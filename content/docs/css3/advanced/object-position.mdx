@@ -1,0 +1,84 @@
+---
+title: "CSS object-position — Object Position နေရာချခြင်း"
+description: "object-position property ဖြင့် Box အတွင်းရှိ Image နှင့် Video တို့၏ မြင်ရမယ့်နေရာကို keyword၊ percentage၊ pixel တန်ဖိုးများဖြင့် သတ်မှတ်နည်း။"
+---
+
+`object-position` Property က `object-fit` ရလဒ်ကြောင့် Box ထဲမှာ ကျန်ရစ်တဲ့ Image ရဲ့ ဘယ်အပိုင်းကို ပြသမလဲ ဆိုတာကို သတ်မှတ်ပေးပါတယ်။ Keyword (`top`, `center`, `bottom`) ၊ Percentage ဒါမှမဟုတ် Pixel တန်ဖိုးတွေနဲ့ ပေးနိုင်ပါတယ်။
+
+### Keyword တန်ဖိုးများ
+
+`top`, `left`, `center`, `right`, `bottom` စတဲ့ Keyword တွေကို ပေါင်းစပ်ပြီး Image ရဲ့ မြင်ရမယ့် နေရာကို သတ်မှတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+img {
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
+  object-position: top left;
+}
+```
+
+မှတ်ချက် — `top left` ဆိုတာ Cover ဖြတ်ထားတဲ့ပုံရဲ့ အပေါ်ဘယ်ဖက် အပိုင်းကို ဦးစားပေးပြီး ပြသမယ်လို့ အဓိပ္ပာယ်ရပါတယ်။
+
+### Percentage တန်ဖိုးများ
+
+Percentage နဲ့ ပေးခြင်းဖြင့် ပိုတိကျတဲ့ နေရာချထားမှုကို ရရှိပါတယ်။ ပထမတန်ဖိုးက Horizontal ၊ ဒုတိယတန်ဖိုးက Vertical ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.portrait {
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
+  object-position: 50% 10%;
+}
+```
+
+မှတ်ချက် — `50% 10%` ကြောင့် ပုံရဲ့ အလျားအလယ် နှင့် အပေါ်ကနေ 10% နေရာကို ပြသလို့ Portrait ဓာတ်ပုံတွေရဲ့ မျက်နှာအပိုင်း ပေါ်လာတတ်ပါတယ်။
+
+### Pixel တန်ဖိုးများ
+
+Pixel နဲ့ပေးရင် Box ရဲ့ အပေါ်ဘယ်ဖက်ကနေ စတင်တွက်ပြီး နေရာချပါတယ်။ `object-fit: none` နဲ့တွဲရင် ပုံက Box ထဲမှာ သီးသန့် ရွေ့လျားနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+img.trophy {
+  width: 300px;
+  height: 300px;
+  object-fit: none;
+  object-position: 20px 40px;
+}
+```
+
+မှတ်ချက် — `object-position: 20px 40px` ဆိုရင် ပုံရဲ့ မူရင်းအရွယ်က Box အတွင်း ဘယ်နား 20px ၊ အပေါ်နား 40px နေရာမှာ ထိုင်နေပါတယ်။
+
+### object-fit နဲ့ တွဲသုံးခြင်း
+
+Hero Section လိုနေရာမှာ Image ကို Cover လုပ်ပြီး စိတ်ဝင်စားစရာ အပိုင်းကို မြဲမြဲပြသဖို့ `cover` နဲ့ `object-position` တွဲသုံးလေ့ရှိပါတယ်။
+
+**ဥပမာ -**
+```css
+.hero {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  object-position: center 30%;
+}
+```
+
+မှတ်ချက် — Screen အရွယ် မရွေး ပုံရဲ့ အလယ်ထဲက အပေါ်ဘက်အပိုင်းကို အမြဲ မြင်ရအောင် ဖန်တီးနိုင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `object-position` က `object-fit` ဖြင့် ချိန်ညှိထားသော ပုံရဲ့ ပြသမည့်နေရာကို သတ်မှတ်ပါသည်။
+- Keyword ၊ Percentage ၊ Pixel တန်ဖိုး ၃ မျိုးလုံးဖြင့် ပေးနိုင်ပါသည်။
+- `cover` နဲ့ တွဲသုံးလျှင် Image ၏ စိတ်ဝင်စားဖွယ် အပိုင်းကို ရွေးပြသရန် အသုံးဝင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "object-position က ဘယ် Property ရဲ့ ရလဒ်နဲ့ တွဲသုံးလေ့ ရှိပါသလဲ?", options: ["object-fit", "object-size", "background-size", "border-radius"], correctAnswer: 0, explanation: "object-position က object-fit ဖြတ်တောက်ပြီးကျန်တဲ့ နေရာထဲက ပြသမယ့် အပိုင်းကို ရွေးပေးပါတယ်။" },
+  { id: "q2", question: "Percentage နဲ့ ပေးတဲ့အခါ ပထမတန်ဖိုးက ဘာကို ညွှန်ပြပါသလဲ?", options: ["အလျားလိုက် Horizontal", "ဒေါင်လိုက် Vertical", "Border အကျယ်", "Radius အရွယ်"], correctAnswer: 0, explanation: "object-position ရဲ့ ပထမတန်ဖိုးတွေက ဘယ်ညာအတိုင်း Horizontal နေရာကို ညွှန်ပြပါတယ်။" },
+  { id: "q3", question: "object-position မှာ Keyword အနေနဲ့ အသုံးမဝင်တဲ့ တန်ဖိုးက ဘာလဲ?", options: ["center", "top", "middle", "bottom"], correctAnswer: 2, explanation: "Keyword တွေက top ၊ right ၊ bottom ၊ left ၊ center ဖြစ်ပြီး middle ကတော့ object-position ရဲ့ Keyword မဟုတ်ပါဘူး။" }
+]} />

@@ -1,0 +1,10 @@
+﻿EXIT=1
+bytes=2827
+node.exe : Turbopack build encountered 1 warning:
+    + CategoryInfo          : NotSpecified: (Turbopack build encountered 1 warning::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+Warning: Dynamic filesystem access causes tracing of the whole project
+> Build error occurred
+Error: Turbopack build failed with 1 error:
+Error: the name `NavLeafLink` is defined multiple times
+Ecmascript file had an error

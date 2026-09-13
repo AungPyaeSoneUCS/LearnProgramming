@@ -1,0 +1,94 @@
+---
+title: "HTML File Paths — HTML File Path များအကြောင်း"
+description: "File path ဆိုတာ ဘာလဲ၊ absolute နှင့် relative path ကွဲပြားပုံနှင့် အသုံးပြုနည်းတို့ကို လေ့လာကြမယ်။"
+---
+
+File path ဆိုတာ browser ကို file တွေ၊ image တွေ၊ stylesheet တွေ ဘယ်မှာ ရှိတယ်ဆိုတာ ပြသပေးတဲ့ လိပ်စာဖြစ်ပါတယ်။ HTML မှာ image၊ link၊ script တွေ ထည့်တဲ့အခါ file path မှန်ကန်ဖို့ အရေးကြီးပါတယ်။ Path မှားရင် browser က ဖိုင်ကို မတွေ့နိုင်တော့ပါဘူး။
+
+### Absolute Path
+
+Absolute path ဆိုတာ website root (domain) ကစပြီး ဖိုင်ရဲ့ တည်နေရာ အပြည့်အစုံ ဖြစ်ပါတယ်။ Full URL address တစ်ခုလုံးပါပြီး `http://` သို့မဟုတ် `https://` နဲ့ စတင်ပါတယ်။ အခြား website ပေါ်မှာ ရှိတဲ့ resource တွေကို ညွှန်ပြရန် absolute path ကို သုံးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<img src="https://www.w3schools.com/images/picture.jpg"
+  alt="Picture ဥပမာ">
+```
+
+မှတ်ချက် — Absolute path သည် domain name အပါအဝင် URL အပြည့်အစုံပါဝင်ပြီး အခြား site ၏ resource များအတွက် သုံးသည်။
+
+### Relative Path
+
+Relative path ဆိုတာ မိမိ file ရဲ့ နေရာကနေ စတင်ကာ အခြား file ဆီသို့ ရောက်ရန် လမ်းကြောင်းကို ဖော်ပြတာဖြစ်ပါတယ်။ မိမိ website အတွင်းပိုင်း file များအတွက် အသုံးများဆုံး နည်းလမ်းဖြစ်ပြီး domain name မလိုပါဘူး။ ဖိုင် folder များ ရွေ့လျား (move) လုပ်လျှင်တော့ path တွေ ပြောင်းရတာတွေ ရှိနိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<img src="picture.jpg" alt="တူညီတဲ့ folder ထဲက ပုံ">
+```
+
+မှတ်ချက် — Relative path က လက်ရှိ file တည်ရှိရာ folder က စတင်ပြီး လမ်းကြောင်း တွက်ချက်ပါတယ်။
+
+### တူညီသော Folder အတွင်းရှိ File များ
+
+လက်ရှိ HTML file နဲ့ တစ်တန်းတည်း (တူညီတဲ့ folder ထဲ) မှာ ရှိတဲ့ file ကို ညွှန်ပြရန် file အမည်ကိုသာ ရေးရပါတယ်။ Folder မရှိတဲ့ file များကတော့ ဒီနည်းအတိုင်း အလွယ်ဆုံး ချိတ်ဆက်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<img src="logo.png" alt="Logo">
+<link rel="stylesheet" href="style.css">
+```
+
+မှတ်ချက် — ဤအတွက်က HTML file နှင့် resource များ တူညီသော folder ထဲတွင် ရှိနေရပါမည်။
+
+### မိဘ Folder သို့ လမ်းကြောင်း
+
+Folder တွေရဲ့ အထက်အဆင့် (parent folder) မှာရှိတဲ့ file ကို ညွှန်ပြဖို့ `../` ကို သုံးပါတယ်။ `..` ဆိုတာ folder အပေါ်တစ်ဆင့်ကို ရည်ညွှန်းပြီး `../../` ဆိုရင်တော့ နှစ်ဆင့်အထက် ဆိုလိုပါတယ်။ ဒါက စုစည်းထားတဲ့ folder structure ထဲမှာ အလွန်အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<img src="../images/picture.jpg" alt="အထက်ဆင့် folder ထဲက ပုံ">
+```
+
+မှတ်ချက် — `../` သည် လက်ရှိ folder ၏ အထက်ဆင့်သို့ ရွှေ့ပြီး နာမည်များကို ဆက်၍ ဖော်ပြသည်။
+
+### Root Path
+
+Root path ဆိုတာ website ရဲ့ အမြစ် directory မှ စတင်ပြီး လမ်းကြောင်းကို ဖော်ပြတာဖြစ်ပါတယ်။ Slash (`/`) နဲ့ စတင်ပြီး domain name မပါဘဲ root ကနေ စတင်တာကြောင့် site တစ်ခုလုံးမှာ တည်ငြိမ်တဲ့ path အတွက် သုံးပါတယ်။ `/images/` ဆိုတာ root directory ထဲက images folder ကို ရည်ညွှန်းပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<img src="/images/picture.jpg" alt="Root folder ထဲက ပုံ">
+```
+
+မှတ်ချက် — Root path က slash တစ်ခုနဲ့ စတင်ပြီး website ၏ root directory ကို ရည်ညွှန်းပါတယ်။ Folder structure တစ်ခုလုံး ရွေ့လျားလျှင် root path များက ပျက်စီးနိုင်ပါတယ်။
+
+### Relative Path သုံးသင့်သော အချိန်
+
+မိမိ site ကို local (မိမိစက်မှာ) သော်လည်း စမ်းသပ်လိုတဲ့အခါ၊ Domain ပြောင်းလဲနိုင်တဲ့ project များမှာ relative path က ပိုသင့်လျော်ပါတယ်။ Root path တွေက domain server ပေါ်တွင်မှ အလုပ်လုပ်လေ့ ရှိပါတယ်။ မိမိရဲ့ website ထဲက file များကို ချိတ်ဆက်တဲ့အခါ relative path က အသုံးများဆုံး ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<img src="images/photo.jpg" alt="Relative path ဖြင့် အသုံးများသော">
+```
+
+မှတ်ချက် — Website အတွင်းပိုင်း resource များအတွက် relative path ကိုသုံးခြင်းက folder structure မပြောင်းသရွေ့ အမြဲအလုပ်လုပ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Relative path က လက်ရှိ file နေရာကစပြီး path များကို တွက်ချက်သည်။
+- `../` က မိဘ folder သို့၊ `/` က root directory သို့ ရည်ညွှန်းသည်။
+- Absolute path က full URL ဖြစ်ပြီး အခြား site ၏ resource များအတွက် သုံးသည်။
+- မိမိ site အတွင်း file များအတွက် relative path ကို ဦးစားပေးသင့်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Slash နဲ့ စတင်ပြီး website ရဲ့ root directory ကို ရည်ညွှန်းတဲ့ path က ဘာလဲ?", options: ["relative path", "root path", "absolute path", "nested path"], correctAnswer: 1, explanation: "Root path သည် website ၏ root directory မှ စတင်သော path ဖြစ်သည်။" },
+  { id: "q2", question: "Parent folder ထဲမှာရှိတဲ့ file ကို ညွှန်ပြဖို့ ဘာကို သုံးမလဲ?", options: ["../", "..", "./", "back"], correctAnswer: 0, explanation: "../ သည် လက်ရှိ folder ၏ အထက်ဆင့်ကို ရည်ညွှန်းသည်။" },
+  { id: "q3", question: "အခြား website ပေါ်မှာရှိတဲ့ image ကို ညွှန်ပြရန် ဘယ် path ကို သုံးမလဲ?", options: ["relative path", "root path", "absolute path", "local path"], correctAnswer: 2, explanation: "အခြား site ၏ resource များအတွက် full URL ပါသော absolute path ကို သုံးသည်။" } ]} />

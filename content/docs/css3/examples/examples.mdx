@@ -1,0 +1,185 @@
+---
+title: "CSS Examples — အသုံးများသော CSS ဥပမာ ကုဒ်များ"
+description: "Rounded card၊ sticky header၊ hover underline၊ gradient button၊ loading spinner နဲ့ checkbox toggle စတဲ့ အသုံးများတဲ့ CSS ဥပမာတွေကို copy-paste ပြီး သုံးနိုင်အောင် စုပေးထားပါတယ်။"
+---
+
+ဒီစာမျက်နှာမှာ Website တွေမှာ အမြဲတမ်းလိုလို လိုအပ်နေတဲ့ CSS ဥပမာလေးတွေ စုထားပါတယ်။ Snippet တစ်ခုချင်းစီကို ကိုယ့် CSS ဖိုင်ထဲ ကူးထည့်ပြီး Class Name တွေကို ကိုယ့် HTML နဲ့ ကိုက်ညီအောင် ပြင်သုံးရုံပါပဲ။
+
+### Card (Card Box) လေးချွန် ပုံစံ
+
+Card က အချက်အလက်၊ ပုံနဲ့ Button တွေကို သေချာစွာ စုဖော်ပြဖို့ သုံးပါတယ်။ `border-radius` က ထောင့်တွေကို လှပချောမွေ့စေပြီး `box-shadow` က မြေပြင်ပေါ် ပေါ့ပါးစွာ မြှောက်ထားသလို ခံစားရစေပါတယ်။
+
+**ဥပမာ -**
+```css
+.card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  max-width: 320px;
+}
+```
+
+မှတ်ချက် — `rgba(0, 0, 0, 0.1)` ရဲ့ နောက်ဆုံးဂဏန်း 0.1 က Shadow ရဲ့ ပွင့်လင်းမှု (Opacity) ဖြစ်ပြီး ပိုနည်းရင် ပိုကြည်လင်ပါတယ်။
+
+### Sticky Header (Scroll ဆင်းလည်း ကပ်နေမယ့် ခေါင်းစဉ်)
+
+Page ကို Scroll ဆင်းလည်း Header က Screen အပေါ်မှာ တည်မြဲနေစေချင်ရင် `position: sticky;` ကို သုံးပါတယ်။ `top: 0;` က ဘယ် Offset မှာ ကပ်မလဲကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.header {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+```
+
+မှတ်ချက် — `z-index` က Header ကို ရှေ့ဆုံး အလွှာမှာ ထားပေးလို့ Content တွေက Header အောက်ကို ရောက်သွားရင်တောင် မှုန်မနေပါဘူး။
+
+### Hover Underline (Mouse လာရပ်ရင် မျဉ်းဆွဲခြင်း)
+
+Nav Link တွေမှာ Mouse လာရပ်တဲ့အခါ အောက်ခြေကနေ မျဉ်းတစ်ကြောင်း ဘယ်မှညာ ချဲ့ဆွဲတဲ့ Effect လေးပါ။ `::after` Pseudo-element က မျဉ်းကို ဖန်တီးပြီး `transition` က ချောမွေ့အောင် လုပ်ပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: #e94560;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+```
+
+မှတ်ချက် — Width ကို 0 ကနေ 100% အထိ ချဲ့တာမို့ Mouse ထွက်သွားရင် မျဉ်းက ပြန်ကျုံ့ပြီး ပျောက်သွားပါတယ်။
+
+### Gradient Button (အရောင်ကူးချောမွေ့တဲ့ ခလုတ်)
+
+`linear-gradient()` နဲ့ အရောင်နှစ်ရောင် အကူးအပြောင်းရှိတဲ့ လှပတဲ့ Button ကို ဖော်ပြပါတယ်။ `border-radius` အကြီးပေးထားလို့ Capsule (ဆေးပြား) ပုံစံ ရလာပါတယ်။
+
+**ဥပမာ -**
+```css
+.btn {
+  background: linear-gradient(90deg, #ff7e5f, #feb47b);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+```
+
+မှတ်ချက် — `:hover` မှာ Opacity နည်းနည်းလေး လျှော့လိုက်လို့ Mouse လာရပ်တဲ့အခါ Button က နည်းနည်း ရှင်လိုက်တဲ့ ခံစားချက် ရစေပါတယ်။
+
+### Loading Spinner (လှည့်နေတဲ့ Loader)
+
+Content ဝင်လာတာကို စောင့်ဆိုင်းနေစဉ်မှာ လှည့်ပတ်နေတဲ့ Spinner ပြချင်တဲ့အခါ `animation` နဲ့ `@keyframes` ကို တွဲသုံးပါတယ်။ `@keyframes` ထဲမှာ Rotation ရဲ့ စရှိရာ (from) နဲ့ အဆုံး (to) ပုံစံတွေကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #ddd;
+  border-top-color: #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+```
+
+မှတ်ချက် — `border-top-color` နဲ့ အပေါ်ဘက်အနား တစ်ဖက်ကိုသာ အရောင်စိုက်ထားလို့ အပြည့်အဝိုင်းအစား လေးပုံတစ်ပုံပဲ အရောင်ရှိတဲ့ Loader ပုံစံ ရလာပါတယ်။
+
+### Checkbox Toggle (Switch ခလုတ်) အလွယ်ပုံစံ
+
+Default Checkbox ကို ဖွက်ပြီး CSS နဲ့ ချောမွေ့တဲ့ Toggle Switch ဖော်ပြဖို့ `input:checked` ဆိုတဲ့ Pseudo-class ကို သုံးပါတယ်။ HTML မှာ Label ထဲ checkbox နဲ့ Toggle ပုံ နှစ်ခု ထည့်ရပါတယ်။
+
+**ဥပမာ -**
+```html
+<label>
+  <input type="checkbox" class="toggle-input">
+  <span class="toggle"></span>
+</label>
+```
+
+မှတ်ချက် — Checkbox ကိုယ်တိုင် မပြချင်တာမို့ CSS နဲ့ `display: none;` ပေးပြီး ဖွက်ထားပါတယ်။
+
+**ဥပမာ -**
+```css
+.toggle-input {
+  display: none;
+}
+
+.toggle {
+  width: 50px;
+  height: 26px;
+  background: #ccc;
+  border-radius: 26px;
+  position: relative;
+  display: inline-block;
+  transition: background 0.3s;
+}
+
+.toggle::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: left 0.3s;
+}
+
+.toggle-input:checked + .toggle {
+  background: #34c759;
+}
+
+.toggle-input:checked + .toggle::after {
+  left: 27px;
+}
+```
+
+မှတ်ချက် — `+` Adjacent Sibling Combinator က Checkbox ပြီးနောက်မှာ တိုက်ရိုက်လိုက်တဲ့ `.toggle` ကိုသာ ရွေးပြီး Checked ဖြစ်ရင် အရောင်နဲ့ အနေအထား ပြောင်းလဲစေပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Card ၊ Sticky Header ၊ Gradient Button တို့က `border-radius` ၊ `position` ၊ `linear-gradient()` တွေရဲ့ ဥပမာများ ဖြစ်သည်။
+- Hover Effect တွေက `:hover` Pseudo-class နဲ့ `transition` တွဲသုံးရသည်။
+- Spinner နဲ့ Toggle တွေက `@keyframes` နဲ့ `input:checked` ကို အခြေခံသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Sticky header က Scroll လုပ်လည်း ဘယ်နေရာမှာ ဆက်ရှိနေပါသလဲ?", options: ["Screen အပေါ်ဆုံး", "Screen အလယ်", "Screen အောက်ဆုံး", "ဘယ်ဘက် ထောင့်"], correctAnswer: 0, explanation: "position: sticky က top: 0 မှာ ကပ်ထားလို့ Scroll ဆင်းလည်း Header က အပေါ်ဆုံးမှာ ရှိနေပါတယ်။" },
+    { id: "q2", question: "Loading spinner ကို လှည့်ပတ်စေဖို့ ဘာကို သုံးပါသလဲ?", options: ["float", "animation နဲ့ keyframes", "box-shadow", "text-align"], correctAnswer: 1, explanation: "animation က keyframes ထဲက rotate အဆင့်တွေကို လှည့်ပြီး Spinner ကို လည်စေပါတယ်။" },
+    { id: "q3", question: "Hover underline မှာ မျဉ်းကျယ်ပြန့်လာတာကို ချောမွေ့စေတဲ့ property က ဘာလဲ?", options: ["transition", "box-shadow", "border", "clear"], correctAnswer: 0, explanation: "transition: width 0.3s ease က Width ပြောင်းတာကို ချောမွေ့စွာ ပြုလုပ်ပေးပါတယ်။" }
+  ]}
+/>

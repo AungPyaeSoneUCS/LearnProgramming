@@ -1,0 +1,50 @@
+---
+title: "Normalization"
+description: "Normalization ဆိုတာ ဘာလဲ၊ ဘာကြောင့် လုပ်သင့်သလဲ"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="💡 ရည်ရွယ်ချက်">
+  Database Architecture ဒီဇိုင်း ရေးဆွဲရာတွင် မရှိမဖြစ် လိုအပ်သည့် **Normalization** စနစ်အကြောင်းနှင့် Data Anomalies များကို ကာကွယ်နည်းကို ရှင်းရှင်းလင်းလင်း နားလည်သွားစေဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## Normalization ဆိုတာ ဘာလဲ?
+
+**Normalization** ဆိုတာ Database ထဲက Data Structure များကို စနစ်တကျ ဖြစ်အောင် ပြန်လည် ဖွဲ့စည်းပြင်ဆင်သည့် Process တစ်ခု ဖြစ်ပါတယ်။ အဓိက ရည်ရွယ်ချက် ၂ ခု ကတော့:
+1. **Data Redundancy (Data ပိုလျှံ ထပ်နေမှု):** လျှော့ချရန်
+2. **Data Integrity (အချက်အလက် ကိုက်ညီ မှန်ကန်မှု):** ထိန်းသိမ်းရန်
+
+ဒီလို ပြုလုပ်ရန် ကြီးမားရှုပ်ထွေးသော Monolithic Table ကြီးများကို တိကျသော Entity-based Table ငယ်များအဖြစ် ခွဲထုတ်ပြီး၊ Foreign Key Relationships များနှင့် စနစ်တကျ ပြန်လည် ချိတ်ဆက်ပေးရပါတယ်။
+
+## ဘာကြောင့် Normalization ပြုလုပ်ရသလဲ?
+
+Normalization မပြုလုပ်ထားသော Unnormalized Database များတွင် အောက်ပါ **Data Modification Anomalies ၃ မျိုး** ကြုံတွေ့ရတတ်ပါတယ်:
+
+### 1. Update Anomaly (ပြင်ဆင်ရာတွင် ကြုံရသော ပြဿနာ)
+Data တစ်ခုကို ပြင်ဆင်ချင်သည့်အခါ နေရာပေါင်းများစွာတွင် လိုက်လံ ပြင်ဆင်နေရသည့် ပြဿနာ ဖြစ်ပါတယ်။
+
+**ဥပမာ:** Supplier တစ်ယောက်၏ ဖုန်းနံပါတ် ပြောင်းလဲသွားပါက၊ Unnormalized Table တွင် Supplier ၏ ဖုန်းနံပါတ်ပါသော ရာနဲ့ချီသည့် Record တိုင်းတွင် လိုက်လံ Update ပြုလုပ်နေရပါမည်။ တစ်နေရာ ကျန်ခဲ့ပါက Data Inconsistency ဖြစ်သွားပါမည်။
+
+### 2. Insertion Anomaly (ဖြည့်သွင်းရာတွင် ကြုံရသော ပြဿနာ)
+Table ထဲတွင် အထောက်အကူပြု Data မပြည့်စုံသေးသဖြင့် Data အသစ်တစ်ခု ဖြည့်သွင်းခွင့်မရသည့် ပြဿနာ ဖြစ်ပါတယ်။
+
+**ဥပမာ:** ဌာနအသစ် (`department`) တစ်ခု စတင်ဖွင့်လှစ်သော်လည်း ထိုဌာနတွင် Assign ဆွဲထားသော ဝန်ထမ်း မရှိသေးပါ။ Department နှင့် Employee ကို Table တစ်ခုတည်းတွင် ရောသိမ်းထားပါက ဝန်ထမ်း Data မပါဘဲ ဌာနအသစ်ကို Database ထဲ ထည့်သွင်း၍ မရနိုင်ပါ။
+
+### 3. Deletion Anomaly (ဖျက်ဆီးရာတွင် ကြုံရသော ပြဿနာ)
+Data တစ်ခုကို ဖျက်လိုက်သည့်အခါ မဖျက်ချင်သော အခြား အရေးကြီး Data များပါ ပျောက်ကွယ်သွားသည့် ပြဿနာ ဖြစ်ပါတယ်။
+
+**ဥပမာ:** Course တစ်ခုကို တက်ရောက်နေသည့် Student တစ်ဦးတည်းသာ ရှိပြီး၊ ထို Student ထွက်သွား၍ Record ဖျက်လိုက်ပါက Course ၏ အချက်အလက်များပါ အလိုအလျောက် ပျောက်ကွယ်သွားခြင်း ဖြစ်ပါတယ်။
+
+## Normal Forms (NF) များ
+
+ဒီ Anomalies များကို စနစ်တကျ ဖြေရှင်းနိုင်ရန် Normalization ကို အဆင့်ဆင့် (Step-by-step Rules) ပြုလုပ်ကြရပါတယ်။ ထို အဆင့်များကို **Normal Forms (NF)** လို့ ခေါ်ဆိုပါ တယ်:
+
+1. First Normal Form (1NF)
+2. Second Normal Form (2NF)
+3. Third Normal Form (3NF)
+4. Boyce-Codd Normal Form (BCNF)
+5. Fourth & Fifth Normal Form (4NF / 5NF)
+
+Production-ready Systems အများစုတွင် **Third Normal Form (3NF)** သို့မဟုတ် **BCNF** အထိ ရောက်ရှိအောင် Design ရေးဆွဲနိုင်ပါက အလွန် သပ်ရပ် ကောင်းမွန်သော Database Architecture ရရှိပြီ ဖြစ်ပါတယ်။
+

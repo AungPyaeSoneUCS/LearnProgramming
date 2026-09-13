@@ -1,0 +1,120 @@
+---
+title: "CSS Links — Link တွေကို Style လုပ်ကြမယ်"
+description: "a:link၊ a:visited၊ a:hover၊ a:active pseudo-class တွေနဲ့ Link ကို လှလှပပ Style လုပ်နည်း။"
+---
+
+### Link Style ဆိုတာ
+
+HTML Link (the `<a>` element) တွေက Browser ထဲမှာ မျဉ်းသား (underline) ပါတဲ့ အပြာရောင် စာသားလို မြင်ရတတ်ပါတယ်။ CSS ရဲ့ Pseudo-class တွေကို သုံးပြီး Link ရဲ့ အခြေအနေ (State) အလိုက် အရောင်၊ နောက်ခံ၊ မျဉ်းသား စတာတွေကို ပြောင်းလဲနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+a:link {
+  color: #0066cc;
+}
+
+a:visited {
+  color: #551a8b;
+}
+```
+
+မှတ်ချက် — `:link` က Link အသစ် (တစ်ခါမှ မနှိပ်ရသေးတဲ့) အခြေအနေ၊ `:visited` ကတော့ ရှေ့က တစ်ခါ နှိပ်ဖူးထားတဲ့ Link ရဲ့ Style ပါ။
+
+### a:hover နဲ့ a:active
+
+`:hover` က Mouse Pointer က Link ပေါ်ကို လာရပ်တဲ့အခါ သက်ရောက်ပြီး `:active` ကတော့ Link ကို ဖိထားတဲ့ (Click နှိပ်ပြီး မလွှတ်ခင်) ကာလမှာ သက်ရောက်ပါတယ်။ Hover Effect က Website တွေမှာ အသုံးအများဆုံး Interaction တစ်ခုပါ။
+
+**ဥပမာ -**
+```css
+a:hover {
+  color: #ff0000;
+  background-color: #ffff00;
+}
+
+a:active {
+  color: #ffffff;
+}
+```
+
+မှတ်ချက် — `:hover` က Mouse အသုံးပြုသူတွေအတွက် အဓိကပါ။ Touch Screen မှာတော့ Tap လုပ်တဲ့အခါမှသာ အာနိသင် ပြတတ်ပါတယ်။
+
+### Pseudo-class တွေရဲ့ အစဉ်လိုက်
+
+Link Style လုပ်တဲ့အခါ Pseudo-class လေးခုကို ဒီအစဉ်လိုက် ရေးလေ့ရှိပါတယ် — `a:link`၊ `a:visited`၊ `a:hover`၊ `a:active`။ အစဉ်လိုက် မကျရင် `a:hover` ဒါမှမဟုတ် `a:active` Style က အလုပ်မလုပ်တာ ဖြစ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+a:link {
+  color: blue;
+}
+
+a:visited {
+  color: purple;
+}
+
+a:hover {
+  color: red;
+}
+
+a:active {
+  color: orange;
+}
+```
+
+မှတ်ချက် — LOVE / HATE ဆိုတဲ့ စကားလုံးနဲ့ မှတ်မိနိုင်ပါတယ် (L-ink, V-isited, H-over, A-ctive)။
+
+### Underline ဖယ်ချင်ရင်
+
+Link တွေရဲ့ Default မျဉ်းသားကို မလိုချင်ရင် `text-decoration: none;` သုံးပြီး ဖယ်ရှားနိုင်ပါတယ်။ Navigation Menu စတာတွေမှာ မျဉ်းသားမပါတဲ့ Link တွေကို အသုံးများပါတယ်။
+
+**ဥပမာ -**
+```css
+a {
+  text-decoration: none;
+}
+```
+
+မှတ်ချက် — Paragraph အလယ်က Link တွေမှာတော့ Accessibility အတွက် မျဉ်းသားထားတာ ပိုကောင်းပါတယ်။
+
+### Button ပုံစံ Link
+
+`<a>` Tag ကို CSS နဲ့ Button နဲ့တူအောင် Style လုပ်လို့လည်း ရပါတယ်။ background-color ၊ padding ၊ border-radius ၊ text-decoration စတဲ့ Property တွေကို ပေါင်းသုံးပြီး Link ကို Button အသွင်နဲ့ ပြောင်းလဲနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<a href="register.html" class="btn-link">Register</a>
+```
+
+**ဥပမာ -**
+```css
+.btn-link {
+  background-color: #04aa6d;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 6px;
+}
+
+.btn-link:hover {
+  background-color: #038a59;
+}
+```
+
+မှတ်ချက် — `display: inline-block;` ထည့်ထားလို့ padding က အလုပ်လုပ်ပြီး Link က Button ပုံစံ ဖြစ်လာပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `a:link` နဲ့ `a:visited` က ပုံမှန် နဲ့ နှိပ်ဖူးပြီးသား Link တွေရဲ့ Style ဖြစ်ပါတယ်။
+- `a:hover` နဲ့ `a:active` က Pointer လာရပ်ခြင်း နဲ့ ဖိထားခြင်း State တွေပါ။
+- Pseudo-class တွေကို LOVE/HATE အစဉ်လိုက် ရေးရပါတယ်။
+- `text-decoration: none;` နဲ့ မျဉ်းသား ဖျက်လို့ရပြီး Link ကို Button ပုံစံလည်း ဖြစ်အောင် လုပ်လို့ရပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Link ပေါ်မှာ Mouse Pointer လာရပ်တဲ့အခါ ဘယ် Pseudo-class က သက်ရောက်ပါသလဲ?", options: ["a:link", "a:visited", "a:hover", "a:active"], correctAnswer: 2, explanation: "a:hover က Mouse Pointer က Link ပေါ်ကို လာရပ်တဲ့အခါ သက်ရောက်ပါတယ်။" },
+  { id: "q2", question: "Link Style ရေးတဲ့အခါ Pseudo-class တွေကို ဘယ်အစဉ်လိုက် ရေးရပါသလဲ?", options: ["a:hover က အရင်ဆုံး", "a:active က အရင်ဆုံး", "အစဉ်လိုက် မလိုအပ်ပါ", "a:link ၊ a:visited ၊ a:hover ၊ a:active"], correctAnswer: 3, explanation: "LOVE/HATE အတိုင်း link ၊ visited ၊ hover ၊ active အစဉ်လိုက် ရေးရပါတယ်။" },
+  { id: "q3", question: "Link ရဲ့ မျဉ်းသားကို ဖယ်ချင်ရင် ဘယ် Property ကို သုံးရပါသလဲ?", options: ["text-align", "text-decoration", "border-style", "list-style"], correctAnswer: 1, explanation: "text-decoration ကို none ထားရင် underline ဖယ်သွားပါတယ်။" }
+]} />

@@ -1,0 +1,90 @@
+---
+title: "CSS Box Sizing — Box အရွယ်အစား တွက်ချက်ခြင်း"
+description: "content-box နဲ့ border-box ရဲ့ ကွာခြားချက်နှင့် box-sizing reset ဖြင့် Layout တွက်ချက်ရ လွယ်ကူစေနည်းကို လေ့လာကြမယ်။"
+---
+
+Element တစ်ခုရဲ့ စုစုပေါင်း အကျယ်ကို တွက်တဲ့အခါ Padding နဲ့ Border ပါ ထည့်တွက်မလား မထည့်တွက်လား ဆိုတာက Layout မှာ အရမ်း အရေးကြီးပါတယ်။ `box-sizing` Property က ဒီတွက်ချက်မှုကို ထိန်းချုပ်ပေးပြီး ဒီသင်ခန်းစာမှာ အသေးစိတ် လေ့လာကြမယ်။
+
+### content-box (Default)
+
+မူလ Default Value က `content-box` ဖြစ်ပြီး Width က Content Area အတွက်သာ ဖြစ်ပါတယ်။ Padding နဲ့ Border တွေက Width အပေါ်မှာ ထပ်ပေါင်းပြီး စုစုပေါင်း Box က သတ်မှတ်ထားတာထက် ပိုကြီးသွားပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  width: 300px;
+  padding: 20px;
+  border: 5px solid black;
+  box-sizing: content-box;
+}
+```
+
+မှတ်ချက် — Padding 20px နှစ်ဖက်နဲ့ Border 5px နှစ်ဖက် ထပ်ပေါင်းလို့ စုစုပေါင်း Width 350px ဖြစ်သွားပါတယ်။
+
+### border-box ပြောင်းလဲခြင်း
+
+`border-box` ဆိုရင် Width ထဲမှာ Padding နဲ့ Border ပါ ထည့်တွက်ပြီး Content Area က ကျန်တဲ့ နေရာထဲမှာသာ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  width: 300px;
+  padding: 20px;
+  border: 5px solid black;
+  box-sizing: border-box;
+}
+```
+
+မှတ်ချက် — စုစုပေါင်း Width က 300px အတိအကျ ရှိပြီး Content Area က 250px (300 မှ Padding 40px နဲ့ Border 10px နုတ်) ဖြစ်ပါတယ်။
+
+### Universal Reset
+
+ဒီဇိုင်းတိုင်းမှာ `border-box` သုံးဖို့ Universal Selector `*` နဲ့ Reset လုပ်လေ့ရှိပါတယ်။ `*` က Element တိုင်းကို ရွေးပြီး Pseudo-Element တွေကိုပါ ပါဝင်စေနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+```
+
+မှတ်ချက် — Reset လုပ်ထားရင် Padding ကြောင့် Box တွေ လျှံထွက်ပြီး Layout ကွဲတာမျိုး မဖြစ်တော့ဘဲ Flex နဲ့ Grid Layout တွေမှာ ပိုအဆင်ပြေပါတယ်။
+
+### Padding ကြောင့် ပြဿနာတွေ ဘာကြောင့် ဖြစ်ရသလဲ
+
+Grid သို့မဟုတ် Flex Container ထဲမှာ Item တစ်ခုက Width 25% သတ်မှတ်ပြီး Padding ထည့်ရင် Content-Box မှာ Item တွေက Row ထဲကနေ လျှံထွက်ပြီး နောက်တစ်တန်း ကျသွားတတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.item {
+  width: 25%;
+  padding: 10px;
+}
+
+.item-no-padding {
+  width: 25%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 2px solid #ddd;
+}
+```
+
+မှတ်ချက် — Default Content-Box မှာ Width 25% နဲ့ Padding ၊ Border ထပ်ပေါင်းလို့ Row မဝင်တော့ဘဲ နောက်တစ်တန်း ကျပါတယ်။ `border-box` သုံးရင် 25% အတိအကျ ရှိပြီး ဝင်သင့်သလို ဝင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `content-box` က Width အတွင်း Padding နဲ့ Border မပါဝင်ပါ။
+- `border-box` က Width အတွင်း Padding နဲ့ Border ပါ ပါဝင်ပါသည်။
+- `*` Selector နဲ့ Reset လုပ်ထားရင် Layout တွက်ချက်မှု ပိုလွယ်ကူပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "box-sizing ရဲ့ Default Value က ဘယ်ဟာလဲ?", options: ["border-box", "content-box", "padding-box", "margin-box"], correctAnswer: 1, explanation: "Box Sizing ရဲ့ Default Value က content-box ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "Width 300px ၊ Padding 20px တစ်ဖက်စီ ၊ Border 5px တစ်ဖက်စီရှိတဲ့ border-box Box ရဲ့ Content Width က ဘယ်လောက်လဲ?", options: ["300px", "350px", "250px", "270px"], correctAnswer: 2, explanation: "300px မှ Padding 40px နဲ့ Border 10px နုတ်လို့ Content Width က 250px ဖြစ်ပါတယ်။" },
+    { id: "q3", question: "Element တိုင်းကို border-box ဖြစ်စေဖို့ ဘယ် Selector ကို သုံးပါသလဲ?", options: ["#id", ".container", "*", "body"], correctAnswer: 2, explanation: "Universal Selector * က Element တိုင်းကို ရွေးပြီး box-sizing reset လုပ်နိုင်ပါတယ်။" }
+  ]}
+/>

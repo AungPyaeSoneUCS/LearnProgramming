@@ -1,0 +1,81 @@
+---
+title: "HTML Interview Prep — အလုပ်အင်တာဗျူး ပြင်ဆင်မှု"
+description: "အသုံးအများဆုံး HTML အင်တာဗျူး မေးခွန်း ၅ ခုကို အတိုပုံစံ အဖြေများနှင့်တကွ လေ့လာပြီး ကိုယ့်ကိုယ်ကို စမ်းသပ်ကြမယ်။"
+---
+
+HTML အင်တာဗျူးတွေမှာ မေးတတ်တဲ့ မေးခွန်းတွေက အခြေခံ အကြောင်းအရာကို ကောင်းကောင်း နားလည်လား၊ semantic HTML ကို မှန်ကန်စွာသုံးလား၊ accessibility ကို သိိလား ဆိုတာတွေ ဖြစ်ပါတယ်။ အောက်က မေးခွန်း ၅ ခုကို အရင်ကိုယ့်ဘာသာ ဖြေကြည့်ပြီးမှ ပေးထားတဲ့ အဖြေနဲ့ ယှဉ်ကြည့်ပါ။
+
+### မေးခွန်း ၁ — Element နဲ့ Tag ရဲ့ ကွာခြားချက်ကို ရှင်းပြပါ
+
+Element ဆိုတာ ဖွင့်တဲ့ tag၊ အကြောင်းအရာ စာသားနဲ့ ပိတဲ့ tag အားလုံး ပါဝင်တဲ့ အစုကြီး ဖြစ်ပြီး Tag က element ရဲ့ အစိတ်အပိုင်း တစ်ခုစီ ဖြစ်ပါတယ်။ ဥပမာ — `<p>` က opening tag ဖြစ်ပြီး `</p>` က closing tag ဖြစ်ကာ element တစ်ခုလုံးက အဲဒီ tag နှစ်ခုနဲ့ ၎င်းကြားက စာသား ဖြစ်ပါတယ်။
+
+**အတိုအဖြေအတွက် frame -**
+
+```html
+<p>ဒါက element တစ်ခုလုံးပါ။</p>
+```
+
+မှတ်ချက် — Tag နဲ့ element ကို ရှင်းရှင်းလင်းလင်း ခွဲခြားပြောတတ်တာက အင်တာဗျူးမှာ စွဲမှတ်စရာ ကောင်းတဲ့ အစ ဖြစ်ပါတယ်။
+
+### မေးခွန်း ၂ — Semantic HTML ဆိုတာ ဘာလဲ
+
+Semantic HTML ဆိုတာ element ရဲ့ အဓိပ္ပာယ်ကို tag နာမည်ကနေ နားလည်ရတဲ့ HTML ကို ရည်ညွှန်းပါတယ်။ `header`, `nav`, `main`, `article`, `footer` စတာတွေက အကြောင်းအရာရဲ့ အခန်းကဏ္ဍကို ဖော်ပြပြီး `div` က အစက်အပြောက်အရောင်ပုံစံမျှသာ ဖြစ်ပါတယ်။ ဒါတွေက screen reader နဲ့ search engine အတွက် page structure ကို ရှင်းရှင်းလင်းလင်း ဖော်ပြနိုင်ပြီး maintain (ထိန်းသိမ်း) ရလွယ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<header>Site အမည်</header>
+<main><article>ဆောင်းပါး အကြောင်းအရာ</article></main>
+<footer>Copyright</footer>
+```
+
+မှတ်ချက် — အင်တာဗျူးမှာ div နဲ့ semantic tag တစ်ခုကို ယှဉ်ပြီး ဘာကြောင့် semantic ပိုကောင်းလဲ ပြောနိုင်ရင် ပိုအဆင့်မြင့်ပါတယ်။
+
+### မေးခွန်း ၃ — Alt Text က ဘာကြောင့် အရေးကြီးလဲ
+
+Alt text က `img` element မှာ ထည့်ရတဲ့ ဖော်ပြချက်ဖြစ်ပြီး screen reader သုံးတဲ့သူတွေက ပုံအကြောင်းကို ဒီကနေ နားလည်ရပါတယ်။ ပုံ အရိုက်ပျက်ရင်လည်း ဒီစာသား ပြသပြီး accessibility ရှိမှုကို ပေးအပ်ပါတယ်။ ပြီးနောက် search engine က ပုံပါ အကြောင်းအရာကို အညွှန်းပြု နားလည်ရာမှာလည်း ကူညီပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<img src="photos/team.jpg" alt="Takkatho သင်တန်းနည်းပြ အဖွဲ့">
+```
+
+မှတ်ချက် — Alt text က mouse ရွှေ့ရင် ပေါ်တဲ့ tooltip မဟုတ်ဘဲ ပုံရဲ့ အဓိပ္ပာယ်ကို ဖော်ပြတဲ့ စာသား ဖြစ်ပါတယ်။
+
+### မေးခွန်း ၄ — Form ထဲမှာ label နဲ့ input ကို ဘယ်လို ချိတ်ဆက်ပါသလဲ
+
+`label` ရဲ့ `for` attribute နဲ့ `input` ရဲ့ `id` attribute တွေ တူညီအောင် ပေးခြင်းဖြင့် ချိတ်ဆက်ပါတယ်။ ဒါရဲ့ အကျိုးက label ကို နှိပ်ရင်လည်း input ထဲ focus ရောက်တာနဲ့ screen reader က ဘယ် input အတွက် ဘယ် label လဲ သိနိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<label for="username">အသုံးပြုသူ အမည်</label>
+<input type="text" id="username" name="username">
+```
+
+မှတ်ချက် — `name` attribute က form data ပို့တဲ့အခါ သုံးတဲ့ key ဖြစ်ပြီး `id` က label ချိတ်ဆိုက် ဖြစ်တာကို ခွဲခြားနားလည်ထားပါ။
+
+### မေးခွန်း ၅ — HTML5 က ဘာတွေ အသစ်ထည့် လာခဲ့သလဲ
+
+HTML5 က semantic tag များဖြစ်တဲ့ `header`, `nav`, `section`, `article`, `footer` နဲ့ media element `video`, `audio` တွေကို မိတ်ဆက်ခဲ့ပါတယ်။ Form input type အသစ်တွေ (`email`, `date`, `number`) နဲ့ `canvas`, SVG တို့ကိုလည်း ပံ့ပိုးပေးခဲ့တယ်။ ဒါတွေက third-party plugin တွေ မလိုဘဲ ပိုကြွယ်ဝပြီး ရှင်းလင်းတဲ့ page တွေ ရေးနိုင်စေပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<audio controls>
+  <source src="lesson.mp3" type="audio/mpeg">
+</audio>
+<input type="email" placeholder="hi@example.com">
+```
+
+မှတ်ချက် — အသစ်အဆန်းတွေကို စာရင်းပြန်ပြောတတ်ရင်း သူ့ရဲ့ အသုံးဝင်မှုပါ အတိုရှင်းပြနိုင်ရင် အဖြေကို ပိုသာလွန်စေပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "element နဲ့ tag ကို မှန်ကန်စွာ ရှင်းပြထားသည်မှာ ဘာလဲ?", options: ["tag က element ထဲ ပါသည်", "element က tag ထဲ ပါသည်", "နှစ်ခု လုံးဝတူသည်", "မသက်ဆိုင်ပါ"], correctAnswer: 0, explanation: "element တွင် tag နှစ်ခုနှင့် ၎င်းကြားရှိ စာသား ပါဝင်သည်။" },
+  { id: "q2", question: "အောက်ပါတို့အနက် semantic tag မဟုတ်သည့်အရာမှာ ဘာလဲ?", options: ["header", "article", "div", "footer"], correctAnswer: 2, explanation: "div က အဓိပ္ပာယ်မရှိသော box ဖြစ်ပြီး semantic tag မဟုတ်ပါ။" },
+  { id: "q3", question: "label နဲ့ input ချိတ်ရန် ဘယ် attribute နှစ်ခု တူညီရသနည်း?", options: ["for နှင့် id", "name နှင့် id", "for နှင့် name", "type နှင့် id"], correctAnswer: 0, explanation: "label ၏ for နှင့် input ၏ id တူညီမှ ချိတ်ဆက်မှု ဖြစ်ပေါ်သည်။" },
+  { id: "q4", question: "HTML5 မှာ အသစ်ထည့်လာသော element များ ပါဝင်သော အစုမှာ ဘာလဲ?", options: ["video, audio, header", "div, span, b", "br, hr, em", "ul, ol, table"], correctAnswer: 0, explanation: "HTML5 တွင် media နှင့် semantic tag အသစ်များ ပါဝင်သည်။" },
+  { id: "q5", question: "alt text ကို ဘယ်သူက အဓိကအသုံးပြုသနည်း?", options: ["search engine နှင့် server", "screen reader သုံးသူများနှင့် search engine", "ဒီဇိုင်နာများ", "database စီမံခန့်ခွဲသူများ"], correctAnswer: 1, explanation: "alt text သည် screen reader သုံးသူများနှင့် search engine အညွှန်းအတွက် အကျိုးပြုသည်။" } ]} />

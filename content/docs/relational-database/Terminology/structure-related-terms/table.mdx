@@ -1,0 +1,28 @@
+---
+title: "Table (ဇယား)"
+description: "Table အကြောင်း ရှင်းလင်းချက်"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## Table ဆိုတာ ဘာလဲ?
+
+**Table** ဆိုတာ Relational Database တစ်ခုလုံးရဲ့ အခြေခံအကျဆုံးနဲ့ အဓိက Storage အစိတ်အပိုင်း ဖြစ်ပါတယ်။ ခင်ဗျား သိမ်းဆည်းချင်တဲ့ Subject / Entity တစ်ခုခု (ဥပမာ - Users, Products, Orders) နဲ့ ပတ်သက်တဲ့ Data တွေကို ဇယား (Table) ပုံစံနဲ့ စုစည်း သိုလှောင်ပေးတဲ့ နေရာ ဖြစ်ပါတယ်။
+
+Table တွေကို နယ်ပယ်အလိုက် ခေါ်ဝေါ်တဲ့ နာမည်များ:
+- Relational Model သီအိုရီအရ Table ကို **Relation** လို့ ခေါ်ဆိုပါတယ်။
+- Object-Oriented Programming (OOP) တွင် **Entity** သို့မဟုတ် **Class** ရဲ့ Representation လို့ ယူဆနိုင်ပါတယ်။
+- Non-technical သမားများအတွက်မူ Excel Sheet သို့မဟုတ် စာရင်းဇယား (List/File) ပုံစံမျိုး ဖြစ်ပါတယ်။
+
+<Aside title="💡 Data များကို Table ထဲတွင်သာ သိုလှောင်ပါသည်">
+  Database တစ်ခုလုံးမှာ Data ကို လက်တွေ့ Physical Storage အနေနဲ့ သိမ်းဆည်းတဲ့ တစ်ခုတည်းသော နေရာဟာ **Table** ဖြစ်ပါတယ်။ ကျန်တဲ့ Database Objects တွေ (ဥပမာ - Views, Stored Procedures, Functions) တွေဟာ Data ကို ကိုယ်တိုင် မသိမ်းဆည်းဘဲ Table ထဲက Data ကို Query လုပ်ခြင်း သို့မဟုတ် Logic ထိန်းချုပ်ခြင်း သာ ပြုလုပ်ကြတာ ဖြစ်ပါတယ်။
+</Aside>
+
+## Table အမျိုးအစားများ
+
+Database Architecture ထဲမှာ ပါဝင်တဲ့ Table တွေကို သူတို့ရဲ့ Role အပေါ် မူတည်ပြီး အဓိက ၃ မျိုး ခွဲခြားနိုင်ပါတယ်:
+
+1. **Data Table (Master / Transaction Table):** Business ရဲ့ အဓိက Data တွေကို သိမ်းဆည်းပေးသည့် Table များ။ (ဥပမာ - `users` Table, `orders` Table, `products` Table)
+2. **Validation / Lookup Table:** Data Entry လုပ်တဲ့အခါ မှားယွင်းမှု မရှိအောင် ထိန်းချုပ်ရန် ကြိုတင် သတ်မှတ်ထားသော စာရင်းများ။ (ဥပမာ - `user_roles` Table, `order_status` Table)
+3. **Linking / Junction Table:** Table နှစ်ခု ကြားမှာ Many-to-Many Relationship ရှိတဲ့အခါ ထို Table နှစ်ခုကို ချိတ်ဆက်ပေးရန် ကြားခံ သုံးသည့် Table။ (ဥပမာ - `student_courses` Table)
+

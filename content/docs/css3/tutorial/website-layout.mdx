@@ -1,0 +1,140 @@
+---
+title: "CSS Website Layout — Website အခြေခံ Layout နည်း"
+description: "Header, Nav, Content, Footer ပါတဲ့ Website Layout ကို Flexbox နဲ့ Grid သုံးပြီး Mobile Friendly ဖြစ်အောင် တည်ဆောက်နည်း။"
+---
+
+### Website Layout ဆိုတာ ဘာလဲ?
+
+Website Layout က Page ကို Header (ခေါင်းစဉ်နဲ့ Menu), Nav (Navigation), Main/Content (အကြောင်းအရာ), Footer (အောက်ခြေ) စတဲ့ အပိုင်း (Section) တွေအဖြစ် ဖွဲ့စည်းပြီး နေရာချထားတာပါ။ CSS မှာ Flexbox နဲ့ Grid တို့က အဓိက Layout System တွေပါ။
+
+**ဥပမာ -**
+```html
+<div class="site">
+  <header class="site-header">Site Header</header>
+  <nav class="site-nav">
+    <a href="#">Home</a>
+    <a href="#">Courses</a>
+    <a href="#">About</a>
+  </nav>
+  <main class="site-main">Main Content</main>
+  <footer class="site-footer">Footer</footer>
+</div>
+```
+
+မှတ်ချက် — `header`, `nav`, `main`, `footer` ဆိုတဲ့ Semantic Tags တွေက Screen Reader တွေအတွက် Structure ရှင်းလင်းစေပြီး CSS အတွက်လည်း ရွေးချယ်ရလွယ်ပါတယ်။
+
+### Flexbox နဲ့ Basic Layout
+
+Flexbox က Row (တစ်ကြောင်း) ဒါမှမဟုတ် Column (ဒေါင်လိုက်) လမ်းကြောင်း တစ်ခုတည်းမှာ Element တွေကို ဖြန့်ချရတာ ကောင်းပါတယ်။ Header ကို အပေါ်ဆုံး ၊ Footer ကို အောက်ခြေမှာ ထားဖို့ Column Layout ဖြစ်အောင် စီစဉ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.site-main {
+  flex: 1;
+}
+.site-header {
+  background: #2c3e50;
+  color: #fff;
+  padding: 1rem;
+}
+.site-nav {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+.site-nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+.simple-footer a:hover {
+  color: #f1c40f;
+}
+```
+
+မှတ်ချက် — min-height: 100vh နဲ့ flex: 1 က Content နည်းနေရင်တောင်မှ Footer ကို Screen အောက်ခြေမှာ ထားပေးပြီး Nav Link တွေကို Flexbox နဲ့ Horizontal Menu အဖြစ် စီပေးပါတယ်။
+
+### Grid နဲ့ Two-Column Layout
+
+Grid က Rows ရော Columns ပါ နှစ်ဖက်လုံးကို ထိန်းချုပ်နိုင်လို့ Sidebar နဲ့ Content ပါတဲ့ Two-Column Layout တွေအတွက် သင့်လျော်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.site {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas:
+    "header header"
+    "nav    main"
+    "footer footer";
+}
+.site-header { grid-area: header; }
+.site-nav    { grid-area: nav; }
+.site-main   { grid-area: main; }
+.site-footer { grid-area: footer; }
+```
+
+မှတ်ချက် — grid-template-areas က Layout ကို ပုံကြည့်ရသလို ရေးလို့ရတာမို့ ဖတ်ရယ်လွယ်ပြီး နေရာချထားမှု ပြောင်းရလည်း လွယ်ပါတယ်။
+
+### Content Cards
+
+Main Content ထဲမှာ Card (ကဒ်) တွေကို Grid နဲ့ စီပြီး Column အရေအတွက်ကို Container အကျယ်အလိုက် အလိုအလျောက် ချိန်ညှိပါတယ်။
+
+**ဥပမာ -**
+```css
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.card {
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  padding: 1rem;
+}
+```
+
+မှတ်ချက် — auto-fill + minmax က Media Query မလိုဘဲ Container အကျယ်အလိုက် Column တွေကို အလိုအလျောက် စီစဉ်ပေးပြီး Responsive Card Grid ဖြစ်စေပါတယ်။
+
+### Mobile Friendly (Responsive)
+
+Mobile (ဖုန်း) Screen မှာ Layout ကို တစ်ခုတည်း Column အဖြစ် ပြောင်းပြီး Media Query နဲ့ ထိန်းချုပ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@media (max-width: 768px) {
+  .site {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "nav"
+      "main"
+      "footer";
+  }
+  .site-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+```
+
+မှတ်ချက် — Mobile-First Approach က Base Style ကို Mobile အတွက် ရေးပြီး Desktop ကို Media Query နဲ့ တိုးတာဖြစ်ပြီး ဒီဥပမာကတော့ Desktop Grid ကို Mobile Column အဖြစ် ပြောင်းတဲ့ နည်းကို ပြထားပါတယ်။
+
+### အကျဉ်းချုပ်
+
+Website Layout ကို Flexbox (Column/Row Layout) ဒါမှမဟုတ် Grid (Two-Column နဲ့ Card Grid) နဲ့ ရေးနိုင်ပြီး Mobile Screen အတွက် Media Query တွေနဲ့ Single Column အဖြစ် ပြောင်းပေးရပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "flex: 1 က .site-main ကို ဘာဖြစ်စေပါသလဲ?", options: ["ကျန်တဲ့ Space တွေယူပြီး Footer ကို အောက်ခြေရောက်စေတယ်", "Header ကို ဖျောက်တယ်", "Nav ကို ဘယ်ဘက်ရွှေ့တယ်", "Content ကို ချုံ့တယ်"], correctAnswer: 0, explanation: "flex: 1 က ကျန်တဲ့ Space တွေကို Main က ယူပြီး Footer ကို Screen အောက်ခြေမှာ ထားစေပါတယ်။" },
+    { id: "q2", question: "Two-Column Layout အတွက် ပိုသင့်လျော်တဲ့ Layout System က ဘာလဲ?", options: ["Grid", "Float", "Table Layout", "Position Absolute"], correctAnswer: 0, explanation: "Grid က Rows နဲ့ Columns နှစ်ဖက်လုံးကို ထိန်းချုပ်နိုင်လို့ Two-Column Layout အတွက် ပိုကောင်းပါတယ်။" },
+    { id: "q3", question: "Card Grid မှာ Screen အကျယ်အလိုက် Column အရေအတွက် အလိုအလျောက် ချိန်တဲ့ တန်ဖိုးက ဘာလဲ?", options: ["repeat(auto-fill, minmax(220px, 1fr))", "repeat(3, 100%)", "auto-fit none", "1fr 1fr 1fr 1fr"], correctAnswer: 0, explanation: "auto-fill က Container အကျယ်နဲ့ ကိုက်ညီတဲ့ Column အရေအတွက်ကို အလိုအလျောက် ဖြည့်ပေးပါတယ်။" },
+  ]}
+/>

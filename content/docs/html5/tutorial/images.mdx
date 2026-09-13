@@ -1,0 +1,105 @@
+---
+title: "HTML Images — Image ထည့်သွင်းနည်း"
+description: "img tag, alt, width height, Floating, Background Image, picture နဲ့ srcset တွေကို လေ့လာကြရအောင်။"
+---
+
+### Image Element — img Tag
+
+`<img>` Tag က Webpage အတွင်းကို ပုံထည့်ဖို့ သုံးတဲ့ **Self-closing** Tag ဖြစ်ပြီး `</img>` မပါပါဘူး။ အဓိက Attribute တွေက **src** (ပုံဘယ်ကလဲ) နဲ့ **alt** (ပုံရဲ့ဖော်ပြချက်) ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<img src="logo.png" alt="Takkatho Logo">
+```
+
+မှတ်ချက် — src က ပုံဖိုင်ရဲ့လမ်းကြောင်း ၊ alt က ပုံမပေါ်တဲ့အခါ ပြစရာစာသားနဲ့ Accessibility အတွက်ပါ အသုံးဝင်ပါတယ်။
+
+### src နဲ့ alt အသေးစိတ်
+
+alt Attribute က Image မဖွင့်နိုင်တဲ့အခါ ဒါမှမဟုတ် Screen Reader သုံးတဲ့သူတွေအတွက် အရမ်းအရေးကြီးပါတယ်။ alt="(အလွတ်)" ထားရင် ပုံက Decoration သက်သက်ဖြစ်ကြောင်း ညွှန်ပြတာပါ။
+
+**ဥပမာ -**
+```html
+<img src="group-photo.jpg" alt="Takkatho 2026 ကျောင်းသားတွေရဲ့ အဖွဲ့ဓာတ်ပုံ">
+```
+
+မှတ်ချက် — alt Text က ပုံရဲ့အကြောင်း တိုတိုနဲ့ရှင်းရှင်း ဖော်ပြဖို့အတွက် ဖြစ်ပါတယ်။
+
+### width နဲ့ height Attribute
+
+`width` နဲ့ `height` Attribute တွေနဲ့ ပုံရဲ့အရွယ်အစားကို Pixel ဖြင့် Set လုပ်နိုင်ပါတယ်။ တူညီတဲ့အလုပ်ကို CSS (style attribute) နဲ့လည်း လုပ်နိုင်ပြီး Responsive ဖို့ပိုအဆင်ပြေပါတယ်။
+
+**ဥပမာ -**
+```html
+<img src="photo.jpg" width="300" height="200" alt="Attribute နဲ့ အရွယ်အစား">
+<img src="photo.jpg" style="width:300px; height:200px;" alt="style နဲ့ အရွယ်အစား">
+```
+
+မှတ်ချက် — CSS နည်းက ပုံကို ချုံ့ဆန့် လိုက်လျောညီထွေဖြစ်အောင် လုပ်ရလွယ်လို့ ဦးစားပေးသုံးကြပါတယ်။
+
+### Floating Images (Text ဘေးမှာ)
+
+ပုံကို Text ရဲ့ ဘယ် ဒါမှမဟုတ် ညာဖက်မှာ Float လုပ်ပြီး ပတ်လည်မှာ Text တွေ စီးကျစေနိုင်ပါတယ်။ CSS ရဲ့ **float** Property နဲ့ လုပ်ဆောင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>
+  <img src="logo.png" style="float:right; width:100px;" alt="ညာဖက်မှာ float နေတဲ့ပုံ">
+  ဒီစာသားတွေက ပုံရဲ့ ဘယ်ဖက်မှာ စီပြီး ဖတ်လို့ရပါတယ်။
+</p>
+```
+
+မှတ်ချက် — Float က ပုံနဲ့ Text ကို ပေါင်းစပ်ပြီး စိတ်ဝင်စားစရာ Layout တွေ ဖန်တီးဖို့ အတွက် ကောင်းပါတယ်။
+
+### Background Image (CSS)
+
+ပုံကို `<img>` နဲ့ မထည့်ဘဲ Element ရဲ့ Style ထဲက **background-image** Property နဲ့ နောက်ခံပုံအနေနဲ့ ထည့်နိုင်ပါတယ်။ url() ထဲမှာ ပုံလမ်းကြောင်းကို ထည့်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<div style="background-image:url('banner.jpg'); background-size:cover; height:200px;">
+  နောက်ခံပုံရှိတဲ့ Banner
+</div>
+```
+
+မှတ်ချက် — background-size:cover က ပုံကို Container ပြည့်အောင် ချုံ့ဆန့် လိုက်ဖက်အောင် လုပ်ပေးပါတယ်။
+
+### picture — Screen Size အလိုက် ရွေး
+
+`<picture>` Element က Screen Size ပေါ်မူတည်ပြီး မတူတဲ့ပုံတွေကို ရွေးပြပေးနိုင်ပါတယ်။ `<source>` Tag ထဲမှာ Media Condition နဲ့ ပုံတစ်ခုစီကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<picture>
+  <source media="(min-width: 800px)" srcset="large.jpg">
+  <source media="(min-width: 400px)" srcset="medium.jpg">
+  <img src="small.jpg" alt="Responsive Image">
+</picture>
+```
+
+မှတ်ချက် — Condition မညီတဲ့အခါ နောက်ဆုံးက img ကို Fallback အနေနဲ့ ပြပါတယ်။
+
+### srcset — Resolution အလိုက် ရွေး
+
+`srcset` Attribute က Device ရဲ့ Screen Density ပေါ်မူတည်ပြီး သင့်တော်တဲ့ပုံကို Browser က ရွေးထည့်ပေးပါတယ်။ 1x (ပုံမှန်) နဲ့ 2x (ပိုရှင်းသော Retina) စတာတွေ သတ်မှတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<img src="photo-1x.jpg" srcset="photo-1x.jpg 1x, photo-2x.jpg 2x" alt="Resolution ချိန်ညှိပုံ">
+```
+
+မှတ်ချက် — srcset က High-Density Screen အတွက် ပိုရှင်းတဲ့ပုံ ရွေးပေးပြီး Page Load ကိုတောင် မြန်စေနိုင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- img Tag က Self-closing ဖြစ်ပြီး src နဲ့ alt မဖြစ်မနေ အရေးကြီးသည်။
+- width/height Attribute ဒါမှမဟုတ် CSS နဲ့ အရွယ်အစား ထိန်းနိုင်သည်။
+- picture နဲ့ srcset က Responsive Image တွေအတွက် ဖြစ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "img Tag မှာ ပုံမပေါ်တဲ့အခါ ပြဖို့ ဘယ် Attribute ကို သုံးပါသလဲ?", options: ["src", "alt", "href", "title"], correctAnswer: 1, explanation: "alt က ပုံမပေါ်တဲ့အခါ ဒါမှမဟုတ် Screen Reader အတွက် စာသားကို ပြပါတယ်။" },
+  { id: "q2", question: "ပုံရဲ့ အရွယ်အစား Pixel သတ်မှတ်ဖို့ Attribute နှစ်ခုက ဘာတွေလဲ?", options: ["src နဲ့ alt", "width နဲ့ height", "href နဲ့ id", "class နဲ့ id"], correctAnswer: 1, explanation: "width နဲ့ height Attribute တွေနဲ့ ပုံရဲ့ အရွယ်အစားကို သတ်မှတ်ပါတယ်။" },
+  { id: "q3", question: "Screen Size အလိုက် မတူတဲ့ပုံတွေ ရွေးပြနိုင်တဲ့ Element က ဘာလဲ?", options: ["video", "picture", "audio", "canvas"], correctAnswer: 1, explanation: "picture Element က source Tag တွေနဲ့ Media Condition အတိုင်း ပုံရွေးပြနိုင်ပါတယ်။" }
+]} />

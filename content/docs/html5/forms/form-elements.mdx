@@ -1,0 +1,121 @@
+---
+title: "HTML Form Elements — Form ရဲ့ အစိတ်အပိုင်းများ"
+description: "input, label, select, textarea, button, fieldset, datalist စတဲ့ form elements တွေကို တစ်ခုချင်းစီ လေ့လာကြမယ်။"
+---
+
+Form ထဲမှာ သုံးနေကျ element တွေကို တစ်ခုချင်းစီ အသေးစိတ် လေ့လာကြည့်ရအောင်။ ဘယ် element က ဘာအတွက် သုံးလဲ သိထားရင် form ဆောက်ရတာ ပိုလွယ်ကူပြီး ပိုကောင်းလာပါလိမ့်မယ်။
+
+### Input Element
+
+`<input>` က form ထဲမှာ data ထည့်ဖို့ အသုံးအများဆုံး element ပါ။ `type` attribute ပေါ်မူတည်ပြီး text box, checkbox, radio စသဖြင့် အမျိုးအစား ပြောင်းသွားပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<input type="text" name="username">
+<input type="password" name="password">
+<input type="checkbox" name="agree">
+```
+
+မှတ်ချက် — `type` ကို ချန်ထားရင် ပုံမှန် text input ဖြစ်သွားပါတယ်။
+
+### Label Element
+
+`<label>` က input field တွေအတွက် နာမည် သတ်မှတ်ပေးပြီး `for` attribute နဲ့ input ရဲ့ `id` ကို ချိတ်ပေးရပါတယ်။ ဒါကြောင့် label ကို နှိပ်ရင်လည်း input ထဲ cursor ကျသွားပြီး သုံးရတာ ပိုလွယ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<label for="email">အီးမေးလ်</label>
+<input type="email" id="email" name="email">
+```
+
+မှတ်ချက် — Screen Reader (မျက်မမြင် အသုံးပြုသူတွေအတွက် ကိရိယာ) အတွက်လည်း label ကြောင့် input ရဲ့ နာမည်ကို သိရပါတယ်။
+
+### Select နဲ့ Option Element
+
+`<select>` က dropdown list ပြပြီး ထဲမှာ `<option>` တွေကို ထည့်ပြီး ရွေးစရာတွေ ဖန်တီးပါတယ်။ ပုံမှန်အားဖြင့် `selected` ရှိတဲ့ option က အစပိုင်းမှာ ပြပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<select name="course">
+  <option value="html">HTML</option>
+  <option value="css">CSS</option>
+  <option value="js" selected>JavaScript</option>
+</select>
+```
+
+မှတ်ချက် — Option ထဲက value က Server ဆီ ပို့မယ့် data ဖြစ်ပြီး ပြတဲ့ စာသားနဲ့ မတူနိုင်ပါဘူး။
+
+### Textarea Element
+
+`<textarea>` က စာကြောင်းမျိုးစုံ ရိုက်ထည့်လို့ရတဲ့ multi-line box ပါ။ `rows` နဲ့ `cols` attribute တွေက box ရဲ့ အတိုင်းအတာကို ချိန်ညှိပေးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<textarea name="comment" rows="5" cols="40">မှတ်ချက် ရေးပါ...</textarea>
+```
+
+မှတ်ချက် — `<textarea>` က self-closing လုပ်လို့မရဘဲ အဖွင့် အပိတ် tag နှစ်ခုလုံး လိုပါတယ်။
+
+### Button Element
+
+`<button>` က form ကို submit လုပ်ဖို့ အသုံးအများဆုံး element ပါ။ Button ထဲမှာ စာသား ဒါမှမဟုတ် icon ဘာပဲဖြစ်ဖြစ် ထည့်လို့ရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<button type="submit">သိမ်းမယ်</button>
+<button type="reset">ဖျက်မယ်</button>
+```
+
+မှတ်ချက် — `type` မထည့်ရင် form ထဲမှာ ဆိုရင် submit ဖြစ်နေတတ်လို့ သတိထားပါ။
+
+### Fieldset နဲ့ Legend Element
+
+`<fieldset>` က form ထဲက ဆက်စပ်တဲ့ fields တွေကို group (အုပ်စု) ဖွဲ့ပေးပြီး `<legend>` က ဒီ group ရဲ့ အမည်ကို ဖော်ပြပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<fieldset>
+  <legend>ပုဂ္ဂိုလ်ရေး အချက်အလက်</legend>
+  <label for="name">အမည်</label>
+  <input type="text" id="name" name="name">
+</fieldset>
+```
+
+မှတ်ချက် — Fieldset က form ရဲ့ ဖွဲ့စည်းပုံ ရှင်းလင်းစေပြီး ပိုလှပါတယ်။
+
+### Datalist Element
+
+`<datalist>` က input ထဲမှာ ရွေးစရာ အကြံပြုချက်တွေ ပေးပြီး User က ကိုယ့်ဘာသာလည်း ရိုက်ထည့်လို့ရပါတယ်။ Select နဲ့ မတူတာက ရိုက်လည်းရ၊ ရွေးလည်းရတဲ့ အခမဲ့ style ပါ။
+
+**ဥပမာ -**
+
+```html
+<input list="cities" name="city">
+<datalist id="cities">
+  <option value="ရန်ကုန်">
+  <option value="မန္တလေး">
+  <option value="နေပြည်တော်">
+</datalist>
+```
+
+မှတ်ချက် — `input` ရဲ့ `list` attribute က `datalist` ရဲ့ `id` နဲ့ တူရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `<label>` က input ရဲ့ နာမည်ဖြစ်ပြီး `for` နဲ့ `id` ကို တွဲရတယ်
+- `<select>` က dropdown၊ `<textarea>` က multi-line box
+- `<fieldset>` က fields တွေကို အုပ်စုဖွဲ့ပေးတယ်
+- `<datalist>` က input အတွက် အကြံပြုချက် ပေးတယ်
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Dropdown list ပြုလုပ်ဖို့ ဘယ် element ကို သုံးလဲ", options: ["textarea", "select", "input", "button"], correctAnswer: 1, explanation: "select နဲ့ option ကို သုံးပြီး dropdown list ပြုလုပ်ပါတယ်" },
+  { id: "q2", question: "Field အုပ်စုတွေကို ပိုင်းခြားဖို့ ဘယ် element က အသုံးဝင်လဲ", options: ["fieldset", "datalist", "label", "legend"], correctAnswer: 0, explanation: "fieldset က ဆက်စပ်တဲ့ fields တွေကို အုပ်စုဖွဲ့ပေးပါတယ်" },
+  { id: "q3", question: "Label နဲ့ input ကို ချိတ်ဖို့ ဘာ attribute တွေ တူညီရမလဲ", options: ["for နဲ့ name", "for နဲ့ id", "id နဲ့ class", "name နဲ့ value"], correctAnswer: 1, explanation: "label ရဲ့ for နဲ့ input ရဲ့ id ကို တူအောင် ထားရပါတယ်" } ]} />

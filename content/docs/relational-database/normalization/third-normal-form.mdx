@@ -1,0 +1,64 @@
+---
+title: "Third Normal Form (3NF)"
+description: "Normalization ၏ တတိယအဆင့် (3NF) နှင့် Transitive Dependency"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from "@/components/Content-image.astro";
+import thirdNFOrders from "@/assets/relational-database/third-nf-orders.png";
+import thirdNFCustomers from "@/assets/relational-database/third-nf-customers.png";
+
+<Aside title="💡 ရည်ရွယ်ချက်">
+  Third Normal Form (3NF) ၏ အဓိက စည်းမျဉ်းဖြစ်သော Transitive Dependency (တစ်ဆင့်ခံ မှီခိုမှု) ဖယ်ရှားနည်းနှင့် Database Structure သပ်ရပ်အောင် ခွဲထုတ်နည်းကို နားလည်သွားစေဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## 3NF ၏ မဖြစ်မနေ စည်းမျဉ်း ၂ ခု
+
+Table တစ်ခုသည် Third Normal Form (3NF) အဆင့်သို့ ရောက်ရှိရန် အောက်ပါ စည်းမျဉ်း ၂ ခုနှင့် ကိုက်ညီရပါမည်:
+
+1. **2NF အဆင့် ပြီးမြောက်ပြီးသား ဖြစ်ရမည်။**
+2. **No Transitive Dependency (တစ်ဆင့်ခံ မှီခိုမှု လုံးဝ မရှိရပါ):**
+   Table ထဲရှိ Non-Key Attributes (Primary Key မဟုတ်သော Columns) များသည် အချင်းချင်း မှီခိုနေခြင်း မရှိရဘဲ၊ Column တိုင်းသည် Primary Key အပေါ်၌သာ တိုက်ရိုက် မှီခိုရပါမည်။
+
+<Aside title="💡 ရိုးရှင်းသော ဆောင်ပုဒ်">
+  **"All non-key attributes must depend on the key, the whole key, and nothing but the key."**
+  
+  (Non-Key Column တိုင်းသည် Primary Key အကြောင်းကိုသာ တိုက်ရိုက် ရည်ညွှန်းရမည်။ အခြား Non-Key Column အကြောင်း မရည်ညွှန်းရပါ။)
+</Aside>
+
+---
+
+## Transitive Dependency ဆိုတာ ဘာလဲ?
+
+**Transitive Dependency (တစ်ဆင့်ခံ မှီခိုမှု)** ဆိုသည်မှာ သင်္ချာသဘောတရားအရ `A -> B` ဖြစ်ပြီး `B -> C` ဖြစ်ပါက `A -> C` ဖြစ်သွားသည့် သဘောတရား ဖြစ်ပါတယ်။
+
+Database Structure တွင်:
+- `A` သည် Primary Key ဖြစ်သည်။
+- `B` နှင့် `C` တို့သည် Non-Key Columns များ ဖြစ်ကြသည်။
+- `C` သည် `A` (Primary Key) အပေါ် တိုက်ရိုက် မမှီခိုဘဲ၊ `B` မှတစ်ဆင့် မှီခိုနေခြင်း (`B -> C`) ကို **Transitive Dependency** ဟု ခေါ်ဆိုပါတယ်။
+
+### 2NF Orders Table ရှိ ပြဿနာ
+
+2NF အဆင့်မှ `orders` Table တွင်:
+- `order_id` (Primary Key)
+- `customer_name` (Non-Key)
+- `customer_address` (Non-Key)
+- `order_date` (Non-Key)
+
+ဒီနေရာတွင် `customer_address` သည် `order_id` (Primary Key) အပေါ် တိုက်ရိုက် မှီခိုနေခြင်း မဟုတ်ဘဲ `customer_name` အပေါ်၌သာ မှီခိုနေခြင်း ဖြစ်ပါတယ်။ (`customer_name -> customer_address`)
+
+ဒါဟာ Non-Key Column အချင်းချင်း မှီခိုနေသည့် **Transitive Dependency** ပြဿနာ ဖြစ်ပါတယ်။
+
+## 2NF မှ 3NF သို့ ပြောင်းလဲခြင်း
+
+3NF စည်းမျဉ်းအရ **Non-Key အချင်းချင်း မှီခိုနေသော Attributes များကို သီးသန့် Table အသစ်အဖြစ် ခွဲထုတ်** ပေးရပါမယ်။
+
+`orders` Table မှ Customer Data များကို `customers` Table အသစ်သို့ ခွဲထုတ်လိုက်ပြီး၊ `orders` Table တွင် `customer_id` (Foreign Key) ဖြင့်သာ ပြန်လည် ချိတ်ဆက်လိုက်ပါမည်။
+
+| Orders Table (3NF) | Customers Table (3NF) |
+|:---:|:---:|
+| <ContentImage src={thirdNFOrders} alt="3NF Orders Table" /> | <ContentImage src={thirdNFCustomers} alt="3NF Customers Table" /> |
+| CustomerID ကို Foreign Key အဖြစ် ချိတ်ဆက်ခြင်း | Customer အချက်အလက် သီးသန့် Storage |
+
+ယခုဆိုပါက Table တိုင်းတွင် Transitive Dependency မရှိတော့ဘဲ **Third Normal Form (3NF)** အဆင့်သို့ ရောက်ရှိသွားပြီ ဖြစ်ပါတယ်။ Production-ready Systems အများစုတွင် 3NF အဆင့်အထိ ရောက်ရှိပါက အလွန် သပ်ရပ် ကောင်းမွန်သော Database Architecture ရရှိပြီ ဖြစ်ပါတယ်။
+

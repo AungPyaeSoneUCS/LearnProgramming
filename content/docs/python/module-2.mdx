@@ -1,0 +1,280 @@
+---
+title: "Control Flow (If/Else နှင့် Loops)"
+description: "Python တွင် အခြေအနေစစ်ဆေးခြင်း၊ ဆုံးဖြတ်ချက်ချခြင်းနှင့် ထပ်ခါထပ်ခါ အလုပ်လုပ်ခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from "@/components/Content-image.astro";
+import controlFlowImg from "@/assets/python/control-flow.svg";
+
+<Aside title="ဒီ Module ပြီးရင် ခင်ဗျားလုပ်နိုင်မှာများ">
+- `if / elif / else` ကို မှန်ကန်စွာ သုံးနိုင်မယ်
+- `for` Loop နဲ့ `while` Loop ရဲ့ ကွာခြားချက်ကို နားလည်သွားမယ်
+- `in`, `enumerate()` ကို Loop ထဲမှာ သုံးနိုင်မယ်
+- Ternary Expression (တစ်ကြောင်းတည်း if) ရေးနိုင်မယ်
+- `break`, `continue`, `pass` ကို မှန်ကန်စွာ သုံးနိုင်မယ်
+</Aside>
+
+<Aside type="tip" title="ဒီ Module မစခင်">
+Module 1 (Variables) နဲ့ Module 1.5 (String Methods) ကို ပြီးမှသာ ဆက်ကြည့်ပေးပါ။ Variables နဲ့ Comparison Operators တွေကို သေချာသိပြီးမှ if/else ကို ကောင်းကောင်းနားလည်နိုင်မှာပါ။
+</Aside>
+
+Program တစ်ခု ရေးတဲ့အခါ အပေါ်ကနေ အောက်ကို တစ်ကြောင်းချင်း အလုပ်လုပ်သွားတာချည်းပဲ မဟုတ်ပါဘူး။ တချို့နေရာတွေမှာ **"ဒီလိုဆိုရင် ဒါလုပ်မယ်"** ဆိုပြီး ဆုံးဖြတ်ချက်ချတာတွေ၊ **"ဒီအလုပ်ကို ၅ ကြိမ် ထပ်လုပ်မယ်"** ဆိုပြီး ခိုင်းတာတွေ လိုအပ်လာပါတယ်။ ဒါကို Control Flow လို့ ခေါ်ပါတယ်။
+
+---
+
+### Indentation (ရှေ့ကွက်လပ် ချန်ခြင်း)
+
+Python မှာ အရေးအကြီးဆုံး အချက်တစ်ခုကတော့ **Indentation** ပါပဲ။ တခြား Language တွေမှာ `{}` ကို သုံးပြီး Code Block ဖွဲ့ပေမယ့်၊ Python မှာတော့ **Space 4 ချက်** ဒါမှမဟုတ် **1 Tab** ချန်ပြီး ဖွဲ့ပေးရပါတယ်:
+
+```python
+if True:
+    print("ဒါက if အထဲမှာ ရှိပါတယ်")  # ← 4 Space
+    print("ဒါလည်း if အထဲ ပါဝင်")     # ← 4 Space
+print("ဒါကတော့ if အပြင်ပြောင်းသွားပြီ")  # ← 0 Space
+```
+
+Space မချန်ရင် ဒါမှမဟုတ် မညီညာရင် `IndentationError` တက်ပါမယ်။
+
+---
+
+### If / Elif / Else (အခြေအနေ စစ်ဆေးခြင်း)
+
+<ContentImage src={controlFlowImg} alt="Control Flow Diagram" />
+
+ဆိုင်မှာ ဈေးနှုန်းသတ်မှတ်တဲ့ပုံစံနဲ့ တူပါတယ် — "ကျပ် ၅၀၀ အောက်ဆိုရင် သေးငယ်တဲ့ထုတ်ပိုးမှုပေးမယ်၊ ၅၀၀ ကနေ ၁၀၀၀ ကြားဆိုရင် အလတ်ထုတ်ပိုးမယ်၊ ၁၀၀၀ ကျော်ဆိုရင်တော့ ကြီးမားတဲ့ထုတ်ပိုးပေးမယ်" ဆိုတဲ့ ဆုံးဖြတ်ချက်မျိုးပါ:
+
+```python
+age = int(input("အသက် ဘယ်လောက်လဲ? "))
+
+if age >= 18:
+    print("ကားမောင်းလို့ ရပါပြီ")
+elif age >= 16:
+    print("ကားမောင်းသင်လို့ ရပါပြီ")
+else:
+    print("ကားမောင်းဖို့ အချိန်လိုပါသေးတယ်")
+```
+
+**`if` က ဘယ်လို စစ်ဆေးသလဲ?** — Comparison Operators တွေနဲ့ စစ်ဆေးပြီး `True/False` ပြန်ပေးတာပါ။
+
+```python
+score = 75
+
+if score >= 80:
+    grade = "A"
+elif score >= 70:
+    grade = "B"
+elif score >= 60:
+    grade = "C"
+else:
+    grade = "F"
+
+print(f"Grade: {grade}")  # Grade: B
+```
+
+#### Logical Operators (`and`, `or`, `not`)
+
+```python
+# and — နှစ်ခုလုံး မှန်မှ True
+age = 20
+has_license = True
+if age >= 18 and has_license:
+    print("ကားမောင်းနိုင်ပါပြီ")
+
+# or — တစ်ခုမှန်ရုံနဲ့ True
+is_admin = False
+is_manager = True
+if is_admin or is_manager:
+    print("Dashboard ဝင်ခွင့် ရှိသည်")
+
+# not — ပြောင်းပြန်
+is_logged_in = False
+if not is_logged_in:
+    print("ဦးစွာ Login လုပ်ပေးပါ")
+```
+
+#### in — Membership စစ်ဆေးခြင်း
+
+`in` ကို သုံးပြီး List ဒါမှမဟုတ် String ထဲမှာ ပါ၊ မပါ စစ်ဆေးနိုင်ပါတယ်:
+
+```python
+fruits = ["Apple", "Banana", "Orange"]
+
+if "Apple" in fruits:
+    print("Apple ရှိပါတယ်")    # ← ဒါကို ပြပေးပါမယ်
+
+if "Mango" not in fruits:
+    print("Mango မရှိဘူး")     # ← ဒါကို ပြပေးပါမယ်
+
+# String ထဲမှာ စစ်ဆေးလို့လည်း ရပါတယ်
+email = "user@gmail.com"
+if "@" in email:
+    print("Valid email format ဖြစ်ပါတယ်")
+```
+
+#### Ternary Expression (တစ်ကြောင်းတည်း if)
+
+တိုတောင်းတဲ့ if/else ကို တစ်ကြောင်းတည်းနဲ့ ရေးနိုင်ပါတယ်:
+
+```python
+# ပုံစံ: value_if_true if condition else value_if_false
+
+age = 20
+status = "လူကြီး" if age >= 18 else "ကလေး"
+print(status)   # လူကြီး
+
+# ပိုရှင်းလင်းတဲ့ ဥပမာ
+score = 75
+result = "အောင်" if score >= 60 else "ကျ"
+print(f"Score {score} — {result}")  # Score 75 — အောင်
+```
+
+---
+
+### Loops (ထပ်ခါထပ်ခါ အလုပ်လုပ်ခြင်း)
+
+#### For Loop — ကိန်းနံပါတ် (Range)
+
+```python
+# range(n) → 0, 1, 2, ..., n-1
+for i in range(5):
+    print(f"အကြိမ် {i}")
+# အကြိမ် 0
+# အကြိမ် 1
+# ...
+# အကြိမ် 4
+
+# range(start, end, step)
+for i in range(1, 10, 2):
+    print(i, end=" ")   # 1 3 5 7 9
+
+# ဂဏန်း ၁ မှ ၁၀ ထိ ပေါင်းခြင်း
+total = 0
+for n in range(1, 11):
+    total += n
+print(f"1-10 ပေါင်းရင် {total}")   # 55
+```
+
+#### For Loop — List ကို ပတ်ခြင်း
+
+```python
+fruits = ["Apple", "Banana", "Orange"]
+
+# တန်ဖိုးသာ ယူချင်ရင်
+for fruit in fruits:
+    print(fruit)
+
+# enumerate() — Index ပါ ယူချင်ရင်
+for i, fruit in enumerate(fruits, start=1):
+    print(f"{i}. {fruit}")
+# 1. Apple
+# 2. Banana
+# 3. Orange
+```
+
+<Aside type="tip" title="enumerate() ကို မမေ့ပါနဲ့">
+Loop လုပ်တဲ့အခါ Index (နံပါတ်) ပါ လိုချင်ရင် `enumerate()` ကိုသာ သုံးပေးပါ။ `range(len(fruits))` ဆိုတာမျိုးက Pythonic သိပ်မဖြစ်လို့ ဖတ်ရ ခက်စေပါတယ်။
+</Aside>
+
+#### Nested Loops — Loop ထဲ Loop
+
+```python
+# မြှောက်ဇယား (Multiplication Table)
+for i in range(1, 4):
+    for j in range(1, 4):
+        print(f"{i} x {j} = {i*j}", end="    ")
+    print()   # အောက်တစ်ကြောင်း ဆင်း
+# 1 x 1 = 1    1 x 2 = 2    1 x 3 = 3
+# 2 x 1 = 2    2 x 2 = 4    2 x 3 = 6
+# 3 x 1 = 3    3 x 2 = 6    3 x 3 = 9
+```
+
+#### While Loop — အခြေအနေ မှန်နေသရွေ့ ဆက်လုပ်ခြင်း
+
+```python
+count = 1
+
+while count <= 5:
+    print(f"ကြိမ် {count}")
+    count += 1    # ← ဒါကို မမေ့ပါနဲ့! မပါရင် အဆုံးမရှိတဲ့ Loop ဖြစ်သွားမယ်
+# ကြိမ် 1
+# ကြိမ် 2
+# ...
+# ကြိမ် 5
+```
+
+<Aside type="caution" title="Infinite Loop ကို သတိထားပါ">
+`while` Loop ထဲမှာ ထွက်နိုင်တဲ့ Condition မျိုး မပါရင် **Infinite Loop** (အဆုံးမရှိတဲ့ Loop) ဖြစ်တတ်ပါတယ်:
+
+```python
+# ❌ ဒါမျိုးဆို — count တန်ဖိုး မပြောင်းဘူး ဆိုရင်
+count = 1
+while count <= 5:
+    print(count)
+    # count += 1   ← ဒါ မပါလို့ 1, 1, 1, ... ဆိုပြီး မဆုံးဘဲ ဆက်ထုတ်နေပါမယ်
+```
+
+Infinite Loop ကို ရပ်ချင်ရင်တော့ **Ctrl + C** ကို နှိပ်ပါ။
+</Aside>
+
+---
+
+### Break, Continue, Pass
+
+#### break — Loop ကို ရပ်ခြင်း
+
+```python
+# ပထမဆုံး စုံဂဏန်း ရှာပြီး ရပ်ခြင်း
+for n in range(1, 20):
+    if n % 2 == 0:
+        print(f"ပထမဆုံး စုံဂဏန်း: {n}")
+        break   # ← Loop ကြီးတစ်ခုလုံး ဒီမှာတင် ရပ်သွားပါမယ်
+# ပထမဆုံး စုံဂဏန်း: 2
+```
+
+#### continue — ကျော်ပြီး ဆက်ခြင်း
+
+```python
+# 1-10 အတွင်းက မကိန်းတွေကိုပဲ ထုတ်ပြခြင်း
+for n in range(1, 11):
+    if n % 2 == 0:
+        continue   # ← စုံဂဏန်းဆိုရင် ကျော်သွားမယ်
+    print(n, end=" ")
+# 1 3 5 7 9
+```
+
+#### pass — နေရာချန်ထားခြင်း
+
+```python
+# Syntax error မဖြစ်ဖို့ ခေတ္တ ထည့်ပေးထားတဲ့ placeholder ပါ
+for item in range(5):
+    pass   # ← ဘာမှ မလုပ်ဘဲ ကျော်သွားမယ် (Syntax Error မတက်ပါ)
+
+if score >= 60:
+    pass   # TODO: Handle passing case later
+```
+
+---
+
+### ဖြစ်တတ်တဲ့ အမှားများ
+
+```python
+# ၁. if ရဲ့ Condition မှာ = (Assign) ကို == (Compare) နဲ့ မရောပါနဲ့
+x = 5
+if x == 5:     # ← Compare (မှန်)
+    print("Five")
+
+# ၂. Indentation ညီညီညာညာ ရှိဖို့ လိုပါတယ်
+if True:
+    print("Line 1")
+   print("Line 2")  # IndentationError! (3 Space နဲ့ ရေးထားလို့ပါ)
+
+# ၃. elif ကို else if လို့ သုံးလို့ မရပါဘူး
+# if condition:
+# else if condition:   # ← SyntaxError!
+# elif condition:      # ← အမှန်
+```
+
+<Aside title="နောက်တစ်ဆင့်">
+Control Flow ကို ကောင်းကောင်းနားလည်ပြီဆိုရင်တော့ **Module 3 — Functions** မှာ Code တွေကို ပြန်သုံးလို့ရအောင် ဘယ်လို စီစဉ်မလဲဆိုတာ ဆက်လက်လေ့လာသွားပါမယ်!
+</Aside>

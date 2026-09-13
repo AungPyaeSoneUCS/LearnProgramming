@@ -1,0 +1,73 @@
+---
+title: "HTML Attributes — HTML Attribute တွေအကြောင်း"
+description: "Element တွေကို အသေးစိတ် သတင်းအချက်အလက်ပေးတဲ့ Attribute တွေကို ဥပမာနဲ့တကွ လေ့လာမယ်။"
+---
+
+### Attribute ဆိုတာ ဘာလဲ?
+Attribute ဆိုတာ Start Tag ထဲမှာ `name="value"` (အမည်="တန်ဖိုး") ပုံစံနဲ့ ထည့်ပေးတဲ့ နောက်ထပ် သတင်းအချက်အလက်တွေ ဖြစ်ပါတယ်။ ဥပမာ Link က ဘယ်ကို သွားမလဲ၊ ပုံက ဘယ်ကလာမလဲ စတဲ့ အချက်အလက်တွေကို Attribute နဲ့ ပြောပြပါတယ်။ Element တစ်ခုမှာ Attribute အများကြီး ထည့်လို့ရပြီး Space (နေရာလွတ်) နဲ့ ခြားပါတယ်။
+
+**ဥပမာ -**
+```html
+<a href="https://example.com">Example ကို သွား</a>
+```
+မှတ်ချက် — Attribute တွေက အမြဲတမ်း Start Tag ရဲ့ အတွင်းမှာ ရှိရပြီး Name တစ်ခုနဲ့ Value တစ်ခု ပါပါတယ်။
+
+#### href နဲ့ src Attribute
+`href` က Link ရဲ့ သွားရမယ့် လိပ်စာ (destination) ကို သတ်မှတ်ပြီး `<a>` Tag နဲ့ သုံးပါတယ်။ `src` က Image ဒါမှမဟုတ် Video စတဲ့ File ဘယ်ကလာလဲ (source) ကို သတ်မှတ်ပြီး `<img>` Tag နဲ့ သုံးပါတယ်။ နှစ်ခုလုံးက Value ထဲမှာ Path ဒါမှမဟုတ် URL ကို ထည့်ပေးရပါတယ်။
+
+**ဥပမာ -**
+```html
+<a href="https://example.com/about">About page</a>
+<img src="photo.jpg">
+```
+မှတ်ချက် — href က Link အတွက်၊ src က Source/File အတွက် ဖြစ်ပါတယ်။
+
+#### width နဲ့ height, alt Attribute
+`width` နဲ့ `height` က Element ရဲ့ အကျယ်နဲ့ အမြင့်ကို သတ်မှတ်ပြီး Pixel (px) တန်ဖိုးနဲ့ သုံးလေ့ရှိပါတယ်။ `alt` က Image မပြနိုင်တဲ့အခါ (ဥပမာ ပုံပျက်နေချိန်) ပြရမယ့် အစားထိုး စာသား ဖြစ်ပါတယ်။ alt က Screen Reader (မျက်မမြင်အတွက် စာဖတ်ကိရိယာ) တွေ အတွက်ပါ အရေးကြီးပါတယ်။
+
+**ဥပမာ -**
+```html
+<img src="dog.jpg" width="300" height="200" alt="ခွေးလေး ပုံ">
+```
+မှတ်ချက် — `<img>` ထဲမှာ alt ကို အမြဲတမ်း ထည့်ပေးဖို့ အကြံပြုပါတယ်။
+
+#### style နဲ့ lang Attribute
+`style` attribute နဲ့ Element တစ်ခုတည်းအတွက် သီးသန့် Style (အရောင်၊ အရွယ်အစား စသည်) ထည့်လို့ ရပါတယ်။ `lang` attribute က Page ဒါမှမဟုတ် Element ရဲ့ ဘာသာစကားကို သတ်မှတ်ပြီး Browser နဲ့ Search Engine တွေအတွက် အသုံးဝင်ပါတယ်။ ဒီလိုမျိုး Attribute တွေနဲ့ Code ကို လိုအပ်ချက်အလိုက် ထိန်းချုပ်လို့ ရပါတယ်။
+
+**ဥပမာ -**
+```html
+<p style="color: red;">ဒီစာသားက အနီရောင် ဖြစ်ပါမယ်။</p>
+<html lang="my">
+```
+မှတ်ချက် — style attribute က မြန်မြန်ဆန်ဆန် စမ်းကြည့်ဖို့ ကောင်းပေမယ့် အဓိက Styling တွေကိုတော့ CSS နဲ့ လုပ်ခြင်း ဖြစ်ပါတယ်။
+
+#### title Attribute
+`title` attribute က Element ပေါ်ကို Mouse လေးနှိပ်ကြည့်ရင် Tooltip (အချက်အလက်ပါတဲ့ လေးစက်ပြစာသား) အနေနဲ့ ပြပေးပါတယ်။ ဒါက User တွေကို နောက်ထပ် အချက်အလက် ပေးနိုင်ပြီး Accessibility (လက်လှမ်းမီမှု) အတွက်လည်း အထောက်အကူ ပြုပါတယ်။ title attribute ကို Element အများစုမှာ ထည့်လို့ ရပါတယ်။
+
+**ဥပမာ -**
+```html
+<p title="ဒါက နောက်ထပ် အချက်အလက်ပါ">Mouse နဲ့ နှိပ်ကြည့်ပါ</p>
+```
+မှတ်ချက် — Mouse နှိပ်ကြည့်တဲ့အခါ title value က Tooltip အနေနဲ့ ပေါ်လာပါတယ်။
+
+#### Single Quote နဲ့ Double Quote
+Attribute value တွေကို Double Quote (") နဲ့လည်း ရေးလို့ ရသလို Single Quote (') နဲ့လည်း ရေးလို့ ရပါတယ်။ နှစ်မျိုးလုံးကို Browser က လက်ခံပါတယ်။ Value ထဲမှာ Quote တစ်မျိုး ပါရင် အခြားတစ်မျိုးနဲ့ ပတ်တာဟာ ရှုပ်ထွေးမှုတွေ လျော့စေပါတယ်။
+
+**ဥပမာ -**
+```html
+<a href="https://example.com" title='ဒါက Single quote နဲ့ပါ'>Link</a>
+```
+မှတ်ချက် — စတိုင်တစ်မျိုးတည်း သုံးနေတာက ပိုသပ်ရပ်ပြီး အများအားဖြင့် Double Quote ကို သုံးလေ့ ရှိပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+* Attribute တွေက Start Tag အတွင်းမှာသာ ရှိပါတယ်။
+* href က Link အတွက်၊ src က File source အတွက် သုံးပါတယ်။
+* `<img>` ထဲမှာ alt ကို အမြဲ ထည့်ပေးပါ။
+* style, lang, title တို့က Element ကို ပိုမို အသုံးဝင်အောင် လုပ်ပေးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+<Quiz questions={[
+  { id: "q1", question: "Attribute value တွေကို ဘာနဲ့ ပတ်ရေးလို့ ရလဲ?", options: ["Quote တိုင် မလိုပါ", "Double နဲ့ Single quote နှစ်မျိုးလုံး", "Curly brace", "Percent sign"], correctAnswer: 1, explanation: "Double quote ရော single quote ရော နှစ်မျိုးလုံးကို Browser က လက်ခံပါတယ်။" },
+  { id: "q2", question: "Image မပြနိုင်တဲ့အခါ ပြရမယ့် စာသားကို ဘယ် attribute နဲ့ သတ်မှတ်လဲ?", options: ["src", "href", "alt", "title"], correctAnswer: 2, explanation: "alt attribute က image မပြနိုင်တဲ့အခါ အစားထိုး စာသားကို ပြပေးပါတယ်။" },
+  { id: "q3", question: "Link ရဲ့ သွားရမယ့် လိပ်စာကို ဘယ် attribute ထဲ ထည့်လဲ?", options: ["href", "src", "style", "width"], correctAnswer: 0, explanation: "href attribute မှာ link ရဲ့ destination URL ကို ထည့်ပါတယ်။" }
+]} />

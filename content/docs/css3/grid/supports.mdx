@@ -1,0 +1,109 @@
+---
+title: "CSS @supports — Feature Detection ဖြင့် Browser Support စစ်ဆေးခြင်း"
+description: "@supports rule ကို အသုံးပြု၍ browser က CSS feature တစ်ခုကို ထောက်ပံ့ခြင်း ရှိမရှိ စစ်ဆေးပြီး fallback ပေးနည်း လေ့လာကြမယ်။"
+---
+
+Browser တိုင်းက CSS feature အားလုံးကို တစ်ပြိုင်တည်း မထောက်ပံ့ပါဘူး။ အထူးသဖြင့် Grid လို ခေတ်မီ feature တွေကို old browser တွေမှာ လုပ်ဆောင်မှု မရှိနိုင်ပါ။ ဒီလိုအခါမျိုးအတွက် `@supports` rule က browser က feature တစ်ခုကို ထောက်ပံ့လားဆိုတာကို စစ်ဆေးပေးပြီး နောက်ကွယ်မှာ fallback style တွေ သတ်မှတ်နိုင်စေပါတယ်။
+
+### @supports — Feature Detection
+
+`@supports` ရဲ့ အခြေခံပုံစံက media queries နဲ့ ဆင်တူပါတယ်။ Condition ထဲမှာ CSS declaration တစ်ခုရေးပြီး browser က ဒီ declaration ကို နားလည်ရင် အတွင်းက style တွေကို အသုံးချပါတယ်။
+
+**ဥပမာ -**
+
+```css
+@supports (display: grid) {
+  .page {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+```
+
+မှတ်ချက် — Browser က `display: grid` ကို support လုပ်မှသာ ဒီ rule ထဲက style တွေ အလုပ်လုပ်ပါတယ်။ မလုပ်ရင် ဒီစာကြောင်းတွေ တစ်ခုလုံးကို ကျော်သွားပြီး အောက်မှာ fallback ရေးထားတဲ့ style တွေကို သုံးပါတယ်။
+
+### Feature အမျိုးမျိုး စစ်ဆေးခြင်း
+
+Feature များစွာကို `and`, `or`, `not` operators တွေနဲ့ ပေါင်းစပ်စစ်ဆေးလို့လည်း ရပါတယ်။ ဒါက Grid ရော Flexbox ပါ နှစ်ခုလုံး ရှိမှ သုံးချင်တဲ့ layout တွေ အတွက် အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+@supports (display: grid) and (gap: 12px) {
+  .cards {
+    display: grid;
+    gap: 12px;
+  }
+}
+
+@supports not (display: grid) {
+  .cards {
+    display: flex;
+  }
+}
+```
+
+မှတ်ချက် — ပထမ rule က Grid ရော gap property ပါ ရှိမှသာ အသုံးချပြီး ဒုတိယ rule ကတော့ Grid မရှိတဲ့ browser တွေအတွက် fallback ဖြစ်ပါတယ်။
+
+### Fallback အတွက် စီစဉ်နည်း (Progressive Enhancement)
+
+အကောင်းဆုံး စနစ်ကတော့ **progressive enhancement** ပါ — အရင်ဆုံး အခြေခံ layout (fallback) ကို ရေးပြီး `@supports` ထဲမှာ အဆင့်မြင့် layout ကို ထပ်ရေးတာပဲ ဖြစ်ပါတယ်။ Old browser တွေက အခြေခံ version ရပြီး ခေတ်မီ browser တွေက ပိုကောင်းတဲ့ version ရပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.posts {
+  display: block;
+}
+
+.posts .post {
+  margin-bottom: 20px;
+}
+
+@supports (display: grid) {
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .posts .post {
+    margin-bottom: 0;
+  }
+}
+```
+
+မှတ်ချက် — Grid support မရှိတဲ့ browser မှာ posts တွေက ပုံမှန် block layout ဖြစ်ပြီး support ရှိတဲ့ browser မှာ card grid ဖြစ်ပါတယ်။ ရလဒ်က တကယ့်အလုပ်လုပ်တဲ့ website ဖြစ်ပါတယ်။
+
+### @supports selector() — Selector များကို စစ်ဆေးခြင်း
+
+Modern CSS မှာ declaration တင်မက selector တွေကိုပါ စစ်ဆေးတဲ့ `selector()` function လည်း ရှိပါတယ်။ ဥပမာ — `:has()` selector ကို support လုပ်လားဆိုတာ စစ်လို့ ရပါတယ်။
+
+**ဥပမာ -**
+
+```css
+@supports selector(:has(a)) {
+  .nav-item:hover {
+    font-size: 1.2rem;
+  }
+}
+```
+
+မှတ်ချက် — `@supports selector()` က feature detection ရဲ့ ပိုပြီး တိကျတဲ့ level ပါ။ Browser က `:has()` selector ကို support လုပ်မှသာ ဒီ hover style တွေကို အသုံးချပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `@supports` က browser ၏ CSS feature ထောက်ပံ့မှုကို စစ်ဆေးသည်။
+- and, or, not operators ဖြင့် condition များကို ပေါင်းစပ်နိုင်သည်။
+- Fallback + progressive enhancement က old browser များအတွက် အကောင်းဆုံး စနစ် ဖြစ်သည်။
+- `@supports selector()` ဖြင့် selector များကိုပါ စစ်ဆေးနိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Browser က CSS feature တစ်ခုကို support လုပ်လားဆိုတာ ဘယ် rule နဲ့ စစ်ဆေးပါသလဲ?", options: ["Supports rule", "Media rule", "Check rule", "Detect rule"], correctAnswer: 0, explanation: "@supports rule က browser က feature တစ်ခုကို support လုပ်လားဆိုတာကို စစ်ဆေးပြီး style များကို conditional အသုံးချပါတယ်။" },
+    { id: "q2", question: "@supports ထဲမှာ condition နှစ်ခုလုံး မှန်မှသာ style သုံးချင်ရင် ဘယ် operator ကို သုံးပါသလဲ?", options: ["And", "Or", "Not", "Maybe"], correctAnswer: 0, explanation: "@supports (display grid) and (gap 12px) လို and operator က condition အားလုံး မှန်မှသာ style ကို အသုံးချစေပါတယ်။" },
+    { id: "q3", question: "Old browser တွေအတွက် အခြေခံ layout ရေးပြီး @supports ထဲမှာ ခေတ်မီ layout ထပ်ရေးတဲ့ နည်းလမ်းကို ဘယ်လိုခေါ်ပါသလဲ?", options: ["Progressive enhancement", "Graceful blocking", "Feature freezing", "Style erasing"], correctAnswer: 0, explanation: "Progressive enhancement က အားလုံးအတွက် အလုပ်လုပ်တဲ့ အခြေခံ version ကို ဦးစွာပေးပြီး support ရှိသူတွေကို ပိုကောင်းတဲ့ version ပေးပါတယ်။" }
+  ]}
+/>

@@ -1,0 +1,137 @@
+---
+title: "CSS Interview Prep — အလုပ် အင်တာဗျူး ပြင်ဆင်မှု"
+description: "Box Model မှ Responsive Design အထိ CSS အင်တာဗျူး၌ အမေးများသော မေးခွန်း ၅ ခုကို နက်ရှိုင်းစွာ ရှင်းပြထားပြီး ကိုယ့်ကိုယ်ကိုပါ စမ်းသပ်ကြမယ်။"
+---
+
+CSS အင်တာဗျူးမှာ မေးလေ့ရှိတဲ့ မေးခွန်းတွေက အခြေခံ သဘောတရားကို ကောင်းကောင်း နားလည်လား၊ CSS ဘာကြောင့် အဲလို အလုပ်လုပ်တာလဲ ဆိုတဲ့ "ဘာကြောင့်" ကို ဖြေနိုင်လားဆိုတာ စစ်ဆေးပါတယ်။ Syntax ကို ရိုးရိုး မှတ်ထားတာထက် Concept ကို နားလည်တဲ့သူကို ပိုအလိုရှိပါတယ်။ အောက်က မေးခွန်း ၅ ခုတစ်ခုချင်းစီကို အခု ကိုယ်တိုင် ဖြေ ကြည့်ပြီးမှ ရှင်းလင်းချက် ဖတ်ပါ။
+
+### မေးခွန်း ၁ — Box Model ဆိုတာ ဘာလဲ၊ ဘယ်လို အလုပ်လုပ်သလဲ
+
+HTML element တိုင်းက box တစ်ခုစီ ဖြစ်ပြီး အလွှာ ၄ ခုနဲ့ ဖွဲ့စည်းထားပါတယ် — **content** (စာသား/ပုံ တကယ်နေရာ)၊ **padding** (content နဲ့ border ကြားက အတွင်းနေရာလွတ်)၊ **border** (padding အပြင် ဘောင်)၊ **margin** (element ရဲ့ အပြင်ဘက် လွတ်နေရာ)။ ဒီအလွှာ ၄ ခုက element အရွယ်အစား တွက်ချက်ပုံကို ဆုံးဖြတ်ပါတယ်။
+
+Default ဖြစ်တဲ့ `content-box` မှာ element ရဲ့ စုစုပေါင်း အကျယ်က `width + padding (ဘယ်ညာ) + border (ဘယ်ညာ)` ဖြစ်ပါတယ်။ ဒါကြောင့် `width: 300px` ၊ `padding: 10px` ၊ `border: 5px` ဆိုရင် စုစုပေါင်း **330px** ရပါတယ်။ `box-sizing: border-box;` ပေးလိုက်ရင် width ထဲမှာ padding နဲ့ border ကို ထည့်တွက်လို့ စုစုပေါင်း အကျယ်က သတ်မှတ်ထားတဲ့ 300px တည်းသာ ဖြစ်ပါတယ်။ ဒါက layout တွက်ရ လွယ်ကူလို့ Universal Reset (`* { box-sizing: border-box; }`) ကို အလေ့အကျင့်တွေမှာ သုံးပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.card {
+  width: 300px;
+  padding: 10px;
+  border: 5px solid #333;
+}
+/* content-box: total width = 300 + 10 + 10 + 5 + 5 = 330px */
+```
+
+မှတ်ချက် — Margin က element ၏ စုစုပေါင်း အရွယ်အစားထဲ မပါပေမဲ့ element အချင်းချင်း ကြားက အကွာအဝေးကို သတ်မှတ်ပြီး Margin Collapsing ကြောင့် အပေါ်အောက် margin ၂ ခု ဆုံရင် ပိုကြီးတဲ့ဟာသာ ကျန်ပါတယ် — ဒါကို ပြောနိုင်ရင် ထပ်ဆင့် အထင်ကြီးစေပါတယ်။
+
+### မေးခွန်း ၂ — Specificity နဲ့ `!important` က ဘယ်လို ကွာသလဲ
+
+Specificity က Selector ဘယ်လောက် တိကျသလဲကို Column ၄ ခုနဲ့ တွက်တဲ့ Cascade စနစ် ဖြစ်ပါတယ် — Inline Style (1000) ၊ ID (100) ၊ Class/Attribute/Pseudo-class (10) ၊ Element/Pseudo-element (1)။ Specificity တူညီနေရင် နောက်ဆုံး ရေးထားတဲ့ Rule (Source Order) က အနိုင်ရပါတယ်။
+
+`!important` ကတော့ အဆင့်တစ်ခု လုံးဝကို ခုန်ကျော်တဲ့ အနိုင်ရခြင်း ဖြစ်ပြီး Inline Style အပါအဝင် Specificity အားလုံးကို ကျော်ဖြတ်ပါတယ်။ ဒါပေမဲ့ သုံးလေလေ Style ထိန်းချုပ်ရ ခက်လေလေ ဖြစ်လို့ Third-party Library ရဲ့ Style ကို ကျော်ဖို့လိုတဲ့အခါမျိုး ၊ ဒါမှမဟုတ် Utility Class တစ်ခုအနေနဲ့ သာသုံးပြီး နေ့စဉ် ရေးနည်းမှာ မထည့်သင့်ပါဘူး။ Specificity ကို Class ထပ်ပေါင်းပြီး မြှင့်တာက `!important` ထက် Maintain လုပ်ရ လွယ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+p { color: gray; }          /* 0-0-0-1 */
+.lead { color: orange; }    /* 0-0-1-0 */
+#intro { color: red; }      /* 0-1-0-0 */
+.lead { color: green !important; } /* အားလုံးကို ကျော် */
+```
+
+မှတ်ချက် — အင်တာဗျူးမှာ "ဘယ်အခါ `!important` သုံးသင့်လဲ" လို့ ပြန်မေးဖို့ ပြင်ထားပါ — Library Override ၊ Utility Class ၊ Script ဖြင့် ထည့်ထားသော Inline Style ကို ပယ်ချိန် ဆိုပြီး ဖြေပါ။
+
+### မေးခွန်း ၃ — Flexbox နဲ့ Grid ရဲ့ ကွာခြားချက်က ဘာလဲ
+
+Flexbox က **1-Dimensional** — item တွေကို row တစ်ကြောင်း (ဒါမှမဟုတ်) column တစ်ကြောင်း တည်းသာ စီစဉ်ပါတယ်။ Nav bar ၊ Button group ၊ Footer တွေလို တစ်ဖက်တည်း စီရတဲ့ Layout မှာ အားသန်ပြီး content အရွယ်အစား သင်နဲ့ တကယ့် နေရာချမှု လိုအပ်ချက်ကို ဦးစားပေးပါတယ်။
+
+Grid ကတော့ **2-Dimensional** — rows နဲ့ columns နှစ်ခုလုံးကို တစ်ပြိုင်နက် ထိန်းချုပ်လို့ Card Grid ၊ Dashboard ၊ Full Page Layout လိုမျိုး rows/columns နှစ်ဖက်စလုံး ထိန်းရတဲ့ နေရာမှာ အားသန်ပါတယ်။ Grid က ဦးတည်ချက်ကို Layout က သတ်မှတ်ပြီး Flexbox က ဦးတည်ချက်ကို Content က သတ်မှတ်ပါတယ်။ ဒါတွေက အပြန်အလှန် အစားထိုး မဟုတ်ဘဲ တွဲသုံးရင် စွမ်းအား အကြီးဆုံး ဖြစ်ပါတယ် — ဥပမာ Grid ထဲမှာ Flexbox ကို နေရာချရန် အသုံးပြုတာမျိုး။
+
+**ဥပမာ -**
+
+```css
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+```
+
+မှတ်ချက် — "ဘယ်အခါ flex ဘယ်အခါ grid" ကို လိမ်းကျွမ်းစွာ ဖြေနိုင်ခြင်းက Layout ကို နားလည်အောင် သုံးတတ်ကြောင်း သက်သေပြပါတယ်။
+
+### မေးခွန်း ၄ — Element တစ်ခုကို စင်တာချရန် နည်းလမ်းတွေက ဘာတွေလဲ
+
+မေးလေ့ရှိတဲ့ နာမည်ကြီး မေးခွန်းတစ်ခု ဖြစ်ပြီး နည်းလမ်း အများကြီးကို စာရင်းပြနိုင်လေ ကောင်းလေပါပဲ။
+
+- **Horizontally (ယာဉ်တစ်ဖက်)** — Text ဆိုရင် `text-align: center;` ၊ Block Element ဆိုရင် `margin: 0 auto;` (width ရှိရန် လို)
+- **Flexbox** — Container ကို `display: flex; justify-content: center; align-items: center;` — နှစ်ဖက်စလုံး တစ်ခါတည်း ပြီး
+- **Grid** — Container ကို `display: grid; place-items: center;` — Flexbox ထက် ပိုတိုတောင်းတဲ့ နည်းလမ်း
+- **Transform** — `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);` — element ၏ ကိုယ်ပိုင် အရွယ်အစား မသိရင် သုံးရတဲ့ နည်း
+- **Line-height (ဒေါင်လိုက်)** — Text အတွက် height နဲ့ line-height တူညီပေးသည့် ရှေးနည်း
+
+ဘယ်ဟာ အကောင်းဆုံးလဲ ဆိုတာထက် "context (အခြေအနေ)" ကို လိုက်ပြီး ရွေးတတ်ရပါတယ် — ဥပမာ Card ချုပ်ရလို့ မထားတဲ့ full screen စင်တာချရင် Flexbox/Grid ၊ ရှေ့ဟောင်း fluctuating layout ဆိုရင် Transform စသဖြင့် ရှင်းပြနိုင်ရပါမယ်။
+
+**ဥပမာ -**
+
+```css
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+```
+
+မှတ်ချက် — transform နည်းလမ်းက element ကို ၎င်း၏ ကိုယ်ပိုင် width/height ထက်ဝက်ဖြင့် ပြန်ရွှေ့ပေးလို့ element အရွယ်အစား မသိရင်တောင် စင်တာအတိအကျ ရပါတယ်။
+
+### မေးခွန်း ၅ — Responsive Website ဖြစ်စေရန် နည်းလမ်းတွေက ဘာတွေလဲ
+
+Responsive Design က screen အကျယ် အမျိုးမျိုးမှာ content ကောင်းကောင်း ပြဖို့ နည်းလမ်းပေါင်းစုံ သုံးပါတယ်။ အဓိက နည်းလမ်းများက —
+
+- **Fluid Layout** — Fixed pixel အားကိုး နည်းပြီး `%` ၊ `rem` ၊ `em` ၊ `vw/vh` စတဲ့ relative unit များ သုံးခြင်း
+- **Flexbox/Grid** — `flex-wrap` ၊ `grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))` စသည့် container တွေကို auto-flow ဖြစ်စေခြင်း
+- **Media Query** — `@media (max-width: 600px)` လိုမျိုး breakpoint တွေမှာ မတူတဲ့ style ကျင့်သုံးခြင်း
+- **Flexible Media** — ပုံ တွေကို `max-width: 100%; height: auto;` ပေး၍ container အကျယ်ထက် မကျော်စေခြင်း
+- **Mobile-first** — စတင်အနေနဲ့ smallest screen layout ကို ရေးပြီး `min-width` media query ဖြင့် desktop ပုံစံ ထပ်ချဲ့ခြင်း — ပိုလွယ်၊ ပိုမြန်တဲ့ နည်း ဖြစ်ပါတယ်
+
+ဒါတွေက သီးခြားစီ မဟုတ်ဘဲ အတူတူသုံးလေ့ ရှိပြီး အားလုံးရဲ့ philosphy က "fixed ထက်ပို flexible" ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+img {
+  max-width: 100%;
+  height: auto;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+@media (max-width: 600px) {
+  body { font-size: 14px; }
+}
+```
+
+မှတ်ချက် — Viewport meta (`<meta name="viewport">`) မထည့်ဘဲ responsive CSS က အဓိပ္ပာယ် မရှိသလောက် ဖြစ်လို့ ဒီအချက်၊ Fluid Image ၊ Mobile-first ဆိုပြီး အချက် ၃ ချက် အနည်းဆုံး စာရင်းပြနိုင်ရင် ကောင်းပါတယ်။
+
+### Interview အတွက် နောက်ထပ် မေးလေ့ ရှိသော ခေါင်းစဉ်များ
+
+- `:nth-child` နဲ့ `nth-of-type` ကွာခြားချက် — latter က tag အမျိုးအစား တစ်မျိုးတည်းထဲမှာသာ ရေတွက်ပါတယ်
+- CSS Variables (`var()`) ကို Theme ပြောင်းလဲဖို့ သုံးတတ်ကြောင်း ပြခြင်း
+- `position: sticky` နဲ့ `position: fixed` ကွာခြားချက် — sticky က scroll container ထဲမှာ သာကျန်နေပါတယ်
+- Block ၊ Inline ၊ Inline-block ၏ ခြားနားချက်
+
+မှတ်ချက် — အင်တာဗျူးမှာ အမှန်တကယ် အရေးကြီးတာက အဖြေ မှန်/မှား မဟုတ်ဘဲ စဉ်းစားလမ်းကြောင်း ဖြစ်ပြီး ဥပမာ ကုဒ်လေးတွေ ပြန်ရေးပြနိုင်ရင် အထင်ကြီးစေဖို့ သေချာပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "content-box တွင် width 300px၊ padding 10px၊ border 5px ရှိလျှင် စုစုပေါင်း အကျယ်သည် မည်မျှဖြစ်သနည်း?", options: ["300px", "310px", "330px", "340px"], correctAnswer: 2, explanation: "content-box တွင် width ပေါင်း padding နှစ်ဖက် (20) ပေါင်း border နှစ်ဖက် (10) ဖြစ်၍ 330px ရသည်။ border-box ဆိုလျှင် 300px သာ ဖြစ်မည်။" },
+  { id: "q2", question: "Inline Style နှင့် !important ပါသော Declaration ယှဉ်လျှင် မည်သည့်အရာ အနိုင်ရသနည်း?", options: ["!important ပါသော Declaration", "Inline Style", "ID Selector", "Class Selector"], correctAnswer: 0, explanation: "!important သည် Cascade ၏ အဆင့်တွေ အားလုံးကို ကျော်ဖြတ်၍ Inline Style နှင့် ID Selector ၏ Specificity ကိုပါ ဦးသာစေသည်။" },
+  { id: "q3", question: "Nav Bar ကဲ့သို့ တစ်ဖက်တည်း (1D) Layout အတွက် ပို၍ သင့်လျော်သော property မှာ မည်သည့်အရာ ဖြစ်သနည်း?", options: ["display: flex", "display: grid", "display: none", "display: table"], correctAnswer: 0, explanation: "Flexbox သည် 1-Dimensional Layout အတွက် ဒီဇိုင်းထုတ်ထားပြီး nav bar ကဲ့သို့ row/column တစ်ကြောင်းတည်း စီနေရာတွင် အကောင်းဆုံး ဖြစ်သည်။" },
+  { id: "q4", question: "Element ၏ အရွယ်အစား မသိဘဲ စင်တာချရန် မည်သည့် နည်းလမ်းက သင့်လျော်သနည်း?", options: ["position absolute နှင့် transform translate", "margin-top သတ်မှတ်ခြင်း", "float: left", "text-indent: 200px"], correctAnswer: 0, explanation: "top 50% left 50% ပြီးနောက် transform translate(-50%, -50%) က element ၏ ကိုယ်ပိုင်အရွယ်အစား ထက်ဝက်ဖြင့် ပြန်ရွှေ့ပေးလို့ အရွယ်အစား မသိရင် စင်တာတိကျစေသည်။" },
+  { id: "q5", question: "Mobile-first ဒီဇိုင်း၏ အဓိပ္ပာယ်မှာ မည်သည့်အရာ ဖြစ်သနည်း?", options: ["Mobile layout ကို အရင်ရေးပြီး desktop အတွက် ချဲ့ခြင်း", "Desktop layout ကို အရင် ရေးခြင်း", "ဖန်သားပြင် ၂ ခု သုံးခြင်း", "Mobile application ရေးခြင်း"], correctAnswer: 0, explanation: "Mobile-first သည် သေးငယ်ဆုံး screen အတွက် base style ရေးပြီး min-width media query ဖြင့် desktop ပုံစံ ထပ်တိုးခြင်းဖြစ်၍ maintain လွယ်ကူပြီး စွမ်းဆောင်ရည် ကောင်းသည်။" } ]} />

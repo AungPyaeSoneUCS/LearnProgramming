@@ -1,0 +1,80 @@
+---
+title: "CSS Comments — Comment ထည့်သွင်းနည်း"
+description: "CSS Comment တွေကို ဘယ်လိုရေးရမလဲ၊ ဘာကြောင့် အသုံးဝင်လဲ ဆိုတာ လေ့လာကြရအောင်။"
+---
+
+### CSS Comment ဆိုတာ ဘာလဲ?
+
+CSS Comment က Browser မျက်နှာပြင်မှာ **လုံးဝမပေါ်**တဲ့ မှတ်စုတစ်မျိုးပါ။ Syntax ကတော့ `/* ... */` ဖြစ်ပြီး Comment ဘောင်အတွင်းမှာ ရှင်းလင်းချက်၊ သတိပေးချက်တွေ ရေးထားနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+/* ဒါကတော့ Comment ဖြစ်ပြီး Browser မှာ မပေါ်ပါဘူး */
+h1 {
+  color: red;
+}
+```
+
+မှတ်ချက် — Comment ထဲက Text တွေကို Browser က လုံးဝ Ignore လုပ်ပြီး Style ကို ဘယ်လိုမှ သက်ရောက်မှု မရှိပါဘူး။
+
+### Comment ရဲ့ အသုံးဝင်ပုံ
+
+Comment တွေက ကုဒ်ရဲ့ အပိုင်းတစ်ပိုင်းချင်းစီကို ရှင်းပြဖို့ ၊ Code ရေးသူ တစ်ဦးထက်မက ရှိတဲ့ Project တွေမှာ အချင်းချင်း နားလည်ဖို့ မှတ်တမ်းထားဖို့ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+/* Header Section အတွက် Style */
+.header {
+  background-color: #333;
+  padding: 20px;
+}
+```
+
+မှတ်ချက် — ဟိုးကြီးတဲ့ Style Sheet တွေမှာ Comment က အပိုင်းတစ်ခုချင်းစီကို မြန်မြန်ရှာဖို့ အထောက်အကူ ပေးပါတယ်။
+
+### Multi-line Comment
+
+CSS Comment က Line တစ်ခုထက်ပိုပြီး လွှမ်းခြုံနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+/*
+  Navigation Menu Style
+  Version 2.0 တွင် Color ပြောင်းရန် မှတ်ချက်
+*/
+nav {
+  background-color: #444;
+}
+```
+
+မှတ်ချက် — Multi-line Comment က Style ဖိုင်ကြီးတွေမှာ Documentation အတွက် သင့်တော်ပြီး မှတ်စုလိုမျိုး အပိုင်းလိုက်ရှင်းပြချက် ရေးနိုင်ပါတယ်။
+
+### Style တစ်ချို့ကို ယာယီ ပိတ်ထားခြင်း
+
+Testing လုပ်နေချိန်မှာ Style Rule တစ်ချို့ကို ဖျက်စရာမလိုဘဲ Comment နဲ့ ခေတ္တရပ်နားထားနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  /* color: red; */
+  font-size: 18px;
+}
+```
+
+မှတ်ချက် — Comment ကို ဖယ်လိုက်တာနဲ့ စာသားအရောင်သတ်မှတ်ချက်ကို ပြန်လည် အသက်သွင်းနိုင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- CSS Comment Syntax က `/* ... */` ဖြစ်သည်။
+- Comment ထဲက အရာတွေကို Browser က Render မလုပ်ပါဘူး။
+- Debugging နဲ့ Documentation အတွက် Comment က အသုံးဝင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "CSS Comment ရဲ့ Syntax က ဘာလဲ?", options: ["-- -- ပုံစံ", "/* နဲ့ */", "// နဲ့", "# နဲ့"], correctAnswer: 1, explanation: "CSS Comment က /* နဲ့စပြီး */ နဲ့ အဆုံးသတ်ပါတယ်။" },
+    { id: "q2", question: "Browser က CSS Comment ကို ဘယ်လို ပြပါသလဲ?", options: ["Screen ပေါ်မှာ ပြတယ်", "အရောင်နဲ့ ပြတယ်", "လုံးဝ မပြပါဘူး", "Error ဖြစ်စေတယ်"], correctAnswer: 2, explanation: "Comment ထဲက အရာတွေကို Browser က Render မလုပ်တာမို့ မပေါ်ပါဘူး။" },
+    { id: "q3", question: "Style Rule တစ်ခုကို ဖျက်စရာမလိုဘဲ ယာယီ ရပ်နားဖို့ ဘာကို သုံးပါသလဲ?", options: ["Space", "Comment", "Dot", "Enter"], correctAnswer: 1, explanation: "Rule ကို Comment ထဲ ထည့်ထားလိုက်ရင် Style က ခေတ္တ အလုပ်မလုပ်တော့ပါဘူး။" },
+  ]}
+/>

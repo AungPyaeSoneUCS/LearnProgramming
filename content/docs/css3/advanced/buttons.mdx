@@ -1,0 +1,113 @@
+---
+title: "CSS Buttons — Button အလှဆင်ခြင်း"
+description: "CSS ဖြင့် Hover ၊ Active ၊ Disabled ၊ Shadow ပါဝင်သော ဆွဲဆောင်မှုရှိသည့် Button များ ဖန်တီးနည်းကို လေ့လာကြမယ်။"
+---
+
+Button ဟာ Website တွေမှာ အသုံးအများဆုံး Element တစ်ခု ဖြစ်ပြီး CSS နဲ့ Style လုပ်ရတာလည်း လွယ်ကူပါတယ်။ ဒီသင်ခန်းစာမှာ ခေတ်မီပြီး အသုံးပြုရ လွယ်ကူတဲ့ Button တွေ ဘယ်လို ဖန်တီးမလဲဆိုတာ အဆင့်ဆင့် လေ့လာကြမယ်။
+
+### Button အခြေခံ Style
+
+Button ကို Style လုပ်ဖို့ Background ၊ Text Color ၊ Padding ၊ Border ၊ Border Radius တို့ကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+```
+
+မှတ်ချက် — `cursor: pointer` ပေးထားမှ Button အပေါ် Mouse ရောက်ရင် လက်ညှိုးပုံ ပေါ်လာပါတယ်။
+
+### Hover နဲ့ Active State
+
+Hover State က Mouse ရောက်နေချိန်၊ Active State က Button ကို နှိပ်နေတုန်း ဖြစ်ချိန်မှာ အသုံးပြုပါတယ်။
+
+**ဥပမာ -**
+```css
+.btn:hover {
+  background-color: #45a049;
+}
+
+.btn:active {
+  background-color: #3e8e41;
+  transform: scale(0.98);
+}
+```
+
+မှတ်ချက် — Active မှာ `transform: scale(0.98)` လေး ကျဉ်းချပြီး Button ကို နှိပ်ထားတဲ့ ခံစားချက် ပိုသိသာလာပါတယ်။
+
+### Shadow ထည့်ခြင်း
+
+`box-shadow` နဲ့ Button ကို မြင့်တဲ့ Lifted ပုံစံ ဖန်တီးနိုင်ပြီး Hover မှာ Shadow ကို ပိုကြီးအောင် ပြောင်းနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.btn {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+```
+
+မှတ်ချက် — Hover မှာ Shadow ပိုကြီးလို့ Button က မြှောက်ထားသလို ပေါ်လာပြီး နှိပ်စရာရှိကြောင်း ညွှန်ပြပါတယ်။
+
+### Disabled Button
+
+Disabled Button ကို `:disabled` Selector နဲ့ Style လုပ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.btn:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+```
+
+မှတ်ချက် — HTML မှာ Button ကို Disable လုပ်ဖို့ disabled Attribute ထည့်ပြီးမှသာ `:disabled` Style သက်ရောက်ပါတယ်။
+
+### Full-Width နဲ့ အရောင် Variant များ
+
+`width: 100%` က Button ကို Container ရဲ့ အကျယ်တစ်ခုလုံး ဖြစ်စေပြီး Class တွေ ခွဲခြားပြီး အရောင်မျိုးစုံ ဖန်တီးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.btn-block {
+  width: 100%;
+  display: block;
+}
+
+.btn-danger {
+  background-color: #f44336;
+}
+
+.btn-info {
+  background-color: #2196f3;
+}
+```
+
+မှတ်ချက် — Width 100% ဖြစ်စေဖို့ Button က Block Level ဖြစ်အောင် `display: block` ကိုပါ ထည့်ပေးရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Hover အတွက် `:hover` ၊ နှိပ်နေတုန်း အတွက် `:active` ၊ Disabled အတွက် `:disabled` ကို သုံးပါသည်။
+- Shadow နဲ့ Hover ပြောင်းလဲမှုတွေက Button ကို ပိုသက်ဝင်စေပါသည်။
+- Class ခွဲခြားပြီး အရောင် Variant အမျိုးမျိုး ဖန်တီးနိုင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Button ပေါ် Mouse ရောက်တဲ့အခါ Style ပြောင်းဖို့ ဘယ် Pseudo-Class ကို သုံးပါသလဲ?", options: [":focus", ":hover", ":active", ":visited"], correctAnswer: 1, explanation: "Mouse ရောက်နေချိန်မျိုးမှာ Style ပြောင်းဖို့ hover Pseudo-Class ကို သုံးပါတယ်။" },
+    { id: "q2", question: "Button ကို Container တစ်ခုလုံး ကျယ်စေဖို့ ဘယ် Value ကို သုံးပါသလဲ?", options: ["height: 100%", "width: 100%", "margin: auto", "top: 0"], correctAnswer: 1, explanation: "width: 100% က Button ကို Container ၏ အကျယ်တစ်ခုလုံး ဖြစ်စေပါတယ်။" },
+    { id: "q3", question: "Disabled Button ရဲ့ Style ကို ဘယ် Selector နဲ့ ရေးပါသလဲ?", options: [".btn:off", ".btn:lock", ".btn:disabled", ".btn:block"], correctAnswer: 2, explanation: "Disabled Button အတွက် disabled Pseudo-Class ကို သုံးပါတယ်။" }
+  ]}
+/>

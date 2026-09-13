@@ -1,0 +1,96 @@
+---
+title: "CSS At-rules — Style Sheet ကြေညာချက်များ"
+description: "charset, import, media, keyframes, font-face, supports, property, page, layer စတဲ့ At-rule တွေရဲ့ ရည်ရွယ်ချက်ကို စုစည်းထားတဲ့ ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### At-rule ဆိုတာ ဘာလဲ?
+
+**At-rule** ဆိုတာ Style Sheet ရဲ့ စည်းကမ်းသတ်မှတ်ချက် (Rule) အမျိုးအစားတစ်ခုဖြစ်ပြီး `@` သင်္ကေတနဲ့ စတင်ပါတယ်။ Media Query အတွက် ဖြစ်စေ ၊ Font သတ်မှတ်ဖို့ဖြစ်စေ ၊ Animation သတ်မှတ်ဖို့ ဖြစ်စေ Browser ရဲ့ အပြုအမူကို ထိန်းချုပ်တဲ့ ကြေညာချက်တွေ ဖြစ်ပါတယ်။
+
+### CSS At-rule များ
+
+| At-rule | ရည်ရွယ်ချက် | ဥပမာ |
+| ---- | ---- | ---- |
+| `@charset` | Style Sheet ရဲ့ Encoding (စာလုံးစနစ်) သတ်မှတ်ခြင်း | `@charset "utf-8";` |
+| `@import` | အခြား Style Sheet တစ်ခုကို သွင်းခြင်း | `@import url("reset.css");` |
+| `@media` | Screen အနံ ၊ အမျိုးအစားအလိုက် Style သက်ရောက်ခြင်း | `@media (max-width: 768px)` |
+| `@keyframes` | Animation ရဲ့ အဆင့်တစ်ဆင့်ချင်းစီ (frame) သတ်မှတ်ခြင်း | `@keyframes fadeIn` |
+| `@font-face` | Web Font တစ်ခုကို ကြေညာပြီး အသုံးပြုခြင်း | `@font-face` |
+| `@supports` | Browser က Property ကို ထောက်ပံ့မှု ရှိ/မရှိစစ်၍ Style သက်ရောက်ခြင်း | `@supports (display: grid)` |
+| `@property` | Custom Property (CSS Variable) ရဲ့ ပုံစံကို ကြေညာခြင်း | `@property --main-color` |
+| `@page` | Print လုပ်တဲ့အခါ Page ရဲ့ အရွယ် ၊ Margin သတ်မှတ်ခြင်း | `@page :first` |
+| `@layer` | Style Sheet ကို အလွှာ (Layer) ခွဲ၍ Priority စီစဉ်ခြင်း | `@layer base` |
+
+### `@media` — Responsive အတွက် အသုံးအများဆုံး At-rule
+
+`@media` က Screen ရဲ့ အနံ ၊ Device အမျိုးအစား စတဲ့ အခြေအနေ တွေပေါ် မူတည်ပြီး Style တွေ သက်ရောက်စေပါတယ်။ Mobile နဲ့ Desktop Layout ခွဲခြားရာမှာ မဖြစ်မနေ သုံးရတဲ့ ကိရိယာ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+}
+```
+
+မှတ်ချက် — Screen အနံ 768px အောက် (Mobile) ရောက်တဲ့အခါ `.sidebar` ကို ဖျောက်ပြီး Desktop မှာတော့ ပုံမှန် ပြသမှာ ဖြစ်ပါတယ်။
+
+### `@keyframes` — Animation သတ်မှတ်ခြင်း
+
+`@keyframes` က Animation ရဲ့ ရွေ့လျားမှု အဆင့်တွေကို `from` (စ) နဲ့ `to` (ဆုံး) ဒါမှမဟုတ် Percentage (%) အပိုင်းတွေနဲ့ သတ်မှတ်ပါတယ်။ Keyframe သတ်မှတ် ပြီးမှ `animation` Property နဲ့ Element ပေါ် သုံးရပါတယ်။
+
+**ဥပမာ -**
+```css
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.box {
+  animation: fadeIn 1s ease;
+}
+```
+
+မှတ်ချက် — Keyframe ကို `@keyframes` နဲ့ အမည်ပေး သတ်မှတ်ပြီး `animation` Property မှာ ထို အမည်ကို ညွှန်ပြ၍ အသုံးပြုရပါတယ်။
+
+### `@font-face` နဲ့ `@supports` — Font နဲ့ Browser ထောက်ပံ့မှု
+
+`@font-face` က ကိုယ်ပိုင် Web Font ကို သွင်းနိုင်စေပြီး `@supports` ကတော့ Browser က ထောက်ပံ့မှု မရှိတဲ့ Feature အတွက် Fallback Style ရေးဖို့ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@font-face {
+  font-family: "TakkathoFont";
+  src: url("takkatho.woff2") format("woff2");
+}
+
+@supports (display: grid) {
+  .layout {
+    display: grid;
+  }
+}
+```
+
+မှတ်ချက် — `@font-face` က `font-family` နဲ့ `src` နှစ်ခုလုံး လိုအပ်ပြီး `@supports` က Browser က Grid ကို သိရမှသာ Rule ကို သက်ရောက်စေပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- At-rule တွေက `@` နဲ့ စပြီး Browser ကို Style Sheet ရဲ့ အမူအကျင့်ကို ထိန်းချုပ်ပါတယ်။
+- `@media` က Responsive Design ရဲ့ အခြေခံ ဖြစ်ပါတယ်။
+- `@keyframes` တစ်ခုတည်းနဲ့ မလုံလောက်ဘဲ `animation` Property နဲ့ တွဲသုံးရပါတယ်။
+- `@charset` နဲ့ `@import` က Style Sheet ရဲ့ ထိပ်ဆုံးမှာသာ ရေး၍ ရပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Screen အနံအလိုက် Style သက်ရောက်ဖို့ ဘယ် At-rule ကို သုံးပါသလဲ?", options: ["media", "charset", "import", "page"], correctAnswer: 0, explanation: "media က Screen အခြေအနေ ပေါ်မှု မူတည်ပြီး Style သက်ရောက်တဲ့ At-rule ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "Animation ရဲ့ အဆင့်တွေကို သတ်မှတ်ဖို့ ဘယ် At-rule သုံးပါသလဲ?", options: ["font-face", "keyframes", "supports", "layer"], correctAnswer: 1, explanation: "keyframes က Animation ရဲ့ from နဲ့ to စတဲ့ အဆင့်တစ်ဆင့်ချင်းစီကို သတ်မှတ်ပေးပါတယ်။" },
+    { id: "q3", question: "ကိုယ်ပိုင် Web Font ကို Style Sheet ထဲ သွင်းဖို့ ဘယ် At-rule ကို သုံးပါသလဲ?", options: ["charset", "page", "font-face", "property"], correctAnswer: 2, explanation: "font-face က font-family နဲ့ src သတ်မှတ်၍ Web Font ကို ကြေညာ သွင်းပေးပါတယ်။" },
+  ]}
+/>

@@ -1,0 +1,141 @@
+---
+title: "Forms"
+description: "Forms"
+---
+
+import { Aside, Code } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import formImage from '@/assets/html/form.png'
+import inputsImage from '@/assets/html/inputs.png'
+import formSubmission from '@/assets/html/form-submission.svg'
+
+<Aside title="ရည်ရွယ်ချက်">
+ဒီအခန်းမှာတော့ User တွေဆီက Data တွေကို Website ဆီ လှမ်းပို့ပေးနိုင်တဲ့ HTML Form တွေ ဘယ်လို ဖန်တီးရမလဲဆိုတာ လေ့လာကြပါမယ် ခင်ဗျာ။ Form တွေက Contact Page တွေ၊ စစ်တမ်းတွေ၊ Register လုပ်တာတွေ၊ နဲ့ Login ဝင်တာတွေအတွက် မရှိမဖြစ် လိုအပ်ပါတယ်။ Form element တွေ၊ Input တွေ၊ Label တွေ၊ Dropdown တွေ၊ Textarea တွေ၊ နဲ့ Button တွေအကြောင်း သေသေချာချာ သင်ယူရမှာပါ။
+</Aside>
+
+### Form ဆိုတာ ဘာလဲ?
+Form ဆိုတာက User တွေဆီက အချက်အလက်တွေကို စုဆောင်းပြီး Server ဆီကို ပို့ပေးတဲ့ HTML Element တစ်ခုပါ။
+
+**ဥပမာနှိုင်းယှဉ်ချက်** — Form ကို Digital ဖြည့်လွှာတစ်ခုလို သဘောထားနိုင်ပါတယ်။ ဘဏ်မှာ Account ဖွင့်တဲ့အခါ ဖြည့်ရတဲ့ ဖြည့်လွှာလိုမျိုးပါပဲ — User က ဖြည့်ပြီး Submit နှိပ်လိုက်ရင် Server ဆီကို ပေးပို့သွားတာ ဖြစ်ပါတယ်။
+
+##### အသုံးပြုပုံများ -
+
+- Website ပေါ်က Contact form တွေ
+- User register လုပ်ခြင်း သို့မဟုတ် Login ဝင်ခြင်း
+- Feedback နဲ့ စစ်တမ်းများ
+- Booking form များ
+
+<ContentImage src={formImage} alt="form sample" height={350} />
+
+### Form Submission Flow (ဖောင်တင်သွင်းတဲ့ ဖြစ်စဉ်)
+User တစ်ယောက်က Submit ကို နှိပ်လိုက်ရင် ဘာတွေဖြစ်သွားသလဲ ဆိုတာကို အရင် ကြည့်လိုက်ရအောင်။ စာပို့တာနဲ့ ဥပမာ နှိုင်းထားပါတယ် — ဖြည့်ထားတဲ့ Form = ရေးထားတဲ့ စာ၊ Submit = Post Box ထဲထည့်တာ၊ Server = Post Office လို့ မှတ်ယူနိုင်ပါတယ်။
+
+<ContentImage src={formSubmission} alt="Form Submission Flow Diagram" />
+
+### Form တည်ဆောက်ပုံ
+Form တစ်ခုကို `<form>` tag နဲ့ ဖန်တီးပါတယ်။ အဓိကကျတဲ့ Attribute နှစ်ခုကတော့-
+
+- `action` – Form data တွေကို ဘယ် URL ဆီ ပို့ရမလဲ သတ်မှတ်ပေးတယ်။
+- `method` – Data ကို `GET` (URL ထဲမှာ မြင်နိုင်) ဒါမှမဟုတ် `POST` (လုံခြုံစွာ ဖောက်ထုတ်ပို့) ဆိုတဲ့ နည်းလမ်းတွေထဲက ဘယ်နည်းနဲ့ ပို့မလဲ ဆိုတာ သတ်မှတ်ပေးတယ်။
+
+```html
+<form action="submit_form.php" method="post">
+  <!-- input fields တွေ ဒီထဲမှာ ထည့်ရပါတယ် -->
+</form>
+```
+
+**ရှင်းလင်းချက်:**
+
+- `action="submit_form.php"` — form data တွေကို `submit_form.php` file ဆီ ပို့ပေးမှာ ဖြစ်တယ်။ Password လိုမျိုး အထိန်းအကျောင်း (Sensitive) ဒေတာ ပို့တဲ့အခါ `method="post"` ကို အမြဲ သုံးပါ — URL ထဲမှာ မပြဘဲ ဖောက်ထုတ်ပို့ပေးလို့ ပိုလုံခြုံပါတယ်။
+
+### Input Fields
+**Input field** တွေက User တွေ Data ဖြည့်ဖို့ အတွက်သုံးတာပါ။ `<input>` tag ကို `type` attribute အမျိုးမျိုးနဲ့ တွဲသုံးပါတယ်-
+
+| Input Type | ရှင်းလင်းချက် |
+|------------|-------------------------------------------------------------------|
+| text       | Text ထည့်ရန် (ဥပမာ - နာမည်)။            |
+| password   | စကားဝှက်ထည့်ရန် (စာလုံးတွေက ဖျောက်ထားပေးတယ်)။                  |
+| email      | Email လိပ်စာထည့်ရန်။                                            |
+| number     | Number သီးသန့်ထည့်ရန် (ဥပမာ - အသက်)။                            |
+| date       | ရက်စွဲရွေးရန်။                                                  |
+| checkbox   | ရွေးချယ်စရာ အများကြီးကို ရွေးနိုင်ရန် (ဥပမာ - ဝါသနာ)။           |
+| radio      | ရွေးချယ်စရာထဲက တစ်ခုတည်းကိုသာ ရွေးနိုင်ရန် (ဥပမာ - ကျား/မ)။    |
+| file       | File တင်ရန် (ဥပမာ - Profile ပုံ)။                                |
+
+<ContentImage src={inputsImage} alt="inputs sample" height={300} />
+
+### Labels — Input ခေါင်းစဉ်တပ်ခြင်း
+`<label>` tag ကို Input field နဲ့ တွဲပြီး ခေါင်းစဉ်တပ်ဖို့ သုံးပါတယ်။ `for` attribute ရဲ့ value က သက်ဆိုင်ရာ Input ရဲ့ `id` value နဲ့ **ကိုက်ညီ**နေဖို့ အလွန် အရေးကြီးပါတယ်။
+
+```html
+<label for="email">Email:</label>
+<input type="email" id="email" name="email">
+```
+
+**ဘာကြောင့် Label ထည့်ရမလဲ:**
+
+- Label ကို နှိပ်လိုက်ရင် သက်ဆိုင်ရာ Input box ကို အလိုအလျောက် Focus ပေးပါတယ် (ဖုန်းပေါ်မှာ သုံးတဲ့အခါ အထူး အဆင်ပြေပါတယ်)
+- Screen reader တွေက Label ကို ဖတ်ပြပြီး Input မှာ ဘာဖြည့်ရမလဲ ပြောပြပေးပါတယ်
+- `label` မပါဘဲ Input ထဲက `placeholder` လောက်နဲ့ပဲ ထားတာဟာ Accessibility လုံးဝ မကောင်းပါဘူး။
+
+### Fieldset နှင့် Legend — Input တွေကို အုပ်စုဖွဲ့ခြင်း
+Form တစ်ခုမှာ Input field တွေ အရမ်း အများကြီး ရှိနေတဲ့အခါ၊ ဆက်စပ်တဲ့ Field တွေကို `<fieldset>` နဲ့ စုဖွဲ့ပြီး `<legend>` နဲ့ ခေါင်းစဉ်တပ်ပေးနိုင်ပါတယ်။ ဒါက Accessibility ကောင်းမွန်သလို ဖတ်ရတာလည်း ပိုသပ်ရပ်သွားစေပါတယ်။
+
+**ဥပမာ —**
+
+```html
+<form action="register.php" method="post">
+  <fieldset>
+    <legend>ကိုယ်ရေးကိုယ်တာ အချက်အလက်</legend>
+    <label for="name">အမည်:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+  </fieldset>
+
+  <fieldset>
+    <legend>နေရပ်လိပ်စာ</legend>
+    <label for="city">မြို့:</label>
+    <input type="text" id="city" name="city">
+
+    <label for="country">နိုင်ငံ:</label>
+    <input type="text" id="country" name="country">
+  </fieldset>
+
+  <button type="submit">Register</button>
+</form>
+```
+
+- `<fieldset>` — ဆက်စပ်တဲ့ Input တွေကို ဘောင်ခတ်ပြီး စုစည်းပေးတဲ့ Container ပါ
+- `<legend>` — `<fieldset>` ရဲ့ ခေါင်းစဉ် (ဘောင်ကြိုးပေါ်မှာ ပေါ်ပါတယ်)
+
+### Form Validation Attributes
+HTML မှာ JavaScript ကို မလိုဘဲ Browser ကနေတိုက်ရိုက် Input data တွေကို စစ်ဆေးနိုင်တဲ့ Validation attribute လေးတွေ ရှိပါတယ်။
+
+| Attribute | ရှင်းလင်းချက် | ဥပမာ |
+|-----------|--------------|-------|
+| `required` | ဖြည့်မှ Submit လုပ်ခွင့်ပြုတယ် | `<input type="text" required>` |
+| `minlength` | အနည်းဆုံး စာလုံးရေ သတ်မှတ်တယ် | `<input type="text" minlength="3">` |
+| `maxlength` | အများဆုံး စာလုံးရေ သတ်မှတ်တယ် | `<input type="text" maxlength="50">` |
+| `min` | ဂဏန်း/ရက်စွဲ အနည်းဆုံးတန်ဖိုး | `<input type="number" min="1">` |
+| `max` | ဂဏန်း/ရက်စွဲ အများဆုံးတန်ဖိုး | `<input type="number" max="100">` |
+| `pattern` | Regex pattern နဲ့ စစ်တယ် | `<input type="text" pattern="[A-Za-z]+">` |
+
+**ဥပမာ — Validation ပါတဲ့ Form တစ်ခု:**
+
+```html
+<form action="submit.html" method="post">
+  <label for="username">အမည်:</label>
+  <input type="text" id="username" name="username" required minlength="3" maxlength="20">
+
+  <label for="age">အသက်:</label>
+  <input type="number" id="age" name="age" min="13" max="120" required>
+
+  <button type="submit">Submit</button>
+</form>
+```
+
+<Aside type="caution" title="သတိပြုရန်">
+HTML validation တွေဟာ User Experience ကို ပိုကောင်းစေပေမဲ့ Server-side validation ကို **ဘယ်တော့မှ အစားမထိုးနိုင်ပါဘူး**။ Security အတွက် Server ဘက်ကနေလည်း Data ကို အမြဲတမ်း စစ်ဆေးရပါမယ် ခင်ဗျာ။
+</Aside>

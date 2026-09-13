@@ -1,0 +1,124 @@
+---
+title: "CSS Inline-block — Inline နဲ့ Block ၏ ပေါင်းစပ်"
+description: "display: inline-block ရဲ့ အပြုအမူနဲ့ block, inline တို့နဲ့ ကွာခြားချက်၊ nav bar ဆောက်ပုံကို လေ့လာကြရအောင်။"
+---
+
+### Inline-block ဆိုတာဘာလဲ
+
+**`display: inline-block`** က Inline ရဲ့ လိုအပ်ချက်နဲ့ Block ရဲ့ လိုအပ်ချက် ပေါင်းစပ်ထားတဲ့ Value ပါ။ Inline-block Element က Block တစ်ခုလိုပဲ **width** နဲ့ **height** သတ်မှတ်လို့ရသလို Inline တစ်ခုလိုပဲ **ဘေးချင်းကပ်** အတန်းတစ်ကြောင်းမှာ နေနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.button {
+  display: inline-block;
+  width: 120px;
+  height: 40px;
+  background-color: #4caf50;
+  text-align: center;
+  line-height: 40px;
+}
+```
+
+မှတ်ချက် — Inline-block မှာ Margin နဲ့ Padding ကို ပုံမှန်လို apply လုပ်လို့ရပြီး Element တွေ တစ်ကြောင်းတည်းမှာ ဆက်နေနိုင်ပါတယ်။
+
+### Inline, Block, Inline-block တို့ကို ယှဉ်ကြည့်ခြင်း
+
+| Property အပြုအမူ | Inline | Block | Inline-block |
+| --- | --- | --- | --- |
+| စာကြောင်းအသစ် ထပ်ခွာသလား | မခွာ | ခွာသည် | မခွာ |
+| width/height သတ်မှတ်လို့ရလား | မရ | ရသည် | ရသည် |
+| Margin/Padding | ဘေးရပြီး ဒေါင်လိုက် မရ | ရသည် | ရသည် |
+
+**`inline`** Element တွေက `<span>`, `<a>`, `<img>` လိုမျိုးပါ။ သူတို့ဟာ Content ရဲ့ အရွယ်လောက်ပဲ နေရာယူပြီး width/height သတ်မှတ်လို့ မရပါဘူး။
+
+**`block`** Element တွေက `<div>`, `<p>`, `<h1>` လိုမျိုးပါ။ သူတို့ဟာ နေရာ အပြည့်ယူပြီး တစ်ခုချင်းစီက စာကြောင်း သီးခြားစီ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+span.inline-box {
+  display: inline;
+  background-color: yellow;
+}
+
+span.block-box {
+  display: block;
+  background-color: lightblue;
+}
+
+span.inline-block-box {
+  display: inline-block;
+  width: 150px;
+  height: 60px;
+  background-color: lightgreen;
+}
+```
+
+မှတ်ချက် — Inline မှာ width/height ထည့်လည်း မသက်ရောက်ပေမယ့် Inline-block မှာတော့ အရွယ်အစား ပြောင်းနိုင်ပြီး တစ်ကြောင်းတည်းလည်း ဆက်နေနိုင်ပါတယ်။
+
+### Horizontal Navigation Bar ဆောက်ခြင်း
+
+**Inline-block** ရဲ့ အသုံးအများဆုံးနေရာက **Horizontal Nav Bar (အလျားလိုက် မီနူးဘား)** ဆောက်တာပါ။ `<li>` တွေကို Inline-block လုပ်ပြီး ဘေးတစ်ကပ် စီစဉ်နိုင်ပြီး Block ရဲ့ width/height အားသာချက်ကိုလည်း ရပါတယ်။
+
+**ဥပမာ -**
+```html
+<ul class="nav">
+  <li><a href="#">မူလစာမျက်နှာ</a></li>
+  <li><a href="#">သင်တန်းများ</a></li>
+  <li><a href="#">ဆက်သွယ်ရန်</a></li>
+</ul>
+```
+
+**ဥပမာ -**
+```css
+.nav {
+  list-style: none;
+  background-color: #333;
+  padding: 10px;
+}
+
+.nav li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+}
+```
+
+မှတ်ချက် — `.nav li` ကို inline-block လုပ်လိုက်တဲ့အတွက် list item တွေက တစ်ကြောင်းတည်းမှာ ဘေးချင်းကပ် ပေါ်ပြီး Link တွေကြားမှာလည်း margin နဲ့ နေရာ ခြားနိုင်ပါတယ်။
+
+### Inline-block သုံးတဲ့အခါ သတိထားစရာ
+
+Inline-block Element တွေ တစ်ကြောင်းတည်းမှာ ထားရင် သူတို့ကြားမှာ **whitespace gap (ကွက်လပ်)** လေး ပေါ်တတ်ပါတယ်။ ဘာကြောင့်လဲဆိုတော့ HTML ထဲက Space/Newline တွေကို Browser က Text လို့ ပြန်ဆိုလို့ပါ။
+
+**ဥပမာ -**
+```css
+.no-gap {
+  font-size: 0;
+}
+
+.no-gap .item {
+  display: inline-block;
+  font-size: 16px;
+}
+```
+
+မှတ်ချက် — Parent မှာ `font-size: 0` သတ်မှတ်ချင်တဲ့နည်းက ကွက်လပ်တွေကို ဖျောက်ဖို့ ဂန္တဝင် trick ဖြစ်ပြီး ဒီလိုကိစ္စတွေကို ပိုပြီး ကျွမ်းကျင်စွာ ဖြေရှင်းပေးတဲ့အတွက် ယနေ့ခေတ်မှာတော့ Flexbox ကို ပိုပြီး အသုံးပြုလာကြပါတယ်။
+
+#### တိုတိုနဲ့လိုရင်း
+
+- Inline-block က width/height ရပြီး တစ်ကြောင်းတည်းမှာ ဆက်နေနိုင်သည်။
+- Horizontal Nav ဆောက်ဖို့ Inline-block က အသုံးများသည်။
+- Whitespace gap ပြဿနာကို Flexbox သို့မဟုတ် font-size trick နဲ့ ကိုင်တွယ်နိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "display: inline-block ရဲ့ အဓိက လက္ခဏာက ဘာလဲ?", options: ["စာကြောင်းအသစ် အတင်း ခွာတယ်", "width နဲ့ height သတ်မှတ်လို့ရပြီး တစ်ကြောင်းတည်းမှာ နေနိုင်တယ်", "width height လုံးဝ မရဘူး", "float လုပ်မှသာ အလုပ်လုပ်တယ်"], correctAnswer: 1, explanation: "inline-block က width height ရပြီး inline လိုပဲ တစ်ကြောင်းတည်းမှာ နေနိုင်ပါတယ်။" },
+    { id: "q2", question: "HTML ထဲက space တွေကြောင့် inline-block element တွေကြားမှာ ဘာတွေ ပေါ်တတ်ပါသလဲ?", options: ["Border", "Box shadow", "Whitespace gap", "Margin auto"], correctAnswer: 2, explanation: "html ထဲက newline နဲ့ space တွေကို browser က text လို မြင်လို့ gap ပေါ်ပါတယ်။" },
+    { id: "q3", question: "ဘယ် element တွေက ပုံမှန် block ဖြစ်ပါသလဲ?", options: ["span", "a", "div", "img"], correctAnswer: 2, explanation: "div က block element ဖြစ်ပြီး ကျန်တဲ့ span, a, img တွေက inline ဖြစ်ပါတယ်။" }
+  ]}
+/>

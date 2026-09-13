@@ -1,0 +1,112 @@
+---
+title: "CSS Image Gallery — Responsive ပုံပြခန်း"
+description: "Flexbox နဲ့ responsive image grid ဆောက်နည်း၊ hover zoom effect နဲ့ caption တွေထည့်နည်းကို လေ့လာကြရအောင်။"
+---
+
+### Image Gallery ဆိုတာဘာလဲ
+
+**Image Gallery** ဆိုတာ ပုံတွေကို Grid ၊ Row ၊ Column အနေအထားနဲ့ အစီအရီ ပြသတဲ့ Layout ပါ။ **Flexbox** က Gallery ဆောက်ဖို့ Quickest နဲ့ Flexible နည်းဖြစ်ပြီး Image Item တွေကို `flex-wrap` နဲ့ အလိုအလျောက် လှည့်ပတ် Wrap စေနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<div class="gallery">
+  <div class="card"><img src="cat.jpg" alt="ကြောင်"></div>
+  <div class="card"><img src="dog.jpg" alt="ခွေး"></div>
+  <div class="card"><img src="bird.jpg" alt="ငှက်"></div>
+</div>
+```
+
+မှတ်ချက် — Gallery မှာ Container div ထဲမှာ Card div တွေ ထည့်ပြီး Card တစ်ခုချင်းစီမှာ img ယူပါတယ်။
+
+### Flexbox နဲ့ Responsive Grid
+
+Flex Container ကို `display: flex` + `flex-wrap: wrap` ပြုလုပ်ပြီး Card တွေကို `flex: 1 1 200px` လို Growth/Basis သတ်မှတ်ပါမယ်။ ဒါက Screen ကျယ်ရင် တစ်ကြောင်းမှာ အများကြီး ထည့်ပြီး Screen ကျဉ်းရင် တစ်စတစ်စနဲ့ အပေါ်အောက် ပြန်စပ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.card {
+  flex: 1 1 220px;
+  max-width: 300px;
+}
+```
+
+မှတ်ချက် — `flex-wrap: wrap` က row ထဲ မဆံ့တဲ့ card တွေကို နောက်မျဉ်းမှာ အလိုအလျောက် ဆင်းစေပြီး `gap` က card တွေကြားအကွာအဝေးကို ထိန်းပေးပါတယ်။
+
+### Card Style နဲ့ Image Setup
+
+Card တွေကို Border ၊ Shadow ၊ Hover Effect တွေနဲ့ ပြောင်လက်မှုဖန်တီးပြီး Image ကို Container ပျက်အောင် Overflow မလုပ်စေဖို့ `max-width: 100%` ထားပါမယ်။
+
+**ဥပမာ -**
+```css
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+```
+
+မှတ်ချက် — `object-fit: cover` က ပုံအချိုးအစားကို မပျက်စေဘဲ Box အတွင်းကို ဖြည့်တင်းပေးပြီး လိုတဲ့အပိုင်းကိုသာ Crop လုပ်ပါတယ်။
+
+### Hover Zoom Effect (Hover မှာ ချဲ့ခြင်း)
+
+Hover မှာ ပုံကို Slightly Zoom ဖြစ်စေဖို့ `transform: scale()` ကို `transition` နဲ့ နှစ်ခု တွဲသုံးပါတယ်။ Scale တန်ဖိုး 1.1 က ပုံကို 10% ချဲ့ပါတယ်။ Image ထဲကို scale တာကြောင့် Card Border ထဲက ပုံကိုသာ ချဲ့တာဖြစ်လို့ overflow hidden နဲ့ ဖြတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.card img {
+  transition: transform 0.4s ease;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+```
+
+မှတ်ချက် — Scale မချဲ့ခင်က overflow hidden ရှိမှသာ Card ဘောင်ကို မကျော်လွှားဘဲ သန့်ရှင်းတဲ့ Zoom Effect ကို ရနိုင်ပါတယ်။
+
+### Caption ထည့်ခြင်း
+
+Gallery Card တွေမှာ Text လည်း ထည့်ချင်ရင် `figcaption` Element ထည့်ပြီး Style လုပ်ပါတယ်။ HTML ထဲမှာတော့ `<figure class="card">` အတွင်းမှာ `img` နဲ့ `figcaption` ကို တွဲထည့်ပါတယ် — `<figcaption>ကြောင်လေးတစ်ကောင်</figcaption>` လိုမျိုးပါ။
+
+**ဥပမာ -**
+```css
+figcaption {
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+```
+
+မှတ်ချက် — figure နဲ့ figcaption က Semantic ဖြစ်ပြီး Screen Reader တွေအတွက် ပုံနဲ့ caption ကို အဖွဲ့ပြန်ထားပြီး ပေါင်းစည်းဖို့ အကြံပြုလိုပါတယ်။
+
+#### တိုတိုနဲ့လိုရင်း
+
+- Flexbox နဲ့ flex-wrap က Responsive Grid ဖန်တီးဖို့ အသုံးဝင်သည်။
+- Object-fit cover က ပုံအချိုးအစားကို ထိန်းပြီး Box ကို ဖြည့်ပေးသည်။
+- Hover Zoom က transform scale နဲ့ transition တွဲသုံးရသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Gallery မှာ Screen ကျဉ်းရင် card တွေ နောက်မျဉ်းကို ဆင်းစေဖို့ Flexbox မှာ ဘာ property သုံးပါသလဲ?", options: ["Flex direction row", "Flex wrap wrap", "Align items center", "Justify content space between"], correctAnswer: 1, explanation: "flex-wrap: wrap က container ထဲမဆံ့တော့ရင် card တွေကို နောက်မျဉ်းကို လွှဲပေးပါတယ်။" },
+    { id: "q2", question: "ပုံအချိုးအစား မပျက်ဘဲ box ထဲကို ဖြည့်ချင်ရင် img မှာ ဘာကို သုံးပါသလဲ?", options: ["Width auto", "Object fit cover", "Float left", "Border radius"], correctAnswer: 1, explanation: "object-fit: cover က ပုံကို box အတွင်းမှာ Crop ပြီး အချိုးအစား မပျက်အောင် ဖြည့်ပေးပါတယ်။" },
+    { id: "q3", question: "Hover zoom effect မှာ ပုံကို ချဲ့ဖို့ ဘယ် property ကို သုံးပါသလဲ?", options: ["Zoom", "Transform scale", "Width increase", "Transition only"], correctAnswer: 1, explanation: "transform: scale(1.1) က ပုံကို 110% ချဲ့ပြီး transition နဲ့ ချောမွေ့စေပါတယ်။" }
+  ]}
+/>

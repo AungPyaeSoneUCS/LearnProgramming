@@ -1,0 +1,62 @@
+---
+title: "PX to EM Converter — px နဲ့ em ပြောင်းနည်း"
+description: "px ၊ em နဲ့ rem ခြားနားချက် ၊ Default 16px Root Size မှ px ကို em အဖြစ် ပြောင်းတဲ့ ရိုးရှင်းသော နည်းလမ်းနဲ့ ဇယား ပါဝင်ပါတယ်။"
+---
+
+### px ၊ em နဲ့ rem ဆိုတာ ဘာလဲ?
+
+**px** (Pixel) က စခရင်ပေါ်မှာ ပုံသေအမှတ်တွေနဲ့ တိုင်းတာလို့ အရွယ်အစား အတိအကျ သတ်မှတ်ချင်ရင် သုံးပါတယ်။ **em** က မိဘ ဒြပ်စင်ရဲ့ Font Size ကို အခြေခံတဲ့ အလွှဲ (Relative) ယူနစ်ဖြစ်ပြီး စာသားရဲ့ အရွယ်အစားကို ပတ်ဝန်းကျင်နဲ့ အချိုးကျ အောင် ပြောင်းလဲစေပါတယ်။ **rem** (Root Em) က Root Element `<html>` ရဲ့ Font Size ကိုသာ အခြေခံလို့ Nesting များများ ရှိရင်လည်း တည်ငြိမ်ပါတယ်။
+
+em က မိဘနဲ့ လိုက်၍ ပြောင်းလို့ အာရုံစိုက်စရာ မလိုဘဲ Scale ရအောင် ဆိုရင် ကောင်းပြီး rem က နေရာတိုင်းမှာ တစ်ပြေးညီ ဖြစ်စေချင်တဲ့အခါ သုံးပါတယ်။ Responsive Design တွေမှာ Relative Unit ကို ဦးစားပေးလေ့ ရှိပါတယ်။
+
+### Default Root Font Size (16px)
+
+Browser တွေရဲ့ Default Root Font Size က **16px** ဖြစ်ပါတယ်။ ဒါကြောင့် `1em` နဲ့ `1rem` တို့သည် ပုံမှန်အားဖြင့် 16px နဲ့ တူညီပါတယ်။ `<html>` မှာ `font-size` ပြောင်းချင်ရင် em ရော rem ရော အဲဒါကို အခြေခံပြီး ပြောင်းသွားပါတယ်။
+
+px ရဲ့ တန်ဖိုးကို em အဖြစ် ပြောင်းဖို့ ရိုးရှင်းတဲ့ စည်းမျဉ်း တစ်ခုပဲ ရှိပါတယ် — **px ÷ 16 = em**။ ဥပမာ 32px ကို 16 နဲ့ စားရင် 2em ဖြစ်ပါတယ်။
+
+### PX to EM Conversion ဇယား
+
+| PX | EM |
+| ---- | ---- |
+| 8px | 0.5em |
+| 12px | 0.75em |
+| 16px | 1em |
+| 20px | 1.25em |
+| 24px | 1.5em |
+| 28px | 1.75em |
+| 32px | 2em |
+
+### လက်တွေ့ အသုံးပြုပုံ ဥပမာ
+
+အောက်က CSS အပိုင်းက စာလုံးအရွယ်အစား အဆင့်တွေကို em နဲ့ သတ်မှတ်ထားပါတယ်။ `html` ရဲ့ Font Size ကို ပြောင်းလိုက်ရင် ကျန်တဲ့ဟာတွေ အားလုံး အချိုးကျ ပြောင်းသွားတာကို တွေ့ရပါလိမ့်မယ်။
+
+```css
+html {
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 2em;   /* 16px * 2 = 32px */
+}
+
+p {
+  font-size: 0.875em; /* 16px * 0.875 = 14px */
+}
+```
+
+မှတ်ချက် — em ကို သုံးတဲ့အခါ မိဘ Element ရဲ့ Font Size ပေါ်လိုက်ပြီး ပြောင်းလို့ Nest နက်လွန်းရင် အရွယ်အစား ပွားနိုင်တဲ့အတွက် rem က ပိုတည်ငြိမ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Default Root Font Size က 16px ။
+- ပြောင်းနည်း — Fraction `px / 16` = em။
+- em က မိဘနဲ့ လိုက် ၊ rem က Root နဲ့သာ လိုက်ပါတယ်။
+- Responsive Design မှာ Relative Unit (em/rem) ကို ဦးစားပေးပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Browser တွေရဲ့ Default Root Font Size က ဘယ်လောက်လဲ?", options: ["16px", "12px", "10px", "18px"], correctAnswer: 0, explanation: "Browser တွေရဲ့ Default Root Font Size က 16px ဖြစ်ပါတယ်။" },
+  { id: "q2", question: "32px က ဘယ် em နဲ့ ညီမျှပါသလဲ?", options: ["2em", "1.5em", "0.5em", "3em"], correctAnswer: 0, explanation: "32px ÷ 16 = 2em ဖြစ်ပါတယ်။" },
+]} />

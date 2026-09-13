@@ -1,0 +1,119 @@
+---
+title: "HTML Canvas — JavaScript နဲ့ ပန်းချီဆွဲခြင်း"
+description: "canvas element နဲ့ JavaScript သုံးပြီး rectangle, line, circle, text စတာတွေ ဘယ်လိုဆွဲလဲ လေ့လာကြမယ်။"
+---
+
+HTML5 `<canvas>` ဆိုတာ Browser ပေါ်မှာ JavaScript သုံးပြီး ပန်းချီဆွဲလို့ရတဲ့ နေရာတစ်ခုပါ။ Chart၊ ဂိမ်း၊ animation စတာတွေ လုပ်ဖို့ အရမ်း အသုံးဝင်ပါတယ်။ Canvas ကိုတော့ `getContext("2d")` နဲ့ စပြီး အသုံးပြုရပါတယ်။
+
+### Canvas Element
+
+`<canvas>` element ကိုတော့ HTML ထဲမှာ `width` နဲ့ `height` သတ်မှတ်ပြီး နေရာချပေးရုံပါပဲ။ ပန်းချီဆွဲတာတွေက JavaScript ထဲမှာ လုပ်ရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<canvas id="myCanvas" width="400" height="300"></canvas>
+```
+
+မှတ်ချက် — Canvas ကိုတော့ id နဲ့ လိုအပ်တဲ့ အတိုင်းအတာ ထားပြီး၊ တကယ်ဆွဲဖို့ JavaScript ကို သုံးရပါတယ်။
+
+### Context ရယူခြင်း
+
+Canvas ပေါ်မှာ ဆွဲဖို့ အရင်ဆုံး `getContext("2d")` နဲ့ drawing context ကို ရယူရပါတယ်။ ဒီ context က ဆွဲတဲ့ method (လုပ်ဆောင်ချက်) တွေ အားလုံးကို ပေးပါတယ်။
+
+**ဥပမာ -**
+
+```javascript
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+```
+
+မှတ်ချက် — Context မရယူထားရင် canvas ပေါ်မှာ ဘာမှ ဆွဲလို့မရပါဘူး။
+
+### Rectangle ဆွဲခြင်း
+
+`fillRect` က color ဖြည့်ထားတဲ့ rectangle ဆွဲပြီး `strokeRect` က အကြမ်းဖျဉ်း (border) ပဲ ပါတဲ့ rectangle ကို ဆွဲပါတယ်။ `clearRect` က နေရာတစ်ခုကို ရှင်းပစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```javascript
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+
+ctx.fillStyle = "steelblue";
+ctx.fillRect(40, 40, 150, 80);
+
+ctx.strokeStyle = "darkred";
+ctx.strokeRect(220, 40, 150, 80);
+```
+
+မှတ်ချက် — `fillRect(x, y, width, height)` မှာ x, y က ဘယ်( အပေါ်ကနေ မျဉ်းပြိုင်) နေရာ ဖြစ်ပြီး width, height က အရွယ်အစား ဖြစ်ပါတယ်။
+
+### Line ဆွဲခြင်း
+
+Line ဆွဲဖို့ `beginPath` နဲ့ အစပြုပြီး `moveTo` နဲ့ အစမှတ်၊ `lineTo` နဲ့ ဆုံးမှတ် သတ်မှတ်ကာ `stroke` နဲ့ ရေးဆွဲပါတယ်။
+
+**ဥပမာ -**
+
+```javascript
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+
+ctx.beginPath();
+ctx.moveTo(50, 200);
+ctx.lineTo(250, 100);
+ctx.lineWidth = 4;
+ctx.strokeStyle = "green";
+ctx.stroke();
+```
+
+မှတ်ချက် — `stroke` ခေါ်မှသာ line ပေါ်လာပြီး `lineWidth` နဲ့ ထူပြီး ပြောင်းလို့ရပါတယ်။
+
+### Circle ဆွဲခြင်း
+
+Circle ဆွဲဖို့ `arc` method ကို သုံးပြီး center နေရာ၊ အချင်းဝက် (radius)၊ စတင်ထောင့်နဲ့ ဆုံးထောင့်ကို သတ်မှတ်ရပါတယ်။
+
+**ဥပမာ -**
+
+```javascript
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+
+ctx.beginPath();
+ctx.arc(120, 180, 60, 0, 2 * Math.PI);
+ctx.fillStyle = "orange";
+ctx.fill();
+```
+
+မှတ်ချက် — `0` ကနေ `2 * Math.PI` အထိ ဆိုရင် စက်ဝိုင်း အပြည့် ဖြစ်သွားပြီး `fill` က color ဖြည့်ပေးပါတယ်။
+
+### Text ရေးခြင်း
+
+Canvas ပေါ်မှာ `fillText` သို့မဟုတ် `strokeText` နဲ့ စာသားတွေ ရေးလို့ရပြီး `font` နဲ့ ဖောင့်ကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+
+```javascript
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+
+ctx.font = "30px Arial";
+ctx.fillStyle = "purple";
+ctx.fillText("Takkatho", 50, 270);
+```
+
+မှတ်ချက် — `fillText(text, x, y)` မှာ x, y က စာသား စတင်တဲ့ နေရာကို ညွှန်ပြပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Canvas ဆွဲဖို့ `getContext("2d")` ကို အရင်ရှာရတယ်
+- `fillRect` က အရောင်ဖြည့်ပြီး `strokeRect` က အကြမ်းဖျဉ်းပဲ
+- Line နဲ့ circle က `beginPath` နဲ့ စတင်ရတယ်
+- Circle က arc နဲ့ 0 ကနေ 2*Math.PI အထိ ဆွဲရတယ်
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Canvas ပေါ်မှာ ဆွဲဖို့ ဘာ method ကို အရင်ခေါ်ရလဲ", options: ["getContext", "draw", "start", "init"], correctAnswer: 0, explanation: "getContext(2d) ကို ခေါ်မှ ဆွဲတဲ့ method တွေ ရပါတယ်" },
+  { id: "q2", question: "အရောင်ဖြည့်ထားတဲ့ rectangle ဆွဲဖို့ ဘာ method ကို သုံးလဲ", options: ["strokeRect", "fillRect", "rect", "drawRect"], correctAnswer: 1, explanation: "fillRect က အတွင်းအရောင် ဖြည့်ထားတဲ့ rectangle ကို ဆွဲပါတယ်" },
+  { id: "q3", question: "Circle ဆွဲဖို့ ဘယ် method ကို သုံးလဲ", options: ["circle", "round", "arc", "curve"], correctAnswer: 2, explanation: "arc method နဲ့ 0 ကနေ 2*Math.PI ထိ ဆွဲရင် circle ဖြစ်ပါတယ်" } ]} />

@@ -1,0 +1,93 @@
+---
+title: "CSS Errors — အဖြစ်များသော အမှားများ"
+description: "Semicolon မေ့ခြင်း၊ Property စာလုံးပေါင်းမှားခြင်း စတဲ့ CSS အမှားတွေနဲ့ Browser က ဘယ်လို ကိုင်တွယ်လဲ။"
+---
+
+### CSS Error တွေက ဘယ်လိုပုံစံလဲ?
+
+CSS က Programming Language လိုမဟုတ်ဘဲ Syntax မှားရင် Error ကြီးကြီး မပေါ်ပဲ Browser က **တိတ်တဆိတ် ကျော်ဖတ်** သွားတတ်ပါတယ်။ ဒါကြောင့် Style မကျတဲ့အခါ ဘယ်နေရာမှာမှား ဆိုတာကို သေချာ စစ်ရပါတယ်။
+
+### Missing Semicolon
+
+Declaration တွေ တစ်ခုထက်ပိုတဲ့အခါ ရှေ့ Declaration ရဲ့ အဆုံးမှာ Semicolon မရှိရင် Declaration နှစ်ခု ရောထွေးပြီး Invalid ဖြစ်သွားတတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  color: red;
+  text-align: center
+}
+```
+
+မှတ်ချက် — နောက်ဆုံး Declaration ကိုတော့ Browser က ညှာတာဖတ်ပေးတတ်ပေမယ့် နောက်ထပ် Declaration ထပ်ထည့်လိုက်တာနဲ့ မှားနိုင်တာမို့ Semicolon ကို အမြဲ ထည့်ပါ။
+
+### Missing Colon
+
+Property နဲ့ Value ကြားမှာ Colon မရှိရင် Declaration တစ်ခုလုံး Invalid ဖြစ်ပြီး Browser က ကျော်သွားပါတယ်။
+
+**ဥပမာ -**
+```css
+h1 {
+  color red;
+}
+```
+
+မှတ်ချက် — `color` နဲ့ `red` ကြားမှာ Colon ( : ) မရှိတာမို့ ဒီ Declaration ကို Browser က လက်မခံပါဘူး။
+
+### Property စာလုံးပေါင်း မှားခြင်း
+
+Property နာမည် မှားရင်လည်း ဒီ Declaration တစ်ခုတည်းကိုသာ Browser က Ignore လုပ်ပြီး ကျန်တဲ့ Declaration တွေ ဆက်အလုပ်လုပ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  colr: red;
+  background-color: yellow;
+}
+```
+
+မှတ်ချက် — `colr` က အသိအမှတ်မပြုတဲ့ Property မို့ Skip ဖြစ်ပြီး background-color ကတော့ ဆက်ပြီး အလုပ်လုပ်ပါတယ်။
+
+### Selector မှားခြင်း
+
+Selector နာမည် မှားရေးရင် Browser က ထို Selector နဲ့ ကိုက်ညီတဲ့ Element ရှာမတွေ့လို့ Style ကို ကျော်သွားတာပါ။
+
+**ဥပမာ -**
+```css
+Headerr {
+  color: red;
+}
+```
+
+မှတ်ချက် — `Headerr` ဆိုတဲ့ Element မရှိတာမို့ ဒီ Style က ဘယ် Element ကိုမှ သက်ရောက်မှာ မဟုတ်ပါဘူး။
+
+### Browser DevTools နဲ့ စစ်ဆေးခြင်း
+
+Style မကျတဲ့အခါ Browser ရဲ့ Developer Tools (F12) ဖွင့်ပြီး Element ပေါ်မှာ Right Click နှိပ်၍ Inspect လုပ်ပါ။ Invalid ဖြစ်နေတဲ့ Rule တွေကို အဲ့ဒီမှာ မြင်ရပါတယ်။
+
+**ဥပမာ -**
+```css
+h1 {
+  color: blue;
+  font-size: 24px;
+  background-color: lightgray;
+}
+```
+
+မှတ်ချက် — DevTools ထဲမှာ Invalid ဖြစ်တဲ့ Rule တွေကို ကျော်ဖြတ်မျဉ်း (Strikethrough) နဲ့ ပြသလေ့ ရှိပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- CSS Error အများစုက Browser မှာ ပြင်းပြင်းထန်ထန် မပေါ်ပဲ တိတ်တဆိတ် ကျော်သွားတတ်သည်။
+- Property နာမည်မှား ၊ Colon သို့မဟုတ် Semicolon မေ့တာက အဖြစ်များသော အမှားများ ဖြစ်သည်။
+- Troubleshooting လုပ်ဖို့ Browser DevTools က အဓိက ကိရိယာ ဖြစ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Semicolon မပါတဲ့ Declaration ဖြစ်ရင် Browser က ဘယ်လို တုံ့ပြန်ပါသလဲ?", options: ["Error လုံးကြီးပြတယ်", "လိုက်လျောဖတ်ပေးတယ်", "Page ကို ပိတ်ပစ်တယ်", "Server ကို အသိပေးတယ်"], correctAnswer: 1, explanation: "CSS က တည်တည်ငြိမ်ငြိမ် ဖတ်တတ်ပြီး နောက်ဆုံး Declaration မှာ Semicolon မပါလည်း ဖတ်ပေးတတ်ပါတယ်။" },
+    { id: "q2", question: "Property စာလုံးပေါင်း မှားရင် ဘာဖြစ်ပါသလဲ?", options: ["Browser က ပြင်ပေးတယ်", "Page Crash ဖြစ်တယ်", "အဲဒီ Declaration ကို Ignore လုပ်တယ်", "Redirect ဖြစ်တယ်"], correctAnswer: 2, explanation: "Invalid Property ကို Browser က အသိအမှတ်မပြုဘဲ ကျန်တဲ့ Rule တွေ ဆက်အလုပ်လုပ်ပါတယ်။" },
+    { id: "q3", question: "CSS Troubleshooting အတွက် အဓိက ကိရိယာက ဘာလဲ?", options: ["Task Manager", "Browser DevTools", "Notepad", "Command Prompt"], correctAnswer: 1, explanation: "Browser DevTools နဲ့ Inspect လုပ်ပြီး Invalid ဖြစ်နေတဲ့ Rule တွေကို စစ်နိုင်ပါတယ်။" },
+  ]}
+/>

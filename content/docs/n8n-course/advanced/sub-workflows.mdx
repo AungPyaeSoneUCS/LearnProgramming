@@ -1,0 +1,56 @@
+---
+title: "Sub-Workflows နှင့် Reusability (ထပ်မံ သုံးစွဲနိုင်သော Workflow များနှင့် ရေးသားနည်း)"
+description: "အကြိမ်ကြိမ် ထပ်မံ ရေးသားစရာ မလိုဘဲ Workflow များကို Function ကဲ့သို့ ပြန်လည် ထုပ်ပိုး သုံးစွဲနိုင်သည့် Sub-Workflows အယူအဆ"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="💡 ရည်ရွယ်ချက်">
+  **DRY (Don't Repeat Yourself)** အယူအဆအတိုင်း ထပ်ခါထပ်ခါ သုံးနေရသော Logic များ (ဥပမာ - မြန်မာ ဖုန်းနံပါတ် Format ပြုလုပ်ခြင်း) ကို သီးသန့် Sub-Workflow အဖြစ် ထုပ်ပိုး၍ အခြား Workflow များမှ လှမ်းခေါ် သုံးစွဲနည်းကို သင်ယူရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## Sub-Workflow ဆိုတာ ဘာလဲ?
+
+Sub-Workflow ဆိုသည်မှာ Programming ရှိ **Function** တစ်ခုကဲ့သို့ ဖြစ်ပါတယ်။
+
+မိမိ၏ Workflow များစွာတွင် ထပ်ခါထပ်ခါ သုံးနေရသော Logic များကို သီးသန့် Workflow အဖြစ် ဖန်တီးထားပြီး၊ အဓိက Parent Workflow မှ **Execute Workflow** Node ကို သုံး၍ Parameter များ ပို့ဆောင်ကာ ရလဒ် ပြန်လည် တောင်းယူခြင်း ဖြစ်ပါတယ်။
+
+---
+
+## 1. Sub-Workflow ဖန်တီးနည်း (ဥပမာ - Format MM Phone Number)
+
+```mermaid
+graph LR
+    A[Parent Workflow] -->|1. Call with '0979123456'| B[Execute Workflow Node]
+    B -->|2. Trigger| C[Execute Workflow Trigger Node]
+    C -->|3. Format Logic| D[Code / Set Node]
+    D -->|4. Return '+95979123456'| E[Parent Workflow receives clean data]
+```
+
+### Step 1: Sub-Workflow အသစ် ဖန်တီးခြင်း
+1. Workflow အသစ်တစ်လုံး ဖွင့်၍ Trigger အဖြစ် **Execute Workflow Trigger** ကို ထည့်ပါ။
+2. **Code Node** ထည့်၍ ဝင်ရောက်လာသော ဖုန်းနံပါတ် မည်သည့် ပုံစံမဆို (`09...`, `959...`, `+959...`) ကို စံနှုန်းမီ `+959...` Format သို့ ပြောင်းလဲပါ:
+
+```javascript
+let phone = $input.item.json.phone || "";
+phone = phone.replace(/[^0-9]/g, ""); // Remove dashes & spaces
+if (phone.startsWith("09")) {
+  phone = "+959" + phone.slice(2);
+} else if (phone.startsWith("959")) {
+  phone = "+" + phone;
+}
+return { json: { formattedPhone: phone } };
+```
+
+### Step 2: Parent Workflow မှ လှမ်းခေါ် သုံးစွဲခြင်း
+1. အဓိက Workflow ထဲတွင် **Execute Workflow** Node ကို ထည့်ပါ။
+2. Source တွင် **Database / Saved Workflow** ကို ရွေး၍ ခုနက ဖန်တီးခဲ့သော "Core: Format MM Phone" ကို ရွေးပါ။
+3. Input Field တွင် `phone` တန်ဖိုးကို ပို့ပေးလိုက်ပါက သန့်စင်ပြီးသော ဖုန်းနံပါတ် ရလဒ် ပြန်လည် ရရှိမည် ဖြစ်ပါတယ်။
+
+---
+
+## Sub-Workflow အသုံးပြုခြင်း၏ အဓိက အားသာချက်များ
+
+1. **Maintainability (ပြင်ဆင်ရ လွယ်ကူခြင်း):** Logic ပြောင်းလဲပါက Sub-Workflow တစ်ခုတည်းတွင် ပြင်ရုံဖြင့် သုံးထားသော Workflow များစွာတွင် အလိုအလျောက် ပြောင်းလဲသွားခြင်း။
+2. **Clean Canvas (သပ်ရပ်သော Workflow):** Parent Workflow တွင် Node ပေါင်းများစွာ ရှုပ်ထွေးမနေတော့ဘဲ စနစ်တကျ ဖြစ်သွားခြင်း။
+3. **Shared Utilities:** Team တစ်ခုလုံး ပူးတွဲ သုံးနိုင်သော Common Tools (ဥပမာ - Phone Formatter, Currency Converter, Custom Email Sender) များ ဖန်တီးနိုင်ခြင်း။

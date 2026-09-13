@@ -1,0 +1,76 @@
+---
+title: "Pseudo-elements"
+description: "CSS ဖြင့် Element အသစ် ဖန်တီးခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import before from '@/assets/css/before.png'
+import content from '@/assets/css/content.png'
+import selection from '@/assets/css/selection.png'
+
+<Aside title="တစ္ဆေ Element များ">
+တကယ့် HTML Code ထဲမှာ မပါလာပေမဲ့၊ CSS ဘက်ကနေပြီး Element အတုလေးတွေ ဖန်တီးကာ လိုအပ်တဲ့ နေရာမှာ ဝင်ထည့်ပေးလို့ ရပါတယ်။
+သူ့ကို ရေးတဲ့အခါကျရင်တော့ Selector ရဲ့ နောက်မှာ ကော်လံ နှစ်ခု (`::`) ခံပြီး ရေးပေးရပါတယ် ခင်ဗျာ။
+</Aside>
+
+### ::before နှင့် ::after
+Element တစ်ခုရဲ့ အရှေ့ဘက် (`::before`) နဲ့ အနောက်ဘက် (`::after`) နေရာတွေမှာ မိမိလိုချင်တဲ့ Content တစ်ခုခုကို ထည့်သွင်းပေးတာပါ။
+ဒီနေရာမှာ အရေးကြီးတာက `content: ""` ဆိုတဲ့ Property က မပါမဖြစ် ပါကိုပါရပါမယ်။ မပါရင် အလုပ်မလုပ်ပါဘူး။
+
+```css
+/* ခေါင်းစဉ်ရှေ့မှာ မီးတောက်လေး ထည့်မယ် */
+h1::before {
+  content: "🔥";
+  margin-right: 10px;
+}
+
+/* စာကြောင်းဆုံးရင် "Read More" လို့ ထည့်မယ် */
+.excerpt::after {
+  content: " Read More...";
+  color: blue;
+  font-size: 0.8em;
+}
+```
+
+<ContentImage src={before} alt="before sample"  />
+
+### အလှဆင်ရာတွင် အသုံးပြုခြင်း
+`content: ""` ကို ဘာစာမှမရေးဘဲ အလွတ်ထားခဲ့ပြီး၊ သူ့ကို Width တွေ Height တွေ သတ်မှတ်ပေးကာ မိမိစိတ်ကြိုက် လှပတဲ့ ဒီဇိုင်းလေးတွေ ဖန်တီးလို့လည်း ရပါသေးတယ်။
+
+```css
+/* Button ပေါ်မှာ Mouse တင်ရင် အောက်က မျဉ်းကြောင်းလေး ပြေးလာတာမျိုး */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: red;
+  transition: width 0.3s;
+}
+
+.nav-link:hover::after {
+  width: 100%; /* Hover လုပ်ရင် မျဉ်းကြောင်းက အပြည့် ဖြစ်သွားမယ် */
+}
+```
+
+<ContentImage src={content} alt="content sample"  />
+
+### အခြား Pseudo-elements
+*   `::first-letter` - စာပိုဒ်တစ်ခုရဲ့ ပထမဆုံး စာလုံးလေး တစ်လုံးတည်းကိုပဲ ရွေးချယ်တာပါ။ (သတင်းစာတွေမှာလို Drop Cap ဒီဇိုင်းမျိုး လုပ်ချင်ရင် သုံးပါတယ်)
+*   `::first-line` - စာပိုဒ်ရဲ့ ပထမဆုံး စာကြောင်း တစ်ကြောင်းလုံးကို ရွေးချယ်တာပါ။
+*   `::selection` - User က စာသားတွေကို Mouse နဲ့ ဖိဆွဲပြီး Select မှတ်လိုက်တဲ့ အချိန်မှာ ပေါ်လာမယ့် Highlight အရောင်ကို ပြောင်းချင်တဲ့အခါ သုံးပါတယ် ခင်ဗျာ။
+
+```css
+p::selection {
+  background-color: yellow;
+  color: black;
+}
+```
+<ContentImage src={selection} alt="selection sample"  />

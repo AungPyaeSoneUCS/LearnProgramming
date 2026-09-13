@@ -1,0 +1,138 @@
+---
+title: "CSS Forms — Form Element များကို Style လုပ်ခြင်း"
+description: "Input, Textarea, Select တို့ကို padding, border, hover, focus စတာတွေနဲ့ အလှဆင်ပြီး သုံးရလွယ်ကူအောင် ပြုလုပ်နည်းကို လေ့လာကြည့်ရအောင်။"
+---
+
+### Form Element တွေ Style လုပ်ခြင်း
+
+Input, Textarea, Select စတဲ့ Form Element တွေက Browser ရဲ့ Default Style နဲ့ လာပြီး Website နဲ့ လိုက်ဖက်ဖို့ CSS နဲ့ ပြောင်းလို့ ရပါတယ်။ ပထမဆုံး Font-Family ကို မိဘနဲ့ ကိုက်ညီအောင် သတ်မှတ်ပါ။
+
+**ဥပမာ -**
+```css
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+```
+
+မှတ်ချက် — Form Element တွေက Default အားဖြင့် Font ကို အမွေမခံပါဘူး။ font-family: inherit ထည့်ပေးမှ မိဘနဲ့ လိုက်ဖက်ပါတယ်။
+
+### Full-width Input (Padding နဲ့ Border အပါအဝင်)
+
+Mobile Screen မှာ Input တွေကို မျက်နှာပြင် အပြည့်ဖြစ်အောင် width: 100% ပေးပြီး box-sizing: border-box ကို သုံးကာ Padding နဲ့ Border တွေကို Width အတွင်းမှာ ထည့်ပေါင်းပါတယ်။
+
+**ဥပမာ -**
+```css
+.input-group {
+  width: 100%;
+  margin-bottom: 15px;
+}
+.input-group input,
+.input-group select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+}
+```
+
+မှတ်ချက် — box-sizing: border-box မရှိရင် width 100% က padding နဲ့ border တွေ ထပ်ပေါင်းသွားလို့ Overflow ဖြစ်တတ်ပါတယ်။
+
+### Hover နဲ့ Focus
+
+Hover က Mouse လာရပ်တဲ့အခါ Style ပြောင်းပြီး Focus က Element ကို ရွေးလိုက်တဲ့အခါ (Click လုပ်တာ၊ Tab နဲ့ ရွေးတာ) Style ပြောင်းပါတယ်။ Focus Style က Keyboard သုံးသူတွေအတွက် မရှိမဖြစ် လိုအပ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+input:hover {
+  border-color: #999;
+}
+input:focus {
+  border-color: #337ab7;
+  outline: 3px solid rgba(51, 122, 183, 0.25);
+}
+```
+
+မှတ်ချက် — Focus Outline ကို လုံးဝ ဖယ်မထားပါနဲ့။ လက်ရှိ ရွေးနေတဲ့ Field ဘယ်မှာ ရှိလဲ သိရဖို့ လိုအပ်တဲ့ Indicator ဖြစ်ပါတယ်။
+
+### Textarea နဲ့ Select
+
+Textarea ကို အမြင့်နဲ့ Resize အပြုအမူ သတ်မှတ်လို့ ရပြီး Select ရဲ့ Dropdown Arrow ကတော့ Browser ကိုယ်တိုင် ပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+textarea {
+  width: 100%;
+  height: 120px;
+  resize: vertical;
+  padding: 10px;
+}
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+```
+
+မှတ်ချက် — textarea ကို resize: vertical ပေးတာက Layout မပျက်စေဘဲ အမြင့်တစ်ဖက်တည်း ပြောင်းလို့ရအောင် လုပ်ထားတာဖြစ်ပြီး User တွေ သက်တောင့်သက်သာ ရှိစေပါတယ်။
+
+### Form အပြည့်အစုံ
+
+အထက်ပါအချက်တွေကို ပေါင်းစပ်ထားတဲ့ Form တစ်ခုလုံးရဲ့ Style ကို ကြည့်ကြရအောင်။
+
+**ဥပမာ -**
+```css
+.form {
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+}
+.form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+.form input,
+.form select,
+.form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.form button {
+  background: #337ab7;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.form button:hover {
+  background: #286090;
+}
+```
+
+မှတ်ချက် — :hover Style က Mouse မှာပဲ အလုပ်လုပ်တဲ့အတွက် Touchscreen Device တွေမှာတော့ :active ကိုပါ ထည့်စဉ်းစားသင့်ပါတယ်။
+
+### အကျဉ်းချုပ်
+
+Form Element တွေကို padding, border, border-radius, width: 100% တွေနဲ့ Style လုပ်ပြီး hover + focus Style တွေကို အမြဲ ထည့်ပေးပါ။ ဒါတွေက User တွေ Form ကို သုံးရလွယ်ကူစေပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Form Element တွေ မိဘရဲ့ Font ကို ရဖို့ ဘာ Property Value ထည့်ရမလဲ?", options: ["font-family: inherit", "font-family: initial", "font-family: unset", "font-family: none"], correctAnswer: 0, explanation: "Form Element တွေက Font ကို Default မှာ အမွေမရလို့ font-family: inherit ထည့်ပေးရပါတယ်။" },
+    { id: "q2", question: "Width 100% Input မှာ Padding ပါဝင်ပြီး Overflow မဖြစ်အောင် ဘာ Property သုံးမလဲ?", options: ["box-sizing: border-box", "overflow: hidden", "position: relative", "float: left"], correctAnswer: 0, explanation: "border-box က padding နဲ့ border ကို width ထဲ ထည့်ပေါင်းလို့ Overflow မဖြစ်တော့ပါဘူး။" },
+    { id: "q3", question: "Keyboard သုံးသူတွေ လက်ရှိ ရွေးနေတဲ့ Field ကို သိရဖို့ ဘယ် Selector က အရေးကြီးပါသလဲ?", options: ["input:focus", "input:hover", "input:active", "input:checked"], correctAnswer: 0, explanation: "Focus Style က လက်ရှိ ရွေးထားတဲ့ Element ကို Outline နဲ့ ပြပေးလို့ မရှိမဖြစ် လိုအပ်ပါတယ်။" },
+  ]}
+/>

@@ -1,0 +1,96 @@
+---
+title: "HTML JavaScript — HTML တွင် JavaScript အသုံးပြုခြင်း"
+description: "Script tag ဖြင့် JavaScript ထည့်သွင်းနည်း၊ ပြင်ပ js file ချိတ်ဆက်နည်းတို့ကို လေ့လာကြမယ်။"
+---
+
+JavaScript ဆိုတာ web page တွေကို အသက်ဝင်လာစေမယ့် (interactive ဖြစ်စေမယ့်) scripting language ဖြစ်ပါတယ်။ HTML က စာမျက်နှာရဲ့ အရိုးစု ဖြစ်ပြီး JavaScript ကတော့ အသုံးပြုသူနဲ့ အပြန်အလှန် တုံ့ပြန်မှုတွေကို လုပ်ဆောင်ပေးပါတယ်။ JavaScript မရှိရင် ခေတ်မီ website တွေရဲ့ dialog box တွေ၊ form validation တွေ၊ animation တွေ ဖြစ်နိုင်မှာ မဟုတ်ပါဘူး။
+
+### Script Tag
+
+HTML ထဲမှာ JavaScript ထည့်ဖို့ `<script>` tag ကို အသုံးပြုပါတယ်။ Script ကို `<head>` ထဲမှာ ဖြစ်စေ၊ `<body>` ရဲ့ အဆုံးမှာ ဖြစ်စေ ထည့်နိုင်ပါတယ်။ Body ရဲ့ အောက်ဆုံးမှာ ထည့်တာက အသုံးအများဆုံး နည်းလမ်းဖြစ်ပြီး page content တွေ အရင်ပေါ်စေဖို့ အတွက် အကြံပြုချက်လည်း ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript ဥပမာ</title>
+</head>
+<body>
+  <h1>Hello JavaScript</h1>
+
+  <script>
+    document.write("ဒီစာကြောင်းက JavaScript ကရေးထားတာပါ");
+  </script>
+</body>
+</html>
+```
+
+မှတ်ချက် — `document.write()` ကို သင်ယူလေ့ကျင့်ရန် သုံးနိုင်ပေမယ့် real website တွေမှာ သုံးလေ့မရှိပါဘူး။ Element များကို စီမံရန် document method များကို သုံးတာ ပိုကောင်းပါတယ်။
+
+### Internal vs External JavaScript
+
+Script ကို HTML file ထဲမှာ တိုက်ရိုက်ရေးတာကို internal လို့ ခေါ်ပြီး သီးခြား `.js` file တစ်ခု ဖန်တီးပြီး `<script src>` ဖြင့် ချိတ်ဆက်တာကို external လို့ ခေါ်ပါတယ်။ External file ကို တစ်နေရာမှာသာ ရေးထားပြီး စာမျက်နှာ အများကြီးမှာ ပြန်သုံးနိုင်လို့ ပိုသန့်ရှင်းပြီး ထိန်းသိမ်းရလွယ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!-- internal script -->
+<script>
+  function sayHello() {
+    alert("မင်္ဂလာပါ!");
+  }
+</script>
+
+<!-- external script -->
+<script src="myscript.js"></script>
+```
+
+မှတ်ချက် — External file ရဲ့ path ကို `src` attribute မှာ ထည့်ပေးပြီး `.js` extension ဖြင့် အဆုံးသတ်ရပါတယ်။
+
+### DOM Element ကို ဖမ်းယူခြင်း (getElementById)
+
+JavaScript ရဲ့ အားသာချက်က HTML element တွေကို ရှာဖွေပြီး ၎င်းတို့ရဲ့ content သို့မဟုတ် style ကို ပြောင်းလဲနိုင်ခြင်း ဖြစ်ပါတယ်။ `document.getElementById()` က element တစ်ခုကို ၎င်း၏ `id` ဖြင့် ရှာဖွေနိုင်တဲ့ အသုံးအများဆုံး method ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<p id="welcome">ဒီစာကို ပြောင်းမယ်</p>
+
+<script>
+  document.getElementById("welcome").innerHTML =
+    "JavaScript က ဒီစာကို ပြောင်းလိုက်ပြီ!";
+</script>
+```
+
+မှတ်ချက် — `innerHTML` က element တစ်ခုရဲ့ အတွင်းပိုင်း content ကို သတ်မှတ်ပေးပါတယ်။ ဒါကြောင့် JavaScript က page ပေါ်မှာ တစ်ခုခုကို ပြောင်းလဲပြသနိုင်တာပဲ ဖြစ်ပါတယ်။
+
+### Noscript Tag
+
+အသုံးပြုသူရဲ့ browser မှာ JavaScript ပိတ်ထားပါက website တွေ ပုံမှန်အလုပ်မလုပ်နိုင်တော့ပါဘူး။ `<noscript>` tag ထဲမှာ ရေးထားတဲ့ content ကိုတော့ JavaScript ပိတ်ထားချိန်မှာ ပြသပေးပါတယ်။ JavaScript ဖွင့်ထားတဲ့ browser တွေမှာတော့ noscript content ကို မပြပါဘူး။
+
+**ဥပမာ -**
+
+```html
+<noscript>
+  သင့်ရဲ့ browser မှာ JavaScript ပိတ်ထားပါတယ်။
+  ဒီ website ကို အပြည့်အဝ သုံးရန် JavaScript ဖွင့်ပေးပါ။
+</noscript>
+```
+
+မှတ်ချက် — Noscript က သုံးစွဲသူတွေကို JavaScript မရှိဘဲ site အသုံးပြုလို့ ရလား ဆိုတာ အသိပေးရန် သုံးလေ့ရှိပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `<script>` tag က HTML ထဲ JavaScript ထည့်ရန် သုံးသည်။
+- External `.js` file ကို `<script src="file.js">` ဖြင့် ချိတ်ဆက်သည်။
+- `document.getElementById()` သည် element ကို ရှာဖွေပြီး စီမံပေးသည်။
+- `<noscript>` က JavaScript ပိတ်ထားချိန် မက်ဆေ့ပြသပေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "HTML ထဲမှာ JavaScript ထည့်ရန် ဘယ် tag ကို သုံးမလဲ?", options: ["js", "script", "javascript", "code"], correctAnswer: 1, explanation: "script tag ကို အသုံးပြု၍ JavaScript code များကို HTML ထဲတွင် ထည့်နိုင်သည်။" },
+  { id: "q2", question: "External JavaScript file ကို ဘယ် attribute ဖြင့် ချိတ်ဆက်မလဲ?", options: ["href", "link", "src", "file"], correctAnswer: 2, explanation: "src attribute တွင် JavaScript file ၏ path ကို ထည့်ပေးခြင်းဖြင့် ချိတ်ဆက်သည်။" },
+  { id: "q3", question: "Element တစ်ခုကို id ဖြင့် ရှာဖွေရန် ဘယ် method ကို သုံးမလဲ?", options: ["getElementByClass", "getElementById", "findElement", "selectElement"], correctAnswer: 1, explanation: "getElementById method သည် id ဖြင့် element ကို ရှာဖွေပေးသည်။" } ]} />

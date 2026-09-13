@@ -1,0 +1,96 @@
+---
+title: "CSS Box Model — Element တစ်ခုရဲ့ ဖွဲ့စည်းပုံ အပြည့်အစုံ"
+description: "content, padding, border, margin ဆိုတဲ့ box model ရဲ့ အစိတ်အပိုင်းလေးခုနဲ့ စုစုပေါင်း အကျယ် တွက်နည်းကို လေ့လာမယ်။"
+---
+
+### Box Model ဆိုတာ ဘာလဲ?
+
+HTML element အားလုံးက တကယ်တော့ **Box (အကွက်)** တစ်ခုစီပါ။ ဒီ box တစ်ခုစီမှာ **content**, **padding**, **border**, **margin** ဆိုတဲ့ အလွှာလေးခု ရှိပြီး ဒီလေးခု ပေါင်းစပ်ထားတာကို **Box Model** လို့ ခေါ်ပါတယ်။ Layout ညှိတဲ့အခါ ဒီအလွှာတွေ ဘယ်လို အလုပ်လုပ်လဲ နားလည်ထားဖို့ အရေးကြီးပါတယ်။
+
+### Box Model Diagram
+
+အတွင်းကနေ အပြင်ကို ကြည့်ရင် box model ရဲ့ ပုံလေးက ဒီလိုပါ။
+
+**ဥပမာ -**
+```css
+/*  ┌───────────────────────────┐
+    │         Margin            │
+    │  ┌─────────────────────┐  │
+    │  │      Border         │  │
+    │  │  ┌───────────────┐  │  │
+    │  │  │    Padding    │  │  │
+    │  │  │  ┌─────────┐  │  │  │
+    │  │  │  │ Content │  │  │  │
+    │  │  │  └─────────┘  │  │  │
+    │  │  └───────────────┘  │  │
+    │  └─────────────────────┘  │
+    └───────────────────────────┘ */
+```
+
+မှတ်ချက် — Margin က အပြင်ဆုံး၊ Content က အတွင်းဆုံး ဖြစ်ပြီး padding နဲ့ border က သူ့ကြားထဲမှာ ရှိပါတယ်။
+
+### အစိတ်အပိုင်း လေးခု (The Four Parts)
+
+**Content** က text နဲ့ image တွေ ထားတဲ့ နေရာ၊ **Padding** က content နဲ့ border ကြား အတွင်းဘက် နေရာလွတ်၊ **Border** က padding အပြင်ဘက်က ဘောင်၊ **Margin** က element ရဲ့ အပြင်ဘက် နေရာလွတ်ပါ။
+
+**ဥပမာ -**
+```css
+.box {
+  width: 300px;            /* content အကျယ် */
+  padding: 10px;           /* content ပတ်လည် */
+  border: 5px solid black; /* အပြင်ဘောင် */
+  margin: 20px;            /* element အပြင်ဘက် */
+}
+```
+
+မှတ်ချက် — Background color နဲ့ background image က content နဲ့ padding ရဲ့ နေရာအထိ သွားပြီး margin ထဲကိုတော့ မဝင်ပါဘူး။
+
+### စုစုပေါင်း အကျယ် တွက်နည်း (Total Width)
+
+Default (content-box) မှာ element ရဲ့ စုစုပေါင်း အကျယ်က width + left/right padding + left/right border ကို ပေါင်းထားတာပါ။
+
+**ဥပမာ -**
+```css
+/* width: 300px, padding: 10px, border: 5px */
+/* total width = 300 + 10 + 10 + 5 + 5 = 330px */
+.card {
+  width: 300px;
+  padding: 10px;
+  border: 5px solid black;
+}
+```
+
+မှတ်ချက် — Margin က element ရဲ့ မူလ အရွယ်အစား တွက်ချက်မှုထဲ မပါဝင်ပေမဲ့ element တွေကြားက အကွာအဝေးကိုတော့ သတ်မှတ်ပါတယ်။
+
+### box-sizing နဲ့ ထိန်းချုပ်နည်း
+
+`box-sizing: border-box;` ပေးရင် width ထဲမှာ padding နဲ့ border ကို ပါ ထည့်တွက်လို့ စုစုပေါင်း အကျယ်က set ထားတဲ့ width အတိုင်း တည်မြဲပါတယ်။
+
+**ဥပမာ -**
+```css
+* {
+  box-sizing: border-box;
+}
+
+.card {
+  width: 300px;
+  padding: 10px;
+  border: 5px solid black;
+}
+```
+
+မှတ်ချက် — border-box က layout တွက်ရ ပိုလွယ်ကူလို့ universal selector နဲ့ ထည့်သုံးတာ ခေတ်စားပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Element တိုင်းက content, padding, border, margin ဆိုတဲ့ အလွှာလေးခုနဲ့ ဖွဲ့စည်းထားပါတယ်။
+- Content-box မှာ total width = width + padding + border ဖြစ်ပါတယ်။
+- `box-sizing: border-box;` က width ထဲမှာ padding နဲ့ border ကို ထည့်တွက်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Box model ရဲ့ အလွှာလေးခုက ဘာတွေလဲ?", options: ["content, padding, border, margin", "color, font, size, align", "width, height, top, left", "header, footer, side, main"], correctAnswer: 0, explanation: "Box model က content, padding, border, margin ဆိုတဲ့ အလွှာလေးခုနဲ့ ဖွဲ့စည်းထားပါတယ်။" },
+  { id: "q2", question: "width 300px padding 10px border 5px default content-box မှာ total width ကဘယ်လောက်လဲ?", options: ["300px", "325px", "330px", "340px"], correctAnswer: 2, explanation: "width ပေါင်း padding နှစ်ဖက် ပေါင်း border နှစ်ဖက် ဆိုတော့ 300 ပေါင်း 20 ပေါင်း 10 က 330px ပါ။" },
+  { id: "q3", question: "box-sizing: border-box; ရဲ့ အဓိပ္ပာယ်က ဘာလဲ?", options: ["width ထဲမှာ padding နဲ့ border ပါ ဝင်တယ်", "border ကို ဖျောက်တယ်", "padding ကို 0 လုပ်တယ်", "margin ကို width ထဲ ထည့်တယ်"], correctAnswer: 0, explanation: "border-box မှာ total width က set ထားတဲ့ width အတိုင်း ဖြစ်ပြီး padding နဲ့ border က အတွင်းဘက်ကို ကျုံ့ပါတယ်။" }
+]} />

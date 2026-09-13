@@ -1,0 +1,87 @@
+---
+title: "HTML Favicon"
+description: "Browser Tab မှာ ပေါ်တဲ့ အသေးစား Logo ဖြစ်တဲ့ Favicon ကို ဘယ်လို ထည့်ရမလဲဆိုတာ လေ့လာကြပါမယ်။"
+---
+
+### Favicon ဆိုတာ ဘာလဲ?
+
+Favicon (Favorite Icon) ဆိုတာ Website ရဲ့ Logo ဒါမှမဟုတ် အမှတ်အသားကို ကိုယ်စားပြုတဲ့ အသေးစား Icon တစ်ခုပါ။ Browser Tab မှာ Page Title ရဲ့ ဘေးမှာ ပေါ်လေ့ရှိပြီး Bookmarks တွေမှာလည်း မြင်ရပါတယ်။ Website ကို မြန်မြန် မှတ်မိစေဖို့ Favicon က အများကြီး ကူညီပေးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<link rel="icon" href="favicon.ico">
+```
+
+မှတ်ချက် — ဒီ `<link>` tag ကို `<head>` ထဲမှာ ထည့်ပေးရပါတယ်။ ဒါဆိုရင် Browser Tab မှာ ကိုယ့်ရဲ့ Icon လေး ပေါ်လာပါပြီ။
+
+### Favicon ကို `<head>` ထဲမှာ ထည့်သွင်းခြင်း
+
+Favicon ဟာ `<head>` ထဲမှာ ရှိတဲ့ `<link>` tag တစ်ခုပဲ ဖြစ်ပါတယ်။ `rel="icon"` နဲ့ `href` မှာ Icon File ရဲ့ လိပ်စာကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>My Website</title>
+  <link rel="icon" href="images/favicon.png">
+</head>
+<body>
+  <h1>Hello World</h1>
+</body>
+</html>
+```
+
+မှတ်ချက် — `href` ထဲမှာ `favicon.ico` လို့ ရိုးရိုး ရေးရင် Project Folder ထဲက Root မှာ ရှိတဲ့ File ကို ရည်ညွှန်းတာပါ။ Folder ခွဲထားရင် `images/favicon.png` လို Path အပြည့်အစုံ ရေးပါ။
+
+### Favicon Format တွေ
+
+Favicon ကို ပုံစံ အမျိုးမျိုးနဲ့ ထားနိုင်ပါတယ်။ အသုံးများတဲ့ Format တွေကတော့ `.ico`, `.png`, `.svg` တို့ပဲ ဖြစ်ပါတယ်။ `.ico` က ရှေးအကျဆုံး Format ဖြစ်ပြီး `.png` နဲ့ `.svg` တို့က ပိုခေတ်မီပြီး Scale လုပ်ဖို့ လွယ်ကူပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<link rel="icon" type="image/png" href="favicon-32x32.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+```
+
+မှတ်ချက် — `type` attribute က Browser ကို File Format အကြောင်း ကြိုပြောပေးပါတယ်။ SVG ဆိုရင် မည်သည့် အရွယ်အစားမဆို ချောမွေ့စွာ ပြသနိုင်ပါတယ်။
+
+### Browser Tab မှာ မြင်ရတဲ့ ဥပမာ
+
+HTML ကို Browser မှာ ဖွင့်တဲ့အခါ Tab ရဲ့ ဘယ်ဘက်စွန်းမှာ Favicon လေးက Page Title ရဲ့ ရှေ့မှာ ပေါ်ပါတယ်။ ဒါကြောင့် Tab တွေ အများကြီး ဖွင့်ထားချိန်မှာ Website တစ်ခုနဲ့ တစ်ခုကို မြန်မြန် ခွဲခြား သိလွယ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <title>Takkatho</title>
+  <link rel="icon" href="https://example.com/takkatho-logo.png">
+</head>
+<body>
+  <p>Favicon ကို အခု Tab မှာ ကြည့်ပါ။</p>
+</body>
+</html>
+```
+
+မှတ်ချက် — Favicon ကို Online ကနေလည်း Link ချိတ်လို့ ရပါတယ်။ ဒါပေမယ့် ကိုယ့် Website ရဲ့ Project Folder ထဲက File ကို သုံးတာက ပိုပြီး ယုံကြည်စိတ်ချရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Favicon ကို `<head>` ထဲက `<link rel="icon">` နဲ့ ထည့်ပါတယ်။
+- `.ico`, `.png`, `.svg` Format အမျိုးမျိုးကို သုံးနိုင်ပါတယ်။
+- Icon File ရဲ့ Path မှန်ကန်ဖို့ အရေးကြီးပါတယ်။
+- Favicon က Website ကို မှတ်မိစေပြီး Tab ခွဲခြားရာမှာ ကူညီပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Favicon ကို HTML မှာ ဘယ် tag နဲ့ ထည့်ပါသလဲ?", options: ["Image tag", "Link tag", "Script tag", "Style tag"], correctAnswer: 1, explanation: "Favicon ကို head ထဲမှာရှိတဲ့ link tag နဲ့ ထည့်ပါတယ်။" },
+  { id: "q2", question: "Favicon က ဘယ်နေရာမှာ ပေါ်ပါသလဲ?", options: ["Page ရဲ့အောက်ခြေ", "Browser Tab နဲ့ Bookmarks", "Body ထဲက ပထမဆုံးစာကြောင်း", "Blog Post ထဲ"], correctAnswer: 1, explanation: "Favicon က Browser Tab မှာ Page Title ရဲ့ ဘေးမှာ ပေါ်ပါတယ်။" },
+  { id: "q3", question: "အောက်က Format တွေထဲက ဘယ်ဟာက Favicon အဖြစ် သုံးလို့ မရဘူးလဲ?", options: ["ico", "png", "svg", "exe"], correctAnswer: 3, explanation: "exe က Program File ဖြစ်ပြီး Icon Format မဟုတ်ပါဘူး။" }
+]} />

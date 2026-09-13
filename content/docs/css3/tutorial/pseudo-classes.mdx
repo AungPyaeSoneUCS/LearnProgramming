@@ -1,0 +1,109 @@
+---
+title: "CSS Pseudo-classes — State ပေါ်မူတည်ပြီး Style"
+description: "hover, focus, first-child, nth-child, not စတဲ့ pseudo-class တွေကို အသုံးပြုပုံ လေ့လာကြရအောင်။"
+---
+
+### Pseudo-class ဆိုတာဘာလဲ
+
+**Pseudo-class** ဆိုတာ Element ရဲ့ အခြေအနေ (state) ဒါမှမဟုတ် Structure အနေအထားပေါ် မူတည်ပြီး Style သက်ရောက်တဲ့ Selector ပါ။ Colon တစ်လုံး (:) နဲ့ စတင်ပါတယ်။ User က Element ပေါ် Mouse ပေးထားရင် ၊ Form Field ကို Focus လုပ်ထားရင် စတဲ့ ကိစ္စတွေမှာ သုံးပါတယ်။
+
+ဥပမာတွေထဲက `:hover`, `:focus`, `:first-child`, `:nth-child`, `:not` တို့က ဒီသင်ခန်းစာမှာ အဓိက လေ့လာပါမယ်။
+
+**ဥပမာ -**
+```css
+a:hover {
+  color: #ff5722;
+}
+```
+
+မှတ်ချက် — Mouse က Link ပေါ်မှာ ရှိနေတဲ့ အချိန်မှာသာ ဒီ style က အလုပ်လုပ်ပြီး Mouse ဖယ်လိုက်တာနဲ့ ပုံမှန် ပြန်ဖြစ်သွားပါတယ်။
+
+### :hover နဲ့ :focus (Interaction State)
+
+`:hover` က Mouse Cursor ပေါ်တင်နေတဲ့ state ဖြစ်ပြီး `:focus` က Element က Keyboard ဒါမှမဟုတ် Click နဲ့ အာရုံစူးစိုက်ခံထားရတဲ့ state ပါ။ Form Field တွေနဲ့ Button တွေမှာ အသုံးအများဆုံး ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+input:focus {
+  border: 2px solid #2962ff;
+  outline: none;
+}
+
+button:hover {
+  background-color: #43a047;
+  cursor: pointer;
+}
+```
+
+မှတ်ချက် — Input ကို click လုပ်ပြီး focus ဖြစ်တဲ့အခါ border အပြာပြောင်းသွားပြီး default outline ကိုဖျောက်လို့ နှစ်ထပ်ဘောင်မ ဖြစ်အောင် ရှောင်ပါတယ်။
+
+### :first-child နဲ့ :last-child (Position)
+
+`:first-child` က Parent ရဲ့ ပထမဆုံးကလေး ဖြစ်တဲ့ element ကိုရွေးပြီး `:last-child` က နောက်ဆုံးကလေး ကို ရွေးပါတယ်။ List တွေ ၊ Nav Menu တွေမှာ ထိပ်ဆုံးနဲ့ အောက်ဆုံးကို သီးခြား style လုပ်ချင်ရင် အလွန် အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+li:first-child {
+  font-weight: bold;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+```
+
+မှတ်ချက် — `.item:last-child` ကို border-bottom ဖျောက်ဖို့ သုံးတဲ့ pattern က divider-line ရှိတဲ့ list တွေမှာ အသုံးများပါတယ်။
+
+### :nth-child နဲ့ Pattern ရွေးချယ်ခြင်း
+
+`:nth-child` က Parent ကလေးတွေထဲက နေရာ (index) အလိုက် ရွေးချယ်နိုင်ပြီး `odd` / `even` ၊ ကိန်းဂဏန်း ၊ နဲ့ `an + b` formula လို pattern တွေပါ ထည့်သုံးနိုင်ပါတယ်။ Table Row တွေ Striped လုပ်ဖို့ အသုံးအများဆုံး ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+li:nth-child(2) {
+  color: #ff5722;
+}
+
+li:nth-child(3n + 1) {
+  color: #2962ff;
+}
+```
+
+မှတ်ချက် — even က စာကြောင်း စုံတွေ (2, 4, 6...) ကို ရွေးပြီး odd က မစုံတွေ (1, 3, 5...) ကို ရွေးပါတယ်။ 3n + 1 က နေရာ 1, 4, 7 စသဖြင့် ဆက်ကောက်ပါတယ်။
+
+### :not နဲ့ ဖယ်ပြီး ရွေးချယ်ခြင်း
+
+`:not()` အတွင်းက Selector နဲ့ ကိုက်ညီတဲ့ Element တွေကို **ဖယ်ပြီး** ကျန်တာတွေကို ရွေးပါတယ်။ တစ်မျိုးအားဖြင့် Negative (ဆန့်ကျင်ဖက်) Selection လို့လည်း ခေါ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+li:not(.active) {
+  color: #999;
+}
+
+input:not([type="submit"]) {
+  width: 100%;
+}
+```
+
+မှတ်ချက် — `.active` class မရှိတဲ့ li တွေကိုသာ Style လုပ်ပြီး Submit Button မဟုတ်တဲ့ Input တွေကိုသာ width အပြည့် ယူစေပါတယ်။
+
+#### တိုတိုနဲ့လိုရင်း
+
+- Pseudo-class တွေက Element ရဲ့ State သို့မဟုတ် နေရာပေါ် မူတည်ပြီး style ပေးသည်။
+- Interact state တွေပါတယ်။ hover နဲ့ focus က အသုံးအများဆုံး ဖြစ်သည်။
+- nth-child နဲ့ not က Pattern-Based Selection ဖြစ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Mouse က element ပေါ်မှာ ရှိနေတဲ့ state ကို ရွေးဖို့ ဘယ် pseudo-class သုံးပါသလဲ?", options: ["Focus", "Hover", "Active", "First child"], correctAnswer: 1, explanation: "hover က mouse cursor က element ပေါ်မှာ ရှိနေတဲ့ state ကို ရွေးပါတယ်။" },
+    { id: "q2", question: "Table row တွေကို striped (အစင်းစား) လုပ်ဖို့ အသုံးဝင်ဆုံး ဟာက ဘာလဲ?", options: ["Not", "Focus", "First child", "Nth child"], correctAnswer: 3, explanation: "nth-child(even) ကို သုံးပြီး စာကြောင်း စုံတွေကို background ပေးလို့ striped table ရပါတယ်။" },
+    { id: "q3", question: "တစ်ချို့ element တွေကို ဖယ်ပြီး ကျန်တာတွေကို ရွေးချင်ရင် ဘယ် pseudo-class ကို သုံးပါသလဲ?", options: ["Not", "Hover", "Last child", "Nth child"], correctAnswer: 0, explanation: "not(selector) က ထည့်ပေးလိုက်တဲ့ selector နဲ့ ကိုက်ညီတာတွေကို ဖယ်ပြီး ကျန်တာကို ရွေးပါတယ်။" }
+  ]}
+/>

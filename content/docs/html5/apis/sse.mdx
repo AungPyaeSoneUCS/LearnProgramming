@@ -1,0 +1,61 @@
+---
+title: "HTML SSE — Server-Sent Events"
+description: "EventSource နဲ့ Server က Data တွေကို Page ဆီ အလိုအလျောက် ပို့လို့ရတာကို လေ့လာကြည့်ရအောင်။"
+---
+
+### Server-Sent Events (SSE) ဆိုတာ ဘာလဲ?
+
+SSE (Server-Sent Events) ဆိုတာ Server က Data တွေကို Browser ဘက်က တောင်းစရာမလိုဘဲ Page ဆီ အလိုအလျောက် ပို့ပေးတဲ့ နည်းပညာပါ။ ဥပမာ - Live Score, Notification, Stock Price လိုမျိုး ဆက်တိုက်ပြောင်းလဲနေတဲ့ Data တွေအတွက် သင့်တော်ပါတယ်။ Browser က Server ဆီ Connection ဖွင့်ထားပြီး Server က Data အသစ်ရှိတိုင်း ပို့ပေးပါတယ်။
+
+### One-way Communication
+
+SSE က Server ကနေ Client (Browser) ဆီကိုပဲ ပို့တဲ့ One-way Communication ဖြစ်ပါတယ်။ Client ကတော့ Server ဆီ Message ပြန်ပို့လို့မရဘဲ လက်ခံရုံပဲ လုပ်နိုင်ပါတယ်။ ဒါပေမယ့် Real-time Notification, Live Feed လိုနေရာတွေမှာ ဒီလောက်နဲ့တင် လုံလောက်ပြီး ရိုးရှင်းလွယ်ကူပါတယ်။
+
+### EventSource Object နဲ့ Data လက်ခံပုံ
+
+Client ဘက်မှာ `new EventSource(url)` နဲ့ Connection ဖွင့်ပြီး Message ရတဲ့အခါ `onmessage` Event မှာ လက်ခံပါတယ်။ ရောက်လာတဲ့ Message က `event.data` ထဲမှာ String အနေနဲ့ ပါပါတယ်။ Server ကတော့ `text/event-stream` Content-Type နဲ့ Data တွေကို ဆက်တိုက် ပို့ပေးပါတယ်။
+
+**ဥပမာ -**
+```javascript
+var events = new EventSource("https://example.com/live");
+
+events.onmessage = function(event) {
+  console.log("Server က ပို့လိုက်တဲ့ Data:", event.data);
+};
+```
+
+မှတ်ချက် — ဒီ Script ရှိတာနဲ့ Browser က Server နဲ့ Connection ဖွင့်ပြီး Message တွေကို အလိုအလျောက် စောင့်လက်ခံနေပါတယ်။
+
+### Server Side ဥပမာ
+
+Server ဘက်မှာ Data ပို့ဖို့ `text/event-stream` နဲ့ ဖော်မက်ကို မှန်မှန်ကန်ကန် ထည့်ပေးရပါတယ်။ Message တစ်ခုချင်းစီက `data:` နဲ့ စပြီး နောက်ဆုံး Blank Line နဲ့ အဆုံးသတ်ပါတယ်။ ဒီဖော်မက်က ရိုးရှင်းတာမို့ ဘယ် Server Language နဲ့မဆို ရေးလို့ရပါတယ်။
+
+**ဥပမာ -**
+```
+Content-Type: text/event-stream
+
+data: Score က 2-1 ဖြစ်သွားပါပြီ
+
+data: Player အသစ်လာပါပြီ
+
+```
+
+မှတ်ချက် — Server က ပို့တဲ့ Message အတွင်းမှာ `data:` နဲ့ စပြီး Line အလွတ် တစ်ကြောင်းနဲ့ Message တစ်ခုစီကို ခြားပေးရပါတယ်။
+
+### readyState အကြောင်း
+
+EventSource ရဲ့ `readyState` Property က Connection ရဲ့အခြေအနေကို ပြပါတယ်။ `0` (CONNECTING) က ဆက်သွယ်နေတာ၊ `1` (OPEN) က ဖွင့်လို့ရနေတာ၊ `2` (CLOSED) က ပိတ်သွားပြီဖြစ်တာကို ပြတာပါ။ Connection ပျက်သွားရင် Browser က ကိုယ်တိုင် ပြန်ချိတ်ဖို့ ကြိုးစားတာကြောင့် Real-time App အတွက် အသုံးဝင်ပါတယ်။
+
+### SSE နဲ့ WebSocket နှိုင်းယှဉ်ချက်
+
+SSE က Server ကနေ Client ဆီကိုသာ ပို့တဲ့ One-way ဖြစ်ပြီး WebSocket ကတော့ နှစ်ဖက် (Two-way) ဆက်သွယ်မှု ဖြစ်ပါတယ်။ Chat App လိုနေရာမျိုးမှာ WebSocket က သင့်တော်ပြီး Live Feed လို One-way နေရာမှာတော့ SSE က ပိုရိုးရှင်းပါတယ်။ အင်္ဂါရပ်ပေါ်မူတည်ပြီး နှစ်ခုထဲက သင့်တော်တာကို ရွေးချယ်ရပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "SSE မှာ Server က Data ကို ဘယ်လိုပို့ပါသလဲ?", options: ["Client တောင်းမှ ပို့တယ်", "ကိုယ်တိုင် အလိုအလျောက် ပို့တယ်", "လုံးဝမပို့ဘူး", "File နဲ့ပဲ ပို့တယ်"], correctAnswer: 1, explanation: "SSE က Server က Data တွေကို ကိုယ်တိုင် အလိုအလျောက် ပို့ပါတယ်။" },
+    { id: "q2", question: "SSE Connection ဖွင့်ဖို့ ဘယ် Object ကို သုံးပါသလဲ?", options: ["WebSocket", "XMLHttpRequest", "EventSource", "Fetch"], correctAnswer: 2, explanation: "SSE ကို EventSource Object နဲ့ ဖွင့်ပါတယ်။" },
+    { id: "q3", question: "SSE နဲ့ WebSocket ရဲ့ အဓိကကွာခြားချက်က ဘာလဲ?", options: ["SSE က One-way၊ WebSocket က Two-way", "SSE က Two-way၊ WebSocket က One-way", "နှစ်ခုလုံး One-way ပါ", "နှစ်ခုလုံး Two-way ပါ"], correctAnswer: 0, explanation: "SSE က Server မှ Client တစ်လမ်းသွားဖြစ်ပြီး WebSocket က နှစ်ဖက်လုံး ပြောနိုင်ပါတယ်။" },
+  ]}
+/>

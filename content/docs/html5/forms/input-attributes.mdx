@@ -1,0 +1,99 @@
+---
+title: "HTML Input Attributes — Input Field ရဲ့ အပြုအမူများ"
+description: "value, readonly, disabled, size, maxlength, min, max, placeholder, pattern စတဲ့ input attribute တွေကို လေ့လာကြမယ်။"
+---
+
+Input field တွေကို ပိုကောင်းအောင် ချိန်ညှိဖို့ attributes တွေ အများကြီး ရှိပါတယ်။ ဒီ attributes တွေကို သိထားရင် ကိုယ့်ရဲ့ form တွေကို ပိုပြီး အသုံးဝင်အောင်၊ ပိုလုံခြုံအောင် လုပ်နိုင်ပါတယ်။
+
+### Value Attribute
+
+`value` attribute က input box ထဲမှာ ပုံမှန် ပြထားမယ့် စာသားကို သတ်မှတ်ပါတယ်။ Text မှာဆိုရင် initial value ဖြစ်ပြီး checkbox/radio မှာဆိုရင် ပို့မယ့် data ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<input type="text" name="city" value="ရန်ကုန်">
+<input type="checkbox" name="subscribe" value="yes">
+```
+
+မှတ်ချက် — Text input မှာ `value` ရှိနေရင် User က ဖျက်ပြီး ပြန်ရိုက်ရပါတယ်။
+
+### Readonly နဲ့ Disabled
+
+`readonly` ဆိုရင် field ကိုတော့ မြင်ရပြီး ပြင်လို့မရဘဲ `disabled` ဆိုရင် field က လုံးဝ မသုံးလို့မရတဲ့ status ဖြစ်ပြီး data လည်း မပို့ပါဘူး။
+
+**ဥပမာ -**
+
+```html
+<input type="text" name="code" value="TK-001" readonly>
+<input type="text" name="oldfield" value="ဟောင်း" disabled>
+```
+
+မှတ်ချက် — `disabled` field ရဲ့ data တွေက Server ဆီ မရောက်ဘဲ `readonly` field ရဲ့ data ကတော့ ရောက်ပါတယ်။
+
+### Size နဲ့ Maxlength
+
+`size` က field box ရဲ့ မြင်ရတဲ့ အနံကို ချိန်ပေးပြီး `maxlength` က ရိုက်လို့ရတဲ့ စာလုံးအရေအတွက် အများဆုံး သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<input type="text" name="code" size="10" maxlength="5">
+```
+
+မှတ်ချက် — `maxlength` ကျော်ရင် Browser က ရိုက်ထည့်လို့ မရတော့ပါဘူး။
+
+### Min နဲ့ Max
+
+`min` နဲ့ `max` က number, date, range စတဲ့ type တွေမှာ ခွင့်ပြုထားတဲ့ အနိမ့်ဆုံး နဲ့ အမြင့်ဆုံး တန်ဖိုးကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<input type="number" name="age" min="18" max="60">
+<input type="date" name="trip" min="2026-01-01" max="2026-12-31">
+```
+
+မှတ်ချက် — Limit ပြင်ပမှာ ရှိရင် submit လုပ်တဲ့အခါ Browser က မှားကြောင်း ပြပါတယ်။
+
+### Placeholder နဲ့ Pattern
+
+`placeholder` က field ထဲမှာ ဘာရိုက်ရမယ်ဆိုတဲ့ ဥပမာ ပြပေးပြီး `pattern` က regex (ပုံစံစစ်စနစ်) နဲ့ ကိုက်ညီမှု ရှိမရှိ စစ်ပေးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<input type="text" name="phone" placeholder="09xxxxxxxxx"
+       pattern="[0-9]{9,11}">
+<input type="text" name="pincode" placeholder="နံပါတ် ၅ လုံး"
+       pattern="[0-9]{5}">
+```
+
+မှတ်ချက် — Pattern နဲ့မကိုက်ရင် form က submit မဖြစ်ဘဲ error ပြပါတယ်။
+
+### Step Attribute
+
+`step` က number နဲ့ range မှာ တစ်ဆင့်ချင်း ဘယ်လောက် တိုးရမယ်ဆိုတာ သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<input type="range" name="score" min="0" max="10" step="2">
+<input type="number" name="qty" step="5">
+```
+
+မှတ်ချက် — `step` ကြောင့် 0, 2, 4, 6 စသဖြင့် ၂ ဆအလိုက်ပဲ ရွေးလို့ရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `disabled` က field ကို ပိတ်ပြီး data မပို့ဘူး
+- `readonly` က ပြင်မရပေမယ့် data ပို့တယ်
+- `pattern` နဲ့ `min`/`max`/`step` က validation လုပ်ပေးတယ်
+- `placeholder` က ရိုက်ရမယ့် ဥပမာ ပြပေးရုံပဲ
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Field ကို ပြင်လို့မရပေမယ့် data ပို့ချင်ရင် ဘာ attribute ကို သုံးလဲ", options: ["disabled", "readonly", "hidden", "lock"], correctAnswer: 1, explanation: "readonly က ပြင်မရဘဲ data တွေကိုတော့ ပို့ပါတယ်" },
+  { id: "q2", question: "ရိုက်လို့ရတဲ့ စာလုံးအရေအတွက် ကန့်သတ်ဖို့ ဘာ attribute ကို သုံးလဲ", options: ["size", "maxlength", "width", "limit"], correctAnswer: 1, explanation: "maxlength က ရိုက်နိုင်တဲ့ စာလုံးအရေအတွက်ကို ကန့်သတ်ပါတယ်" },
+  { id: "q3", question: "Regex နဲ့ ပုံစံအလိုက် စစ်ပေးတဲ့ attribute ကဘာလဲ", options: ["pattern", "validate", "format", "check"], correctAnswer: 0, explanation: "pattern attribute က regex နဲ့ input ကို စစ်ပေးပါတယ်" } ]} />

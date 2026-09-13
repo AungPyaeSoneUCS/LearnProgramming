@@ -1,0 +1,73 @@
+---
+title: "CSS Gradients — အရောင်များ ချောမွေ့စွာ ကူးပြောင်းခြင်း"
+description: "Linear, Radial, Conic, Repeating Gradient တို့ဖြင့် အရောင်များ ချောမွေ့စွာ ကူးပြောင်းပြသပုံကို လေ့လာကြမယ်။"
+---
+
+### Linear Gradient (မျဉ်းဖြောင့်အတိုင်း ကူးပြောင်းခြင်း)
+
+`linear-gradient()` Function က အရောင်တွေကို မျဉ်းဖြောင့်အတိုင်း ချောမွေ့စွာ ကူးပြောင်းပေးပါတယ်။ ဦးတည်ချက် Direction (to right, to bottom left, 45deg စသည်) ကို အရင်ထည့်ပြီး နောက်မှာ Color Stop တွေကို စီပါတယ်။ Direction မပါရင် Default က အပေါ်ကအောက်သို့ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.a { background: linear-gradient(to right, red, yellow); }
+.b { background: linear-gradient(45deg, #ff7e5f, #feb47b); }
+.c { background: linear-gradient(blue, white, red); }
+```
+
+မှတ်ချက် — Color Stop တွေ အများကြီး ထည့်နိုင်ပြီး နှစ်ခုထက်ပိုရင် အကူးအပြောင်း စုံလင်လာပါတယ်။
+
+### Radial Gradient (အဝိုင်းလိုက် ကူးပြောင်းခြင်း)
+
+`radial-gradient()` က အရောင်တွေကို ဗဟိုကနေ အပြင်ဘက်ကို အဝိုင်းပုံစံ ကူးပြောင်းပေးပါတယ်။ Shape (circle ၊ ellipse) ၊ Size တွေနဲ့ `at` နဲ့ တွဲပြီး Position တွေကိုလည်း သတ်မှတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.sun { background: radial-gradient(circle at center, #ffd700, #ff8c00, #333); }
+.sunset { background: radial-gradient(ellipse at top, lightblue, white); }
+```
+
+မှတ်ချက် — at နဲ့ Position သတ်မှတ်ချက်က Gradient ရဲ့ ဗဟိုကျမယ့်နေရာကို ပြောင်းပေးပါတယ်။
+
+### Conic Gradient (ပတ်လမ်းလိုက် ကူးပြောင်းခြင်း)
+
+`conic-gradient()` က ဗဟိုတစ်ခုကနေ လှည့်ပတ်ပြီး အရောင်တွေ ကူးပြောင်းစေပါတယ်။ Color Wheel ၊ Pie Chart စတဲ့ ပုံစံများမှာ အသုံးအများဆုံးဖြစ်ပြီး `from` နဲ့ စတင်ထောင့်ကိုလည်း သတ်မှတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.wheel {
+  background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+```
+
+မှတ်ချက် — စတင်ထောင့် သတ်မှတ်ချင်ရင် `from 90deg` လိုမျိုး ရေးပြီး ဒါရိုက်တာနဲ့ Color Stop တွေ တန်းစီပါတယ်။
+
+### Repeating Gradient နဲ့ Transparency
+
+`repeating-linear-gradient()` နဲ့ `repeating-radial-gradient()` တွေက Color Stop အကွာအဝေးကို ထပ်ကာထပ်ကာ ပြန်ရွေ့ပေးပါတယ်။ အရောင်တွေမှာ Alpha ပါတဲ့ `rgba()` (သို့) `hsla()` တွေနဲ့ ပွင့်လင်းမှုကို ထည့်ပေါင်းလို့လည်း ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.stripes { background: repeating-linear-gradient(45deg, #eee 0 10px, #333 10px 20px); }
+.fade { background: linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 0, 0, 0)); }
+```
+
+မှတ်ချက် — Repeating Gradient မှာ Color Stop Range (0 10px ပုံစံ) ပေးလေ့ရှိပြီး Transparency က အလွှာပေါင်းများစွာ ထပ်တင်တဲ့အခါ အလွန်လှပပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- linear-gradient က မျဉ်းဖြောင့် ၊ radial-gradient က အဝိုင်း ၊ conic-gradient က ပတ်လမ်းလိုက် ကူးပြောင်းသည်။
+- Direction မပေးရင် linear gradient က အပေါ်ကအောက်သို့ ကူးပြောင်းသည်။
+- Repeating Function တွေက Color Stop တွေကို ထပ်ကာထပ်ကာ ရွေ့ပေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "linear-gradient မှာ Direction မထည့်ရင် Default အနေနဲ့ ဘယ်သို့ ကူးပြောင်းပါသလဲ?", options: ["ဘယ်ကညာသို့", "ညာကဘယ်သို့", "အပေါ်ကအောက်သို့", "ဒေါင်လိုက် အောက်ကအပေါ်သို့"], correctAnswer: 2, explanation: "Direction မပေးရင် Gradient က top to bottom ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "Pie Chart ပုံစံ အရောင်စက်ဝိုင်း လိုအပ်ရင် ဘယ် Gradient က သင့်တော်ပါသလဲ?", options: ["linear-gradient", "radial-gradient", "conic-gradient", "repeating-linear-gradient"], correctAnswer: 2, explanation: "conic-gradient က ဗဟိုကို လှည့်ပတ်ကူးပြောင်းတာမို့ Pie Chart ပုံစံမှာ သုံးပါတယ်။" },
+    { id: "q3", question: "Color Stop တွေကို ထပ်ကာထပ်ကာ ပြန်ရွေ့ပေးတဲ့ Function က ဘာလဲ?", options: ["repeating-linear-gradient", "linear-gradient", "conic-gradient", "radial-gradient"], correctAnswer: 0, explanation: "repeating-linear-gradient က Color Stop အကွာအဝေးကို ထပ်ခါထပ်ခါ ရွေ့ပေးပါတယ်။" }
+  ]}
+/>

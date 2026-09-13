@@ -1,0 +1,129 @@
+---
+title: "Flex Responsive — Flexbox နဲ့ Responsive Layout"
+description: "Flexbox ကို အသုံးပြု၍ responsive layout များ တည်ဆောက်နည်း၊ item wrapping, flexible widths, media queries နဲ့ responsive navbar အကြောင်း လေ့လာကြမယ်။"
+---
+
+Flexbox ရဲ့ အားသာချက်တွေထဲက တစ်ခုက item တွေကို container ရဲ့ အကျယ်ပေါ်မူတည်ပြီး အလိုအလျောက် ပြောင်းလဲစေနိုင်တာ ဖြစ်ပါတယ်။ Media queries နဲ့ ပေါင်းစပ်လိုက်တဲ့အခါ ဖုန်း၊ tablet၊ desktop အားလုံးမှာ သုံးလို့ကောင်းတဲ့ layout ကို ရရှိမှာ ဖြစ်ပါတယ်။
+
+### Item Wrapping နဲ့ Responsive Cards
+
+Card တွေ တစ်တန်းတည်း ဖြန့်ထားတဲ့ gallery ဒါမှမဟုတ် card grid တွေက screen ကျဉ်းလာတဲ့အခါ item တွေကို အောက် line တွေဆီ ကျော်ရောက်စေနိုင်ပါတယ်။ `flex-wrap: wrap` နဲ့ `flex-basis` ကပဲ အဓိက လုပ်ဆောင်ပေးပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.card-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.card-row .card {
+  flex: 1 1 240px; /* basis 240px ၊ နေရာမရှိရင် ကျုံ့ပြီး ရှိရင် ဆန့်သည် */
+}
+```
+
+မှတ်ချက် — Card တစ်ခုချင်းစီက အနည်းဆုံး 240px ရဖို့ ကြိုးစားပြီး screen ကျဉ်းလာတဲ့အခါ နောက် line တွေကို ကျော်ရောက်ပါတယ်။ Screen အကြီးမှာ card ၄-၅ ခု ရပြီး၊ ဖုန်းမှာ ၁-၂ ခု ရတာမျိုး ဖြစ်ပါတယ်။
+
+### Flexible Widths နဲ့ အချိုးကျ ခွဲဝေခြင်း
+
+Item တွေကို အချိုးကျ ကျယ်စေဖို့ `flex-grow` ကို အသုံးပြုပြီး ဘယ် item က ဘယ်လောက် ကျယ်မလဲ သတ်မှတ်နိုင်ပါတယ်။ အဓိကအားဖြင့် page layout (sidebar + main content) တွေမှာ သုံးပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.layout {
+  display: flex;
+}
+
+.sidebar {
+  flex: 1; /* width 25% လောက် */
+}
+
+.main {
+  flex: 3; /* width 75% လောက် */
+}
+```
+
+မှတ်ချက် — flex 1 နဲ့ 3 ဆိုတဲ့အခါ main content က sidebar ထက် ၃ ဆ ကျယ်ပါတယ်။ Screen အရွယ်အစား ဘယ်လောက်ပဲ ဖြစ်ဖြစ် အချိုးက အမြဲ ညီနေပါတယ်။
+
+### Media Queries နဲ့ ချိန်ညှိခြင်း
+
+Screen သေးတဲ့အခါ layout ကို သပ်သပ်ရပ်ရပ် ပြောင်းလဲဖို့ media queries ကို သုံးပါတယ်။ ဥပမာ — ဖုန်းမှာ sidebar နဲ့ main ကို ဘေးချင်း ကပ်ထားရင် ကျဉ်းလွန်းလို့ အောက်ဆင့် column အဖြစ် ပြောင်းပေးရပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.layout {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+}
+```
+
+မှတ်ချက် — Mobile screen တွေမှာ layout က column ဖြစ်သွားပြီး sidebar က main ရဲ့ အပေါ်မှာ ဒါမှမဟုတ် အောက်မှာ ပေါ်ပါတယ်။ ဒီ pattern က responsive web design ရဲ့ အခြေခံ ဖြစ်ပါတယ်။
+
+### Responsive Navbar — လက်တွေ့ ဥပမာ
+
+Flexbox ရဲ့ အကောင်းဆုံး လက်တွေ့အသုံးချမှုတွေထဲက တစ်ခုက responsive navbar ပါ။ Logo က ဘယ်ဘက်၊ links တွေက ညာဘက်မှာ စီထားပြီး ဖုန်းမှာ links တွေကို column အဖြစ် ပြောင်းပေးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<nav class="nav">
+  <a href="#" class="logo">MySite</a>
+  <div class="links">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
+```
+
+မှတ်ချက် — HTML ထဲမှာ logo နဲ့ links ဆိုတဲ့ အပိုင်းနှစ်ခု ပါဝင်ပြီး အောက်က CSS မှာ flex layout ကို သတ်မှတ်ပါမယ်။
+
+**ဥပမာ -**
+
+```css
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .nav {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+```
+
+မှတ်ချက် — Desktop မှာ logo က ဘယ်၊ links တွေက ညာဘက်မှာ ရှိပြီး ဖုန်းမှာတော့ အားလုံး center ဖြစ်အောင် column ပြောင်းထားပါတယ်။ တစ်ခြားဘာမှ ရှုပ်ရှုပ်ထွေးထွေး လုပ်စရာ မလိုဘဲ Flexbox တစ်ခုတည်းနဲ့ ပြီးသွားပါပြီ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `flex-wrap: wrap` + `flex-basis` ဖြင့် card grid များကို responsive ဖြစ်စေနိုင်သည်။
+- `flex-grow` က item အချိုးကျ ခွဲဝေမှုကို ထိန်းချုပ်သည်။
+- Media queries အသုံးပြု၍ screen သေးလာပါက flex-direction ကို column ပြောင်းနိုင်သည်။
+- Flexbox သည် responsive navbar တည်ဆောက်ရာတွင် ရိုးရှင်းပြီး အားကိုးရသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Card grid မှာ item တွေ အောက် line ကို ကျော်ရောက်စေဖို့ ဘယ် property ကို သုံးပါသလဲ?", options: ["Overflow hidden", "Flex wrap wrap", "Text align center", "Position fixed"], correctAnswer: 1, explanation: "flex-wrap: wrap က နေရာမလောက်တဲ့ item တွေကို အောက် line ဆီ ကျော်ရောက်စေပါတယ်။" },
+    { id: "q2", question: "Screen ကျဉ်းတဲ့အခါ flex layout ကို column ပြောင်းဖို့ ဘာကို သုံးပါသလဲ?", options: ["Media query", "Flex grow", "Flex shrink", "Float left"], correctAnswer: 0, explanation: "Media queries နဲ့ flex-direction column ပေါင်းပြီး mobile မှာ layout ကို ပြောင်းနိုင်ပါတယ်။" },
+    { id: "q3", question: "Sidebar ကို main ရဲ့ သုံးပုံတစ်ပုံ လောက်သာ ကျယ်စေချင်ရင် flex တန်ဖိုး ဘယ်လို သတ်မှတ်မလဲ?", options: ["Sidebar 1, main 3", "Sidebar 3, main 1", "Sidebar 0, main 0", "Sidebar 1, main 1"], correctAnswer: 0, explanation: "sidebar flex 1 နဲ့ main flex 3 ဆိုရင် main က sidebar ထက် သုံးဆ ကျယ်ပါတယ်။" }
+  ]}
+/>

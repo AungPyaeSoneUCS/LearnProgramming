@@ -1,0 +1,88 @@
+---
+title: "HTML URL Encode — URL အတွက် Encoding"
+description: "URL ထဲမှာ Space နဲ့ အထူးစာလုံးတွေကို %20 စတဲ့ Encoding အဖြစ် ဘယ်လို ပြောင်းရလဲ လေ့လာကြည့်ရအောင်။"
+---
+
+### URL ဆိုတာ ဘာလဲ?
+
+**URL (Uniform Resource Locator)** ဆိုတာ Web ပေါ်မှာရှိတဲ့ Resource (Page, Image, File) တွေရဲ့ လိပ်စာ ဖြစ်ပြီး၊ Browser က ဒီလိပ်စာကနေ ဟိုဟာ Resource ကို ရှာပြီး ဖွင့်ပြပါတယ်။ URL တစ်ခုမှာ Part (အပိုင်း) အများကြီး ပါဝင်ပြီး Standard Rules (စည်းမျဉ်း) တွေနဲ့ ရေးရပါတယ်။
+
+**ဥပမာ -**
+```html
+https://takkatho.com/courses/html/page-1.html
+```
+
+- `https` — Protocol (ဘယ်လို ချိတ်ဆက်မလဲ)
+- `takkatho.com` — Host (ဘယ်ဆာဗာ)
+- `/courses/html/page-1.html` — Path (ဘယ်နေရာမှာ ရှိတယ်)
+
+မှတ်ချက် — URL က Spaces နဲ့ အချို့စာလုံးများ မရနိုင်လို့ Encoding (ပြောင်းလဲခြင်း) လိုပါတယ်။
+
+### Space ကို %20 နဲ့ Encoding လုပ်ခြင်း
+
+Web Address တွေမှာ Space လိုအပ်ရင် အဲဒီနေရာကို **%20** ဆိုတဲ့ ကုဒ်နဲ့ ပြောင်းပါတယ်။ ဒါကို **URL Encoding** လို့ ခေါ်ပြီး `%` နဲ့စတင်ကာ Hex (Base 16) ကိန်းဂဏန်း (၂) လုံး ပါဝင်ပါတယ်။ Space ရဲ့ ASCII Code က 32 ဖြစ်ပြီး Hex မှာ 20 လို့ရေးလို့ `%20` ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<a href="my%20page.html">My Page</a>
+```
+
+ဆိုလိုတာက `my page.html` ဆိုတဲ့ File ကို URL ထဲမှာ `my%20page.html` လို့ ရေး ရပါတယ်။ Browser တွေက Space ကို အလိုအလျောက် `%20` အဖြစ် ပြောင်းပေးပြီး ဒီအလိုအလျောက် ပြောင်းခြင်းကို **URL Encode** လို့ ခေါ်ပါတယ်။
+
+မှတ်ချက် — URL ထဲ Space ကိုပတ် (သို့) အာကာသစာလုံးထည့်တာ Error ဖြစ်တတ်လို့ `%20` နဲ့သာ ရေးပါ။
+
+### Encoding Table (အသုံးများသော)
+
+URL ထဲမှာ Encoding လိုအပ်တဲ့ Character အများကြီး ရှိပြီး တစ်ခုချင်းစီမှာ ASCII Hex ကိုအခြေခံတဲ့ ကုဒ်ရှိပါတယ်။ အသုံးအများဆုံး တချို့ကို ကြည့်ရအောင်။
+
+| Character | Encoding |
+|-----------|----------|
+| Space | `%20` |
+| & | `%26` |
+| % | `%25` |
+| + | `%2B` |
+| # | `%23` |
+| / | `%2F` |
+| ? | `%3F` |
+| = | `%3D` |
+
+**ဥပမာ -**
+```html
+<a href="search.html?q=HTML%26CSS">HTML &amp; CSS</a>
+```
+
+မှတ်ချက် — `&` က URL ထဲ Signature ဖြစ်လို့ `%26` ဆိုပြီး၊ HTML Text ထဲမှာ `&amp;` ဆိုပြီး နှစ်မျိုးလုံး ရေးရပါတယ်။
+
+### Reserved Character တွေ ဘာကြောင့် Encoding လုပ်ရပါသလဲ?
+
+URL တချို့စာလုံးတွေက URL ရဲ့ Syntax (ပုံစံ) အတွက် **Reserved (သီးသန့် နေရာ)** ယူထားပါတယ်။ ဥပမာ `?` က Query string ကို စဖို့၊ `#` က Anchor ကို စဖို့၊ `/` က Path ကို ခွဲဖို့ သုံးပါတယ်။
+
+ဒီစာလုံးတွေကို ပုံမှန်စာသားထဲသုံးချင်ရင် Encoding လုပ်မှ သာ Browser က "ဒါက URL အပိုင်းအစ၊ Syntax အမှတ်အသား မဟုတ်ဘူး" ဆိုပြီး သိမှာပါ။ Encoded မလုပ်ဘဲထားရင် URL လွဲသွားပြီး Page မှန်မှန် မဖွင့်တတ်ပါဘူး။
+
+**ဥပမာ -**
+```html
+<!-- မှားတဲ့ URL (လွဲမှားစေနိုင်) -->
+<a href="/blog/what-is-html?">Blog</a>
+
+<!-- အမှန် URL -->
+<a href="/blog/what-is-html%3F">Blog</a>
+```
+
+မှတ်ချက် — Reserved Character (`?`, `#`, `%`, `&`, `/`, Space စသည်) တိုင်းကို URL ရဲ့ Value ထဲမှာ Encoded ရေးပါ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- URL က Web Resource တွေရဲ့ လိပ်စာဖြစ်ပြီး Style Rules တွေ ရှိပါတယ်။
+- Space ကို `%20` ၊ `&` ကို `%26` စသဖြင့် Encoded လို့ ရေးရပါတယ်။
+- Reserved Character တွေက URL Syntax အတွက်ဖြစ်လို့ Value ထဲမှာ Encoding ရေးရပါတယ်။
+- `%` နဲ့နောက် Hex ကိန်း (၂) လုံးက URL Encoding ရဲ့ ပုံစံဖြစ်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "URL ထဲမှာ Space ကို ဘယ်လို Encoded ရေးပါသလဲ?", options: ["%20", "%26", "%25", "+20"], correctAnswer: 0, explanation: "Space ကို URL ထဲမှာ %20 နဲ့ ကိုယ်စားပြုပါတယ်။" },
+    { id: "q2", question: "URL ထဲမှာ & ကိုမ္း Encoded ရေးတာက ဘာလဲ?", options: ["%26", "%20", "%2B", "%23"], correctAnswer: 0, explanation: "& ကို URL ထဲမှာ %26 အနေနဲ့ Encoded ရေးပါတယ်။" },
+    { id: "q3", question: "Reserved Character တွေကို URL မှာ Encoded ရေးရတဲ့ အကြောင်းရင်းက ဘာလဲ?", options: ["ပိုမြန်လို့", "Syntax အတွက် သီးသန့် ဖြစ်နေလို့", "ပိုလှလို့", "File သေးလို့"], correctAnswer: 1, explanation: "Reserved Character တွေက URL Syntax ရဲ့ အစိတ်အပိုင်းဖြစ်လို့ Value ထဲမှာ Encoded ရေးရပါတယ်။" },
+  ]}
+/>

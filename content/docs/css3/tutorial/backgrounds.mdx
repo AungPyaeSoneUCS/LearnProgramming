@@ -1,0 +1,92 @@
+---
+title: "CSS Backgrounds — နောက်ခံအလှဆင်နည်း"
+description: "background-color, background-image, repeat, position, size နဲ့ Shorthand သုံးနည်းတွေကို လေ့လာကြရအောင်။"
+---
+
+### Background ဆိုတာ ဘာလဲ?
+
+CSS Background Property တွေက Element ရဲ့ နောက်ခံကို အရောင် သို့မဟုတ် ပုံနဲ့ အလှဆင်ပေးပါတယ်။ `background-color` ၊ `background-image` ၊ `background-repeat` ၊ `background-position` ၊ `background-size` စတဲ့ Property တွေ ရှိပါတယ်။
+
+### background-color
+
+Element ရဲ့ နောက်ခံအရောင်ကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+body {
+  background-color: lightblue;
+}
+```
+
+မှတ်ချက် — Color Name ၊ HEX ၊ RGB စတဲ့ Color နည်းလမ်းတွေ အားလုံး သုံးနိုင်ပါတယ်။
+
+### background-image
+
+Element ရဲ့ နောက်ခံပုံကို `url()` အတွင်းမှာ ပုံလမ်းကြောင်း ထည့်ပြီး သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+body {
+  background-image: url("bg.png");
+}
+```
+
+မှတ်ချက် — `url()` ထဲက ပုံလမ်းကြောင်း မှန်ဖို့လိုပြီး ပုံငယ်ဆိုရင် ပုံမှန်အားဖြင့် ထပ်ခါထပ်ခါ ပြန့်ပြီး (Repeat) ပြပါတယ်။
+
+### background-repeat
+
+နောက်ခံပုံ ပြန့်ထွက်ပုံကို ထိန်းချုပ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+body {
+  background-image: url("bg.png");
+  background-repeat: no-repeat;
+}
+```
+
+မှတ်ချက် — `repeat-x` က အလျားလိုက်သာ ၊ `repeat-y` က ဒေါင်လိုက်သာ ၊ `no-repeat` က တစ်ကြိမ်သာ ပြပေးပါတယ်။
+
+### background-position နဲ့ background-size
+
+`background-position` က ပုံဘယ်နေရာမှာ ထားမလဲကို ရွေးပြီး `background-size` က ပုံဘယ်လောက် အရွယ်နဲ့ ပြမလဲကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.hero {
+  background-image: url("hero.jpg");
+  background-position: center center;
+  background-size: cover;
+}
+```
+
+မှတ်ချက် — `cover` က Element တစ်ခုလုံးကို လွှမ်းအောင် ချုံ့ပြီး `contain` က ပုံအလုံးစုံ မြင်ရအောင် ပြပါတယ်။
+
+### Background Shorthand
+
+Property တွေကို တစ်ခုချင်း ရေးမယ့်အစား `background` တစ်ခုထဲမှာ ပေါင်းရေးလို့ ရပါတယ်။
+
+**ဥပမာ -**
+```css
+body {
+  background: #f4f4f4 url("bg.png") no-repeat right top;
+}
+```
+
+မှတ်ချက် — Shorthand က color → image → repeat → position စဉ်အတိုင်း စာကြောင်းတစ်ကြောင်းတည်းမှာ ရေးနိုင်ပြီး ကုဒ်တိုစေပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `background-color` က နောက်ခံအရောင် ၊ `background-image` က နောက်ခံပုံ သတ်မှတ်သည်။
+- `background-repeat` နဲ့ ပြန့်ပုံ ၊ `background-position` နဲ့ နေရာ ၊ `background-size` နဲ့ အရွယ် ထိန်းသည်။
+- `background` Shorthand က Property တွေကို တစ်ကြောင်းတည်း ပေါင်းရေးနိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "နောက်ခံပုံကို တစ်ကြိမ်သာ ပြဖို့ ဘာကို သုံးပါသလဲ?", options: ["background-repeat: no-repeat", "background-size: contain", "background-position: left", "background-color: white"], correctAnswer: 0, explanation: "background-repeat: no-repeat က ပုံကို မပြန့်ဘဲ တစ်ကြိမ်တည်း ပြပေးပါတယ်။" },
+    { id: "q2", question: "background-size: cover က ဘာလုပ်ပါသလဲ?", options: ["ပုံကို ချုံ့ပြီး အလုံးစုံ ပြတယ်", "Element တစ်ခုလုံးကို လွှမ်းခြုံပြပါတယ်", "ပုံကို ဖျောက်ပါတယ်", "ပုံကို ထပ်ခါထပ်ခါ ပြပါတယ်"], correctAnswer: 1, explanation: "cover က Element ရဲ့ ဧရိယာတစ်ခုလုံး ဖုံးအောင်ပြီး အဆိုပါနေရာကို လွှမ်းခြုံပါတယ်။" },
+    { id: "q3", question: "Background Shorthand ရဲ့ အသုံးများတဲ့ စဉ်က ဘယ်ဟာလဲ?", options: ["image color repeat position", "position color image repeat", "color image repeat position", "repeat image color position"], correctAnswer: 2, explanation: "Shorthand က color image repeat position စဉ်အတိုင်း ရေးလေ့ ရှိပါတယ်။" },
+  ]}
+/>

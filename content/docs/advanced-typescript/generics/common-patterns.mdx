@@ -1,0 +1,143 @@
+---
+title: "Real-World Generics: အသုံးများသော ပုံစံများ"
+description: "Real-World Generics: အသုံးများသော ပုံစံများ"
+---
+
+import { Code, Aside } from "@astrojs/starlight/components";
+
+export const dataFetching = `
+// အရင်က ပြောခဲ့တဲ့ ApiResponse Interface (Data ရဲ့ Type ကို Generic လုပ်ထားတာ)
+interface ApiResponse<DataType> {
+  data: DataType; 
+  success: boolean; 
+  error?: string; 
+}
+
+// API ကနေ User Data ပြန်လာရင် ဘယ်လိုပုံစံ ဖြစ်မယ်ဆိုတာ သတ်မှတ်ချက်
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+// API ကနေ Data ယူတဲ့ Generic Function (နားလည်ရလွယ်အောင် ရိုးရှင်းအောင် ရေးထားတာပါ)
+// ဒီ Function က ResponseType ဆိုတဲ့ Generic Type နဲ့ အလုပ်လုပ်မယ်
+// ပြန်ထွက်လာမယ့် Data ကတော့ ApiResponse<ResponseType> ပုံစံ ဖြစ်မယ်လို့ Promise (ကတိ) ပေးထားတယ်
+async function fetchData<ResponseType>(url: string): Promise<ApiResponse<ResponseType>> {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(\`HTTP error! status: \${response.status}\`);
+    }
+    const data: ApiResponse<ResponseType> = await response.json();
+    if (!data.success) {
+      throw new Error(data.error || "API returned success: false");
+    }
+    return data;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown fetch error";
+    // data ကို null လို့ သတ်မှတ်ထားတယ်၊ ဒါပေမယ့် ResponseType အနေနဲ့ ယူဆမယ်လို့ 'as ResponseType' နဲ့ ပြောထားတယ်
+    return { data: null as ResponseType, success: false, error: message };
+  }
+}
+
+// ဒီ Generic fetchData Function ကို လက်တွေ့ ဘယ်လို သုံးလဲ ကြည့်ရအောင်
+async function getUser(userId: number) {
+  // fetchData ကို ခေါ်တဲ့အခါ ApiResponse ထဲက data ဟာ User Type ဖြစ်ရမယ်လို့ <User> ဆိုပြီး ပြောလိုက်တယ်
+  const userResponse = await fetchData<User>(\`/api/users/\${userId}\`);
+  if (userResponse.success) {
+    // userResponse.data ရဲ့ Type ဟာ User ဖြစ်မှန်း TypeScript က အတိအကျ သိနေပြီ။ ဒါ့ကြောင့် .name ကို ရဲရဲဝံ့ဝံ့ သုံးလို့ရတယ်
+    console.log("Fetched User:", userResponse.data.name);
+  } else {
+    // Error ရှိရင်လည်း userResponse.error ကို သုံးလို့ရတယ်
+    console.error("Failed to fetch user:", userResponse.error);
+  }
+}
+`;
+
+export const react = `
+import React from 'react';
+
+// ValueType ဆိုတဲ့ Generic Type ကို သုံးထားတယ်
+interface SelectOption<ValueType> {
+  label: string;
+  value: ValueType;
+}
+
+// Select Component ရဲ့ Props တွေအတွက် Interface (ဒါလည်း Generic ပဲ)
+interface SelectProps<ValueType> {
+  options: SelectOption<ValueType>[];
+  selectedValue: ValueType | null;
+  onChange: (selectedValue: ValueType) => void;
+  label: string;
+}
+
+// Select Component (ValueType ရဲ့ Type အပေါ် မူတည်ပြီး Generic ဖြစ်အောင် ရေးထားတယ်)
+// ValueType ဟာ string ဒါမှမဟုတ် number Type ထဲက တစ်ခုခု ဖြစ်ရမယ်လို့ ကန့်သတ်ထားတယ် (ဥပမာ ပြချင်လို့ပါ)
+function Select<ValueType extends string | number>(props: SelectProps<ValueType>) {
+
+  const { options, selectedValue, onChange, label } = props;
+
+  // Generic Type ကြောင့် props တွေရဲ့ Type ကို TypeScript က အတိအကျ သိနေပြီ
+  console.log("Received options:", options); // options ရဲ့ Type က SelectOption<ValueType>[] မှန်း သိတယ်
+  console.log("Received selectedValue:", selectedValue); // selectedValue ရဲ့ Type က ValueType | null မှန်း သိတယ်
+
+  return (
+    <div>
+      <p>{label} Select Component Placeholder</p>
+      {/* တကယ့် select box UI rendering logic တွေကို ဒီနေရာမှာ ရေးမယ် */}
+    </div>
+  );
+
+}
+
+// ဒီ Generic Select Component ကို ဘယ်လို သုံးမလဲ (အသုံးပြုပုံက Generic ရဲ့ အားသာချက်ကို ကောင်းကောင်း ပြပါတယ်)
+
+// ဥပမာ ၁: Theme ရွေးဖို့ Dropdown (ValueType က Theme literal union)
+type Theme = 'light' | 'dark'; // Theme Type ကို သတ်မှတ်လိုက်တယ် (string တွေပါပဲ)
+
+const themeOptions: SelectOption<Theme>[] = [ // options array ရဲ့ Type က SelectOption<Theme>[] ဖြစ်မယ်
+  { label: "Light Mode", value: 'light' }, // value ရဲ့ Type က Theme (string)
+  { label: "Dark Mode", value: 'dark' }
+];
+
+// Component ခေါ်သုံးခြင်း
+// <Select options={themeOptions} selectedValue={currentTheme} onChange={handleThemeChange} label="Theme" />
+// ဒီလို သုံးလိုက်တာနဲ့ Select Component ရဲ့ ValueType က Theme ဖြစ်သွားပြီ၊ onChange callback ကလည်း Theme Type ကိုပဲ ပြန်ပို့ပေးမယ်လို့ TypeScript က သိတယ်
+
+// ဥပမာ ၂: Rating ရွေးဖို့ Dropdown (ValueType က number)
+const ratingOptions: SelectOption<number>[] = [ // options array ရဲ့ Type က SelectOption<number>[] ဖြစ်မယ်
+  { label: "⭐", value: 1 }, // value ရဲ့ Type က number
+  { label: "⭐⭐", value: 2 },
+  { label: "⭐⭐⭐", value: 3 }
+];
+
+// Component ခေါ်သုံးခြင်း
+// <Select options={ratingOptions} selectedValue={currentRating} onChange={handleRatingChange} label="Rating" />
+// ဒီလို သုံးလိုက်တာနဲ့ Select Component ရဲ့ ValueType က number ဖြစ်သွားပြီ၊ onChange callback ကလည်း number Type ကိုပဲ ပြန်ပို့ပေးမယ်လို့ TypeScript က သိတယ်
+`;
+
+### Data များကို Generic ပုံစံဖြင့် ဆွဲယူခြင်း (Fetching Data)
+
+ကျွန်တော်တို့ Application တွေ ရေးတဲ့အခါ အပြင်က API (Application Programming Interface) တွေဆီကနေ Data တွေ သွားယူရတာကို အမြဲလိုလို လုပ်ရပါတယ်။ ဒီ Data ယူတဲ့ Logic (အလုပ်လုပ်ပုံ) တစ်ခုလုံးကို Generic ဖြစ်အောင် ရေးထားတာက အရမ်းကို အသုံးဝင်ပြီး၊ လုပ်ငန်းခွင်မှာ လုပ်ရိုးလုပ်စဉ် (Best Practice) လိုတောင် ဖြစ်နေပါပြီ။
+
+အရင် သင်ခန်းစာမှာ ကျွန်တော်တို့ `ApiResponse` ဆိုတဲ့ Generic Interface လေးတစ်ခု သတ်မှတ်ခဲ့တာ မှတ်မိဦးမယ် ထင်ပါတယ်။ API ကနေ ဘယ်လို Data အမျိုးအစားပဲ ပြန်လာလာ၊ ဒီ `ApiResponse` ပုံစံအတိုင်း အလွယ်တကူ ထည့်သုံးလို့ ရတာပေါ့။
+
+<Code code={dataFetching} lang="typescript" title="index.ts" />
+
+<br />
+<Aside title="💡 ရှင်းပြချက်">
+  ဒီ Function ကို ကြည့်ရင် `ResponseType` ဆိုတဲ့ Generic Type နဲ့ ရေးထားတာ တွေ့ရပါမယ်။ ဒီ Function ကို ခေါ်တဲ့အခါ (ဥပမာ `fetchData` မှာ `User` Type သတ်မှတ်ပြီး ခေါ်တာမျိုး) `ResponseType` နေရာမှာ ဘယ် Type (ဥပမာ `User` Type) ဖြစ်ရမယ်ဆိုတာကို ကျွန်တော်တို့ တိတိကျကျ သတ်မှတ်ပေးလိုက်တယ်။ ဒါကြောင့် API ကနေ ပြန်လာမယ့် `ApiResponse` ထဲက `data` Field ဟာ ကျွန်တော်တို့ သတ်မှတ်လိုက်တဲ့ `User` Type ဖြစ်ရမယ်လို့ TypeScript က အလိုအလျောက် သိသွားပါပြီ။ ဒီလိုရေးတာက API Call တွေကို Type မှန်ကန်စိတ်ချရစေပြီး၊ Data ယူတဲ့ Logic ကိုလည်း နေရာတိုင်းမှာ ပြန်လည် အသုံးပြုလို့ရအောင် လုပ်ပေးပါတယ်။ `Axios` လိုမျိုး Data ယူတဲ့ နာမည်ကြီး Libraries တွေမှာလည်း ဒီလို Generic နည်းလမ်းတွေ အများဆုံး သုံးထားတာ တွေ့ရပါလိမ့်မယ်။
+</Aside>
+
+### UI Components များ (ဥပမာ - React)
+
+Website ဒါမှမဟုတ် Application တွေအတွက် UI (User Interface) Components တွေ ရေးတဲ့အခါ (ဥပမာ - Lists တွေ၊ Tables တွေ၊ Dropdowns တွေ) Data အမျိုးမျိုးကို ပြသနိုင်တဲ့ Components တွေ လိုအပ်လာတတ်ပါတယ်။ ဒီလို Components တွေကို Generic သုံးပြီး ရေးတာက တကယ်ကို လက်တွေ့ကျကျ အသုံးဝင်ပါတယ်။
+
+React Framework ကို ဥပမာယူပြီး ရေးထားတဲ့ Code လေး ကြည့်ရအောင် (ဒါက Concept ကို ပြချင်တာမို့လို့၊ React Syntax ကို အသေးစိတ် နားမလည်ရင်လည်း ကိစ္စမရှိပါဘူး)။ Dropdown List (`Select` Box) Component လေးတစ်ခု ရေးကြည့်ပါမယ်။
+
+<Code code={react} lang="typescript" title="index.tsx" />
+
+<Aside title="💡 ရှင်းပြချက်" type="note">
+  ဒီ `Select` Component ဟာ `ValueType` ဆိုတဲ့ Generic Type တစ်ခုပေါ်မှာ အခြေခံပြီး အလုပ်လုပ်ပါတယ်။ သူက Options တွေမှာ ပါဝင်တဲ့ တကယ့် တန်ဖိုး (Value) က `string` Type ဖြစ်နေစေ၊ `number` Type ဖြစ်နေစေ (ဒါမှမဟုတ် `extends string | number` လို့ ကန့်သတ်ထားတဲ့ တခြား ရိုးရှင်းတဲ့ Type တွေဖြစ်ပါစေ) လက်ခံပြီး အလုပ်လုပ်နိုင်ပါတယ်။ Option ပြောင်းတဲ့အခါ ခေါ်မယ့် `onChange` Function ကလည်း မှန်ကန်တဲ့ `ValueType` အတိုင်း Data ကို ပြန်ပို့ပေးပါတယ်။ ဒါကြောင့် `ThemeSelect`, `RatingSelect` စသဖြင့် Type တစ်ခုချင်းစီအတွက် Components တွေ သီးသန့် ခွဲရေးနေစရာ မလိုတော့ပါဘူး။ ဒီ Generic `Select` Component တစ်ခုတည်းနဲ့တင် Data အမျိုးမျိုးအတွက် ပြန်သုံးလို့ရသွားပြီ ဖြစ်ပါတယ်။
+</Aside>

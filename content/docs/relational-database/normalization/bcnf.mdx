@@ -1,0 +1,63 @@
+---
+title: "Boyce-Codd Normal Form (BCNF)"
+description: "Normalization ၏ 3.5 အဆင့် (BCNF) အကြောင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from "@/components/Content-image.astro";
+import bcnfOriginal from "@/assets/relational-database/bcnf-original.svg";
+import bcnfStudent from "@/assets/relational-database/bcnf-student.svg";
+import bcnfAdvisor from "@/assets/relational-database/bcnf-advisor.svg";
+
+<Aside title="💡 ရည်ရွယ်ချက်">
+  3NF အောက်တွင် ဖြစ်ပေါ်နိုင်သေးသော အထူး အခြေအနေ (Edge Case) ကို ဖြေရှင်းပေးသည့် **BCNF (Boyce-Codd Normal Form - 3.5 NF)** အကြောင်းကို လေ့လာသွားကြပါမယ်။
+</Aside>
+
+## BCNF ၏ မဖြစ်မနေ စည်းမျဉ်း ၂ ခု
+
+Table တစ်ခုသည် BCNF အဆင့်သို့ ရောက်ရှိရန် အောက်ပါ စည်းမျဉ်း ၂ ခုနှင့် ကိုက်ညီရပါမည်:
+
+1. **3NF အဆင့် ပြီးမြောက်ပြီးသား ဖြစ်ရမည်။**
+2. **Every Determinant is a Super Key / Candidate Key:**
+   Table တွင် Functional Dependency `A -> B` ရှိပါက `A` သည် Candidate Key သို့မဟုတ် Super Key မဖြစ်မနေ ဖြစ်ရပါမည်။ (အခြား Non-Key Column မည်သည်မျှ အခြား Attributes များကို အဆုံးအဖြတ်ပေးသော Determinant မဖြစ်ရပါ။)
+
+---
+
+## BCNF လိုအပ်လာပုံ (လက်တွေ့ ဥပမာ)
+
+ကျောင်းသား၊ ဘာသာရပ်နှင့် သင်ကြားပေးသော Advisor (ဆရာ) အချက်အလက်များ ပါဝင်သည့် Table ကို စဉ်းစားကြည့်ပါမည်:
+
+**Business Rules:**
+- ကျောင်းသားတစ်ဦးသည် ဘာသာရပ် (Subject) တစ်ခုစီတွင် Advisor ဆရာတစ်ဦးဆီ၌သာ သင်ယူခွင့် ရှိသည်။
+- Advisor တစ်ဦးသည် ဘာသာရပ် (Subject) တစ်ခုတည်းကိုသာ သင်ကြားပေးနိုင်သည်။
+- ဘာသာရပ် တစ်ခုတွင် သင်ကြားပေးသော Advisor ဆရာများစွာ ရှိနိုင်သည်။
+
+<ContentImage src={bcnfOriginal} alt="Un-normalized Advisor Table" />
+
+**ဒီ Table Structure တွင်:**
+- Composite Primary Key သည် **`(student, subject)`** ဖြစ်ပါတယ်။
+- Non-Key Column သည် `advisor` ဖြစ်ပါတယ်။
+- 3NF စည်းမျဉ်းအရ Non-Key အချင်းချင်း မှီခိုခြင်း မရှိသဖြင့် Table သည် 3NF အဆင့် ရောက်နေပါတယ်။
+
+**သို့သော် ဖြစ်ပေါ်နေသော ပြဿနာ:**
+Business Rule အရ Advisor တစ်ဦးသည် Subject တစ်ခုတည်းကိုသာ သင်ကြားပေးသဖြင့် `advisor -> subject` ဟူသော Functional Dependency တည်ရှိနေပါတယ်။ 
+
+ဒီနေရာတွင် `advisor` သည် Candidate/Primary Key မဟုတ်ဘဲ Non-Key Attribute ဖြစ်နေသော်လည်း Primary Key ၏ အစိတ်အပိုင်းဖြစ်သော `subject` ကို အဆုံးအဖြတ်ပေးနေသည့် **Determinant** ဖြစ်နေပါတယ်။ ဒါဟာ BCNF စည်းမျဉ်းကို ချိုးဖောက်နေခြင်း ဖြစ်ပါတယ်။
+
+---
+
+## 3NF မှ BCNF သို့ ပြောင်းလဲခြင်း
+
+BCNF စည်းမျဉ်းအရ အဆိုပါ Determinant ဖြစ်နေသော Attribute ကို သီးသန့် Table တစ်ခုအဖြစ် **ခွဲထုတ်** ပေးရပါမယ်။
+
+| Student_Advisor Table (BCNF) | Advisor_Subject Table (BCNF) |
+|:---:|:---:|
+| <ContentImage src={bcnfStudent} alt="BCNF Student Table" /> | <ContentImage src={bcnfAdvisor} alt="BCNF Advisor Table" /> |
+| ကျောင်းသားနှင့် ဆရာ ချိတ်ဆက်မှု | ဆရာနှင့် ဘာသာရပ် သီးသန့် Storage |
+
+ယခုဆိုပါက:
+1. `advisor_subject` Table တွင် `advisor` သည် Primary Key ဖြစ်သွားပြီး `subject` ကို အဆုံးအဖြတ် ပေးပါတယ်။
+2. `student_advisor` Table တွင် `(student, advisor)` ကို Composite Key အဖြစ် သုံးထားပါတယ်။
+
+ဒီလို ခွဲထုတ်လိုက်သည့်အတွက် BCNF စည်းမျဉ်းနှင့် ရာနှုန်းပြည့် ကိုက်ညီသွားပြီး Data Anomalies များကို အပြည့်အဝ ဖြေရှင်းနိုင်သွားပြီ ဖြစ်ပါတယ်။
+ 

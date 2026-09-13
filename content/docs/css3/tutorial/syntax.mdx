@@ -1,0 +1,78 @@
+---
+title: "CSS Syntax — Syntax အခြေခံဖွဲ့စည်းပုံ"
+description: "Selector { property: value; } ပုံစံနဲ့ CSS Rule ကို ဘယ်လိုရေးရလဲ ဆိုတာ လေ့လာကြရအောင်။"
+---
+
+### CSS Rule တစ်ခုရဲ့ ဖွဲ့စည်းပုံ
+
+CSS Rule တစ်ခုက **Selector** နဲ့ **Declaration Block** ဆိုပြီး အပိုင်းနှစ်ပိုင်း ပါပါတယ်။ Selector က ဘယ် Element တွေကို Style လုပ်မယ်ဆိုတာကို ရွေးပြီး Declaration Block ( `{ }` အတွင်းက အပိုင်း) က ဘယ်လို Style လုပ်မယ်ဆိုတာကို ရေးပါတယ်။
+
+`selector { property: value; }` ပုံစံက CSS ရဲ့ မူလအခြေခံ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+h1 {
+  color: blue;
+}
+```
+
+မှတ်ချက် — `h1` က Selector ၊ `color` က Property ၊ `blue` က Value ၊ သူတို့နှစ်ခုပေါင်းလိုက်တာက Declaration ပါ။
+
+### Property နဲ့ Value
+
+Declaration တစ်ခုက Property နဲ့ Value ကို Colon ( : ) နဲ့ ခြားပြီး `property: value;` ပုံစံ ရေးပါတယ်။ Property က ဘယ်လိုပိုင်းကို ပြောင်းမလဲဆိုတာကို ပြောပြပြီး Value က ဘယ်လောက် ပြောင်းမလဲ ဆိုတာကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  text-align: center;
+  color: red;
+}
+```
+
+မှတ်ချက် — Colon အပြီးမှာ Value ရေးပြီး Semicolon ( ; ) နဲ့ စာကြောင်းကို အဆုံးသတ်ရပါတယ်။
+
+### Declaration အများအပြား
+
+Declaration တွေကို Semicolon နဲ့ တစ်ခုချင်း ခြားပြီး အတန်းလိုက် ရေး နိုင်ပါတယ်။ နောက်ဆုံး Declaration မှာ Semicolon မထည့်လည်းအလုပ်လုပ်ပေမယ့် အမြဲတမ်း ထည့်တာက ပိုလုံခြုံပြီး အလေ့အကျင့်ကောင်း ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}
+```
+
+မှတ်ချက် — Declaration တွေကို ဘယ်လိုအစီအစဉ်နဲ့မဆို ရေးလို့ရပြီး Property တစ်ခုချင်းစီကို သူ့ဘာသာ သီးခြား သက်ရောက်ပါတယ်။
+
+### Selector အများအပြားကို တစ်စုတည်း Style ချခြင်း
+
+Selector တွေကို Comma ( , ) နဲ့ စာရင်းပြုပြီး Declaration Block တစ်ခုတည်းကို မျှဝေသုံးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+h1, h2 {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+```
+
+မှတ်ချက် — ဒီ Rule က `h1` ရော `h2` ရော နှစ်ခုလုံးကို တစ်ချိန်တည်း တူညီတဲ့ Style ဖြစ်စေပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- CSS Rule က Selector နဲ့ Declaration Block နှစ်ပိုင်း ပါဝင်သည်။
+- Declaration ရဲ့ ပုံစံက `property: value;` ဖြစ်သည်။
+- Property နဲ့ Value ကို Colon ၊ Declaration တစ်ခုချင်းစီကို Semicolon နဲ့ ခြားသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "CSS Rule ထဲမှာ Selector က ဘာကို သတ်မှတ်ပါသလဲ?", options: ["ဘယ် Element ကို Style လုပ်မယ်", "အရောင် ဘယ်လောက်", "Border အထူ", "Animation Speed"], correctAnswer: 0, explanation: "Selector က ဘယ် Element တွေကို Style လုပ်မယ်ဆိုတာကို ရွေးချယ်ပါတယ်။" },
+    { id: "q2", question: "Declaration တစ်ခုချင်းစီကို ဘာနဲ့ ခြားပါသလဲ?", options: ["Colon", "Semicolon", "Comma", "Dot"], correctAnswer: 1, explanation: "Declaration နှစ်ခု မရောထွေးဖို့ Semicolon ( ; ) နဲ့ ခြားပါတယ်။" },
+    { id: "q3", question: "Property နဲ့ Value ကို ဘာနဲ့ ခြားပါသလဲ?", options: ["Semicolon", "Comma", "Slash", "Colon"], correctAnswer: 3, explanation: "Property ကို ရေးပြီး Colon ( : ) ခံပြီးမှ Value ကို ရေးပါတယ်။" },
+  ]}
+/>

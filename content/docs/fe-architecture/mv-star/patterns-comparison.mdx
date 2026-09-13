@@ -1,0 +1,33 @@
+---
+title: "Patterns နှိုင်းယှဉ်ချက်"
+description: "Patterns နှိုင်းယှဉ်ချက်"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+ဘယ် Pattern က အကောင်းဆုံးလဲလို့ မေးရင်၊ အဖြေကတော့ **"ကိုယ့် Project ရဲ့ လိုအပ်ချက်ပေါ် မူတည်ပါတယ်"**။
+
+### နှိုင်းယှဉ်ချက် ဇယား
+
+| Pattern | အဓိက ထိန်းချုပ်သူ (Boss) | Data ချိတ်ဆက်ပုံ | ဘယ်နေရာတွေမှာ သုံးလေ့ရှိလဲ? |
+|---|---|---|---|
+| **MVC** | Controller | Manual (Controller ကနေ ကိုယ်တိုင် ချိတ်ဆက်ပေးရတယ်) | Backend Frameworks (ဥပမာ - Laravel, Ruby on Rails) |
+| **MVP** | Presenter | Manual (Presenter က အစအဆုံး အကုန်လုပ်ပေးရတယ်) | Desktop Apps, အရင်ခေတ် Android Apps |
+| **MVVM** | ViewModel | Automatic (Data Binding နဲ့ အလိုအလျောက် ချိတ်ဆက်တယ်) | Modern Frontend (ဥပမာ - Vue, Angular, React*) |
+
+> *မှတ်ချက်: React က တိတိကျကျ ပြောရရင် MVVM အစစ် မဟုတ်ပါဘူး။ "Component-Based" လို့ ခေါ်ပါတယ်။ ဒါပေမဲ့ အလုပ်လုပ်တဲ့ သဘောတရား Concept ကတော့ MVVM နဲ့ အရမ်း ဆင်တူပါတယ်။
+
+### ဘာကြောင့် MV* Patterns တွေကို သုံးရတာလဲ?
+1.  **Separation of Concerns (တာဝန်ခွဲဝေခြင်း):** "ထမင်းချက်တဲ့သူ" နဲ့ "ဧည့်ခံတဲ့သူ" ရဲ့ အလုပ်ကို သေချာ ခွဲခြားထားချင်လို့ပါ။ (Logic နဲ့ UI ကို တစ်နေရာတည်းမှာ မရောချင်လို့ပါ)
+2.  **Testability (စမ်းသပ်ရ လွယ်ကူခြင်း):** UI တွေ မပါဘဲနဲ့၊ နောက်ကွယ်က Logic သက်သက်ကိုပဲ စမ်းသပ်စစ်ဆေး (Testing လုပ်) ရတာ အရမ်း လွယ်ကူစေပါတယ်။
+3.  **Maintainability (ပြုပြင်ထိန်းသိမ်းရ လွယ်ကူခြင်း):** Code တွေ ရှင်းလင်းသွားတဲ့အတွက် နောက်ပိုင်းမှာ ပြင်ဆင်ရတာ၊ အဆင့်မြှင့်တင်ရတာတွေ လွယ်ကူစေပါတယ်။
+
+<Aside title="အနှစ်ချုပ်" type="tip">
+MV* Pattern တွေက Data, UI နဲ့ Control Logic ကို စနစ်တကျ ခွဲခြားပေးတဲ့အတွက် Code တွေကို ထိန်းသိမ်းရ လွယ်ကူစေပါတယ်။
+
+- **MVC:** Controller က အရာရာကို ထိန်းချုပ်ပြီး (Boss)၊ View က Model ကို စောင့်ကြည့်နေပါတယ်။ UI သိပ်မရှုပ်ထွေးတဲ့ ရိုးရှင်းတဲ့ App တွေအတွက် အဆင်ပြေပါတယ်။
+- **MVP:** Presenter က အလယ်ကနေ ကြားခံ (Middleman) လုပ်ပေးပြီး၊ UI အပြောင်းအလဲတွေကို ပိုပြီး တိတိကျကျ ထိန်းချုပ်ချင်တဲ့အခါမျိုးမှာ သုံးပါတယ်။
+- **MVVM:** ViewModel က Data တွေနဲ့ UI ကို အလိုအလျောက် ချိတ်ဆက် (Auto-Sync) ပေးပါတယ်။ အခုခေတ်လို Dynamic ဖြစ်ပြီး User နဲ့ အပြန်အလှန် (Interactive) အလုပ်လုပ်ရတဲ့ UI တွေအတွက် အကောင်းဆုံးပါပဲ။
+
+ခေတ်မီ Frontend Development လောကမှာတော့ **MVVM** (သို့မဟုတ် Component-Based Pattern) က အသုံးအများဆုံး ဖြစ်ပါတယ်။
+</Aside>

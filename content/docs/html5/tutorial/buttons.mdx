@@ -1,0 +1,98 @@
+---
+title: "HTML Buttons — HTML Button များအကြောင်း"
+description: "Button element ကို အသုံးပြုနည်း၊ onclick ဖြင့် JavaScript ခေါ်နည်း၊ CSS ဖြင့် အလှဆင်နည်းတို့ကို လေ့လာကြမယ်။"
+---
+
+HTML မှာ button ဆိုတာ သုံးစွဲသူက နှိပ်လိုက်တဲ့အခါ တစ်ခုခု ဖြစ်ပေါ်လာအောင် လုပ်ပေးတဲ့ element ပဲ ဖြစ်ပါတယ်။ Form တစ်ခုကို ပို့ရန်၊ နောက်စာမျက်နှာသို့ သွားရန် စတဲ့ အလုပ်တွေ လုပ်နိုင်ပါတယ်။ အသုံးများဆုံး element တွေထဲက တစ်ခုဖြစ်လို့ ကောင်းကောင်း နားလည်ထားဖို့ အရေးကြီးပါတယ်။
+
+### Button Element
+
+`<button>` tag ကို သုံးပြီး button တစ်ခု ဖန်တီးနိုင်ပါတယ်။ ထဲမှာ ရေးထားတဲ့ text က button ပေါ်မှာ ပြသနေမှာ ဖြစ်ပါတယ်။ သူနဲ့ တွဲသုံးတတ်တဲ့ attribute များနဲ့ အသုံးများတဲ့ နည်းလမ်းတွေကို ကြည့်ကြရအောင်။
+
+**ဥပမာ -**
+
+```html
+<button>Click Me</button>
+<button type="button">တစ်ခုခု လုပ်ရန်</button>
+```
+
+မှတ်ချက် — `type` attribute က button ရဲ့ အပြုအမူကို သတ်မှတ်ပေးပါတယ်။ `type="button"` ဆို ပုံမှန် button ဖြစ်ပြီး အခြား type များလည်း ရှိပါသေးတယ်။
+
+### onclick ဖြင့် JavaScript ခေါ်ခြင်း
+
+button ကို နှိပ်တဲ့အခါ JavaScript code တစ်ခုကို run စေဖို့ `onclick` attribute ကို သုံးပါတယ်။ အောက်က ဥပမာမှာ button ကို နှိပ်တာနဲ့ `alert()` ဖြင့် မက်ဆေ့တစ်ခု ပေါ်လာမှာ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<button onclick="alert('မင်္ဂလာပါ!')">နှိပ်ကြည့်ပါ</button>
+```
+
+မှတ်ချက် — `alert()` က browser မှာ popup မက်ဆေ့ပုံ ပြရန် အသုံးပြုတဲ့ built-in function ဖြစ်ပါတယ်။ နှိပ်လိုက်တာနဲ့ message box ပေါ်လာပါလိမ့်မယ်။
+
+### CSS ဖြင့် Button အလှဆင်ခြင်း
+
+Button တွေကို CSS နဲ့ လှပပြီး နှိပ်ချင်စရာ ဖြစ်အောင် ပြုလုပ်နိုင်ပါတယ်။ အရောင်၊ border-radius၊ hover effect စတာတွေ သုံးနိုင်ပါတယ်။ Styling သုံးတာက real website တွေမှာ အရမ်းအရေးပါပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<style>
+  .btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .btn:hover {
+    background-color: #45a049;
+  }
+</style>
+
+<button class="btn">အစိမ်းရောင် Button</button>
+```
+
+မှတ်ချက် — `:hover` က mouse ညွှန်းတုတ်က button ပေါ် ဝင်လာတဲ့အခါ style ပြောင်းပေးပါတယ်။ `cursor: pointer` က mouse လက်ညှိုးပုံ ပြောင်းပေးပါတယ်။
+
+### Button vs Link
+
+`<button>` က လုပ်ဆောင်ချက်တစ်ခုကို စတင်ဖို့ဖြစ်ပြီး `<a>` link က နောက်တစ်နေရာသို့ သွားဖို့အတွက် ဖြစ်ပါတယ်။ နှစ်ခုလုံး နှိပ်လို့ရတဲ့ element တွေဖြစ်ပေမယ့် အသုံးပြုလိုတဲ့ ရည်ရွယ်ချက် မတူကြပါဘူး။ Link ကို button ပုံစံ style လုပ်လို့လည်း ရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<button onclick="alert('ပေးပို့ပြီး!')">ပို့မည်</button>
+<a href="https://example.com">ဒီနေရာသို့ သွားမည်</a>
+```
+
+မှတ်ချက် — လုပ်ဆောင်ချက် (submit, delete စသည်) အတွက် button ကိုသုံးပြီး စာမျက်နှာပြောင်းရန် အတွက်တော့ link ကို သုံးသင့်ပါတယ်။
+
+### Disabled Button
+
+Button ကို မနှိပ်နိုင်အောင် `disabled` attribute ထည့်ပေးနိုင်ပါတယ်။ ဥပမာ — လိုအပ်တဲ့ အချက်အလက်တွေ မဖြည့်ရသေးတဲ့ form မှာ button ကို disabled လုပ်ထားလေ့ရှိပါတယ်။ Disabled button ကိုနှိပ်လို့ မရတော့ပါဘူး။
+
+**ဥပမာ -**
+
+```html
+<button disabled>မနှိပ်နိုင်ပါ</button>
+<button>ပုံမှန် Button</button>
+```
+
+မှတ်ချက် — Disabled button ကိုကြည့်ရတာ မှိန်နေပြီး onclick ဖြစ်စေ တုံ့ပြန်မှု လုံးဝမရှိပါဘူး။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `<button>` က လုပ်ဆောင်ချက်များအတွက်၊ `<a>` က လမ်းကြောင်းပြောင်းခြင်းအတွက် ဖြစ်သည်။
+- `onclick` ဖြင့် JavaScript function တစ်ခုကို နှိပ်လိုက်တာနဲ့ ခေါ်နိုင်သည်။
+- `disabled` attribute သည် button ကို မနှိပ်နိုင်စေရန် ပြုလုပ်ပေးသည်။
+- CSS နဲ့ button ကို လှပအောင် တန်ဆာဆင်နိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Button ကို နှိပ်တဲ့အခါ JavaScript ခေါ်ရန် ဘယ် attribute ကို သုံးမလဲ?", options: ["onclick", "onpress", "onclicked", "action"], correctAnswer: 0, explanation: "onclick attribute က button နှိပ်သည့်အခါ JavaScript code ကို run စေသည်။" },
+  { id: "q2", question: "Button ကို မနှိပ်နိုင်အောင် လုပ်ရန် ဘယ် attribute ကို သုံးမလဲ?", options: ["blocked", "disabled", "stop", "void"], correctAnswer: 1, explanation: "disabled attribute ပါသော button သည် နှိပ်လို့မရဘဲ မှိန်ပြီး ပေါ်နေသည်။" },
+  { id: "q3", question: "နောက်စာမျက်နှာသို့ သွားရန် ဘယ် element ကို သုံးသင့်သနည်း?", options: ["button", "input", "a link", "div"], correctAnswer: 2, explanation: "လမ်းကြောင်းပြောင်းခြင်းအတွက် a link ကို အသုံးပြုသင့်သည်။" } ]} />

@@ -1,0 +1,103 @@
+---
+title: "HTML Links — Link နဲ့ Hyperlink"
+description: "a href, target, mailto, Bookmark Anchor စတဲ့ Link အမျိုးမျိုးကို လေ့လာကြရအောင်။"
+---
+
+### Link ဆိုတာ — a Tag
+
+**Link (Hyperlink)** က Webpage တစ်ခုကနေ နောက်တစ်ခုကို သွားလို့ရအောင် လုပ်ပေးတာပါ။ `<a>` Tag မှာ **href** Attribute နဲ့ သွားမယ့်နေရာကို သတ်မှတ်ပြီး Tag ကြားမှာ မြင်ရမယ့်စာသားကို ရေးပါတယ်။
+
+**ဥပမာ -**
+```html
+<a href="https://takkatho.com">Takkatho စာမျက်နှာ</a>
+```
+
+မှတ်ချက် — href မပါဘဲ `<a>` Tag သုံးရင် Link အလုပ်မလုပ်ဘဲ ပုံမှန်စာသားလို ဖြစ်နေပါတယ်။
+
+### target Attribute
+
+`target` Attribute က Link ကို ဘယ်နေရာမှာ ဖွင့်မလဲ သတ်မှတ်ပါတယ်။ **_blank** က New Tab (Window) အသစ်မှာ ဖွင့်ပြီး **_self** ကတော့ လက်ရှိစာမျက်နှာမှာ ဖွင့်ပေးပါတယ်။
+
+**ဥပမာ -**
+```html
+<a href="https://takkatho.com" target="_blank">New Tab မှာ ဖွင့်မယ့် Link</a>
+```
+
+မှတ်ချက် — အခြားဆိုဒ်ကို သွားမယ့် External Link တွေကို target="_blank" နဲ့ ဖွင့်ပေးတာ အသုံးများပါတယ်။
+
+### title Attribute
+
+`title` Attribute က Link ပေါ်ကို Mouse Hover လုပ်တဲ့အခါ **Tooltip** အဖြစ် ပြမယ့်အချက်အလက်ကို ပေးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<a href="course.html" title="HTML5 သင်တန်းစာမျက်နှာသို့">HTML5 သင်တန်း</a>
+```
+
+မှတ်ချက် — Screen Reader အတွက်ပါ အသုံးဝင်တဲ့ အပိုအချက်အလက်တစ်ခု ဖြစ်ပါတယ်။
+
+### Absolute နဲ့ Relative URL
+
+**Absolute URL** က https:// ပါတဲ့ လိပ်စာအပြည့်အစုံဖြစ်ပြီး **Relative URL** ကတော့ လက်ရှိဖိုင်ရဲ့အနေအထားနဲ့ တွက်ပြီး သွားတဲ့လမ်းကြောင်းပါ။ ကိုယ့် Website အတွင်းမှာတော့ Relative URL ကို အသုံးများပါတယ်။
+
+**ဥပမာ -**
+```html
+<a href="https://www.google.com">Absolute URL</a>
+<a href="/about">Relative URL (root ကနေ)</a>
+<a href="contact.html">Relative URL (ဖိုင်နဲ့အတူ)</a>
+```
+
+မှတ်ချက် — Relative URL က Domain ပြောင်းသွားရင်တောင် အလုပ်ဆက်လုပ်နေတာမို့ Project ထဲက Page တွေအတွက် ပိုလုံခြုံပါတယ်။
+
+### mailto: — Email Link
+
+**mailto:** prefix နဲ့ Link ကို နှိပ်ရင် User ရဲ့ Email Program (Outlook, Gmail) ဖွင့်ပြီး လိပ်စာကို အလိုအလျောက် ဖြည့်ပေးပါတယ်။
+
+**ဥပမာ -**
+```html
+<a href="mailto:hello@takkatho.com">ကျွန်တော်တို့ကို Email ပို့ရန်</a>
+```
+
+မှတ်ချက် — Subject ပါထည့်ချင်ရင် mailto:hello@takkatho.com?subject=Hello လိုမျိုး ရေးနိုင်ပါတယ်။
+
+### Bookmark Anchor (#id)
+
+Page ရဲ့ တစ်နေရာရာကို ချက်ချင်း ရွှေ့ဖို့ Link ရဲ့ href ထဲမှာ **#id** ကို သုံးပါတယ်။ သွားချင်တဲ့ Element မှာလည်း id Attribute ဆင်တူ ထည့်ပေးရပါမယ်။
+
+**ဥပမာ -**
+```html
+<a href="#section2">အပိုင်း ၂ ကို သွားရန်</a>
+
+<h2 id="section2">အပိုင်း ၂</h2>
+<p>ဒီအပိုင်းကို Link နှိပ်လိုက်တာနဲ့ ချက်ချင်း ရောက်သွားပါမယ်။</p>
+```
+
+မှတ်ချက် — id က Page ထဲမှာ ထူးခြားနေရပြီး ထပ်တူမဖြစ်အောင် ဂရုစိုက်ရပါမယ်။
+
+### Button ပုံစံ Link (CSS)
+
+`<a>` Tag ကို CSS နဲ့ Button ပုံစံ လှလှပပ ပြောင်းလဲနိုင်ပါတယ်။ background-color ၊ padding ၊ text-decoration စတဲ့ Property တွေနဲ့ Button နဲ့တူအောင် Style လုပ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<a href="join.html" style="background-color:#007bff; color:white; padding:10px 20px; text-decoration:none;">
+  Join Now
+</a>
+```
+
+မှတ်ချက် — text-decoration:none က Link ရဲ့ မျဉ်းသားကို ဖယ်ပေးပြီး Button နဲ့တူတဲ့ ပုံစံဖြစ်စေပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Link ရဲ့ အဓိက Attribute က href ဖြစ်သည်။
+- target="_blank" က New Tab မှာ ဖွင့်ပေးသည်။
+- #id နဲ့ ကိုယ့် Page ထဲက နေရာတစ်ခုကို ချက်ချင်းရွှေ့နိုင်သည်။
+- mailto: prefix နဲ့ Email Program ဖွင့်နိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Link အသစ်ကို New Tab မှာ ဖွင့်ချင်ရင် ဘယ် Attribute ကို သုံးပါသလဲ?", options: ["href", "target", "title", "src"], correctAnswer: 1, explanation: "target attribute ကို _blank နဲ့ထားရင် New Tab မှာ ဖွင့်ပါတယ်။" },
+  { id: "q2", question: "Absolute URL ဆိုတာ ဘယ်လိုလိပ်စာလဲ?", options: ["Domain နာမည် တစ်ခုတည်း", "https:// ပါတဲ့ လိပ်စာ အပြည့်အစုံ", "Email လိပ်စာ", "Folder နာမည်"], correctAnswer: 1, explanation: "Absolute URL က https:// ပါတဲ့ Website လိပ်စာ အပြည့်အစုံပါ။" },
+  { id: "q3", question: "Email Program ဖွင့်တဲ့ Link လုပ်ဖို့ href ထဲမှာ ဘာကို ထည့်ပါသလဲ?", options: ["https://", "mailto:", "ftp://", "tel:"], correctAnswer: 1, explanation: "mailto: prefix နဲ့ Link ကို နှိပ်ရင် Email Program ဖွင့်ပေးပါတယ်။" }
+]} />

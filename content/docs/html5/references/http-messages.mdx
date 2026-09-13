@@ -1,0 +1,71 @@
+---
+title: "HTTP Messages — HTTP Message အကြောင်း"
+description: "HTTP Request/Response ရဲ့ ပုံသဏ္ဌာန် ၊ Status Code အုပ်စုများအကြောင်း အကျဉ်းချုပ် ရှင်းပြထားပါတယ်။"
+---
+
+### HTTP Message ဆိုတာ ဘာလဲ?
+
+Browser က Web Server နဲ့ စကားပြောတဲ့အခါ ပို့လိုက်တဲ့ အကြောင်းအရာ တိုင်းကို **HTTP Message** လို့ ခေါ်ပါတယ်။ Browser ဘက်မှ ပို့တာကို **HTTP Request** ၊ Server ဘက်မှ ပြန်ပို့တာကို **HTTP Response** လို့ ခေါ်ပါတယ်။ Message တစ်ခုစီကို အပိုင်း (၃) ခု နဲ့ ဖွဲ့စည်းထားပါတယ် — Start Line ၊ Headers နဲ့ Body။
+
+HTML Page တစ်ခု ဖွင့်တိုင်း ဒီ Request/Response စက်ဝိုင်း တစ်ခု ဖြစ်ပေါ်ပြီး ပုံမှန်အားဖြင့် Browser က အဲဒါတွေကို သူ့ဘာသာသူ ထိန်းသိမ်းပေးပါတယ်။ Developer Tools (F12) ရဲ့ Network Tab မှာ ဖွင့်ကြည့်ရင် Request/Response တွေကို တိုက်ရိုက် မြင်နိုင်ပါတယ်။
+
+### HTTP Request ၏ ဖွဲ့စည်းပုံ
+
+Request ရဲ့ ပထမဆုံး စာကြောင်းကို **Request Line** လို့ ခေါ်ပြီး Method ၊ URL ၊ HTTP Version သုံးမျိုး ပါဝင်ပါတယ်။ ဒုတိယပိုင်းက **Request Headers** ဖြစ်ပြီး Server အတွက် နောက်ထပ် အချက်အလက်တွေ (ဥပမာ ဘယ် Browser လဲဆိုတာ) ပါပါတယ်။ နောက်ဆုံးပိုင်းက **Request Body** ဖြစ်ပြီး Method အမျိုးအစားပေါ် မူတည်ပြီး Data တွေ ပါရင်ပါမယ်။
+
+**ဥပမာ -**
+```http
+GET /lesson/html5 HTTP/1.1
+Host: www.takkatho.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0)
+Accept: text/html
+```
+
+မှတ်ချက် — GET Request မှာ Body မပါဘဲ Headers နဲ့ပဲ Request Line ကို လုံလောက်ပါတယ်။
+
+### HTTP Response ၏ ဖွဲ့စည်းပုံ
+
+Response ရဲ့ ပထမဆုံး စာကြောင်းကို **Status Line** လို့ ခေါ်ပြီး HTTP Version ၊ Status Code ၊ Status Text ပါဝင်ပါတယ်။ ဒုတိယပိုင်းက **Response Headers** ဖြစ်ပြီး Content အမျိုးအစား ၊ အလျား စတာတွေ ပါပါတယ်။ တတိယပိုင်း **Response Body** ကတော့ အသုံးပြုသူကို ပြသမယ့် HTML ၊ JSON စတဲ့ Content အစစ်အမှန် ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```http
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+Content-Length: 342
+
+<!DOCTYPE html>
+<html lang="my">
+  <body>
+    <p>မင်္ဂလာပါ ။ ဒါက Response Body ပါ။</p>
+  </body>
+</html>
+```
+
+မှတ်ချက် — Status Code `200` က Request အောင်မြင်ပြီး Content ကို ပြန်ပို့ပေးတာကို ဆိုလိုပါတယ်။
+
+### HTTP Status Code အုပ်စုများ
+
+Status Code တွေက နံပါတ် (၃) လုံး ပါဝင်ပြီး ပထမဂဏန်းက အုပ်စု ကို သတ်မှတ်ပါတယ်။
+
+| Class | အုပ်စု | အဓိပ္ပာယ် |
+| ---- | ---- | ---- |
+| 1xx | Informational | တုံ့ပြန်ချက် ရရှိနေဆဲ ၊ Process ဆက်လုပ်ရန် |
+| 2xx | Success | Request အောင်မြင်ပြီး ရလဒ် ပြန်ရပြီ |
+| 3xx | Redirection | Resource က တစ်နေရာ အသစ်သို့ ရွှေ့ထားသည် |
+| 4xx | Client Error | Client ဘက် မှားယွင်းမှု (ဥပမာ 404 Not Found) |
+| 5xx | Server Error | Server ဘက်မှာ ပြဿနာ တစ်ခုခု (ဥပမာ 500) |
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Request က Start Line + Headers + Body ၊ Response က Status Line + Headers + Body။
+- `200` အောင်မြင်ခြင်း ၊ `404` Page မတွေ့ခြင်း ၊ `500` Server အမှား။
+- Message တွေကို Network Tab မှာ ကြည့်နိုင်ပါတယ်။
+- Status Code ရဲ့ ပထမဂဏန်းက အုပ်စု ကို ကိုယ်စားပြုပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "HTTP Request ရဲ့ ပထမဆုံး စာကြောင်းကို ဘာလို့ ခေါ်ပါသလဲ?", options: ["Request Line", "Body Line", "Header Line", "Main Line"], correctAnswer: 0, explanation: "Request Line မှာ Method ၊ URL ၊ HTTP Version ပါဝင်ပါတယ်။" },
+  { id: "q2", question: "Status Code 404 က ဘာကို ဆိုလိုပါသလဲ?", options: ["Page ကို ရှာမတွေ့ဘူး", "အောင်မြင်ပြီ", "Server က ပြိုကျပြီ", "Data ပျက်စီးပြီ"], correctAnswer: 0, explanation: "404 Not Found က Request လုပ်တဲ့အရာ မရှိဘူးဆိုတဲ့ Client Error ပါ။" },
+  { id: "q3", question: "Status Code 200 ရဲ့ အဓိပ္ပာယ်က ဘာလဲ?", options: ["Request အောင်မြင်ပြီ", "Redirect လုပ်ရမယ်", "Client Error", "Server Error"], correctAnswer: 0, explanation: "200 OK က Request အောင်မြင်ပြီး ရလဒ် ပြန်ရတာကို ဆိုလိုပါတယ်။" },
+]} />

@@ -1,0 +1,105 @@
+---
+title: "Joining Tables (ဇယားများ ချိတ်ဆက်ခြင်း)"
+description: "INNER, LEFT, RIGHT, FULL OUTER Joins အကြောင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="ရည်ရွယ်ချက်">
+    Database ထဲမှာ သီးခြားစီ ခွဲသိမ်းထားတဲ့ Table တွေကို လိုအပ်တဲ့အခါ ပြန်လည် ချိတ်ဆက်ပြီး (Join) အချက်အလက်တွေ ဘယ်လို ဆွဲထုတ်ရမလဲ ဆိုတာကို လေ့လာကြပါမယ်။
+</Aside>
+
+## Join ဆိုတာ ဘာလဲ?
+
+Relational Database တွေမှာ Data တွေကို အကုန်ရောမသိမ်းဘဲ သက်ဆိုင်ရာ အကြောင်းအရာအလိုက် Table လေးတွေ ခွဲသိမ်းလေ့ ရှိပါတယ်။ ဒါပေမဲ့ လက်တွေ့ အသုံးပြုတဲ့အခါ Table တစ်ခုတည်းက Data တွေနဲ့ မလုံလောက်ဘဲ၊ တခြား Table တွေက Data တွေပါ ပေါင်းစပ် ကြည့်ရှုဖို့ လိုအပ်လာပါတယ်။
+
+ဒီလို Table နှစ်ခု ဒါမှမဟုတ် နှစ်ခုထက်ပိုတဲ့ Table တွေကို အချင်းချင်း ချိတ်ဆက် (Primary Key နဲ့ Foreign Key ကို အသုံးပြုပြီး) ပြီး Data တွေကို တစ်ပေါင်းတည်း ဆွဲထုတ်တဲ့ နည်းလမ်းကို **JOIN** လို့ ခေါ်ပါတယ်။
+
+## Join အမျိုးအစားများ
+
+SQL မှာ အဓိက အသုံးပြုတဲ့ JOIN ၄ မျိုး ရှိပါတယ်။
+1. INNER JOIN
+2. LEFT JOIN
+3. RIGHT JOIN
+4. FULL OUTER JOIN
+
+လေ့လာရ လွယ်ကူအောင် `Employees` နဲ့ `Departments` ဆိုတဲ့ Table နှစ်ခု ရှိတယ်လို့ မှတ်ဆယူကြည့်ပါ။
+- `Employees` Table ထဲမှာ ဝန်ထမ်းတွေရဲ့ နာမည်နဲ့ သူတို့ရဲ့ ဌာန ID (`DepartmentID`) ပါပါတယ်။
+- `Departments` Table ထဲမှာ `DepartmentID` နဲ့ ဌာနနာမည် (`DepartmentName`) တွေ ပါပါတယ်။
+
+---
+
+### 1. INNER JOIN
+**"နှစ်ဖက်စလုံးမှာ တူညီ (Match) တဲ့ အရာတွေကိုပဲ ယူမယ်"**
+
+Table နှစ်ခုစလုံးမှာ ကိုက်ညီမှု (Matching Record) ရှိတဲ့ Data တွေကိုပဲ ရွေးထုတ်ပေးပါတယ်။ (စက်ဝိုင်းနှစ်ခု ထပ်နေတဲ့ အလယ်ဗဟို ဧရိယာ - Intersection - ကိုပဲ ယူသလိုမျိုးပါ။)
+
+**ဥပမာ:** ဝန်ထမ်းနာမည်နဲ့ သူတို့ အလုပ်လုပ်တဲ့ ဌာနနာမည်ကို တွဲပြပါ။
+```sql
+SELECT E.FirstName, D.DepartmentName
+FROM Employees AS E
+INNER JOIN Departments AS D ON E.DepartmentID = D.DepartmentID;
+```
+*(ဒီ Query က ဌာန ရှိတဲ့ ဝန်ထမ်းတွေနဲ့၊ ဝန်ထမ်း ရှိတဲ့ ဌာနတွေကိုပဲ ပြပေးပါလိမ့်မယ်။ ဌာန မရှိတဲ့ ဝန်ထမ်းတွေ၊ ဝန်ထမ်း မရှိတဲ့ ဌာနတွေက ရလဒ်မှာ ပါလာမှာ မဟုတ်ပါဘူး။)*
+
+> `ON` Keyword နောက်မှာ ဘယ် Column တွေ တူရင် ချိတ်ဆက်မလဲ (များသောအားဖြင့် PK နဲ့ FK) ဆိုတဲ့ စည်းမျဉ်းကို သတ်မှတ်ပေးရပါတယ်။
+
+---
+
+### 2. LEFT JOIN (LEFT OUTER JOIN)
+**"ဘယ်ဘက် Table က အကုန်ယူမယ်၊ ညာဘက် Table က တူတာပဲ ယူမယ်"**
+
+ပထမ (ဘယ်ဘက်) Table မှာ ရှိသမျှ Record အားလုံးကို ဖော်ပြပေးပြီး၊ ဒုတိယ (ညာဘက်) Table ကနေ ကိုက်ညီတဲ့ Record တွေကို တွဲပြပါတယ်။ ကိုက်ညီတာ မရှိရင် ညာဘက် Data နေရာမှာ `NULL` (ဘာမှမရှိ) လို့ ပြပေးပါတယ်။
+
+**ဥပမာ:** ဝန်ထမ်း အားလုံးကို ပြပေးပါ။ သူတို့ ဌာနရှိရင် ဌာနနာမည် တွဲပြပြီး၊ ဌာနမရှိသေးရင် `NULL` ပြပါ။
+```sql
+SELECT E.FirstName, D.DepartmentName
+FROM Employees AS E
+LEFT JOIN Departments AS D ON E.DepartmentID = D.DepartmentID;
+```
+*(ဒီ Join ဟာ ဌာန မခွဲရသေးတဲ့ ဝန်ထမ်းသစ် တွေကိုပါ ကြည့်ချင်တဲ့အခါမျိုးမှာ အလွန် အသုံးဝင်ပါတယ်။)*
+
+---
+
+### 3. RIGHT JOIN (RIGHT OUTER JOIN)
+**"ညာဘက် Table က အကုန်ယူမယ်၊ ဘယ်ဘက် Table က တူတာပဲ ယူမယ်"**
+
+LEFT JOIN ရဲ့ ပြောင်းပြန်ပါ။ ဒုတိယ (ညာဘက်) Table မှာ ရှိသမျှ အားလုံးကို ပြပေးပြီး၊ ပထမ (ဘယ်ဘက်) Table က တူတာကိုပဲ တွဲပြပါတယ်။
+
+**ဥပမာ:** ဌာန အားလုံးကို ပြပေးပါ။ ဝန်ထမ်းရှိရင် နာမည်တွဲပြပြီး၊ ဝန်ထမ်း တစ်ယောက်မှ မရှိတဲ့ ဌာနဆိုရင် `NULL` ပြပါ။
+```sql
+SELECT E.FirstName, D.DepartmentName
+FROM Employees AS E
+RIGHT JOIN Departments AS D ON E.DepartmentID = D.DepartmentID;
+```
+*(ဒီ Join ဟာ လူမရှိသေးတဲ့ ဌာနအလွတ် (ဥပမာ - ဌာနသစ်) တွေကို ရှာဖွေချင်တဲ့အခါမျိုးမှာ သုံးပါတယ်။)*
+
+---
+
+### 4. FULL OUTER JOIN
+**"နှစ်ဖက်စလုံးက အကုန်ယူမယ်"**
+
+LEFT JOIN နဲ့ RIGHT JOIN ရလဒ် နှစ်ခုစလုံးကို ပေါင်းထားတာနဲ့ တူပါတယ်။ Table နှစ်ခုစလုံးမှာ ရှိတဲ့ Record အားလုံးကို ပြပေးပါတယ်။ ကိုက်ညီတာ မရှိတဲ့ နေရာတွေမှာတော့ `NULL` တွေ ပြပေးမှာ ဖြစ်ပါတယ်။
+
+```sql
+SELECT E.FirstName, D.DepartmentName
+FROM Employees AS E
+FULL OUTER JOIN Departments AS D ON E.DepartmentID = D.DepartmentID;
+```
+
+> **မှတ်ချက်:** MySQL Database မှာ `FULL OUTER JOIN` ကို တိုက်ရိုက် သုံးလို့ မရပါဘူး။ အဲဒီအစား `LEFT JOIN` နဲ့ `RIGHT JOIN` ကို ရေးပြီး ကြားထဲကနေ `UNION` ဆိုတဲ့ Keyword လေးခံပြီး ပေါင်းပေးရပါတယ်။
+
+---
+
+## Table (၃) ခု အထက် ချိတ်ဆက်ခြင်း
+
+`JOIN` ဟာ Table ၂ ခုတည်းကိုပဲ ချိတ်ဆက်လို့ ရတာ မဟုတ်ပါဘူး။ `JOIN` Clause တွေကို တစ်ခုပြီးတစ်ခု ဆက်တိုက် ရေးသွားပြီး Table တွေ အများကြီးကို Query တစ်ခုတည်းမှာ ပေါင်းစပ်လို့ ရပါတယ်။
+
+**ဥပမာ:** (Projects -> Employees -> Departments) Table ၃ ခုကို ချိတ်ဆက်ခြင်း
+```sql
+SELECT P.ProjectName, E.FirstName, D.DepartmentName
+FROM Projects AS P
+INNER JOIN Employees AS E ON P.LeadEmployeeID = E.EmployeeID
+INNER JOIN Departments AS D ON E.DepartmentID = D.DepartmentID;
+```
+*(ဒီ Query က Project နာမည်၊ အဲဒီ Project ကို ဦးဆောင်မယ့် ဝန်ထမ်းနာမည် နဲ့ သူ အလုပ်လုပ်တဲ့ ဌာနနာမည် တွေကို တစ်ပေါင်းတည်း ဆွဲထုတ်ပြပေးပါလိမ့်မယ်။)*

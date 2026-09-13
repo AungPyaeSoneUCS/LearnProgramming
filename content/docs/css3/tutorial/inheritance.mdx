@@ -1,0 +1,130 @@
+---
+title: "CSS Inheritance — Style အမွေဆက်ခံခြင်း"
+description: "Property တွေ Parent ကနေ Child ကို ဘယ်လို ဆက်ခံသွားလဲ နဲ့ inherit, initial, unset တန်ဖိုးတွေကို လေ့လာကြည့်ရအောင်။"
+---
+
+### CSS Inheritance ဆိုတာ ဘာလဲ?
+
+CSS Inheritance က Parent Element မှာ သတ်မှတ်ထားတဲ့ Style (Property) တွေကို Child Element တွေက မရေးရဘဲ အလိုအလျောက် ရရှိတာပါ။ color, font-family, line-height စတဲ့ Text နဲ့ ဆိုင်တဲ့ Property တွေက Inherit (ဆက်ခံ) ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+body {
+  color: #333;
+  font-family: "Padauk", sans-serif;
+}
+p {
+  font-size: 1.1rem;
+}
+```
+
+မှတ်ချက် — body မှာ သတ်မှတ်ထားတဲ့ color နဲ့ font-family ကို p အပါအဝင် Child Elements အားလုံးက မရေးရဘဲ အလိုလို ရသွားပါတယ်။
+
+### Inherited ဖြစ်တဲ့ Property တွေ
+
+အသုံးများတဲ့ Inherited Property တချို့ ကြည့်ရအောင်။
+
+| Property | ဆက်ခံရရှိတဲ့ အရာ |
+|---|---|
+| color | စာသားအရောင် |
+| font-family | ဖောင့်အမျိုးအစား |
+| font-size | ဖောင့်အရွယ်အစား |
+| line-height | စာကြောင်းကြား အကွာ |
+| text-align | စာသားချိန်ညှိမှု |
+| visibility | မြင်နိုင်မှု |
+
+မှတ်ချက် — Inherited Property တွေကိုလည်း Child မှာ ပြန်ပြောင်းလို့ ရပြီး မပြောင်းရင် Parent ရဲ့ Style ကို ဆက်ရနေမှာပါ။
+
+**ဥပမာ -**
+```css
+section {
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+.alert {
+  color: #e74c3c;   /* color ကို ပြောင်းသည် */
+}
+```
+
+မှတ်ချက် — .alert မှာ color ပြောင်းပေမဲ့ font-size ကတော့ Section ရဲ့ 1.2rem ကိုပဲ ဆက်ခံနေပါတယ်။
+
+### Inherit မလုပ်တဲ့ (Non-inherited) Property တွေ
+
+margin, padding, border, background, width, height စတဲ့ Box/Layout Property တွေက Inherit မလုပ်ပါ။ Child က Parent ရဲ့ Border ဒါမှမဟုတ် Background ကို အလိုလို မရပါဘူး။
+
+**ဥပမာ -**
+```css
+.parent {
+  border: 2px solid #2c3e50;
+  padding: 20px;
+}
+.child {
+  /* border နဲ့ padding ကို inherit မလုပ်ပါဘူး */
+}
+```
+
+မှတ်ချက် — Non-inherited Property တွေကို Element တစ်ခုချင်းစီမှာ သီးသန့် သတ်မှတ်ပေးဖို့ လိုအပ်ပါတယ်။
+
+### `inherit` နဲ့ `initial` — Keyword တန်ဖိုးများ
+
+`inherit` က Parent ရဲ့ Value ကို ရအောင်ယူပြီး `initial` ကတော့ Property ရဲ့ Spec မူလတန်ဖိုး (Browser Default) ကို ပြန်ယူပါတယ်။ ဒီနှစ်ခုက ဆန့်ကျင်ဘက် အဓိပ္ပာယ်ရှိတယ်ဆိုတာ မှတ်ထားပါ။
+
+**ဥပမာ -**
+```css
+a {
+  color: #337ab7;
+}
+.footer-link {
+  color: inherit;   /* parent ရဲ့ color */
+}
+.inner {
+  width: initial;   /* auto */
+  margin: initial;  /* 0 */
+}
+```
+
+မှတ်ချက် — inherit က Parent ရဲ့ Value ၊ initial က Spec မူလတန်ဖိုး ဖြစ်ပြီး Non-inherited Property တစ်ခုကိုတောင် inherit ပေးပြီး Parent ဆီကပဲ ယူလို့ ရပါတယ်။
+
+### `unset` — စွယ်စုံသုံး Reset တန်ဖိုး
+
+`unset` က Property က Inherited ဖြစ်ရင် inherit လို့လည်းကောင်း ၊ Non-inherited ဖြစ်ရင် initial လို့လည်းကောင်း အလုပ်လုပ်ပါတယ်။ Browser Default Style တွေ ဖယ်ရှားတဲ့ Reset Stylesheet တွေမှာ မကြာခဏ သုံးပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  color: unset;    /* inherited ၊ ဒါကြောင့် inherit နဲ့ညီ */
+}
+div {
+  margin: unset;   /* non-inherited ၊ ဒါကြောင့် initial နဲ့ညီ */
+}
+```
+
+မှတ်ချက် — unset က Property တစ်ခုချင်းစီရဲ့ Behavior ကို မမှတ်မိဘဲ အလိုအလျောက် Inherit/Initial ကို ရွေးပေးတာမို့ Reset လုပ်ရတာ လွယ်ကူပါတယ်။
+
+### Inheritance က Code ကို ဘယ်လို အတိုချုံးပေးသလဲ?
+
+Inheritance ကိုသိရင် Parent တစ်ခုတည်းမှာ Style သတ်မှတ်ပြီး Child အများကြီး တစ်ခါတည်းနဲ့ Style ရနိုင်ပါတယ်။ CSS ပိုတိုပြီး Maintain (ပြုပြင်ရ) လွယ်တာက Inheritance ရဲ့ အားသာချက်ပါ။
+
+**ဥပမာ -**
+```css
+body {
+  font-family: "Padauk", sans-serif;
+  line-height: 1.6;
+}
+```
+
+မှတ်ချက် — body တစ်နေရာတည်းမှာ Font နဲ့ Line-Height သတ်မှတ်လိုက်ရုံနဲ့ Page ထဲက Text Element တွေ အားလုံး လိုက်ဖက်လာပါတယ်။
+
+### အကျဉ်းချုပ်
+
+color, font-family, line-height စတဲ့ Property တွေ Inherited ဖြစ်ပြီး margin, padding, border စတာတွေ Non-inherited ဖြစ်ပါတယ်။ inherit, initial, unset ဆိုတဲ့ Keyword (၃) ခုနဲ့ ဦးတည်ချက် သတ်မှတ်နိုင်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "အောက်ထဲက ဘယ် Property က Child Element တွေ အလိုအလျောက် ဆက်ခံပါသလဲ?", options: ["color", "border", "padding", "margin"], correctAnswer: 0, explanation: "color က Inherited ဖြစ်ပြီး border, padding, margin တွေက Non-inherited ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "Non-inherited Property တစ်ခုကို Parent ရဲ့ Value ယူဖို့ ဘယ် Keyword သုံးမလဲ?", options: ["inherit", "initial", "unset", "none"], correctAnswer: 0, explanation: "inherit က Property ဘယ်လိုမျိုးပဲ ဖြစ်ဖြစ် Parent ရဲ့ Value ကို ယူပေးပါတယ်။" },
+    { id: "q3", question: "initial Keyword က ဘယ်တန်ဖိုးကို ယူပါသလဲ?", options: ["Browser ရဲ့ မူလတန်ဖိုး", "Parent ရဲ့ တန်ဖိုး", "Child ရဲ့ တန်ဖိုး", "ကြီးဆုံးတန်ဖိုး"], correctAnswer: 0, explanation: "initial က Property ရဲ့ Spec မူလတန်ဖိုးကို ပြန်ယူပြီး inherit နဲ့ ကွဲပြားပါတယ်။" },
+  ]}
+/>

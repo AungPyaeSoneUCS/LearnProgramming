@@ -1,0 +1,108 @@
+---
+title: "CSS How To — CSS ထည့်သွင်းနည်း ၃ မျိုး"
+description: "External, Internal, Inline ဆိုတဲ့ CSS ထည့်သွင်းနည်း သုံးမျိုးကို ဥပမာနဲ့တကွ လေ့လာကြရအောင်။"
+---
+
+### CSS ထည့်သွင်းနည်းတွေ ဆိုတာ
+
+CSS ကို HTML ထဲ ထည့်သွင်းဖို့ နည်းလမ်း **သုံးမျိုး** ရှိပါတယ်။
+
+- **External CSS** — သီးခြား `.css` ဖိုင်ထဲ ရေးပြီး `<link>` Tag နဲ့ ချိတ်ဆက်ခြင်း။
+- **Internal CSS** — `<head>` ထဲက `<style>` Tag အတွင်းမှာ ရေးခြင်း။
+- **Inline CSS** — Element ရဲ့ style attribute ထဲမှာ တိုက်ရိုက်ရေးခြင်း။
+
+### External CSS
+
+External CSS က Style တွေကို သီးခြား `.css` ဖိုင်ထဲမှာ ရေးတာပါ။ Website တစ်ခုလုံးရဲ့ Style ကို တစ်နေရာတည်းကနေ ထိန်းချုပ်နိုင်လို့ အသုံးအများဆုံး နည်းလမ်း ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+body {
+  background-color: #f8f8f8;
+}
+h1 {
+  color: #222;
+}
+```
+
+မှတ်ချက် — ဒါက `style.css` ဖိုင်ထဲက Content ဖြစ်ပြီး ဒီဖိုင်ထဲမှာ HTML Tag တွေ ထည့်လို့ မရပါဘူး။
+
+### External CSS ကို HTML နဲ့ ချိတ်ဆက်ခြင်း
+
+သီးခြား `.css` ဖိုင်ကို `<link>` Tag နဲ့ `<head>` အတွင်းမှာ ချိတ်ဆက်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>External CSS Example</h1>
+</body>
+</html>
+```
+
+မှတ်ချက် — `href` ထဲက လမ်းကြောင်းက HTML ဖိုင်ရှိတဲ့ နေရာနဲ့ ဆက်စပ်မှန်ကန်နေဖို့ လိုပါတယ်။
+
+### Internal CSS
+
+Internal CSS က `<style>` Tag ကို `<head>` ထဲ ထည့်ပြီး Page တစ်ခုတည်းအတွက် Style တွေကို ရေးပါတယ်။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { background-color: linen; }
+    h1 { color: maroon; margin-left: 40px; }
+  </style>
+</head>
+<body>
+  <h1>Internal CSS Example</h1>
+</body>
+</html>
+```
+
+မှတ်ချက် — Internal CSS က သီးခြားဖိုင် မဆောက်ဘဲ Page တစ်ခုတည်းအတွက် Style ရေးချင်တဲ့အခါ အဆင်ပြေပါတယ်။
+
+### Inline CSS
+
+Inline CSS က Element ရဲ့ style attribute ထဲမှာ Property တွေကို တိုက်ရိုက် ရေးတာပါ။ Element တစ်ခုတည်းကိုသာ သက်ရောက်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<p style="color:red; font-size:20px;">ဒါက Inline Style ဖြစ်သည်။</p>
+```
+
+မှတ်ချက် — Inline Style က သတ်မှတ်ထားတဲ့ Element တစ်ခုတည်းကိုသာ သက်ရောက်ပြီး အလွန်အကျွံ သုံးရင် ကုဒ်ထိန်းသိမ်းရ ခက်ပါတယ်။
+
+### Style Precedence (ဦးစားပေးစဉ်)
+
+Rule တွေ ထပ်နေရင် ဘယ်ဟာက အနိုင်ရလဲဆိုတာ စည်းမျဉ်း ရှိပါတယ်။ အကြမ်းဖျင်းအားဖြင့် **Inline** က ဦးစားပေး အမြင့်ဆုံး ဖြစ်ပြီး နောက်မှာ Internal ၊ နောက်ဆုံးမှာ External ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<style> p { color: blue; } </style>
+<p style="color:red;">Inline Style က Internal CSS ထက် ဦးစားပေး ဖြစ်သည်။</p>
+```
+
+မှတ်ချက် — ဦးစားပေးအဆင့် တူညီနေရင် နောက်မှာရေးထားတဲ့ Rule က အနိုင်ရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- CSS ထည့်နည်း သုံးမျိုးမှာ External, Internal, Inline ဖြစ်သည်။
+- External CSS က Website တစ်ခုလုံးကို စီမံဖို့ အကောင်းဆုံး ဖြစ်သည်။
+- ဦးစားပေးစဉ်မှာ Inline က အမြင့်ဆုံး ဖြစ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Website တစ်ခုလုံးအတွက် Style စီမံဖို့ အကောင်းဆုံး CSS ထည့်နည်းက ဘာလဲ?", options: ["Inline CSS", "Internal CSS", "External CSS", "Browser Default"], correctAnswer: 2, explanation: "External CSS က Style တစ်ခုလုံးကို သီးခြားဖိုင်ထဲမှာ ထိန်းချုပ်လို့ ရပါတယ်။" },
+    { id: "q2", question: "Internal CSS ကို ဘယ်နေရာမှာ ရေးပါသလဲ?", options: ["head ထဲက style tag", "body ရဲ့ အဆုံး", "style.css ဖိုင်", "JavaScript ဖိုင်"], correctAnswer: 0, explanation: "Internal CSS ကို head ထဲက style tag အတွင်းမှာ ရေးပါတယ်။" },
+    { id: "q3", question: "ဦးစားပေး (Precedence) အမြင့်ဆုံး CSS က ဘာလဲ?", options: ["External CSS", "Internal CSS", "Inline Style", "Media Query"], correctAnswer: 2, explanation: "Inline Style က ဦးစားပေး အမြင့်ဆုံး ဖြစ်ပြီး ကျန်တာတွေ အားလုံးကို ကျော်လွန် သက်ရောက်ပါတယ်။" },
+  ]}
+/>

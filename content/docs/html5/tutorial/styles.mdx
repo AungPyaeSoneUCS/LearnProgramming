@@ -1,0 +1,89 @@
+---
+title: "HTML Styles — HTML Style Attribute အသုံးပြုနည်း"
+description: "style attribute နဲ့ Element တွေရဲ့ အရောင်၊ စာလုံးအရွယ်အစားတွေကို အလွယ်တကူ သတ်မှတ်နည်းကို လေ့လာကြမယ်။"
+---
+
+### style Attribute ဆိုတာ ဘာလဲ?
+
+**Global style attribute** က HTML Element တိုင်းမှာ ထည့်သုံးလို့ရတဲ့ Attribute ပါ။ `style="color:red;"` လိုမျိုး Element ထဲမှာ CSS Property တွေကို **Inline** အနေနဲ့ တိုက်ရိုက် ရေးပေးနိုင်ပါတယ်။ Property နဲ့ Value ကြားကို Colon (:) နဲ့ခြားပြီး Property အများကြီးရေးရင်တော့ Semicolon (;) နဲ့ တစ်ခုစီ ခြားပေးရပါမယ်။
+
+**ဥပမာ -**
+```html
+<p style="color:red;">ဒီစာသားက အနီရောင် ဖြစ်နေပါမယ်။</p>
+```
+
+မှတ်ချက် — `color` ဆိုတဲ့ CSS Property က စာသားရဲ့ အရောင်ကို သတ်မှတ်ပေးတာပါ။
+
+### color (စာသားအရောင်)
+
+`color` Property က စာသားရဲ့ အရောင်ကို သတ်မှတ်ပါတယ်။ အင်္ဂလိပ်အရောင်နာမည် (red, blue, green) ဒါမှမဟုတ် Hex Code (#ff0000) စတာတွေနဲ့ Value ပေးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<h1 style="color:blue;">Blue Heading</h1>
+<p style="color:green;">Green Paragraph</p>
+```
+
+မှတ်ချက် — Style က သတ်မှတ်ထားတဲ့ Element တစ်ခုအပေါ်မှာပဲ သက်ရောက်ပြီး ကျန်တဲ့ Element တွေကို မထိခိုက်ပါဘူး။
+
+### background-color (နောက်ခံအရောင်)
+
+`background-color` Property က Element ရဲ့ နောက်ခံအရောင်ကို သတ်မှတ်ပေးပါတယ်။ စာသားရဲ့အရောင် မဟုတ်ဘဲ Text နောက်ကွယ်က Box အရောင်ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<p style="background-color:yellow;">ဒါက နောက်ခံ အဝါရောင် ပါ။</p>
+<div style="background-color:lightblue; padding:10px;">Light blue box</div>
+```
+
+မှတ်ချက် — `padding` က Box အတွင်းဘက် နေရာလွတ်ချန်ပေးတာမို့ Background ကို ပိုသိသာစေပါတယ်။
+
+### font-size (စာလုံးအရွယ်အစား)
+
+`font-size` Property က စာလုံးရဲ့ အရွယ်အစားကို သတ်မှတ်ပါတယ်။ Value ကို Pixel (px) လိုမျိုး Unit တွေနဲ့ ပေးလေ့ရှိပြီး နံပါတ်ကြီးလေ စာသားကြီးလေ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<p style="font-size:16px;">ပုံမှန်အရွယ်အစား</p>
+<p style="font-size:32px;">ပိုကြီးတဲ့စာသား</p>
+```
+
+မှတ်ချက် — Web Design မှာ ခေါင်းစဉ် (Heading) တွေကို စာသားထက် ပိုကြီးအောင် font-size နဲ့ ချိန်ညှိပါတယ်။
+
+### text-align (စာသားညှိခြင်း)
+
+`text-align` Property က စာသားကို ဘယ်ဖက် (left), ညာဖက် (right), အလယ် (center) စသဖြင့် ချိန်ညှိပေးပါတယ်။
+
+**ဥပမာ -**
+```html
+<h1 style="text-align:center;">အလယ်ချိန်စာသား</h1>
+<p style="text-align:right;">ညာဖက်ချိန်စာသား</p>
+```
+
+မှတ်ချက် — Center ချိန်တာက ခေါင်းစဉ်နဲ့ Button တွေမှာ အသုံးအများဆုံးပါ။
+
+### font-family (စာလုံးပုံစံ)
+
+`font-family` Property က စာလုံးရဲ့ Font အမျိုးအစားကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<p style="font-family:Arial;">Arial font နဲ့ ပြပါမယ်။</p>
+<p style="font-family:Georgia;">Georgia font နဲ့ ပြပါမယ်။</p>
+```
+
+မှတ်ချက် — User ရဲ့ Computer မှာ ဒီ Font မရှိရင် Browser က ဆင်တူနီးစပ်တဲ့ Font နဲ့ အစားထိုး ပြပေးပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- style attribute က မည်သည့် HTML Element တွင်မဆို သုံးနိုင်တဲ့ Global Attribute ဖြစ်သည်။
+- Property နဲ့ Value ကို Colon ၊ Property ချင်းကို Semicolon နဲ့ ခြားရသည်။
+- Inline Style က သတ်မှတ်ထားတဲ့ Element တစ်ခုကိုသာ သက်ရောက်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "style attribute က ဘယ် HTML Element တွေမှာ သုံးလို့ရပါသလဲ?", options: ["HTML Element တိုင်းမှာ", "p မှာသာ", "div မှာသာ", "h1 မှာသာ"], correctAnswer: 0, explanation: "style attribute က Global Attribute မို့ Element တိုင်းမှာ သုံးလို့ရပါတယ်။" },
+  { id: "q2", question: "စာသားရဲ့ အရောင်ပြောင်းဖို့ ဘယ် Property ကို သုံးပါသလဲ?", options: ["font-size", "text-align", "color", "background-color"], correctAnswer: 2, explanation: "color Property က စာသားရဲ့ အရောင်ကို သတ်မှတ်ပေးပါတယ်။" },
+  { id: "q3", question: "background-color ဆိုတာ ဘာရဲ့ အရောင်ကို ပြောင်းပေးတာပါလဲ?", options: ["စာသားအရောင်", "နောက်ခံအရောင်", "Font ပုံစံ", "စာသားအကွာအဝေး"], correctAnswer: 1, explanation: "background-color က Element ရဲ့ နောက်ခံအရောင်ကို ပြောင်းပေးပါတယ်။" }
+]} />

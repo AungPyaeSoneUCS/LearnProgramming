@@ -1,0 +1,70 @@
+---
+title: "CSS PX-EM Converter — px မှ em/rem ပြောင်းနည်း"
+description: "Default 16px Root မှာ px ကို em/rem သို့ ကိုယ်တိုင် Manual Conversion လုပ်နည်းနဲ့ ပြောင်းလဲဇယား ပါဝင်ပါတယ်။"
+---
+
+### px ကို em/rem သို့ ပြောင်းနည်း
+
+Browser Default Root Font Size က **16px** ဖြစ်လို့ `1em` နဲ့ `1rem` နှစ်ခုလုံး 16px နဲ့ ညီပါတယ်။ px တန်ဖိုးကို em ပြောင်းဖို့ **Root Size နဲ့ စားရုံပါပဲ** ။ ဥပမာ `32px ÷ 16 = 2em` ဖြစ်ပါတယ်။
+
+စည်းမျဉ်း — `px / root-font-size = em` ။ Root Font Size ကို ကိုယ်တိုင် ပြောင်းထားရင် အဲဒီတန်ဖိုး နဲ့သာ စားပါ။
+
+### em နဲ့ rem ခြားနားချက်
+
+**em** က မိဘ Element (Parent) ရဲ့ Font Size ကို အခြေခံပြီး **rem** က Root Element `<html>` ရဲ့ Font Size ကိုသာ အခြေခံပါတယ်။ Nesting နက်လာရင် `em` က ပုံစံအလိုက် ပွားနိုင်ပြီး `rem` က နေရာတိုင်း တည်ငြိမ်နေပါတယ်။ Default Root 16px မှာတော့ နှစ်ခုလုံး တူညီပါတယ်။
+
+### Common Conversion ဇယား
+
+| PX | EM | REM |
+| ---- | ---- | ---- |
+| 4px | 0.25em | 0.25rem |
+| 8px | 0.5em | 0.5rem |
+| 12px | 0.75em | 0.75rem |
+| 16px | 1em | 1rem |
+| 20px | 1.25em | 1.25rem |
+| 24px | 1.5em | 1.5rem |
+| 28px | 1.75em | 1.75rem |
+| 32px | 2em | 2rem |
+| 40px | 2.5em | 2.5rem |
+| 48px | 3em | 3rem |
+
+မှတ်ချက် — 16px က 1em ၊ 32px က 2em ဆိုသလို 16 နဲ့ စားရုံဖြင့် အားလုံး ပြောင်းလို့ ရပါတယ် ၊ ကိန်းမြှောက် မရှိရင်လည်း ဒဿမနဲ့ ရေးနိုင်ပါတယ်။
+
+### Manual Conversion ဥပမာ
+
+Root Font Size 16px မှာ လိုချင်တဲ့ px တန်ဖိုးကို 16 နဲ့ စားပြီး em/rem ထဲ ထည့်ရေးပါတယ်။
+
+**ဥပမာ -**
+```css
+html {
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 2rem;       /* 32px */
+  margin-bottom: 1.5rem; /* 24px */
+}
+
+p {
+  font-size: 0.875rem;   /* 14px */
+  line-height: 1.6;
+}
+```
+
+မှတ်ချက် — Comment တွေမှာ မူရင်း px တန်ဖိုးကို ရေးထားရင် အနာဂတ်မှာ ပြန်ကြည့်ရ လွယ်ပြီး Root Size ပြောင်းရင်လည်း အားလုံး အချိုးကျ ပြောင်းပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Default Root Size က 16px ။
+- Manual Conversion — `px / 16 = em` ။
+- `em` က Parent ၊ `rem` က Root တို့ကို အခြေခံပါတယ်။
+- Root Size ပြောင်းရင် ဇယားပါ တန်ဖိုးတွေ ပြောင်းသွားပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Default Root Font Size 16px မှာ 24px ကို em အဖြစ် ပြောင်းရင် ဘယ်လောက်လဲ?", options: ["1.5em", "1.25em", "2em", "0.75em"], correctAnswer: 0, explanation: "24px ÷ 16 = 1.5em ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "em နဲ့ rem ရဲ့ အဓိက ခြားနားချက်က ဘာလဲ?", options: ["em က Parent ၊ rem က Root ကို အခြေခံတယ်", "em က Root ၊ rem က Parent ကို အခြေခံတယ်", "နှစ်ခုလုံး Viewport ကို အခြေခံတယ်", "ခြားနားချက် မရှိဘူး"], correctAnswer: 0, explanation: "em က Parent Font Size ကို အခြေခံပြီး rem က Root html Font Size ကိုသာ အခြေခံပါတယ်။" },
+  ]}
+/>

@@ -1,0 +1,97 @@
+---
+title: "CSS Image Sprites — ပုံများကို တစ်ခုတည်း ပေါင်းသုံးခြင်း"
+description: "Icon ပုံငယ်များကို Sprite ပုံတစ်ပုံထဲ ပေါင်းပြီး background-position နည်းပညာနဲ့ HTTP Request လျှော့ချနည်းကို လေ့လာကြည့်ရအောင်။"
+---
+
+### Image Sprite ဆိုတာ ဘာလဲ?
+
+**Image Sprite** ဆိုတာ Icon (ပုံငယ်လေးများ) အများကြီးကို ပုံတစ်ပုံတည်းထဲမှာ စုပုံထားတဲ့ နည်းပညာတစ်မျိုး ဖြစ်ပါတယ်။ HTML နဲ့ CSS က ဒီပုံကြီးရဲ့ အစိတ်အပိုင်းတစ်ခုချင်းစီကို ခွဲပြီး ပြသပါတယ်။ Mouse လာရပ်တဲ့အခါ ပုံပြောင်းတဲ့ Hover Effect တွေအတွက်လည်း မကြာခဏ သုံးပါတယ်။
+
+**ဥပမာ -**
+```html
+<nav>
+  <a class="icon-home">ပင်မ</a>
+  <a class="icon-search">ရှာဖွေ</a>
+  <a class="icon-save">သိမ်းရန်</a>
+</nav>
+```
+
+မှတ်ချက် — Icon တွေကို Sprite ထဲမှာ အတန်းလိုက် စီထားပြီး CSS မှာ တစ်ခုချင်းစီရဲ့ နေရာကို ညွှန်ပြပါတယ်။
+
+### ဘာကြောင့် Sprite သုံးရတာလဲ?
+
+Web Page တစ်ခု ဖွင့်တိုင်း ပုံတစ်ပုံချင်းစီအတွက် Browser က Server ဆီ **HTTP Request** တစ်ခုစီ ပို့ပါတယ်။ Icon ၁၀ လုံး သုံးမယ်ဆိုရင် Request ၁၀ ခု ပို့ရပြီး ပုံအားလုံး ပြည့်ဖို့ အချိန်ပိုကြာစေပါတယ်။ Sprite မှာတော့ Request **တစ်ခုတည်း** နဲ့ ပုံအားလုံး ရသွားလို့ Page ပိုမြန်ပါတယ်။
+
+**ဥပမာ -**
+```css
+/* Sprite ပုံကြီးတစ်ခုတည်းကို တစ်ကြိမ်တည်း ဆွဲယူပါတယ် */
+.sprite {
+  background-image: url("icons-sprite.png");
+  background-repeat: no-repeat;
+}
+```
+
+မှတ်ချက် — Sprite က Icon များလေလေ ရလဒ်ပိုကောင်းလေဖြစ်ပြီး Icon ၂ လုံး ၊ ၃ လုံးလောက်ပဲ ရှိရင် သာမန် Image တွေသုံးတာက ပိုသင့်လျော်ပါတယ်။
+
+### background-position နည်းပညာ
+
+Sprite ပုံကြီးတစ်ခုလုံး ပြမယ့်အစား Container ရဲ့ width နဲ့ height ကို Icon အရွယ်အစားနဲ့ သတ်မှတ်ပြီး **background-position** ကို သုံးကာ ပြချင်တဲ့ Icon အပိုင်းကို ရွှေ့ပြပါတယ်။ Negative Value က ပုံကြီးကို ဘယ်ဘက် (သို့) အပေါ်ကို ရွှေ့ပြီး Positive Value က ညာဘက် (သို့) အောက်ကို ရွှေ့ပါတယ်။
+
+**ဥပမာ -**
+```css
+.icons a {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background: url("icons-sprite.png") no-repeat;
+}
+.icon-home   { background-position: 0 0; }        /* ပထမဆုံး Icon */
+.icon-search { background-position: -32px 0; }    /* ဒုတိယ Icon */
+.icon-save   { background-position: -64px 0; }    /* တတိယ Icon */
+```
+
+မှတ်ချက် — Icon တစ်ခုစီက 32px အကျယ်ရှိတယ်ဆိုရင် ဒုတိယ Icon ကို ပြဖို့ background-position ကို -32px 0 လို့ ရေးရပါတယ်။
+
+### Hover နဲ့ ပုံပြောင်းခြင်း
+
+Icon ပေါ်ကို Mouse လာရပ်တဲ့အခါ :hover Pseudo-class နဲ့ background-position ကို ပြောင်းပြီး ပုံပြောင်းလို့ ရပါတယ်။ Sprite ထဲက အတန်းနောက်တစ်ခုကို ပြောင်းပြတာမို့ ပုံအသစ် ထပ်ဆွဲစရာ မလိုဘဲ Instant (ချက်ချင်း) ပြောင်းလဲပါတယ်။
+
+**ဥပမာ -**
+```css
+.icon-home:hover {
+  background-position: 0 -32px;   /* Hover State အတွက် အတန်းပြောင်း */
+}
+```
+
+မှတ်ချက် — Hover State ပုံတွေကို Sprite ထဲမှာ ဒုတိယအတန်း (Row) အဖြစ် ထားရင် position ပြောင်းရတာ ပိုလွယ်ပါတယ်။
+
+### ဘယ်အခါ သုံးရသင့်သလဲ?
+
+Menu Icon၊ Social Media Icon လိုမျိုး Icon အများကြီးသုံးတဲ့နေရာတွေမှာ Sprite က သင့်လျော်ပါတယ်။ ဒါပေမဲ့ Icon နည်းပါးရင် (သို့) အရောင်ပြောင်းသုံးရတာတွေ ရှိရင် SVG Sprite နဲ့ CSS Background တွေကို စဉ်းစားပါ။
+
+**ဥပမာ -**
+```css
+/* Icon နည်းတဲ့အခါ background-color သုံးတာ ပိုလွယ်ကူပါတယ် */
+.icon-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #d9534f;
+}
+```
+
+မှတ်ချက် — Sprite ဖိုင်ထဲ Icon အသစ်ထည့်ရတိုင်း Sprite ဖိုင်ကို ပြန်ပြုလုပ်ရတာမို့ Sprite Generator Tool တွေ သုံးတာ ပိုကောင်းပါတယ်။
+
+### အကျဉ်းချုပ်
+
+Image Sprite က ပုံငယ်များစွာကို ပုံတစ်ပုံထဲ စုပြီး HTTP Request တွေကို လျှော့ချပေးပါတယ်။ background-position ကို Negative Value နဲ့ ရွှေ့ပြီး ပြချင်တဲ့ Icon ကို ရွေးချယ်ပြရပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Image Sprite ရဲ့ အဓိက အားသာချက်က ဘာလဲ?", options: ["HTTP Request အရေအတွက် လျော့ကျစေခြင်း", "ပုံတွေကို ပိုကြီးအောင် လုပ်ပေးခြင်း", "CSS ဖိုင်ကို ဖျက်လို့ရခြင်း", "HTML Tag တွေ မလိုတော့ခြင်း"], correctAnswer: 0, explanation: "Sprite ကိုသုံးရင် Request တစ်ခုတည်းနဲ့ ပုံအားလုံးရပြီး Page ပိုမြန်ပါတယ်။" },
+    { id: "q2", question: "Sprite ထဲမှာရှိတဲ့ Icon တစ်ခုချင်းစီကို ပြဖို့ ဘယ် CSS Property ကို အဓိက သုံးပါသလဲ?", options: ["background-position", "position", "display", "overflow"], correctAnswer: 0, explanation: "ပြချင်တဲ့ Icon အပိုင်းကို background-position နဲ့ ရွှေ့ပြပါတယ်။" },
+    { id: "q3", question: "Icon တွေ အတန်းလိုက်ရှိတဲ့ Sprite မှာ ဒုတိယ Icon (width 32px) ကို ပြဖို့ ဘယ် Value သုံးမလဲ?", options: ["-32px 0", "32px 0", "0 -32px", "100% 0"], correctAnswer: 0, explanation: "Icon width 32px ဆိုရင် ဒုတိယ Icon ကို -32px 0 နဲ့ ရွှေ့ပြပါတယ်။" },
+  ]}
+/>

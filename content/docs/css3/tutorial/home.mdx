@@ -1,0 +1,91 @@
+---
+title: "CSS HOME — CSS စတင်ရန်"
+description: "CSS3 သင်တန်း စတင် — ဘာတွေသင်ရမလဲ၊ ပထမဆုံး CSS ဖိုင်ကို ဘယ်လိုရေးရလဲ။"
+---
+
+**CSS (Cascading Style Sheets)** က HTML Element တွေကို လှပအောင် ပုံဖော်ပေးတဲ့ Web ရဲ့ အလှဆင်ဘာသာစကားပါ။ ဒီ CSS3 သင်တန်းမှာ ခင်ဗျားအနေနဲ့ Style Sheet ရေးနည်းကို **အခြေခံမှ အဆင့်မြင့်အထိ** အဆင့်ဆင့် လေ့လာသွားရမှာ ဖြစ်ပါတယ်။
+
+### ဒီသင်တန်းမှာ ဘာတွေ သင်ရမလဲ?
+
+- **CSS Introduction နဲ့ Syntax** — Selector ၊ Property ၊ Value တွေရဲ့ အခြေခံဖွဲ့စည်းပုံ။
+- **CSS Selectors** — Element, ID, Class, Universal, Grouping Selector တွေနဲ့ Element ရွေးချယ်ပုံ။
+- **CSS How To** — External, Internal, Inline စတဲ့ Style ထည့်သွင်းနည်း (၃) မျိုး။
+- **CSS Colors နဲ့ Backgrounds** — အရောင်သတ်မှတ်ပုံ ၊ နောက်ခံပုံနဲ့ အလှဆင်ပုံ။
+- **နောက်ထပ် အကြောင်းအရာများ** — Box Model, Flexbox, Grid, Animation စတာတွေ။
+
+### စတင်ရန် ဘာတွေ လိုအပ်လဲ?
+
+- **HTML အခြေခံ** — CSS က HTML Element တွေကို Style လုပ်တာမို့ HTML ကို နည်းနည်း သိထားဖို့ လိုပါတယ်။
+- **Browser** — Chrome, Edge, Firefox စသဖြင့် ဘယ် Browser မဆို ရပါပြီ။
+- **Editor** — VS Code, Notepad++ စတာတွေကို CSS ဖိုင် ရေးဖို့ သုံးနိုင်ပါတယ်။
+
+### ပထမဆုံး CSS ဖိုင် ရေးသားခြင်း
+
+CSS ဖိုင်က `.css` extension နဲ့ သိမ်းရပြီး အထဲမှာ Style Rule တွေ ရေးပါတယ်။ `style.css` ဖိုင်တစ်ခု ဖန်တီးပြီး အောက်ပါအတိုင်း ရေးကြည့်ရအောင်။
+
+**ဥပမာ -**
+```css
+body {
+  background-color: lightblue;
+}
+h1 {
+  color: navy;
+  text-align: center;
+}
+```
+
+မှတ်ချက် — `body` ကို ရွေးပြီး နောက်ခံကို lightblue ၊ `h1` ကို navy အရောင် နဲ့ စင်တာချ ထားတာကို တွေ့ရမှာပါ။
+
+### CSS ကို HTML ထဲသို့ ချိတ်ဆက်ခြင်း
+
+သီးခြား `.css` ဖိုင်ကို HTML ထဲမှာ `<link>` Tag နဲ့ `<head>` အတွင်းမှာ ချိတ်ဆက်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>My CSS Page</h1>
+</body>
+</html>
+```
+
+မှတ်ချက် — `rel="stylesheet"` က ဒါ Style Sheet ဖြစ်ကြောင်း ၊ `href` က ဖိုင်လမ်းကြောင်းကို ညွှန်ပြပါတယ်။
+
+### HTML နဲ့ CSS တွဲဖက် လုပ်ဆောင်ပုံ
+
+HTML က ဖွဲ့စည်းပုံ (Structure) ကို ပေးပြီး CSS က အရောင် ၊ အကွာအဝေး ၊ Font စတာတွေကို ချိန်ညှိပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+h1 {
+  color: white;
+  background-color: teal;
+  padding: 10px;
+}
+p {
+  font-size: 18px;
+  color: #333;
+}
+```
+
+မှတ်ချက် — ဒီ Style ကို သင့် `style.css` ထဲ ထည့်လိုက်ရင် Title က teal နောက်ခံဖြူ ဖြစ်ပြီး စာပိုဒ်က 18px နဲ့ ပေါ်ပါမယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- CSS က HTML Element တွေကို အလှဆင်ပေးသော Style ဘာသာစကား ဖြစ်သည်။
+- `.css` extension ဖိုနဲ့ သိမ်းပြီး HTML ထဲမှာ `<link>` Tag နဲ့ ချိတ်ဆက်သည်။
+- Browser နဲ့ Editor ရှိရုံနဲ့ CSS ကို စတင်လေ့လာနိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "CSS ဖိုင်တွေရဲ့ Extension က ဘာလဲ?", options: [".html", ".css", ".js", ".txt"], correctAnswer: 1, explanation: "CSS ဖိုင်တွေကို .css extension နဲ့ သိမ်းပါတယ်။" },
+    { id: "q2", question: "CSS ကို ဘာအတွက် အသုံးပြုပါသလဲ?", options: ["Server စီမံရန်", "Database ဆောက်ရန်", "HTML Element တွေကို အလှဆင်ရန်", "Program ရေးရန်"], correctAnswer: 2, explanation: "CSS က HTML Element တွေရဲ့ အရောင်, Font, Layout စတာတွေကို Style လုပ်ပေးပါတယ်။" },
+    { id: "q3", question: "External CSS ဖိုင်ကို ချိတ်ဆက်ဖို့ ဘယ် Tag ကို သုံးပါသလဲ?", options: ["script", "style", "meta", "link"], correctAnswer: 3, explanation: "link tag ထဲမှာ rel=stylesheet နဲ့ href ကို ထည့်ပြီး CSS ဖိုင်ကို ချိတ်ဆက်ပါတယ်။" },
+  ]}
+/>

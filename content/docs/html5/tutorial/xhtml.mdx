@@ -1,0 +1,82 @@
+---
+title: "HTML vs XHTML — ဘယ်ဟာ သုံးမလဲ?"
+description: "XHTML ဆိုတာ ဘာလဲ၊ HTML နဲ့ ကွာခြားချက်တွေက ဘာတွေလဲ၊ ဒီနေ့ခေတ်မှာ ဘယ်ဟာကို သုံးသင့်လဲ လေ့လာကြည့်ရအောင်။"
+---
+
+### XHTML ဆိုတာ ဘာလဲ?
+
+**XHTML (Extensible HyperText Markup Language)** ဆိုတာ HTML ရဲ့ ပိုတင်းကျပ်တဲ့ (Stricter) Version တစ်ခုဖြစ်ပြီး **XML** (Extensible Markup Language) ရဲ့ စည်းမျဉ်းတွေနဲ့ ဆောက်ထားပါတယ်။ HTML က စာလုံးနဲ့ Tag တချို့ အသေးစိတ်မမှန်ရင်တောင် Browser က သည်းခံပြီး ပြပေးတတ်ပေမဲ့ XHTML ကတော့ ပိုတိကျမှု ရှိစေဖို့ စည်းမျဉ်းတင်းကျပ်ပါတယ်။
+
+XHTML က XML-based ဖြစ်လို့ **Well-formed** (ဖွဲ့စည်းပုံစနစ်တကျ) ဖြစ်ရပါတယ် — Tag အားလုံး ပိတ်ထားရမယ်၊ Tag အမည်တွေ Lowercase ဖြစ်ရမယ်၊ Attribute အားလုံး Quotes နဲ့ ပတ်ထားရမယ် စတဲ့ စည်းမျဉ်းတွေ ပါဝင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<!-- HTML (XML Rules မလိုက်နာဘဲ ရနိုင်) -->
+<p class=title>Hello</p>
+<img src="logo.png">
+<br>
+
+<!-- XHTML (XML Rules အရ) -->
+<p class="title">Hello</p>
+<img src="logo.png" />
+<br />
+```
+
+မှတ်ချက် — XHTML မှာ Empty Element (`<br>`, `<img>`) တွေကိုလည်း `<br />` ဆိုပြီး Self-closing Slash နဲ့ အဆုံးသတ်ရပါတယ်။
+
+### HTML နဲ့ XHTML ရဲ့ အဓိက ကွာခြားချက်များ
+
+- **Well-formed:** XHTML က Tag တိုင်း ပိတ်ထားရပါတယ်။ Element တွေကလည်း မှန်ကန်စွာ Nested (ထည့်သွင်း) ရပါတယ်။ HTML ကတော့ ဒါကို မတင်းကြပ်ပါဘူး။
+- **Lowercase:** XHTML Tag နဲ့ Attribute name အားလုံး Lowercase ဖြစ်ရပါတယ်။ HTML က Case-insensitive ပါ။
+- **Attribute Quotes:** XHTML မှာ Attribute value အားလုံး Quotes နဲ့ ပတ်ထားရပါတယ်။ HTML က မဖြစ်မနေ မလိုဟု လွတ်လပ်ပါတယ်။
+- **Closing Tags:** XHTML မှာ `<p>` ဆိုရင် `</p>` နဲ့ ပိတ်ရပါတယ်။ Self-closing (`<br />`) လည်း မဖြစ်မနေ ရေးရပါတယ်။
+
+**ဥပမာ -**
+```html
+<!-- HTML နည်း (အနည်းငယ် လွတ်လပ်) -->
+<p><b>Hello</b>
+<INPUT TYPE="text" value="Hi">
+
+<!-- XHTML နည်း (တင်းကျပ်) -->
+<p><b>Hello</b></p>
+<input type="text" value="Hi" />
+```
+
+မှတ်ချက် — XHTML က XML Trees နဲ့ ដွှန်ချက်တွေ ပါတာမို့ တင်းကျပ်တဲ့ Structure တွေ လိုအပ်တဲ့ Project တွေမှာ အကျိုးရှိခဲ့ပါတယ်။
+
+### ဒီနေ့ခေတ်မှာ ဘယ်ဟာကို သုံးသင့်ပါသလဲ?
+
+ဒီနေ့ခေတ် Web Development မှာ **HTML5 ကို Standard အဖြစ်** သုံးပါတယ်။ XHTML ကတော့ HTML5 ရဲ့ ချောမွေ့မှုနဲ့ JavaScript, CSS နဲ့ ပေါင်းစည်းလွယ်တာ စတဲ့ အကျိုးတွေ မရှိလို့ အသုံးနည်းလာပါပြီ။
+
+HTML5 က XHTML ရဲ့ ကောင်းတဲ့အချက်တချို့ (Tag တွေ ပိတ်ဖို့ရန်၊ Lowercase သုံးဖို့ရန် စသည်) ကိုတော့ Style Guide အဖြစ် သိမ်းထားပြီး Technical Requirement (Well-formed XML) တွေ မတောင်းဆိုတာမို့ ပိုသက်တောင့်သက်သာ ရှိပါတယ်။
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Page</title>
+</head>
+<body>
+  <h1>HTML5 ရဲ့ Standard</h1>
+</body>
+</html>
+```
+
+မှတ်ချက် — တကယ်တမ်းမှာ HTML5 ရဲ့ အမှတ်အသားဖြစ်တဲ့ `<!DOCTYPE html>` လေးတစ်ကြောင်းနဲ့ HTML5 ကို စတင်ပါတယ်။ XHTML တွေလို XML Declaration တွေ မလိုပါဘူး။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- XHTML က XML Rules တွေနဲ့ တင်းကျပ်တဲ့ Version ဖြစ်ပါတယ်။
+- XHTML မှာ Tag တွေ အမြဲပိတ်ရပြီး Lowercase နဲ့ Attribute Quotes လိုအပ်ပါတယ်။
+- ဒီနေ့ခေတ်မှာ HTML5 က Standard ဖြစ်ပြီး XHTML က ဘုံအသုံးမှ နည်းလာပါပြီ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "XHTML က ဘာကို အခြေခံထားတဲ့ ပိုတင်းကျပ်တဲ့ HTML Version ပါလဲ?", options: ["CSS", "JavaScript", "XML", "JSON"], correctAnswer: 2, explanation: "XHTML က XML (Extensible Markup Language) ကို အခြေခံထားပါတယ်။" },
+    { id: "q2", question: "XHTML မှာ Empty Element တွေကို ဘယ်လို ရေးရပါသလဲ?", options: ["<br>", "<br> ပဲ", "<br/>", "<BR>"], correctAnswer: 2, explanation: "XHTML မှာ Empty Element တွေကို Self-closing (<br />) နဲ့ ရေးရပါတယ်။" },
+    { id: "q3", question: "ဒီနေ့ခေတ် Web Development မှာ Standard အဖြစ် သုံးတာက ဘာလဲ?", options: ["HTML5", "XHTML", "XML", "SGML"], correctAnswer: 0, explanation: "ဒီနေ့ခေတ်မှာ HTML5 က Standard အဖြစ် သုံးပြီး XHTML က အသုံးနည်းလာပါပြီ။" },
+  ]}
+/>

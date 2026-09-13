@@ -1,0 +1,76 @@
+---
+title: "Pseudo-classes"
+description: "အခြေအနေအလိုက် ဒီဇိုင်းပြောင်းခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import hover from '@/assets/css/hover.png'
+import pseudoClasses from '@/assets/css/pseudo-classes.png'
+
+<Aside title="အခြေအနေများ">
+Element တစ်ခုရဲ့ လက်ရှိ ရောက်နေတဲ့ "အခြေအနေ" (State) အပေါ်မူတည်ပြီး ဒီဇိုင်းကို ပြောင်းလဲချင်တဲ့အခါမှာ Pseudo-classes တွေကို အသုံးပြုကြပါတယ်။
+သူ့ကို ရေးတဲ့အခါ Selector ရဲ့ အနောက်မှာ ကော်လံ (`:`) လေး ခံပြီး ရေးပေးရပါတယ်။
+</Aside>
+
+### User Action Pseudo-classes
+User ဘက်ကနေ Action တစ်ခုခု လုပ်လိုက်တဲ့ အချိန်မျိုးမှာ Style ပြောင်းလဲသွားစေချင်ရင် သုံးပါတယ်။
+
+*   `:hover` - Element ပေါ်ကို Mouse သွားတင်လိုက်တဲ့ အချိန်။
+*   `:active` - Mouse ကို ဖိနှိပ်ထားတဲ့ အချိန် (Click နှိပ်လိုက်ပြီး လက်မလွှတ်ခင် အချိန်လေး)။
+*   `:focus` - Input Box ထဲကို စာရိုက်ဖို့အတွက် နှိပ်လိုက်တဲ့ အချိန် (Keyboard Focus ရသွားတဲ့ အချိန်)။
+*   `:focus-within` - Element ကိုယ်တိုင် ဖြစ်စေ၊ ဒါမှမဟုတ် သူ့ရဲ့ Child Element တစ်ခုခုက ဖြစ်စေ Focus ရနေတဲ့ အချိန်။
+*   `:focus-visible` - User က Keyboard ကနေ Tab ခလုတ်နှိပ်ပြီး သွားတဲ့ အချိန်မျိုးမှာပဲ Focus Ring ပြချင်တဲ့အခါ။ (Mouse နဲ့ နှိပ်ရင်တော့ မပြပါဘူး)
+
+<Aside type="tip" title="Focus ကွာခြားချက်များ">
+*   **:focus** - သူကတော့ Focus ရတာနဲ့ ချက်ချင်း အလုပ်လုပ်ပါတယ်။ (Mouse နဲ့ပဲ နှိပ်နှိပ်၊ Keyboard နဲ့ပဲ သွားသွား အကုန်အလုပ်လုပ်ပါတယ်)
+*   **:focus-within** - Parent Element တစ်ခုရဲ့ အတွင်းမှာရှိတဲ့ Child Element လေးတစ်ခု Focus ရသွားတာနဲ့၊ အပြင်က Parent ကြီးကိုပါ Style လိုက်ပြောင်းချင်တဲ့ အခါမျိုးမှာ သုံးပါတယ်။ (ဥပမာ - Form အကွက်တစ်ခုလုံးကို Highlight လုပ်ပြချင်တာမျိုးပါ)
+*   **:focus-visible** - User က Keyboard ကို အသုံးပြုနေမှသာ (Tab နှိပ်ပြီး သွားနေမှသာ) Focus Ring ကို ပြပေးပြီး၊ Mouse နဲ့ နှိပ်တဲ့အခါမျိုးမှာတော့ ဖျောက်ထားချင်တဲ့အခါ သုံးပါတယ်။ (ဒါက User Experience (UX) ကို ပိုကောင်းစေပါတယ် ခင်ဗျာ)
+</Aside>
+
+```css
+button:hover {
+  background-color: green;
+}
+
+input:focus {
+  border-color: blue;
+  outline: none;
+}
+```
+
+<ContentImage src={hover} alt="pseudo classes"  />
+
+### Structural Pseudo-classes
+Element တွေရဲ့ ဖွဲ့စည်းတည်ဆောက်ပုံ အစီအစဉ် (Structure) အပေါ် မူတည်ပြီး ရွေးချယ်ချင်တဲ့အခါ သုံးပါတယ်။
+
+*   `:first-child` - အုပ်စုတစ်ခုထဲက ပထမဆုံး Child Element ကို ရွေးချယ်တာပါ။
+*   `:last-child` - အုပ်စုတစ်ခုထဲက နောက်ဆုံး Child Element ကို ရွေးချယ်တာပါ။
+*   `:nth-child(n)` - မိမိလိုချင်တဲ့ (n) ခုမြောက် Child Element ကို ရွေးချယ်တာပါ။ (ဥပမာ - Table ဇယားကွက်တွေမှာ တစ်ကြောင်းခြားစီ အရောင်လေးတွေ ပြောင်းချင်တဲ့အခါမျိုးမှာ အသုံးများပါတယ်)
+
+```css
+/* စာရင်းထဲက ပထမဆုံး item */
+li:first-child {
+  font-weight: bold;
+  color : red;
+}
+
+/* မ (1, 3, 5...) တွေကို အရောင်ပြောင်း */
+tr:nth-child(odd) {
+  background-color: purple;
+}
+```
+
+<ContentImage src={pseudoClasses} alt="pseudo classes"  />
+
+### Link Pseudo-classes
+ဒါတွေကတော့ Link (`<a>` tag) တွေအတွက် သီးသန့် အသုံးပြုတဲ့ Pseudo-classes တွေပါ။
+
+*   `:visited` - User အနေနဲ့ အရင်က ဝင်ရောက်ကြည့်ရှုပြီးသား ဖြစ်နေတဲ့ Link တွေကို ပြောင်းချင်တဲ့အခါ။
+*   `:link` - တစ်ခါမှ မဝင်ကြည့်ရသေးတဲ့ Link အသစ်တွေကို ပြောင်းချင်တဲ့အခါ။
+
+```css
+a:visited {
+  color: purple;
+}
+```

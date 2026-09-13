@@ -1,0 +1,118 @@
+---
+title: "HTML Head — HTML Head Section အကြောင်း"
+description: "Head section ထဲမှာ ဘာတွေပါဝင်သလဲ၊ meta tag များနှင့် အသုံးဝင်မှုတို့ကို လေ့လာကြမယ်။"
+---
+
+`<head>` section က HTML document ရဲ့ အမြင့်ဆုံးမှာရှိပြီး page ပေါ်မှာ တိုက်ရိုက်ပြသမဲ့ content မဟုတ်ဘဲ page အကြောင်း အချက်အလက်များ (metadata) ပါဝင်ပါတယ်။ Title၊ style၊ link၊ meta စတဲ့ အချက်အလက်တွေ head ထဲမှာ ထည့်လေ့ရှိပါတယ်။ Head က browser နဲ့ search engine တွေကို page အကြောင်း ရှင်းပြပေးတဲ့ နေရာလို့ ဆိုနိုင်ပါတယ်။
+
+### Title Tag
+
+`<title>` tag က browser tab ရဲ့ အပေါ်မှာ ပြသမယ့် စာတန်းကို သတ်မှတ်ပေးပါတယ်။ Bookmark လုပ်တဲ့အခါလည်း title က အမည်အဖြစ် သုံးပြီး search engine results မှာလည်း ပြသပါတယ်။ Title က SEO အတွက် အရေးကြီးတဲ့ နေရာတွေထဲက တစ်ခုပဲ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My First Website</title>
+</head>
+<body>
+  ...
+</body>
+</html>
+```
+
+မှတ်ချက် — Title က page တိုင်းမှာ ထူးခြားပြီး သင့်လျော်တဲ့စာတန်းတစ်ခု ထားသင့်ပါတယ်။ Title သည် browser tab ပေါ်မှာ မြင်ရတဲ့ text ဖြစ်ပါတယ်။
+
+### Style Tag
+
+`<style>` tag က CSS code များကို HTML file ထဲမှာ တိုက်ရိုက် ထည့်သွင်းရန် သုံးပါတယ်။ Head အတွင်းမှာ style tag ရေးထားရင် အဲဒီ CSS က page တစ်ခုလုံးကို သက်ရောက်မှုရှိပါတယ်။ Internal CSS လို့လည်း ခေါ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<head>
+  <style>
+    body {
+      background-color: lightblue;
+      font-family: Arial;
+    }
+    h1 {
+      color: navy;
+    }
+  </style>
+</head>
+```
+
+မှတ်ချက် — Style tag ထဲက CSS က အဲဒီ page တစ်ခုတည်းအတွက်သာ အကျိုးသက်ရောက်မှုရှိပါတယ်။
+
+### Link Tag
+
+`<link>` tag က external resource (အဓိကအားဖြင့် CSS file) ကို page နဲ့ ချိတ်ဆက်ရန် သုံးပါတယ်။ External stylesheet file များကို ဒီနည်းအားဖြင့် import လုပ်နိုင်ပါတယ်။ ဒါက project တွေ ကြီးလာတဲ့အခါ style ကို သီးခြားခွဲထားလို့ ပိုသန့်ရှင်းပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<head>
+  <link rel="stylesheet" href="styles.css">
+</head>
+```
+
+မှတ်ချက် — `rel="stylesheet"` က ဖိုင်ရဲ့ အခန်းကဏ္ဍကို သတ်မှတ်ပြီး `href` က file ရဲ့ path ဖြစ်ပါတယ်။
+
+### Meta Tag — Charset
+
+`<meta>` tag က page အကြောင်း metadata များကို သတ်မှတ်ပေးပါတယ်။ `charset="UTF-8"` က document ရဲ့ character encoding ကို သတ်မှတ်ပေးပြီး မြန်မာလို အကြောင်းအရာများ အပါအဝင် စာလုံးအမျိုးမျိုး မှန်ကန်စွာ ပြသနိုင်ဖို့ သေချာစေပါတယ်။ Charset meta က page အားလုံးမှာ ထည့်သင့်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<head>
+  <meta charset="UTF-8">
+</head>
+```
+
+မှတ်ချက် — `UTF-8` character set သည် ရုံး နှင့် မြန်မာစာလုံးများအပါအဝင် ဘာသာစကားအများစုကို ထောက်ပံ့ပေးပါတယ်။
+
+### Viewport Meta Tag
+
+`viewport` meta tag က mobile device တွေပေါ်မှာ page ကို ဘယ်လို ပြသမလဲ ဆိုတာ browser ကို ညွှန်ကြားပေးပါတယ်။ ဒီ meta မရှိရင် mobile ဖုန်းတွေမှာ page က desktop အတိုင်း ကျဉ်းကျပ်ပြီး zoom ဖြင့် ကြည့်ရှုရပါမယ်။ Responsive design အတွက် မရှိမဖြစ် လိုအပ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+```
+
+မှတ်ချက် — `width=device-width` က page ၏ width ကို device ရဲ့ screen width နဲ့ ကိုက်ညီစေပြီး `initial-scale` က အစပိုင်း zoom level ကို သတ်မှတ်ပေးပါတယ်။
+
+### Meta Description Tag
+
+`meta name="description"` က page ရဲ့ အတိုချုပ် ဖော်ပြချက်ကို သတ်မှတ်ပေးပါတယ်။ Search engine results တွေမှာ page title ရဲ့ အောက်မှာ ဒီ description ကို ပြသလေ့ရှိပါတယ်။ SEO အတွက် အရေးကြီးပြီး ရှင်းလင်း တိုတောင်းတဲ့ description ထားသင့်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<head>
+  <meta name="description" content="အခမဲ့ programming သင်ခန်းစာများ">
+</head>
+```
+
+မှတ်ချက် — Description က ရှည်လွန်းမသွားဘဲ ၁၆၀ character ခန့် အတွင်းထားတာက SEO အတွက် ပိုကောင်းပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `<head>` က page ၏ metadata များပါဝင်ပြီး ပုံမှန်အားဖြင့် browser တွင် မပြပါ။
+- Title သည် browser tab နှင့် search results များတွင် ပြသသည်။
+- Meta charset UTF-8 က စာလုံးများကို မှန်ကန်စွာ ပြသနိုင်ရန် သေချာစေသည်။
+- Viewport meta က responsive design အတွက် မရှိမဖြစ်လိုအပ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Browser tab ရဲ့ အပေါ်မှာ ပြသမယ့်စာတန်းကို ဘယ် tag ဖြင့် သတ်မှတ်မလဲ?", options: ["meta", "title", "head", "style"], correctAnswer: 1, explanation: "title tag သည် browser tab နှင့် search results တွင်ပြသသော စာတန်းဖြစ်သည်။" },
+  { id: "q2", question: "External CSS file ကို ချိတ်ဆက်ရန် ဘယ် tag ကို သုံးမလဲ?", options: ["style", "css", "link", "meta"], correctAnswer: 2, explanation: "link tag သည် rel attribute ဖြင့် external resource များကို ချိတ်ဆက်ပေးသည်။" },
+  { id: "q3", question: "Mobile devices အတွက် responsive layout တွင် မရှိမဖြစ် လိုအပ်သော meta tag က ဘာလဲ?", options: ["charset meta", "author meta", "viewport meta", "keywords meta"], correctAnswer: 2, explanation: "viewport meta tag သည် page ကို device width နှင့် ကိုက်ညီစွာ ပြသရန် ညွှန်ကြားပေးသည်။" } ]} />

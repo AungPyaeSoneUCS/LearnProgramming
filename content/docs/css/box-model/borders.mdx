@@ -1,0 +1,50 @@
+---
+title: "Borders (ဘောင်များ)"
+description: "ဘောင်ခတ်ခြင်းနှင့် ထောင့်ကွေးခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import borderExample from '@/assets/css/border.png'
+
+<Aside title="ဘောင်ခတ်မယ်">
+Element တစ်ခုစီရဲ့ နယ်နိမိတ်ကို သေချာ ထင်ရှားသွားအောင် သတ်မှတ်ပေးဖို့အတွက် Border တွေကို အသုံးပြုကြပါတယ်။
+</Aside>
+
+### Border Style
+Border တစ်ခု ဖန်တီးတော့မယ်ဆိုရင် အနည်းဆုံး အောက်ပါအချက် (၃) ချက်ကို သတ်မှတ်ပေးရပါတယ် -
+1.  **Width:** ဘောင်ရဲ့ အထူ (ဥပမာ - `1px`, `2px`)
+2.  **Style:** ဘောင်ရဲ့ ပုံစံ (`solid` အဖြောင့်၊ `dashed` အပြတ်၊ `dotted` အစက်လေးတွေ)
+3.  **Color:** ဘောင်ရဲ့ အရောင် (`red`, `#000` စသဖြင့်)
+
+```css
+.box {
+  border: 2px solid black; /* 2px အထူ၊ မျဉ်းဖြောင့်၊ အမည်းရောင် */
+}
+
+.dashed-box {
+  border: 2px dashed red; /* မျဉ်းပြတ် */
+}
+```
+
+### Border Radius (ထောင့်ကွေးခြင်း)
+Element တွေရဲ့ လေးထောင့်စွန်းတွေကို ဝိုင်းသွားအောင် လုပ်ချင်တယ်ဆိုရင်တော့ `border-radius` ကို အသုံးပြုပေးရပါတယ်။
+
+```css
+.card {
+  border: 1px solid #ccc;
+  border-radius: 10px; /* ထောင့်တွေကို 10px စာ ဝိုင်းမယ် */
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* လုံးဝ အဝိုင်းဖြစ်သွားမယ် */
+}
+```
+
+<ContentImage src={borderExample} alt="CSS Border Example"  />
+
+<Aside type="tip">
+ဒီနေ့ခေတ် Modern ဒီဇိုင်းတွေမှာ `border-radius` ကို အသုံးပြုပြီး User တွေအတွက် ပိုမို နူးညံ့တဲ့ ခံစားမှုကို ပေးလေ့ရှိကြပါတယ်။ အထူးသဖြင့် Button တွေနဲ့ Card တွေမှာ အများဆုံး အသုံးပြုကြပါတယ် ခင်ဗျာ။
+</Aside>

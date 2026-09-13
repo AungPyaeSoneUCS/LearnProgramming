@@ -1,0 +1,74 @@
+---
+title: "HTML Emojis — Emoji များထည့်သွင်းခြင်း"
+description: "HTML Page ထဲမှာ Emoji တွေကို Unicode စာလုံးအဖြစ်ထည့်ပြီး ပျော်စရာကောင်းတဲ့ Content တွေ ဖန်တီးကြည့်ရအောင်။"
+---
+
+### Emoji ဆိုတာ Unicode စာလုံးတွေပါ
+
+Emoji တွေကို HTML မှာ Image လိုမဟုတ်ဘဲ **Unicode Character (စာလုံး)** အဖြစ် ထည့်သုံးနိုင်ပါတယ်။ ဆိုလိုတာက Emoji တစ်ခုစီမှာ Code Point တစ်ခု ရှိပြီး Browser က အဲဒီကုဒ်ကို ဖတ်ပြီး Emoji ပုံပေါ်ဖို့ ပြသပေးပါတယ်။ ဥပမာ Text Editor ထဲမှာ Emoji ကို Copy လုပ်ပြီး HTML File ထဲ တိုက်ရိုက်ထည့်လို့ ရပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>မင်္ဂလာပါ! 😀</p>
+<p>ဒီနေ့ သင်ခန်းစာ ပြီးသွားပြီ 🎉</p>
+```
+
+မှတ်ချက် — Emoji က Text ဖြစ်တဲ့အတွက် Size ကို CSS နဲ့ ပြောင်းလို့ ရပြီး ပုံတွေလို Loading စောင့်စရာ မလိုပါဘူး။
+
+### HTML Entities နဲ့ Emoji ပြသခြင်း
+
+Emoji တွေကိုလည်း **Entity Number** သုံးပြီး ရေးလို့ ရပါတယ်။ ဥပမာ Smile Face Emoji (`😀`) ရဲ့ Unicode Code Point က `128512` ဖြစ်လို့ `&#128512;` လို့ ရေးပြီး ပြနိုင်ပါတယ်။ ဒီနည်းက Emoji ကို ကိုယ်တိုင်ရိုက်တာ ဒါမှမဟုတ် Copy လုပ်တာထက် ပိုတိကျပြီး ကုဒ်တွေ အများကြီးနဲ့ တောင်တွေ ရှုပ်ထွေးနေရင် သေချာစေပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>&#128512; ဒါက Smile Face ပါ</p>
+<p>&#128516; ဒါက Grinning Face ပါ</p>
+<p>&#128525; ဒါက Smiling Face with Hearts ပါ</p>
+```
+
+မှတ်ချက် — `&#128512;` က Decimal (Base 10) Entity ဖြစ်ပြီး Unicode Code Point 128512 ကို ဆိုလိုပါတယ်။
+
+### UTF-8 Encoding က ဘာကြောင့် လိုအပ်ပါသလဲ?
+
+Emoji တွေ မှန်ကန်စွာ ပေါ်ဖို့ဆိုရင် HTML Page ရဲ့ **Charset (Encoding)** ကို **UTF-8** ဖြစ်ထားရပါမယ်။ `<head>` ထဲမှာ `<meta charset="UTF-8">` ထည့်ထားပြီး UTF-8 မဟုတ်ရင် Emoji တွေက ပုံမမှန်တဲ့အချက်တွေ (Broken Symbol) အဖြစ် ပေါ်ပါလိမ့်မယ်။
+
+**ဥပမာ - Emoji ဇယား**
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>Emoji Page</title>
+</head>
+<body>
+  <h2>Emoji အမျိုးမျိုး</h2>
+  <p>&#128512; &#128513; &#128514; &#128515; &#128516; &#128525;</p>
+</body>
+</html>
+```
+
+မှတ်ချက် — Emoji တွေကို Space အကြားထား ပြချင်ရင် `&nbsp;` (Non-breaking Space) ကို သုံးပြီး စာလုံးတွေ ဘယ်တော့မှ တစ်လိုင်းတည်း မကျိုက်အောင် လုပ်ပါသည်။
+
+**ဥပမာ - &nbsp; သုံးခြင်း**
+```html
+<p>&#128512;&nbsp;&#128513;&nbsp;&#128514;&nbsp;&#128515;</p>
+```
+
+မှတ်ချက် — `&nbsp;` က Space ဖြစ်ပြီး Emoji တွေကြားက Space ကို စာကြောင်းတစ်လိုင်းမှာ တစ်နေရာတည်းနဲ့ ထားရှိစေပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Emoji တွေက Image မဟုတ်ဘဲ Unicode Character တွေ ဖြစ်ပါတယ်။
+- Entity Number နဲ့ ရေးနိုင်ပါတယ် — ဥပမာ `&#128512;`။
+- Emoji ပေါ်ဖို့ `<meta charset="UTF-8">` လိုအပ်ပါတယ်။
+- Emoji တွေကြားထား Space ကို `&nbsp;` နဲ့ ထိန်းနိုင်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Emoji တွေက HTML မှာ ဘာအဖြစ် ထည့်ထားပါသလဲ?", options: ["Image", "Unicode Character", "Video", "Link"], correctAnswer: 1, explanation: "Emoji တွေက Image မဟုတ်ဘဲ Unicode Character တွေ ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "Smile Face အတွက် Entity က ဘာလဲ?", options: ["&copy;", "&euro;", "&#128512;", "&#8364;"], correctAnswer: 2, explanation: "Smile Face Emoji ကို &#128512; နဲ့ ပြပါတယ်။" },
+    { id: "q3", question: "Emoji တွေ မှန်ကန်စွာ ပေါ်ဖို့ ဘယ် Charset လိုအပ်ပါသလဲ?", options: ["ASCII", "ANSI", "ISO-8859-1", "UTF-8"], correctAnswer: 3, explanation: "UTF-8 မဟုတ်ရင် Emoji တွေ ပုံမမှန်ဘဲ Broken Symbol အဖြစ် ပေါ်နိုင်ပါတယ်။" },
+  ]}
+/>

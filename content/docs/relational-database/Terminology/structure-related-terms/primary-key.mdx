@@ -1,0 +1,29 @@
+---
+title: "Primary Key"
+description: "Primary Key ၏ အဓိပ္ပာယ်နှင့် အရေးပါပုံ"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## Primary Key ဆိုတာ ဘာလဲ?
+
+**Primary Key** ဆိုတာ Table တစ်ခုမှာ ရှိတဲ့ Record (Row) တစ်ခုချင်းစီကို တိတိကျကျ သီးသန့် ခွဲခြားသတ်မှတ်ပေးနိုင်တဲ့ Unique Identifier (မထပ်သော သီးသန့် အမှတ်အသား) ဖြစ်ပါတယ်။
+
+Table တစ်ခုမှာ ရှိနိုင်တဲ့ Candidate Keys တွေထဲကမှ အသင့်တော်ဆုံး Field တစ်ခု (သို့မဟုတ် Field ပေါင်းစပ်မှု) ကို ရွေးချယ်ပြီး **Primary Key** အဖြစ် သတ်မှတ်ရပါတယ်။ Primary Key ရဲ့ အဓိက ရည်ရွယ်ချက်ကတော့ Data ရဲ့ Uniqueness ကို ထိန်းသိမ်းဖို့နဲ့ Record တွေကို အချိန်တိုအတွင်း တိတိကျကျ Query လုပ်ယူနိုင်ဖို့ ဖြစ်ပါတယ်။
+
+<Aside title="💡 လက်တွေ့ ဥပမာ">
+  `employees` Table မှာ ဝန်ထမ်းတွေရဲ့ `ID` (ဥပမာ - `EMP-001`, `EMP-002`) ဟာ Primary Key ဖြစ်ပါတယ်။ ဝန်ထမ်း နာမည်တူ တဦးထက်ပိုပြီး ရှိနိုင်ပေမယ့်၊ Employee ID ကတော့ မည်သည့်အခါမျှ ထပ်တူညီလို့ မရပါဘူး။
+</Aside>
+
+## Primary Key ရဲ့ အရေးပါပုံ
+
+1. **Uniqueness:** Table ထဲက Record တိုင်းကို မထပ်ဘဲ တိကျစွာ ခွဲခြားပေးနိုင်ခြင်း။
+2. **Relationships ချိတ်ဆက်ခြင်း:** Foreign Key များနှင့် ချိတ်ဆက်၍ Table များနှင့် Relational Relationships များ တည်ဆောက်နိုင်ခြင်း။
+
+## Primary Key ရဲ့ မဖြစ်မနေ စည်းမျဉ်း ၂ ခု
+
+Primary Key အဖြစ် သတ်မှတ်မယ့် Field သည် အောက်ပါ စည်းမျဉ်း ၂ ခုကို ရာနှုန်းပြည့် လိုက်နာရပါမယ်:
+
+- **Rule 1: Unique (မထပ်ရပါ):** Primary Key Value သည် Table ထဲရှိ တခြား ဘယ် Record Value နဲ့မျှ တူညီ၍ မရပါ။
+- **Rule 2: NOT NULL (Null မဖြစ်ရပါ):** Primary Key Value သည် တန်ဖိုး မရှိဘဲ လွတ်နေခြင်း (`Null`) လုံးဝ မရှိရပါ။ အမြဲတမ်း Valid Data Value ရှိနေရပါမယ်။
+

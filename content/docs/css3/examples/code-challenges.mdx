@@ -1,0 +1,154 @@
+---
+title: "CSS Code Challenges — စိန်ခေါ်မှု လေ့ကျင့်ခန်းများ"
+description: "Flag layout၊ navigation bar၊ pricing card နှင့် profile card စိန်ခေါ်မှု ၄ ခုကို လိုအပ်ချက်များနှင့်တကွ ကိုယ်တိုင် စမ်းရေးပြီး CSS ကျွမ်းကျင်မှုကို မြှင့်တင်ကြမယ်။"
+---
+
+ဒီစိန်ခေါ်မှုတွေက သင်ယူပြီးသား Selector၊ Box Model၊ Flexbox ၊ Position စတဲ့ အသိပညာတွေကို စုစည်းပြီး လက်တွေ့ သုံးကြည့်ဖို့ ဖြစ်ပါတယ်။ Challenge တစ်ခုစီမှာ လိုအပ်ချက်စာရင်းနဲ့ စတင်ဖို့ template ရှိပါတယ် — အရင်ဆုံး ကိုယ်တိုင် စမ်းရေးပြီးမှ နောက်ဆုံးက ပေးထားတဲ့ sample solution နဲ့ နှိုင်းယှဉ်ကြည့်ပါ။ ကိုယ့်နည်းနဲ့ ကိုယ် ရေးရင် ရလဒ် အလုပ်လုပ်နေသရွေ့ အဖြေမှန်ပဲ ဖြစ်ပါတယ်။
+
+### စိန်ခေါ်မှု ၁ — Flag Layout
+
+အလျားလိုက် တန်း ၃ ခုပါတဲ့ နိုင်ငံတော် အလံပုံစံ တစ်ခုကို ဆောက်ပါ။ `div` ၃ ခုကို ဒေါင်လိုက် အစီအလိုက် ထည့်ပြီး တစ်ခုချင်းစီကို height ပေးကာ အရောင် ၃ မျိုး ခြယ်ပါ။ Flag တစ်ခုလုံးကို စင်တာချပြီး ဘောင်တစ်ချက် ထည့်ပါ။
+
+လိုအပ်ချက်များ —
+- `height` 150px နဲ့ အရောင် ၃ မျိုး (ဥပမာ — အနီ၊ အစိမ်း၊ အပြာ)
+- Flag အကျယ်က `width: 100%;` သို့မဟုတ် `max-width` ဖြင့် ထားပါ
+- Flag တစ်ခုလုံးက စာမျက်နှာ အလယ် စင်တာမှာ ရှိရမယ်
+- တန်း တစ်ခုနဲ့ တစ်ခု ကြားမှာ ကွက်လပ် မရှိရဘူး
+
+#### စတင်ရန် Template
+
+**ဥပမာ -**
+
+```html
+<div class="flag">
+  <div class="band band-1"></div>
+  <div class="band band-2"></div>
+  <div class="band band-3"></div>
+</div>
+```
+
+မှတ်ချက် — `band-1` ၊ `band-2` ၊ `band-3` ဆိုတဲ့ class ၃ ခုကို အရောင်တစ်ခုချင်းစီအတွက် သီးသန့် သုံးနိုင်တယ် ဆိုတာ သတိထားပါ။
+
+### စိန်ခေါ်မှု ၂ — Navigation Bar
+
+Site တစ်ခုအတွက် ထိပ်ဆုံး navigation bar တစ်ခု ဆောက်ပါ။ Logo/အမည်က ဘယ်ဘက်၊ link ၄ ခုက ညာဘက်မှာ ရှိပြီး link ပေါ်မှာ mouse ရွှေ့ရင် background ပြောင်းတဲ့ hover ပါ ပါရမယ်။
+
+လိုအပ်ချက်များ —
+- Flexbox သုံးပြီး logo နဲ့ link list ကို ဆန့်ကျင်ဘက် နှစ်ဖက် ခွဲပါ
+- အောက်မှာ ဖျော့ရောင် border ပါတဲ့ nav container
+- Link တွေမှာ padding နဲ့ hover background ပြောင်းလဲမှု
+- Current page အတွက် `.active` class ပါ ထည့်ပါ
+
+#### စတင်ရန် Template
+
+**ဥပမာ -**
+
+```html
+<nav class="navbar">
+  <span class="logo">Takkatho</span>
+  <div class="links">
+    <a class="active" href="#">ပင်မ</a>
+    <a href="#">သင်တန်းများ</a>
+    <a href="#">အကြောင်း</a>
+    <a href="#">ဆက်သွယ်ရန်</a>
+  </div>
+</nav>
+```
+
+မှတ်ချက် — Logo ကို `span`၊ link စုထားတာကို `div` နဲ့ ခွဲထားတာက flexbox ကို အပြင်အဆင် ထိန်းချုပ်ရ လွယ်ကူစေပါတယ်။
+
+### စိန်ခေါ်မှု ၃ — Pricing Card
+
+Software service တစ်ခုရဲ့ Price ဖော်ပြတဲ့ card တစ်ခုကို ဆောက်ပါ။ Plan နာမည်၊ ဈေးနှုန်း၊ အင်္ဂါရပ် စာရင်းနဲ့ CTA button ပါဝင်ရမယ်။ Card ကို ပေါ်လွင်အောင် shadow နဲ့ ထောင့်ဝိုင်း လုပ်ပါ။
+
+လိုအပ်ချက်များ —
+- Card အပြင်မှာ `box-shadow` ၊ အတွင်းမှာ `padding` နဲ့ `border-radius`
+- Plan နာမည်က `h3` ၊ ဈေးနှုန်းက ကြီးပြီး အရောင် ထင်ရှားရမယ်
+- အင်္ဂါရပ် စာရင်းကို `ul` နဲ့ ဖော်ပြပါ
+- CTA button က hover မှာ အရောင် ပြောင်းရမယ်
+
+#### စတင်ရန် Template
+
+**ဥပမာ -**
+
+```html
+<div class="price-card">
+  <h3>Pro Plan</h3>
+  <p class="price">၅၀၀၀ ကျပ် /လ</p>
+  <ul>
+    <li>Project ၁၀ ခု</li>
+    <li>Domain ၁ ခု</li>
+    <li>Support ၂၄ နာရီ</li>
+  </ul>
+  <a class="btn" href="#">စတင်မည်</a>
+</div>
+```
+
+မှတ်ချက် — ဈေးနှုန်း `p` ကို `.price` class ပေးပြီး button ကို `.btn` class နဲ့ သီးခြား style ပေးနိုင်တယ်ဆိုတာ သတိထားပါ။
+
+### စိန်ခေါ်မှု ၄ — Profile Card
+
+လူတစ်ဦးရဲ့ ကိုယ်ရေးအကျဉ်းအတွက် Profile Card တစ်ခု ဆောက်ပါ — အဝိုင်းပုံ avatar၊ နာမည်၊ အလုပ်ခေါင်းစဉ်နဲ့ အတ္ထုပ္ပတ္တိ ဝါကျတစ်ခု။ အောက်မှာ link ၂ ခုကို ဘေးချင်းကပ် ထားပါ။
+
+လိုအပ်ချက်များ —
+- Avatar က `border-radius: 50%;` ဖြင့် အဝိုင်းဖြစ်၍ စင်တာချရမယ်
+- အမည် ၊ အလုပ် ၊ ဖော်ပြချက် အစဉ်လိုက် စနစ်တကျ ထားပါ
+- Social link ၂ ခုကို Flexbox သုံးပြီး ဘေးချင်းကပ် ထားပါ
+- Card တစ်ခုလုံးကို စာမျက်နှာ အလယ်မှာ ထားပါ
+
+#### စတင်ရန် Template
+
+**ဥပမာ -**
+
+```html
+<div class="profile-card">
+  <img class="avatar" src="https://example.com/pic.jpg" alt="ကိုယ်တိုင်ပုံ">
+  <h3>မောင်မောင်</h3>
+  <p class="role">Web Designer</p>
+  <p class="bio">ပုံပြင်ပြောတတ်တဲ့ Designer တစ်ဦး ဖြစ်ပါတယ်။</p>
+  <div class="social">
+    <a href="#">GitHub</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</div>
+```
+
+မှတ်ချက် — Avatar ပုံက အရံ box ထဲ ပါနေလို့ `border-radius: 50%;` ပေးချိန် `width` နဲ့ `height` တူညီလို့ဝိုင်းပုံ ရမှာ ဖြစ်ပါတယ်။
+
+### Sample Solution — Flag Layout
+
+အောက်မှာ စိန်ခေါ်မှု ၁ ရဲ့ နည်းလမ်းတစ်ခုကို ပြထားပါတယ်။ `margin: 0 auto;` ဖြင့် flag ကို စင်တာချပြီး band ၃ ခုကို height တူညီစွာ ခွဲထားပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.flag {
+  width: 360px;
+  max-width: 100%;
+  margin: 0 auto;
+  border: 1px solid #333;
+}
+.band {
+  height: 120px;
+}
+.band-1 { background: #e63946; }
+.band-2 { background: #2a9d8f; }
+.band-3 { background: #1d3557; }
+```
+
+မှတ်ချက် — Band ၃ ခုက `div` ဖြစ်လို့ အတင်းအကျပ် ဒေါင်လိုက် စီသွားပြီး `height` တူညီသောကြောင့် အလျားလိုက် တန်း ၃ ခု ရလာပါတယ်။
+
+#### ကိုယ့်ကိုယ်ကို စိန်ခေါ်ရန် နောက်ထပ် အကြံများ
+
+- Flag ကို `position: absolute` နဲ့ စင်တာချကြည့်ပါ — နည်းလမ်း နှစ်မျိုး ယှဉ်ကြည့်ပါ။
+- Nav bar ကို `display: flex` အစား CSS Grid နဲ့ ပြန်ဆောက်ကြည့်ပါ။
+- Profile card ထဲမှာ hover လုပ်ရင် slight scale up ဖြစ်အောင် `transform` ထည့်ကြည့်ပါ။
+
+မှတ်ချက် — Coding ကျွမ်းကျင်မှုက ထပ်ခါထပ်ခါ ကိုယ်တိုင်ရေးခြင်းဖြင့်သာ တိုးတက်ပြီး နည်းလမ်းတိုင်းကို စမ်းကြည့်တာက အကောင်းဆုံး သင်ယူနည်း ဖြစ်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Flag band များကို ဒေါင်လိုက် စီရန် မည်သည့် property က အဓိက အကူအညီဖြစ်သနည်း?", options: ["margin", "float", "height သတ်မှတ်ခံ block element", "text-align"], correctAnswer: 2, explanation: "div သည် block element ဖြစ်၍ အလိုအလျောက် ဒေါင်လိုက် စီပြီး height ဖြင့် တန်းအမြင့် သတ်မှတ်နိုင်သည်။" },
+  { id: "q2", question: "Avatar ကို အဝိုင်းပုံ ဖြစ်စေရန် မည်သည့် CSS ကို သုံးသနည်း?", options: ["border-radius: 50%", "border-width: 50%", "margin: 50%", "padding: 50%"], correctAnswer: 0, explanation: "width နှင့် height ညီညီ ရှိသော box တွင် border-radius: 50% ပေးသော် စက်ဝိုင်းပုံ ရသည်။" },
+  { id: "q3", question: "Nav bar တွင် logo နှင့် link များကို နှစ်ဖက် ခွဲရန် မည်သည့် နည်းလမ်း ကောင်းသနည်း?", options: ["Flexbox ဖြင့် justify-content: space-between", "margin-top ကြီးကြီး", "display: none", "border-collapse"], correctAnswer: 0, explanation: "Flex container တွင် space-between က item များကြား နေရာကို အညီအမျှ ခွဲပေးသည်။" } ]} />

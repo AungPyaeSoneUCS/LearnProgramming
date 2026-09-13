@@ -1,0 +1,101 @@
+---
+title: "CSS Pseudo-elements — Element အစိတ်အပိုင်း Style"
+description: "before, after, first-letter, first-line, selection, marker, placeholder စတဲ့ Pseudo-element တွေရဲ့ အသုံးပြုပုံကို စုစည်းထားတဲ့ ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### Pseudo-element ဆိုတာ ဘာလဲ?
+
+Pseudo-element က Element ထဲက **အစိတ်အပိုင်းတစ်ခုခု** ကို ရွေးချယ်ပြီး Style လုပ်တဲ့ Selector ဖြစ်ပါတယ်။ Colon နှစ်လုံး `::` နဲ့ စတင်ပြီး HTML ထဲမှာ Element အနေနဲ့ မရှိတဲ့ Content တွေကိုပါ ဖန်တီးနိုင်ပါတယ်။
+
+### Pseudo-element များ
+
+| Pseudo-element | ဖော်ပြချက် | ဥပမာ |
+| ---- | ---- | ---- |
+| `::before` | Element Content ရဲ့ ရှေ့မှာ Content ထည့်ရန် | `p::before` |
+| `::after` | Element Content ရဲ့ နောက်မှာ Content ထည့်ရန် | `p::after` |
+| `::first-letter` | စာပိုဒ်ရဲ့ ပထမ စာလုံးတစ်လုံး | `p::first-letter` |
+| `::first-line` | စာပိုဒ်ရဲ့ ပထမဆုံး စာကြောင်း | `p::first-line` |
+| `::selection` | User က Mouse ဖြင့် ရွေးထားတဲ့ စာသားအပိုင်း | `::selection` |
+| `::marker` | List Item ရဲ့ Bullet / Number သင်္ကေတ | `li::marker` |
+| `::placeholder` | Input Field ရဲ့ Placeholder စာသား | `input::placeholder` |
+
+### `::before` နဲ့ `::after` — Content ထည့်သွင်းခြင်း
+
+`::before` နဲ့ `::after` က Element ရဲ့ Content အပြင်ဘက် (ရှေ့ / နောက်) မှာ Content တစ်ခုခု ထည့်ရန် သုံးပြီး `content` Property က **မဖြစ်မနေ** လိုအပ်ပါတယ်။ Icon ၊ Decoration ၊ Tooltip စတာတွေကို HTML မထည့်ဘဲ ဖန်တီးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.quote::before {
+  content: "“";
+  font-size: 3rem;
+  color: #999;
+}
+
+.note::after {
+  content: " ✦";
+  color: #ff5722;
+}
+```
+
+မှတ်ချက် — `::before` နဲ့ `::after` က Inline Element အစစ် ဖြစ်တဲ့အတွက် Background ဒါမှမဟုတ် Width ၊ Height စတာတွေ သုံးချင်ရင် `display: block;` လို Property ထည့်ဖို့ လိုအပ်ပါတယ်။
+
+### `::first-letter` နဲ့ `::first-line` — စာသား အစိတ်အပိုင်း
+
+`::first-letter` က Block Level Element (စာပိုဒ်) ရဲ့ ပထမ စာလုံးကို ၊ `::first-line` က ပထမ စာကြောင်းကို ရွေးပြီး စာအုပ် အလှဆင်မှု (Drop Cap) ၊ မျဉ်းသားလေးတွေ ပြုလုပ်ရာမှာ သုံးပါတယ်။
+
+**ဥပမာ -**
+```css
+p::first-letter {
+  font-size: 3rem;
+  font-weight: bold;
+  float: left;
+}
+
+p::first-line {
+  text-transform: uppercase;
+  color: #2962ff;
+}
+```
+
+မှတ်ချက် — `::first-letter` နဲ့ `::first-line` က Block Level Element တွေပေါ်မှာသာ အလုပ်လုပ်လို့ Inline Element တွေမှာ သက်ရောက်မှု ရှိမှာ မဟုတ်ပါဘူး။
+
+### `::selection` ၊ `::marker` နဲ့ `::placeholder`
+
+User က ရွေးထားတဲ့ စာသား ၊ List Item ရဲ့ Bullet သင်္ကေတ ၊ Input ရဲ့ Placeholder စာသားတို့ကိုလည်း Pseudo-element တွေနဲ့ Style လုပ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+::selection {
+  background-color: #2962ff;
+  color: #fff;
+}
+
+li::marker {
+  color: #ff5722;
+  font-weight: bold;
+}
+
+input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+```
+
+မှတ်ချက် — `::selection` ကို Element အားလုံး ပေါ်သုံးချင်ရင် `*::selection` ဖြစ်စေ ၊ `::selection` တစ်ခုထဲ ဖြစ်စေ ရေးနိုင်ပြီး `li::marker` က List ရဲ့ Bullet ၊ Number အရောင်နဲ့ အရွယ်ကိုသာ သက်ရောက်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Pseudo-element က `::` နှစ်လုံးနဲ့ စပြီး Pseudo-class က `:` တစ်လုံးနဲ့ စပါတယ်။
+- `::before` နဲ့ `::after` မှာ `content` Property မဖြစ်မနေ လိုအပ်ပါတယ်။
+- `::first-letter` နဲ့ `::first-line` က Block Level Element တွေပေါ်မှာသာ အလုပ်လုပ်ပါတယ်။
+- HTML မှာ Element မရှိဘဲ Decoration Content တွေကို Pseudo-element နဲ့ ဖန်တီးနိုင်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Pseudo-element တွေကို ရေးတဲ့အခါ ဘာ Sign နဲ့ စတင်ပါသလဲ?", options: ["Colon တစ်လုံး", "Colon နှစ်လုံး", "Period တစ်လုံး", "Hash တစ်လုံး"], correctAnswer: 1, explanation: "Pseudo-element က :: နှစ်လုံးနဲ့ စပြီး Pseudo-class ကသာ : တစ်လုံးနဲ့ စပါတယ်။" },
+    { id: "q2", question: "Element Content ရဲ့ နောက်မှာ Content ထည့်ဖို့ ဘယ် Pseudo-element ကို သုံးပါသလဲ?", options: ["before", "first-letter", "after", "marker"], correctAnswer: 2, explanation: "after က Element Content ရဲ့ နောက်မှာ Content ထည့်ပေးပြီး before က ရှေ့မှာ ထည့်ပါတယ်။" },
+    { id: "q3", question: "before နဲ့ after နှစ်ခုလုံးမှာ မဖြစ်မနေ လိုအပ်တဲ့ Property က ဘာလဲ?", options: ["content", "display", "width", "position"], correctAnswer: 0, explanation: "before နဲ့ after က content property မပါရင် ဘာမှ ပြသမှာ မဟုတ်ပါဘူး။" },
+  ]}
+/>

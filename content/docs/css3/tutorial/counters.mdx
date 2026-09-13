@@ -1,0 +1,134 @@
+---
+title: "CSS Counters — နံပါတ်တပ်စနစ်"
+description: "counter-reset, counter-increment နဲ့ content: counter(name) တို့ကို သုံးပြီး HTML ကို မထိဘဲ နံပါတ်တပ်နည်းကို လေ့လာကြည့်ရအောင်။"
+---
+
+### CSS Counters ဆိုတာ ဘာလဲ?
+
+CSS Counters တွေက JavaScript မလိုဘဲ List ရဲ့ Item တွေ၊ Section တွေကို CSS တစ်ခုတည်းကနေ အလိုအလျောက် နံပါတ်တပ်ပေးပါတယ်။ အဓိက အစိတ်အပိုင်း (၃) ခုနဲ့ အလုပ်လုပ်ပါတယ်။
+
+- `counter-reset` — Counter ကို စတင်သတ်မှတ်ခြင်း
+- `counter-increment` — Counter ကို ထပ်တိုးပေးခြင်း
+- `content: counter(name)` — Counter ရဲ့ တန်ဖိုးကို ပြသခြင်း
+
+**ဥပမာ -**
+```css
+ol {
+  counter-reset: item;
+}
+li::before {
+  counter-increment: item;
+  content: counter(item) ". ";
+  font-weight: bold;
+}
+```
+
+မှတ်ချက် — ::before မှာ counter(item) ကို content နဲ့ တွဲသုံးတော့ li တိုင်းရဲ့ ရှေ့မှာ 1. 2. 3. ဆိုပြီး နံပါတ်တွေ အလိုအလျောက် ပေါ်လာပါတယ်။
+
+### `counter-reset` — စတင်ခြင်း
+
+`counter-reset` က Counter ရဲ့ အမည်ကို သတ်မှတ်ပြီး စတင်တန်ဖိုးကိုပါ ထည့်နိုင်ပါတယ်။ Value မရေးရင် 0 ကနေ စပါတယ်။
+
+**ဥပမာ -**
+```css
+.chapter {
+  counter-reset: chapter;
+  list-style: none;
+}
+.chapter li::before {
+  counter-increment: chapter;
+  content: counter(chapter, upper-roman) ". ";
+}
+```
+
+မှတ်ချက် — counter-reset မှာ Value မရေးရင် 0 ကစပြီး counter-increment နဲ့အတူ ပထမဆုံးတန်ဖိုး 1 ဖြစ်လာပါတယ်။ counter-reset: chapter 5 လိုမျိုး Value ထည့်ရင်လည်း 5 ကနေစလို့ ရပါတယ်။
+
+### `counter-increment` — ထပ်တိုးပေးခြင်း
+
+`counter-increment` က Counter ကို တစ်ခါအသုံးပြုတိုင်း တိုးပေးပါတယ်။ ဘယ် Element မှာ Increment လုပ်မလဲ အလိုက် နံပါတ်ပေါ်တဲ့ နေရာ ပြောင်းနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+h2 {
+  counter-increment: section;
+}
+h3::before {
+  counter-increment: subsection;
+  content: counter(section) "." counter(subsection) " ";
+}
+```
+
+မှတ်ချက် — h2 မှာ နံပါတ်ဖော်ပြချက် မထည့်ဘဲ Counter ကိုသာ တိုးပြီး နံပါတ်ကို h3 မှာပဲ ပြလို့ရတာမို့ Section/Subsection အဆင့်စနစ် ရေးဖို့ လွယ်ကူပါတယ်။
+
+### `content: counter()` — တန်ဖိုးပြသခြင်း
+
+`content` ထဲမှာ `counter(name)` ကို ရေးခြင်းက Counter ရဲ့ လက်ရှိတန်ဖိုးကို စာသားအဖြစ် ပြောင်းပြပါတယ်။ Number Format (decimal, upper-roman, lower-roman စသည်) ကိုပါ ရွေးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+li::before {
+  content: "Lesson " counter(lesson) ": ";
+  color: #e67e22;
+}
+li::after {
+  content: " (" counter(lesson, lower-roman) ")";
+  color: #999;
+}
+```
+
+မှတ်ချက် — counter() ရဲ့ ဒုတိယ Argument မှာ Number Style သတ်မှတ်လို့ ရပြီး Default က decimal ဖြစ်ပါတယ်။
+
+### Nested (အဆင့်ဆင့်) Counters
+
+List ထဲ List ၊ Section ထဲ Section ဆိုရင် အဆင့်တစ်ခုစီမှာ Reset ပြန်လုပ်ပြီး 1.1, 1.2 လိုမျိုး အဆင့်ဆင့် နံပါတ်တပ်လို့ ရပါတယ်။
+
+**ဥပမာ -**
+```css
+ol {
+  counter-reset: item;
+}
+ol li::before {
+  counter-increment: item;
+  content: counter(item) ". ";
+}
+ol ol {
+  counter-reset: subitem;
+}
+ol ol li::before {
+  counter-increment: subitem;
+  content: counter(item) "." counter(subitem) " ";
+}
+```
+
+မှတ်ချက် — Level တစ်ခုစီမှာ Reset ပြန်လုပ်မှသာ Sub-Item တွေ 1.1, 1.2 စသဖြင့် အလိုအလျောက် ပြန်ရေတွက်ပြီး Reset မလုပ်ရင် တစ်ဖက်ဆက် တိုးနေပါမယ်။
+
+### လက်တွေ့အသုံးချမှု
+
+FAQ (အမေးများသောမေးခွန်း) List လိုမျိုး Q1, Q2 ဆိုပြီး Question တွေကို အလိုအလျောက် နံပါတ်တပ်လို့ ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.faq {
+  counter-reset: question;
+}
+.faq h4::before {
+  counter-increment: question;
+  content: "Q" counter(question) ". ";
+}
+```
+
+မှတ်ချက် — HTML ကို ပြင်စရာ၊ JavaScript ရေးစရာ မလိုဘဲ Counter တစ်ခုတည်းနဲ့ နံပါတ်စနစ်ကို ထိန်းချုပ်နိုင်ပါတယ်။
+
+### အကျဉ်းချုပ်
+
+CSS Counter က Reset (စတင်ခြင်း) + Increment (တိုးခြင်း) + Content (ပြသခြင်း) ဆိုတဲ့ ပေါင်းစပ်မှုနဲ့ အလုပ်လုပ်ပြီး HTML ရဲ့ Semantic Structure ကို မပျက်စေဘဲ နံပါတ်တပ်နိုင်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Counter ကို စတင်သတ်မှတ်ဖို့ ဘယ် Property ကို သုံးပါသလဲ?", options: ["counter-reset", "counter-increment", "content", "display"], correctAnswer: 0, explanation: "counter-reset က Counter ရဲ့ အမည်နဲ့ စတင်တန်ဖိုးကို သတ်မှတ်ပါတယ်။" },
+    { id: "q2", question: "Counter ရဲ့ တန်ဖိုးကို ပြသဖို့ content ထဲမှာ ဘာထည့်ရပါသလဲ?", options: ["counter(name)", "value(name)", "count(name)", "number(name)"], correctAnswer: 0, explanation: "content: counter(name) က Counter ရဲ့ လက်ရှိတန်ဖိုးကို စာသားအဖြစ် ပြသပါတယ်။" },
+    { id: "q3", question: "counter-increment က ဘာကို ပြုလုပ်ပေးပါသလဲ?", options: ["Counter ကို တန်ဖိုးထပ်တိုးပေးခြင်း", "Counter ကို ပြန်စတင်ပေးခြင်း", "Counter ကို ဖျက်ပေးခြင်း", "Counter ကို နာမည်ပြောင်းပေးခြင်း"], correctAnswer: 0, explanation: "counter-increment က Counter ရဲ့ တန်ဖိုးကို တစ်ခုချင်းစီ ထပ်တိုးပေးပါတယ်။" },
+  ]}
+/>

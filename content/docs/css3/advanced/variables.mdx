@@ -1,0 +1,92 @@
+---
+title: "CSS Variables — CSS Variable အသုံးပြုခြင်း"
+description: ":root တွင် Variable များ သတ်မှတ်ခြင်း၊ var() Function ၊ Fallback Value နှင့် Theme ပြောင်းလဲနည်းကို လေ့လာကြမယ်။"
+---
+
+CSS Variable (Custom Property) ဆိုတာ အရောင် ၊ အရွယ်အစားလို တန်ဖိုးတွေကို နာမည်တစ်ခုအောက်မှာ သိမ်းထားပြီး တစ်နေရာတည်း ပြောင်းလိုက်ရုံနဲ့ Site တစ်ခုလုံးမှာ သက်ရောက်စေနိုင်တဲ့ နည်းလမ်း ဖြစ်ပါတယ်။ နာမည်ကို `--` နဲ့ စရေးရပါတယ်။
+
+### Variable သတ်မှတ်ခြင်း
+
+Variable တွေကို များသောအားဖြင့် `:root` ထဲမှာ သတ်မှတ်ပြီး Document တစ်ခုလုံးမှာ သုံးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+:root {
+  --main-color: #3498db;
+  --main-padding: 15px;
+}
+```
+
+မှတ်ချက် — `:root` က Document ရဲ့ အမြင့်ဆုံး Element ကို ကိုယ်စားပြုပြီး အဲဒီမှာ သတ်မှတ်ထားတဲ့ Variable တွေက Page အားလုံးမှာ ရနိုင်ပါတယ်။
+
+### var() Function အသုံးပြုခြင်း
+
+Variable ကို ပြန်သုံးဖို့ `var()` Function ထဲမှာ Variable နာမည်ကို ထည့်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.button {
+  background-color: var(--main-color);
+  padding: var(--main-padding);
+}
+
+.card {
+  border: 2px solid var(--main-color);
+}
+```
+
+မှတ်ချက် — `var()` ကို Property Value နေရာမှာ သုံးနိုင်ပြီး Variable ရဲ့ တန်ဖိုး ပြောင်းလဲလိုက်တာနဲ့ အသုံးပြုနေတဲ့ နေရာတိုင်းမှာ အလိုအလျောက် ပြောင်းပါတယ်။
+
+### Fallback Value
+
+`var()` အသုံးပြုတဲ့အခါ Variable ရှာမတွေ့ပါက သုံးမယ့် Fallback Value ကို Second Argument အဖြစ် ထည့်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.title {
+  color: var(--title-color, #333);
+  font-size: var(--title-size, 24px);
+}
+```
+
+မှတ်ချက် — `--title-color` မရှိတဲ့အခါ Fallback က `#333` ဖြစ်လို့ Style က ကွဲသွားစရာ မလိုဘဲ လုံခြုံပါတယ်။
+
+### Scope နဲ့ Theme ပြောင်းလဲခြင်း
+
+Variable တွေက Nested Scope ရှိပြီး Selector တစ်ခုအတွင်းမှာ ပြန်သတ်မှတ်ရင် အဲဒီနေရာမှာသာ Override ဖြစ်ပါတယ်။ ဒါကြောင့် Theme Switching ကို CSS ပြောင်းစရာမလိုဘဲ ပြုလုပ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+:root {
+  --bg: white;
+  --text: black;
+}
+
+.dark-theme {
+  --bg: #222;
+  --text: white;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+```
+
+မှတ်ချက် — Body ပေါ်မှာ `dark-theme` Class ရှိနေရင် Variable နှစ်ခုလုံး Override ဖြစ်ပြီး Dark Theme ကို Class ထည့်ခြင်းဖြင့်သာ ရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Variable နာမည်ကို `--` နဲ့ စတင်ပြီး `var()` ဖြင့် ပြန်အသုံးပြုပါသည်။
+- Fallback Value ကြောင့် Variable မရှိလျှင်လည်း Style အလုပ်လုပ်ပါသည်။
+- Variable ကို Scope အတွင်း ပြန်သတ်မှတ်၍ Theme ပြောင်းလဲနိုင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "CSS Variable ရဲ့ နာမည်ကို ဘယ်လို စပြီး ရေးပါသလဲ?", options: ["#", "--", "##", "$"], correctAnswer: 1, explanation: "Variable နာမည်ကို -- နဲ့ စတင်၍ ရေးရပါတယ်။" },
+    { id: "q2", question: "Variable တစ်ခု ရှာမတွေ့တဲ့အခါ သုံးမယ့် တန်ဖိုးကို ဘယ်လို ခေါ်ပါသလဲ?", options: ["Default Style", "Fallback Value", "Root Value", "Base Value"], correctAnswer: 1, explanation: "var() ထဲက Second Argument က Fallback Value ဖြစ်ပါတယ်။" },
+    { id: "q3", question: "Class တစ်ခုအတွင်းမှာ Variable ပြန်သတ်မှတ်ရင် ဘာဖြစ်ပါသလဲ?", options: ["Element အားလုံးမှာ ပြောင်း", "အဲဒီ Scope မှာသာ ပြောင်း", "ဘာမှ မဖြစ်", "Browser က Error ပြ"], correctAnswer: 1, explanation: "Variable ကို Selector ရဲ့ Scope အတွင်းမှာသာ Override ဖြစ်ပါတယ်။" }
+  ]}
+/>

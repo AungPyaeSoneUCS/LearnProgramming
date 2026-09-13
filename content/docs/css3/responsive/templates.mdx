@@ -1,0 +1,192 @@
+---
+title: "RWD Templates — Responsive Page Template"
+description: "Header ၊ 3-Column Main ၊ Footer ပါတဲ့ ပြန်လည်သုံးနိုင်သော Responsive Page Template တစ်ခုကို ခြေတစ်လှမ်းချင်း ဆောက်ကြည့်မယ်။"
+---
+
+ဒီသင်ခန်းစာမှာ ယခင် သင်ခန်းစာတွေက သင်ယူခဲ့တဲ့ Viewport ၊ Fluid Layout ၊ Media Query တွေကို ပေါင်းစပ်ပြီး ပြန်လည်သုံးနိုင်တဲ့ Responsive Page Template တစ်ခုကို တည်ဆောက်ပါမယ်။ Template တစ်ခုဆိုတာ Project အသစ်တိုင်းမှာ ပြန်သုံးလို့ရတဲ့ အခြေခံပုံစံ ဖြစ်ပြီး Header ၊ Navigation ၊ Content Area ၊ Footer စတာတွေ ပါဝင်ပါတယ်။
+
+### Page Structure ဖန်တီးခြင်း
+
+ပထမဆုံး HTML Structure ကို ဖန်တီးပါမယ်။ Semantic Element တွေဖြစ်တဲ့ Header ၊ Nav ၊ Main ၊ Footer တွေကို သုံးပြီး 3-Column Layout အတွက် Sidebar နှစ်ခု ထည့်ပါမယ်။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Template</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <h1>My Website</h1>
+  </header>
+
+  <nav class="main-nav">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main class="layout">
+    <aside class="sidebar sidebar-left">Sidebar ဘယ်</aside>
+    <section class="content">Content နေရာ</section>
+    <aside class="sidebar sidebar-right">Sidebar ညာ</aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>Copyright 2026</p>
+  </footer>
+
+</body>
+</html>
+```
+
+မှတ်ချက် — `main` ထဲမှာ Sidebar နှစ်ခုနဲ့ Content ပါတာမို့ Desktop မှာ Column ၃ ခု ဖြစ်ပါတယ်။ Class နာမည်တွေကို CSS မှာ Selective ဖြစ်အောင် ထင်ရှားတာတွေ ရွေးထားပါတယ်။
+
+### Grid နဲ့ 3-Column Layout
+
+Layout ကို CSS Grid နဲ့ တည်ဆောက်ပါမယ်။ Desktop မှာ ဘယ် Sidebar (250px) ၊ Content (Auto) ၊ ညာ Sidebar (250px) ဖြစ်အောင် Column Template သတ်မှတ်ပြီး Screen သေးတဲ့အခါ Column အားလုံးကို ဒေါင်လိုက် စီစေဖို့ Media Query ထည့်ပါမယ်။
+
+**ဥပမာ -**
+```css
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 250px 1fr 250px;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sidebar {
+  background-color: #f4f4f4;
+  padding: 15px;
+}
+
+.content {
+  background-color: #ffffff;
+  padding: 15px;
+  min-height: 300px;
+}
+```
+
+မှတ်ချက် — Grid Template က ဘယ်/ညာ Sidebar ကို 250px Fixed ပေးပြီး Content ကို ကျန်တဲ့ နေရာအားလုံး ရယူပါတယ်။ `max-width` နဲ့ `margin: 0 auto` က Screen ကျယ်တဲ့အခါ Layout ကို အလယ်တည့်တည့် ထားပေးပါတယ်။
+
+### Header နဲ့ Nav ကို Styling လုပ်ခြင်း
+
+Header က Site ရဲ့ ထိပ်ဆုံး Branding နေရာပြီး Navigation က Page ထဲ လွယ်ကူစွာ ရွေ့လျားနိုင်အောင် ကူညီပါတယ်။ Nav Link တွေကို Mobile မှာလည်း နှိပ်လို့ အဆင်ပြေအောင် နေရာချထားမှု ကောင်းဖို့ လိုပါတယ်။
+
+**ဥပမာ -**
+```css
+.site-header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.main-nav {
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.main-nav a {
+  color: white;
+  text-decoration: none;
+  padding: 14px 20px;
+  display: block;
+}
+
+.main-nav a:hover {
+  background-color: #555;
+}
+```
+
+မှတ်ချက် — `flex-wrap: wrap` သုံးထားတာမို့ Nav Link တွေက Screen ကျဉ်းတဲ့အခါ နောက်တန်းကို ဆင်းပြီး မကျန်ရစ်ပါဘူး။
+
+### Media Query ဖြင့် Mobile Layout
+
+Screen Width 768px အောက်မှာ Column ၃ ခုကို Grid Template Column တစ်ခုတည်း ပြောင်းပြီး ဒေါင်လိုက် စီစေပါမယ်။ ဒါက Mobile-First ထက် Desktop-First နည်းလမ်းဖြစ်ပြီး Template ရဲ့ Layout ကို ပြောင်းလဲဖို့ `max-width` Media Query ကို သုံးပါတယ်။
+
+**ဥပမာ -**
+```css
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar-left {
+    order: 1;
+    width: 100%;
+  }
+
+  .content {
+    order: 2;
+  }
+
+  .sidebar-right {
+    order: 3;
+  }
+}
+```
+
+မှတ်ချက် — Mobile မှာ ဘယ် Sidebar က Content ရဲ့ အပေါ်ကို ရောက်သွားပြီး ညာ Sidebar က Content ရဲ့ အောက်ကို ရောက်သွားပါတယ်။ `order` Property က Grid ထဲက Element တွေရဲ့ စီစဉ်မှုကို ထိန်းချုပ်တာပါ။
+
+### Footer ၊ Image နဲ့ ပြီးပြည့်စုံသော Template
+
+နောက်ဆုံးအနေနဲ့ Footer Style နဲ့ Responsive Image တွေကို ထည့်ပြီး Template ကို ပြီးပြည့်စုံအောင် လုပ်ပါမယ်။ Content ထဲမှာ Image တွေရှိရင် အချိုးမပျက်စေဖို့ `max-width: 100%` ကို သေချာထည့်ထားပါတယ်။
+
+**ဥပမာ -**
+```css
+.site-footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+```
+
+```html
+<footer class="site-footer">
+  <p>My Website — 2026</p>
+</footer>
+```
+
+မှတ်ချက် — ဒီ Template ကို Page အသစ်တိုင်းမှာ Head Section နဲ့ Main Content လေးကိုသာ ပြောင်းလဲပြီး ပြန်သုံးနိုင်တာမို့ Development မြန်ဆန်လာပါတယ်။ Template ရဲ့ Process အလုံးစုံကို မှတ်သားထားပါက CSS Framework တွေရဲ့ အလုပ်လုပ်ပုံကိုလည်း နားလည်သွားမှာ ဖြစ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Responsive Template က Header ၊ Nav ၊ Main ၊ Footer ပါဝင်ပြီး ပြန်လည်သုံးနိုင်သည်။
+- CSS Grid နဲ့ 3-Column Layout ကို တည်ဆောက်နိုင်သည်။
+- Media Query နဲ့ Mobile အရွယ်တွင် Column များကို ဒေါင်လိုက် စီစနိုင်သည်။
+- `max-width: 100%` နဲ့ Image တွေကို Container ထဲတွင် ထိန်းနိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Desktop မှာ Column သုံးခု ဖြစ်အောင် ဘယ် CSS Feature ကို သုံးမလဲ?", options: ["CSS Grid", "List Style", "Box Shadow", "Border Radius"], correctAnswer: 0, explanation: "CSS Grid ရဲ့ grid-template-columns ကို သုံးပြီး Column များကို သတ်မှတ်ပါတယ်။" },
+    { id: "q2", question: "Mobile Layout အတွက် Column များကို ဒေါင်လိုက် စီစေဖို့ ဘာလုပ်ရပါသလဲ?", options: ["grid-template-columns ကို 1fr ပြောင်းရသည်", "ပိုဆိုးပြီး Media Query မသုံးရဘူး", "Font Size ပြောင်းရသည်", "Module ထည့်ရသည်"], correctAnswer: 0, explanation: "Mobile အတွက် Media Query ထဲမှာ grid-template-columns ကို 1fr ပြောင်းလျှင် Column များ ဒေါင်လိုက် စီပါတယ်။" },
+    { id: "q3", question: "Navigation Link တွေ Screen ကျဉ်းရင် နောက်တန်းဆင်းဖို့ ဘယ် Property ကို သုံးမလဲ?", options: ["flex-wrap: wrap", "width: 100%", "display: none", "float: right"], correctAnswer: 0, explanation: "flex-wrap: wrap က Link တွေ Screen ကျဉ်းတဲ့အခါ နောက်တန်းသို့ ဆင်းပြီး ပြသပါတယ်။" },
+  ]}
+/>

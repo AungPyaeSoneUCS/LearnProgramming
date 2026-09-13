@@ -1,0 +1,76 @@
+---
+title: "CSS Padding — Element အတွင်းဘက် နေရာလွတ် သတ်မှတ်နည်း"
+description: "content နဲ့ border ကြားက အတွင်းဘက် နေရာလွတ်ဖြစ်တဲ့ padding ကို shorthand နဲ့ တစ်ဖက်ချင်း သတ်မှတ်နည်း။"
+---
+
+### Padding ဆိုတာ ဘာလဲ?
+
+**Padding** က element ရဲ့ အတွင်းဘက် နေရာလွတ်ပါ။ Content နဲ့ border ကြားက အကွာအဝေးကို သတ်မှတ်ပေးပြီး margin နဲ့ မတူတာက padding ထဲကို background color နဲ့ background image တွေ ဝင်ပါတယ်။ Button တွေ၊ card တွေမှာ content ကို လှပစေဖို့ padding ကို အမြဲ သုံးပါတယ်။
+
+### Padding Shorthand (တန်ဖိုး တစ်လုံးကနေ လေးလုံး)
+
+`padding` shorthand က margin နဲ့ အတူတူပဲ တန်ဖိုး ၁ လုံးကနေ ၄ လုံး ပေးလို့ရပြီး အစဉ်လည်း တူပါတယ်။
+
+**ဥပမာ -**
+```css
+.p-one { padding: 10px; }                 /* လေးဖက်လုံး */
+.p-two { padding: 10px 20px; }            /* အပေါ်အောက် ဘယ်ညာ */
+.p-three { padding: 10px 20px 30px; }     /* အပေါ် ဘယ်ညာ အောက် */
+.p-four { padding: 10px 20px 30px 40px; } /* top right bottom left */
+```
+
+မှတ်ချက် — Padding shorthand မှာလည်း နာရီလက်တံအတိုင်း top, right, bottom, left အစဉ် သက်ရောက်ပါတယ်။
+
+### Individual Sides (တစ်ဖက်ချင်း သတ်မှတ်ခြင်း)
+
+`padding-top`, `padding-right`, `padding-bottom`, `padding-left` တွေနဲ့ တစ်ဖက်ချင်း ညှိနိုင်ပါတယ်။ တစ်ဖက်ချင်း value ကွဲတာတွေမှာ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  padding-top: 10px;
+  padding-right: 20px;
+  padding-bottom: 15px;
+  padding-left: 25px;
+}
+
+.btn {
+  padding: 8px 16px;
+}
+```
+
+မှတ်ချက် — တစ်ဖက်ချင်း ကွဲပြားချင်ရင် longhand properties တွေ၊ အတူတူဆိုရင် shorthand ကို သုံးရင် ပိုတိုပါတယ်။
+
+### Padding နဲ့ Element ရဲ့ စုစုပေါင်း အရွယ်အစား
+
+Default (content-box) မှာ `width` ကို padding နဲ့ ပေါင်းပြီးမှ element ရဲ့ စုစုပေါင်း အကျယ် ဖြစ်ပါတယ်။ ဒါကြောင့် width တူပေမဲ့ padding ကွဲရင် element တွေရဲ့ ပြင်ပ အရွယ်အစား မတူတော့ပါဘူး။
+
+**ဥပမာ -**
+```css
+.box {
+  width: 200px;
+  padding: 20px;
+}
+
+.box-border-box {
+  box-sizing: border-box;
+  width: 200px;
+  padding: 20px;
+}
+```
+
+မှတ်ချက် — `box-sizing: border-box;` ပေးထားရင် width ထဲမှာ padding ရော border ပါ ပါဝင်လို့ စုစုပေါင်း အကျယ်က 200px ပဲ ရှိနေမှာ ဖြစ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Padding က element အတွင်းဘက် နေရာလွတ်ဖြစ်ပြီး background က padding ထဲအထိ ဝင်ပါတယ်။
+- `padding` shorthand က value ၁ လုံးကနေ ၄ လုံး အထိ လက်ခံပါတယ်။
+- `box-sizing: border-box;` နဲ့ padding အပါအဝင် အရွယ်အစားကို ထိန်းချုပ်နိုင်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Padding က element ရဲ့ ဘယ်နေရာကို သတ်မှတ်ပေးလဲ?", options: ["element ရဲ့ အပြင်ဘက်", "content နဲ့ border ကြား", "element နှစ်ခုကြား", "margin ရဲ့ အပြင်ဘက်"], correctAnswer: 1, explanation: "padding က content နဲ့ border ကြားက အတွင်းဘက် နေရာလွတ်ပါ။" },
+  { id: "q2", question: "padding: 10px 20px; မှာ 10px က ဘာလဲ?", options: ["ဘယ်ညာ", "အပေါ်အောက်", "လေးဖက်လုံး", "အောက်ဘက် တစ်ဖက်တည်း"], correctAnswer: 1, explanation: "နှစ်လုံး ပေးရင် ပထမ value က အပေါ်အောက် ဒုတိယ value က ဘယ်ညာ ပါ။" },
+  { id: "q3", question: "content-box မှာ width 200px padding 20px ဆိုရင် စုစုပေါင်း အကျယ်က ဘယ်လောက်လဲ?", options: ["200px", "220px", "240px", "160px"], correctAnswer: 2, explanation: "width နဲ့ padding ဘယ်ညာ နှစ်ဖက် ပေါင်းလို့ 200 ပေါင်း 20 ပေါင်း 20 က 240px ဖြစ်ပါတယ်။" }
+]} />

@@ -1,0 +1,65 @@
+---
+title: "Subqueries နှင့် CTEs (အဆင့်မြင့် Query များ)"
+description: "SQL တွင် Query များ ထပ်ဆင့်အသုံးပြုခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="ရည်ရွယ်ချက်">
+    Query တစ်ခုတည်းနဲ့ အဖြေရှာလို့ မရတဲ့ ရှုပ်ထွေးတဲ့ ပြဿနာတွေကို ဖြေရှင်းဖို့ **Subqueries (Query အသေးလေးတွေ ထပ်ထည့်ခြင်း)** နဲ့ **CTE (Common Table Expressions)** အသုံးပြုနည်းတွေကို လေ့လာကြပါမယ်။
+</Aside>
+
+## Subqueries (Nested Queries) ဆိုတာ ဘာလဲ?
+
+**Subquery** ဆိုတာ အဓိက Query (Main Query) ကြီး တစ်ခုထဲမှာ ထပ်ထည့်ထားတဲ့ Query အသေးလေး (Inner Query) ကို ခေါ်တာပါ။ များသောအားဖြင့် ကွင်းစကွင်းပိတ် `()` တွေ ကြားထဲမှာ ရေးလေ့ရှိပါတယ်။
+
+Subquery က အရင်ဆုံး အလုပ်လုပ်ပြီး၊ သူ့ဆီက ရလာတဲ့ အဖြေ (Result) ကိုမှ Main Query က ဆက်လက် အသုံးပြုပါတယ်။
+
+### ဥပမာ - ပျမ်းမျှလစာ (Average Salary) ထက် ပိုရသော ဝန်ထမ်းများကို ရှာပါ။
+
+ဒီပြဿနာကို ဖြေရှင်းဖို့ အဆင့် ၂ ဆင့် လိုပါတယ်။
+1. ပျမ်းမျှလစာ ဘယ်လောက်ရှိလဲ အရင်တွက်ရမယ်။ (Subquery)
+2. အဲဒီ ပျမ်းမျှလစာထက် များတဲ့ ဝန်ထမ်းတွေကို ရှာရမယ်။ (Main Query)
+
+```sql
+SELECT FirstName, LastName, Salary
+FROM Employees
+WHERE Salary > (
+    SELECT AVG(Salary) 
+    FROM Employees
+);
+```
+
+**ရှင်းလင်းချက်:**
+- ပထမဆုံး ကွင်းထဲက Subquery `(SELECT AVG(Salary) FROM Employees)` က အရင် အလုပ်လုပ်ပါတယ်။ (ဥပမာ - ပျမ်းမျှလစာ ၇၅,၀၀၀ ရတယ် ဆိုပါစို့)
+- ပြီးမှ Main Query က `WHERE Salary > 75000` ဆိုပြီး ဆက်လက် ရှာဖွေပေးသွားတာပါ။
+
+---
+
+## CTE (Common Table Expression) ဆိုတာ ဘာလဲ?
+
+**CTE** ဆိုတာကလည်း Subquery နဲ့ သဘောတရား အတူတူပါပဲ။ ဒါပေမဲ့ ရေးရတဲ့ ပုံစံက ပိုရှင်းလင်းပြီး ဖတ်ရလွယ်ကူအောင် `WITH` Keyword ကို သုံးပြီး ယာယီ Table လေးတစ်ခု အနေနဲ့ အရင် ကြေညာပေးရတာပါ။ 
+
+Subquery တွေ အများကြီး ထပ်နေလို့ (Nested ဖြစ်နေလို့) ရှုပ်ထွေးသွားတဲ့အခါမျိုးမှာ CTE ကို ပြောင်းသုံးတာက အကောင်းဆုံးပါ။
+
+### ဥပမာ - ပျမ်းမျှလစာထက် ပိုရသော ဝန်ထမ်းများကို CTE အသုံးပြု၍ ရှာပါ။
+
+```sql
+WITH AverageSalary AS (
+    SELECT AVG(Salary) AS avg_sal
+    FROM Employees
+)
+
+SELECT FirstName, LastName, Salary
+FROM Employees
+WHERE Salary > (SELECT avg_sal FROM AverageSalary);
+```
+
+**ရှင်းလင်းချက်:**
+- `WITH` Keyword ကို သုံးပြီး `AverageSalary` ဆိုတဲ့ နာမည်နဲ့ ယာယီ Table လေးတစ်ခုကို အရင် ဖန်တီးလိုက်ပါတယ်။
+- အဲဒီ Table လေးထဲမှာ ပျမ်းမျှလစာ (avg_sal) တန်ဖိုးကို တွက်ပြီး သိမ်းထားပါတယ်။
+- ပြီးမှ အောက်က Main Query က အဲဒီ `AverageSalary` ဆိုတဲ့ ယာယီ Table လေးဆီကနေ Data တွေ ပြန်ယူသုံးသွားတာပါ။
+
+### ဘယ်အချိန်မှာ ဘာကို သုံးမလဲ?
+- သာမန် ရိုးရှင်းတဲ့ အခြေအနေတွေမှာ **Subquery** ကို သုံးတာ မြန်ဆန်ပါတယ်။
+- Query တွေ အရမ်းရှည်လာပြီး ဖတ်ရရှုပ်လာတဲ့အခါ (သို့မဟုတ် ယာယီရလဒ် တစ်ခုတည်းကို နေရာများစွာမှာ ပြန်သုံးချင်တဲ့အခါ) **CTE** ကို သုံးတာ အကောင်းဆုံးပါ။

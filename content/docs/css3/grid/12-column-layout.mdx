@@ -1,0 +1,122 @@
+---
+title: "Grid 12-column Layout — Responsive 12-Column Grid"
+description: "12-column grid template, col-span utility classes, responsive breakpoints နဲ့ header/main/sidebar/footer page layout တည်ဆောက်နည်း ကို လေ့လာကြမယ်။"
+---
+
+Bootstrap တို့ Tailwind တို့လို့ CSS framework တွေရဲ့ နောက်ကွယ်မှာ အသုံးအများဆုံး နည်းပညာကတော့ **12-column grid** ပဲ ဖြစ်ပါတယ်။ 12 က 2၊ 3၊ 4၊ 6 တို့လို ဂဏန်တွေနဲ့ ပြစွတ်ဝင်တာမို့ flexible ဖြစ်တဲ့ split တွေ အများကြီး လုပ်နိုင်ပါတယ်။ ဒီနည်းပညာကို pure CSS Grid နဲ့ ကိုယ်တိုင် တည်ဆောက်ကြည့်ရအောင်။
+
+### 12-Column Template
+
+အခြေခံ template ကတော့ column ၁၂ ခုလုံးကို `fr` unit နဲ့ ညီတူ သတ်မှတ်တဲ့ပုံစံ ဖြစ်ပါတယ်။ `repeat(12, 1fr)` တစ်ကြောင်းနဲ့ frame တစ်ခုလုံးကို ဆောက်လိုက်တာပဲ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+```
+
+မှတ်ချက် — ဒီမှာကတည်းက item တွေက default အားဖြင့် column ၁ ခုစီ ယူပြီး track ၁၂ ခုလုံးကို ဖြည့်သွားမှာပါ။ နောက်တစ်ခန်းက item တွေ ဘယ်နှစ်ကွက် ယူမလဲ ဆိုတာကို utility class တွေနဲ့ ထိန်းချုပ်ပါမယ်။
+
+### Col-Span Utility Classes
+
+Column တစ်ခုက ၂ ကွက်၊ ၄ ကွက် ဘယ်လောက် ယူမလဲဆိုတာကို class တွေ သတ်မှတ်ထားပြီး HTML ထဲမှာ ပြန်သုံးလို့ရအောင် လုပ်ထားတာကို "utility classes" လို့ ခေါ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.col-span-1  { grid-column: span 1; }
+.col-span-2  { grid-column: span 2; }
+.col-span-3  { grid-column: span 3; }
+.col-span-4  { grid-column: span 4; }
+.col-span-6  { grid-column: span 6; }
+.col-span-12 { grid-column: span 12; }
+```
+
+မှတ်ချက် — `col-span-4` ရှိတဲ့ item သုံးခုဆိုရင် 4+4+4 = 12 ဖြစ်လို့ grid တစ်တန်းကို အတိအကျ ဖြည့်ပါတယ်။ `col-span-6` item နှစ်ခုဆိုရင်လည်း 6+6 = 12 နဲ့ row တစ်တန်း ဖြစ်ပါတယ်။
+
+### Responsive Breakpoints
+
+Screen သေးတဲ့အခါ col-span အချိုးတွေကို ပြောင်းဖို့ media queries နဲ့ utility class တွေကို override လုပ်ပါတယ်။ Desktop မှာ column ၄ ခု ဖြစ်ပြီး tablet မှာ ၂ ခု၊ ဖုန်းမှာ ၁ ခုအထိ ပြောင်းလို့ရပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.col-span-4 {
+  grid-column: span 4;
+}
+
+@media (max-width: 768px) {
+  .col-span-4 {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 480px) {
+  .col-span-4 {
+    grid-column: span 12;
+  }
+}
+```
+
+မှတ်ချက် — Tablet screen တွေမှာ card ၄ ခုက ၂ ခုစီ တန်းလျှောက်ပြီး ဖုန်းမှာတော့ ၁ ခုချင်းစီ အောက်ဆင့် ပေါ်ပါတယ်။ Media query ရဲ့ max-width တွေက breakpoint (အမှတ်အသား) တွေ ဖြစ်ပါတယ်။
+
+### Header / Main / Sidebar / Footer Layout
+
+12-column grid ကို သုံးပြီး page layout တစ်ခုလုံးကို လက်တွေ့ တည်ဆောက်ကြည့်ရအောင်။ Header က ၁၂ ကွက်၊ sidebar က ၃ ကွက်၊ main က ၆ ကွက်၊ ညာဘက် ad က ၃ ကွက်နဲ့ footer က ၁၂ ကွက် — အားလုံးပေါင်းရင် ၁၂ ကွက် ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<div class="page">
+  <header class="col-12">Header</header>
+  <aside class="col-3">Sidebar</aside>
+  <main class="col-6">Main Content</main>
+  <aside class="col-3">Ad Column</aside>
+  <footer class="col-12">Footer</footer>
+</div>
+```
+
+မှတ်ချက် — HTML မှာ col-span class တွေ ထည့်ထားပြီးဖြစ်လို့ အောက်က CSS မှာ ဒီ class တွေကို grid-column span တန်ဖိုးတွေနဲ့ သတ်မှတ်ပေးရပါမယ်။
+
+**ဥပမာ -**
+
+```css
+.page {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+.col-12 { grid-column: span 12; }
+.col-6  { grid-column: span 6; }
+.col-3  { grid-column: span 3; }
+
+@media (max-width: 768px) {
+  .col-3, .col-6 {
+    grid-column: span 12;
+  }
+}
+```
+
+မှတ်ချက် — Desktop မှာ sidebar - main - sidebar layout ဖြစ်ပြီး ဖုန်းမှာတော့ အားလုံး တစ်တန်းစီ အောက်ဆင့် ပေါ်ပါတယ်။ breakpoint override ချိန်ညှိပြီး tablet မှာ sidebar တွေကို ဘေးချင်းကပ်ထားတာမျိုးလည်း လုပ်နိုင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- 12-column grid က CSS framework တွေရဲ့ နောက်ကွယ်မှာ အသုံးအများဆုံး နည်းပညာ ဖြစ်သည်။
+- `repeat(12, 1fr)` ဖြင့် template ကို တည်ဆောက်သည်။
+- Col-span utility classes များဖြင့် item အကျယ်ကို ထိန်းချုပ်သည်။
+- Media queries ဖြင့် breakpoint အလိုက် layout ကို ပြောင်းလဲနိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "12-column grid တစ်ခုမှာ item လေးခု တစ်တန်းလုံး ညီတူ ဖြည့်ချင်ရင် တစ်ခုချင်းစီက column ဘယ်နှစ်ကွက် ယူရပါသလဲ?", options: ["Span 2", "Span 3", "Span 4", "Span 6"], correctAnswer: 1, explanation: "Column အလုံးရေ 12 ကို item 4 ခုနဲ့ ညီတူခွဲရင် တစ်ခုချင်းစီ span 3 ယူရပြီး 3+3+3+3 က 12 ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "Col-span utility classes က ဘာကို ထိန်းချုပ်သတ်မှတ်ပေးပါသလဲ?", options: ["Item တစ်ခုက track ဘယ်နှစ်ကွက် ယူမယ်", "Main axis ရဲ့ ဦးတည်ချက်", "Font အရွယ်အစား", "Z index အစီအစဉ်"], correctAnswer: 0, explanation: "col-span classes တွေက grid-column span ကို သတ်မှတ်ပြီး item တစ်ခုက track ဘယ်နှစ်ကွက် ယူမယ်ဆိုတာကို ထိန်းချုပ်ပါတယ်။" },
+    { id: "q3", question: "Screen သေးတဲ့အခါ 12-column card တွေကို stacking တစ်တန်းစီ ဖြစ်စေချင်ရင် ဘာလုပ်ရပါသလဲ?", options: ["Span 1 ပြောင်းရပါတယ်", "Media query ထဲ span 12 လုပ်ရပါတယ်", "Flex wrap ထည့်ရပါတယ်", "Grid gap ကြီးလုပ်ရပါတယ်"], correctAnswer: 1, explanation: "Media query ထဲမှာ grid-column span 12 သို့မဟုတ် span 1fr ပြောင်းလိုက်ရင် item တွေ ဖုန်းမှာ တစ်တန်းစီ ပေါ်ပါတယ်။" }
+  ]}
+/>

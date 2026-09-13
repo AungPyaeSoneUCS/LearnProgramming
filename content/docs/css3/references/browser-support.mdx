@@ -1,0 +1,83 @@
+---
+title: "CSS Browser Support — Browser ပံ့ပိုးမှု"
+description: "Browser Engine အလိုက် CSS အကောင်အထည်ဖော်ပုံ ကွာခြားချက် ၊ Vendor Prefix ၊ @supports Feature Detection နဲ့ Support ဇယား ပါဝင်ပါတယ်။"
+---
+
+### Browser တစ်ခုချင်း CSS ကွဲပြားမှု
+
+CSS Spec တစ်ခုတည်းကိုပဲ Browser Engine တွေက ကိုယ့်နည်းကိုယ့်ဟန်နဲ့ အကောင်အထည်ဖော်ပါတယ်။ Chrome နဲ့ Edge က **Blink** ၊ Firefox က **Gecko** ၊ Safari က **WebKit** Engine ကို သုံးပါတယ်။ ဒါကြောင့် Feature အသစ်တစ်ခုကို Browser တစ်ခုမှာ အရင် ရပြီး ကျန်တာတွေမှာ နောက်မှ ရနိုင်ပါတယ်။
+
+Browser Support Status က အချိန်နဲ့အမျှ ပြောင်းလဲနေလို့ Source ကို အမြဲ ပြန်စစ်ပါ။
+
+### Vendor Prefix များ
+
+Experiment ဖြစ်တဲ့ Feature တွေအတွက် Browser Vendor တွေက Prefix ထည့်ပြီး Support လုပ်ခဲ့ပါတယ်။ `-webkit-` (Chrome ၊ Edge ၊ Safari) ၊ `-moz-` (Firefox) ၊ `-ms-` (ဟောင်းတဲ့ Microsoft Browser) ၊ `-o-` (ဟောင်းတဲ့ Opera) တို့ ဖြစ်ပါတယ်။ ခေတ်ပေါ် Standard Feature တွေအတွက် Prefix မလို လိုတဲ့အခါ Autoprefixer လို Tool က အလိုအလျောက် ထည့်ပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+.example {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+```
+
+မှတ်ချက် — Prefix Version ကို ရှေ့မှာ ရေးပြီး Standard Property ကို နောက်ဆုံးမှာ ရေးရင် Standard ရထားတဲ့ Browser တွေက Standard ကို သုံးပါတယ်။
+
+### `@supports` Feature Detection
+
+`@supports` Rule က Browser မှာ Feature ရှိ/မရှိ စစ်ပြီး ရှိမှသာ အတွင်းက Style တွေ အလုပ်လုပ်စေပါတယ်။ မရှိတဲ့ Browser အတွက် Fallback ကိုလည်း ချိန်ညှိရ လွယ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@supports (display: grid) {
+  .layout {
+    display: grid;
+    gap: 1rem;
+  }
+}
+
+@supports not (display: grid) {
+  .layout {
+    display: flex;
+  }
+}
+```
+
+မှတ်ချက် — `@supports` အတွင်းက Code ကို Browser က Condition ကို Support လုပ်မှသာ သုံးပြီး Fallback နည်းလမ်းကို အခြား Block နဲ့ စီစဉ်နိုင်ပါတယ်။
+
+### caniuse.com ဖြင့် စစ်ဆေးခြင်း
+
+Browser Support ကို လျှင်မြန်စွာ စစ်လို့ရတဲ့ အကျော်ကြားဆုံး Site က **caniuse.com** ဖြစ်ပါတယ်။ Feature နာမည် ရိုက်ထည့်ရင် Browser အလိုက် Status ၊ ခေတ်စားနေဆဲ Version ၊ ဆီလိုက်ပး ဇယားပါ ရပါတယ်။
+
+### ခေတ်ပေါ် Feature Support ဇယား
+
+အောက်က Feature တွေက 2026 ခုနှစ်မှာ Evergreen Browser အားလုံးမှာ ယေဘုယျအားဖြင့် Supported ဖြစ်ပါတယ်။
+
+| Feature | Chrome | Edge | Firefox | Safari |
+| ---- | ---- | ---- | ---- | ---- |
+| Flexbox | Supported | Supported | Supported | Supported |
+| CSS Grid | Supported | Supported | Supported | Supported |
+| `aspect-ratio` | Supported | Supported | Supported | Supported |
+| `:has()` | Supported | Supported | Supported | Supported |
+| `backdrop-filter` | Supported | Supported | Supported | Supported |
+| Container Queries | Supported | Supported | Supported | Supported |
+
+မှတ်ချက် — Support အခြေအနေက Version တစ်ခုတည်း မဟုတ်ဘဲ ပြောင်းလဲနိုင်လို့ သေချာ စစ်ထည့်ချင်ရင် caniuse.com ကို သုံးပါ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Engine မတူလို့ Feature ရမယ့် အချိန် ကွဲပါတယ်။
+- Prefix (`-webkit-` ၊ `-moz-`) က Legacy ဖြစ်လာပါပြီ။
+- `@supports` နဲ့ Feature Detection လုပ်ပါ။
+- caniuse.com မှာ စစ်ပြီး Fallback ထည့်ပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Firefox Browser ရဲ့ Engine က ဘာလဲ?", options: ["Gecko", "Blink", "WebKit", "Trident"], correctAnswer: 0, explanation: "Firefox က Gecko Engine ကို သုံးပါတယ် ၊ Chrome နဲ့ Edge ကတော့ Blink ပါ။" },
+    { id: "q2", question: "Browser မှာ Feature ရှိ/မရှိ စစ်တဲ့ CSS Rule က ဘာလဲ?", options: ["@supports", "@media", "@import", "@font-face"], correctAnswer: 0, explanation: "@supports က Feature Detection အတွက် သီးသန့် Rule ဖြစ်ပါတယ်။" },
+    { id: "q3", question: "Browser Support Status ကို စစ်လို့ရတဲ့ နာမည်ကြီး Website က ဘာလဲ?", options: ["caniuse.com", "w3.org", "validator.w3.org", "developer.oracle.com"], correctAnswer: 0, explanation: "caniuse.com မှာ Feature တိုင်းရဲ့ Browser Support ကို ကြည့်လို့ ရပါတယ်။" },
+  ]}
+/>

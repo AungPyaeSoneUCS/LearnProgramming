@@ -1,0 +1,62 @@
+---
+title: "DDL: Table များ တည်ဆောက်ခြင်း (CREATE TABLE)"
+description: "SQL တွင် Table များ ဖန်တီးနည်းနှင့် Data Type များ"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="ရည်ရွယ်ချက်">
+    Database ထဲမှာ Table အသစ်တစ်ခု ဘယ်လို တည်ဆောက်ရမလဲ ဆိုတာကို DDL (Data Definition Language) Command တစ်ခုဖြစ်တဲ့ `CREATE TABLE` ကို အသုံးပြုပြီး လေ့လာကြပါမယ်။
+</Aside>
+
+## Table အသစ်တစ်ခု တည်ဆောက်ခြင်း (CREATE TABLE)
+
+Database တစ်ခု ဖန်တီးပြီးသွားရင် အဲဒီထဲမှာ Data တွေ သိမ်းဖို့ Table တွေ ဆောက်ရပါတယ်။ `CREATE TABLE` ဆိုတဲ့ SQL Command ကို သုံးပြီး ကိုယ်လိုချင်တဲ့ Table နာမည်၊ Column နာမည်တွေနဲ့ အဲဒီ Column တွေမှာ သိမ်းမယ့် Data အမျိုးအစား (Data Type) တွေကို သတ်မှတ်ပေးရပါတယ်။
+
+### Syntax
+```sql
+CREATE TABLE table_name (
+    column1_name data_type constraints,
+    column2_name data_type constraints,
+    ...
+);
+```
+
+### Data Types (အချက်အလက် အမျိုးအစားများ)
+Column တစ်ခုကို ဆောက်တဲ့အခါ ဘာ Data Type ဆိုတာ မဖြစ်မနေ ကြေညာပေးရပါတယ်။ အသုံးအများဆုံး Data Type တွေကတော့:
+- **`INT` / `INTEGER`:** ကိန်းပြည့် ဂဏန်းများအတွက် (ဥပမာ - 1, 100, -50)
+- **`DECIMAL(p, s)` / `NUMERIC`:** ဒသမကိန်းများအတွက်။ `p` က ဂဏန်းစုစုပေါင်း အရေအတွက်ဖြစ်ပြီး `s` က ဒသမနောက် ကိန်းဂဏန်း အရေအတွက်ပါ။ (ဥပမာ - Price `DECIMAL(10, 2)`)
+- **`VARCHAR(n)`:** အရှည် အတို ပြောင်းလဲနိုင်တဲ့ စာသားတွေအတွက်။ `n` က အများဆုံး လက်ခံမယ့် စာလုံးရေပါ။ (ဥပမာ - Name `VARCHAR(50)`)
+- **`CHAR(n)`:** ပုံသေ အရှည်ရှိတဲ့ စာသားတွေအတွက်။ (ဥပမာ - Country Code (US, UK) `CHAR(2)`)
+- **`DATE`:** နေ့စွဲများအတွက် (ဥပမာ - '2023-12-31')
+- **`BOOLEAN` / `TINYINT`:** မှန်/မှား (True/False သို့မဟုတ် 1/0) တန်ဖိုးများအတွက်
+
+### Constraints (ကန့်သတ်ချက်များ)
+Column တွေထဲမှာ ထည့်မယ့် Data တွေ မှန်ကန်တိကျစေဖို့ စည်းမျဉ်းတွေ ထပ်ထည့်ပေးလို့ ရပါတယ်။
+- **`PRIMARY KEY`:** ဒီ Column ဟာ Record တစ်ခုစီကို ခွဲခြားပေးမယ့် အဓိက သော့ချက်ပါ။ (ထပ်ခွင့်မရှိ၊ လွတ်ခွင့်မရှိ)
+- **`NOT NULL`:** ဒီ Column မှာ Data မထည့်ဘဲ (Null အနေနဲ့) အလွတ်ထားခွင့် မပြုပါဘူး။
+- **`UNIQUE`:** ဒီ Column ထဲက Data တွေဟာ တစ်ခုနဲ့ တစ်ခု လုံးဝ မတူရပါဘူး။
+- **`FOREIGN KEY`:** တခြား Table တစ်ခုနဲ့ ချိတ်ဆက်ဖို့ သုံးပါတယ်။
+- **`DEFAULT`:** Data ဘာမှ မထည့်ရင် အလိုအလျောက် ဝင်သွားမယ့် တန်ဖိုးကို သတ်မှတ်ပေးပါတယ်။
+
+### ဥပမာ - `Employees` Table တည်ဆောက်ခြင်း
+
+ဝန်ထမ်းတွေရဲ့ အချက်အလက်တွေကို သိမ်းမယ့် Table တစ်ခု တည်ဆောက်ကြည့်ရအောင်။
+
+```sql
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    HireDate DATE,
+    Salary DECIMAL(10, 2) DEFAULT 0.00
+);
+```
+
+**ရှင်းလင်းချက်:**
+- `EmployeeID` ကို `INT` လို့ သတ်မှတ်ပြီး `PRIMARY KEY` အဖြစ် သုံးထားပါတယ်။
+- `FirstName` နဲ့ `LastName` ကို စာလုံးရေ ၅၀ အများဆုံး လက်ခံမယ့် `VARCHAR` သုံးထားပြီး အလွတ်ထားခွင့်မရှိအောင် `NOT NULL` ပေးထားပါတယ်။
+- `Email` ကို `UNIQUE` ပေးထားလို့ ဝန်ထမ်းနှစ်ယောက် အီးမေးလ် ထပ်နေလို့ မရပါဘူး။
+- `HireDate` ကို `DATE` အဖြစ် သတ်မှတ်ထားပါတယ်။
+- `Salary` ကို `DECIMAL(10,2)` ပေးထားပြီး Data မထည့်ရင် `0.00` အလိုအလျောက် ဝင်သွားအောင် `DEFAULT` သတ်မှတ်ထားပါတယ်။

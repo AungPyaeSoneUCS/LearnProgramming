@@ -1,0 +1,129 @@
+---
+title: "CSS Dropdowns — Hover Dropdown Menu"
+description: "hover dropdown ဆောက်နည်းနဲ့ position absolute တွေကို သုံးပြီး nav menu အောက်မှာ dropdown ပေါ်လာစေနည်း။"
+---
+
+### Dropdown ဆိုတာဘာလဲ
+
+**Dropdown Menu** ဆိုတာ Link ဒါမှမဟုတ် Button ပေါ် Mouse ပေးထားတဲ့အခါ အောက်ကို ဖြန့်ထွက်ပေါ်လာတတ်တဲ့ Hidden Menu ပါ။ CSS ချည်းသုံးပြီး JavaScript မလိုဘဲ `:hover` State နဲ့ ဖန်တီးလို့ရပါတယ်။
+
+စံ Model ကတော့ — Dropdown Container (`div`) ၊ Button ၊ နောက်က Hidden-content Division ဆိုပြီး သုံးပိုင်းပါပါတယ်။ CSS မှာ Hidden content ကို Default အနေနဲ့ ဖျောက်ထားပြီး Container ကို hover လုပ်တဲ့အခါ ပြန်ပြပေးပါတယ်။
+
+**ဥပမာ -**
+```html
+<div class="dropdown">
+  <button class="dropbtn">မီနူး</button>
+  <div class="dropdown-content">
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+  </div>
+</div>
+```
+
+မှတ်ချက် — dropdown-content ကို hidden ထားပြီး dropdown ပေါ် hover လုပ်တဲ့အခါ ပေါ်လာစေဖို့ structure ဒီလိုပဲ ထားပါမယ်။
+
+### Position နဲ့ Hidden စီစဉ်ခြင်း
+
+Dropdown ကို မှန်မှန်ကန်ကန် ဖော်ပြဖို့ — **Dropdown Container** မှာ `position: relative` ထားပြီး **Dropdown Content** မှာ `position: absolute` ထားပါတယ်။ ဒါက Content ကို Parent အောက်မှာ တိကျစွာ နေရာချပေးပါတယ်။
+
+ခုချိန်မှာ `.dropdown-content` ကို `display: none` နဲ့ Hidden ထားပြီး `.dropdown:hover` လုပ်ရင် ပြန်ပြစေမယ့် Mechanism တပ်ဆင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+```
+
+မှတ်ချက် — `position: absolute` က အောက်ကစာတွေ စီးဆင်းမသွားဘဲ Nav Bar အောက်မှာ ပြသချင်တဲ့နေရာကို ထိန်းပေးပါတယ်။
+
+### Hover Mechanism (Hover လုပ်ရင် ပြခြင်း)
+
+အရေးကြီးဆုံးကုဒ်ကတော့ `:hover` State ပါ — `.dropdown` ပေါ်မှာ Mouse ရှိနေရင် `.dropdown-content` ကို ပြပါတယ်။
+
+**ဥပမာ -**
+```css
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+```
+
+မှတ်ချက် — `.dropdown:hover .dropdown-content` ဆိုတဲ့ Descendant Combinator က Mouse dropdown ပေါ်မှာရှိတဲ့အချိန်မှသာ menu ကို display block ဖြစ်စေပါတယ်။
+
+### Button Style သေချာပေးခြင်း
+
+Dropdown ကို Nav Bar ထဲ ထည့်လို့အဆင်ပြေစေဖို့ Dropdown Button ကိုလည်း ရှင်းရှင်းလင်းလင်း Style လုပ်ပေးရပါတယ်။
+
+**ဥပမာ -**
+```css
+.dropbtn {
+  background-color: #04aa6d;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+```
+
+မှတ်ချက် — Button ရဲ့ Border ကို ဖျောက်ပြီး hover မှာ အရောင်ပြောင်းလို့ အသုံးဝင်ကြောင်း User ကို ထင်ရှားစေပါတယ်။
+
+### Right-Aligned Dropdown
+
+Dropdown Menu က Button ရဲ့ ညာဘက်စွန်းနဲ့ အံကိုက်ဖို့ ဆိုရင် `left: 0` ကို `right: 0` ပြောင်းပါတယ်။ Content က ဘယ်ဘက် လျှံနေရင် (overflow) ဒါက အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.dropdown-right .dropdown-content {
+  right: 0;
+  left: auto;
+}
+
+.dropdown-content {
+  min-width: 160px;
+  z-index: 1;
+}
+```
+
+မှတ်ချက် — `right: 0` နဲ့ `left: auto` က Content ကို Button ညာဘက်စွန်းနဲ့ အံကိုက်ဖြစ်စေပြီး `z-index` က dropdown ကို သူ့အောက်က Content တွေ (ဥပမာ တခြား box တွေ) ရဲ့ အပေါ်မှာ ပေါ်နေစေဖို့ အာမခံပေးပါတယ်။
+
+#### တိုတိုနဲ့လိုရင်း
+
+- Dropdown က CSS `:hover` နဲ့ JavaScript မလိုဘဲ ဖန်တီးနိုင်သည်။
+- Content ကို absolute-position လုပ်ဖို့ Parent မှာ relative ထားရသည်။
+- Hidden content ကို display none ထားပြီး hover မှာ block အဖြစ် ပြောင်းပေးရသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Dropdown menu ကို javascript မသုံးဘဲ ဖန်တီးဖို့ ဘယ် css state ကို အသုံးပြုပါသလဲ?", options: ["Focus", "Hover", "Active", "Visited"], correctAnswer: 1, explanation: "hover state က dropdown container ပေါ် mouse ရှိနေစဉ် menu ကို ပြဖို့ trigger လုပ်ပါတယ်။" },
+    { id: "q2", question: "Dropdown content ကို parent အောက်မှာ position ချဖို့ parent မှာ ဘာ position ပေးရပါသလဲ?", options: ["Absolute", "Fixed", "Relative", "Static"], correctAnswer: 2, explanation: "parent မှာ position relative ထားမှ absolute child က parent နဲ့ ဆက်စပ်ပြီး နေရာချနိုင်ပါတယ်။" },
+    { id: "q3", question: "Dropdown content ကို hidden ထားဖို့ default value က ဘာလဲ?", options: ["Display block", "Display none", "Opacity zero", "Visibility hidden"], correctAnswer: 1, explanation: "display none က menu ကို layout ထဲက ပါ ဖျောက်ထားပြီး hover မှ block ဖြစ်လာပါတယ်။" }
+  ]}
+/>

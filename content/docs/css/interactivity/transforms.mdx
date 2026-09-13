@@ -1,0 +1,64 @@
+---
+title: "Transforms (ပုံသဏ္ဍာန်ပြောင်းခြင်း)"
+description: "Element များကို လှည့်ခြင်း၊ ချဲ့ခြင်း၊ ရွှေ့ခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import transformExample from "@/assets/css/transform.png";
+
+<Aside title="ပုံစံပြောင်းမယ်">
+Element တွေကို သူ့ရဲ့ မူလနေရာကနေ မရွှေ့ဘဲ ပုံသဏ္ဍာန် ပြောင်းလဲချင်တဲ့အခါ (ဥပမာ - လှည့်တာ၊ ကြီးလာတာ၊ သေးသွားတာမျိုးတွေအတွက်) `transform` ကို အသုံးပြုပါတယ်။
+ဒီကောင်ရဲ့ အားသာချက်က တခြား Element တွေရဲ့ Layout ကို သွားပြီး မထိခိုက်စေတာပဲ ဖြစ်ပါတယ် ခင်ဗျာ။
+</Aside>
+
+### 1. Rotate (လှည့်ခြင်း)
+Element ကို လှည့်ချင်တဲ့အခါ သုံးပါတယ်။ တန်ဖိုးကိုတော့ ဒီဂရီ (`deg`) နဲ့ သတ်မှတ်ပေးရပါတယ်။
+
+```css
+.box:hover {
+  transform: rotate(45deg); /* ၄၅ ဒီဂရီ လှည့်မယ် */
+}
+```
+
+### 2. Scale (ချဲ့ခြင်း/ချုံ့ခြင်း)
+Element ကို ချဲ့တာ၊ ချုံ့တာတွေ လုပ်ချင်ရင် သုံးပါတယ်။ သူ့ရဲ့ မူလအရွယ်အစားကို `1` လို့ သတ်မှတ်ထားပါတယ်။ `1` ထက် ကြီးတဲ့ တန်ဖိုးပေးရင် ပိုကြီးလာမှာဖြစ်ပြီး၊ `1` ထက် ငယ်တဲ့ တန်ဖိုးပေးရင် ပိုသေးသွားမှာပါ။
+
+```css
+.box:hover {
+  transform: scale(1.2); /* ၂၀% ပိုကြီးသွားမယ် */
+}
+```
+
+### 3. Translate (နေရာရွှေ့ခြင်း)
+သူ့ရဲ့ သဘောတရားက `position: relative` နဲ့ နေရာရွှေ့တာနဲ့ ခပ်ဆင်ဆင် တူပေမဲ့၊ `transform` နဲ့ ရွှေ့တာက Browser အတွက် Performance ပိုကောင်းပါတယ်။ ဒါကြောင့် Animation တွေ လုပ်တဲ့အခါ `position` ထက် `transform` ကိုပဲ ဦးစားပေး သုံးသင့်ပါတယ်။
+
+```css
+.box:hover {
+  transform: translateY(-10px); /* အပေါ်ကို 10px တက်သွားမယ် */
+}
+```
+
+### 4. Skew (ရွဲ့ခြင်း)
+ဒါကတော့ Element ကို ပုံမှန် လေးထောင့်ကနေ စောင်း (Skew) သွားအောင် လုပ်ချင်တဲ့အခါမှာ သုံးပါတယ်။
+
+```css
+.box {
+  transform: skewX(20deg);
+}
+```
+<ContentImage src={transformExample} alt="CSS Transform Examples" />
+
+<Aside type="tip">
+**Transition နဲ့ တွဲသုံးပါ:**
+`transform` Property တွေကို နောက်သင်ခန်းစာမှာ သင်ရမယ့် `transition` နဲ့သာ တွဲသုံးလိုက်မယ်ဆိုရင် အရမ်းမိုက်တဲ့ Effect လေးတွေကို ဖန်တီးနိုင်ပါတယ်။
+ဥပမာ - Card လေးတစ်ခုပေါ်ကို Mouse သွားတင် (Hover) လိုက်တဲ့အခါ အပေါ်ကို နည်းနည်းလေး ကြွတက်လာတာမျိုးပေါ့ ခင်ဗျာ။
+```css
+.card {
+  transition: transform 0.3s;
+}
+.card:hover {
+  transform: translateY(-10px);
+}
+```
+</Aside>

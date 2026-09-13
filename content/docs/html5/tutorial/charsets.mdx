@@ -1,0 +1,68 @@
+---
+title: "HTML Charsets — စာလုံးကုဒ်စနစ်များ"
+description: "ASCII, ANSI, ISO-8859-1, UTF-8 စတဲ့ Character Set တွေအကြောင်းနဲ့ UTF-8 ကို ဘာကြောင့် သုံးသင့်လဲ လေ့လာကြည့်ရအောင်။"
+---
+
+### Character Set (Charset) ဆိုတာ ဘာလဲ?
+
+ကမ္ဘာပေါ်မှာ ဘာသာစကားပေါင်း များစွာ ရှိပြီး တစ်ခုချင်းစီမှာ ကိုယ်ပိုင်အက္ခရာနဲ့ သင်္ကေတတွေ ရှိပါတယ်။ Computer က ဒီအက္ခရာတွေကို **Number (ကိန်းဂဏန်း)** နဲ့သာ မှတ်ယူပြီး၊ ဂဏန်းတစ်ခုစီနဲ့ ယှဉ်တွဲထားတဲ့ အက္ခရာအစု စာရင်းကို **Character Set (Charset)** လို့ ခေါ်ပါတယ်။ HTML Browser က Document ကို ဘယ် Charset နဲ့ ဖတ်ရမယ်ဆိုတာ သိဖို့ **Encoding** လိုအပ်ပါတယ်။
+
+နှစ်ပေါင်းများစွာ အတွင်း Character Set အမျိုးမျိုး ထွက်ပေါ်ခဲ့ပြီး တစ်ခုချင်းစီမှာ ကိုယ်ပိုင် ကန့်သတ်ချက်တွေ ရှိခဲ့ပါတယ်။ နောက်ဆုံးမှာတော့ **UTF-8** က အားလုံးရဲ့ စံဖြစ်လာခဲ့ပါတယ်။
+
+**ဥပမာ -**
+```html
+<meta charset="UTF-8">
+```
+
+မှတ်ချက် — ဒီ Meta Tag က Browser ကို "ဒီစာမျက်နှာကို UTF-8 နဲ့ ဖတ်ပါ" လို့ ပြောပြတာ ဖြစ်ပါတယ်။
+
+### Charset အမျိုးမျိုး ရဲ့ သမိုင်း
+
+Character Set တွေက အချိန်နဲ့အမျှ တိုးတက် ပြောင်းလဲလာခဲ့ပါတယ်။
+
+- **ASCII** — ပထမဦးဆုံး စံ Character Set ဖြစ်ပြီး English အက္ခရာ (A–Z, a–z)၊ ဂဏန်း (0–9) နဲ့ သင်္ကေတ အချို့ကို **128** Character အဖြစ် သတ်မှတ်ပါတယ်။
+- **ANSI (Windows-1252)** — ASCII ရဲ့ အထက်မှာ ဥရောပအက္ခရာများ ထပ်ထည့်ထားတဲ့ Microsoft ရဲ့ Extend လုပ်ထားသော Version ဖြစ်ပြီး Windows မှာ သုံးပါတယ်။
+- **ISO-8859-1** — Western European language တွေအတွက် 256 Character ပါတဲ့ စံသတ်မှတ်ချက်။
+- **UTF-8** — Unicode Character အားလုံးကို ကိုယ်စားပြုနိုင်ပြီး Variable-length (အက္ခရာပေါ်မူတည်ပြီး 1–4 bytes) Encoding ဖြစ်ပါတယ်။
+
+မှတ်ချက် — ASCII က 128 Character ပဲ ပြီး မြန်မာစာလိုအက္ခရာတွေကို မပါဝင်တာမို့ တစ်ကမ္ဘာလုံးအတွက် အကန့်အသတ်များပါတယ်။
+
+### UTF-8 က ဘာကြောင့် အကောင်းဆုံးပါလဲ?
+
+UTF-8 က ကမ္ဘာ့ဘာသာစကားအသီးသီးရဲ့ Character တွေ (မြန်မာစာ၊ အာရဗီ၊ တရုတ်၊ Japanese စသည်) အားလုံးကို တစ်ခုတည်းသော Encoding မှာ ကိုယ်စားပြုနိုင်ပါတယ်။ ဒါ့ကြောင့် Browser, OS, Editor တွေ တသမတ်တည်း အသုံးပြုနိုင်ပြီး Internationalization (နိုင်ငံတကာအသုံးပြုနိုင်မှု) အတွက် ပိုကောင်းပါတယ်။
+
+ဒါ့အပြင် UTF-8 က ASCII နဲ့ Backward-compatible (နောက်ကိုက်ညီ) ဖြစ်လို့ English Text တွေ ပုံမှန်ပဲ အလုပ်လုပ်ပါတယ်။ ဒါကြောင့် HTML5 ရဲ့ **Default Charset** လည်း ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML Charset</title>
+</head>
+<body>
+  <h1>မင်္ဂလာပါ!</h1>
+  <p>မြန်မာစာ နဲ့ Emoji ပါ ရေးလို့ရပါတယ် 😁</p>
+</body>
+</html>
+```
+
+မှတ်ချက် — HTML5 မှာ `charset` ကို မရေးထားရင်တောင် Browser တွေက Default ဖြစ်တဲ့ UTF-8 ကို အများအားဖြင့် သုံးပါတယ်။ ဒါပေမဲ့ `<meta charset="UTF-8">` ကို အမြဲထည့်တာ ပိုစိတ်ချရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Charset ဆိုတာ Character တွေကို Number နဲ့ ယှဉ်တွဲထားတဲ့ စာရင်း ဖြစ်ပါတယ်။
+- ASCII က Character 128 ပဲ ပါဝင်ပြီး အကန့်အသတ်များပါတယ်။
+- UTF-8 က ကမ္ဘာ့ဘာသာစကားအားလုံးကို ကိုယ်စားပြုနိုင်ပြီး HTML5 Default ဖြစ်ပါတယ်။
+- `<head>` ထဲ `<meta charset="UTF-8">` ကို အမြဲထည့်ပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "ပထမဆုံး စံ Character Set က ဘာလဲ?", options: ["UTF-8", "ASCII", "ANSI", "ISO-8859-1"], correctAnswer: 1, explanation: "ASCII က ပထမဆုံး စံ Character Set ဖြစ်ပြီး 128 Character ပါဝင်ပါတယ်။" },
+    { id: "q2", question: "မြန်မာစာလိုအက္ခရာတွေ ပါဝင်ဖို့ ဘယ် Encoding လိုအပ်ပါသလဲ?", options: ["ASCII", "ISO-8859-1", "UTF-8", "ANSI"], correctAnswer: 2, explanation: "UTF-8 က ကမ္ဘာ့ဘာသာစကားအားလုံးကို ကိုယ်စားပြုနိုင်လို့ မြန်မာစာပါ ရေးလို့ရပါတယ်။" },
+    { id: "q3", question: "HTML5 ရဲ့ Default Charset က ဘာလဲ?", options: ["ASCII", "UTF-8", "ANSI", "ISO-8859-1"], correctAnswer: 1, explanation: "HTML5 ရဲ့ Default Charset က UTF-8 ဖြစ်ပါတယ်။" },
+  ]}
+/>

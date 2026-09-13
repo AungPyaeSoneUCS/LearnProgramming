@@ -1,0 +1,95 @@
+---
+title: "CSS Multiple Columns — Column အများအပြား တည်ဆောက်ခြင်း"
+description: "column-count ၊ column-gap ၊ column-rule နဲ့ column-span property တို့ဖြင့် Content ကို Column များစွာဖြင့် ဖော်ပြနည်းကို လေ့လာကြမယ်။"
+---
+
+သတင်းစာ ၊ မဂ္ဂဇင်း ပုံစံ Column Layout ကို CSS ရဲ့ Multiple Columns Module နဲ့ လွယ်ကူစွာ ဖန်တီးနိုင်ပါတယ်။ အခြေခံ Property လေးခု ဖြစ်တဲ့ `column-count` ၊ `column-gap` ၊ `column-rule` နဲ့ `column-span` တို့ကို ဒီသင်ခန်းစာမှာ လေ့လာကြပါမယ်။
+
+### column-count
+
+`column-count` က Content ကို Column ဘယ်နှစ်ခု ခွဲမလဲ သတ်မှတ်ပါတယ်။ Container ရဲ့ ရနိုင်တဲ့ အကျယ်လိုက် အချိုးကျ ခွဲပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+.news {
+  column-count: 3;
+}
+```
+
+မှတ်ချက် — `column-count` က Browser ကို ခွဲရမယ့် Column အရေအတွက် ညွှန်ပြပေးပြီး ရရှိနိုင်ရင် အတိအကျ Column များအဖြစ် ခွဲပါတယ်။
+
+### column-gap
+
+`column-gap` က Column တွေကြားက အကွာအဝေးကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.news {
+  column-count: 3;
+  column-gap: 40px;
+}
+```
+
+မှတ်ချက် — Gap Value က Visual Space သာမက ဘယ် Column ၌ Content ကို မထပ်စေဘဲ စနစ်တကျ ခြားပေးပါတယ်။
+
+### column-rule
+
+`column-rule` က Column အကြားမှာ ဒေါင်လိုက် မျဉ်းကြောင်း ဆွဲပေးပါတယ်။ Border လိုပဲ Width ၊ Style ၊ Color ကို Shorthand နဲ့ ရေးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.magazine {
+  column-count: 2;
+  column-rule: 2px solid #ccc;
+}
+```
+
+မှတ်ချက် — `column-rule` ရဲ့ Style က Solid အပြင် Dashed ၊ Dotted စတဲ့ Border Style တွေကိုလည်း ရနိုင်ပါတယ်။
+
+### column-span
+
+`column-span` က Element တစ်ခုကို Column အားလုံးကို ဖြတ်၍ အကျယ်ပြည့် ဖြစ်စေပါတယ်။ Heading တွေကို Column အားလုံးအပေါ် ခံလိုက်လို့ ထားချင်တဲ့အခါ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.headline {
+  column-span: all;
+}
+```
+
+မှတ်ချက် — `column-span: all` ဖြစ်တဲ့ Element က Layout ရဲ့ အကျယ်တစ်ခုလုံး ရှိပြီး ကျန်တဲ့ Content တွေသာ Column အဖြစ် ဆက်ခွဲပါတယ်။
+
+### ပေါင်းစပ် နမူနာ
+
+Learn ထားတဲ့ Property တွေကို ပေါင်းစပ်ပြီး မဂ္ဂဇင်းပုံစံ Layout တစ်ခုလုံး ဖန်တီးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.article {
+  column-count: 3;
+  column-gap: 30px;
+  column-rule: 1px dotted #aaa;
+}
+
+.article h2 {
+  column-span: all;
+}
+```
+
+မှတ်ချက် — Heading က Column အားလုံးကို ဖြတ်၍ ကျယ်ပြီး ပါဝင်တဲ့ စာပိုဒ် တွေသာ Column အဖြစ် အခွဲခံပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `column-count` ဖြင့် Column အရေအတွက်ကို သတ်မှတ်ပါသည်။
+- `column-gap` နဲ့ `column-rule` က Column အကြား အကွာအဝေးနဲ့ မျဉ်းကို ထိန်းချုပ်ပါသည်။
+- `column-span: all` က Element တစ်ခုကို Column အားလုံး ဖြတ်ကျော်စေပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Column ဘယ်နှစ်ခု ခွဲမလဲ သတ်မှတ်ဖို့ ဘယ် Property ကို သုံးပါသလဲ?", options: ["column-width", "column-count", "column-gap", "column-rule"], correctAnswer: 1, explanation: "column-count က Column အရေအတွက်ကို သတ်မှတ်ပေးပါတယ်။" },
+    { id: "q2", question: "Column တွေကြားမှာ ဒေါင်လိုက် မျဉ်းဆွဲဖို့ ဘယ် Property ကို သုံးပါသလဲ?", options: ["column-line", "column-rule", "column-border", "column-separate"], correctAnswer: 1, explanation: "column-rule က Column အကြားမှာ မျဉ်းကြောင်း ဆွဲပေးပါတယ်။" },
+    { id: "q3", question: "Element တစ်ခုကို Column အားလုံး ဖြတ်ကျော်စေဖို့ ဘယ် Value ကို သုံးပါသလဲ?", options: ["column-span: all", "column-span: none", "column-count: all", "column-gap: 0"], correctAnswer: 0, explanation: "column-span: all က Element ကို Column အားလုံးရဲ့ ထိပ်မှာ အကျယ်ပြည့် ဖြစ်စေပါတယ်။" }
+  ]}
+/>

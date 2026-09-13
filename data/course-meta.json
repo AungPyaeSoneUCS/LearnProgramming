@@ -1,0 +1,158 @@
+[
+  {
+    "label": "SQL အခြေခံ",
+    "description": "Database တွေနဲ့ အလုပ်လုပ်ဖို့ SELECT, JOIN, GROUP BY စတဲ့ SQL Queries တွေကို လက်တွေ့ကျကျ သင်ယူမယ့် သင်တန်း။",
+    "icon": "🗄️",
+    "color": "#10b981"
+  },
+  {
+    "label": "MongoDB အခြေခံ",
+    "description": "Document-based NoSQL Database ဖြစ်တဲ့ MongoDB ရဲ့ Collections, Documents, Indexing နဲ့ Aggregation တွေကို အခြေခံမှ အဆင့်မြင့်အထိ လေ့လာမယ်။",
+    "icon": "🍃",
+    "color": "#22c55e"
+  },
+  {
+    "label": "AI Proficiency",
+    "description": "Developer တွေအတွက် AI Tools သုံးပြီး Code ရေးသားခြင်း၊ Debugging လုပ်ခြင်းနဲ့ Productivity မြှင့်တင်နည်းများကို လေ့လာမယ်။",
+    "icon": "🤖",
+    "color": "#8b5cf6"
+  },
+  {
+    "label": "Python",
+    "description": "Variables ကစပြီး OOP, Modules, Mini Projects အထိ Python ကို ခြေချင်းရင်းစွဲ သင်ယူမယ့် သင်တန်း။",
+    "icon": "🐍",
+    "color": "#3b82f6"
+  },
+  {
+    "label": "Java",
+    "description": "Syntax, OOP, Collections, Exceptions အပါအဝင် Java ရဲ့ အခြေခံမှသည် Mini Project အထိ စနစ်တကျ သင်ယူမယ်။",
+    "icon": "☕",
+    "color": "#f97316"
+  },
+  {
+    "label": "Node.js",
+    "description": "JavaScript နဲ့ Backend ရေးဖို့ Node.js, Express, File System နဲ့ REST API တွေကို လက်တွေ့လုပ်ရင်း သင်ယူမယ်။",
+    "icon": "🟢",
+    "color": "#16a34a"
+  },
+  {
+    "label": "TypeScript",
+    "description": "Type Safety ရတဲ့ JavaScript — Types, Functions, OOP, Union Types စတာတွေကို စနစ်တကျ လေ့လာမယ်။",
+    "icon": "🔷",
+    "color": "#2563eb"
+  },
+  {
+    "label": "Golang",
+    "description": "Go ရဲ့ ရိုးရှင်းမှု၊ Performance နဲ့ Concurrency — Variables, Structs, Interfaces, Goroutines အထိ သင်ယူမယ်။",
+    "icon": "🐹",
+    "color": "#06b6d4"
+  },
+  {
+    "label": "Data Structures & Algorithms",
+    "description": "Big O, Arrays, Linked Lists, Trees, Dynamic Programming အထိ Algorithm နဲ့ Data Structure တွေကို ပုံဖော်ပြီး နားလည်အောင် သင်မယ်။",
+    "icon": "📊",
+    "color": "#f59e0b"
+  },
+  {
+    "label": "WebSocket",
+    "description": "Real-time Web Application အတွက် TCP, HTTP Handshake, WebSocket Messaging တို့ကို အသေးစိတ် နားလည်အောင် သင်ယူမယ်။",
+    "icon": "🔌",
+    "color": "#f43f5e"
+  },
+  {
+    "label": "Advanced-Typescript",
+    "description": "Generics, Utility Types, Satisfies စတဲ့ TypeScript ရဲ့ အဆင့်မြင့် Type စနစ်တွေကို နက်နက်နဲနဲ လေ့လာမယ်။",
+    "icon": "🧠",
+    "color": "#6366f1"
+  },
+  {
+    "label": "Git Version Control",
+    "description": "Commit, Branch, Merge, Rebase, Remote Workflow အပါအဝင် Git ရဲ့ Version Control အားလုံးကို လက်တွေ့အသုံးပြုနည်း။",
+    "icon": "🌿",
+    "color": "#dc2626"
+  },
+  {
+    "label": "Web Performance: Web Vitals and More",
+    "description": "Core Web Vitals, Image/Font Optimization, Caching, CDN စတဲ့ Web Performance မြှင့်တင်နည်းများကို လေ့လာမယ်။",
+    "icon": "⚡",
+    "color": "#0ea5e9"
+  },
+  {
+    "label": "Software Architecture",
+    "description": "Monolith, Microservices, C4 Model, Design Patterns အပါအဝင် System Design ရဲ့ အခြေခံသဘောတရားများကို လေ့လာမယ်။",
+    "icon": "🏗️",
+    "color": "#0f766e"
+  },
+  {
+    "label": "Relational Database",
+    "description": "Normalization, Keys, Relationships, SQL စတဲ့ Relational Database ရဲ့ သဘောတရားတွေကို စနစ်တကျ သင်ယူမယ်။",
+    "icon": "🏦",
+    "color": "#1d4ed8"
+  },
+  {
+    "label": "Frontend Architecture Patterns",
+    "description": "Component-based, MV*, Flux/Redux, Micro-frontend စတဲ့ Frontend Design ရဲ့ Architecture Patterns တွေကို လေ့လာမယ်။",
+    "icon": "🧩",
+    "color": "#9333ea"
+  },
+  {
+    "label": "HTML",
+    "description": "HTML Structure, Forms, Semantic HTML, HTML5 Features အထိ Webpage တွေ ဆောက်ဖို့ အခြေခံစတင်နိုင်မယ့် သင်တန်း။",
+    "icon": "🌐",
+    "color": "#ea580c"
+  },
+  {
+    "label": "CSS",
+    "description": "Selectors, Box Model, Flexbox, Grid, Responsive Design အပါအဝင် CSS ရဲ့ အားလုံးကို လက်တွေ့အဆင့်ထိ လေ့လာမယ်။",
+    "icon": "🎨",
+    "color": "#ec4899"
+  },
+  {
+    "label": "JavaScript",
+    "description": "Fundamentals, DOM, Asynchronous JavaScript အပါအဝင် Web ရဲ့ အသက်ဖြစ်တဲ့ JavaScript ကို သင်ယူမယ်။",
+    "icon": "📜",
+    "color": "#eab308"
+  },
+  {
+    "label": "n8n Workflow Automation",
+    "description": "n8n နဲ့ Workflow တွေ ချိတ်ဆက်ပြီး Automation Pipeline တွေ တည်ဆောက်နည်းကို လေ့လာမယ်။",
+    "icon": "🔗",
+    "color": "#a855f7"
+  },
+  {
+    "label": "Docker & Containerization",
+    "description": "Docker Images, Containers, Docker Compose တွေနဲ့ Application တွေကို Container လုပ်နည်းကို လက်တွေ့ သင်ယူမယ်။",
+    "icon": "📦",
+    "color": "#0284c7"
+  },
+  {
+    "label": "Next.js Full-Stack Framework",
+    "description": "App Router, SSR/SSG, Server Components တွေနဲ့ Next.js ကို သုံးပြီး Full-Stack Application တည်ဆောက်နည်း။",
+    "icon": "▲",
+    "color": "#111827"
+  },
+  {
+    "label": "Linux & Cloud DevOps",
+    "description": "Linux Commands, Shell, Cloud Services နဲ့ DevOps အခြေခံတွေကို လက်တွေ့အသုံးပြုနည်းနဲ့တကွ လေ့လာမယ်။",
+    "icon": "☁️",
+    "color": "#65a30d"
+  },
+  {
+    "label": "Advanced CSS",
+    "description": "CSS အဆင့်မြင့်နည်းပညာများ — Animations, Transforms, Layout Mastery တို့ကို ပိုမိုနက်ရှိုင်းစွာ သင်ယူမယ်။",
+    "icon": "🖌️",
+    "color": "#db2777"
+  },
+  {
+    "label": "HTML5",
+    "description": "HTML ကို ခြေချင်းရင်းစွဲမှ အဆင့်မြင့်အထိ — Tutorial, Forms, Graphics, Media, APIs, References အပြည့်အစုံ ပါဝင်တဲ့ ပြည့်စုံသော သင်တန်း။",
+    "icon": "🅷",
+    "color": "#f97316"
+  },
+  {
+    "label": "CSS3",
+    "description": "CSS ကို အခြေခံမှ အဆင့်မြင့်အထိ — Tutorial, Advanced, Flexbox, Grid, Responsive, SASS, Examples, References အပြည့်အစုံ ပါဝင်တဲ့ ပြည့်စုံသော သင်တန်း။",
+    "icon": "💅",
+    "color": "#06b6d4"
+  }
+]

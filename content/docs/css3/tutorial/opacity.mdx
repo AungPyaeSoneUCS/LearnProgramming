@@ -1,0 +1,121 @@
+---
+title: "CSS Opacity — ဖောက်ထွင်းမြင်ရအောင် ပြုလုပ်ခြင်း"
+description: "opacity 0 ကနေ 1 အထိ သုံးပြီး transparent effect နဲ့ hover ပေါ်မှာပြောင်းလဲခြင်း၊ RGBA နဲ့ နှိုင်းယှဉ်ချက်ကို လေ့လာကြရအောင်။"
+---
+
+### Opacity ဆိုတာဘာလဲ
+
+**`opacity`** Property က Element တစ်ခုလုံးကို ဖောက်ထွင်းမြင်ရလားစေတဲ့ (transparent) ပြုလုပ်ပေးပါတယ်။ Value က **0 ကနေ 1** အထိ ရပြီး 0 ဆိုရင် လုံးဝ မမြင်ရအောင် ပျောက်သွားပြီး 1 ဆိုရင် အပြည့်အဝ မြင်ရပါတယ်။
+
+**0.5** လို Decimal Value တွေက အလယ်အလတ် ဖောက်ထွင်းမြင်ရမှုကို ပေးပါတယ်။ Element တစ်ခုလုံး (နောက်ခံ ၊ Text ၊ Border အားလုံး) ကို တစ်ပြိုင်နက် သက်ရောက်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.ghost-text {
+  opacity: 0.3;
+}
+
+.invisible {
+  opacity: 0;
+}
+
+.solid {
+  opacity: 1;
+}
+```
+
+မှတ်ချက် — Opacity က Element တစ်ခုလုံးကို သက်ရောက်ပြီး Background ကိုသာ 0.5 လို ဖောက်ထားချင်ရင်တော့ RGBA ကို သုံးရပါမယ်။
+
+### Hover မှာ Opacity ပြောင်းခြင်း
+
+Opacity က Transition နဲ့ တွဲသုံးတဲ့အခါ အလွန် လှပါတယ်။ Button ကို Mouse ပေးထားရင် မှိန်ဖျော့သွားတဲ့ effect အတွက် `:hover` မှာ opacity ပြောင်းကြပါတယ်။
+
+**ဥပမာ -**
+```css
+.button {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.button:hover {
+  opacity: 0.7;
+}
+```
+
+မှတ်ချက် — transition နဲ့တွဲလိုက်တဲ့အတွက် opacity က ခုန်ပျံမပြောင်းဘဲ လိုက်ချော့မွေ့စွာ ပြောင်းပါတယ်။
+
+### Image Hover Effect (ပုံ မှိန်ချခြင်း)
+
+Website တွေမှာ Image ပေါ် Mouse ပေးထားရင် Opacity နဲ့ Hover Effect လေးတွေ ဖန်တီးလေ့ ရှိပါတယ်။ Image Gallery တွေမှာ Classic Effect ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.gallery img {
+  opacity: 0.6;
+  transition: opacity 0.5s ease;
+}
+
+.gallery img:hover {
+  opacity: 1;
+}
+
+.main-pic {
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+
+.main-pic:hover {
+  opacity: 0.85;
+}
+```
+
+မှတ်ချက် — ဒီပုံစံ နှစ်မျိုးစလုံးက Opacity ကို 0 နဲ့ 1 ကြားမှာ transition နဲ့ ဆော့တာပါ။ Gallery ပုံတွေက Mouse မပေးထားရင် မှိန်ပြီး ပေးလိုက်ရင် ပွင့်လင်းလာပြီး Main Picture ကတော့ Mouse ပေးထားတဲ့အခါ မှိန်ချပါတယ်။
+
+### RGBA နဲ့ Opacity ခြားနားချက်
+
+Opacity က Element တစ်ခုလုံး ပြေတယ်ဆိုရင် **RGBA** Color ကတော့ **နောက်ခံတစ်ခုတည်းကို** သာ ဖောက်ထွင်းပေးပါတယ်။ RGBA ရဲ့ နောက်ဆုံး Value (Alpha) ကလည်း 0 ကနေ 1 အထိ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.box-opacity {
+  opacity: 0.5;
+  background-color: #2962ff;
+}
+
+.box-rgba {
+  background-color: rgba(41, 98, 255, 0.5);
+}
+```
+
+မှတ်ချက် — opacity 0.5 ဆိုရင် Text က လည်း မှိန်သွားပေမယ့် rgba က background သာ ဖောက်ပြီး text က ပွင့်ပွင့်လင်းလင်း ကျန်နေပါတယ်။
+
+### Opacity 0 သုံးပြီး Element ဖျောက်ခြင်း
+
+`opacity: 0` ကြောင့် Element က Visible မဟုတ်တော့ပေမယ့် Page Layout ထဲမှာတော့ နေရာ ဆက်ယူ နေပါတယ်။ ဒါက `visibility: hidden` နဲ့ တူပေမယ့် `display: none` နဲ့တော့ မတူပါဘူး။
+
+**ဥပမာ -**
+```css
+.hidden-space {
+  opacity: 0;
+  height: 80px;
+  background-color: tomato;
+}
+```
+
+မှတ်ချက် — opacity 0 က element ကို မမြင်ရတော့အောင် လုပ်ပေမယ့် နေရာ (space) ကတော့ ဆက်ထားပြီး Animation နဲ့ Tooltip လိုနေရာတွေမှာ သုံးပါတယ်။
+
+#### တိုတိုနဲ့လိုရင်း
+
+- Opacity က Element တစ်ခုလုံးကို ဖောက်ထွင်းမြင်ရအောင် ပြုလုပ်သည်။
+- RGBA က Background တစ်ခုတည်းကိုသာ ဖောက်ထွင်းပေးသည်။
+- Transition နဲ့ တွဲသုံးရင် Hover Effect တွေ လှစွာ ဖန်တီးနိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "opacity 0 ဆိုရင် ဘာဖြစ်ပါသလဲ?", options: ["အပြည့်အဝ မြင်ရတယ်", "လုံးဝ မမြင်ရတော့ဘူး", "အလယ်အလတ် မြင်ရတယ်", "အရောင် ပြောင်းသွားတယ်"], correctAnswer: 1, explanation: "opacity 0 က element ကို invisible ဖြစ်အောင် လုပ်ပေမယ့် layout ထဲမှာ နေရာ ဆက်ယူပါတယ်။" },
+    { id: "q2", question: "Element တစ်ခုလုံးကို မသက်ရောက်ဘဲ background ကိုသာ ဖောက်ထွင်းချင်ရင် ဘာကို သုံးပါသလဲ?", options: ["Opacity", "RGBA color", "Visibility", "Float"], correctAnswer: 1, explanation: "rgba ရဲ့ alpha value က background တစ်ခုတည်းကိုသာ ဖောက်ထွင်းပေးပါတယ်။" },
+    { id: "q3", question: "Hover မှာ opacity ပြောင်းတဲ့အခါ ချောမွေ့ပြောင်းလဲစေဖို့ ဘာကို တွဲသုံးပါသလဲ?", options: ["Float", "Transition", "Transform scale", "Overflow"], correctAnswer: 1, explanation: "transition က opacity အပြောင်းအလဲကို animation လို ချောမွေ့စွာ ပြုလုပ်ပေးပါတယ်။" }
+  ]}
+/>

@@ -1,0 +1,102 @@
+---
+title: "ရွေးထုတ်ခြင်းနှင့် ချန်လှပ်ခြင်း: Pick<T, K>, Omit<T, K>"
+description: "ရွေးထုတ်ခြင်းနှင့် ချန်လှပ်ခြင်း: Pick<T, K>, Omit<T, K>"
+---
+
+import { Code, Aside } from "@astrojs/starlight/components";
+
+export const userprofile = `
+interface UserProfile {
+  id: number;
+  username: string;
+  email?: string; // email က optional ပါ
+  bio: string | null;
+  isActive: boolean;
+  lastLogin: Date; // နောက်ဆုံး Login ဝင်ခဲ့တဲ့ အချိန်
+}
+`;
+
+export const pick = `
+ type UserPreview = {
+   id: number;
+   username: string;
+   email?: string;
+ }
+`;
+
+export const omit = `
+type UserForPublicListing = {
+   id: number;
+   username: string;
+   email?: string;
+   isActive: boolean;
+ }
+`;
+
+export const usage = `
+// UserProfile ထဲကနေ 'username' နဲ့ 'email' နှစ်ခုတည်းကိုပဲ ရွေးထုတ်ပြီး Type အသစ် ဖန်တီးလိုက်တယ်
+type UserAvatarInfo = Pick<UserProfile, "username" | "email">;
+
+function displayUserAvatar(info: UserAvatarInfo) {
+  console.log(\`Avatar for \${info.username}\`); // username သုံးလို့ရတယ်
+  if (info.email) {
+    console.log(\`Contact: \${info.email}\`); // email လည်း သုံးလို့ရတယ်
+  }
+}
+
+const userForAvatar: UserAvatarInfo = { username: "hero123", email: "hero@example.com" };
+displayUserAvatar(userForAvatar);
+
+// const tooMuchInfo: UserAvatarInfo = { username: "hero123", email: "hero@example.com", id: 1 };
+// TypeScript က Error ပြပါလိမ့်မယ်။ ဘာလို့လဲဆိုတော့ 'id' ဆိုတာ UserAvatarInfo (Pick လုပ်ထားတဲ့ Type) ထဲမှာ မပါဝင်လို့ပါ!
+`;
+
+export const omitUsage = `
+// UserProfile ထဲကနေ system က အလိုအလျောက် ထည့်ပေးမယ့် 'id', 'lastLogin', 'isActive' တွေကို ဖယ်ထုတ် (Omit) ပြီး Type အသစ် ဖန်တီးလိုက်တယ်
+// User Registration လုပ်တဲ့အခါ User ဆီကနေ username, email, bio တွေကိုပဲ တောင်းမှာဖြစ်လို့ပါ
+type UserRegistrationData = Omit<UserProfile, "id" | "lastLogin" | "isActive">;
+
+function registerUser(data: UserRegistrationData) {
+  console.log(\`Registering user: \${data.username} with email \${data.email}\`);
+  
+  // ဒီနေရာမှာ data ထဲက အချက်အလက်တွေ (User ဖြည့်ထားတာတွေ) ရယ်၊ System က ထုတ်ပေးတဲ့ အချက်အလက်တွေရယ် ပေါင်းပြီး Database မှာ သိမ်းတာမျိုး လုပ်ပါမယ်
+  // ဥပမာ -
+  // const fullUser: UserProfile = { ...data, id: generateId(), lastLogin: new Date(), isActive: true };
+}
+
+registerUser({ username: "newbie", email: "newbie@example.com", bio: "Just starting out!"});
+// id, lastLogin တွေ ထည့်ပေးစရာ မလိုပါဘူး
+`;
+
+<Aside title='💡 ရည်ရွယ်ချက်' type="tip">
+  `Pick<T, K>` နဲ့ `Omit<T, K>` Utility Types တွေကို အသုံးပြုပြီး၊ ကိုယ်ဆီမှာ ရှိပြီးသား Type ကနေ ကိုယ်လိုချင်တဲ့ Properties လေးတွေကိုပဲ သီးသန့် ရွေးထုတ်တာမျိုး ဒါမှမဟုတ် ကိုယ်မလိုချင်တဲ့ လျှို့ဝှက် Properties တွေကို ဖယ်ထုတ်တာမျိုး လုပ်ပြီး၊ Type အသစ်တွေကို အလွယ်တကူ ဖန်တီး အသုံးပြုတတ်စေဖို့ ဖြစ်ပါတယ်။ `K` ဆိုတာကတော့ မူရင်း `T` ထဲက Property နာမည်တွေကို ပေါင်းစပ် (Union) လုပ်ထားတာကို ဆိုလိုတာပါ။
+</Aside>
+
+ဒီဥပမာတွေအတွက် ကျွန်တော်တို့ရဲ့ မူရင်း `UserProfile` Interface ကိုပဲ ပြန်သုံးကြရအောင်။ ဒီတစ်ခါတော့ `lastLogin` ဆိုတဲ့ Property အသစ်လေး တစ်ခု ထပ်ထည့်ထားပါတယ်။
+
+<Code lang="typescript" code={userprofile} title="index.ts" />
+
+## `Pick<T, K>`: Properties တချို့ကို ရွေးထုတ်ခြင်း
+
+- **ဘာလုပ်ပေးသလဲ**: `Pick<T, K>` ဟာ `T` Type မှာရှိတဲ့ Properties အားလုံးထဲကမှ၊ ကျွန်တော်တို့ `K` နေရာမှာ ရွေးချယ် သတ်မှတ်ပေးလိုက်တဲ့ Properties တွေကိုသာ သီးသန့် ဆွဲထုတ်ပြီး Type အသစ်တစ်ခု အဖြစ် ဖန်တီးပေးပါတယ်။
+- **ဘယ်လို သုံးမလဲ**: `Pick<UserProfile, "id" | "username" | "email">` 
+  - ဒုတိယ Argument နေရာမှာ ကိုယ်ရွေးထုတ်ချင်တဲ့ Property နာမည်တွေကို `|` ခံပြီး ရေးပေးရပါတယ်။ (ဒါကို Union of literal string types လို့ ခေါ်ပါတယ်)
+- **ရလာမယ့် Type (ပုံစံ)**: (မျက်စိထဲမှာ အောက်ကပုံစံမျိုး မြင်ယောင်ကြည့်ပါ)
+
+<Code lang="typescript" code={pick} title="index.ts" />
+
+- **ဘယ်လိုနေရာမှာ သုံးသလဲ**: API ကနေ ပြန်ပို့ပေးမယ့် Data Transfer Object (DTO) တွေ ဖန်တီးတဲ့အခါ ဒါမှမဟုတ် UI Component (ဥပမာ User Preview Card လေးတွေ) အတွက် Data အပြည့်အစုံ မလိုအပ်ဘဲ တချို့တဝက်ပဲ သီးသန့် လိုအပ်တဲ့ အခါမျိုးတွေမှာ အရမ်းကို အသုံးဝင်ပါတယ်။
+
+<Code lang="typescript" code={usage} title="index.ts" />
+
+## `Omit<T, K>`: Properties တွေကို ချန်လှပ်ခြင်း (ဖယ်ထုတ်ခြင်း)
+
+- **ဘာလုပ်ပေးသလဲ**: `Omit<T, K>` ဟာ `Pick` ရဲ့ ပြောင်းပြန်ပါပဲ။ သူက `T` Type ထဲကနေ ကျွန်တော်တို့ **မလိုချင်တဲ့** Properties တွေ (အဲ့ဒါကို `K` နေရာမှာ ထည့်ပေးရမယ်) ကို ဖယ်ထုတ် (ချန်လှပ်) ပစ်ပြီး၊ ကျန်တဲ့ Properties အားလုံးနဲ့ Type အသစ်တစ်ခု အဖြစ် ဖန်တီးပေးပါတယ်။
+- **ဘယ်လို သုံးမလဲ**: `Omit<UserProfile, "lastLogin" | "isActive">`
+- **ရလာမယ့် Type (ပုံစံ)**: (မျက်စိထဲမှာ အောက်ကပုံစံမျိုး မြင်ယောင်ကြည့်ပါ)
+
+<Code lang="typescript" code={omit} title="index.ts" />
+
+- **ဘယ်လိုနေရာမှာ သုံးသလဲ**: လူသိရှင်ကြား ပြသလို့ မရတဲ့ လျှို့ဝှက်အချက်အလက်တွေ (ဥပမာ - Password, SSN) ဒါမှမဟုတ် လက်ရှိ အခြေအနေတစ်ခု (ဥပမာ - User Registration Form) နဲ့ မသက်ဆိုင်တဲ့၊ မလိုအပ်တဲ့ Properties တွေကို ဖယ်ထုတ်ပြီး Type အသစ် အမြန် ဖန်တီးချင်တဲ့ နေရာတွေမှာ အသုံးဝင်ပါတယ်။ 
+
+<Code lang="typescript" code={omitUsage} title="index.ts" />

@@ -1,0 +1,3426 @@
+[
+  {
+    "label": "SQL အခြေခံ",
+    "items": [
+      {
+        "label": "1. မိတ်ဆက်",
+        "items": [
+          {
+            "label": "SQL ဆိုတာ ဘာလဲ?",
+            "slug": "sql-course/introduction/what-is-sql"
+          }
+        ]
+      },
+      {
+        "label": "2. အခြေခံ Queries",
+        "items": [
+          {
+            "label": "SELECT နဲ့ FROM",
+            "slug": "sql-course/basic-queries/select-from"
+          },
+          {
+            "label": "WHERE (စည်းကမ်းချက်)",
+            "slug": "sql-course/basic-queries/where-clause"
+          },
+          {
+            "label": "ORDER BY နဲ့ LIMIT",
+            "slug": "sql-course/basic-queries/order-limit"
+          }
+        ]
+      },
+      {
+        "label": "3. ဒေတာပြင်ဆင်ခြင်း (CRUD)",
+        "items": [
+          {
+            "label": "INSERT, UPDATE, DELETE",
+            "slug": "sql-course/crud/insert-update-delete"
+          }
+        ]
+      },
+      {
+        "label": "4. တွက်ချက်ခြင်းများ",
+        "items": [
+          {
+            "label": "Aggregations & GROUP BY",
+            "slug": "sql-course/aggregations/group-by"
+          }
+        ]
+      },
+      {
+        "label": "5. ဇယားများ ချိတ်ဆက်ခြင်း",
+        "items": [
+          {
+            "label": "Understanding JOINs",
+            "slug": "sql-course/joins/understanding-joins"
+          }
+        ]
+      },
+      {
+        "label": "6. ဇယားများ ဖန်တီးခြင်း",
+        "items": [
+          {
+            "label": "CREATE, ALTER, DROP",
+            "slug": "sql-course/table-operations/create-alter-drop"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "MongoDB အခြေခံ",
+    "items": [
+      {
+        "label": "1. မိတ်ဆက်",
+        "items": [
+          {
+            "label": "MongoDB ဆိုတာ ဘာလဲ?",
+            "slug": "mongodb-course/introduction/what-is-mongodb"
+          }
+        ]
+      },
+      {
+        "label": "2. အခြေခံသဘောတရားများ",
+        "items": [
+          {
+            "label": "Collections နဲ့ Documents",
+            "slug": "mongodb-course/basics/collections-documents"
+          }
+        ]
+      },
+      {
+        "label": "3. ဒေတာစီမံခန့်ခွဲခြင်း (CRUD)",
+        "items": [
+          {
+            "label": "Insert, Find, Update, Delete",
+            "slug": "mongodb-course/crud/insert-find-update-delete"
+          }
+        ]
+      },
+      {
+        "label": "4. အဆင့်မြင့် လုပ်ဆောင်ချက်များ",
+        "items": [
+          {
+            "label": "Indexing နဲ့ Aggregation",
+            "slug": "mongodb-course/advanced/indexing-aggregation"
+          }
+        ]
+      },
+      {
+        "label": "5. Cloud နှင့် လက်တွေ့အသုံးချခြင်း",
+        "items": [
+          {
+            "label": "MongoDB Atlas",
+            "slug": "mongodb-course/cloud/mongodb-atlas"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "AI Proficiency",
+    "items": [
+      {
+        "label": "Introduction & Tools",
+        "items": [
+          {
+            "label": "AI for Developers",
+            "slug": "ai-proficiency/foundations/introduction"
+          },
+          {
+            "label": "The AI Toolkit",
+            "slug": "ai-proficiency/tools/introduction"
+          }
+        ]
+      },
+      {
+        "label": "Core Skills",
+        "items": [
+          {
+            "label": "Prompt Engineering for Code",
+            "slug": "ai-proficiency/core-skills/prompt-engineering"
+          },
+          {
+            "label": "Debugging & Refactoring",
+            "slug": "ai-proficiency/core-skills/debugging"
+          },
+          {
+            "label": "Generating Code",
+            "slug": "ai-proficiency/core-skills/generating-code"
+          },
+          {
+            "label": "Docs & Explanation",
+            "slug": "ai-proficiency/core-skills/documentation"
+          }
+        ]
+      },
+      {
+        "label": "Best Practices",
+        "items": [
+          {
+            "label": "AI-Assisted Testing",
+            "slug": "ai-proficiency/testing/introduction"
+          },
+          {
+            "label": "Security & Privacy",
+            "slug": "ai-proficiency/responsible-ai/introduction"
+          },
+          {
+            "label": "Productivity Hacks",
+            "slug": "ai-proficiency/productivity/introduction"
+          },
+          {
+            "label": "Learning with AI",
+            "slug": "ai-proficiency/learning/introduction"
+          }
+        ]
+      },
+      {
+        "label": "Conclusion",
+        "items": [
+          {
+            "label": "Real World Use Cases",
+            "slug": "ai-proficiency/capstone/introduction"
+          },
+          {
+            "label": "The Future Developer",
+            "slug": "ai-proficiency/future/introduction"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Python",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Welcome",
+            "slug": "python"
+          }
+        ]
+      },
+      {
+        "label": "Module 0: Setup & Installation",
+        "items": [
+          {
+            "label": "Python တပ်ဆင်ပြီး စတင်ခြင်း",
+            "slug": "python/module-0"
+          }
+        ]
+      },
+      {
+        "label": "Module 1: Variables & Data Types",
+        "items": [
+          {
+            "label": "Variables, Types, Operators",
+            "slug": "python/module-1"
+          }
+        ]
+      },
+      {
+        "label": "Module 1.5: String Methods",
+        "items": [
+          {
+            "label": "String Methods & f-strings",
+            "slug": "python/module-1-5"
+          }
+        ]
+      },
+      {
+        "label": "Module 2: Control Flow",
+        "items": [
+          {
+            "label": "If/Else, Loops & in Operator",
+            "slug": "python/module-2"
+          }
+        ]
+      },
+      {
+        "label": "Module 3: Functions",
+        "items": [
+          {
+            "label": "Functions, Lambda & Scope",
+            "slug": "python/module-3"
+          }
+        ]
+      },
+      {
+        "label": "Module 4: Data Structures",
+        "items": [
+          {
+            "label": "Lists, Dicts, Tuples, Sets",
+            "slug": "python/module-4"
+          }
+        ]
+      },
+      {
+        "label": "Module 4.5: Comprehensions",
+        "items": [
+          {
+            "label": "Comprehensions & Built-ins",
+            "slug": "python/module-4-5"
+          }
+        ]
+      },
+      {
+        "label": "Module 5: OOP",
+        "items": [
+          {
+            "label": "Classes, Objects & Inheritance",
+            "slug": "python/module-5"
+          }
+        ]
+      },
+      {
+        "label": "Module 6: File & Error Handling",
+        "items": [
+          {
+            "label": "Files, JSON & Error Handling",
+            "slug": "python/module-6"
+          }
+        ]
+      },
+      {
+        "label": "Module 6.5: Virtual Environments",
+        "items": [
+          {
+            "label": "venv & pip",
+            "slug": "python/module-6-5"
+          }
+        ]
+      },
+      {
+        "label": "Module 7: Modules & Packages",
+        "items": [
+          {
+            "label": "Modules, Packages & ကိုယ်ပိုင် Module",
+            "slug": "python/module-7"
+          }
+        ]
+      },
+      {
+        "label": "Module 8: Mini Project",
+        "items": [
+          {
+            "label": "Number Guessing Game",
+            "slug": "python/module-8"
+          }
+        ]
+      },
+      {
+        "label": "Module 9: Debugging",
+        "items": [
+          {
+            "label": "Error ဖတ်နည်း & Debugging",
+            "slug": "python/module-9"
+          }
+        ]
+      },
+      {
+        "label": "Module 10: More Projects",
+        "items": [
+          {
+            "label": "To-do List, Calculator & Word Counter",
+            "slug": "python/module-10"
+          }
+        ]
+      },
+      {
+        "label": "Python မိတ်ဆက်",
+        "slug": "python/index"
+      }
+    ]
+  },
+  {
+    "label": "Java",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Welcome",
+            "slug": "java"
+          }
+        ]
+      },
+      {
+        "label": "Module 1: Syntax & Data Types",
+        "items": [
+          {
+            "label": "Syntax & Data Types",
+            "slug": "java/module-1"
+          }
+        ]
+      },
+      {
+        "label": "Module 2: Control Flow",
+        "items": [
+          {
+            "label": "If/Else & Loops",
+            "slug": "java/module-2"
+          }
+        ]
+      },
+      {
+        "label": "Module 3: Methods",
+        "items": [
+          {
+            "label": "Methods",
+            "slug": "java/module-3"
+          }
+        ]
+      },
+      {
+        "label": "Module 4: OOP",
+        "items": [
+          {
+            "label": "Object-Oriented Programming",
+            "slug": "java/module-4"
+          }
+        ]
+      },
+      {
+        "label": "Module 5: Collections",
+        "items": [
+          {
+            "label": "Collections Framework",
+            "slug": "java/module-5"
+          }
+        ]
+      },
+      {
+        "label": "Module 6: Exceptions & Files",
+        "items": [
+          {
+            "label": "Exceptions & File Handling",
+            "slug": "java/module-6"
+          }
+        ]
+      },
+      {
+        "label": "Module 7: Mini Project",
+        "items": [
+          {
+            "label": "Student Management System",
+            "slug": "java/module-7"
+          }
+        ]
+      },
+      {
+        "label": "Java မိတ်ဆက်",
+        "slug": "java/index"
+      }
+    ]
+  },
+  {
+    "label": "Node.js",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Welcome",
+            "slug": "nodejs"
+          }
+        ]
+      },
+      {
+        "label": "Module 1: Basics & Modules",
+        "items": [
+          {
+            "label": "Node.js Basics & Modules",
+            "slug": "nodejs/module-1"
+          }
+        ]
+      },
+      {
+        "label": "Module 2: File System",
+        "items": [
+          {
+            "label": "File System & Path",
+            "slug": "nodejs/module-2"
+          }
+        ]
+      },
+      {
+        "label": "Module 3: Async Programming",
+        "items": [
+          {
+            "label": "Asynchronous Programming",
+            "slug": "nodejs/module-3"
+          }
+        ]
+      },
+      {
+        "label": "Module 4: NPM",
+        "items": [
+          {
+            "label": "NPM & Package Management",
+            "slug": "nodejs/module-4"
+          }
+        ]
+      },
+      {
+        "label": "Module 5: Web Server",
+        "items": [
+          {
+            "label": "Building a Web Server",
+            "slug": "nodejs/module-5"
+          }
+        ]
+      },
+      {
+        "label": "Module 6: Express.js",
+        "items": [
+          {
+            "label": "Express.js Basics",
+            "slug": "nodejs/module-6"
+          }
+        ]
+      },
+      {
+        "label": "Module 7: Mini Project",
+        "items": [
+          {
+            "label": "Simple REST API",
+            "slug": "nodejs/module-7"
+          }
+        ]
+      },
+      {
+        "label": "Node.js မိတ်ဆက်",
+        "slug": "nodejs/index"
+      }
+    ]
+  },
+  {
+    "label": "TypeScript",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Welcome",
+            "slug": "typescript"
+          }
+        ]
+      },
+      {
+        "label": "Module 1: Basic Types",
+        "items": [
+          {
+            "label": "Basic Types",
+            "slug": "typescript/module-1"
+          }
+        ]
+      },
+      {
+        "label": "Module 2: Functions",
+        "items": [
+          {
+            "label": "Functions",
+            "slug": "typescript/module-2"
+          }
+        ]
+      },
+      {
+        "label": "Module 3: Objects & Interfaces",
+        "items": [
+          {
+            "label": "Objects & Interfaces",
+            "slug": "typescript/module-3"
+          }
+        ]
+      },
+      {
+        "label": "Module 4: Union & Intersection",
+        "items": [
+          {
+            "label": "Union & Intersection Types",
+            "slug": "typescript/module-4"
+          }
+        ]
+      },
+      {
+        "label": "Module 5: Enums & Tuples",
+        "items": [
+          {
+            "label": "Enums & Tuples",
+            "slug": "typescript/module-5"
+          }
+        ]
+      },
+      {
+        "label": "Module 6: Classes & OOP",
+        "items": [
+          {
+            "label": "Classes & OOP",
+            "slug": "typescript/module-6"
+          }
+        ]
+      },
+      {
+        "label": "Module 7: Mini Project",
+        "items": [
+          {
+            "label": "Todo List Logic",
+            "slug": "typescript/module-7"
+          }
+        ]
+      },
+      {
+        "label": "TypeScript မိတ်ဆက်",
+        "slug": "typescript/index"
+      }
+    ]
+  },
+  {
+    "label": "Golang",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Welcome",
+            "slug": "golang"
+          }
+        ]
+      },
+      {
+        "label": "Module 1: Setup",
+        "items": [
+          {
+            "label": "Introduction & Setup",
+            "slug": "golang/module-1"
+          }
+        ]
+      },
+      {
+        "label": "Module 2: Basics",
+        "items": [
+          {
+            "label": "Variables, Types & Functions",
+            "slug": "golang/module-2"
+          }
+        ]
+      },
+      {
+        "label": "Module 3: Control Structures",
+        "items": [
+          {
+            "label": "If, For & Switch",
+            "slug": "golang/module-3"
+          }
+        ]
+      },
+      {
+        "label": "Module 4: Data Structures",
+        "items": [
+          {
+            "label": "Arrays, Slices & Maps",
+            "slug": "golang/module-4"
+          }
+        ]
+      },
+      {
+        "label": "Module 5: Pointers & Structs",
+        "items": [
+          {
+            "label": "Pointers & Structs",
+            "slug": "golang/module-5"
+          }
+        ]
+      },
+      {
+        "label": "Module 6: Interfaces & Errors",
+        "items": [
+          {
+            "label": "Interfaces & Error Handling",
+            "slug": "golang/module-6"
+          }
+        ]
+      },
+      {
+        "label": "Module 7: Concurrency",
+        "items": [
+          {
+            "label": "Goroutines & Channels",
+            "slug": "golang/module-7"
+          }
+        ]
+      },
+      {
+        "label": "Module 8: Standard Library",
+        "items": [
+          {
+            "label": "Packages & HTTP",
+            "slug": "golang/module-8"
+          }
+        ]
+      },
+      {
+        "label": "Module 9: Mini Project",
+        "items": [
+          {
+            "label": "Bookstore REST API",
+            "slug": "golang/module-9"
+          }
+        ]
+      },
+      {
+        "label": "Golang Programming Course",
+        "slug": "golang/index"
+      }
+    ]
+  },
+  {
+    "label": "Data Structures & Algorithms",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Welcome",
+            "slug": "dsa"
+          }
+        ]
+      },
+      {
+        "label": "Module 1: Foundations",
+        "items": [
+          {
+            "label": "The Big O & Memory",
+            "slug": "dsa/module-1/foundations"
+          }
+        ]
+      },
+      {
+        "label": "Module 2: Linear Data Structures",
+        "items": [
+          {
+            "label": "Arrays",
+            "slug": "dsa/module-2/arrays"
+          },
+          {
+            "label": "Strings",
+            "slug": "dsa/module-2/strings"
+          },
+          {
+            "label": "Linked Lists",
+            "slug": "dsa/module-2/linked-lists"
+          }
+        ]
+      },
+      {
+        "label": "Module 3: LIFO & FIFO",
+        "items": [
+          {
+            "label": "Stacks",
+            "slug": "dsa/module-3/stacks"
+          },
+          {
+            "label": "Queues",
+            "slug": "dsa/module-3/queues"
+          },
+          {
+            "label": "Hash Maps",
+            "slug": "dsa/module-3/hash-maps"
+          }
+        ]
+      },
+      {
+        "label": "Module 4: Recursion & Sorting",
+        "items": [
+          {
+            "label": "Recursion",
+            "slug": "dsa/module-4/recursion"
+          },
+          {
+            "label": "Sorting Algorithms",
+            "slug": "dsa/module-4/sorting"
+          }
+        ]
+      },
+      {
+        "label": "Module 5: Trees & Graphs",
+        "items": [
+          {
+            "label": "Trees & BST",
+            "slug": "dsa/module-5/trees"
+          },
+          {
+            "label": "Heaps",
+            "slug": "dsa/module-5/heaps"
+          },
+          {
+            "label": "Graphs",
+            "slug": "dsa/module-5/graphs"
+          }
+        ]
+      },
+      {
+        "label": "Module 6: Advanced Problem Solving",
+        "items": [
+          {
+            "label": "Dynamic Programming",
+            "slug": "dsa/module-6/dynamic-programming"
+          },
+          {
+            "label": "Greedy Algorithms",
+            "slug": "dsa/module-6/greedy"
+          },
+          {
+            "label": "Backtracking",
+            "slug": "dsa/module-6/backtracking"
+          }
+        ]
+      },
+      {
+        "label": "The Visual & Practical Guide to Algorithms",
+        "slug": "dsa/index"
+      }
+    ]
+  },
+  {
+    "label": "WebSocket",
+    "items": [
+      {
+        "label": "Websocket Introduction",
+        "items": [
+          {
+            "label": "What is WebSocket?",
+            "slug": "websocket/introduction/what-is-websocket"
+          },
+          {
+            "label": "TCP connection",
+            "slug": "websocket/introduction/tcp-connection"
+          },
+          {
+            "label": "TCP Three-Way Handshake",
+            "slug": "websocket/introduction/tcp-handshake"
+          }
+        ]
+      },
+      {
+        "label": "About HTTP",
+        "items": [
+          {
+            "label": "HTTP history and limitations",
+            "slug": "websocket/http/http-history-and-limitations"
+          },
+          {
+            "label": "HTTP version history",
+            "slug": "websocket/http/http-versions"
+          },
+          {
+            "label": "HTTP Real-Time",
+            "slug": "websocket/http/http-realtime"
+          }
+        ]
+      },
+      {
+        "label": "About WebSocket",
+        "items": [
+          {
+            "label": "Birth of WebSocket",
+            "slug": "websocket/about-websocket/birth-websocket"
+          },
+          {
+            "label": "Http upgrade handshake",
+            "slug": "websocket/about-websocket/http-upgrade-handshake"
+          },
+          {
+            "label": "WebSocket Messaging",
+            "slug": "websocket/about-websocket/websocket-messaging"
+          },
+          {
+            "label": "Two sides of WebSocket",
+            "slug": "websocket/about-websocket/two-sides-websocket"
+          }
+        ]
+      },
+      {
+        "label": "Real World Example",
+        "items": [
+          {
+            "label": "Simple Chat App - Client",
+            "slug": "websocket/real-world-application/chat-app-client"
+          },
+          {
+            "label": "Simple Chat App - Server",
+            "slug": "websocket/real-world-application/chat-app-server"
+          }
+        ]
+      },
+      {
+        "label": "Latest Updates & Alternatives",
+        "slug": "websocket/latest-and-alternatives"
+      }
+    ]
+  },
+  {
+    "label": "Advanced-Typescript",
+    "items": [
+      {
+        "label": "Why is needed?",
+        "items": [
+          {
+            "label": "why advanced typescript?",
+            "slug": "advanced-typescript/why-is-advanced-ts-needed/why-advanced-typescript"
+          },
+          {
+            "label": "Basic Typescript's Help",
+            "slug": "advanced-typescript/why-is-advanced-ts-needed/basic-typescript"
+          },
+          {
+            "label": "New Challenges: Getting More Complex",
+            "slug": "advanced-typescript/why-is-advanced-ts-needed/getting-complex"
+          },
+          {
+            "label": "More powerful Ways",
+            "slug": "advanced-typescript/why-is-advanced-ts-needed/more-powerful-ways"
+          }
+        ]
+      },
+      {
+        "label": "Generics",
+        "items": [
+          {
+            "label": "Generics Introduction",
+            "slug": "advanced-typescript/generics/introduction"
+          },
+          {
+            "label": "Explicitly and Inference",
+            "slug": "advanced-typescript/generics/explicitly-and-inference"
+          },
+          {
+            "label": "Usages of Generics",
+            "slug": "advanced-typescript/generics/usage-of-generics"
+          },
+          {
+            "label": "Generics Constraints",
+            "slug": "advanced-typescript/generics/generics-constraints"
+          },
+          {
+            "label": "Common Patterns",
+            "slug": "advanced-typescript/generics/common-patterns"
+          }
+        ]
+      },
+      {
+        "label": "Utility Types",
+        "items": [
+          {
+            "label": "Utility Introduction",
+            "slug": "advanced-typescript/utility/introduction"
+          },
+          {
+            "label": "Partial",
+            "slug": "advanced-typescript/utility/modifying-properties-partial"
+          },
+          {
+            "label": "Required",
+            "slug": "advanced-typescript/utility/modifying-properties-required"
+          },
+          {
+            "label": "Readonly",
+            "slug": "advanced-typescript/utility/modifying-properties-readonly"
+          },
+          {
+            "label": "Pick & Omit",
+            "slug": "advanced-typescript/utility/pick-omit"
+          },
+          {
+            "label": "Record",
+            "slug": "advanced-typescript/utility/record"
+          },
+          {
+            "label": "Exclude, Extract & NonNullable",
+            "slug": "advanced-typescript/utility/exclude-extract-nonnullable"
+          },
+          {
+            "label": "Parameters, ReturnType & Awaited",
+            "slug": "advanced-typescript/utility/parameters-returntype-awaited"
+          },
+          {
+            "label": "Summary (Cheat Sheet)",
+            "slug": "advanced-typescript/utility/utility-cheat-sheet"
+          }
+        ]
+      },
+      {
+        "label": "Satisfies Keyword",
+        "items": [
+          {
+            "label": "Before Satisfies",
+            "slug": "advanced-typescript/satisfies/before-satisfies"
+          },
+          {
+            "label": "Problem with Type annotation and 'as' keyword",
+            "slug": "advanced-typescript/satisfies/solving-types"
+          },
+          {
+            "label": "Satisfies Introduction",
+            "slug": "advanced-typescript/satisfies/satisfies-introduction"
+          },
+          {
+            "label": "Satisfies Comparison",
+            "slug": "advanced-typescript/satisfies/satisfies-comparison"
+          },
+          {
+            "label": "Practical Use Cases",
+            "slug": "advanced-typescript/satisfies/satisfies-practical-use-cases"
+          }
+        ]
+      },
+      {
+        "label": "Bringing it all together",
+        "items": [
+          {
+            "label": "Generics + Utility Types",
+            "slug": "advanced-typescript/all-together/generics-utility"
+          },
+          {
+            "label": "Mini Project",
+            "slug": "advanced-typescript/all-together/mini-project"
+          },
+          {
+            "label": "Common Pitfalls & Best Practices",
+            "slug": "advanced-typescript/all-together/advanced-tips-pitfalls"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Git Version Control",
+    "items": [
+      {
+        "label": "Git Introduction",
+        "items": [
+          {
+            "label": "Why Git?",
+            "slug": "git-course/introduction/why-git"
+          },
+          {
+            "label": "Installation & Identity",
+            "slug": "git-course/introduction/installation-identity"
+          },
+          {
+            "label": "The Three Arenas",
+            "slug": "git-course/introduction/three-arena"
+          },
+          {
+            "label": "Commit Messages & Git History",
+            "slug": "git-course/introduction/commit-messages"
+          }
+        ]
+      },
+      {
+        "label": "Branches",
+        "items": [
+          {
+            "label": "Branches Introduction",
+            "slug": "git-course/branches/branches-introduction"
+          },
+          {
+            "label": "Merging Branches",
+            "slug": "git-course/branches/merge"
+          },
+          {
+            "label": "Solving Merge Conficts",
+            "slug": "git-course/branches/solving-conflicts"
+          },
+          {
+            "label": "Deleting Branches",
+            "slug": "git-course/branches/deleting-branches"
+          }
+        ]
+      },
+      {
+        "label": "Remote Repository",
+        "items": [
+          {
+            "label": "Remote Repository Introduction",
+            "slug": "git-course/remote-repository/remote-intro"
+          },
+          {
+            "label": "Linking Local and Remote",
+            "slug": "git-course/remote-repository/connect-remote"
+          },
+          {
+            "label": "Pushing",
+            "slug": "git-course/remote-repository/pushing"
+          },
+          {
+            "label": "Pulling",
+            "slug": "git-course/remote-repository/pulling"
+          },
+          {
+            "label": "Cloning",
+            "slug": "git-course/remote-repository/cloning"
+          }
+        ]
+      },
+      {
+        "label": "Git Workflow",
+        "items": [
+          {
+            "label": "Git Workflow Introduction",
+            "slug": "git-course/collaboration/workflow"
+          },
+          {
+            "label": "Pull Requests (PRs)",
+            "slug": "git-course/collaboration/pull-requests"
+          },
+          {
+            "label": "Discussion & Improvment",
+            "slug": "git-course/collaboration/discussion"
+          },
+          {
+            "label": "Merging a Pull Request",
+            "slug": "git-course/collaboration/merging"
+          }
+        ]
+      },
+      {
+        "label": "Advanced Techniques",
+        "items": [
+          {
+            "label": "Quick Fixes",
+            "slug": "git-course/advanced-techniques/quick-fixes"
+          },
+          {
+            "label": "Resetting(Soft, Mixed & Hard)",
+            "slug": "git-course/advanced-techniques/resetting"
+          },
+          {
+            "label": "Reverting Published Commits",
+            "slug": "git-course/advanced-techniques/reverting"
+          },
+          {
+            "label": "Stashing",
+            "slug": "git-course/advanced-techniques/stashing"
+          },
+          {
+            "label": "Rebasing",
+            "slug": "git-course/advanced-techniques/rebasing"
+          },
+          {
+            "label": "Rebase Vs Merge",
+            "slug": "git-course/advanced-techniques/rebase-vs-merge"
+          },
+          {
+            "label": "Tagging",
+            "slug": "git-course/advanced-techniques/tagging"
+          },
+          {
+            "label": "Reflog",
+            "slug": "git-course/advanced-techniques/reflog"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Web Performance: Web Vitals and More",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Why Web Performance",
+            "slug": "web-performance/introduction/why-web-performance"
+          },
+          {
+            "label": "The Business Case for Performance",
+            "slug": "web-performance/introduction/business-cases"
+          }
+        ]
+      },
+      {
+        "label": "Measuring Web Performance",
+        "items": [
+          {
+            "label": "Key Performance Metrics",
+            "slug": "web-performance/measuring-performance/metrics"
+          },
+          {
+            "label": "Essential Tools",
+            "slug": "web-performance/measuring-performance/essential-tools"
+          }
+        ]
+      },
+      {
+        "label": "Mastering Core Web Vitals",
+        "items": [
+          {
+            "label": "LCP",
+            "slug": "web-performance/core-vitals/lcp"
+          },
+          {
+            "label": "FID & INP",
+            "slug": "web-performance/core-vitals/fid-and-inp"
+          },
+          {
+            "label": "CLS",
+            "slug": "web-performance/core-vitals/cls"
+          },
+          {
+            "label": "Optimizing",
+            "slug": "web-performance/core-vitals/optimizing"
+          }
+        ]
+      },
+      {
+        "label": "Image & Asset Optimization",
+        "items": [
+          {
+            "label": "Image Optimization",
+            "slug": "web-performance/image-and-asset/image-optimization"
+          },
+          {
+            "label": "Video Optimization",
+            "slug": "web-performance/image-and-asset/video-optimization"
+          },
+          {
+            "label": "Font Optimization",
+            "slug": "web-performance/image-and-asset/font-optimization"
+          }
+        ]
+      },
+      {
+        "label": "Javascript & CSS Optimization",
+        "items": [
+          {
+            "label": "Javascript Optimization",
+            "slug": "web-performance/js-and-css/js-optimization"
+          },
+          {
+            "label": "CSS Optimization",
+            "slug": "web-performance/js-and-css/css-optimization"
+          },
+          {
+            "label": "How Browsers Show Pages",
+            "slug": "web-performance/js-and-css/how-browsers-show-pages"
+          }
+        ]
+      },
+      {
+        "label": "Server-Side & Delivery - Caching, CDNS",
+        "items": [
+          {
+            "label": "Browser Caching",
+            "slug": "web-performance/server-side/browser-caching"
+          },
+          {
+            "label": "Content Delivery Network",
+            "slug": "web-performance/server-side/cdn"
+          },
+          {
+            "label": "Server-Side Optimizations",
+            "slug": "web-performance/server-side/server-side"
+          }
+        ]
+      },
+      {
+        "label": "Advanced Performance Techniques & Future Trends",
+        "items": [
+          {
+            "label": "Rendering Architectures",
+            "slug": "web-performance/advanced-techniques/rendering-architectures"
+          },
+          {
+            "label": "Predictive Loading",
+            "slug": "web-performance/advanced-techniques/predictive-loading"
+          },
+          {
+            "label": "Future of Web Performance",
+            "slug": "web-performance/advanced-techniques/future"
+          }
+        ]
+      },
+      {
+        "label": "Course Summary",
+        "slug": "web-performance/summary"
+      }
+    ]
+  },
+  {
+    "label": "Software Architecture",
+    "items": [
+      {
+        "label": "Foundations",
+        "items": [
+          {
+            "label": "Foundations of Software Architecture",
+            "slug": "software-architecture/foundations/foundations"
+          },
+          {
+            "label": "The Goals of Architecture",
+            "slug": "software-architecture/foundations/goals"
+          }
+        ]
+      },
+      {
+        "label": "Monolithic Architecture",
+        "items": [
+          {
+            "label": "Monolithic Architecture",
+            "slug": "software-architecture/monolith/monolithic"
+          },
+          {
+            "label": "Layered Architecture",
+            "slug": "software-architecture/monolith/layered"
+          },
+          {
+            "label": "Monolith Pain Point",
+            "slug": "software-architecture/monolith/pain-points"
+          }
+        ]
+      },
+      {
+        "label": "SOA & Microservices",
+        "items": [
+          {
+            "label": "Distributed Systems & SOA",
+            "slug": "software-architecture/microservices/soa"
+          },
+          {
+            "label": "Microservices Architecture",
+            "slug": "software-architecture/microservices/microservices"
+          },
+          {
+            "label": "Challenges of Microservices",
+            "slug": "software-architecture/microservices/challenges"
+          }
+        ]
+      },
+      {
+        "label": "Designing Communication",
+        "items": [
+          {
+            "label": "Synchronous Communication",
+            "slug": "software-architecture/communications/synchronous"
+          },
+          {
+            "label": "Data Architecture in Distributed Systems",
+            "slug": "software-architecture/communications/data-distributed"
+          },
+          {
+            "label": "Choosing the Right Database",
+            "slug": "software-architecture/communications/database"
+          }
+        ]
+      },
+      {
+        "label": "Asynchronous Architectures",
+        "items": [
+          {
+            "label": "Asynchronous Communication",
+            "slug": "software-architecture/async/asynchronous"
+          },
+          {
+            "label": "Architectural Patterns",
+            "slug": "software-architecture/async/patterns"
+          },
+          {
+            "label": "Advanced Patterns",
+            "slug": "software-architecture/async/advanced"
+          }
+        ]
+      },
+      {
+        "label": "The Architect's Craft",
+        "items": [
+          {
+            "label": "Trade-Off & Making Decisions",
+            "slug": "software-architecture/craft/decisions"
+          },
+          {
+            "label": "C4 Model",
+            "slug": "software-architecture/craft/c4"
+          },
+          {
+            "label": "Architectural Decision Records (ADRs)",
+            "slug": "software-architecture/craft/adr"
+          },
+          {
+            "label": "Evaluating Architecture & Architectural Fitness Functions",
+            "slug": "software-architecture/craft/evaluation"
+          }
+        ]
+      },
+      {
+        "label": "Practical Architecture",
+        "items": [
+          {
+            "label": "Designing a \"Ride-Sharing App\"",
+            "slug": "software-architecture/practical/design"
+          },
+          {
+            "label": "High-Level Design & Pattern Selection",
+            "slug": "software-architecture/practical/pattern"
+          },
+          {
+            "label": "Detailed Design & Key Decisions",
+            "slug": "software-architecture/practical/decisions"
+          }
+        ]
+      },
+      {
+        "label": "The Future of Architecture",
+        "items": [
+          {
+            "label": "Current & Future Trends",
+            "slug": "software-architecture/future/current"
+          },
+          {
+            "label": "Software Architect's Role",
+            "slug": "software-architecture/future/role"
+          },
+          {
+            "label": "Course Recap",
+            "slug": "software-architecture/future/recap"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Relational Database",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Welcome to Database",
+            "slug": "relational-database/introduction/welcome-to-database"
+          },
+          {
+            "label": "Types of Databases",
+            "slug": "relational-database/introduction/types-of-databases"
+          },
+          {
+            "label": "Relational Database",
+            "slug": "relational-database/introduction/relational-database"
+          }
+        ]
+      },
+      {
+        "label": "Terminology",
+        "items": [
+          {
+            "label": "Terminology",
+            "slug": "relational-database/terminology/terminology"
+          },
+          {
+            "label": "Data Values and Null",
+            "slug": "relational-database/terminology/value-related-terms"
+          },
+          {
+            "label": "Table",
+            "slug": "relational-database/terminology/structure-related-terms/table"
+          },
+          {
+            "label": "Field",
+            "slug": "relational-database/terminology/structure-related-terms/field"
+          },
+          {
+            "label": "Record",
+            "slug": "relational-database/terminology/structure-related-terms/record"
+          },
+          {
+            "label": "Candidate Key",
+            "slug": "relational-database/terminology/structure-related-terms/candidate-key"
+          },
+          {
+            "label": "Primary Key",
+            "slug": "relational-database/terminology/structure-related-terms/primary-key"
+          },
+          {
+            "label": "Foreign Key",
+            "slug": "relational-database/terminology/structure-related-terms/foreign-key"
+          },
+          {
+            "label": "Alternate Key and Non-Keys",
+            "slug": "relational-database/terminology/structure-related-terms/alternate-key"
+          },
+          {
+            "label": "Relationships",
+            "slug": "relational-database/terminology/structure-related-terms/relationships"
+          }
+        ]
+      },
+      {
+        "label": "Normalization",
+        "items": [
+          {
+            "label": "Normalization",
+            "slug": "relational-database/normalization/normalization"
+          },
+          {
+            "label": "First Normal Form",
+            "slug": "relational-database/normalization/first-normal-form"
+          },
+          {
+            "label": "Second Normal Form",
+            "slug": "relational-database/normalization/second-normal-form"
+          },
+          {
+            "label": "Third Normal Form",
+            "slug": "relational-database/normalization/third-normal-form"
+          },
+          {
+            "label": "Boyce-Codd Normal Form",
+            "slug": "relational-database/normalization/bcnf"
+          },
+          {
+            "label": "Fourth Normal Form",
+            "slug": "relational-database/normalization/fourth-normal-form"
+          },
+          {
+            "label": "Fifth Normal Form",
+            "slug": "relational-database/normalization/fifth-normal-form"
+          }
+        ]
+      },
+      {
+        "label": "SQL",
+        "items": [
+          {
+            "label": "SQL",
+            "slug": "relational-database/sql/what-is-sql"
+          },
+          {
+            "label": "SQL Basic Types",
+            "slug": "relational-database/sql/sql-types"
+          },
+          {
+            "label": "Querying Data",
+            "slug": "relational-database/sql/querying-data"
+          },
+          {
+            "label": "Filtering and Sorting Data",
+            "slug": "relational-database/sql/filter-and-sort-data"
+          },
+          {
+            "label": "Joining Tables",
+            "slug": "relational-database/sql/join-tables"
+          },
+          {
+            "label": "Data Aggregation and Grouping",
+            "slug": "relational-database/sql/aggregate-and-group"
+          },
+          {
+            "label": "Subqueries and CTEs",
+            "slug": "relational-database/sql/subqueries-cte"
+          },
+          {
+            "label": "Data Manipulation Language (DML)",
+            "slug": "relational-database/sql/modifying-data"
+          },
+          {
+            "label": "Data Definition Language (DDL)",
+            "slug": "relational-database/sql/ddl"
+          },
+          {
+            "label": "Advanced Topics",
+            "slug": "relational-database/sql/advanced-topic"
+          }
+        ]
+      },
+      {
+        "label": "Alternate Key နှင့် Non-Keys",
+        "slug": "relational-database/Terminology/structure-related-terms/alternate-key"
+      },
+      {
+        "label": "Candidate Key",
+        "slug": "relational-database/Terminology/structure-related-terms/candidate-key"
+      },
+      {
+        "label": "Field (Column / အကွက်)",
+        "slug": "relational-database/Terminology/structure-related-terms/field"
+      },
+      {
+        "label": "Foreign Key",
+        "slug": "relational-database/Terminology/structure-related-terms/foreign-key"
+      },
+      {
+        "label": "Primary Key",
+        "slug": "relational-database/Terminology/structure-related-terms/primary-key"
+      },
+      {
+        "label": "Record (Row / အတန်း)",
+        "slug": "relational-database/Terminology/structure-related-terms/record"
+      },
+      {
+        "label": "Relationships",
+        "slug": "relational-database/Terminology/structure-related-terms/relationships"
+      },
+      {
+        "label": "Table (ဇယား)",
+        "slug": "relational-database/Terminology/structure-related-terms/table"
+      },
+      {
+        "label": "မရှိမဖြစ်လိုအပ်သော Database ဝေါဟာရများ",
+        "slug": "relational-database/Terminology/terminology"
+      },
+      {
+        "label": "Value-related Terms",
+        "slug": "relational-database/Terminology/value-related-terms"
+      }
+    ]
+  },
+  {
+    "label": "Frontend Architecture Patterns",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "What is Frontend Architecture?",
+            "slug": "fe-architecture/introduction/welcome"
+          }
+        ]
+      },
+      {
+        "label": "Monolithic Architecture",
+        "items": [
+          {
+            "label": "What is Monolithic Architecture?",
+            "slug": "fe-architecture/monolithic/monolithic"
+          },
+          {
+            "label": "Advantages & Disadvantages",
+            "slug": "fe-architecture/monolithic/advantages"
+          },
+          {
+            "label": "Monolithic in Modern Frameworks",
+            "slug": "fe-architecture/monolithic/modern"
+          }
+        ]
+      },
+      {
+        "label": "Component-Based Architecture",
+        "items": [
+          {
+            "label": "Component-Based Architecture",
+            "slug": "fe-architecture/component/component-based"
+          },
+          {
+            "label": "Advantages & Disadvantages",
+            "slug": "fe-architecture/component/advantages"
+          }
+        ]
+      },
+      {
+        "label": "MV* Architecture (MVC, MVVM, MVP)",
+        "items": [
+          {
+            "label": "Introduction to MV*",
+            "slug": "fe-architecture/mv-star/intro"
+          },
+          {
+            "label": "Comparison",
+            "slug": "fe-architecture/mv-star/patterns-comparison"
+          }
+        ]
+      },
+      {
+        "label": "Flux/Redux Architecture",
+        "items": [
+          {
+            "label": "Flux Architecture",
+            "slug": "fe-architecture/redux/flux"
+          },
+          {
+            "label": "Benefits",
+            "slug": "fe-architecture/redux/benefits"
+          }
+        ]
+      },
+      {
+        "label": "Micro-Frontend Architecture",
+        "items": [
+          {
+            "label": "Micro-Frontend Architecture",
+            "slug": "fe-architecture/micro-frontend/intro"
+          },
+          {
+            "label": "Benefits",
+            "slug": "fe-architecture/micro-frontend/benefits"
+          }
+        ]
+      },
+      {
+        "label": "Modular Architecture",
+        "items": [
+          {
+            "label": "Modular Architecture",
+            "slug": "fe-architecture/modular/intro"
+          },
+          {
+            "label": "Benefits",
+            "slug": "fe-architecture/modular/benefits"
+          }
+        ]
+      },
+      {
+        "label": "Rendering Strategies (CSR, SSR, SSG, ISR)",
+        "items": [
+          {
+            "label": "CSR, SSR, SSG, ISR",
+            "slug": "fe-architecture/rendering/intro"
+          },
+          {
+            "label": "Comparison",
+            "slug": "fe-architecture/rendering/comparison"
+          }
+        ]
+      },
+      {
+        "label": "Conclusion & Future Trends",
+        "items": [
+          {
+            "label": "Conclusion",
+            "slug": "fe-architecture/conclusion/conclusion"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "HTML",
+    "items": [
+      {
+        "label": "HTML Introduction",
+        "items": [
+          {
+            "label": "What is HTML?",
+            "slug": "html/introduction/welcome-to-html"
+          },
+          {
+            "label": "Setting up Your Editor",
+            "slug": "html/introduction/editor"
+          }
+        ]
+      },
+      {
+        "label": "Basic HTML Structure",
+        "items": [
+          {
+            "label": "Simple HTML Document",
+            "slug": "html/structure/simple"
+          },
+          {
+            "label": "The <head> Section",
+            "slug": "html/structure/head"
+          },
+          {
+            "label": "The <body> Section",
+            "slug": "html/structure/body"
+          }
+        ]
+      },
+      {
+        "label": "Text & Formatting",
+        "items": [
+          {
+            "label": "Headings & Paragraphs",
+            "slug": "html/texts/headings"
+          },
+          {
+            "label": "Line Breaks, Horizontal Rules & Text Formatting",
+            "slug": "html/texts/line"
+          },
+          {
+            "label": "Lists",
+            "slug": "html/texts/lists"
+          }
+        ]
+      },
+      {
+        "label": "Links & Navigation",
+        "items": [
+          {
+            "label": "Links",
+            "slug": "html/links/links"
+          },
+          {
+            "label": "Images as Links",
+            "slug": "html/links/images"
+          }
+        ]
+      },
+      {
+        "label": "Images & Media",
+        "items": [
+          {
+            "label": "Images",
+            "slug": "html/media/images"
+          },
+          {
+            "label": "Videos & Audios",
+            "slug": "html/media/videos"
+          }
+        ]
+      },
+      {
+        "label": "Table",
+        "items": [
+          {
+            "label": "Table Introduction",
+            "slug": "html/table/table-intro"
+          },
+          {
+            "label": "Merging Cells",
+            "slug": "html/table/merging-cells"
+          }
+        ]
+      },
+      {
+        "label": "Forms & Input",
+        "items": [
+          {
+            "label": "Form Introduction",
+            "slug": "html/form/form-intro"
+          },
+          {
+            "label": "Dropdowns & Options",
+            "slug": "html/form/dropdown"
+          }
+        ]
+      },
+      {
+        "label": "Semantic HTML",
+        "items": [
+          {
+            "label": "Semantic HTML Introduction",
+            "slug": "html/semantic/intro"
+          },
+          {
+            "label": "Benefits of Semantic HTML",
+            "slug": "html/semantic/benefits"
+          }
+        ]
+      },
+      {
+        "label": "HTML Attributes & Best Practices",
+        "items": [
+          {
+            "label": "Attributes",
+            "slug": "html/attributes/intro"
+          },
+          {
+            "label": "HTML Best Practices",
+            "slug": "html/attributes/best-practices"
+          }
+        ]
+      },
+      {
+        "label": "HTML 5 Features",
+        "items": [
+          {
+            "label": "New Input Types",
+            "slug": "html/html5/input"
+          },
+          {
+            "label": "Other Elements",
+            "slug": "html/html5/other"
+          }
+        ]
+      },
+      {
+        "label": "Putting It All Together",
+        "items": [
+          {
+            "label": "Structure of a Webpage",
+            "slug": "html/together/structure"
+          }
+        ]
+      },
+      {
+        "label": "Next Steps",
+        "items": [
+          {
+            "label": "Next Steps",
+            "slug": "html/next/steps"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "HTML5",
+    "items": [
+      {
+        "label": "1. နိဒါန်း (Introduction)",
+        "items": [
+          {
+            "label": "HTML HOME — HTML စတင်ရန်",
+            "slug": "html5/tutorial/home"
+          },
+          {
+            "label": "HTML Introduction — HTML အကြောင်း",
+            "slug": "html5/tutorial/introduction"
+          },
+          {
+            "label": "HTML Editors — Editor တပ်ဆင်ခြင်း",
+            "slug": "html5/tutorial/editors"
+          },
+          {
+            "label": "HTML Basic — အခြေခံဥပမာများ",
+            "slug": "html5/tutorial/basic"
+          },
+          {
+            "label": "HTML Elements — Element များ",
+            "slug": "html5/tutorial/elements"
+          },
+          {
+            "label": "HTML Attributes — Attribute များ",
+            "slug": "html5/tutorial/attributes"
+          },
+          {
+            "label": "HTML Headings — ခေါင်းစဉ်များ",
+            "slug": "html5/tutorial/headings"
+          },
+          {
+            "label": "HTML Paragraphs — စာပိုဒ်များ",
+            "slug": "html5/tutorial/paragraphs"
+          }
+        ]
+      },
+      {
+        "label": "2. စာသားနှင့် အသွင်အပြင် (Text & Style)",
+        "items": [
+          {
+            "label": "HTML Styles — Style များ",
+            "slug": "html5/tutorial/styles"
+          },
+          {
+            "label": "HTML Formatting — Formatting",
+            "slug": "html5/tutorial/formatting"
+          },
+          {
+            "label": "HTML Quotations — ကိုးကားချက်များ",
+            "slug": "html5/tutorial/quotations"
+          },
+          {
+            "label": "HTML Comments — Comment များ",
+            "slug": "html5/tutorial/comments"
+          },
+          {
+            "label": "HTML Colors — အရောင်များ",
+            "slug": "html5/tutorial/colors"
+          },
+          {
+            "label": "HTML CSS — CSS ချိတ်ဆက်ခြင်း",
+            "slug": "html5/tutorial/css"
+          }
+        ]
+      },
+      {
+        "label": "3. Link နှင့် Media (Links & Media)",
+        "items": [
+          {
+            "label": "HTML Links — Link များ",
+            "slug": "html5/tutorial/links"
+          },
+          {
+            "label": "HTML Images — ပုံများ",
+            "slug": "html5/tutorial/images"
+          },
+          {
+            "label": "HTML Project — Project အသေးစား",
+            "slug": "html5/tutorial/project"
+          },
+          {
+            "label": "HTML Favicon — Favicon",
+            "slug": "html5/tutorial/favicon"
+          },
+          {
+            "label": "HTML Page Title — Title",
+            "slug": "html5/tutorial/page-title"
+          }
+        ]
+      },
+      {
+        "label": "4. ဒေတာနှင့် Layout (Data & Layout)",
+        "items": [
+          {
+            "label": "HTML Tables — Table များ",
+            "slug": "html5/tutorial/tables"
+          },
+          {
+            "label": "HTML Lists — List များ",
+            "slug": "html5/tutorial/lists"
+          },
+          {
+            "label": "HTML Block & Inline — Block နှင့် Inline",
+            "slug": "html5/tutorial/block-inline"
+          },
+          {
+            "label": "HTML Div — Div",
+            "slug": "html5/tutorial/div"
+          },
+          {
+            "label": "HTML Classes — Class များ",
+            "slug": "html5/tutorial/classes"
+          },
+          {
+            "label": "HTML Id — Id",
+            "slug": "html5/tutorial/id"
+          },
+          {
+            "label": "HTML Buttons — Button များ",
+            "slug": "html5/tutorial/buttons"
+          },
+          {
+            "label": "HTML Iframes — Iframe",
+            "slug": "html5/tutorial/iframes"
+          },
+          {
+            "label": "HTML JavaScript — JS ချိတ်ဆက်မှု",
+            "slug": "html5/tutorial/javascript"
+          },
+          {
+            "label": "HTML File Paths — File Path များ",
+            "slug": "html5/tutorial/file-paths"
+          },
+          {
+            "label": "HTML Head — Head Section",
+            "slug": "html5/tutorial/head"
+          },
+          {
+            "label": "HTML Layout — Layout",
+            "slug": "html5/tutorial/layout"
+          },
+          {
+            "label": "HTML Responsive — Responsive Design",
+            "slug": "html5/tutorial/responsive"
+          },
+          {
+            "label": "HTML Computercode — Code Formatting",
+            "slug": "html5/tutorial/computercode"
+          }
+        ]
+      },
+      {
+        "label": "5. အဆင့်မြင့် HTML (Advanced)",
+        "items": [
+          {
+            "label": "HTML Semantics — Semantic HTML",
+            "slug": "html5/tutorial/semantics"
+          },
+          {
+            "label": "HTML Style Guide — Style Guide",
+            "slug": "html5/tutorial/style-guide"
+          },
+          {
+            "label": "HTML Entities — Entities",
+            "slug": "html5/tutorial/entities"
+          },
+          {
+            "label": "HTML Symbols — Symbols",
+            "slug": "html5/tutorial/symbols"
+          },
+          {
+            "label": "HTML Emojis — Emoji",
+            "slug": "html5/tutorial/emojis"
+          },
+          {
+            "label": "HTML Charsets — Character Set",
+            "slug": "html5/tutorial/charsets"
+          },
+          {
+            "label": "HTML URL Encode — URL Encoding",
+            "slug": "html5/tutorial/url-encode"
+          },
+          {
+            "label": "HTML vs XHTML — XHTML",
+            "slug": "html5/tutorial/xhtml"
+          }
+        ]
+      },
+      {
+        "label": "6. HTML Forms",
+        "items": [
+          {
+            "label": "HTML Forms — Form များ",
+            "slug": "html5/forms/forms"
+          },
+          {
+            "label": "HTML Form Attributes — Form Attribute တွေ",
+            "slug": "html5/forms/form-attributes"
+          },
+          {
+            "label": "HTML Form Elements — Form Element တွေ",
+            "slug": "html5/forms/form-elements"
+          },
+          {
+            "label": "HTML Input Types — Input Type တွေ",
+            "slug": "html5/forms/input-types"
+          },
+          {
+            "label": "HTML Input Attributes — Input Attribute တွေ",
+            "slug": "html5/forms/input-attributes"
+          },
+          {
+            "label": "Input Form Attributes — Autofill, Validation",
+            "slug": "html5/forms/input-form-attributes"
+          }
+        ]
+      },
+      {
+        "label": "7. HTML Graphics",
+        "items": [
+          {
+            "label": "HTML Canvas — Canvas",
+            "slug": "html5/graphics/canvas"
+          },
+          {
+            "label": "HTML SVG — SVG",
+            "slug": "html5/graphics/svg"
+          }
+        ]
+      },
+      {
+        "label": "8. HTML Media",
+        "items": [
+          {
+            "label": "HTML Media — Media အကြောင်း",
+            "slug": "html5/media/media"
+          },
+          {
+            "label": "HTML Video — Video",
+            "slug": "html5/media/video"
+          },
+          {
+            "label": "HTML Audio — Audio",
+            "slug": "html5/media/audio"
+          },
+          {
+            "label": "HTML Plug-ins — Plug-ins & Embed",
+            "slug": "html5/media/plug-ins"
+          },
+          {
+            "label": "HTML YouTube — YouTube Videos",
+            "slug": "html5/media/youtube"
+          }
+        ]
+      },
+      {
+        "label": "9. HTML APIs",
+        "items": [
+          {
+            "label": "HTML Web APIs — Web API အကြောင်း",
+            "slug": "html5/apis/web-apis"
+          },
+          {
+            "label": "HTML Geolocation — Geolocation",
+            "slug": "html5/apis/geolocation"
+          },
+          {
+            "label": "HTML Drag and Drop — Drag & Drop",
+            "slug": "html5/apis/drag-drop"
+          },
+          {
+            "label": "HTML Web Storage — Web Storage",
+            "slug": "html5/apis/web-storage"
+          },
+          {
+            "label": "HTML Web Workers — Web Workers",
+            "slug": "html5/apis/web-workers"
+          },
+          {
+            "label": "HTML SSE — Server-Sent Events",
+            "slug": "html5/apis/sse"
+          }
+        ]
+      },
+      {
+        "label": "10. ဥပမာများနှင့် လေ့ကျင့်မှု (Examples & Practice)",
+        "items": [
+          {
+            "label": "HTML Examples — ဥပမာများ",
+            "slug": "html5/practice/examples"
+          },
+          {
+            "label": "HTML Exercises — လေ့ကျင့်ခန်းများ",
+            "slug": "html5/practice/exercises"
+          },
+          {
+            "label": "HTML Challenges — စိန်ခေါ်မှုများ",
+            "slug": "html5/practice/challenges"
+          },
+          {
+            "label": "HTML Website — Website တည်ဆောက်ခြင်း",
+            "slug": "html5/practice/website"
+          },
+          {
+            "label": "HTML Syllabus — သင်ရိုးညွှန်းတမ်း",
+            "slug": "html5/practice/syllabus"
+          },
+          {
+            "label": "HTML Study Plan — လေ့လာမှုအစီအစဉ်",
+            "slug": "html5/practice/study-plan"
+          },
+          {
+            "label": "HTML Summary — အနှစ်ချုပ်",
+            "slug": "html5/practice/summary"
+          },
+          {
+            "label": "HTML Accessibility — Accessibility",
+            "slug": "html5/practice/accessibility"
+          },
+          {
+            "label": "HTML Interview Prep — Interview မေးခွန်းများ",
+            "slug": "html5/practice/interview-prep"
+          },
+          {
+            "label": "HTML Quiz — အလယ်အလတ် စာမေးပွဲ",
+            "slug": "html5/practice/quiz"
+          }
+        ]
+      },
+      {
+        "label": "11. HTML References",
+        "items": [
+          {
+            "label": "HTML Tag List — Tag စာရင်း",
+            "slug": "html5/references/tag-list"
+          },
+          {
+            "label": "HTML Global Attributes — Global Attributes",
+            "slug": "html5/references/global-attributes"
+          },
+          {
+            "label": "HTML Browser Support — Browser ပံ့ပိုးမှု",
+            "slug": "html5/references/browser-support"
+          },
+          {
+            "label": "HTML Events — Event များ",
+            "slug": "html5/references/events"
+          },
+          {
+            "label": "HTML Doctypes — Doctype ဥပမာများ",
+            "slug": "html5/references/doctypes"
+          },
+          {
+            "label": "HTML Lang Codes — Language Code များ",
+            "slug": "html5/references/lang-codes"
+          },
+          {
+            "label": "HTTP Messages — HTTP Message",
+            "slug": "html5/references/http-messages"
+          },
+          {
+            "label": "HTTP Methods — HTTP Method များ",
+            "slug": "html5/references/http-methods"
+          },
+          {
+            "label": "PX to EM Converter — PX/EM",
+            "slug": "html5/references/px-em"
+          }
+        ]
+      },
+      {
+        "label": "12. အသိအမှတ်ပြုစာမေးပွဲ (Certificate)",
+        "items": [
+          {
+            "label": "HTML Certificate — စာမေးပွဲ",
+            "slug": "html5/certificate/certificate"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "CSS",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "What is CSS?",
+            "slug": "css/introduction/welcome"
+          },
+          {
+            "label": "Selectors",
+            "slug": "css/introduction/selectors"
+          },
+          {
+            "label": "Combinators",
+            "slug": "css/introduction/combinators"
+          },
+          {
+            "label": "Specificity & Cascade",
+            "slug": "css/introduction/specificity"
+          }
+        ]
+      },
+      {
+        "label": "Visuals",
+        "items": [
+          {
+            "label": "Colors & Backgrounds",
+            "slug": "css/visuals/colors"
+          },
+          {
+            "label": "Fonts & Text",
+            "slug": "css/visuals/fonts"
+          }
+        ]
+      },
+      {
+        "label": "Box Model",
+        "items": [
+          {
+            "label": "The Box Model",
+            "slug": "css/box-model/box-model"
+          },
+          {
+            "label": "Margin & Padding",
+            "slug": "css/box-model/spacing"
+          },
+          {
+            "label": "Borders",
+            "slug": "css/box-model/borders"
+          }
+        ]
+      },
+      {
+        "label": "Layout",
+        "items": [
+          {
+            "label": "Display Property",
+            "slug": "css/layout/display"
+          },
+          {
+            "label": "Flexbox",
+            "slug": "css/layout/flexbox"
+          },
+          {
+            "label": "CSS Grid",
+            "slug": "css/layout/grid"
+          }
+        ]
+      },
+      {
+        "label": "Responsive Design",
+        "items": [
+          {
+            "label": "Media Queries",
+            "slug": "css/responsive/media-queries"
+          }
+        ]
+      },
+      {
+        "label": "Positioning",
+        "items": [
+          {
+            "label": "Position Property",
+            "slug": "css/positioning/position"
+          },
+          {
+            "label": "Z-Index",
+            "slug": "css/positioning/z-index"
+          }
+        ]
+      },
+      {
+        "label": "Effects",
+        "items": [
+          {
+            "label": "Shadows",
+            "slug": "css/effects/shadows"
+          },
+          {
+            "label": "Gradients",
+            "slug": "css/effects/gradients"
+          }
+        ]
+      },
+      {
+        "label": "Interactivity",
+        "items": [
+          {
+            "label": "Transitions",
+            "slug": "css/interactivity/transitions"
+          },
+          {
+            "label": "Transforms",
+            "slug": "css/interactivity/transforms"
+          },
+          {
+            "label": "Animations",
+            "slug": "css/interactivity/animations"
+          }
+        ]
+      },
+      {
+        "label": "Advanced Selectors",
+        "items": [
+          {
+            "label": "Pseudo-classes",
+            "slug": "css/advanced-selectors/pseudo-classes"
+          },
+          {
+            "label": "Pseudo-elements",
+            "slug": "css/advanced-selectors/pseudo-elements"
+          }
+        ]
+      },
+      {
+        "label": "Modern Practices",
+        "items": [
+          {
+            "label": "CSS Variables",
+            "slug": "css/modern-practices/variables"
+          },
+          {
+            "label": "CSS Units",
+            "slug": "css/modern-practices/units"
+          }
+        ]
+      },
+      {
+        "label": "Next Steps",
+        "items": [
+          {
+            "label": "What is Next?",
+            "slug": "css/next/steps"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "JavaScript",
+    "items": [
+      {
+        "label": "Introduction & Setup",
+        "items": [
+          {
+            "label": "What This Course Covers",
+            "slug": "javascript/introduction/intro"
+          },
+          {
+            "label": "Tools & Environment Setup",
+            "slug": "javascript/introduction/setup"
+          }
+        ]
+      },
+      {
+        "label": "Fundamentals",
+        "items": [
+          {
+            "label": "What Is JavaScript?",
+            "slug": "javascript/fundamentals/what-is-js"
+          },
+          {
+            "label": "Variables & Data Types",
+            "slug": "javascript/fundamentals/variables"
+          },
+          {
+            "label": "Operators",
+            "slug": "javascript/fundamentals/operators"
+          },
+          {
+            "label": "Strings & Numbers",
+            "slug": "javascript/fundamentals/strings-numbers"
+          },
+          {
+            "label": "Interactive Section",
+            "slug": "javascript/fundamentals/interactive"
+          }
+        ]
+      },
+      {
+        "label": "Control Flow",
+        "items": [
+          {
+            "label": "Conditional Statements",
+            "slug": "javascript/control-flow/conditionals"
+          },
+          {
+            "label": "Switch Statements",
+            "slug": "javascript/control-flow/switch"
+          },
+          {
+            "label": "Loops",
+            "slug": "javascript/control-flow/loops"
+          },
+          {
+            "label": "Interactive Section",
+            "slug": "javascript/control-flow/interactive"
+          }
+        ]
+      },
+      {
+        "label": "Arrays & Objects",
+        "items": [
+          {
+            "label": "Arrays",
+            "slug": "javascript/arrays-objects/arrays"
+          },
+          {
+            "label": "Objects",
+            "slug": "javascript/arrays-objects/objects"
+          },
+          {
+            "label": "Arrays of Objects",
+            "slug": "javascript/arrays-objects/arrays-of-objects"
+          },
+          {
+            "label": "Interactive Section",
+            "slug": "javascript/arrays-objects/interactive"
+          }
+        ]
+      },
+      {
+        "label": "Functions",
+        "items": [
+          {
+            "label": "What Are Functions?",
+            "slug": "javascript/functions/intro"
+          },
+          {
+            "label": "Parameters & Return Values",
+            "slug": "javascript/functions/parameters"
+          },
+          {
+            "label": "Arrow Functions",
+            "slug": "javascript/functions/arrow-functions"
+          },
+          {
+            "label": "Interactive Section",
+            "slug": "javascript/functions/interactive"
+          }
+        ]
+      },
+      {
+        "label": "Introduction to the DOM",
+        "items": [
+          {
+            "label": "What Is the DOM?",
+            "slug": "javascript/dom-intro/what-is-dom"
+          },
+          {
+            "label": "Selecting Elements",
+            "slug": "javascript/dom-intro/selecting"
+          },
+          {
+            "label": "Interactive Section",
+            "slug": "javascript/dom-intro/interactive"
+          }
+        ]
+      },
+      {
+        "label": "DOM Manipulation Basics",
+        "items": [
+          {
+            "label": "Changing Content",
+            "slug": "javascript/dom-manipulation/content"
+          },
+          {
+            "label": "Changing Styles",
+            "slug": "javascript/dom-manipulation/styles"
+          },
+          {
+            "label": "Working with Attributes",
+            "slug": "javascript/dom-manipulation/attributes"
+          },
+          {
+            "label": "Interactive Section",
+            "slug": "javascript/dom-manipulation/interactive"
+          }
+        ]
+      },
+      {
+        "label": "Events & Event Handling",
+        "items": [
+          {
+            "label": "What Are Events?",
+            "slug": "javascript/events/intro"
+          },
+          {
+            "label": "Event Listeners",
+            "slug": "javascript/events/listeners"
+          },
+          {
+            "label": "Event Flow",
+            "slug": "javascript/events/flow"
+          },
+          {
+            "label": "Interactive Section",
+            "slug": "javascript/events/interactive"
+          }
+        ]
+      },
+      {
+        "label": "DOM Projects (Hands-On)",
+        "items": [
+          {
+            "label": "Project 1: Interactive Counter",
+            "slug": "javascript/projects/counter"
+          },
+          {
+            "label": "Project 2: To-Do List",
+            "slug": "javascript/projects/todo-list"
+          },
+          {
+            "label": "Project 3: Theme Switcher",
+            "slug": "javascript/projects/theme-switcher"
+          }
+        ]
+      },
+      {
+        "label": "Best Practices & Next Steps",
+        "items": [
+          {
+            "label": "Writing Clean JavaScript",
+            "slug": "javascript/best-practices/clean-code"
+          },
+          {
+            "label": "Debugging Basics",
+            "slug": "javascript/best-practices/debugging"
+          },
+          {
+            "label": "What to Learn Next",
+            "slug": "javascript/best-practices/next-steps"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "n8n Workflow Automation",
+    "items": [
+      {
+        "label": "EP0. Workflow vs AI Agent",
+        "slug": "n8n-course/introduction/workflow-vs-agent"
+      },
+      {
+        "label": "EP1. n8n မိတ်ဆက်နှင့် Setup",
+        "slug": "n8n-course/introduction/what-is-n8n"
+      },
+      {
+        "label": "EP2. Nodes, Triggers & Credentials",
+        "slug": "n8n-course/core-concepts/understanding-nodes"
+      },
+      {
+        "label": "EP3. ပထမဆုံး AI Chatbot Workflow",
+        "slug": "n8n-course/first-workflow/hello-world-workflow"
+      },
+      {
+        "label": "EP4. Data Transformation",
+        "slug": "n8n-course/first-workflow/data-transformation"
+      },
+      {
+        "label": "EP5. Telegram & API Automation",
+        "slug": "n8n-course/real-world/email-notifications"
+      },
+      {
+        "label": "EP6. Error Handling & Sub-Workflows",
+        "items": [
+          {
+            "label": "Error Handling",
+            "slug": "n8n-course/advanced/error-handling"
+          },
+          {
+            "label": "Sub-Workflows နှင့် Reusability",
+            "slug": "n8n-course/advanced/sub-workflows"
+          }
+        ]
+      },
+      {
+        "label": "EP7. Loop နှင့် Batch Processing",
+        "slug": "n8n-course/loop-batch/loop-over-items"
+      },
+      {
+        "label": "EP8. AI Nodes & AI Agent (Hybrid)",
+        "items": [
+          {
+            "label": "AI Nodes မိတ်ဆက်",
+            "slug": "n8n-course/ai-workflow/ai-nodes-intro"
+          },
+          {
+            "label": "AI Agent & Hybrid Workflow",
+            "slug": "n8n-course/ai-workflow/ai-agent-workflow"
+          }
+        ]
+      },
+      {
+        "label": "EP9. Database Operations",
+        "slug": "n8n-course/database/database-operations"
+      },
+      {
+        "label": "EP10. Production Self-Hosting",
+        "slug": "n8n-course/production/self-hosting"
+      },
+      {
+        "label": "EP11. Capstone E-Commerce System",
+        "slug": "n8n-course/final-project/ecommerce-automation"
+      },
+      {
+        "label": "EP12. Messenger Auto-Reply AI Bot",
+        "slug": "n8n-course/special/facebook-messenger-bot"
+      },
+      {
+        "label": "Credentials နဲ့ Security",
+        "slug": "n8n-course/core-concepts/credentials-security"
+      },
+      {
+        "label": "Triggers နဲ့ Events",
+        "slug": "n8n-course/core-concepts/triggers-and-events"
+      },
+      {
+        "label": "HTTP Request နဲ့ Webhook",
+        "slug": "n8n-course/first-workflow/http-request-webhook"
+      },
+      {
+        "label": "n8n ထည့်သွင်းခြင်းနှင့် Setup",
+        "slug": "n8n-course/introduction/installation-setup"
+      },
+      {
+        "label": "API Integration လက်တွေ့",
+        "slug": "n8n-course/real-world/connecting-apis"
+      }
+    ]
+  },
+  {
+    "label": "Docker & Containerization",
+    "items": [
+      {
+        "label": "1. မိတ်ဆက်နှင့် Concept",
+        "slug": "docker/introduction/what-is-docker"
+      },
+      {
+        "label": "2. Containers & Images CLI",
+        "slug": "docker/core-concepts/containers-images"
+      },
+      {
+        "label": "3. Dockerfile တည်ဆောက်ခြင်း",
+        "slug": "docker/dockerfile/building-images"
+      },
+      {
+        "label": "4. Docker Compose Multi-Container",
+        "slug": "docker/docker-compose/multi-container"
+      },
+      {
+        "label": "5. Production Best Practices & Security",
+        "slug": "docker/production/best-practices"
+      }
+    ]
+  },
+  {
+    "label": "Next.js Full-Stack Framework",
+    "items": [
+      {
+        "label": "1. Next.js မိတ်ဆက်",
+        "slug": "nextjs/introduction/what-is-nextjs"
+      },
+      {
+        "label": "2. App Router & File-System Routing",
+        "slug": "nextjs/routing/app-router"
+      },
+      {
+        "label": "3. React Server Components & Data Fetching",
+        "slug": "nextjs/data-fetching/server-components"
+      },
+      {
+        "label": "4. Server Actions & Form Mutations",
+        "slug": "nextjs/server-actions/mutations"
+      },
+      {
+        "label": "5. Vercel Deployment, Env & SEO",
+        "slug": "nextjs/deployment/vercel-deployment"
+      }
+    ]
+  },
+  {
+    "label": "Linux & Cloud DevOps",
+    "items": [
+      {
+        "label": "မိတ်ဆက် (Course Overview)",
+        "slug": "linux-devops"
+      },
+      {
+        "label": "1. Linux CLI အခြေခံ",
+        "items": [
+          {
+            "label": "1. Navigation & File System",
+            "slug": "linux-devops/01-cli-basics/01-navigation-and-files"
+          },
+          {
+            "label": "2. Permissions & Users Management",
+            "slug": "linux-devops/01-cli-basics/02-permissions-and-users"
+          }
+        ]
+      },
+      {
+        "label": "2. System Management",
+        "items": [
+          {
+            "label": "1. APT Package Manager",
+            "slug": "linux-devops/02-system-management/01-package-management"
+          },
+          {
+            "label": "2. Processes & Systemd Services",
+            "slug": "linux-devops/02-system-management/02-processes-and-services"
+          }
+        ]
+      },
+      {
+        "label": "3. Server Security & Hardening",
+        "items": [
+          {
+            "label": "1. SSH Keys & Access Hardening",
+            "slug": "linux-devops/03-server-security/01-ssh-keys-and-access"
+          },
+          {
+            "label": "2. UFW Firewall & Fail2ban",
+            "slug": "linux-devops/03-server-security/02-firewall-and-hardening"
+          }
+        ]
+      },
+      {
+        "label": "4. Nginx Web Server & SSL",
+        "items": [
+          {
+            "label": "1. Nginx Fundamentals & Static Hosting",
+            "slug": "linux-devops/04-nginx-reverse-proxy/01-nginx-fundamentals"
+          },
+          {
+            "label": "2. Reverse Proxy & Let's Encrypt SSL",
+            "slug": "linux-devops/04-nginx-reverse-proxy/02-reverse-proxy-and-ssl"
+          }
+        ]
+      },
+      {
+        "label": "5. CI/CD Pipeline Automation",
+        "items": [
+          {
+            "label": "1. GitHub Actions CI Basics",
+            "slug": "linux-devops/05-cicd-automation/01-github-actions-basics"
+          },
+          {
+            "label": "2. Automated VPS Deployment",
+            "slug": "linux-devops/05-cicd-automation/02-automated-vps-deployment"
+          }
+        ]
+      },
+      {
+        "label": "Linux, Cloud VPS & DevOps မိတ်ဆက် (Course Overview)",
+        "slug": "linux-devops/index"
+      }
+    ]
+  },
+  {
+    "label": "Advanced CSS",
+    "items": [
+      {
+        "label": "Core Logic & Functions",
+        "slug": "advanced-css/core-logic/functions"
+      },
+      {
+        "label": "@property At-Rule",
+        "slug": "advanced-css/ergonomics/at-property"
+      },
+      {
+        "label": "Enhanced attr() Function",
+        "slug": "advanced-css/ergonomics/attr-function"
+      },
+      {
+        "label": "Cascade Layers (@layer)",
+        "slug": "advanced-css/ergonomics/cascade-layers"
+      },
+      {
+        "label": "Advanced CSS မိတ်ဆက်",
+        "slug": "advanced-css/introduction/welcome"
+      },
+      {
+        "label": "Anchor Positioning",
+        "slug": "advanced-css/layout-sizing/anchor-positioning"
+      },
+      {
+        "label": "Container Scroll State Queries",
+        "slug": "advanced-css/layout-sizing/container-queries"
+      },
+      {
+        "label": "field-sizing Property",
+        "slug": "advanced-css/layout-sizing/field-sizing"
+      },
+      {
+        "label": "interpolate-size Property",
+        "slug": "advanced-css/layout-sizing/interpolate-size"
+      },
+      {
+        "label": "corner-shape Property",
+        "slug": "advanced-css/visuals-ui/corner-shape"
+      },
+      {
+        "label": "Customizable Select",
+        "slug": "advanced-css/visuals-ui/custom-select"
+      },
+      {
+        "label": "Scroll Marker Pseudo-elements",
+        "slug": "advanced-css/visuals-ui/scroll-markers"
+      },
+      {
+        "label": "View Transitions (Cross-Document)",
+        "slug": "advanced-css/visuals-ui/view-transitions"
+      }
+    ]
+  },
+  {
+    "label": "CSS3",
+    "items": [
+      {
+        "label": "1. CSS Tutorial",
+        "items": [
+          {
+            "label": "CSS HOME",
+            "slug": "css3/tutorial/home"
+          },
+          {
+            "label": "CSS Introduction",
+            "slug": "css3/tutorial/introduction"
+          },
+          {
+            "label": "CSS Syntax",
+            "slug": "css3/tutorial/syntax"
+          },
+          {
+            "label": "CSS Selectors",
+            "slug": "css3/tutorial/selectors"
+          },
+          {
+            "label": "CSS How To",
+            "slug": "css3/tutorial/how-to"
+          },
+          {
+            "label": "CSS Comments",
+            "slug": "css3/tutorial/comments"
+          },
+          {
+            "label": "CSS Errors",
+            "slug": "css3/tutorial/errors"
+          },
+          {
+            "label": "CSS Colors",
+            "slug": "css3/tutorial/colors"
+          },
+          {
+            "label": "CSS Backgrounds",
+            "slug": "css3/tutorial/backgrounds"
+          },
+          {
+            "label": "CSS Borders",
+            "slug": "css3/tutorial/borders"
+          },
+          {
+            "label": "CSS Margins",
+            "slug": "css3/tutorial/margins"
+          },
+          {
+            "label": "CSS Padding",
+            "slug": "css3/tutorial/padding"
+          },
+          {
+            "label": "CSS Height / Width",
+            "slug": "css3/tutorial/height-width"
+          },
+          {
+            "label": "CSS Box Model",
+            "slug": "css3/tutorial/box-model"
+          },
+          {
+            "label": "CSS Outline",
+            "slug": "css3/tutorial/outline"
+          },
+          {
+            "label": "CSS Text",
+            "slug": "css3/tutorial/text"
+          },
+          {
+            "label": "CSS Fonts",
+            "slug": "css3/tutorial/fonts"
+          },
+          {
+            "label": "CSS Icons",
+            "slug": "css3/tutorial/icons"
+          },
+          {
+            "label": "CSS Links",
+            "slug": "css3/tutorial/links"
+          },
+          {
+            "label": "CSS Lists",
+            "slug": "css3/tutorial/lists"
+          },
+          {
+            "label": "CSS Tables",
+            "slug": "css3/tutorial/tables"
+          },
+          {
+            "label": "CSS Display",
+            "slug": "css3/tutorial/display"
+          },
+          {
+            "label": "CSS Max-width",
+            "slug": "css3/tutorial/max-width"
+          },
+          {
+            "label": "CSS Position",
+            "slug": "css3/tutorial/position"
+          },
+          {
+            "label": "CSS Position Offsets",
+            "slug": "css3/tutorial/position-offsets"
+          },
+          {
+            "label": "CSS Z-index",
+            "slug": "css3/tutorial/z-index"
+          },
+          {
+            "label": "CSS Overflow",
+            "slug": "css3/tutorial/overflow"
+          },
+          {
+            "label": "CSS Float",
+            "slug": "css3/tutorial/float"
+          },
+          {
+            "label": "CSS Inline-block",
+            "slug": "css3/tutorial/inline-block"
+          },
+          {
+            "label": "CSS Align",
+            "slug": "css3/tutorial/align"
+          },
+          {
+            "label": "CSS Combinators",
+            "slug": "css3/tutorial/combinators"
+          },
+          {
+            "label": "CSS Pseudo-classes",
+            "slug": "css3/tutorial/pseudo-classes"
+          },
+          {
+            "label": "CSS Pseudo-elements",
+            "slug": "css3/tutorial/pseudo-elements"
+          },
+          {
+            "label": "CSS Opacity",
+            "slug": "css3/tutorial/opacity"
+          },
+          {
+            "label": "CSS Navigation Bars",
+            "slug": "css3/tutorial/navigation-bars"
+          },
+          {
+            "label": "CSS Dropdowns",
+            "slug": "css3/tutorial/dropdowns"
+          },
+          {
+            "label": "CSS Image Gallery",
+            "slug": "css3/tutorial/image-gallery"
+          },
+          {
+            "label": "CSS Image Sprites",
+            "slug": "css3/tutorial/image-sprites"
+          },
+          {
+            "label": "CSS Attribute Selectors",
+            "slug": "css3/tutorial/attribute-selectors"
+          },
+          {
+            "label": "CSS Forms",
+            "slug": "css3/tutorial/forms"
+          },
+          {
+            "label": "CSS Counters",
+            "slug": "css3/tutorial/counters"
+          },
+          {
+            "label": "CSS Units",
+            "slug": "css3/tutorial/units"
+          },
+          {
+            "label": "CSS Inheritance",
+            "slug": "css3/tutorial/inheritance"
+          },
+          {
+            "label": "CSS Specificity",
+            "slug": "css3/tutorial/specificity"
+          },
+          {
+            "label": "CSS !important",
+            "slug": "css3/tutorial/important"
+          },
+          {
+            "label": "CSS Math Functions",
+            "slug": "css3/tutorial/math-functions"
+          },
+          {
+            "label": "CSS Optimization",
+            "slug": "css3/tutorial/optimization"
+          },
+          {
+            "label": "CSS Accessibility",
+            "slug": "css3/tutorial/accessibility"
+          },
+          {
+            "label": "CSS Website Layout",
+            "slug": "css3/tutorial/website-layout"
+          }
+        ]
+      },
+      {
+        "label": "2. CSS Advanced",
+        "items": [
+          {
+            "label": "CSS Rounded Corners",
+            "slug": "css3/advanced/rounded-corners"
+          },
+          {
+            "label": "CSS Border Images",
+            "slug": "css3/advanced/border-images"
+          },
+          {
+            "label": "CSS Backgrounds",
+            "slug": "css3/advanced/backgrounds"
+          },
+          {
+            "label": "CSS Colors",
+            "slug": "css3/advanced/colors"
+          },
+          {
+            "label": "CSS Gradients",
+            "slug": "css3/advanced/gradients"
+          },
+          {
+            "label": "CSS Shadows",
+            "slug": "css3/advanced/shadows"
+          },
+          {
+            "label": "CSS Text Effects",
+            "slug": "css3/advanced/text-effects"
+          },
+          {
+            "label": "CSS Custom Fonts",
+            "slug": "css3/advanced/custom-fonts"
+          },
+          {
+            "label": "CSS 2D Transforms",
+            "slug": "css3/advanced/transform-2d"
+          },
+          {
+            "label": "CSS 3D Transforms",
+            "slug": "css3/advanced/transform-3d"
+          },
+          {
+            "label": "CSS Transitions",
+            "slug": "css3/advanced/transitions"
+          },
+          {
+            "label": "CSS Animations",
+            "slug": "css3/advanced/animations"
+          },
+          {
+            "label": "CSS Tooltips",
+            "slug": "css3/advanced/tooltips"
+          },
+          {
+            "label": "CSS Image Styling",
+            "slug": "css3/advanced/image-styling"
+          },
+          {
+            "label": "CSS Image Modal",
+            "slug": "css3/advanced/image-modal"
+          },
+          {
+            "label": "CSS Image Centering",
+            "slug": "css3/advanced/image-centering"
+          },
+          {
+            "label": "CSS Image Filters",
+            "slug": "css3/advanced/image-filters"
+          },
+          {
+            "label": "CSS Image Shapes",
+            "slug": "css3/advanced/image-shapes"
+          },
+          {
+            "label": "CSS object-fit",
+            "slug": "css3/advanced/object-fit"
+          },
+          {
+            "label": "CSS object-position",
+            "slug": "css3/advanced/object-position"
+          },
+          {
+            "label": "CSS Masking",
+            "slug": "css3/advanced/masking"
+          },
+          {
+            "label": "CSS Buttons",
+            "slug": "css3/advanced/buttons"
+          },
+          {
+            "label": "CSS Pagination",
+            "slug": "css3/advanced/pagination"
+          },
+          {
+            "label": "CSS Multiple Columns",
+            "slug": "css3/advanced/multiple-columns"
+          },
+          {
+            "label": "CSS User Interface",
+            "slug": "css3/advanced/user-interface"
+          },
+          {
+            "label": "CSS Variables",
+            "slug": "css3/advanced/variables"
+          },
+          {
+            "label": "CSS @property",
+            "slug": "css3/advanced/at-property"
+          },
+          {
+            "label": "CSS Box Sizing",
+            "slug": "css3/advanced/box-sizing"
+          },
+          {
+            "label": "CSS Media Queries",
+            "slug": "css3/advanced/media-queries"
+          }
+        ]
+      },
+      {
+        "label": "3. CSS Flexbox",
+        "items": [
+          {
+            "label": "Flexbox Intro",
+            "slug": "css3/flexbox/intro"
+          },
+          {
+            "label": "Flex Container",
+            "slug": "css3/flexbox/container"
+          },
+          {
+            "label": "Flex Items",
+            "slug": "css3/flexbox/items"
+          },
+          {
+            "label": "Flex Responsive",
+            "slug": "css3/flexbox/responsive"
+          }
+        ]
+      },
+      {
+        "label": "4. CSS Grid",
+        "items": [
+          {
+            "label": "Grid Intro",
+            "slug": "css3/grid/intro"
+          },
+          {
+            "label": "Grid Container",
+            "slug": "css3/grid/container"
+          },
+          {
+            "label": "Grid Items",
+            "slug": "css3/grid/items"
+          },
+          {
+            "label": "Grid 12-column Layout",
+            "slug": "css3/grid/12-column-layout"
+          },
+          {
+            "label": "CSS @supports",
+            "slug": "css3/grid/supports"
+          }
+        ]
+      },
+      {
+        "label": "5. CSS Responsive",
+        "items": [
+          {
+            "label": "RWD Intro",
+            "slug": "css3/responsive/intro"
+          },
+          {
+            "label": "RWD Viewport",
+            "slug": "css3/responsive/viewport"
+          },
+          {
+            "label": "RWD Grid View",
+            "slug": "css3/responsive/grid-view"
+          },
+          {
+            "label": "RWD Media Queries",
+            "slug": "css3/responsive/media-queries"
+          },
+          {
+            "label": "RWD Images",
+            "slug": "css3/responsive/images"
+          },
+          {
+            "label": "RWD Videos",
+            "slug": "css3/responsive/videos"
+          },
+          {
+            "label": "RWD Frameworks",
+            "slug": "css3/responsive/frameworks"
+          },
+          {
+            "label": "RWD Templates",
+            "slug": "css3/responsive/templates"
+          }
+        ]
+      },
+      {
+        "label": "6. CSS SASS",
+        "items": [
+          {
+            "label": "SASS Tutorial",
+            "slug": "css3/sass/tutorial"
+          }
+        ]
+      },
+      {
+        "label": "7. ဥပမာများနှင့် လေ့ကျင့်မှု (Examples & Practice)",
+        "items": [
+          {
+            "label": "CSS Templates",
+            "slug": "css3/examples/templates"
+          },
+          {
+            "label": "CSS Examples",
+            "slug": "css3/examples/examples"
+          },
+          {
+            "label": "CSS Editor",
+            "slug": "css3/examples/editor"
+          },
+          {
+            "label": "CSS Snippets",
+            "slug": "css3/examples/snippets"
+          },
+          {
+            "label": "CSS Quiz",
+            "slug": "css3/examples/quiz"
+          },
+          {
+            "label": "CSS Exercises",
+            "slug": "css3/examples/exercises"
+          },
+          {
+            "label": "CSS Code Challenges",
+            "slug": "css3/examples/code-challenges"
+          },
+          {
+            "label": "CSS Website",
+            "slug": "css3/examples/website"
+          },
+          {
+            "label": "CSS Syllabus",
+            "slug": "css3/examples/syllabus"
+          },
+          {
+            "label": "CSS Study Plan",
+            "slug": "css3/examples/study-plan"
+          },
+          {
+            "label": "CSS Interview Prep",
+            "slug": "css3/examples/interview-prep"
+          }
+        ]
+      },
+      {
+        "label": "8. CSS References",
+        "items": [
+          {
+            "label": "CSS Reference",
+            "slug": "css3/references/reference"
+          },
+          {
+            "label": "CSS Selectors",
+            "slug": "css3/references/selectors"
+          },
+          {
+            "label": "CSS Combinators",
+            "slug": "css3/references/combinators"
+          },
+          {
+            "label": "CSS Pseudo-classes",
+            "slug": "css3/references/pseudo-classes"
+          },
+          {
+            "label": "CSS Pseudo-elements",
+            "slug": "css3/references/pseudo-elements"
+          },
+          {
+            "label": "CSS At-rules",
+            "slug": "css3/references/at-rules"
+          },
+          {
+            "label": "CSS Functions",
+            "slug": "css3/references/functions"
+          },
+          {
+            "label": "CSS Reference Aural",
+            "slug": "css3/references/reference-aural"
+          },
+          {
+            "label": "CSS Web Safe Fonts",
+            "slug": "css3/references/web-safe-fonts"
+          },
+          {
+            "label": "CSS Animatable",
+            "slug": "css3/references/animatable"
+          },
+          {
+            "label": "CSS Units",
+            "slug": "css3/references/units"
+          },
+          {
+            "label": "CSS PX-EM Converter",
+            "slug": "css3/references/px-em-converter"
+          },
+          {
+            "label": "CSS Colors",
+            "slug": "css3/references/colors"
+          },
+          {
+            "label": "CSS Color Values",
+            "slug": "css3/references/color-values"
+          },
+          {
+            "label": "CSS Default Values",
+            "slug": "css3/references/default-values"
+          },
+          {
+            "label": "CSS Browser Support",
+            "slug": "css3/references/browser-support"
+          }
+        ]
+      },
+      {
+        "label": "9. အသိအမှတ်ပြုစာမေးပွဲ (Certificate)",
+        "items": [
+          {
+            "label": "CSS Certificate",
+            "slug": "css3/cert/certificate"
+          }
+        ]
+      }
+    ]
+  }
+]

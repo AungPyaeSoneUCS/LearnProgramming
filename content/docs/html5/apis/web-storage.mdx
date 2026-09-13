@@ -1,0 +1,61 @@
+---
+title: "HTML Web Storage — Data သိမ်းဆည်းခြင်း"
+description: "localStorage နဲ့ sessionStorage တို့ကို ဘယ်လိုသုံးလဲ၊ Data ဘယ်လိုသိမ်းလဲ လေ့လာကြည့်ရအောင်။"
+---
+
+### Web Storage ဆိုတာ ဘာလဲ?
+
+Web Storage က User ရဲ့ Browser ထဲမှာ Data တွေကို (ဥပမာ - Settings, Shopping Cart) သိမ်းထားနိုင်တဲ့ နည်းလမ်းပါ။ Server ဆီ ဘာမှမပို့ဘဲ Code ထဲမှာ Data သိမ်းဓာတ်ခံထားသလို အလုပ်လုပ်လို့ရပါတယ်။ အဓိက Storage (၂) မျိုးရှိပြီး `localStorage` က Browser ပိတ်လည်း Data ခံပြီး `sessionStorage` က Tab ပိတ်ရင် Data ပျောက်ပါတယ်။
+
+### localStorage နဲ့ sessionStorage ကွာခြားပုံ
+
+**localStorage** မှာ Data က Permission မရှိဘဲ ကာလကြာရှည် သိမ်းထားနိုင်ပြီး Browser ကိုပိတ်ပြီး ပြန်ဖွင့်ရင်တောင် ကျန်နေပါတယ်။ **sessionStorage** ကတော့ Tab တစ်ခုအတွင်းမှာပဲ ရှိပြီး Tab ကိုပိတ်လိုက်တာနဲ့ Data ပျောက်သွားပါတယ်။ ဒါကြောင့် ယာယီ Data (ဥပမာ - Form အဆင့်) တွေအတွက် `sessionStorage` ကို သုံးသင့်ပြီး အမြဲသိမ်းချင်ရင် `localStorage` ကို သုံးပါတယ်။
+
+### Storage Methods တွေ
+
+Storage နှစ်ခုလုံးက နည်းတူ Method တွေ ပါပါတယ်။ `setItem(key, value)` နဲ့ Data သိမ်းပြီး `getItem(key)` နဲ့ ပြန်ထုတ်ပါတယ်။ `removeItem(key)` နဲ့ တစ်ခုချင်း ဖျက်ပြီး `clear()` နဲ့ အားလုံး ဖျက်နိုင်ပါတယ်။ Key ကတော့ Data တစ်ခုကို အမည်သတ်မှတ်တဲ့ Identifier ပါ။
+
+**ဥပမာ -**
+```javascript
+localStorage.setItem("username", "mintha");
+var name = localStorage.getItem("username");
+console.log(name);
+
+localStorage.removeItem("username");
+localStorage.clear();
+```
+
+မှတ်ချက် — `setItem` မှာ Value က String ဖြစ်ရပါတယ်။ Number ဒါမှမဟုတ် Object ဆိုရင် String အဖြစ် ပြောင်းပေးရပါတယ်။
+
+### JSON နဲ့ Object သိမ်းခြင်း
+
+Object တစ်ခုလုံး သိမ်းချင်ရင် String အဖြစ် JSON ပြောင်းဖို့ `JSON.stringify()` ကို သုံးပါတယ်။ ပြန်ထုတ်တဲ့အခါ `JSON.parse()` နဲ့ Object ပြန်ဖြစ်အောင် ပြောင်းပေးရပါတယ်။ ဒီလိုမှ မဟုတ်ရင် Object သိမ်းလို့မရဘဲ "[object Object]" လို String အနေနဲ့ပဲ ရှိနေပါလိမ့်မယ်။
+
+**ဥပမာ -**
+```javascript
+var user = { name: "Min", age: 16 };
+
+localStorage.setItem("user", JSON.stringify(user));
+
+var saved = JSON.parse(localStorage.getItem("user"));
+console.log(saved.name);
+console.log(saved.age);
+```
+
+မှတ်ချက် — Store လုပ်ဖို့ `JSON.stringify`၊ Load လုပ်ဖို့ `JSON.parse` — အမြဲတွဲမှတ်ထားပါ။
+
+### မှတ်ထားရမယ့် အချက်များ
+
+- `localStorage` က Browser ပိတ်လည်း Data ခံတယ်။
+- `sessionStorage` က Tab ပိတ်ရင် Data ပျောက်တယ်။
+- Object တွေကို JSON.stringify နဲ့ String ပြောင်းပြီး သိမ်းရတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Browser ပိတ်ပြီးရင်တောင် Data ကျန်နေတဲ့ Storage က ဘာလဲ?", options: ["sessionStorage", "localStorage", "Cache Storage", "Cookie"], correctAnswer: 1, explanation: "localStorage က Browser ပိတ်လည်း Data ခံပါတယ်။" },
+    { id: "q2", question: "Tab ပိတ်လိုက်ရင် Data ပျောက်သွားတဲ့ Storage က ဘာလဲ?", options: ["localStorage", "IndexedDB", "sessionStorage", "History"], correctAnswer: 2, explanation: "sessionStorage က Tab ပိတ်ရင် Data ပျောက်သွားပါတယ်။" },
+    { id: "q3", question: "Object တစ်ခုကို Web Storage မှာ သိမ်းဖို့ ဘာနဲ့ ပြောင်းရပါသလဲ?", options: ["JSON.stringify", "JSON.parse", "toString", "String()"], correctAnswer: 0, explanation: "Object တွေကို JSON.stringify နဲ့ String ပြောင်းပြီး သိမ်းရပါတယ်။" },
+  ]}
+/>

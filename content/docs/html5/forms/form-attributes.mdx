@@ -1,0 +1,104 @@
+---
+title: "HTML Form Attributes — Form ရဲ့ အပြုအမူကို ထိန်းချုပ်ခြင်း"
+description: "action, method, target, autocomplete, novalidate, enctype စတဲ့ form attribute တွေကို လေ့လာကြမယ်။"
+---
+
+`<form>` element ရဲ့ attributes (အရည်အချင်းများ) တွေက ဒေတာကို ဘယ်လို ပို့မယ်၊ ဘယ်ကို ပို့မယ်၊ ဘယ်လို စစ်ဆေးမယ်ဆိုတာတွေကို ထိန်းချုပ်ပေးပါတယ်။ ဒီ attributes တွေကို နားလည်ထားရင် ကိုယ့်ရဲ့ form တွေ ပိုအလုပ်ဖြစ်လာမှာပါ။
+
+### Action Attribute
+
+`action` attribute က form data တွေကို ဘယ်နေရာ (URL) ဆီ ပို့မယ်ဆိုတာကို သတ်မှတ်ပါတယ်။ ဒီနေရာမှာ Server ရဲ့ endpoint (လက်ခံမယ့်နေရာ) ကို ရေးပေးရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<form action="/api/signup">
+  <input type="text" name="username">
+  <button type="submit">Sign Up</button>
+</form>
+```
+
+မှတ်ချက် — `action` မရေးထားရင် form က ကိုယ့်စာမျက်နှာတူနေရာကိုပဲ ပြန်ပို့ပါတယ်။
+
+### Method Attribute
+
+`method` attribute က data တွေကို ဘယ်လို ပို့မယ်ဆိုတာ သတ်မှတ်ပြီး `get` နဲ့ `post` ဆိုပြီး အဓိကနှစ်မျိုး ရှိပါတယ်။ `get` က data တွေကို URL ထဲ မြင်သာအောင် ထည့်ပို့ပြီး `post` က URL မှာ မပေါ်ဘဲ request body ထဲမှာ ဝှက်ပြီး ပို့ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<form action="/search" method="get">
+  <input type="text" name="q">
+  <button type="submit">ရှာမယ်</button>
+</form>
+
+<form action="/signup" method="post">
+  <input type="password" name="password">
+  <button type="submit">Register</button>
+</form>
+```
+
+မှတ်ချက် — password လိုမျိုး လျှို့ဝှက် data တွေအတွက် `post` ကို အမြဲ သုံးသင့်ပါတယ်။
+
+### Target Attribute
+
+`target` attribute က form ရဲ့ response (တုံ့ပြန်မှု) ကို ဘယ်မှာ ပြမယ်ဆိုတာ သတ်မှတ်ပါတယ်။ `_blank` ဆိုရင် response က tab အသစ်မှာ ပွင့်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<form action="/report" method="get" target="_blank">
+  <input type="text" name="month">
+  <button type="submit">အစီရင်ခံစာ ကြည့်မယ်</button>
+</form>
+```
+
+မှတ်ချက် — `_self` က ပုံမှန်ဖြစ်ပြီး လက်ရှိ tab ထဲမှာပဲ ပြပါတယ်။
+
+### Autocomplete နဲ့ Novalidate
+
+`autocomplete` attribute က Browser က ခေါ်ရိုက်ဖူးတဲ့ data တွေကို ပြန်ပြပေးဖို့ ခွင့်ပြုမပြု သတ်မှတ်ပါတယ်။ `novalidate` ဆိုရင် form ကို submit လုပ်တဲ့အခါ Browser ရဲ့ စစ်ဆေးမှုကို ကျော်သွားပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<form action="/login" method="post" autocomplete="on">
+  <input type="text" name="email">
+</form>
+
+<form action="/form" method="post" novalidate>
+  <input type="email" name="email">
+  <button type="submit">ပို့မယ်</button>
+</form>
+```
+
+မှတ်ချက် — `autocomplete="on"` ဆိုရင် Browser က ရိုက်ဖူးတဲ့ စာတွေကို အကြံပြုပေးပါတယ်။
+
+### Enctype Attribute
+
+`enctype` attribute က form data ကို ဘယ်လို encode (နံပါတ်ပြောင်း) လုပ်ပြီး ပို့မယ်ဆိုတာ သတ်မှတ်ပါတယ်။ File (ဖိုင်) တွေ upload လုပ်တဲ့အခါ `multipart/form-data` ကို မဖြစ်မနေ သုံးရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<form action="/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="photo">
+  <button type="submit">Upload</button>
+</form>
+```
+
+မှတ်ချက် — `enctype` ကို `method="post"` နဲ့မှ တွဲသုံးလို့ ရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `action` က ဘယ်ကို ပို့မယ်၊ `method` က ဘယ်လို ပို့မယ်
+- `get` က URL မှာ ပေါ်တယ်၊ `post` က ပေါ်တယ်
+- `target` က response ပြတဲ့ နေရာကို ထိန်းချုပ်တယ်
+- File upload အတွက် `enctype="multipart/form-data"` လိုတယ်
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Form data ဘယ်ကို ပို့မယ်ဆိုတာ ဘယ် attribute က သတ်မှတ်လဲ", options: ["method", "action", "target", "enctype"], correctAnswer: 1, explanation: "action attribute က data ပို့မယ့် URL ကို သတ်မှတ်ပါတယ်" },
+  { id: "q2", question: "Password လိုမျိုး လျှို့ဝှက် data တွေအတွက် ဘယ် method က သင့်တော်လဲ", options: ["get", "post", "put", "delete"], correctAnswer: 1, explanation: "post က URL မှာ data မပေါ်ဘဲ ဝှက်ပြီး ပို့ပါတယ်" },
+  { id: "q3", question: "File upload လုပ်ဖို့ ဘယ် enctype ကို သုံးရလဲ", options: ["text/plain", "application/json", "multipart/form-data", "text/html"], correctAnswer: 2, explanation: "File upload အတွက် multipart/form-data ကို သုံးရပါတယ်" } ]} />

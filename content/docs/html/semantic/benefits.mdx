@@ -1,0 +1,75 @@
+---
+title: "Semantic HTML သုံးခြင်းရဲ့ အကျိုးကျေးဇူးများ"
+description: "Semantic HTML သုံးခြင်းရဲ့ အကျိုးကျေးဇူးများ"
+---
+
+import { Aside, Code, LinkCard } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import semanticImage from '@/assets/html/semantic.png'
+
+<Aside title="ရည်ရွယ်ချက်">
+ဒီအခန်းမှာတော့ Semantic HTML သုံးခြင်းကြောင့် Accessibility နဲ့ SEO ကို ဘယ်လို အကျိုးပြုတယ်ဆိုတာနဲ့ ကောင်းမွန်တဲ့ Page Structure ဘယ်လို တည်ဆောက်ရမလဲဆိုတဲ့ Best Practices တွေကို ဆက်ပြီး လေ့လာကြပါမယ် ခင်ဗျာ။
+</Aside>
+
+### Semantic HTML သုံးခြင်းရဲ့ Accessibility အကျိုးကျေးဇူးများ
+Semantic HTML ကို သုံးတာက Screen Reader လိုမျိုး အထောက်အကူပြု နည်းပညာတွေအတွက် Content ကို ပိုမို နားလည်လွယ်စေတဲ့အတွက် Accessibility ကို အများကြီး ပိုကောင်းစေပါတယ်။ 
+
+**Screen Reader အတွက် ဥပမာ -** <br/>
+Screen reader တစ်ခုက Page ရဲ့ ခေါင်းပိုင်း (`<header>`)၊ အဓိက အကြောင်းအရာပိုင်း (`<main>`) နဲ့ အောက်ခြေပိုင်း (`<footer>`) ကို အလွယ်တကူ ခွဲခြားသိနိုင်ပါတယ်။ ဒါကြောင့် Content တွေကို ပိုပြီး စနစ်တကျ၊ အစီအစဉ်တကျ ဖတ်ပြနိုင်သွားပါတယ်။
+
+<ContentImage src={semanticImage} alt="Non-semantic vs Semantic" />
+
+### ARIA Attributes — Accessibility ကို ထပ်မံ မြှင့်တင်ခြင်း
+Semantic HTML tag တွေချည်း သက်သက်နဲ့ မလုံလောက်တဲ့ နေရာတွေမှာ **ARIA (Accessible Rich Internet Applications)** attributes တွေ ထပ်ထည့်နိုင်ပါတယ်။ ဒီ Attribute တွေက Screen reader တွေကို Content ရဲ့ အဓိပ္ပာယ်ကို ပိုကောင်းကောင်း နားလည်အောင် ကူညီပေးပါတယ်။
+
+**အသုံးဝင်ဆုံး ARIA attribute အချို့:**
+
+| Attribute | ရှင်းလင်းချက် | ဥပမာ |
+|-----------|--------------|-------|
+| `aria-label` | Element ကို ခေါ်ဖို့ အမည်ပေးတယ် | `<button aria-label="Close dialog">X</button>` |
+| `aria-hidden="true"` | Screen reader ကနေ ဖျောက်ထားတယ် | `<span aria-hidden="true">★</span>` |
+| `role` | Element ရဲ့ အလုပ်ကို ဖော်ပြတယ် | `<div role="alert">Error!</div>` |
+
+**ဥပမာ — Navigation link တစ်ခုကို ပိုပြည့်စုံအောင် ရေးသားခြင်း:**
+
+```html
+<nav aria-label="ပင်မ Navigation">
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+```
+
+`aria-label="ပင်မ Navigation"` ထည့်ထားတဲ့အတွက် Page ပေါ်မှာ `<nav>` တစ်ခုထက်ပိုရှိနေတဲ့အခါမျိုးမှာ Screen reader ကနေ ဘယ် `<nav>` က ဘာအတွက်ဆိုတာ သေချာ ခွဲပြောနိုင်ပါတယ်။
+
+<Aside type="note" title="မှတ်ချက်">
+Semantic HTML tag တွေကို ရွေးချယ်သုံးတာကို အမြဲ ဦးစားပေးပါ — `<nav>`, `<header>`, `<main>` တွေ သုံးရင် ARIA မလိုဘဲ Accessibility ကောင်းနေပါပြီ။ ARIA ကိုတော့ Semantic tag တွေနဲ့တင် မလုံလောက်တော့တဲ့ အခြေအနေမျိုးမှာမှ ထပ်ဖြည့်ပါ ခင်ဗျာ။
+</Aside>
+
+### Semantic HTML အတွက် အလေ့အကျင့်ကောင်းများ
+##### 1. မှန်ကန်တဲ့ Tag များကို သုံးပါ 
+    Content နဲ့ သင့်တော်တဲ့၊ အဓိပ္ပာယ်ရှိတဲ့ Tag ကို သုံးပါ (ဥပမာ - Blog post အတွက် `<article>`, Menu အတွက် `<nav>`)။
+
+##### 2. `<div>` ကို အလွန်အကျွံ မသုံးပါနဲ့ 
+`<div>` က အရာအားလုံးကို ထည့်လို့ရတဲ့ Container ဆိုပေမဲ့ နေရာတကာမှာ လျှောက်မသုံးပါနဲ့။ သူ့အစား Structure ပိုကျတဲ့၊ အဓိပ္ပာယ် ပိုရှိတဲ့ Semantic tag တွေကို သုံးပါ။
+
+##### 3. Page Structure ကို စဉ်းစားပါ
+Tag တွေရဲ့ အစီအစဉ်ကို အမြဲတမ်း စဉ်းစားပါ။ ခင်ဗျားရဲ့ Page ဟာ `<header>` (အပေါ်ပိုင်း) ကနေ `<main>` (အဓိက Content) ကိုဖြတ်ပြီး `<footer>` (အောက်ခြေပိုင်း) မှာ ဆုံးသင့်ပါတယ်။
+
+##### 4. ရှင်းလင်းတဲ့ ခေါင်းစဉ်များ ပေးပါ
+`<nav>`, `<header>`, `<footer>`, ဒါမှမဟုတ် `<section>` လို Tag တွေ သုံးတဲ့အခါ အထဲမှာပါတဲ့ Content တွေက ရှင်းလင်းပြီး အဓိပ္ပာယ်ရှိနေဖို့ သေချာပါစေ။
+
+<Aside type="tip"  title="အနှစ်ချုပ်">
+- Semantic HTML ကို သုံးခြင်းအားဖြင့် Web Accessibility နဲ့ SEO အများကြီး ပိုကောင်းလာစေပါတယ်။
+
+- HTML tag တွေကို ရွေးချယ်တဲ့အခါမှာ အမြင်ကိုပဲ မစဉ်းစားဘဲ Content ရဲ့ အဓိပ္ပာယ် ကိုပါ အမြဲ ထည့်သွင်းစဉ်းစားသင့်ပါတယ်။
+
+- Content တွေကို စနစ်တကျဖြစ်စေဖို့ `<header>`, `<footer>`, `<section>`, `<article>`, `<nav>` တို့လို Semantic Tag တွေကို သုံးပါ။
+
+- Code တွေကို ရှင်းလင်းစေဖို့ `<div>` tag ကို အလွန်အကျွံ မသုံးဘဲ အဓိပ္ပာယ်ရှိတဲ့ Tag တွေကို သုံးပါ။
+
+- Content တွေကို Header ကနေ Main Content၊ ပြီးမှ Footer ဆိုပြီး စနစ်တကျ စီစဉ်ပါ။
+
+- Semantic HTML က Screen Reader တွေနဲ့ Search Engine တွေကို ခင်ဗျားရဲ့ Webpage မှာပါတဲ့ အကြောင်းအရာတွေကို ပိုနားလည်လွယ်စေပါတယ် ခင်ဗျာ။
+</Aside>

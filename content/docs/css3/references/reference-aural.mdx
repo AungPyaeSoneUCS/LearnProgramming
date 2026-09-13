@@ -1,0 +1,70 @@
+---
+title: "CSS Reference Aural — အသံဖြင့် ဖတ်ပြမှုအတွက် Aural Style Property များ"
+description: "Legacy Aural (Speech) Style Property များဖြစ်သော volume, speech-rate, voice-family, pause, cue တို့အကြောင်း ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### Aural Style ဆိုတာ ဘာလဲ?
+
+**Aural Style** ဆိုတာ Browser က Page ကို Screen Reader လို အသံဖြင့် ဖတ်ပြတဲ့အခါ သုံးဖို့ ရည်ရွယ်ထားတဲ့ CSS ပုံစံ ဖြစ်ပါတယ်။ CSS 2 မှာ `aural` Media Type နဲ့ အတူ ပါဝင်ခဲ့ပြီး အသံအတိုးအကျယ် ၊ စကားပြောနှုန်း ၊ အသံအမျိုးအစား ၊ ခေတ္တရပ်ချိန်တွေကို ထိန်းချုပ်နိုင်ခဲ့ပါတယ်။
+
+ဒါပေမယ့် ခေတ်ပေါ် Browser တွေမှာ ဒီ Property တွေက **Legacy** သမ ဖြစ်နေပြီး ပံ့ပိုးမှု အားနည်းလွန်းလို့ လက်တွေ့ မသုံးတော့ပါဘူး။ Screen Reader Software တွေက ကိုယ်ပိုင် စည်းမျဉ်းတွေနဲ့ အလုပ်လုပ်လို့ CSS Property တွေကို လျစ်လျူရှုလေ့ ရှိပါတယ်။
+
+### Voice Property များ ဇယား
+
+အောက်က Property တွေက Legacy Aural Style ထဲက အဓိက Property များ ဖြစ်ပါတယ်။
+
+| Property | ဖော်ပြချက် | အခြေအနေ |
+| ---- | ---- | ---- |
+| `volume` | အသံအတိုးအကျယ် သတ်မှတ်ရန် | Legacy |
+| `speech-rate` | စကားပြောနှုန်း သတ်မှတ်ရန် | Legacy |
+| `voice-family` | ဖတ်ပြမည့် အသံအမျိုးအစား ရွေးချယ်ရန် | Legacy |
+| `pause` | အသံ မဖတ်မီနဲ့ ပြီးနောက် ခေတ္တရပ်ရန် | Legacy |
+| `cue` | အသံအစနဲ့ အဆုံးမှာ သံစဉ် ထည့်ရန် | Legacy |
+
+### အခြား Aural Property များ
+
+| Property | ဖော်ပြချက် | အခြေအနေ |
+| ---- | ---- | ---- |
+| `pitch` | အသံ အနိမ့်အမြင့် | Legacy |
+| `stress` | ဝဲဆိုမှု အား | Legacy |
+| `richness` | အသံ ကြွယ်ဝမှု | Legacy |
+| `azimuth` | အသံလာရာ လားရာ ထောင့် | Legacy |
+| `elevation` | အသံ မြင့်မှု ထောင့် | Legacy |
+
+### အဘယ်ကြောင့် မသုံးတော့သလဲ?
+
+Aural Media Type က CSS 2 ခေတ်ရဲ့ Concept ဖြစ်ပြီး ခေတ်ပေါ် CSS Speech Module မှာ `speech` Media Type နဲ့ `voice-volume` ၊ `speech-rate` စတဲ့ Property သစ်တွေ အဆိုပြုထားပါတယ်။ ဒါပေမယ့် ဒီ Property တွေကိုလည်း Browser အများစုက အပြည့်အဝ မပံ့ပိုးသေးပါဘူး။ Screen Reader Access အတွက် အကောင်းဆုံး နည်းက Semantic HTML ကို မှန်ကန်စွာ ရေးတာပဲ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@media aural {
+  body {
+    volume: medium;
+    speech-rate: normal;
+    voice-family: male;
+  }
+  .warning {
+    pause: 500ms;
+    cue: "alert";
+  }
+}
+```
+
+မှတ်ချက် — အထက်က CSS က CSS 2 ရဲ့ အဟောင်း Syntax ဖြစ်ပြီး ခေတ်ပေါ် Browser တွေမှာ Effect မရှိသလောက် ဖြစ်ပါတယ် ၊ Screen Reader အတွက် Semantic HTML ကိုသာ အားထားပါ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Aural Property တွေက CSS 2 ခေတ်ရဲ့ Legacy များ ဖြစ်ပါတယ်။
+- `volume` ၊ `speech-rate` ၊ `voice-family` စတဲ့ Property တွေ ပါဝင်ပါတယ်။
+- Browser ပံ့ပိုးမှု အားနည်းလို့ လက်တွေ့ အသုံးမပြုတော့ပါဘူး။
+- Accessibility အတွက် Semantic HTML ကို ဦးစားပေးပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "အသံအတိုးအကျယ် သတ်မှတ်တဲ့ Aural Property က ဘာလဲ?", options: ["volume", "speech-rate", "cue", "pitch"], correctAnswer: 0, explanation: "volume က အသံအတိုးအကျယ် သတ်မှတ်ပေးတဲ့ Property ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "Aural Style Property တွေကို ခေတ်ပေါ် Browser တွေမှာ ဘယ်လို သတ်မှတ်ပါသလဲ?", options: ["Legacy သမ ၊ ပံ့ပိုးမှု အားနည်းတယ်", "အားလုံး အပြည့်အဝ အလုပ်လုပ်တယ်", "Mobile မှာသာ အလုပ်လုပ်တယ်", "JavaScript လိုအပ်တယ်"], correctAnswer: 0, explanation: "Aural Property တွေက Legacy ဖြစ်ပြီး Browser တွေရဲ့ ပံ့ပိုးမှု အလွန်နည်းပါတယ်။" },
+    { id: "q3", question: "Screen Reader အတွက် အကောင်းဆုံး နည်းလမ်းက ဘာလဲ?", options: ["Semantic HTML သုံးခြင်း", "Aural CSS တိုင်း ရေးခြင်း", "ပုံ များများ ထည့်ခြင်း", "JavaScript ဖြင့် ဖျောက်ခြင်း"], correctAnswer: 0, explanation: "Accessibility အတွက် Semantic HTML ကို မှန်ကန်စွာ ရေးတာ အကောင်းဆုံး ဖြစ်ပါတယ်။" },
+  ]}
+/>

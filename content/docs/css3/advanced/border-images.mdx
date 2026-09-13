@@ -1,0 +1,82 @@
+---
+title: "CSS Border Images — border-image နဲ့ ဘောင်အလှဆင်ခြင်း"
+description: "border-image-source, slice, width, repeat Property တွေ သုံးပြီး Element ရဲ့ ဘောင်ကို ပုံနဲ့ အလှဆင်နည်းကို လေ့လာကြမယ်။"
+---
+
+### border-image မိတ်ဆက်
+
+`border-image` Property က Element ရဲ့ ဘောင်ကို ပုံတစ်ပုံနဲ့ အလှဆင်ပေးနိုင်ပါတယ်။ သာမန် border က အရောင်သက်သက်ဖြစ်ပြီး border-image ကတော့ ပုံတစ်ပုံကို ၉ ပိုင်းဖြတ် (9-slice) ပြီး ဘောင်လေးဖက်မှာ ပြန့်ဖတ်ပြသပေးတာပါ။ ဒီအတွက် အဓိက Property တွေကတော့ `border-image-source`, `border-image-slice`, `border-image-width`, `border-image-repeat` တို့ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.frame {
+  border: 15px solid transparent;
+  border-image-source: url("frame.png");
+  border-image-slice: 30;
+  border-image-repeat: round;
+}
+```
+
+မှတ်ချက် — border-image ကို အလုပ်လုပ်စေဖို့ border-style (သို့) border-width ကို သေချာသတ်မှတ်ထားရပါမယ်။
+
+### border-image-source နဲ့ border-image-slice
+
+`border-image-source` က ပုံကို ဘယ်ကယူမယ်ဆိုတာ url() နဲ့ သတ်မှတ်ပေးပြီး `border-image-slice` ကတော့ အဲဒီပုံကို ဘယ်လောက်စီ ဖြတ်မယ်ဆိုတာကို သတ်မှတ်ပေးပါတယ်။ Slice ဖြတ်ရာမှာ ပုံရဲ့ ထောင့်လေးခု၊ အနားလေးဖက်ကို သီးခြားတစ်ပိုင်းစီ ရလို့ ဘောင်အရွယ် ဘယ်လောက်ပြောင်းပြောင်း ပုံစံမပျက်နေပါတယ်။
+
+**ဥပမာ -**
+```css
+.btn {
+  border: 12px solid transparent;
+  border-image-source: url("btn-slice.png");
+  border-image-slice: 25;
+}
+```
+
+မှတ်ချက် — border-image-slice မှာ unit မပါတဲ့ နံပါတ်က pixel ကို ကိုယ်စားပြုပြီး `25%` လိုမျိုး percentage လည်း ပေးလို့ရပါတယ်။
+
+### border-image-width နဲ့ border-image-repeat
+
+`border-image-width` က ဘောင်ပေါ်မှာ ပုံရဲ့ အကျယ်အဝန်းကို သတ်မှတ်ပေးပြီး `border-image-repeat` ကတော့ အနားတစ်လျှောက် ပုံကို ဘယ်လို စီမံမယ်ဆိုတာကို ထိန်းပါတယ်။ repeat က ပုံကို ဖြတ်ပြီး ထပ်စီမယ်၊ round က ဘောင်အရွယ်နဲ့ လိုက်ဖက်အောင် ပုံအရေအတွက်ကို ချိန်ပေးပြီး stretch က ဆွဲဆန့်ပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+.banner {
+  border: 20px solid transparent;
+  border-image-source: url("stripe.png");
+  border-image-slice: 20;
+  border-image-width: 15px;
+  border-image-repeat: round;
+}
+```
+
+မှတ်ချက် — repeat က ပုံထပ်တဲ့အခါ အနားမှာ ပုံစုတ်ပြတ်စ ဝင်တတ်ပြီး round က အဲဒါမျိုး မဖြစ်အောင် ချိန်ညှိပေးပါတယ်။
+
+### Shorthand ပုံစံ
+
+Property တွေကို တစ်ကြောင်းတည်း border-image shorthand နဲ့လည်း ရေးလို့ရပါတယ်။ အစဉ်က source ၊ slice ၊ width ၊ repeat ဖြစ်ပြီး Slash (/) က slice နဲ့ width ကို ပိုင်းခြားပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+.pic {
+  border: 20px solid transparent;
+  border-image: url("frame.png") 30 / 20px round;
+}
+```
+
+မှတ်ချက် — Slash (/) ရဲ့ နောက်က value က border-image-width ဖြစ်ပြီး မပါရင် border-width ကို ပြန်သုံးပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- border-image-source က ဘောင်အတွက် ပုံကို သတ်မှတ်ပေးသည်။
+- border-image-slice က ပုံကို ၉ ပိုင်း ဖြတ်ဖို့ သတ်မှတ်ပေးသည်။
+- Shorthand မှာ Slash (/) က slice နဲ့ width ကို ပိုင်းခြားပေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "border-image-repeat: round က ဘာလုပ်ပေးပါသလဲ?", options: ["ပုံကို ဆွဲဆန့်ပေးသည်", "ပုံကို ဖြတ်ပြီး ထပ်စီပေးသည်", "ပုံအရေအတွက်ကို ချိန်ပြီး ဖြန့်ပေးသည်", "ပုံကို လုံးဝမပြပေးပါ"], correctAnswer: 2, explanation: "round က ဘောင်အရွယ်နဲ့ လိုက်ဖက်စေဖို့ ပုံအရေအတွက်ကို ချိန်ညှိပေးပါတယ်။" },
+    { id: "q2", question: "border-image-slice မှာ unit မပါတဲ့ value 30 ရဲ့ အဓိပ္ပါယ်က ဘာလဲ?", options: ["Percentage (25%)", "Pixel", "Em", "Rem"], correctAnswer: 1, explanation: "Unit မပါတဲ့ နံပါတ်က pixel ကို ကိုယ်စားပြုပါတယ်။" },
+    { id: "q3", question: "border-image shorthand မှာ slice နဲ့ width ကို ဘာနဲ့ ခွဲပါသလဲ?", options: ["Comma", "Semicolon", "Slash (/)", "Colon"], correctAnswer: 2, explanation: "Shorthand မှာ Slash (/) နဲ့ slice နဲ့ width ကို ပိုင်းခြားပေးပါတယ်။" }
+  ]}
+/>

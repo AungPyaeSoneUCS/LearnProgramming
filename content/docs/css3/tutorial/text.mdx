@@ -1,0 +1,121 @@
+---
+title: "CSS Text — စာသား အလှဆင်ခြင်းနဲ့ ချိန်ညှိနည်းများ"
+description: "text-align, text-decoration, text-transform, letter-spacing, line-height, text-indent, text-shadow စတဲ့ properties တွေကို လေ့လာမယ်။"
+---
+
+### text-align (စာသားညှိခြင်း)
+
+`text-align` က block element ထဲက စာသားကို ဘယ်ဖက်၊ ညာဖက်၊ အလယ်၊ justify စသဖြင့် ညှိပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+h1 {
+  text-align: center;
+}
+
+p {
+  text-align: justify;
+}
+
+.quote {
+  text-align: right;
+}
+```
+
+မှတ်ချက် — justify က စာကြောင်းချင်း နှစ်ဖက်စလုံး တန်းညီအောင် ညှိပေးပြီး စာပိုဒ်ရှည်တွေမှာ အသုံးဝင်ပါတယ်။
+
+### text-decoration (စာသား အလှဆင်)
+
+`text-decoration` နဲ့ underline, overline, line-through တွေ ထည့်လို့ရပြီး `none` နဲ့ ဖယ်လို့ရပါတယ်။ Link တွေရဲ့ default underline ကို ဖျောက်ဖို့ သုံးပါတယ်။
+
+**ဥပမာ -**
+```css
+a {
+  text-decoration: none;
+}
+
+.sale {
+  text-decoration: line-through;
+}
+
+.note {
+  text-decoration: underline;
+}
+```
+
+မှတ်ချက် — text-decoration က inline element မှာတောင် အလုပ်လုပ်ပြီး underline ရဲ့ အရောင်၊ အထူ၊ ပုံစံတွေကိုလည်း သီးခြား ညှိလို့ရပါတယ်။
+
+### text-transform (စာလုံးပုံစံ ပြောင်းခြင်း)
+
+`text-transform` က စာရေးထားတဲ့အတိုင်း မဟုတ်ဘဲ စာလုံးအကြီး အသေး ပုံစံကို ပြောင်းပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+h2 {
+  text-transform: uppercase;
+}
+
+.topic {
+  text-transform: capitalize;
+}
+
+.low {
+  text-transform: lowercase;
+}
+```
+
+မှတ်ချက် — Uppercase/capitalize က headings နဲ့ button label တွေမှာ အသုံးများပြီး HTML ထဲက original text ကို မပြောင်းဘဲ CSS နဲ့ပဲ ပြသမှုကို ပြောင်းနိုင်ပါတယ်။
+
+### letter-spacing နဲ့ line-height
+
+`letter-spacing` က စာလုံးချင်း ကြားက နေရာ၊ `line-height` က စာကြောင်းချင်း ကြားက အကွာကို သတ်မှတ်ပါတယ်။ line-height ကို unit မပါတဲ့ ဂဏန်းနဲ့ ပေးရင် font-size ရဲ့ အဆဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.heading {
+  letter-spacing: 3px;
+  line-height: 1.6;
+}
+
+.summary {
+  line-height: 1.8;
+  letter-spacing: 1px;
+}
+```
+
+မှတ်ချက် — line-height က 1.5 ကနေ 1.8 အထိ ပေးရင် စာဖတ်ရ လွယ်ကူတဲ့ အကောင်းဆုံး အကွာပါ။
+
+### text-indent နဲ့ text-shadow
+
+`text-indent` က ပထမဆုံး စာကြောင်းရဲ့ ရှေ့ဆုတ်ချက် (indentation) ကို ပေးပြီး `text-shadow` က စာသားနောက်မှာ အရိပ်ထည့်ပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+p.para {
+  text-indent: 30px;
+}
+
+.title {
+  text-shadow: 2px 2px 5px gray;
+}
+
+.logo {
+  text-shadow: 1px 1px 0 red;
+}
+```
+
+မှတ်ချက် — text-shadow ရဲ့ value အစဉ်က horizontal offset, vertical offset, blur, color ဖြစ်ပြီး blur 0 ပေးရင် ချွန်ထက်တဲ့ အရိပ် ရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- text-align က left, right, center, justify လေးမျိုး ရှိပါတယ်။
+- `text-decoration: none;` က link တွေရဲ့ underline ကို ပျောက်စေပါတယ်။
+- text-shadow ရဲ့ value အစဉ်က offset-x, offset-y, blur, color ပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Link တွေရဲ့ underline ကို ဖျောက်ချင်ရင် ဘာကို သုံးလဲ?", options: ["text-transform", "text-decoration: none;", "text-align: center;", "text-shadow"], correctAnswer: 1, explanation: "text-decoration ကို none ပေးရင် underline ပျောက်ပြီး link က plain text လို ဖြစ်ပါတယ်။" },
+  { id: "q2", question: "hello ကို HELLO အနေနဲ့ ပြချင်ရင် ဘာ value သုံးလဲ?", options: ["text-transform: uppercase;", "text-transform: lowercase;", "letter-spacing: 5px;", "text-decoration: overline;"], correctAnswer: 0, explanation: "uppercase က စာလုံးအားလုံးကို အကြီး ပြောင်းပေးပါတယ်။" },
+  { id: "q3", question: "text-shadow: 2px 2px 5px gray; မှာ 5px က ဘာကို ဆိုလိုလဲ?", options: ["horizontal offset", "blur radius", "vertical offset", "အရောင်"], correctAnswer: 1, explanation: "value အစဉ်က offset-x, offset-y, blur, color ဖြစ်လို့ တတိယ value က blur ပါ။" }
+]} />

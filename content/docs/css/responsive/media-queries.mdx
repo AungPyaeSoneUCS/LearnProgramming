@@ -1,0 +1,103 @@
+---
+title: "Responsive Design"
+description: "Device မျိုးစုံအတွက် အဆင်ပြေစေခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import maxWidth from "@/assets/css/max-width.png";
+import minWidth from "@/assets/css/min-width.png";
+
+<Aside title="ဖုန်းနဲ့ ကြည့်မလား?">
+ဒီနေ့ခေတ်မှာဆိုရင် လူတော်တော်များများက ကွန်ပျူတာထက် ဖုန်းနဲ့ပဲ အင်တာနက် သုံးကြတာ များလာပါပြီ။
+ဒါကြောင့် ခင်ဗျား ရေးဆွဲလိုက်တဲ့ Website ဟာ ကွန်ပျူတာမှာ ကြည့်ကောင်းရုံတင်မကဘဲ၊ ဖုန်း မျက်နှာပြင်မှာလည်း အချိုးအစားကျကျနဲ့ ကြည့်ကောင်းနေဖို့က အရမ်းကို အရေးကြီးပါတယ် ခင်ဗျာ။
+</Aside>
+
+### Media Queries ဆိုတာ ဘာလဲ?
+သူကတော့ Browser ကို "Screen Size (မျက်နှာပြင် အကျယ်) က ဘယ်လောက်ဆိုရင်တော့၊ ဒီ Style ကို သုံးပေးပါ" ဆိုပြီး အခြေအနေပေး ခိုင်းစေလိုက်တာမျိုး ဖြစ်ပါတယ်။
+
+```css
+/* ပုံမှန် (Desktop) အတွက် */
+body {
+  background-color: white;
+  font-size: 18px;
+}
+
+/* Screen အကျယ် 600px နှင့် အောက် (ဖုန်းများ) အတွက် */
+@media (max-width: 600px) {
+  body {
+    background-color: lightblue; /* ဖုန်းမှာဆို အပြာနုရောင် ဖြစ်သွားမယ် */
+    font-size: 16px; /* စာလုံး နည်းနည်း သေးမယ် */
+  }
+}
+```
+<ContentImage src={maxWidth} alt="Media Queries Example" />
+
+### Mobile First Approach
+Website ရေးတဲ့အခါ Desktop (ကွန်ပျူတာ) အတွက် အရင်ရေးပြီးမှ ဖုန်းအတွက် လိုက်ပြင်တာထက်၊ **Mobile (ဖုန်း) အတွက် အရင်ရေးပြီးမှ Desktop အတွက် ချဲ့သွားတဲ့နည်းလမ်း (Mobile First Approach)** က ပိုပြီး ခေတ်မီသလို၊ Code ရေးရတာလည်း ပိုရှင်းပါတယ် ခင်ဗျာ။
+
+```css
+/* 1. ဖုန်းအတွက် အရင်ရေး (Base Styles) */
+.container {
+  flex-direction: column; /* ဖုန်းမှာ ဒေါင်လိုက် စီမယ် */
+}
+
+/* 2. Tablet နဲ့ အထက် (min-width) */
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row; /* Tablet နဲ့ PC မှာ ဘေးတိုက် စီမယ် */
+  }
+}
+```
+
+<ContentImage src={minWidth} alt="Mobile First Media Queries Example" />
+
+### Common Breakpoints (အသုံးများသော Size များ)
+အပြင်မှာ Device အမျိုးအစားတွေ အများကြီး ရှိပေမဲ့၊ အောက်ပါ အဓိက Breakpoint (ခွဲခြားမယ့် အကျယ်အဝန်း) လေးတွေကို မှတ်ထားမယ်ဆိုရင် တော်တော်လေး အဆင်ပြေပါတယ်။
+
+*   **Mobile:** < 640px (Default styles)
+*   **Tablet:** >= 768px
+*   **Laptop:** >= 1024px
+*   **Desktop:** >= 1280px
+
+```css
+/* Mobile (Default) */
+.card { width: 100%; }
+
+/* Tablet */
+@media (min-width: 768px) {
+  .card { width: 50%; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .card { width: 33.33%; }
+}
+```
+
+### Advanced Media Queries
+
+#### 1. Logical Operators (and)
+သတ်မှတ်ထားတဲ့ အခြေအနေ နှစ်ခုလုံးနဲ့ ကိုက်ညီမှ (True ဖြစ်မှ) အလုပ်လုပ်စေချင်တယ်ဆိုရင် `and` ကို သုံးလို့ ရပါတယ်။
+
+```css
+/* Width က 600px နဲ့ 900px ကြားဖြစ်မှ */
+@media (min-width: 600px) and (max-width: 900px) {
+  body { background: yellow; }
+}
+```
+
+#### 2. Orientation (အလျားလိုက်/ဒေါင်လိုက်)
+User က သူ့ရဲ့ ဖုန်းကို အလျားလိုက် လှဲကြည့်နေတာ (Landscape) လား၊ ဒါမှမဟုတ် ဒေါင်လိုက် ထောင်ကြည့်နေတာ (Portrait) လား ဆိုတာကိုလည်း Media Query သုံးပြီး ခွဲခြားနိုင်ပါသေးတယ်။
+
+```css
+@media (orientation: landscape) {
+  /* ဖုန်းလှဲကြည့်ရင် Video ကို အပြည့်ပြမယ် */
+  .video-player { height: 100vh; }
+}
+```
+
+<Aside type="tip">
+Responsive ဒီဇိုင်းတွေ လုပ်တဲ့အခါမှာ အကျယ်အဝန်းတွေအတွက် `px` (Pixel အတိ) အစား `%` ဒါမှမဟုတ် `rem` တွေကို သုံးပေးတာက ပိုပြီး အဆင်ပြေပါတယ်။
+နောက်ပြီး Layout တွေ ခွဲတဲ့အခါမှာလည်း Flexbox နဲ့ Grid တို့ကို သုံးပေးခြင်းအားဖြင့် Responsive လုပ်ရတာကို အရမ်း လွယ်ကူသွားစေပါတယ် ခင်ဗျာ။
+</Aside>

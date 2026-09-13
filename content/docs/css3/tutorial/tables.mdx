@@ -1,0 +1,127 @@
+---
+title: "CSS Tables — Table တွေကို အလှဆင်ကြမယ်"
+description: "Table Border ၊ Border Collapse ၊ Width ၊ Text-align ၊ Padding နဲ့ Striped Row တွေ Style လုပ်နည်း။"
+---
+
+### Table Style ဆိုတာ
+
+Table က Data တွေကို Row နဲ့ Column ပုံစံ ဖော်ပြတဲ့ အသုံးအဆောင်ပါ။ HTML Table တစ်ခုက Default အတိုင်း ကြည့်ရင် အရမ်း Plain ဖြစ်နေတတ်ပြီး CSS နဲ့ Border၊ Color၊ Spacing တွေ ထည့်ပြီး လှပ သန့်ရှင်းအောင် လုပ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+table,
+th,
+td {
+  border: 1px solid #999;
+}
+```
+
+မှတ်ချက် — `table` အပြင် `th` (Header Cell) နဲ့ `td` (Data Cell) တွေကိုပါ Border ထည့်ပေးမှသာ မျဉ်းတွေ အကုန် မြင်ရပါတယ်။
+
+### border-collapse
+
+Browser Default မှာ Border တစ်ခုနဲ့တစ်ခု ကပ်နေတဲ့အခါ မျဉ်းနှစ်ထပ် ဖြစ်နေတတ်ပါတယ်။ `border-collapse: collapse;` သုံးရင် Border တွေ ပေါင်းပြီး မျဉ်းတစ်ထပ်တည်း ဖြစ်သွားပါတယ်။
+
+**ဥပမာ -**
+```css
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 8px;
+}
+```
+
+မှတ်ချက် — `width: 100%;` က Table ကို Container အား ကုန်အောင် ဆန့်ပေးပြီး `text-align` နဲ့ `padding` က Cell တွေရဲ့ အသွားအပြင် (Alignment) နဲ့ နေရာလွတ်ကို ချိန်ပေးပါတယ်။
+
+### Striped Rows — Row အလှည့်ကျ အရောင်
+
+`tr:nth-child(even)` လို Selector ကို သုံးပြီး Row အလှည့်ကျ အရောင်ခြယ်နိုင်ပါတယ်။ ဒါကို Striped Table (စင်္ကြန်လုံး Row ပုံစံ) လို့ ခေါ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+```
+
+မှတ်ချက် — `even` က စုံကာချာ Row တွေ၊ `odd` ကတော့ မ စုံကာချာ Row တွေကို ရွေးပါတယ်။ Header Row ကို အရောင်မခြယ်ချင်ရင် `tr:nth-child(odd)` လို Variant တွေ ချိန်လို့ရပါတယ်။
+
+### Hover Effect — Row ပေါ် Mouse လာရပ်ရင်
+
+Row တစ်ခုပေါ်မှာ Mouse Pointer လာရပ်တဲ့အခါ နောက်ခံအရောင် ပြောင်းပေးရင် Table က ပိုပြီး Interactive ဖြစ်ပြီး ဖတ်ရလွယ်ကူစေပါတယ်။
+
+**ဥပမာ -**
+```css
+tr:hover {
+  background-color: #ddd;
+}
+```
+
+မှတ်ချက် — Hover Effect က Mouse User တွေအတွက် အဓိကဖြစ်ပြီး Row ပေါင်းများတဲ့ Table တွေမှာ ပိုအသုံးဝင်ပါတယ်။
+
+### Table တစ်ခုလုံး ဥပမာ
+
+CSS Property တွေ အကုန် ပေါင်းသုံးထားတဲ့ Table တစ်ခုကို ကြည့်ကြရအောင်။
+
+**ဥပမာ -**
+```html
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+  </tr>
+  <tr>
+    <td>Aung</td>
+    <td>18</td>
+  </tr>
+  <tr>
+    <td>Su</td>
+    <td>17</td>
+  </tr>
+</table>
+```
+
+**ဥပမာ -**
+```css
+table {
+  border-collapse: collapse;
+  width: 50%;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #ffe9d6;
+}
+```
+
+မှတ်ချက် — `th` က Header Cell ဖြစ်လို့ အရောင်နဲ့ Font စတာတွေကို `th` Selector နဲ့ သီးသန့် ပြောင်းလို့လည်း ရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Border က `table` ၊ `th` ၊ `td` အကုန်လုံး မှာ ထည့်ရပါတယ်။
+- `border-collapse: collapse;` က မျဉ်းနှစ်ထပ်ကို မျဉ်းတစ်ထပ်တည်း ဖြစ်စေပါတယ်။
+- `tr:nth-child(even)` နဲ့ Striped Row တွေ ဆွဲနိုင်ပြီး `tr:hover` နဲ့ Hover Effect ထည့်နိုင်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Table မှာ Border မျဉ်းတစ်ထပ်တည်း ဖြစ်စေဖို့ ဘယ် Property ကို သုံးပါသလဲ?", options: ["border-spacing: 0", "border-collapse: collapse", "border-style: single", "padding: 0"], correctAnswer: 1, explanation: "border-collapse: collapse က မျဉ်းနှစ်ထပ်ကို ပေါင်းပြီး မျဉ်းတစ်ထပ်တည်း ဖြစ်စေပါတယ်။" },
+  { id: "q2", question: "Row အလှည့်ကျ အရောင်ခြယ်ဖို့ ဘယ် Selector ကို သုံးပါသလဲ?", options: ["tr:first", "tr:nth-child(even)", "td:none", "tr:striped"], correctAnswer: 1, explanation: "tr:nth-child(even) က စုံကာချာ Row တွေကို ရွေးပြီး အရောင်ခြယ်ပေးပါတယ်။" },
+  { id: "q3", question: "Row ပေါ်မှာ Mouse လာရပ်တဲ့အခါ နောက်ခံပြောင်းဖို့ ဘယ် Selector ကို သုံးရပါသလဲ?", options: ["tr:active", "tr:over", "tr:hover", "tr:focus"], correctAnswer: 2, explanation: "tr:hover က Pointer က Row ပေါ်ကို လာရပ်ချိန်မှာ သက်ရောက်ပါတယ်။" }
+]} />

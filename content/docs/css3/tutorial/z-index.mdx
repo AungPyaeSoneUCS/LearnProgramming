@@ -1,0 +1,141 @@
+---
+title: "CSS Z-index — အပေါ်အောက်ရောက်စီးမှု"
+description: "z-index နဲ့ Element တွေ ထပ်နေတဲ့အခါ အပေါ်အောက် စီစဉ်မှု (Stacking Order) ကို ဘယ်လို သတ်မှတ်လဲ လေ့လာကြမယ်။"
+---
+
+### `z-index` ဆိုတာ
+
+Element တွေ တစ်ခုနဲ့တစ်ခု ထပ်နေတဲ့အခါ ဘယ်သူက အပေါ်ဆုံးမှာ မြင်မလဲ ဆိုတာကို `z-index` Property က ဆုံးဖြတ်ပါတယ်။ Value က အရေအတွက် (Integer) ဖြစ်ပြီး နံပါတ်ကြီးတဲ့ Element က နံပါတ်ငယ်တဲ့ Element ကို ဖုံးပါတယ်။
+
+**ဥပမာ -**
+```css
+img {
+  position: absolute;
+  z-index: -1;
+}
+```
+
+မှတ်ချက် — `z-index: -1;` ဆိုရင် Image က Content တွေရဲ့ နောက်ကွယ်ကို ရောက်သွားပါတယ်။
+
+### Positioned Element လိုအပ်ချက်
+
+`z-index` က Static Element တွေမှာ အများအားဖြင့် အလုပ်မလုပ်ပါဘူး။ Overlap ကို ထိန်းချုပ်ဖို့ Element က Positioned (relative ၊ absolute ၊ fixed ၊ sticky) ဖြစ်ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.layer-a {
+  position: relative;
+  z-index: 1;
+}
+
+.layer-b {
+  position: relative;
+  z-index: 2;
+}
+```
+
+မှတ်ချက် — `z-index` ကို Positioned Element အပေါ်မှာ သုံးမှ Stacking Order ကို လွှမ်းမိုးနိုင်ပါတယ်။
+
+### Positive နဲ့ Negative Value
+
+Positive Value (`z-index: 1;` စသည်) က Element ကို အပေါ်ကို တင်ပေးပြီး Negative Value (`z-index: -1;` စသည်) က နောက်ကို ပို့ပါတယ်။ Value ကြီးလေ အပေါ်ဆုံးကို ရောက်လေပါ။
+
+**ဥပမာ -**
+```css
+.a {
+  position: absolute;
+  z-index: 10;
+}
+
+.b {
+  position: absolute;
+  z-index: 50;
+}
+
+.c {
+  position: absolute;
+  z-index: -5;
+}
+```
+
+မှတ်ချက် — ဒီတော့ `c` က အောက်ဆုံး၊ `a` က အလယ်၊ `b` က အပေါ်ဆုံးမှာ မြင်ရပါတယ်။
+
+### Overlapping Example — လက်တွေ့
+
+Card နှစ်ခု တစ်ခုပေါ် တစ်ခု ထပ်နေတဲ့ ဥပမာကို ကြည့်ကြရအောင်။
+
+**ဥပမာ -**
+```html
+<div class="card card-1">Card 1</div>
+<div class="card card-2">Card 2</div>
+```
+
+**ဥပမာ -**
+```css
+.card {
+  position: absolute;
+  width: 140px;
+  height: 100px;
+  padding: 10px;
+}
+
+.card-1 {
+  background-color: lightblue;
+  z-index: 1;
+}
+
+.card-2 {
+  background-color: coral;
+  left: 70px;
+  top: 40px;
+  z-index: 2;
+}
+```
+
+မှတ်ချက် — `z-index` တူနေရင် HTML မှာ နောက်မှာ ရေးထားတဲ့ Element က အပေါ်ကို ရောက်တတ်ပါတယ်။
+
+### `z-index` မပါဘဲ Overlap
+
+`z-index` မထည့်ထားရင်တောင် Positioned Element တွေ ထပ်နေနိုင်ပြီး HTML ရဲ့ အစဉ်အရ နောက်ထဲက Element က အပေါ်ကို ရောက်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<div class="x back">Behind</div>
+<div class="x front">Front</div>
+```
+
+**ဥပမာ -**
+```css
+.x {
+  position: absolute;
+  width: 120px;
+  height: 80px;
+}
+
+.back {
+  background-color: gray;
+}
+
+.front {
+  background-color: green;
+  top: 30px;
+  left: 30px;
+}
+```
+
+မှတ်ချက် — `z-index` မရှိတဲ့အခါ HTML Order အရ နောက်က Element က အပေါ်မှာ မြင်ရတတ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `z-index` က Overlap ဖြစ်နေတဲ့ Element တွေရဲ့ အပေါ်အောက် စီစဉ်မှုကို သတ်မှတ်ပါတယ်။
+- `z-index` က Positioned Element တွေမှာသာ အဓိက အလုပ်လုပ်ပါတယ်။
+- Value ကြီးလေ အပေါ်ဆုံးကို ရောက်ပြီး Negative Value က နောက်ကို ပို့ပါတယ်။
+- `z-index` မရှိရင် HTML Order အရ နောက်ထဲက Element က အပေါ်ကို ရောက်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Element တွေ ထပ်နေတဲ့အခါ အပေါ်အောက် စီစဉ်မှုကို ဘယ် Property က ထိန်းချုပ်ပါသလဲ?", options: ["position", "z-index", "display", "float"], correctAnswer: 1, explanation: "z-index က Stacking Order ကို သတ်မှတ်ပေးပါတယ်။" },
+  { id: "q2", question: "z-index က ဘယ် Element တွေမှာ အဓိက အလုပ်လုပ်ပါသလဲ?", options: ["Static element", "Positioned element", "Table cell", "Form input"], correctAnswer: 1, explanation: "relative ၊ absolute ၊ fixed ၊ sticky စတဲ့ Positioned Element တွေမှာ z-index က အလုပ်လုပ်ပါတယ်။" },
+  { id: "q3", question: "z-index Value ကြီးလေ ဘယ်လို ဖြစ်ပါသလဲ?", options: ["အောက်ကို ရောက်လေ", "အပေါ်ကို ရောက်လေ", "ဖျောက်သွားလေ", "ဘာမှ မပြောင်းလဲ", "ဖယ်သွားလေ"], correctAnswer: 1, explanation: "z-index နံပါတ် ကြီးတဲ့ Element က နံပါတ်ငယ်တဲ့ Element ကို ဖုံးပါတယ်။" }
+]} />

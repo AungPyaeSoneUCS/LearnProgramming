@@ -1,0 +1,81 @@
+---
+title: "CSS Max-width — Element ရဲ့ အကျယ်ဆုံး အကန့်အသတ်"
+description: "max-width က width နဲ့ ဘယ်လို ကွာခြားလဲ၊ margin auto နဲ့ Center လုပ်နည်း လေ့လာကြမယ်။"
+---
+
+### width နဲ့ max-width
+
+`width` က Element ရဲ့ အနံကို အမြဲ အတိအကျ သတ်မှတ်ပေးပါတယ်။ `max-width` ကတော့ အကျယ်ဆုံး ကန့်သတ်ချက်သာ ဖြစ်ပြီး Screen ကျဉ်းလာရင် Element က ကိုယ့်အလိုလို ကျဉ်းသွားနိုင်ပါတယ်။ ဒါကြောင့် Responsive Design မှာ `max-width` က ပိုအသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+div.w1 {
+  width: 600px;
+  background-color: coral;
+}
+
+div.w2 {
+  max-width: 600px;
+  background-color: lightblue;
+}
+```
+
+မှတ်ချက် — Screen က 600px ထက် ကျဉ်းရင် `w1` က ပိုလျှံပြီး `w2` ကတော့ ချုံ့လိုက်ပါတယ်။
+
+### max-width Property
+
+`max-width` ရဲ့ Value တွေက px ၊ % ၊ em စတာတွေ ဖြစ်နိုင်ပါတယ်။ Element ရဲ့ Width က ဒီတန်ဖိုးထက် ကျော်မသွားအောင် ကန့်သတ်တဲ့သဘောပါ။
+
+**ဥပမာ -**
+```css
+p {
+  max-width: 500px;
+  background-color: #eaf5ea;
+}
+```
+
+မှတ်ချက် — Content က ရှည်နေလည်း Line တွေက px 500 အထိသာ ရှည်ပြီး ကျော်ရင် နောက်မျဉ်းကို ညှပ် (Wrap) ဖြစ်သွားပါတယ်။
+
+### Margin Auto — Center လုပ်နည်း
+
+Block Element တစ်ခုကို အလျားလိုက် Center လုပ်ချင်ရင် `margin: auto;` (သို့) `margin: 0 auto;` ကို သုံးပါတယ်။ Auto Margin က ဘယ်ညာ Margin တွေကို ညီမျှ ခွဲပေးပြီး Element ကို အလယ်ရောက်စေပါတယ်။
+
+**ဥပမာ -**
+```css
+.center {
+  max-width: 500px;
+  margin: auto;
+  background-color: lightgreen;
+}
+```
+
+မှတ်ချက် — `margin: auto;` က Inline Element တွေမှာ အလုပ်မလုပ်ပါဘူး။ Center လုပ်ချင်တဲ့ Element က Block (သို့) Inline-block ဖြစ်ရပါမယ်။
+
+### Responsive Behavior
+
+`max-width` ပေါင်းမှာ `width: 100%` ထည့်ထားရင် Element က Screen နဲ့ လိုက်လျော ချဲ့ပြီး ကန့်သတ်ချက်ကိုတော့ မကျော်ပါဘူး။ Website Layout တွေမှာ Content Container အတွက် ဒီနည်းကို အသုံးများပါတယ်။
+
+**ဥပမာ -**
+```css
+.container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+```
+
+မှတ်ချက် — Desktop မှာ px 960 အထိ ပြပြီး Mobile မှာတော့ Screen ရဲ့ အနံအတိုင်း ကျုံ့ပြီး အလယ်မှာ နေပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `width` က အနံကို အတိအကျ သတ်မှတ်ပြီး `max-width` က အကျယ်ဆုံးသာ ကန့်သတ်ပါတယ်။
+- `margin: auto;` နဲ့ Block Element ကို Center လုပ်လို့ရပါတယ်။
+- Responsive Layout အတွက် `width: 100%;` နဲ့ `max-width` တွဲသုံးပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Element ရဲ့ အနံကို အတိအကျ အမြဲ သတ်မှတ်ပေးတဲ့ Property က ဘာလဲ?", options: ["max-width", "width", "height", "margin"], correctAnswer: 1, explanation: "width က အနံကို အတိအကျ သတ်မှတ်ပြီး max-width ကတော့ အကန့်အသတ်သာ ဖြစ်ပါတယ်။" },
+  { id: "q2", question: "Block Element ကို အလျားလိုက် Center လုပ်ဖို့ ဘယ် Style ကို သုံးရပါသလဲ?", options: ["margin: 0 auto", "padding: auto", "center: yes", "align: middle"], correctAnswer: 0, explanation: "margin: 0 auto က ဘယ်ညာ Margin တွေကို ညီမျှ ခွဲပေးပြီး Center တည်စေပါတယ်။" },
+  { id: "q3", question: "Screen ကျဉ်းရင် Element ကို ကျုံ့နိုင်စေဖို့ width နဲ့ ဘယ် Property ကို တွဲသုံးရပါသလဲ?", options: ["height: auto", "max-width", "min-width", "border-width"], correctAnswer: 1, explanation: "max-width ကြောင့် Element က Screen ကျဉ်းရင် ကျုံ့ပြီး ကန့်သတ်ချက်ထက် မကျော်တော့ပါဘူး။" }
+]} />

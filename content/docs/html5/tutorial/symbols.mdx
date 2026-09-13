@@ -1,0 +1,91 @@
+---
+title: "HTML Symbols — သင်္ကေတအမျိုးမျိုး"
+description: "Mathematical, Arrow, Greek, Currency စတဲ့ Symbols တွေကို HTML မှာ Entity Name နဲ့ Number သုံးပြီး ပြသပုံ လေ့လာကြည့်ရအောင်။"
+---
+
+### HTML Symbols ဆိုတာ ဘာလဲ?
+
+Keyboard ပေါ်မှာ မရှိတဲ့ သင်္ကေတ (Symbol) အများကြီးကိုလည်း HTML မှာ **Entity** သုံးပြီး ပြသနိုင်ပါတယ်။ ဥပမာ သင်္ချာသင်္ကေတတွေ၊ မြှားတွေ၊ ဂရိအက္ခရာတွေ၊ ငွေကြေးသင်္ကေတတွေ စသဖြင့် ပါဝင်ပါတယ်။
+
+Symbol အများစုအတွက် **Entity Name** ရှိပြီး တချို့အတွက်တော့ Name မရှိဘဲ **Entity Number** နဲ့သာ ရပါတယ်။ Number က Unicode Code Point ကို အခြေခံပါတယ်။
+
+ဥပမာအနေနဲ့ Sum သင်္ကေတကို Entity Name `&sum;` သုံးပြီး ပြနိုင်သလို၊ Empty Set သင်္ကေတကို Entity Number `&#8709;` နဲ့ ပြနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>Total = 100 &sum; 50</p>
+<p>Empty Set: &#8709;</p>
+```
+
+မှတ်ချက် — Symbol တွေက Document ထဲမှာ ပုံမှန်စာလုံးတွေလို ပေါ်ပြီး Copy လုပ်လို့လည်း ရပါတယ်။
+
+### သင်္ချာနဲ့ မြှားသင်္ကေတများ
+
+သင်္ချာသင်္ကေတတွေနဲ့ မြှားသင်္ကေတတွေကို ဖော်မြူလာတွေ၊ ညွှန်ပြချက်တွေ ရေးတဲ့အခါ သုံးပါတယ်။ Entity Name နဲ့ Number နှစ်ခုစလုံး ရှိတတ်ပါတယ်။
+
+| Symbol | Meaning | Entity Name | Entity Number |
+|--------|---------|-------------|---------------|
+| ∑ | Sum (ပေါင်းချုပ်) | `&sum;` | `&#8721;` |
+| ∑ (variant) | Sum | `&sum;` | `&#8721;` |
+| ← | Left arrow (ဘယ်မြှား) | `&larr;` | `&#8592;` |
+| → | Right arrow (ညာမြှား) | `&rarr;` | `&#8594;` |
+| ∞ | Infinity (အကန့်အသတ်မဲ့) | `&infin;` | `&#8734;` |
+| ≈ | Almost equal | `&asymp;` | `&#8776;` |
+
+မှတ်ချက် — Number က Symbol တစ်ခုစီအတွက် Unicode သတ်မှတ်ထားတဲ့ ကုဒ်ဖြစ်ပြီး Name ထက် ပိုပြည့်စုံပါတယ်။
+
+### Greek အက္ခရာနဲ့ ငွေကြေးသင်္ကေတများ
+
+Greek အက္ခရာတွေက Mathematics နဲ့ Science ဖော်မြူလာတွေမှာ အသုံးများပါတယ်။ ငွေကြေးသင်္ကေတတွေကတော့ ဈေးနှုန်းနဲ့ ငွေကြေးပမာဏ ပြတဲ့အခါ သုံးပါတယ်။
+
+| Symbol | Meaning | Entity Name | Entity Number |
+|--------|---------|-------------|---------------|
+| α | Greek Alpha | `&alpha;` | `&#945;` |
+| β | Greek Beta | `&beta;` | `&#946;` |
+| γ | Greek Gamma | `&gamma;` | `&#947;` |
+| € | Euro (ယူရို) | `&euro;` | `&#8364;` |
+| £ | Pound (ပေါင်) | `&pound;` | `&#163;` |
+| ¥ | Yen (ယန်း) | `&yen;` | `&#165;` |
+
+**ဥပမာ -**
+```html
+<h2>သင်္ချာ ဖော်မြူလာ</h2>
+<p>&alpha; + &beta; = 30&deg;</p>
+<p>ဈေးနှုန်း: &euro; 50 / &pound; 45</p>
+<p>ညှွှန်: &larr; ဘယ်၊ &rarr; ညာ</p>
+```
+
+မှတ်ချက် — Symbol တိုင်းဟာ Browser ကြီးတွေမှာ Ctrl+C နဲ့ Ctrl+V လုပ်လို့ ရတဲ့ ပုံမှန်စာလုံးတွေဖြစ်ပြီး အလားတူ Style တွေလည်း ရပါတယ်။
+
+### Symbol ကို Hard Way နှင့် Entity Way
+
+ဒီသင်ခန်းစာမှာ Symbol တွေကို Entity သုံးပြီး ရေးတာတွေ လေ့လာခဲ့ပါတယ်။ ဒါပေမဲ့ Browser များစွာနဲ့ Editor တွေက Symbol တွေကို Keyboard ပေါ်မှာ **တိုက်ရိုက်ရိုက်ခြင်း (Hard Way)** ကိုလည်း ထောက်ပံ့ပါတယ် — ဆိုလိုတာက Greek letter ဒါမှမဟုတ် Arrow ကို Text ထဲကို Copy လုပ်ပြီး ထည့်လိုက်ရုံပါပဲ။
+
+ဒါပေမဲ့ Encoding မကိုက်တဲ့အခါ Symbol တွေ ပျက်စီးနိုင်တာမို့ **Entity သုံးခြင်းက** ပိုစိတ်ချရပြီး Document ရဲ့ Encoding နဲ့ မသက်ဆိုင်ဘဲ အလုပ်လုပ်ပါတယ်။
+
+```html
+<!-- Hard Way: Symbol ကို တိုက်ရိုက် ထည့်ထားသည် -->
+<p>Temperature: 45°C</p>
+
+<!-- Entity Way: Entity နဲ့ အာမခံထားသည် -->
+<p>Temperature: 45&deg;C</p>
+```
+
+မှတ်ချက် — UTF-8 Encoding သုံးထားရင် Hard Way လည်း ရပါတယ်။ ဒါပေမဲ့ အမြဲသေချာစေဖို့ Entity Way က ပိုအန္တရာယ်ကင်းပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Symbol တွေကို Entity Name (ဥပမာ `&sum;`) နဲ့ ပြနိုင်ပါတယ်။
+- Name မရှိတဲ့ Symbol အတွက် Number (ဥပမာ `&#8709;`) သုံးပါ။
+- Mathematical, Arrow, Greek, Currency စတဲ့ Symbol မျိုးစုံ ရှိပါတယ်။
+- Encoding ပျက်စီးမှု ရှောင်ဖို့ Entity သုံးခြင်းက ပိုစိတ်ချရပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Sum သင်္ကေတအတွက် Entity Name က ဘာလဲ?", options: ["&sum;", "&rarr;", "&alpha;", "&euro;"], correctAnswer: 0, explanation: "Sum သင်္ကေတအတွက် Entity Name က sum ဖြစ်ပြီး &sum; လို့ ရေးပါတယ်။" },
+    { id: "q2", question: "ယူရို (Euro) ငွေကြေး သင်္ကေတအတွက် Entity က ဘာလဲ?", options: ["&pound;", "&yen;", "&euro;", "&copy;"], correctAnswer: 2, explanation: "ယူရိုသင်္ကေတကို &euro; နဲ့ ပြပါတယ်။" },
+    { id: "q3", question: "Symbol တွေကို တိုက်ရိုက်ရိုက်တာထက် Entity သုံးခြင်းရဲ့ အကျိုးက ဘာလဲ?", options: ["ပိုမြန်တယ်", "Encoding အမျိုးမျိုးမှာ ပိုစိတ်ချရတယ်", "ပိုလှတယ်", "JavaScript လိုတယ်"], correctAnswer: 1, explanation: "Entity သုံးခြင်းက Document ရဲ့ Encoding နဲ့ မသက်ဆိုင်ဘဲ အလုပ်လုပ်လို့ ပိုစိတ်ချရပါတယ်။" },
+  ]}
+/>

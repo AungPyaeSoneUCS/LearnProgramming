@@ -1,0 +1,58 @@
+---
+title: "HTML Video — Video တွဲထည့်နည်း"
+description: "<video> Tag နဲ့ Video ထည့်နည်း၊ Attribute တွေနဲ့ Source Fallback တွေကို လေ့လာကြည့်ရအောင်။"
+---
+
+`### <video>` Element မိတ်ဆက်
+
+`<video>` Element က Video File တွေကို Webpage မှာ ပြသဖို့ သုံးပါတယ်။ `src` Attribute ကို Video File ရဲ့ Path ထည့်သွင်းလိုက်ရင် Browser က Video ကို ဖွင့်ပေးပါတယ်။ ဒါပေမယ့် `src` တစ်ခုတည်း ထည့်ထားရင် Play ခလုတ်တွေ မပါလာတာမို့ User က ထိန်းချုပ်လို့ မရနိုင်ပါဘူး။
+
+**ဥပမာ -**
+```html
+<video src="movie.mp4" controls></video>
+```
+
+မှတ်ချက် — `controls` Attribute က Play, Pause, Volume စတဲ့ Controls တွေ ပါလာစေတာပါ။ ဒါ့အပြင် `</video>` ကို ပိတ်စရာမလိုဘဲ Self-closing အနေနဲ့ မရေးပါဘူး။
+
+### Video Attributes တွေ
+
+Video Element မှာ အသုံးဝင်တဲ့ Attribute တွေ အများကြီး ရှိပါတယ်။ `autoplay` က စာမျက်နှာ ဖွင့်တာနဲ့ Video ကို အလိုအလျောက် ဖွင့်ပေးပြီး `muted` က အသံကို ပိတ်ထားပေးပါတယ်။ `loop` က Video ပြီးသွားရင် ပြန်စက်စေပြီး `poster` က Video မဖွင့်ခင် ပြသနိုင်တဲ့ Cover Image ကို သတ်မှတ်ပေးပါတယ်။ `width` နဲ့ `height` က Video ရဲ့ အရွယ်အစားကို ချိန်ညှိပေးတဲ့ Attribute တွေပါ။
+
+**ဥပမာ -**
+```html
+<video src="movie.mp4" controls autoplay muted loop
+       poster="poster.jpg" width="640" height="360"></video>
+```
+
+မှတ်ချက် — `autoplay` တစ်ခုတည်း သုံးရင် Browser တော်တော်များများက ပိတ်ပေးတတ်လို့ `muted` နဲ့ တွဲသုံးရတတ်ပါတယ်။
+
+`### <source>` နဲ့ Format အမျိုးမျိုး
+
+Browser တိုင်း Format တိုင်းကို မပံ့ပိုးနိုင်တာမို့ `<source>` Element တွေကို အများကြီး ထည့်နိုင်ပါတယ်။ Browser က သူ့ရဲ့ ပထမဆုံး ဖွင့်နိုင်တဲ့ Format ကို တွေ့ပြီး ဖွင့်ပါတယ်။ `type` Attribute နဲ့ MIME Type ကိုလည်း တွဲထည့်ပေးနိုင်ပြီး Format အမျိုးမျိုးကို ထောက်ပံ့ဖို့ Fallback အဖြစ် အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<video width="640" height="360" controls>
+  <source src="movie.mp4" type="video/mp4">
+  <source src="movie.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
+```
+
+မှတ်ချက် — `<source>` သုံးတဲ့အခါ `<video>` Tag မှာ `src` မထည့်တော့ဘဲ `<source>` တစ်ခုချင်းစီရဲ့ `src` ထဲမှာ ထည့်ပါတယ်။ Browser က ဖွင့်နိုင်တဲ့ ပထမဆုံး Source ကို ရွေးပါတယ်။
+
+### မှတ်ထားရမယ့် အချက်များ
+
+- `controls` မပါရင် Video ကို User က ထိန်းချုပ်လို့မရဘူး။
+- `autoplay` ကို `muted` နဲ့ တွဲသုံးရတတ်တယ်။
+- Format အမျိုးမျိုး ထောက်ပံ့ဖို့ `<source>` Element တွေ အများကြီး ထည့်နိုင်တယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Video Player မှာ Play နဲ့ Volume ခလုတ်တွေ ပါလာစေချင်ရင် ဘယ် Attribute ကို ထည့်ရပါသလဲ?", options: ["autoplay", "controls", "loop", "poster"], correctAnswer: 1, explanation: "Controls attribute က Player ရဲ့ ခလုတ်တွေကို ပြသပေးပါတယ်။" },
+    { id: "q2", question: "Browser အများစုက Autoplay ကို ဘယ်အချိန်မှာ ခွင့်ပြုတတ်ပါသလဲ?", options: ["Muted နဲ့ တွဲသုံးရင်", "Loop နဲ့ တွဲသုံးရင်", "Poster နဲ့ တွဲသုံးရင်", "ဘယ်တော့မှ ခွင့်မပြုဘူး"], correctAnswer: 0, explanation: "Browser အများစုက autoplay ကို muted နဲ့တွဲရင် ခွင့်ပြုပါတယ်။" },
+    { id: "q3", question: "Source Element အများကြီးထဲက Browser က ဘယ်ဟာကို ရွေးပါသလဲ?", options: ["အကြီးဆုံး Source", "နောက်ဆုံး Source", "ပထမဆုံး ဖွင့်နိုင်တဲ့ Source", "အသေးဆုံး Source"], correctAnswer: 2, explanation: "Browser က ဖွင့်နိုင်တဲ့ ပထမဆုံး Source ကို ရွေးပါတယ်။" },
+  ]}
+/>

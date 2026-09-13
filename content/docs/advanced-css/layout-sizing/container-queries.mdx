@@ -1,0 +1,46 @@
+---
+title: "Container Scroll State Queries"
+description: "Container ၏ Scroll အနေအထားပေါ်မူတည်ပြီး Style ပြောင်းခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="Scroll သိတတ်သော စတိုင်များ (Scroll Aware Styling)">
+Container Queries က Element တစ်ခုရဲ့ အရွယ်အစား (Size) ကို သိရှိသလိုပဲ၊ Scroll State Queries ကတော့ အဲ့ဒီ Element က "Scroll လုပ်နေလား? ထိပ်ဆုံးကို ရောက်နေလား?" ဆိုတဲ့ အခြေအနေ (State) ကို သိရှိနိုင်ပါတယ်။
+</Aside>
+
+### အသုံးပြုပုံ
+Scroll လုပ်လို့ရမယ့် Container တစ်ခုကို `container-type: scroll-state` လို့ အရင် သတ်မှတ်ပေးရပါတယ်။ အဲ့ဒီနောက် သူ့အထဲက Element တွေကို အခြေအနေပေါ် မူတည်ပြီး ပြောင်းလဲဖို့ `@container` နဲ့ ဖမ်းပြီး ရေးရပါတယ်။
+
+```css
+.scroll-container {
+  overflow-y: auto;
+  container-type: scroll-state; /* Scroll ရဲ့ အခြေအနေကို စောင့်ကြည့်မယ်လို့ သတ်မှတ်လိုက်တာပါ */
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  padding: 1rem;
+  background: white;
+  transition: box-shadow 0.3s;
+}
+
+/* Container က Scroll လုပ်လိုက်တဲ့ အချိန် (ထိပ်ဆုံးမှာ မဟုတ်တော့တဲ့ အချိန်) */
+@container scroll-state(stuck: top) {
+  .sticky-header {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Scroll ဆွဲတာနဲ့ အရိပ် (Shadow) လေး ပေါ်လာမယ် */
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
+```
+
+### စစ်ဆေးနိုင်သော အခြေအနေများ (Queries)
+*   `scroll-state(stuck: top)`: Sticky ဖြစ်နေတဲ့ Element က အပေါ်ဘက်ကို ကပ်သွားတဲ့ အချိန်။
+*   `scroll-state(stuck: bottom)`: Sticky ဖြစ်နေတဲ့ Element က အောက်ဘက်ကို ကပ်သွားတဲ့ အချိန်။
+*   `scroll-state(snapped: x)`: Scroll Snap Point တစ်ခုခုမှာ အတိအကျ ရပ်သွားတဲ့ အချိန်။
+*   `scroll-state(overflowing: block)`: Content တွေ များလွန်းလို့ ဖုံးကွယ်နေပြီး Scroll Bar ပေါ်လာတဲ့ အချိန်။
+
+<Aside type="tip">
+အရင်တုန်းကဆိုရင် Sticky Header တွေမှာ Shadow ပေါ်လာဖို့ JavaScript (IntersectionObserver) ကို သုံးပြီး ရေးခဲ့ရပါတယ်။ အခုအခါမှာတော့ CSS သက်သက်နဲ့တင် အလွယ်တကူ ဖန်တီးလို့ ရသွားပါပြီ။
+</Aside>

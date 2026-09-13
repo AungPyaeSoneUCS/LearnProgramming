@@ -1,0 +1,103 @@
+---
+title: "Grid Items — Item တွေကို Grid ထဲမှာ နေရာချခြင်း"
+description: "grid-column, grid-row, grid-template-areas နဲ့ span တို့ဖြင့် grid item တွေကို track အမျိုးမျိုးကြားမှာ နေရာချနည်း လေ့လာကြမယ်။"
+---
+
+Grid container က track တွေကို ဆောက်ပေးပြီး **grid items** တွေဟာ default အားဖြင့် ရှေ့ဆုံးရဲ့ အကွက်ထဲက စပြီး အစီအစဉ်လိုက် နေရာချခံရပါတယ်။ ဒါပေမယ့် item တစ်ခုချင်းစီပေါ်မှာ property တွေ သတ်မှတ်ပြီး သူတို့ track အများကြီး ကျော်အောင်၊ နှစ်သက်ရာ နေရာမှာ ထားနိုင်ပါတယ်။
+
+### grid-column — Item ၏ အနေအထား (Column)
+
+`grid-column` က item တစ်ခုဟာ column track ဘယ်ကနေ ဘယ်အထိ နေရာယူမလဲ သတ်မှတ်ပါတယ်။ Grid line နံပါတ်တွေနဲ့ သုံးပြီး 1 က ပထမဆုံး column line ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.item {
+  grid-column: 2 / 4;
+}
+```
+
+မှတ်ချက် — ဒီ item က column line 2 ကနေ line 4 အထိ ဖြန့်လိုက်ပြီး track ၂ ခု (column 2 နဲ့ 3) ကို ပေါင်းယူလိုက်ပါတယ်။ `/` ရှေ့က start line၊ နောက်က end line ဖြစ်ပါတယ်။
+
+### grid-row — Row အနေအထားနဲ့ span
+
+`grid-row` ကလည်း ဒီလိုပဲ row line နံပါတ်တွေနဲ့ သုံးပါတယ်။ Track အရေအတွက် ပေါင်းယူမယ်ဆိုရင် `span` keyword ကိုသုံးပြီး ရှေ့ယူမယ့် track ရေကြည့်ပြီး သတ်မှတ်လို့လည်း ရပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.item {
+  grid-row: 1 / span 2;
+}
+```
+
+မှတ်ချက် — `1 / span 2` ဆိုတာ row line 1 ကနေစပြီး row ၂ ခုကို ဆက်ယူဆိုတဲ့ အဓိပ္ပာယ်ပါ။ End line အတိအကျ မသိရင် span က ပိုရှင်းပါတယ်။
+
+### grid-template-areas — နာမည်တွေနဲ့ layout
+
+Grid track နံပါတ်တွေ မှတ်ထားရတာ ခက်တဲ့အခါ `grid-template-areas` ကို သုံးပြီး layout ကို နာမည်တွေနဲ့ သတ်မှတ်နိုင်ပါတယ်။ ASCII art လိုပုံစံနဲ့ ဖတ်ရတာ အလွန် ရှင်းပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<div class="page">
+  <header class="header">Header</header>
+  <nav class="nav">Nav</nav>
+  <main class="main">Main</main>
+  <footer class="footer">Footer</footer>
+</div>
+```
+
+မှတ်ချက် — Element တစ်ခုစီမှာ `class` တစ်ခုစီ ရှိပြီး ဒီ class တွေကို အောက်က CSS မှာ `grid-area` တန်ဖိုးတွေနဲ့ ချိတ်ဆက်ပါမယ်။
+
+**ဥပမာ -**
+
+```css
+.page {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-areas:
+    "header header"
+    "nav    main"
+    "footer footer";
+  gap: 12px;
+}
+
+.header { grid-area: header; }
+.nav    { grid-area: nav; }
+.main   { grid-area: main; }
+.footer { grid-area: footer; }
+```
+
+မှတ်ချက် — `grid-template-areas` ထဲက string တစ်ကြောင်းစီက row တစ်ခုစီကို ကိုယ်စားပြုပြီး နာမည်တူတဲ့ cell တွေ ကပ်နေရင် သူတို့က track တစ်ခုတည်းကြားမှာ စည်းနေပါတယ်။ `.` က ကွက်လပ် cell ကို ကိုယ်စားပြုပါတယ်။
+
+### Item ကို Column အများကြီးဖြန့်ပြီး နေရာချခြင်း
+
+Banner ဒါမှမဟုတ် highlight card တစ်ခုကို row တစ်ခုလုံး ဖြန့်ထားချင်ရင် `grid-column: 1 / -1` နည်းပြီး grid ရဲ့ နောက်ဆုံး line အထိ ဖြန့်နိုင်ပါတယ်။ `-1` က နောက်ဆုံး line ကို ဆိုလိုပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.banner {
+  grid-column: 1 / -1;
+}
+```
+
+မှတ်ချက် — Track အရေအတွက် ဘယ်လောက်ပဲ ဆောက်ထားပါစေ `1 / -1` က row တစ်ခုလုံးကို အမြဲ ဖြန့်ပေးပါတယ်။ Column ရေသိစရာ မလိုတာကြောင့် ဒီနည်းကို နေရာအခိုင်အမာ နေရာချထားတွေမှာ သုံးကြပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `grid-column: start / end` က line နံပါတ်များဖြင့် အနေအထားကို သတ်မှတ်သည်။
+- `span` ဖြင့် track အရေအတွက်ကို သတ်မှတ်နိုင်သည်။
+- `grid-template-areas` က layout ကို နာမည်များဖြင့် သတ်မှတ်နိုင်သည်။
+- `grid-column: 1 / -1` က row တစ်ခုလုံး အနှံ့ ဖြန့်ပေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Item တစ်ခုကို column track နှစ်ခု ပေါင်းယူစေချင်ရင် ဘယ် CSS ကို သုံးပါသလဲ?", options: ["Grid column 2 slash 4", "Grid area main", "Grid auto rows", "Align grid start"], correctAnswer: 0, explanation: "grid-column: 2 / 4 က column line 2 ကနေ line 4 အထိ ဖြန့်ပြီး track နှစ်ခုကို ယူပါတယ်။" },
+    { id: "q2", question: "Grid line နံပါတ်တွေ မသိဘဲ track အရေအတွက်နဲ့ သတ်မှတ်ဖို့ ဘယ် keyword ကို သုံးပါသလဲ?", options: ["Auto", "Span", "Grow", "Fill"], correctAnswer: 1, explanation: "grid-row: 1 / span 2 လို span keyword က end line ကို မသိရင်တောင် track အရေအတွက်နဲ့ သတ်မှတ်နိုင်ပါတယ်။" },
+    { id: "q3", question: "grid-template-areas ထဲမှာ ကွက်လပ် cell တစ်ခုကို ကိုယ်စားပြုဖို့ ဘာ symbol ကို သုံးပါသလဲ?", options: ["Dash", "Asterisk", "Dot", "Comma"], correctAnswer: 2, explanation: "grid-template-areas ထဲမှာ . က ကွက်လပ်ဖြစ်တဲ့ empty cell ကို ကိုယ်စားပြုပါတယ်။" }
+  ]}
+/>

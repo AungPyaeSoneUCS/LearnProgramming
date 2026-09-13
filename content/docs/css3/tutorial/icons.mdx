@@ -1,0 +1,85 @@
+---
+title: "CSS Icons — Icon Fonts တွေနဲ့ Web Page အလှဆင်ခြင်း"
+description: "icon fonts ဆိုတာ ဘာလဲ၊ Font Awesome စတဲ့ libraries တွေကို link နဲ့ ထည့်ပြီး i element နဲ့ icon ပြနည်း။"
+---
+
+### Icon Font ဆိုတာ ဘာလဲ?
+
+**Icons** ဆိုတာ အရာဝတ္ထုတွေ၊ လုပ်ဆောင်ချက်တွေကို ဖော်ပြတဲ့ သေးငယ်တဲ့ သင်္ကေတလေးတွေပါ။ **Icon Font** ကတော့ icon တွေကို ပုံ (image) အနေနဲ့ မဟုတ်ဘဲ **font glyph** အနေနဲ့ ထားတာပါ။ ဒါကြောင့် `font-size`, `color` စတဲ့ CSS properties တွေနဲ့ အရွယ်အစားနဲ့ အရောင် ချိန်ညှိလို့ လွယ်ကူပါတယ်။
+
+### နာမည်ကြီး Icon Libraries
+
+Web မှာ အသုံးများတဲ့ icon fonts တွေကတော့ **Font Awesome**, **Bootstrap Icons**, **Google Material Icons** (Google Icons) တို့ပါ။ CDN link တစ်ကြောင်း ထည့်ရုံနဲ့ သုံးလို့ရတာမို့ အရမ်း အဆင်ပြေပါတယ်။
+
+### Font Awesome ထည့်သုံးနည်း
+
+Font Awesome ကို သုံးဖို့ page ရဲ့ `head` ထဲမှာ stylesheet link တစ်ကြောင်း ထည့်ရပါမယ်။ CDN (Content Delivery Network) ကနေ link လုပ်တာက အဆင်ပြေဆုံးပါ။
+
+**ဥပမာ -**
+```html
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+```
+
+မှတ်ချက် — Link ကို page ရဲ့ head ထဲ ထည့်ပြီးမှသာ icon classes တွေ အလုပ်လုပ်ပါမယ်။
+
+### i Element နဲ့ Icon ပြခြင်း
+
+Icon တွေကို `<i>` element အတွင်းမှာ class ပေးပြီး ပြလေ့ရှိပါတယ်။ Class ကသာ ဘယ် icon ဖြစ်မလဲဆိုတာကို ဆုံးဖြတ်ပေးပါတယ်။
+
+**ဥပမာ -**
+```html
+<i class="fa-solid fa-house"></i>
+<i class="fa-solid fa-user"></i>
+<i class="fa-solid fa-magnifying-glass"></i>
+<i class="fa-brands fa-css3-alt"></i>
+```
+
+မှတ်ချက် — `fa-solid` လို style class နဲ့ `fa-house` လို icon name class ကို တွဲပေးမှပဲ icon ပေါ်ပါတယ်။
+
+### Icon အရောင် နဲ့ အရွယ်အစား ချိန်ညှိခြင်း
+
+Icon က text (font glyph) ဖြစ်လို့ `font-size` နဲ့ `color` သုံးပြီး style လုပ်နိုင်ပြီး hover မှာ အရောင်ပြောင်းတာလိုမျိုးလည်း ရပါတယ်။
+
+**ဥပမာ -**
+```css
+i {
+  font-size: 32px;
+  color: #4CAF50;
+}
+
+.icon-menu i:hover {
+  color: #ff5722;
+}
+```
+
+မှတ်ချက် — Icon က image မဟုတ်လို့ `<img>` ထည့်စရာ မလိုဘဲ CSS နဲ့ပဲ အလှဆင်လို့ရတာက icon fonts ရဲ့ အဓိက အားသာချက်ပါ။
+
+### Bootstrap Icons နဲ့ Google Icons
+
+အခြား library တွေကိုလည်း CDN link နဲ့ အတူတူ ထည့်သုံးနိုင်ပြီး class name တွေက library အလိုက် ကွဲပြားပါတယ်။
+
+**ဥပမာ -**
+```html
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/icon?family=Material+Icons">
+```
+
+မှတ်ချက် — Bootstrap Icons က `bi` prefix, Google Icons က `material-icons` class သုံးလို့ documentation ကို ကြည့်ပြီး class name မှန်မှန် ရေးဖို့ လိုပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Icon fonts တွေက icon တွေကို font glyph အဖြစ် ထားလို့ CSS နဲ့ style ရလွယ်ပါတယ်။
+- `head` ထဲမှာ CDN stylesheet link ထည့်ပြီးမှ icon classes တွေ အလုပ်လုပ်ပါတယ်။
+- Library အလိုက် class name (fa-solid fa-house, bi bi-house, material-icons) ကွဲပြားပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Icon fonts တွေက icon တွေကို ဘယ်လို သိုလှောင်ထားလဲ?", options: ["သီးခြား image file တွေအနေနဲ့", "font glyph တွေအနေနဲ့", "video အနေနဲ့", "database ထဲမှာ"], correctAnswer: 1, explanation: "icon font က icon တွေကို font glyph အဖြစ် ထားလို့ font-size နဲ့ color နဲ့ ပြောင်းလို့ရပါတယ်။" },
+  { id: "q2", question: "Font Awesome ကို သုံးဖို့ ပထမဆုံး ဘာလုပ်ရလဲ?", options: ["head ထဲမှာ CDN stylesheet ကို link ထည့်ရတယ်", "img tag နဲ့ ပုံထည့်ရတယ်", "video tag ထည့်ရတယ်", "script tag ထည့်ရတယ်"], correctAnswer: 0, explanation: "head ထဲမှာ stylesheet link ထည့်မှသာ icon classes တွေ ရနိုင်ပါတယ်။" },
+  { id: "q3", question: "i element မှာ class ပေးတာက ဘာအတွက်လဲ?", options: ["style attribute လို့ပဲ ရှိတယ်", "ဘယ် icon glyph ကို ပြမလဲ ဆုံးဖြတ်တယ်", "jQuery plugin activate လုပ်တယ်", "comment အနေနဲ့ပဲ ရှိတယ်"], correctAnswer: 1, explanation: "class name (fa-solid fa-house လို) က icon ရဲ့ ပုံစံနဲ့ glyph ကို သတ်မှတ်ပေးပါတယ်။" }
+]} />

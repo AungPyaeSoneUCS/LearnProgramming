@@ -1,0 +1,23 @@
+---
+title: "CSS Quiz — CSS3 သင်တန်း အပြည့်အစုံ စစ်ဆေးမှု"
+description: "Selectors ၊ box model ၊ colors ၊ flexbox ၊ grid ၊ position ၊ media queries ၊ transitions ၊ units နဲ့ specificity အပါအဝင် CSS3 သင်တန်းတစ်ခုလုံးက မေးခွန်း ၁၀ ခု။"
+---
+
+သင်တန်း တစ်ခုလုံးကို ဖြတ်ကျော်ပြီးပြီဆိုတော့ သင်ယူခဲ့သမျှကို တစ်နေရာတည်းမှာ ပြန်စုပြီး စစ်ဆေးကြည့်ဖို့ အချိန်တန်ပါပြီ။ ဒီ Quiz မှာ Selector ၊ Box Model ၊ Color ၊ Flexbox ၊ Grid ၊ Position ၊ Media Query ၊ Transition ၊ Unit နဲ့ Specificity ဆိုတဲ့ အကြောင်းအရာ ၁၀ မျိုးမှာ တစ်မျိုးစီ မေးခွန်းပါဝင်ပါတယ်။ တစ်ခုခု မမှန်ရင် ရှင်းလင်းချက်နဲ့အတူ ပြန်လေ့လာနိုင်ဖို့ လိုအပ်တဲ့ ရှင်းပြချက်တွေလည်း ထည့်ပေးထားပါတယ်။ ပျော်ပျော် ဖြေလိုက်ပါ — ဒါက သင်တန်း နောက်ဆုံး Certificate Test မဟုတ်ပါဘူး။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Class Selector ကို ဘယ်သင်္ကေတ နဲ့ ရေးသနည်း?", options: ["#", ".", "*", ":"], correctAnswer: 1, explanation: "Class Selector ကို dot (.) နဲ့ ရေးပြီး ID ကို hash (#) နဲ့ ရေးပါတယ်။" },
+    { id: "q2", question: "Box Model မှာ Content ရဲ့ အပြင်ဘက်က ပထမဆုံး အလွှာက ဘာလဲ?", options: ["Margin", "Border", "Padding", "Shadow"], correctAnswer: 2, explanation: "Box Model က Content → Padding → Border → Margin စဉ်အတိုင်း ဖြစ်ပြီး Content နဲ့ Border ကြားမှာ Padding ရှိပါတယ်။" },
+    { id: "q3", question: "CSS မှာ အရောင် သတ်မှတ်ရန် နည်း သုံးမျိုး ကဘာတွေလဲ?", options: ["Name, Hex, RGB", "Name သာ", "Hex သာ", "RGB သာ"], correctAnswer: 0, explanation: "red လို Color Name ၊ #ff0000 လို Hexadecimal ၊ rgb() စသဖြင့် သုံးမျိုးနဲ့ သတ်မှတ်နိုင်ပါတယ်။" },
+    { id: "q4", question: "Flexbox Layout ရရှိဖို့ Container တစ်ခုမှာ ဘယ် Property ကို သတ်မှတ်ရပါသလဲ?", options: ["display: grid", "display: flex", "float: left", "position: relative"], correctAnswer: 1, explanation: "display: flex က Container ကို Flex Container ဖြစ်စေပြီး Child တွေကို Flex Item များ ဖြစ်စေပါတယ်။" },
+    { id: "q5", question: "Grid ထဲမှာ Column သုံးခု ညီညီ ခွဲဖို့ ဘာကို သုံးပါသလဲ?", options: ["grid-template-columns: repeat(3, 1fr)", "grid-template-rows: 3", "display: block", "gap: 3px"], correctAnswer: 0, explanation: "grid-template-columns: repeat(3, 1fr) က 1fr အညီမျှ အတန်း သုံးခု ဖန်တီးပေးပါတယ်။" },
+    { id: "q6", question: "Browser Viewport နဲ့ နေရာချပြီး Scroll လုပ်လည်း မရွေ့တဲ့ Position က ဘာလဲ?", options: ["Relative", "Absolute", "Fixed", "Sticky"], correctAnswer: 2, explanation: "position: fixed က Viewport နဲ့ နေရာချလို့ Scroll ဆင်းလည်း နေရာကနေ မရွေ့ပါဘူး။" },
+    { id: "q7", question: "Screen အကျယ်ပေါ် မူတည်ပြီး Style ပြောင်းလဲဖို့ ဘာကို သုံးပါသလဲ?", options: ["@media Rule", "link Tag", "href Attribute", "viewport Meta Tag"], correctAnswer: 0, explanation: "@media Rule ထဲက min-width ၊ max-width တွေနဲ့ Screen အရွယ်အလိုက် Style ပြောင်းနိုင်ပါတယ်။" },
+    { id: "q8", question: "Transition မှာ Change ကြာချိန် Duration ကို ဘယ် Property နဲ့ သတ်မှတ်ပါသလဲ?", options: ["transition-property", "transition-duration", "transition-timing", "animation-time"], correctAnswer: 1, explanation: "transition-duration က 0.5s လိုမျိုး ပြောင်းလဲချိန် ကြာမြင့်မှုကို သတ်မှတ်ပါတယ်။" },
+    { id: "q9", question: "Root (html) Font Size ပေါ် မူတည်တဲ့ Responsive Unit က ဘာလဲ?", options: ["em", "px", "rem", "pt"], correctAnswer: 2, explanation: "rem က Root Element ရဲ့ Font Size ပေါ်မူတည်ပြီး em က Parent ရဲ့ Font Size ပေါ် မူတည်ပါတယ်။" },
+    { id: "q10", question: "Specificity (ဦးစားပေးအား) မှာ အားအပြင်းဆုံး Selector က ဘာလဲ?", options: ["Element Selector", "Class Selector", "ID Selector", "Universal Selector"], correctAnswer: 2, explanation: "ID Selector က Specificity အမြင့်ဆုံး ဖြစ်ပြီး Class က ၎င်းနောက် ၊ Element က အားအနည်းဆုံး ဖြစ်ပါတယ်။" }
+  ]}
+/>

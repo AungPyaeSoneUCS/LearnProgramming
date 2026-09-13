@@ -1,0 +1,166 @@
+---
+title: "CSS Tooltips — Tooltip ဖန်တီးနည်း"
+description: "CSS pseudo-element နှင့် Positioning များဖြင့် Hover လုပ်တိုင်း Tooltip ပြသပေးနိုင်သော နည်းလမ်းကို လေ့လာကြမယ်။"
+---
+
+Tooltip ဆိုတာ User က Element တစ်ခုပေါ်မှာ Mouse နဲ့ Hover လုပ်တဲ့အခါ အသေးစိတ် အချက်အလက် ပြသပေးတဲ့ Box လေးဖြစ်ပါတယ်။ CSS ရဲ့ `::after` Pseudo-element နဲ့ `content` Property ကို သုံးရင် JavaScript မလိုဘဲ Tooltip ဖန်တီးနိုင်ပါတယ်။
+
+### `::after` Pseudo-element ဖြင့် Tooltip Box
+
+`::after` က Element ရဲ့ အတွင်းဘက် နောက်ဆုံးမှာ Content အသစ်တစ်ခု ထည့်ပေးပါတယ်။ `content` Property မှာ Tooltip စာသားကို ရေးပြီး `position: absolute` နဲ့ Parent ရဲ့ အပေါ်မှာ နေရာချနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip::after {
+  content: "ဒါက Tooltip စာသားပါ";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  background: black;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  opacity: 0;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+}
+```
+
+မှတ်ချက် — `bottom: 100%` က Tooltip Box ကို Parent ရဲ့ အပေါ်ဘက်ကို ကပ်စေပြီး `opacity: 0` က Box ကို ဝှက်ထားပြီး Hover မှာမှ `opacity: 1` ပြသပါတယ်။
+
+### Tooltip ကို Center ချိန်ခြင်း
+
+Tooltip Box ကို Parent ရဲ့ အလယ်တည့်တည့်မှာ ရောက်စေဖို့ `left: 50%` နဲ့ `transform: translateX(-50%)` ကို အတူတွဲ သုံးပါတယ်။
+
+**ဥပမာ -**
+```css
+.tooltip::after {
+  content: "Tooltip စာသား";
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: #333;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+```
+
+မှတ်ချက် — `transform: translateX(-50%)` က Box Width ရဲ့ တစ်ဝက်ကို ဘယ်ဖက်ဆွဲပေးလို့ Center မှာ တည့်တည့် နေရာရပါတယ်။
+
+### Data Attribute ဖြင့် Tooltip စာသား ပြောင်းနိုင်ခြင်း
+
+`content: attr(data-tip)` ကို သုံးရင် Tooltip စာသားကို HTML Element ရဲ့ `data-tip` Attribute ကနေ ပြောင်းလို့ ရပါတယ်။ Tooltip အများကြီး ဖန်တီးရတဲ့အခါ ပိုအဆင်ပြေပါတယ်။
+
+**ဥပမာ -**
+```html
+<span class="tooltip" data-tip="အကူအညီ စာသားလေး">Hover လုပ်ပါ</span>
+```
+
+မှတ်ချက် — `data-tip` ရဲ့ တန်ဖိုးကို Tooltip စာသားအနေနဲ့ ယူပါမယ်။
+
+**ဥပမာ -**
+```css
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: darkblue;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+}
+```
+
+မှတ်ချက် — `transition: opacity 0.3s` ထည့်ထားလို့ Tooltip က ရုတ်တရက် မပေါ်ဘဲ ချောမွေ့စွာ ပေါ်လာပါတယ်။
+
+### Styled Tooltip တစ်ခုလုံး ဥပမာ
+
+Transition ရော Arrow ပါ ပြည့်စုံတဲ့ Tooltip တစ်ခု ဖန်တီးရအောင်။ `::before` နဲ့ Arrow လေးကိုပါ ထည့်ပါမယ်။
+
+**ဥပမာ -**
+```html
+<button class="download-btn">Download ရယူမယ်</button>
+```
+
+မှတ်ချက် — Button ဖြစ်လို့ Tooltip က Button အပေါ်မှာ ပေါ်ပါမယ်။
+
+**ဥပမာ -**
+```css
+.download-btn {
+  position: relative;
+  padding: 12px 20px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.download-btn::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: #222;
+  border-bottom: none;
+  opacity: 0;
+}
+
+.download-btn::after {
+  content: "ဖိုင်အသစ်တွေ ရှိနေပါတယ်";
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.download-btn:hover::before,
+.download-btn:hover::after {
+  opacity: 1;
+}
+```
+
+မှတ်ချက် — `::before` က Tooltip အောက်က Arrow ကို ဖန်တီးပေးပြီး Hover လုပ်တဲ့အခါ Arrow ရော Box ရော တစ်ပြိုင်နက် ပေါ်လာပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Tooltip ဖန်တီးရန် `::after` သို့မဟုတ် `::before` Pseudo-element များကို အသုံးပြုပါသည်။
+- Tooltip နေရာချရန် Parent Element မှာ `position: relative` ပေးရန် လိုအပ်ပါသည်။
+- `attr(data-tip)` ဖြင့် Tooltip စာသားကို HTML မှ ထိန်းချုပ်နိုင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Tooltip Box ရဲ့ စာသားကို ဘယ် Property နဲ့ ထည့်ပါသလဲ?", options: ["text", "title", "content", "label"], correctAnswer: 2, explanation: "content Property ထဲမှာ Tooltip စာသားကို ထည့်သွင်းပါတယ်။" },
+  { id: "q2", question: "Tooltip Box ကို Parent ပေါ်မှာ နေရာချဖို့ Parent Element မှာ ဘာ Property လိုအပ်ပါသလဲ?", options: ["position: relative", "position: absolute", "float: left", "display: grid"], correctAnswer: 0, explanation: "Parent က position relative ဖြစ်မှ Absolute တည်နေရာကို Parent နဲ့ တွက်ချက်နိုင်ပါတယ်။" },
+  { id: "q3", question: "Tooltip ကို Center ချိန်ရန် left 50% နဲ့ တွဲသုံးရတဲ့ Property ကဘာလဲ?", options: ["transform: translateX", "margin: auto", "text-align: center", "width: 100%"], correctAnswer: 0, explanation: "transform: translateX(-50%) က Box Width အရ ဘယ်ဖက်ဆွဲပေးလို့ Center ဖြစ်ပါတယ်။" }
+]} />

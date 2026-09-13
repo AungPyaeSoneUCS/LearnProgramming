@@ -1,0 +1,92 @@
+---
+title: "CSS Image Styling — Image များကို Style လုပ်နည်း"
+description: "Image များကို Responsive ဖြစ်စေရန်၊ ဝိုင်းဝိုင်းစက်စက် နှင့် Thumbnail ပုံစံများ ပြုလုပ်နည်းကို လေ့လာကြမယ်။"
+---
+
+Website တွေမှာ Image ဟာ အဓိက နေရာကနေ ပါဝင်ပါတယ်။ CSS နဲ့ Image တွေကို လှပစွာ ချိန်ညှိနိုင်သလို Screen အရွယ်အစားတိုင်းနဲ့ပါ လိုက်လျောညီထွေ ဖြစ်အောင် ပြုလုပ်နိုင်ပါတယ်။
+
+### Responsive Image ဖန်တီးခြင်း
+
+Image က Container ရဲ့ အကျယ်ထက် ပိုမကျယ်စေဖို့ `max-width: 100%` ကို သုံးပြီး `height: auto` က ပုံရဲ့ အချိုးအစားမပျက်စေဖို့ အမြင့်ကို အလိုအလျောက် ထိန်းပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+img {
+  max-width: 100%;
+  height: auto;
+}
+```
+
+မှတ်ချက် — `width: 100%` ဆိုရင် Container ထက် သေးတဲ့ပုံ ကြီးသွားနိုင်ပြီး `max-width: 100%` ကတော့ Container ရဲ့ အကျယ်အထိသာ ကြီးစေပါတယ်။
+
+### Rounded Image တွေဖန်တီးခြင်း
+
+`border-radius` နဲ့ ပုံရဲ့ ထောင့်တွေကို ဝိုင်းအောင် ပြုလုပ်နိုင်ပါတယ်။ `border-radius: 50%` ဆိုရင် ပုံက စက်ဝိုင်းပုံ ဖြစ်သွားပါတယ်။
+
+**ဥပမာ -**
+```css
+.rounded {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+```
+
+မှတ်ချက် — `border-radius: 50%` က စတုရန်းပုံကို စက်ဝိုင်းဖြစ်စေပြီး `object-fit: cover` က ပုံကို Box အတွင်း ပြည့်အောင်ဖြတ်ပြီး ပြသပါတယ်။
+
+### Thumbnail ပုံစံ ဖန်တီးခြင်း
+
+Border ၊ Padding ၊ Shadow စတာတွေ ပေါင်းစပ်ပြီး ပုံကို Thumbnail ပုံစံ ဖန်တီးနိုင်ပါတယ်။ Gallery ရဲ့ ပုံအသေးစား စာရင်းတွေမှာ အသုံးများပါတယ်။
+
+**ဥပမာ -**
+```css
+.thumbnail {
+  max-width: 150px;
+  height: auto;
+  border: 4px solid #ddd;
+  border-radius: 12px;
+  padding: 5px;
+}
+
+.thumbnail:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+```
+
+မှတ်ချက် — Hover လုပ်တဲ့အခါ Box-shadow ပေါ်လာလို့ ပုံက ပိုထင်ရှားပြီး Click လို့ရတဲ့ ပုံစံ ဖြစ်လာပါတယ်။
+
+### Screen အလိုက် Image ပြောင်းခြင်း
+
+`<picture>` Element နဲ့ `srcset` ကို သုံးရင် Screen အရွယ်ပေါ်လိုက် သင့်တော်တဲ့ Image File ကို Browser က အလိုအလျောက် ရွေးယူပါတယ်။
+
+**ဥပမာ -**
+```html
+<picture>
+  <source media="(min-width: 800px)" srcset="landscape-large.jpg">
+  <source media="(min-width: 400px)" srcset="landscape-medium.jpg">
+  <img src="landscape-small.jpg" alt="ခင်းကျင်းပုံ">
+</picture>
+```
+
+မှတ်ချက် — Screen အကျယ်ပေါ်လိုက် File အရွယ်ကို လျှော့ချနိုင်လို့ Page Load Speed ပါ တိုးတက်စေပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `max-width: 100%` နဲ့ `height: auto` က Image ကို Responsive ဖြစ်စေပါသည်။
+- `border-radius` ဖြင့် ဝိုင်းစက်တဲ့ပုံများကိုပါ ဖန်တီးနိုင်ပါသည်။
+- Border နဲ့ Shadow ဖြင့် Thumbnail ပုံစံ ပြုလုပ်နိုင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Image က Container ထက် ပိုကျယ်မသွားစေဖို့ ဘယ် Value ကို သုံးမလဲ?", options: ["width: 100%", "max-width: 100%", "height: 100%", "min-width: 100%"], correctAnswer: 1, explanation: "max-width: 100% က Image ကို Container ရဲ့ အကျယ်အထိသာ ကြီးစေပါတယ်။" },
+  { id: "q2", question: "Image ကို စက်ဝိုင်းပုံ ဖြစ်စေချင်ရင် ဘယ် Value ကို သုံးမလဲ?", options: ["border-radius: 50%", "border-width: 50%", "padding: 50%", "margin: 50%"], correctAnswer: 0, explanation: "border-radius: 50% က ထောင့်တွေကို လုံးဝ ဝိုင်းစေလို့ စက်ဝိုင်းဖြစ်ပါတယ်။" },
+  { id: "q3", question: "Screen အရွယ်ပေါ်လိုက် Image ပြောင်းဖို့ ဘယ် Element နဲ့ srcset ကို သုံးပါသလဲ?", options: ["img", "picture", "video", "source"], correctAnswer: 1, explanation: "picture Element ထဲမှာ source တွေကို စီထားပြီး Screen အလိုက် Browser က ရွေးယူပါတယ်။" }
+]} />

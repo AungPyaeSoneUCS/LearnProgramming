@@ -1,0 +1,114 @@
+---
+title: "CSS Fonts — Web Fonts နဲ့ စာလုံးပုံစံ ရွေးချယ်နည်း"
+description: "font-family, font-size, font-weight, font-style, font shorthand, generic families နဲ့ font pairing အကြောင်း လေ့လာမယ်။"
+---
+
+### font-family (စာလုံး မိသားစု)
+
+`font-family` က element ရဲ့ စာလုံးပုံစံကို သတ်မှတ်ပါတယ်။ Font အများကြီးကို **Font Stack** အနေနဲ့ ပေးလေ့ရှိပြီး browser က ပထမဆုံး ရနိုင်တဲ့ font ကို သုံးပါတယ်။ Generic family တွေမှာ **serif, sans-serif, monospace, cursive, fantasy** တို့ ပါဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+pre {
+  font-family: "Courier New", monospace;
+}
+
+.formal {
+  font-family: Georgia, Times, serif;
+}
+```
+
+မှတ်ချက် — Stack ရဲ့ နောက်ဆုံးမှာ generic family (serif, sans-serif, monospace စသဖြင့်) ကို အမြဲ ထည့်ထားဖို့ လိုပါတယ်။
+
+### font-size (စာလုံး အရွယ်အစား)
+
+`font-size` က စာလုံးရဲ့ အရွယ်အစားကို px, em, rem, percent စတဲ့ unit တွေနဲ့ ပေးလို့ရပါတယ်။ rem က root font size အပေါ် မူတည်ပြီး responsive ဖြစ်လို့ အသုံးများပါတယ်။
+
+**ဥပမာ -**
+```css
+h1 {
+  font-size: 32px;
+}
+
+p {
+  font-size: 1rem;
+}
+
+.small {
+  font-size: 0.8rem;
+}
+
+.big-percent {
+  font-size: 120%;
+}
+```
+
+မှတ်ချက် — px က fixed ဖြစ်ပြီး em, rem, percent တွေက relative ဖြစ်လို့ responsive design ကို ပိုထောက်ပံ့ပါတယ်။
+
+### font-weight နဲ့ font-style
+
+`font-weight` က စာလုံးရဲ့ အထူ (bold) ကို၊ `font-style` က normal, italic, oblique ပုံစံကို သတ်မှတ်ပါတယ်။ Weight ကို keyword (normal, bold, bolder, lighter) နဲ့ 100 ကနေ 900 ထိ ဂဏန်းတွေနဲ့လည်း ပေးလို့ရပါတယ်။
+
+**ဥပမာ -**
+```css
+strong {
+  font-weight: bold;
+}
+
+.heading {
+  font-weight: 700;
+  font-style: normal;
+}
+
+.quote {
+  font-style: italic;
+}
+```
+
+မှတ်ချက် — 400 က normal, 700 က bold နဲ့ ညီမျှပြီး font ထဲမှာ ဒီ weight အလေး မရှိရင် browser က အနီးစပ်ဆုံးနဲ့ ပြပါတယ်။
+
+### Font Shorthand (တစ်ကြောင်းတည်း ရေးနည်း)
+
+`font` shorthand နဲ့ style, weight, size, line-height, family တွေကို တစ်ကြောင်းထဲ ပေါင်းရေးလို့ရပါတယ်။ **size နဲ့ family က မဖြစ်မနေ ပါရမယ်**။
+
+**ဥပမာ -**
+```css
+.style1 {
+  font: italic 700 16px/1.5 Arial, sans-serif;
+}
+
+.style2 {
+  font: 20px Georgia, serif;
+}
+```
+
+မှတ်ချက် — size နဲ့ line-height combo ကို slash (/) နဲ့ တွဲရေးပြီး size ဒါမှမဟုတ် family တစ်ခုခု မပါရင် shorthand က invalid ဖြစ်ပါတယ်။
+
+### Font Pairing (Font ချိတ်တွဲ ရွေးချယ်ခြင်း)
+
+Headings နဲ့ body အတွက် မတူတဲ့ font နှစ်မျိုး ချိတ်သုံးရင် စာမျက်နှာ ပိုလှပါတယ်။ Serif heading နဲ့ sans-serif body လို ဆန့်ကျင်ဖက်ပုံစံ ချိတ်တွဲတာက အသုံးများပါတယ်။ Web fonts တွေကို Google Fonts လိုမျိုး service ကနေ link တစ်ကြောင်း ထည့်ပြီး သုံးလို့ရပါတယ်။
+
+**ဥပမာ -**
+```html
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lora&display=swap" rel="stylesheet">
+```
+
+မှတ်ချက် — Web fonts ကို page ရဲ့ head ထဲမှာ link ထည့်ပြီး သက်ဆိုင်ရာ font-family ကို CSS မှာ သုံးရုံပါပဲ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Font stack ရဲ့ နောက်ဆုံးမှာ generic family ထည့်ဖို့ လိုပါတယ်။
+- `font-size` က px (fixed) ဒါမှမဟုတ် rem/percent (relative) နဲ့ ပေးလို့ရပါတယ်။
+- `font` shorthand မှာ size နဲ့ family က မဖြစ်မနေ ပါရမယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "sans-serif generic family ရဲ့ လက္ခဏာက ဘာလဲ?", options: ["ခြေထောက် (serif) ပါတဲ့ စာလုံးများ", "ခြေထောက်မပါတဲ့ ရိုးရှင်းစာလုံးများ", "အကျယ်တူ equal-width စာလုံးများ", "လက်ရေးပုံစံ စာလုံးများ"], correctAnswer: 1, explanation: "sans-serif က serif ခြေထောက်တွေ မပါတဲ့ ခေတ်မီ ရိုးရှင်းစာလုံးတွေပါ။" },
+  { id: "q2", question: "font shorthand မှာ mandatory ဖြစ်တဲ့ ၂ ခုက ဘာတွေလဲ?", options: ["font-style နဲ့ font-weight", "font-size နဲ့ font-family", "font-weight နဲ့ font-variant", "line-height နဲ့ color"], correctAnswer: 1, explanation: "size နဲ့ family မပါရင် font shorthand က invalid ဖြစ်ပါတယ်။" },
+  { id: "q3", question: "Font stack ထဲက ဘယ် font ကို browser က ရွေးသုံးလဲ?", options: ["နောက်ဆုံးတစ်လုံး", "ပထမဆုံး ရနိုင်တဲ့ font", "အလယ်က font", "အားလုံးကို ရောနှောသုံးတယ်"], correctAnswer: 1, explanation: "browser က stack ထဲက ပထမဆုံး ရနိုင်တဲ့ font ကို ရွေးပါတယ်။" }
+]} />

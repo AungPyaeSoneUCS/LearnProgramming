@@ -1,0 +1,100 @@
+---
+title: "CSS Position — Element နေရာချခြင်း"
+description: "static ၊ relative ၊ absolute ၊ fixed ၊ sticky Position Type ငါးမျိုးကို ဥပမာနဲ့ လေ့လာကြမယ်။"
+---
+
+### Position Property ဆိုတာ
+
+`position` Property က Element တွေကို Document Flow (စီစဉ်ပုံ) ထဲကနေ ဘယ်လို နေရာယူစေမလဲ ဆိုတာ သတ်မှတ်ပါတယ်။ Value ငါးမျိုး ရှိပါတယ် — `static` ၊ `relative` ၊ `absolute` ၊ `fixed` ၊ `sticky`။ Position Type ပေါ်မူတည်ပြီး `top` ၊ `right` ၊ `bottom` ၊ `left` Offset တွေ အလုပ်လုပ်ပုံ ကွာပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  position: static;
+}
+```
+
+မှတ်ချက် — `static` က Default အနေအထားပါ။ Offset Property တွေကလည်း `static` မှာ အလုပ်မလုပ်ပါဘူး။
+
+### relative — မူရင်းနေရာကနေ ရွှေ့
+
+`position: relative;` က Element ရဲ့ မူလနေရာကို အခြေခံပြီး Offset နဲ့ ရွှေ့ပေးပါတယ်။ မူလနေရာရဲ့ Space တွေကတော့ ကျန်နေပါတယ်။
+
+**ဥပမာ -**
+```css
+.badge {
+  position: relative;
+  left: 20px;
+  top: 10px;
+}
+```
+
+မှတ်ချက် — Element က မူရင်း နေရာကနေ Left 20px ၊ Top 10px ရွေ့သွားပေမယ့် မူလ Space ကတော့ ကျန်နေပါသေးတယ်။
+
+### absolute — Parent နဲ့ နေရာချ
+
+`position: absolute;` က Element ကို Document Flow ထဲကနေ ဖယ်ထုတ်ပြီး Positioned (static မဟုတ်တဲ့) Ancestor နဲ့ နေရာချပါတယ်။ Positioned Ancestor မရှိရင် Page ရဲ့ အပေါ်ဆုံး (HTML) ကို အခြေခံပါတယ်။
+
+**ဥပမာ -**
+```css
+.parent {
+  position: relative;
+}
+
+.child {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+```
+
+မှတ်ချက် — Parent မှာ `position: relative;` ထည့်ထားလို့ Child က Parent ရဲ့ ညာဘက်အပေါ် ထောင့်မှာ နေရာယူပါတယ်။
+
+### fixed — Screen မှာ ကပ်နေ
+
+`position: fixed;` က Element ကို Browser Viewport (Screen) နဲ့ နေရာချပေးပြီး Page ကို Scroll လုပ်လည်း နေရာကနေ မရွေ့ပါဘူး။ Navbar ၊ Chat Button ၊ Cookie Notice စတာတွေမှာ သုံးပါတယ်။
+
+**ဥပမာ -**
+```css
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #222;
+  color: white;
+  text-align: center;
+}
+```
+
+မှတ်ချက် — Fixed Element က Document Flow ကနေ ဖယ်ခံရလို့ Page ရဲ့ Content တွေက သူ့အနောက်ကို ဝင်သွားနိုင်ပါတယ်။ အပေါ်ကနေ ဖုံးနေတာမို့ အပြင်မှာ နေရာလွတ် ချန်ပေးဖို့ လိုပါတယ်။
+
+### sticky — Scroll နဲ့အတူ ကပ်လာ
+
+`position: sticky;` က Element ရဲ့ မူရင်း နေရာမှာ စတင်ပြီး Scroll လုပ်ရင်း သတ်မှတ်ထားတဲ့ Offset (`top`) ကို ရောက်တာနဲ့ ထိုနေရာမှာ ကပ်နေပါတယ်။ Scroll ပြန်တက်ရင် မူရင်း နေရာကိုပါ ပြန်ရောက်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.table-header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+```
+
+မှတ်ချက် — `sticky` က Parent (Container) ရဲ့ အဆုံး ရောက်ရင် ကပ်နေတာ ရပ်ပြီး Parent နဲ့အတူ ဆက်သွားပါတယ်။ Scope ရှိတဲ့ `fixed` လို့ မှတ်ထားနိုင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `static` က Default ဖြစ်ပြီး Offset အလုပ်မလုပ်ပါ။
+- `relative` က မူရင်း နေရာကနေ ရွှေ့ပြီး Space ကျန်ခဲ့ပါတယ်။
+- `absolute` က Positioned Parent နဲ့ နေရာချပြီး Flow ကနေ ဖယ်ပါတယ်။
+- `fixed` က Viewport မှာ ကပ်ပြီး `sticky` က Offset ရောက်မှ ကပ်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Position ရဲ့ Default Value က ဘာလဲ?", options: ["relative", "absolute", "static", "fixed"], correctAnswer: 2, explanation: "Browser ရဲ့ Default value က static ဖြစ်ပြီး Offset တွေ အလုပ်မလုပ်ပါဘူး။" },
+  { id: "q2", question: "Page ကို Scroll လုပ်လည်း Element က Screen မှာ နေရာချနေဖို့ ဘယ် Value ကို သုံးရပါသလဲ?", options: ["fixed", "relative", "sticky", "static"], correctAnswer: 0, explanation: "fixed က Viewport နဲ့ နေရာချလို့ Scroll လုပ်လည်း မရွေ့ပါဘူး။" },
+  { id: "q3", question: "absolute Element တစ်ခုရဲ့ Offset တွေက ဘယ်အရာနဲ့ တွက်ချက်ပါသလဲ?", options: ["Browser Font", "Document Flow", "Positioned Ancestor", "Body Background"], correctAnswer: 2, explanation: "absolute က static မဟုတ်တဲ့ Positioned Ancestor နဲ့ နေရာချပါတယ်။" }
+]} />

@@ -1,0 +1,99 @@
+---
+title: "CSS Pagination — Page အစဉ်အတန်း Style ပြုလုပ်ခြင်း"
+description: "Page Number များကို Pill ပုံစံ Style ပြုလုပ်ပြီး Hover ၊ Active ၊ Disabled အခြေအနေများဖြင့် Pagination ဒီဇိုင်းနည်းကို လေ့လာကြမယ်။"
+---
+
+Pagination က Content အများကြီးကို Page များစွာနဲ့ ခွဲပြီး ပြဖို့အတွက် Page Number တွေကို စီတန်းပြသခြင်း ဖြစ်ပါတယ်။ Blog ၊ Shop စတဲ့ Site တွေမှာ မဖြစ်မနေ လိုအပ်လေ့ရှိပြီး CSS နဲ့ လှပစွာ Style လုပ်နိုင်ပါတယ်။
+
+### အခြေခံ Page Number များ
+
+Link Element တွေကို `display: inline-block` ပြောင်း၊ Padding နဲ့ Border ထည့်ပြီး Page Pill တွေ ဖန်တီးပါတယ်။
+
+**ဥပမာ -**
+```css
+.pagination a {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  color: #333;
+  text-decoration: none;
+}
+```
+
+မှတ်ချက် — Pagination Container ထဲမှာ HTML Link တွေကို Page အစဉ်အတိုင်း ထည့်ထားရပါတယ်။
+
+### Hover Effect
+
+Link အပေါ် Mouse ရောက်တဲ့အခါ Background အရောင် ပြောင်းပြီး ဘယ် Page Number ကို ညွှန်နေလဲ သိစေပါတယ်။
+
+**ဥပမာ -**
+```css
+.pagination a:hover {
+  background-color: #ddd;
+}
+```
+
+မှတ်ချက် — Hover Effect က Link တစ်ခုချင်းစီရဲ့ နေရာမှာသာ သက်ရောက်လို့ Active Page နဲ့ မရောထွေးပါဘူး။
+
+### Active Page (လက်ရှိ Page)
+
+လက်ရှိ ရောက်နေတဲ့ Page ကို `active` Class နဲ့ အရောင်ထင်ရှားအောင် ပြပါတယ်။
+
+**ဥပမာ -**
+```css
+.pagination a.active {
+  background-color: #4caf50;
+  color: white;
+}
+```
+
+မှတ်ချက် — `active` Class ကို HTML မှာ လက်ရှိ Page ရဲ့ Link ပေါ်မှာသာ ထည့်ပေးရပါတယ်။
+
+### Disabled Link
+
+သွားလို့မရတဲ့ Page ကို Disabled အနေနဲ့ ပြသပါတယ်။ `disabled` Class နဲ့ Style လုပ်ပြီး Mouse Event တွေကိုပါ ပိတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.pagination a.disabled {
+  color: #aaa;
+  pointer-events: none;
+  cursor: default;
+}
+```
+
+မှတ်ချက် — `pointer-events: none` ကြောင့် Disabled Link ကို နှိပ်လို့ မရတော့ပါဘူး။
+
+### Circular Pagination Style
+
+`border-radius: 50%` ပေးရင် Page Number တွေက Circle ပုံစံ ဖြစ်လာပြီး ပိုခေတ်မီတဲ့ ဒီဇိုင်း ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.pagination-circle a {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  margin: 0 4px;
+}
+```
+
+မှတ်ချက် — Circle ပုံစံ ဖြစ်ဖို့ Width ၊ Height ၊ Line-Height ကို တန်ဖိုးတူပေးပြီး `border-radius: 50%` ထည့်ပေးရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Pagination က Page Number Link တွေကို Pill ပုံစံ Style လုပ်ပါသည်။
+- Active Page ကို Color နဲ့ ထင်ရှားစေပြီး Disabled ကို Mouse Event ပိတ်ပါသည်။
+- `border-radius: 50%` ဖြင့် Circular Style ဖန်တီးနိုင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "လက်ရှိ Page ကို ထင်ရှားစေဖို့ HTML မှာ ဘယ် Class ကို ထည့်ပါသလဲ?", options: ["primary", "active", "current", "selected"], correctAnswer: 1, explanation: "လက်ရှိ Page ရဲ့ Link ပေါ်မှာ active Class ထည့်၍ အရောင်ထင်ရှားစေပါတယ်။" },
+    { id: "q2", question: "Page Number တွေကို Circle ပုံစံ ဖြစ်စေဖို့ ဘယ် Value ကို သုံးပါသလဲ?", options: ["border-radius: 50%", "clip-path: circle", "shape-outside: circle", "border-style: dotted"], correctAnswer: 0, explanation: "border-radius: 50% က Page Pill များကို Circle ပုံစံ ဖြစ်စေပါတယ်။" },
+    { id: "q3", question: "Disabled Link ကို နှိပ်လို့မရအောင် ဘယ် Property က ပိတ်ပေးပါသလဲ?", options: ["visibility: hidden", "pointer-events: none", "z-index: -1", "float: none"], correctAnswer: 1, explanation: "pointer-events: none က Link ၏ Mouse Event များကို ပိတ်ပေးပါတယ်။" }
+  ]}
+/>

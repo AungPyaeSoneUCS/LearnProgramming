@@ -1,0 +1,81 @@
+---
+title: "CSS Rounded Corners — border-radius နဲ့ ထောင့်ဝိုင်းအောင်ပြုလုပ်နည်း"
+description: "border-radius property သုံးပြီး Element တွေရဲ့ ထောင့်တွေကို ဝိုင်းချောစွာ ပြုလုပ်နည်းကို လေ့လာကြမယ်။"
+---
+
+### border-radius ဆိုတာ ဘာလဲ?
+
+`border-radius` Property က Element ရဲ့ ထောင့်လေးခုကို ဝိုင်းချောချော ဖြစ်စေတဲ့ CSS Property ပါ။ Value ကို px ဖြစ်စေ percentage ဖြစ်စေ ပေးနိုင်ပြီး ထောင့်လေးခုလုံးကို ဝိုင်းစေချင်ရင် value တစ်ခုတည်း ပေးရုံပါပဲ။ Value ရဲ့ Radius (အချင်းဝက်) ကြီးလေ ထောင့်ပိုဝိုင်းလေပါ။
+
+**ဥပမာ -**
+```css
+.card {
+  border: 2px solid #333;
+  border-radius: 10px;
+}
+```
+
+မှတ်ချက် — ဒီမှာ value တစ်ခုတည်းဖြစ်လို့ ထောင့်လေးခုလုံးကို 10px အဝိုင်းနဲ့ ဝိုင်းပေးပါတယ်။
+
+### Value အရေအတွက်ပေါ်မူတည်တဲ့ သက်ရောက်မှု
+
+`border-radius` က Value ဘယ်နှစ်ခု ပေးလဲဆိုတာပေါ်မူတည်ပြီး သက်ရောက်ပုံ ကွာပါတယ်။ Value နှစ်ခုဆိုရင် ပထမက top-left နဲ့ bottom-right ၊ ဒုတိယက top-right နဲ့ bottom-left ကို တွဲဝိုင်းပြီး Value လေးခုဆိုရင် top-left, top-right, bottom-right, bottom-left အစဉ်လိုက် သက်ရောက်ပါတယ်။ တစ်ထောင့်ချင်းစီ ပြောင်းချင်ရင်တော့ `border-top-left-radius` လိုမျိုး Property သီးခြားစီလည်း ရေးလို့ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.a { border-radius: 10px; }
+.b { border-radius: 10px 30px; }
+.card {
+  border: 2px solid #222;
+  border-top-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+```
+
+မှတ်ချက် — Value လေးခုရဲ့ အစဉ်ကို မှတ်ဖို့ နာရီလုံးချိန် စည်းမျဉ်းအတိုင်း စဉ်းစားရပြီး per-corner property တွေက ထောင့်တစ်ခုကိုသာ ပြောင်းပေးပါတယ်။
+
+### Elliptical Corners (ဘဲဥပုံထောင့်များ)
+
+ပုံမှန် ထောင့်ဝိုင်းက စက်ဝိုင်းတစ်ဝက် ပုံစံဖြစ်ပြီး Slash (/) နဲ့ Horizontal Radius နဲ့ Vertical Radius ကို သီးခြားသတ်မှတ်ရင် ထောင့်တွေက ဘဲဥပုံသဏ္ဍာန် ဖြစ်လာပါတယ်။
+
+**ဥပမာ -**
+```css
+.ellipse {
+  border: 2px solid teal;
+  border-radius: 50px / 20px;
+}
+```
+
+မှတ်ချက် — Slash (/) ရဲ့ ဘယ်ဘက်က Horizontal Radius ဖြစ်ပြီး ညာဘက်က Vertical Radius ဖြစ်ပါတယ်။
+
+### Circle (စက်ဝိုင်းပုံစံ)
+
+Element တစ်ခုကို စက်ဝိုင်းပုံ ဖြစ်စေချင်ရင် `border-radius: 50%` သုံးရပါတယ်။ ဒါပေမယ့် Width နဲ့ Height တူညီမှသာ စက်ဝိုင်း ဖြစ်ပြီး မတူညီရင် ဘဲဥပုံ ဖြစ်သွားပါတယ်။
+
+**ဥပမာ -**
+```css
+.avatar {
+  width: 100px;
+  height: 100px;
+  background-color: #007bff;
+  border-radius: 50%;
+}
+```
+
+မှတ်ချက် — Profile Picture (Avatar) တွေမှာ border-radius: 50% ကို အသုံးအများဆုံးဖြစ်ပြီး button တွေမှာတော့ သေးငယ်တဲ့ radius ကို သုံးလေ့ရှိပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Value တစ်ခုက ထောင့်လေးခုလုံး၊ Value လေးခုက နာရီလုံးချိန်စဉ်အတိုင်း သက်ရောက်သည်။
+- Per-corner property တွေက ထောင့်တစ်ခုတည်းကိုသာ ပြောင်းပေးသည်။
+- `border-radius: 50%` က Width နဲ့ Height တူရင် စက်ဝိုင်းဖြစ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "border-radius ကို value တစ်ခုတည်းပေးရင် ဘယ်လိုသက်ရောက်ပါသလဲ?", options: ["ထောင့်လေးခုလုံး ဝိုင်းသည်", "ဘယ်ဖက်နှစ်ထောင့်သာ ဝိုင်းသည်", "ညာဖက်နှစ်ထောင့်သာ ဝိုင်းသည်", "ဘာမှ မသက်ရောက်ပါ"], correctAnswer: 0, explanation: "Value တစ်ခုတည်းက ထောင့်လေးခုလုံးကို တစ်ပြိုင်နက် ဝိုင်းပေးပါတယ်။" },
+    { id: "q2", question: "Element ကို စက်ဝိုင်းပုံဖြစ်အောင် ဘယ်လိုသတ်မှတ်ပါသလဲ?", options: ["border-radius: 50% အသုံးပြုခြင်း", "width ကြီးပေးခြင်း", "border-width တိုးပေးခြင်း", "background-color ပေးခြင်း"], correctAnswer: 0, explanation: "Width နဲ့ Height တူညီပြီး border-radius: 50% ပေးရင် စက်ဝိုင်းဖြစ်ပါတယ်။" },
+    { id: "q3", question: "Horizontal Radius နဲ့ Vertical Radius ကို ဘာနဲ့ ခွဲပြီးရေးပါသလဲ?", options: ["Comma (,)", "Slash (/)", "Semicolon (;)", "Colon (:)"], correctAnswer: 1, explanation: "Slash (/) က Horizontal နဲ့ Vertical Radius ကို ပိုင်းခြားပေးပြီး ဘဲဥပုံထောင့်ဖြစ်စေပါတယ်။" }
+  ]}
+/>

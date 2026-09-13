@@ -1,0 +1,72 @@
+---
+title: "HTML Web Workers — Background Process"
+description: "Web Worker က Main Thread ပိတ်နေတဲ့အခါတောင် Background မှာ Process တွေ ဘယ်လိုလုပ်ဆောင်လဲ လေ့လာကြည့်ရအောင်။"
+---
+
+### Web Worker ဆိုတာ ဘာလဲ?
+
+Web Worker ဆိုတာ JavaScript ကို Background မှာ သီးခြား Thread အဖြစ် လုပ်ဆောင်စေတဲ့ နည်းလမ်းပါ။ အခုအချိန်ထိ JavaScript က Single-threaded ဖြစ်ပေမယ့် Worker နဲ့ဆို နောက် Thread တစ်ခုစီ ခွဲပြီး ပြေးစေနိုင်ပါတယ်။ ဒါကြောင့် တွက်ချက်မှုကြီးတွေကို Worker မှာ လုပ်ပြီး Main Page ကတော့ ချောမွေ့စွာ ဆက်အလုပ်လုပ်နေနိုင်ပါတယ်။
+
+### Main Thread ပိတ်ခြင်း ပြဿနာ
+
+Browser မှာ JavaScript က Main Thread (User Interface အတွက် တာဝန်ခံ) ပေါ်မှာ ပြေးပါတယ်။ အကယ်၍ Heavy Loop ဒါမှမဟုတ် Complex Calculation တစ်ခု Main Thread မှာ ပြေးနေရင် Page က ပိတ် (Block) သွားပြီး Button နှိပ်တာတောင် မတုံ့ပြန်တော့ပါဘူး။ Web Worker က ဒီလိုပြဿနာတွေကို ရှောင်ဖို့ တွက်ချက်မှုတွေကို Background မှာ လုပ်ပေးတာပါ။
+
+**ဥပမာ -**
+```javascript
+var result = 0;
+for (var i = 0; i < 1000000000; i++) {
+  result += i;
+}
+```
+
+မှတ်ချက် — ဒီလို Long Loop ကို Main Thread မှာ ပြေးရင် Page ပိတ်သွားပြီး White Screen ဖြစ်တတ်ပါတယ်။
+
+### Worker တစ်ခု စတင်အသုံးပြုပုံ
+
+Worker ကို `new Worker("file.js")` နဲ့ ဖန်တီးပြီး သီးခြား JavaScript File ထဲမှာ Worker ရဲ့ Code တွေကို ရေးရပါတယ်။ Worker က Main Thread နဲ့ ဆက်သွယ်ဖို့ `postMessage()` ကို သုံးပြီး Message လက်ခံဖို့ `onmessage` Event ကို သုံးပါတယ်။ ဒါဟာ Worker နဲ့ Main Thread ကြား တစ်လမ်းအပြန်အလှန် စကားပြောလိုပါပဲ။
+
+**ဥပမာ -**
+```javascript
+// main.js
+var worker = new Worker("count.js");
+
+worker.onmessage = function(event) {
+  console.log("Worker က ပြန်ပို့တဲ့ ရလဒ်:", event.data);
+};
+
+worker.postMessage("start");
+```
+
+```javascript
+// count.js (Worker File)
+self.onmessage = function(event) {
+  var result = 0;
+  for (var i = 0; i < 1000000000; i++) {
+    result += i;
+  }
+  self.postMessage(result);
+};
+```
+
+မှတ်ချက် — Worker File (count.js) ထဲမှာ `self` က Worker ကိုယ်တိုင် (Global Scope) ကို ဆိုလိုပြီး `postMessage` က Main Thread ဆီ ရလဒ်ပြန်ပို့တာပါ။
+
+### Worker ရဲ့ ကန့်သတ်ချက်တွေ
+
+Worker က Page တစ်ခုလုံးရဲ့ DOM (Document Object Model) ကို ဝင်ရောက်ခွင့် မရှိပါဘူး။ ဆိုလိုတာက Worker ထဲမှာ Element ဖန်တီးတာ၊ Style ပြောင်းတာ စတာတွေ မလုပ်နိုင်ပါဘူး။ Worker က ဒေတာထဲသာ လုပ်ဆောင်ပြီး DOM ကို ထိချင်ရင် `postMessage` နဲ့ Main Thread ဆီ ပို့ပြီးတော့မှ Main Thread က DOM ကို ပြောင်းလဲပေးရပါတယ်။
+
+### မှတ်ထားရမယ့် အချက်များ
+
+- Worker က Background မှာ သီးခြား Thread နဲ့ ပြေးတယ်။
+- Main Thread မှာ Heavy Calculation လုပ်ရင် Page ပိတ်တတ်တယ်။
+- Worker ထဲမှာ DOM ကို ဝင်ရောက်လို့မရဘူး။
+- ဆက်သွယ်ဖို့ `postMessage` နဲ့ `onmessage` ကို သုံးတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Web Worker နဲ့ JavaScript ကို ဘယ်မှာ လုပ်ဆောင်စေပါသလဲ?", options: ["DOM ထဲမှာ", "Background Thread မှာ", "Server မှာ", "CSS ထဲမှာ"], correctAnswer: 1, explanation: "Worker က JavaScript ကို Background Thread မှာ လုပ်ဆောင်စေပါတယ်။" },
+    { id: "q2", question: "Worker နဲ့ Main Thread ကြား ဆက်သွယ်ဖို့ ဘာတွေကို သုံးပါသလဲ?", options: ["getElementById", "postMessage နဲ့ onmessage", "setItem နဲ့ getItem", "addEventListener ပဲ"], correctAnswer: 1, explanation: "ဆက်သွယ်ဖို့ postMessage နဲ့ onmessage Event တွေကို သုံးပါတယ်။" },
+    { id: "q3", question: "Worker ထဲမှာ ဘာတွေ မလုပ်နိုင်ပါသလဲ?", options: ["Math တွက်ချက်တာ", "Data ပြောင်းလဲတာ", "DOM ကို ဝင်ရောက်တာ", "String ဖော်ပြတာ"], correctAnswer: 2, explanation: "Worker က DOM ကို ဝင်ရောက်လို့မရတဲ့အတွက် UI ကို မပြောင်းလဲနိုင်ပါဘူး။" },
+  ]}
+/>

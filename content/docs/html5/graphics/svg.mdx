@@ -1,0 +1,115 @@
+---
+title: "HTML SVG — Vector ပန်းချီဆွဲခြင်း"
+description: "svg element နဲ့ rect, circle, ellipse, line, path, polygon စတဲ့ shape တွေ ဆွဲနည်း၊ canvas နဲ့ ဘာကွာလဲ လေ့လာကြမယ်။"
+---
+
+SVG (Scalable Vector Graphics) ဆိုတာ Browser ပေါ်မှာ vector (ပုံရိပ် quality မကျတဲ့) ပန်းချီဆွဲနိုင်တဲ့ နည်းလမ်းပါ။ Logo၊ icon၊ chart စတာတွေ လုပ်ဖို့ အသုံးဝင်ပြီး ကျယ်ကျယ်လွယ်လွယ် zoom လုပ်ရင်တောင် အရည်အသွေး မကျပါဘူး။
+
+### SVG Element
+
+`<svg>` element ကို HTML ထဲမှာ တိုက်ရိုက် ထည့်ရေးနိုင်ပြီး `width` နဲ့ `height` သတ်မှတ်ပြီး အထဲမှာ shape တွေကို tag တွေနဲ့ ဆွဲပါတယ်။ JavaScript မလိုဘဲ HTML တစ်ခုတည်းနဲ့ပဲ ရေးလို့ရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<svg width="200" height="120">
+  <rect x="20" y="20" width="100" height="60" fill="steelblue"></rect>
+</svg>
+```
+
+မှတ်ချက် — Rect ရဲ့ `x`, `y` က တည်နေရာဖြစ်ပြီး `fill` က အရောင်ကို သတ်မှတ်ပါတယ်။
+
+### Rect နဲ့ Circle
+
+`<rect>` က rectangle ပြီး `<circle>` က စက်ဝိုင်း ဖြစ်ပါတယ်။ Circle မှာတော့ `cx`, `cy` က center နေရာ ဖြစ်ပြီး `r` က အချင်းဝက်ပါ။
+
+**ဥပမာ -**
+
+```html
+<svg width="300" height="150">
+  <rect x="30" y="30" width="100" height="70" fill="tomato"></rect>
+  <circle cx="220" cy="75" r="40" fill="gold"></circle>
+</svg>
+```
+
+မှတ်ချက် — Shape တွေမှာ `stroke` (ဘောင်အရောင်) နဲ့ `stroke-width` လည်း ထည့်နိုင်ပါတယ်။
+
+### Ellipse နဲ့ Line
+
+`<ellipse>` က ဘေးတိုက် ဆန့်တဲ့ စက်ဝိုင်း ဖြစ်ပြီး `rx` နဲ့ `ry` နှစ်မျိုးနဲ့ အချင်းဝက် သတ်မှတ်ပါတယ်။ `<line>` က မျဉ်းဖြောင့်တစ်ကြောင်း ဆွဲပြီး `x1`, `y1` နဲ့ `x2`, `y2` နဲ့ အစနဲ့အဆုံး သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<svg width="300" height="150">
+  <ellipse cx="120" cy="70" rx="80" ry="40" fill="lightgreen"></ellipse>
+  <line x1="10" y1="120" x2="220" y2="40" stroke="darkblue" stroke-width="3"></line>
+</svg>
+```
+
+မှတ်ချက် — Line မှာ `stroke` မထည့်ရင် မျဉ်းကို မမြင်ရပါဘူး။
+
+### Path Element
+
+`<path>` က ပိုရှုပ်ထွေးတဲ့ ပုံသဏ္ဍာန်တွေ ဆွဲဖို့ အစွမ်းအစ ရှိပြီး `d` attribute ထဲမှာ command စာလုံးတွေနဲ့ လမ်းကြောင်း ရေးပါတယ်။ M က move to၊ L က line to၊ C က curve ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<svg width="200" height="150">
+  <path d="M 20 120 L 100 20 L 180 120 Z" fill="purple"></path>
+</svg>
+```
+
+မှတ်ချက် — Z က shape ကို ပိတ်ပြီး ဒီလိုဖြင့် သုံးထောင့်ပုံ ဖြစ်သွားပါတယ်။
+
+### Polygon Element
+
+`<polygon>` က ထောင့် ၃ ခုနဲ့အထက်ရှိတဲ့ ပုံသဏ္ဍာန်တွေ ဆွဲဖို့ သုံးပြီး `points` ထဲမှာ x, y နှစ်လုံးတွဲတွေ စာရင်းပြုတဲ့ပုံစံ ရေးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<svg width="200" height="150">
+  <polygon points="100,10 40,120 160,120" fill="orange"></polygon>
+</svg>
+```
+
+မှတ်ချက် — Points တွေကို နာရီလက်တံ လှည့်ပြီးရေးတာက ပုံစံရှင်းပြီး ဆောက်ရလွယ်ပါတယ်။
+
+### SVG နဲ့ Canvas ကွာခြားချက်
+
+SVG က HTML element tag တွေနဲ့ ဆွဲပြီး CSS နဲ့ stylize လုပ်လို့ရပါတယ်။ Zoom လုပ်ရင်လည်း ကြည်လင်နေပြီး မှုန်မသွားပါဘူး။ Canvas ကတော့ JavaScript နဲ့ pixel (အစက်တစ်ခုချင်း) အလိုက် ဆွဲပြီး ကြီးကြီးချဲ့ရင် မှုန်သွားတတ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<svg width="200" height="120">
+  <circle cx="100" cy="60" r="50" fill="#ffaa00"></circle>
+</svg>
+```
+
+```javascript
+const canvas = document.createElement("canvas");
+const ctx = canvas.getContext("2d");
+ctx.beginPath();
+ctx.arc(100, 60, 50, 0, 2 * Math.PI);
+ctx.fillStyle = "#ffaa00";
+ctx.fill();
+```
+
+မှတ်ချက် — ရိုးရှင်းတဲ့ ပုံတွေနဲ့ responsive (ဖုန်းနဲ့ desktop လိုက်လျောညီထွေ) ဖြစ်ချင်ရင် SVG က ပိုလွယ်ပြီး ဂိမ်းလို dynamic (တစာစီတစည်း ပြောင်းလဲတာ) အတွက်တော့ Canvas က ပိုမြန်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- SVG က HTML tag တွေနဲ့ ဆွဲပြီး JavaScript မလိုဘူး
+- `path` ရဲ့ d attribute က ပုံသဏ္ဍာန်ကို ထိန်းချုပ်တယ်
+- SVG က zoom လုပ်ရင် မမှုန်ဘဲ canvas က မှုန်တယ်
+- Shape တွေကို CSS နဲ့လည်း အရောင်ပြောင်းလို့ရတယ်
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Ellipse ကို r နဲ့ မဟုတ်ဘဲ ဘာနဲ့ အချင်းဝက် သတ်မှတ်လဲ", options: ["rx နဲ့ ry", "x နဲ့ y", "w နဲ့ h", "cx နဲ့ cy"], correctAnswer: 0, explanation: "ellipse က rx နဲ့ ry နဲ့ အချင်းဝက်နှစ်မျိုး သတ်မှတ်ပါတယ်" },
+  { id: "q2", question: "ပိုရှုပ်ထွေးတဲ့ ပုံသဏ္ဍာန်တွေ ဆွဲဖို့ ဘယ် element ကို သုံးလဲ", options: ["rect", "path", "line", "circle"], correctAnswer: 1, explanation: "path element က command တွေနဲ့ ရှုပ်ထွေးတဲ့ ပုံတွေ ဆွဲနိုင်ပါတယ်" },
+  { id: "q3", question: "SVG ရဲ့ အားသာချက်တစ်ခုက ဘာလဲ", options: ["Zoom လုပ်ရင် မှုန်တယ်", "JavaScript မလိုဘဲ ရေးလို့ရတယ်", "Pixel အလိုက်ပဲ ဆွဲရတယ်", "CSS သုံးလို့မရဘူး"], correctAnswer: 1, explanation: "SVG က HTML tag တွေနဲ့ ရေးလို့ရပြီး zoom လုပ်ရင် ကြည်လင်နေပါတယ်" } ]} />

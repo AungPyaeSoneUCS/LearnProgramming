@@ -1,0 +1,40 @@
+---
+title: "Cascade Layers (@layer)"
+description: "CSS Specificity ပြဿနာကို ဖြေရှင်းခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="!important ကို နှုတ်ဆက်လိုက်ပါ (No More !important)">
+CSS ရေးဖူးသူတိုင်း "ငါရေးထားတဲ့ Style က ဘာလို့ အလုပ်မလုပ်တာလဲ?" ဆိုပြီး ဒေါသတကြီးနဲ့ `!important` တွေ လိုက်တပ်ဖူးကြမှာပါ။ `@layer` ကတော့ အဲ့ဒီလို မဖြစ်ရအောင် Style တွေရဲ့ အဆင့်အတန်း (Priority) ကို စနစ်တကျ ခွဲခြား သတ်မှတ်ပေးပါတယ်။
+</Aside>
+
+### ပြဿနာ (The Problem)
+Selector တွေ အရမ်းရှည်လာ၊ ရှုပ်ထွေးလာတဲ့အခါ ဘယ် CSS Rule က အနိုင်ရမလဲ (Specificity) တွက်ချက်ရတာ ခေါင်းကိုက်စရာ ကောင်းပါတယ်။
+
+### ဖြေရှင်းနည်း (The Solution)
+Style တွေကို အလွှာ (Layer) လေးတွေ ခွဲထုတ်လိုက်ပါ။ အစီအစဉ်အရ **နောက်ဆုံးမှာ ကြေညာထားတဲ့ Layer က အမြဲတမ်း အနိုင်ရပါတယ်။** Selector ဘယ်လောက်ပဲ အားနည်းနေပါစေ၊ Layer အဆင့်မြင့်နေရင် သူကပဲ အနိုင်ရမှာပါ။
+
+```css
+/* Layer များ၏ အစီအစဉ်ကို ကြိုတင် သတ်မှတ်ခြင်း (နောက်ဆုံးက Layer က ပိုအရေးကြီးပါတယ်) */
+@layer reset, base, theme, utilities;
+
+@layer reset {
+  /* အခြေခံ Style များကို Reset ချခြင်း */
+  * { box-sizing: border-box; }
+}
+
+@layer base {
+  body { color: #333; }
+  h1 { font-size: 2rem; }
+}
+
+@layer utilities {
+  /* ဒီ Layer က အစီအစဉ်အရ နောက်ဆုံးမှာ ရှိနေတဲ့အတွက် အမြဲတမ်း အနိုင်ရပါမယ် */
+  .text-red { color: red; }
+}
+```
+
+### အကျိုးကျေးဇူးများ (Benefits)
+*   Third-party CSS တွေ (ဥပမာ - Bootstrap, Tailwind) ကို Layer တစ်ခုထဲ သီးသန့် ထည့်ထားလိုက်ရင်၊ ကိုယ်ပိုင်ရေးထားတဲ့ Code တွေနဲ့ ဝင်တိုက်တာ (Conflict ဖြစ်တာ) မျိုး လုံးဝ မဖြစ်တော့ပါဘူး။
+*   Code တွေကို အလုပ်လုပ်ပုံအလိုက် အပိုင်းလေးတွေ စနစ်တကျ ခွဲခြားရေးသားလို့ ရသွားတဲ့အတွက် Project ကြီးလာလေ ပိုပြီး သိသာလေ ဖြစ်ပါတယ်။

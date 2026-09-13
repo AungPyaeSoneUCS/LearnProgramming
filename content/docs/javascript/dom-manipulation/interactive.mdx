@@ -1,0 +1,39 @@
+---
+title: "Interactive Section - Manipulation"
+description: "DOM Manipulation လက်တွေ့စမ်းသပ်ရန်"
+---
+
+သင့်ရဲ့ Webpage မှာ အောက်ပါ HTML Code တွေ ရှိနေတယ်လို့ သဘောထားလိုက်ပါ။
+
+```html
+<h1 id="title">Old Title</h1>
+<img id="image" src="cat.jpg" alt="Cat Picture">
+<div id="box" style="width: 100px; height: 100px;"></div>
+```
+
+## လေ့ကျင့်ခန်း ၁ (Exercise 1): Change Text
+
+`h1` Element ရဲ့ စာသား (Text) ကို "JavaScript is Cool! 😎" ဆိုပြီး ပြောင်းလဲပေးမယ့် Code ကို ရေးသားပါ။
+
+```javascript
+let h1 = document.querySelector("#title");
+// သင်၏ Code များကို ဤနေရာတွင် ဆက်လက် ရေးသားပါ...
+```
+
+## လေ့ကျင့်ခန်း ၂ (Exercise 2): Change Image Source
+
+`img` Element ရဲ့ `src` Attribute တန်ဖိုးကို "dog.jpg" လို့ ပြောင်းလဲပေးမယ့် Code ကို ရေးသားပါ။
+
+```javascript
+let img = document.querySelector("#image");
+// သင်၏ Code များကို ဤနေရာတွင် ဆက်လက် ရေးသားပါ...
+```
+
+## အထူးစိန်ခေါ်မှု (Challenge): Style Change 🎨
+
+`#box` အိုင်ဒီ ရှိတဲ့ `div` Element ရဲ့ Background အရောင်ကို `blue` ပြောင်းပေးပါ။ ပြီးရင် သူရဲ့ အကျယ် (Width) ကို `200px` ဖြစ်သွားအောင် ပြောင်းလဲပေးပါ။
+
+```javascript
+let box = document.querySelector("#box");
+// သင်၏ Code များကို ဤနေရာတွင် ဆက်လက် ရေးသားပါ...
+```

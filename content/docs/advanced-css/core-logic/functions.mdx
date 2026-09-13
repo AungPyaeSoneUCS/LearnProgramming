@@ -1,0 +1,77 @@
+---
+title: "Core Logic & Functions"
+description: "CSS တွင် Logic နှင့် Function များ အသုံးပြုခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="CSS က Programming Language လား? (CSS is Programming?)">
+CSS ဆိုတာ အရင်ကလို ပုံသေ Style တွေ (Static Styles) ပေးရုံသက်သက် မဟုတ်တော့ပါဘူး။ တကယ့် Programming Language တွေလိုပဲ Logic တွေ စစ်တာ၊ Calculation တွက်ချက်တာတွေကို တိုက်ရိုက် လုပ်ဆောင်နိုင်တဲ့ အဆင့်ကို ရောက်ရှိလာပါပြီ။
+</Aside>
+
+### ၁။ CSS if() Function
+Style တွေကို အခြေအနေ (Condition) ပေါ်မူတည်ပြီး တိုက်ရိုက် အပြောင်းအလဲ လုပ်နိုင်ပါပြီ။ အရင်လို Sass သို့မဟုတ် Less လိုမျိုး Preprocessor တွေ မဖြစ်မနေ သုံးစရာ မလိုတော့ပါဘူး။
+
+```css
+.card {
+  /* --variant ရဲ့ တန်ဖိုးက 'featured' ဖြစ်ရင် ရွှေရောင် (gold)၊ မဟုတ်ရင် မီးခိုးရောင် (gray) ပြမယ် */
+  border-color: if(var(--variant) = 'featured', gold, gray);
+  
+  /* နောက်ခံအရောင် (Background Color) ကိုလည်း System ရဲ့ Theme ပေါ်မူတည်ပြီး ရွေးချယ်လို့ ရပါတယ် */
+  background-color: if(style(--theme: dark), #333, #fff);
+}
+```
+
+### ၂။ Custom Functions (မိမိကြိုက်နှစ်သက်ရာ ဖန်တီးခြင်း)
+Developer တွေ ကိုယ်တိုင် Function တွေကို ဖန်တီးတည်ဆောက်ပြီး၊ နေရာပေါင်းစုံမှာ ထပ်ခါတလဲလဲ ပြန်လည်အသုံးပြု (Reuse) လို့ ရလာပါပြီ။
+
+```css
+/* Custom Function တစ်ခု တည်ဆောက်ခြင်း */
+@function --calculate-shadow(--elevation) {
+  result: 0 var(--elevation) calc(var(--elevation) * 2) rgba(0,0,0,0.2);
+}
+
+.button {
+  box-shadow: --calculate-shadow(4px); /* Function ကို ခေါ်သုံးခြင်း */
+}
+
+.card {
+  box-shadow: --calculate-shadow(8px); /* Function ကို ခေါ်သုံးခြင်း */
+}
+```
+
+### ၃။ Sibling Functions (ညီအစ်ကို မောင်နှမများကို ရေတွက်ခြင်း)
+Element တစ်ခုဟာ သူနဲ့ အဆင့်တူညီတဲ့ အခြား Element (Sibling) တွေကြားမှာ ဘယ်နေရာ ရောက်နေလဲ၊ စုစုပေါင်း ဘယ်နှခု ရှိလဲ ဆိုတာတွေအပေါ် မူတည်ပြီး Style သတ်မှတ်လို့ ရပါတယ်။
+
+*   `sibling-count()`: Sibling စုစုပေါင်း အရေအတွက်ကို ဖော်ပြပေးပါတယ်။
+*   `sibling-index()`: ကိုယ်ရောက်နေတဲ့ အစဉ် (Index) ကို ဖော်ပြပေးပါတယ် (1 ကနေ စရေတွက်ပါတယ်)။
+
+```css
+/* List Item အရေအတွက်က ၅ ခုထက် များနေရင် စာလုံးအရွယ်အစား သေးမယ်၊ မများရင် ကြီးမယ် */
+li {
+  font-size: if(sibling-count() > 5, 14px, 18px);
+}
+
+/* Rainbow Effect: မိမိရောက်နေတဲ့ အစဉ် (Index) ပေါ်မူတည်ပြီး အရောင် အလှည့်ကျ ပြောင်းသွားမယ် */
+div {
+  background-color: hsl(calc(sibling-index() * 30), 70%, 50%);
+}
+```
+
+### ၄။ Stepped Value Functions (သင်္ချာ တွက်ချက်မှုများ)
+Mathematical Operation တွေကို တိတိကျကျ တွက်ချက်နိုင်ဖို့အတွက် Function အသစ်တွေလည်း ပါဝင်လာပါတယ်။
+
+*   `round(strategy, value, interval)`: ပေးထားတဲ့ တန်ဖိုးကို အနီးစပ်ဆုံး ကိန်းပြည့် သို့မဟုတ် သတ်မှတ်ထားတဲ့ Interval ဆီကို ဖြတ်ပေးပါတယ်။
+*   `mod(value, divisor)`: အကြွင်းကို ရှာဖွေပေးပါတယ် (Modulus)။
+*   `rem(value, divisor)`: အကြွင်းကိုပဲ ရှာပေးတာဖြစ်ပေမယ့် အနုတ်ကိန်း (Negative number) တွေအတွက် `mod` နဲ့ အလုပ်လုပ်ပုံ အနည်းငယ် ကွာခြားပါတယ်။
+
+```css
+.element {
+  /* 100px ကို 33px အဆတွေနဲ့ အနီးစပ်ဆုံးဖြစ်အောင် ဖြတ်ချလိုက်မယ် (ရလဒ်အနေနဲ့ 99px ဖြစ်သွားပါမယ်) */
+  width: round(nearest, 100px, 33px);
+  
+  /* အလှည့်ကျ အရောင်ပြောင်းဖို့အတွက် အကြွင်း (mod) ကို အသုံးပြုခြင်း */
+  --hue: mod(sibling-index() * 10, 360);
+  color: hsl(var(--hue), 50%, 50%);
+}
+```

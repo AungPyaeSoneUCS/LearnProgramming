@@ -1,0 +1,61 @@
+---
+title: "HTML Iframes — HTML Iframe များအကြောင်း"
+description: "Iframe ဖြင့် နောက်ထပ် webpage တစ်ခုကို မိမိစာမျက်နှာထဲတွင် ထည့်သွင်းနည်းကို လေ့လာကြမယ်။"
+---
+
+Iframe ဆိုတာ inline frame ဖြစ်ပြီး မိမိ webpage ရဲ့ နေရာတစ်နေရာထဲမှာ နောက်ထပ် webpage တစ်ခုကို ထည့်ပြသနိုင်ဖို့ အသုံးပြုပါတယ်။ Video တွေ၊ map တွေ၊ အခြား website တွေကို site ထဲမှာ ထည့်ပြသရင် iframe ကို သုံးလေ့ရှိပါတယ်။ Web ပေါ်မှာ အလွန်အသုံးဝင်တဲ့ feature တစ်ခုပဲ ဖြစ်ပါတယ်။
+
+### Iframe Element
+
+`<iframe>` tag ကို သုံးပြီး နောက်ထပ် webpage တစ်ခုကို မိမိစာမျက်နှာထဲမှာ ပြသနိုင်ပါတယ်။ `src` attribute မှာ ပြသချင်တဲ့ page ရဲ့ address ကို ထည့်ပေးရပါတယ်။ `height` နဲ့ `width` attribute တွေက iframe ရဲ့ အရွယ်အစားကို သတ်မှတ်ပေးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<iframe src="https://example.com" height="400" width="600"
+  title="Example Website"></iframe>
+```
+
+မှတ်ချက် — `title` attribute က screen reader များအတွက် အသုံးဝင်ပြီး accessibility ကို တိုးတက်စေပါတယ်။ Width နဲ့ height က pixel ဖြင့် သတ်မှတ်လေ့ရှိပါတယ်။
+
+### Target Navigation
+
+Iframe ကို name ပေးထားပြီး link တစ်ခုရဲ့ `target` attribute မှာ အဲဒီ name ကို ထည့်လိုက်ရင် link ကိုနှိပ်တဲ့အခါ စာမျက်နှာအ�စ်က iframe ထဲမှာ ပွင့်လာပါလိမ့်မယ်။ ဒါက iframe ထဲမှာပဲ content တွေ ပြောင်းလဲပြသလိုတဲ့အခါ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<iframe src="page1.html" name="views" height="300" width="400"></iframe>
+
+<a href="page2.html" target="views">Page 2 ကို iframe ထဲမှာ ပြမည်</a>
+```
+
+မှတ်ချက် — Link ကို နှိပ်တဲ့အခါ page2.html ဟာ စာမျက်နှာတစ်ခုလုံး ပြောင်းမသွားဘဲ iframe ထဲမှာသာ ပြပါလိမ့်မယ်။
+
+### အခြား Website တစ်ခုကို ထည့်သွင်းခြင်း
+
+Website အများစုက မိမိ content များကို iframe နဲ့ အခြား site တွေမှာ ထည့်သုံးခြင်းကို ခွင့်ပြုဖို့အတွက် embed code များ ပေးလေ့ရှိပါတယ်။ YouTube video တစ်ခုကို site မှာ ထည့်တာမျိုး ဥပမာ ဖြစ်ပါတယ်။ အချို့ site တွေကတော့ `X-Frame-Options` ကြောင့် iframe ဖြင့် ဖွင့်လို့ မရအောင် တားထားတာ ရှိနိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+  height="315" width="560"
+  title="YouTube Video"></iframe>
+```
+
+မှတ်ချက် — YouTube embed video တွေအတွက် standard src format သည် `https://www.youtube.com/embed/VIDEO_ID` ဖြစ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `<iframe>` က webpage ထဲမှာ နောက်ထပ် webpage တစ်ခုကို ထည့်သွင်းပြသရန် သုံးသည်။
+- `src`, `height`, `width` တို့သည် အသုံးအများဆုံး attribute များဖြစ်သည်။
+- `target` ဖြင့် link ကို iframe အတွင်းမှာ ဖွင့်နိုင်သည်။
+- အချို့ website များသည် iframe ဖြင့် ပြသခြင်းကို ခွင့်မပြုပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Iframe ထဲမှာ ပြသမယ့် page ရဲ့ address ကို ဘယ် attribute မှာ ထည့်မလဲ?", options: ["href", "src", "link", "url"], correctAnswer: 1, explanation: "src attribute တွင် iframe ပြသမည့် page ၏ address ကို ထည့်ပေးရသည်။" },
+  { id: "q2", question: "Link တစ်ခုကို iframe ထဲမှာ ဖွင့်ရန် target attribute မှာ ဘာကို ထည့်ရမလဲ?", options: ["iframe ရဲ့ name", "iframe ရဲ့ id", "iframe ရဲ့ src", "iframe ရဲ့ height"], correctAnswer: 0, explanation: "target ထဲမှာ link ဖွင့်လိုသော iframe ၏ name ကို ထည့်ပေးရသည်။" },
+  { id: "q3", question: "Iframe ရဲ့ အရွယ်အစားကို ဘယ် attribute တွေဖြင့် သတ်မှတ်သနည်း?", options: ["style", "height and width", "size", "margin"], correctAnswer: 1, explanation: "height နှင့် width attribute များသည် iframe ၏ အရွယ်အစားကို သတ်မှတ်ပေးသည်။" } ]} />

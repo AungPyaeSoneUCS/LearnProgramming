@@ -1,0 +1,102 @@
+---
+title: "RWD Frameworks — CSS Framework များ"
+description: "Responsive Web Design ကို မြန်ဆန်စွာ တည်ဆောက်နိုင်ဖို့ Tailwind ၊ Bootstrap ၊ Foundation ကဲ့သို့ CSS Framework များ၏ အသုံးဝင်မှု။"
+---
+
+ဒီသင်ခန်းစာအထိ CSS တွေကို ကိုယ်တိုင်ရေးပြီး Responsive Design ဆောက်ခဲ့ကြပါတယ်။ ဒါပေမဲ့ လက်တွေ့ Project တွေမှာ Developer တွေက အဆင်သင့်ပြင်ဆင်ပေးထားတဲ့ Style ၊ Grid System ၊ Component တွေကို ပေးတဲ့ CSS Framework တွေကို သုံးတာ များပါတယ်။ Framework သုံးခြင်းဖြင့် အချိန်ကုန်သက်သာပြီး Browser တွေ အားလုံးမှာ တစ်ပုံစံတည်း အလုပ်လုပ်ပါတယ်။
+
+### CSS Framework ဆိုတာ ဘာလဲ?
+
+CSS Framework ဆိုတာ Pre-built လုပ်ထားတဲ့ CSS Class တွေ ၊ Grid System တွေ ၊ UI Component တွေရဲ့ စုစည်းမှုပါ။ Developer က သူ့ HTML Class Attribute ထဲမှာ Framework ရဲ့ Class တွေကို ထည့်လိုက်တာနဲ့ Responsive Layout ၊ Button ၊ Card စတာတွေ ချက်ချင်း ရရှိပါတယ်။ Framework တစ်ခုချင်းစီမှာ ကိုယ်ပိုင်အားသာချက် ရှိတာမို့ Project နဲ့ ကိုက်ညီတာကို ရွေးတဲ့ဟာ အရေးကြီးပါတယ်။
+
+### Bootstrap — အသုံးအများဆုံး Framework
+
+Bootstrap က 12-Column Grid System ၊ Ready-made Component တွေနဲ့ JavaScript Plugin တွေကို ပံ့ပိုးပေးတဲ့ Framework ဖြစ်ပါတယ်။ Class တွေက `container` ၊ `row` ၊ `col-md-6` စသဖြင့် ရှင်းလင်းပြီး Documentation လည်း စုံလင်ပါတယ်။ Starter Project တွေနဲ့ Theme တွေလည်း ပေါများတာမို့ စတင်သူတွေအတွက် အဆင်ပြေပါတယ်။
+
+**ဥပမာ -**
+```html
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-md-4">Column 1</div>
+    <div class="col-sm-6 col-md-4">Column 2</div>
+    <div class="col-sm-6 col-md-4">Column 3</div>
+  </div>
+</div>
+```
+
+မှတ်ချက် — `col-sm-6` က Small Screen (Tablet) အထိ Column ၂ ခုစီ ၊ `col-md-4` က Medium Screen အထက် Column ၃ ခုစီ ပြဆိုတဲ့ အဓိပ္ပါယ် ဖြစ်ပါတယ်။ Responsive တွေက Class နာမည်ထဲ ပါသွားလို့ Media Query တွေ စရေးစရာမလိုပါဘူး။
+
+### Foundation — ပျော့ပြောင်းသော Framework
+
+Foundation က ပိုပြီး Flexible ဖြစ်ပြီး Mobile-First ကို ဦးစားပေးတဲ့ Framework ပါ။ Semantic HTML ကို အသုံးပြုပြီး Customize လုပ်ဖို့ လွယ်ကူပါတယ်။ Enterprise Project တွေ အတွက် အသုံးများပြီး Grid ၊ Forms ၊ Button တွေအပြင် Email Framework တွေလည်း ပံ့ပိုးပါတယ်။
+
+အသုံးဝင်တဲ့ Foundation Class တွေကတော့ Layout အတွက် Grid Column တွေ ၊ Visibility Class တွေ (ဥပမာ `show-for-small-only`) တွေကို ပေးထားတာမို့ Element တွေကို Screen အလိုက် ဝှက်/ပြန် အလွယ်တကူ ပြုလုပ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<div class="row">
+  <div class="large-6 medium-8 columns">Content</div>
+  <div class="large-6 medium-4 columns">Sidebar</div>
+</div>
+```
+
+မှတ်ချက် — Foundation မှာ `large-6` ၊ `medium-8` လို့ Column Class တွေက Screen အလိုက် Width ကို သတ်မှတ်ပါတယ်။ Format က Bootstrap နဲ့ နည်းနည်းကွာပေမဲ့ အခြေခံ Grid Concept တူပါတယ်။
+
+### Tailwind CSS — Utility-First Framework
+
+Tailwind CSS က Ready-made Component တွေ မပေးဘဲ Utility Class သေးသေးလေးတွေကို ပေးပါတယ်။ `flex` ၊ `p-4` ၊ `bg-red-500` လိုမျိုး Class တွေကို HTML ထဲမှာ တိုက်ရိုက်ရေးပြီး ကိုယ်ပိုင် Design တည်ဆောက်ရပါတယ်။ Responsive အတွက် `sm:flex` ၊ `md:p-8` ဆိုပြီး Prefix တွေနဲ့ Media Query ကို Class အတွင်းမှာပဲ သတ်မှတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<div class="flex flex-col md:flex-row gap-4 p-4">
+  <div class="bg-blue-500 p-4 rounded">Card 1</div>
+  <div class="bg-green-500 p-4 rounded">Card 2</div>
+</div>
+```
+
+မှတ်ချက် — `flex-col` က Mobile မှာ ဒေါင်လိုက် စီစေ ပြီး `md:flex-row` က Medium Screen ကစလို့ ဘေးတိုက် စီစေပါတယ်။ ဒီနည်းနဲ့ CSS File တွေကို သီးသန့်မရေးရဘဲ Layout ကို ထိန်းချုပ်နိုင်ပါတယ်။
+
+### Grid Class တွေ ရေးနည်း — တိကျတဲ့ နှိုင်းယှဉ်ချက်
+
+Framework အသီးသီးက Grid Class နာမည် ကွာခြားပေမဲ့ နောက်ကွယ်က အလုပ်လုပ်ပုံကတော့ သင်ခန်းစာ Grid View မှာ သင်ခဲ့တဲ့ 12-Column Percentage နည်းစနစ်အတိုင်းပဲ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+/* Framework များထဲမှ အခြေခံ Grid ရဲ့ အလုပ်လုပ်ပုံ */
+.col-4 {
+  width: 33.33%;
+}
+
+@media (max-width: 768px) {
+  .col-4 {
+    width: 100%;
+  }
+}
+```
+
+မှတ်ချက် — Framework တွေက ဒီလို Media Query တွေကို ကြိုရေးပေးထားတာမို့ Developer က Class နာမည် ထည့်ရုံနဲ့ Responsive ဖြစ်သွားတာ ဖြစ်ပါတယ်။
+
+### Framework ရွေးချယ်ခြင်း လမ်းညွှန်
+
+- **Bootstrap** — စတင်သူ ၊ အဆင်သင့် Component တွေ လိုသူ ၊ Documentation စုံလင်မှု ဦးစားပေးသူ။
+- **Foundation** — Enterprise Project ၊ ပျော့ပြောင်းသော Customization လိုသူ။
+- **Tailwind CSS** — Code ကို ပိုထိန်းချုပ်လိုသူ ၊ Utility Class နဲ့ အလုပ်လုပ်ရတာ နှစ်သက်သူ။
+
+နောက်ဆုံးမှာတော့ Framework သုံးသည်ဖြစ်စေ မသုံးသည်ဖြစ်စေ Responsive ရဲ့ အခြေခံ ဖြစ်တဲ့ Fluid Layout ၊ Flexible Media နဲ့ Media Query တွေကို နားလည်ထားတာက အရေးကြီးပါတယ်။ Framework က Tool ဖြစ်ပြီး Concept က ဉာဏ်ရည် ဖြစ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- CSS Framework က Pre-built Class ၊ Grid System ၊ UI Component တွေကို ပေးသည်။
+- Bootstrap က 12-Column Grid နဲ့ Component အများအပြား ပါရှိသည်။
+- Foundation က Mobile-First ဖြစ်ပြီး Flexible ဖြစ်သည်။
+- Tailwind CSS က Utility Class တွေနဲ့ Design ကို HTML အတွင်းမှာပဲ တည်ဆောက်စေသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "ဘယ် Framework က Utility Class တွေကို အဓိကပေးပါသလဲ?", options: ["Bootstrap", "Foundation", "Tailwind CSS", "jQuery UI"], correctAnswer: 2, explanation: "Tailwind CSS က Utility Class တွေကို ပေးပြီး HTML ထဲမှာ Design ကို တိုက်ရိုက် ထိန်းချုပ်ပါတယ်။" },
+    { id: "q2", question: "Bootstrap ရဲ့ Grid System က ဘယ်နှစ် Column ရှိပါသလဲ?", options: ["10 Column", "12 Column", "16 Column", "8 Column"], correctAnswer: 1, explanation: "Bootstrap က 12-Column Grid System ကို အသုံးပြုပါတယ်။" },
+    { id: "q3", question: "Foundation Framework ရဲ့ အဓိက အားသာချက်က ဘာလဲ?", options: ["Component များများ ပါခြင်း", "Mobile-First ဖြစ်ပြီး ပျော့ပြောင်းခြင်း", "JavaScript မလိုအပ်ခြင်း", "အလွန်သေးငယ်ခြင်း"], correctAnswer: 1, explanation: "Foundation က Mobile-First နဲ့ Flexible ဖြစ်ပြီး Enterprise Project တွေမှာ အသုံးများပါတယ်။" },
+  ]}
+/>

@@ -1,0 +1,131 @@
+---
+title: "CSS Units — အတိုင်းအတာ ယူနစ်များ"
+description: "Absolute (px, pt, cm) နဲ့ Relative (%, em, rem, vw, vh) Unit တွေကို ဘယ်လို ခွဲသုံးရမလဲ လေ့လာကြည့်ရအောင်။"
+---
+
+### CSS Units မိတ်ဆက်
+
+CSS မှာ အရွယ်အစား သတ်မှတ်ရာတွင် Unit (ယူနစ်) တွေကို သုံးပါတယ်။ Unit တွေကို Absolute (အတိအကျ) နဲ့ Relative (နှိုင်းယှဉ်) ဆိုပြီး အဓိက နှစ်မျိုး ခွဲပါတယ်။ Relative Unit တွေက Parent ဒါမှမဟုတ် Viewport ကို အခြေခံလို့ Responsive Layout အတွက် ပိုအသုံးဝင်ပါတယ်။
+
+### Absolute Units — အတိအကျ
+
+Absolute Unit တွေက တကယ့် အတိုင်းအတာ အတိအကျကို ဆိုလိုပြီး Parent ရဲ့ သက်ရောက်မှု မရှိပါဘူး။
+
+| Unit | အဓိပ္ပာယ် |
+|---|---|
+| px | Pixel (CSS Pixel) |
+| pt | Point — 1 pt = 1/72 inch |
+| cm | Centimeter |
+| mm | Millimeter |
+| in | Inch — 1 in = 96px |
+
+မှတ်ချက် — Web Design မှာ px က အသုံးအများဆုံး ဖြစ်ပြီး pt, cm, in တို့က Print (ပုံနှိပ်) အတွက် ပိုသင့်လျော်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  width: 96px;
+  height: 48px;
+  border: 1px solid #ddd;
+}
+```
+
+မှတ်ချက် — px က Screen Density (Pixel သိပ်သည်းမှု) ပြောင်းရင် Physical Size မတူညီနိုင်ပေမဲ့ CSS မှာတော့ ညီမျှပြီး အသုံးတည်ငြိမ်တဲ့ Unit ဖြစ်ပါတယ်။
+
+### `%` — Percent (ရာခိုင်နှုန်း)
+
+`%` က Parent Element ရဲ့ အရွယ်အစားကို ရာခိုင်နှုန်းနဲ့ ယူပါတယ်။ Layout အကျယ်အဝန်း သတ်မှတ်ရာမှာ အသုံးအများဆုံး Unit တစ်ခုပါ။
+
+**ဥပမာ -**
+```css
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+.child {
+  width: 50%;   /* container ရဲ့ တစ်ဝက် */
+}
+```
+
+မှတ်ချက် — width: 80% က Parent ရဲ့ အကျယ် 80% ဖြစ်ပြီး Screen အရွယ်နဲ့အတူ အလိုအလျောက် ပြောင်းလဲလို့ Responsive ဖြစ်ပါတယ်။
+
+### em နဲ့ rem — Font ကို အခြေခံတဲ့ Units
+
+em က Parent ရဲ့ Font Size ကို အခြေခံပြီး rem ကတော့ Root (html) ရဲ့ Font Size ကိုသာ အခြေခံပါတယ်။ Browser Default မှာ html Font Size က 16px ဖြစ်လို့ 1rem = 16px ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+html {
+  font-size: 16px;
+}
+body {
+  font-size: 1rem;   /* 16px */
+  padding: 1rem;     /* 16px */
+}
+.btn {
+  font-size: 0.875em;   /* parent ရဲ့ 87.5% */
+  padding: 0.6em 1.2em;
+}
+```
+
+မှတ်ချက် — Nested Element တွေ များလာတဲ့အခါ em က တွက်ရခက်ပြီး rem ကတော့ အဆင့်မည်မျှပဲ ရှိရှိ Root ကိုသာ လိုက်လို့ တူညီတဲ့တန်ဖိုးကို ပေးပါတယ်။
+
+### rem ကို ဘာကြောင့် သုံးသင့်သလဲ?
+
+Accessibility အတွက် User က Browser Setting မှာ ဖောင့်အရွယ်အစား ပြောင်းထားရင် Root (html) Font Size ပါ ပြောင်းသွားပြီး rem နဲ့ ပေးထားတဲ့တန်ဖိုးအားလုံး အလိုအလျောက် လိုက်ကြီးပါတယ်။ ဒါကြောင့် Font Size, Padding, Margin တွေမှာ rem ကို အကြံပြုပါတယ်။
+
+**ဥပမာ -**
+```css
+.card {
+  padding: 1.25rem;
+  margin: 1rem auto;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+}
+```
+
+မှတ်ချက် — Font Size နဲ့ Spacing (Padding/Margin) တွေကို rem နဲ့ ရေးပြီး Border, Icon လိုမျိုး Detail တွေမှာတော့ px ကို သုံးတာ Best Practice ဖြစ်ပါတယ်။
+
+### vw, vh — Viewport Units
+
+vw က Browser Window (Viewport) အကျယ်ရဲ့ 1% ၊ vh က အမြင့်ရဲ့ 1% ဖြစ်ပါတယ်။ Hero Section လိုမျိုး Screen တစ်ခုလုံး နေရာယူဖို့ 100vh ကို သုံးပါတယ်။
+
+**ဥပမာ -**
+```css
+.hero {
+  height: 100vh;
+  width: 100%;
+  background: #2c3e50;
+}
+.hero-title {
+  font-size: 6vw;
+}
+```
+
+မှတ်ချက် — vw/vh က Viewport အလိုက် ပြောင်းတာမို့ Screen ကြီးလေလေ အရွယ်ကြီးလေလေ ဖြစ်တတ်ပြီး Font တွေမှာ 6vw လိုမျိုးတော့ Title အကြီးကြီးတွေမှာသာ သုံးပါ။
+
+### ဘယ် Unit ဘယ်နေရာမှာ သုံးမလဲ?
+
+| နေရာ | သင့်လျော်တဲ့ Unit |
+|---|---|
+| Font Size | rem |
+| Spacing (Margin/Padding) | rem |
+| Layout Width | % နဲ့ fr |
+| Border, Outline | px |
+| Full Screen Section | vh |
+
+မှတ်ချက် — rem နဲ့ % ကို Base အဖြစ် သုံးပြီး Border လိုမျိုး Detail တွေမှာပဲ px ကို သုံးပါ။ ဒီလိုလုပ်ရင် Responsive ဖြစ်ပြီး Maintain လုပ်ရလွယ်ပါတယ်။
+
+### အကျဉ်းချုပ်
+
+px, pt, cm စတဲ့ Absolute Units က အတိအကျ ဖြစ်ပြီး %, em, rem, vw, vh စတဲ့ Relative Units က Parent/Viewport ကို အခြေခံပါတယ်။ Font Size နဲ့ Spacing အတွက် rem ၊ Layout Width အတွက် % ကို ဦးစားပေး သုံးသင့်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Browser Default မှာ 1rem က ဘယ်လောက်နဲ့ ညီပါသလဲ?", options: ["16px", "10px", "12px", "100px"], correctAnswer: 0, explanation: "Browser Default Root Font Size က 16px ဖြစ်တာမို့ 1rem က 16px နဲ့ ညီပါတယ်။" },
+    { id: "q2", question: "Font Size နဲ့ Spacing တွေအတွက် အကြံပြုထားတဲ့ Unit က ဘာလဲ?", options: ["rem", "pt", "cm", "in"], correctAnswer: 0, explanation: "rem က Root Font Size ကို အခြေခံပြီး User Setting နဲ့ပါ လိုက်လျောညီထွေ ကောင်းတာမို့ အကြံပြုပါတယ်။" },
+    { id: "q3", question: "Parent Element ရဲ့ Font Size ကို အခြေခံတဲ့ Unit က ဘာလဲ?", options: ["em", "rem", "vw", "vh"], correctAnswer: 0, explanation: "em က Parent ရဲ့ Font Size ကို အခြေခံပြီး Nested တွေများရင် ရှုပ်ထွေးတတ်ပါတယ်။" },
+  ]}
+/>

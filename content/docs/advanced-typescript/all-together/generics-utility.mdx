@@ -1,0 +1,122 @@
+---
+title: "အားလုံးကို ပေါင်းစပ်အသုံးပြုခြင်း: ပူးပေါင်းဆောင်ရွက်ခြင်း!"
+description: "အားလုံးကို ပေါင်းစပ်အသုံးပြုခြင်း: ပူးပေါင်းဆောင်ရွက်ခြင်း!"
+---
+
+import { Code, Aside } from "@astrojs/starlight/components";
+
+export const mappedType = `
+// Mapped Types ကို အကြမ်းဖျင်း ဥပမာပြရရင် -
+// type Partial<T> = {
+//   [P in keyof T]?: T[P]; // T (Object) ထဲမှာရှိတဲ့ property P (တစ်ခုချင်းစီ) တိုင်းကို Optional (?:) ဖြစ်အောင် ပြောင်းလဲပေးပါတယ်။
+// };
+`;
+
+export const pickAndStringify = `
+// <T extends object, K extends keyof T> ဆိုတာ Generic Parameters တွေပါ။
+function pickAndStringifyValues<T extends object, K extends keyof T>( 
+    obj: T, // obj ရဲ့ Type ဟာ T ဖြစ်ရပါမယ်။
+    keys: K[] // ပြန်ရွေးထုတ်ချင်တဲ့ Keys တွေပါတဲ့ Array ပါ။
+  ): Record<K, string | null> { // ပြန်ထွက်လာမယ့် (Return) Type အတွက် Record Utility Type ကို သုံးထားပါတယ်။
+    
+    // အစပိုင်းမှာ ဗလာ Object အနေနဲ့ ဖန်တီးပြီး၊ 'as' နဲ့ Type ကို ကြိုတင် သတ်မှတ်ထားလိုက်ပါတယ်။
+    const result = {} as Record<K, string | null>; 
+    
+    for (const key of keys) { 
+        if (obj.hasOwnProperty(key)) { // obj မှာ ဒီ Key တကယ် ပါ/မပါ စစ်ဆေးပါတယ်။
+            const value = obj[key]; // Key နဲ့ ကိုက်ညီတဲ့ Value ကို ဆွဲထုတ်ပါတယ်။
+            // Value ဟာ null သို့မဟုတ် undefined မဟုတ်ရင် string အဖြစ် ပြောင်းပါတယ်။ မဟုတ်ရင် null ပဲ ထားပါတယ်။
+            result[key] = value !== null && value !== undefined ? String(value) : null; 
+        }
+    }
+    return result; 
+}
+
+const sampleUser = { name: "Alice", age: 30, isActive: true };
+const stringifiedInfo = pickAndStringifyValues(sampleUser, ["name", "age"]);
+
+// typeof stringifiedInfo ရဲ့ Type ဟာ Record<"name" | "age", string | null> ဖြစ်သွားပါတယ်။
+// လက်တွေ့ တန်ဖိုးကတော့ stringifiedInfo = { name: "Alice", age: "30" } ပါ။
+console.log(stringifiedInfo.name); // "Alice" (string)
+
+// console.log(stringifiedInfo.isActive); 
+// 👆 Error တက်ပါမယ်: 'isActive' ဆိုတဲ့ property မရှိပါဘူးလို့ ပြပါလိမ့်မယ်။ (ဘာလို့လဲဆိုတော့ ["name", "age"] ကိုပဲ ရွေးထုတ်ထားလို့ပါ)
+`;
+
+export const combineUtility = `
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description?: string;
+  tags: string[];
+}
+
+// Product တွေကို Update လုပ်ဖို့အတွက် Payload Type တစ်ခု လိုချင်တယ်လို့ စိတ်ကူးကြည့်ပါ။
+// စည်းမျဉ်းများ:
+// - 'id' ကို Update လုပ်ခွင့် မပေးဘူး၊ ကျန်တဲ့ 'name', 'price', 'description', 'tags' တွေကိုပဲ ပြင်လို့ရမယ်။ (Omit 'id' ကို သုံးမယ်)
+// - ပြင်လို့ရတဲ့ Field တွေ အားလုံးက မဖြစ်မနေ ထည့်စရာမလိုတဲ့ Optional တွေ ဖြစ်ရမယ်။ (Partial ကို သုံးမယ်)
+// - ဒီ Payload Object ကြီး တစ်ခုလုံးဟာ Function ထဲရောက်သွားရင် ပြန်လည် ပြင်ဆင်ခွင့် မရှိတဲ့ Readonly ဖြစ်ရမယ်။ (Readonly ကို သုံးမယ်)
+
+// အထက်ပါ စည်းမျဉ်းတွေ အားလုံးကို Utility Types တွေ ပေါင်းစပ်ပြီး ဖန်တီးလိုက်တာပါ:
+type ProductUpdatePayload = Readonly<Partial<Omit<Product, "id">>>;
+
+// တစ်ဆင့်ချင်းစီ ဘယ်လို အလုပ်လုပ်သွားသလဲဆိုတာ ရှင်းပြပါမယ်။
+// 1. Omit<Product, "id"> -> { name: string; price: number; description?: string; tags: string[]; } ('id' ကို ဖယ်ထုတ်လိုက်တယ်)
+// 2. Partial<အဆင့် ၁ ရဲ့ ရလဒ်> -> { name?: string; price?: number; description?: string; tags?: string[]; } (အားလုံးကို Optional ဖြစ်စေတယ်)
+// 3. Readonly<အဆင့် ၂ ရဲ့ ရလဒ်> -> { readonly name?: string; readonly price?: number; ... } (အားလုံးကို Readonly ပြောင်းပစ်လိုက်တယ်)
+
+function handleProductUpdate(payload: ProductUpdatePayload) {
+  // payload.name = "New Name"; // 👈 ချက်ချင်း Error တက်ပါမယ်! ဘာလို့လဲဆိုတော့ Readonly ဖြစ်နေလို့ပါ။
+  if (payload.price !== undefined) {
+    console.log("Price update:", payload.price);
+  }
+}
+
+// အသုံးပြုပုံ ဥပမာများ:
+handleProductUpdate({ name: "Super Gadget", price: 199.99 });
+handleProductUpdate({ description: "The best gadget ever." });
+// handleProductUpdate({ id: "123" }); // Error: 'id' ကို ပေးလို့မရပါဘူး။
+`;
+
+<Aside title="💡 ရည်ရွယ်ချက်" type="tip">
+  ရှေ့မှာ သင်ယူခဲ့တဲ့ Generics၊ Utility Types တွေနဲ့ `satisfies` Operator တွေကို လက်တွေ့ လုပ်ငန်းခွင်မှာ ဘယ်လို ပေါင်းစပ် အသုံးချမလဲဆိုတာ လေ့လာကြပါမယ်။ သူတို့ အချင်းချင်း ဘယ်လို ပူးပေါင်းဆောင်ရွက်ကြတယ် ဆိုတာကို ပြသဖို့ သင်ခန်းစာ အဆုံးမှာ Mini-project သေးသေးလေး တစ်ခုလည်း အတူတူ တည်ဆောက်ကြည့်ကြမှာ ဖြစ်ပါတယ်။
+</Aside>
+
+## Generics နဲ့ Utility Types တွေကို ပေါင်းစပ်အသုံးပြုခြင်း
+
+### Utility Types တွေဟာ တကယ်တော့ Generic တွေပါပဲ!
+
+အရင် သင်ခန်းစာတွေမှာ လေ့လာခဲ့တဲ့ `Partial`, `Pick`, `Readonly` စတဲ့ Utility Types တွေကို မှတ်မိကြဦးမယ် ထင်ပါတယ်။ အဲ့ဒီမှာ ပါဝင်တဲ့ `T` နဲ့ `K` ဆိုတာတွေက ဘာတွေလဲဆိုတော့၊ တကယ်တော့ သူတို့ဟာ Generic Type Parameters (Type တွေရဲ့ နေရာမှာ လာရောက် အစားထိုးခံမယ့် ကိုယ်စားလှယ် အမည်) တွေပဲ ဖြစ်ပါတယ်။
+
+Utility Types အများစုဟာ အခြေခံအားဖြင့် Generic Types တွေပါပဲ။ သူတို့က Types တွေကို ပုံစံပြောင်းလဲပေးတဲ့ (Transform လုပ်ပေးတဲ့) အလုပ်တွေကို လုပ်ဆောင်ပါတယ်။ TypeScript က ဒါတွေကို အသင့်သုံးနိုင်အောင် ဖန်တီးပေးထားတာ ဖြစ်ပေမဲ့၊ အနောက်ကွယ်မှာတော့ Generic တွေရဲ့ အခြေခံ သဘောတရားအတိုင်းပဲ အလုပ်လုပ်နေတာ ဖြစ်ပါတယ်။
+
+ဥပမာအနေနဲ့ `Partial` ဟာ အနောက်ကွယ်မှာ ဘယ်လို အလုပ်လုပ်သလဲဆိုတာ ရိုးရှင်းတဲ့ ပုံစံနဲ့ လေ့လာကြည့်ရအောင် (ဒါဟာ Mapped Types ဆိုတဲ့ နည်းပညာကို အသုံးပြုထားတာဖြစ်ပြီး၊ နောက်သင်ခန်းစာတွေမှာ အသေးစိတ် ထပ်မံ လေ့လာသွားပါမယ်)။
+
+<Code lang="typescript" code={mappedType} title="utils.ts" />
+
+<Aside title="💡 မှတ်သားရန်" type="note">
+  အဓိက မှတ်ထားရမှာက Generics တွေဟာ Template (ပုံစံခွက်) တစ်ခုလို အလုပ်လုပ်ပေးပါတယ်။ Utility Types တွေကတော့ အဲ့ဒီ Generic Pattern (ပုံစံခွက်) တွေကို အခြေခံပြီး၊ ပုံမှန် အမြဲလုပ်လေ့ရှိတဲ့ အလုပ်တွေ (ဥပမာ - Properties တွေကို Optional ပြောင်းတာ၊ Readonly ပြောင်းတာ မျိုး) အတွက် ကြိုတင် တည်ဆောက်ပေးထားတဲ့ 'အသင့်သုံး ကိရိယာ' တွေပဲ ဖြစ်တယ်ဆိုတာပါပဲ။
+</Aside>
+
+## Generics နဲ့ Utility Types တွေကို သုံးပြီး ကိုယ်ပိုင် Function/Type တွေ ဖန်တီးခြင်း
+
+Generics နဲ့ Utility Types တွေကို ပေါင်းစပ်ပြီး လက်တွေ့ ဥပမာတစ်ခု ဖန်တီးကြည့်ရအောင်။ Object တစ်ခုနဲ့၊ အဲ့ဒီ Object ထဲက Keys တွေ (Properties တွေရဲ့ နာမည်) ပါတဲ့ Array တစ်ခုကို လက်ခံမယ့် Function တစ်ခုကို စဉ်းစားကြည့်ပါ။ ဒီ Function ကနေ အဲ့ဒီ Keys တွေနဲ့ ကိုက်ညီတဲ့ Properties တွေကိုပဲ ရွေးထုတ်ပြီး Object အသစ်တစ်ခု ပြန်တည်ဆောက်ပေးပါမယ်။ ဒါပေမဲ့ ပြန်ပေးမယ့် Properties တွေရဲ့ Value တွေကိုတော့ String (စာသား) အဖြစ် အတင်းအကျပ် ပြောင်းထားမယ် (ဒါမှမဟုတ် String ပြောင်းလို့မရရင် `null` အဖြစ် သတ်မှတ်မယ်)။
+
+<Code lang="typescript" code={pickAndStringify} title="utils.ts" />
+
+<Aside title="💡 ရှင်းပြချက်" type="note">
+- ဒီ Function မှာ Generics တွေဖြစ်တဲ့ `T extends object`, `K extends keyof T` ကို အသုံးပြုထားပါတယ်။ `T` က ကျွန်တော်တို့ ထည့်သွင်းမယ့် အဓိက Object ရဲ့ Type ကို ကိုယ်စားပြုပြီး, `K` ကတော့ အဲ့ဒီ `T` (Object) ထဲမှာပါတဲ့ Properties တွေရဲ့ နာမည် (Key) တွေကို စုစည်းထားတဲ့ Union Type ပါ။
+- `keys: K[]` ဆိုတာက ဒီ Function ဟာ `T` (ကျွန်တော်တို့ရဲ့ Object) ထဲမှာ အမှန်တကယ် ရှိရမယ့် Properties တွေရဲ့ နာမည် (Key) တွေ ပါဝင်တဲ့ Array တစ်ခုကိုသာ လက်ခံမယ်လို့ ကန့်သတ်လိုက်တာပါ။ (မရှိတဲ့ Key တွေ ထည့်ရင် Error ပြပါမယ်)။
+- `Record<K, string | null>` ဆိုတာက ပြန်ထွက်လာမယ့် (Return) Object ရဲ့ Type ကို သတ်မှတ်လိုက်တာပါ။ ဒီ Object အသစ်ထဲမှာ ကျွန်တော်တို့ ရွေးချယ်လိုက်တဲ့ Keys တွေ (`K`) ပဲ ပါဝင်ပါမယ်။ ပြီးတော့ သူတို့ရဲ့ Values တွေဟာ `string` သို့မဟုတ် `null` ဖြစ်ရပါမယ်။ ဒီနေရာမှာ `Record` ဆိုတဲ့ Utility Type ကို နေရာတကျ အသုံးချထားတာ ဖြစ်ပါတယ်။
+</Aside>
+
+## Utility Types တွေကို ပေါင်းစပ် (Chaining) အသုံးပြုခြင်း
+
+လက်တွေ့ လုပ်ငန်းခွင်မှာ ရှုပ်ထွေးတဲ့ Type တွေကို ဖန်တီးဖို့အတွက် Utility Types အများကြီးကို အလွှာလိုက် ပေါင်းစပ်ပြီး (Chaining လုပ်ပြီး) သုံးဖို့ လိုအပ်လာတတ်ပါတယ်။
+
+<Code lang="typescript" code={combineUtility} title="utils.ts" />
+
+<Aside title="💡 ရှင်းပြချက်" type="note">
+  ကျွန်တော်တို့ဟာ Utility Types တွေကို အလွှာလိုက် ပေါင်းစပ်ပြီး (တစ်ခုပြီးတစ်ခု ထပ်ဆင့်ပြီး) အလွန် ရှုပ်ထွေးတဲ့ Type တွေကို တိုတိုရှင်းရှင်းနဲ့ အလွယ်တကူ ဖန်တီးနိုင်ပါတယ်။ အထက်ပါ ဥပမာမှာပြထားတဲ့ `ProductUpdatePayload` Type ဟာ Data ရဲ့ ပုံစံ ဘယ်လိုရှိရမယ်၊ ပြီးတော့ ဘယ်လို ကန့်သတ်ချက် (Readonly, Optional) တွေ ရှိသလဲဆိုတာကို ရှင်းရှင်းလင်းလင်း ဖော်ပြပေးထားပါတယ် ခင်ဗျာ။
+</Aside>

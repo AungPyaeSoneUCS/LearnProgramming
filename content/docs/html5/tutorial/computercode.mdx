@@ -1,0 +1,88 @@
+---
+title: "HTML Computercode — Computer Code ပြသခြင်း"
+description: "Code များနှင့် computer output များကို HTML တွင် ပြသရန် အသုံးပြုသော tags များအကြောင်းကို လေ့လာကြမယ်။"
+---
+
+Programming website တွေမှာ code sample များ၊ keyboard shortcut များ၊ computer output များကို ပြသရန် အထူးသီးသန့် HTML tags များရှိပါတယ်။ ဒီ tags တွေက code များကို အခြား text တွေနဲ့ ခွဲခြားပြီး အဓိပ္ပာယ်ရှိစွာ ပြသနိုင်အောင် ကူညီပေးပါတယ်။ Semantic ဖြစ်လို့ browser နဲ့ developer တွေက တစ်ချက်ကြည့်ရုံနဲ့ ဘာကို ကိုယ်စားပြုလဲ ဆိုတာ သိနိုင်ပါတယ်။
+
+### Code Tag
+
+`<code>` tag က code snippet တစ်ခုကို ပြသရန် အသုံးပြုပါတယ်။ ပုံမှန်အားဖြင့် monospace font (စာလုံးတိုင်း တူညီသော အကျယ်ရှိသော font) နဲ့ ပြသပါတယ်။ ဒါက code စာကြောင်းများကို ရိုးရိုး text နဲ့ မရောထွေးအောင် ခွဲခြားပေးပါတယ်။ Inline code (စာကြောင်းအလယ်မှာ သုံးတာ) အတွက် အသုံးများပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<p>Python မှာ variables တွေကို
+  <code>print()</code> function နဲ့ ဖော်ပြနိုင်ပါတယ်။</p>
+```
+
+မှတ်ချက် — Code tag က inline (စာကြောင်းထဲမှာ) သုံးရန် သင့်တော်ပြီး code မျက်နှာစာများ အတွက်တော့ pre tag ကို သုံးပါတယ်။
+
+### Pre Tag
+
+`<pre>` tag က space တွေ၊ line break တွေ၊ indentation တွေကို မူလအတိုင်း ထိန်းသိမ်းပြသပေးတဲ့ tag ဖြစ်ပါတယ်။ Multiline code block များ၊ ကွန်ပျူတာ output များကို ပြသရန် သင့်လျော်ပါတယ်။ HTML က space တွေကို ပုံမှန်အားဖြင့် တစ်ခုတည်းအဖြစ် ချုံ့ပေမယ့် pre tag ကတော့ မချုံ့ပါဘူး။
+
+**ဥပမာ -**
+
+```html
+<pre>
+  def hello():
+      print("မင်္ဂလာပါ!")
+      print("Programming လေ့လာတာ ပျော်စရာကောင်းတယ်နော်")
+</pre>
+```
+
+မှတ်ချက် — Pre tag ထဲမှာရှိတဲ့ space နဲ့ line break အားလုံး ပြသခံရပြီး code formatting အတိုင်း အတိအကျ ပေါ်ပါတယ်။
+
+### Kbd Tag (Keyboard Input)
+
+`<kbd>` tag က keyboard key တစ်ခုကို ကိုယ်စားပြုဖော်ပြရန် အသုံးပြုပါတယ်။ ဥပမာ — Ctrl+C လို shortcut တွေကို ရှင်းရှင်းလင်းလင်း ပြသရန် kbd tag ကို သုံးပါတယ်။ ဒီလိုပြသခြင်းက documentation များမှာ အသုံးဝင်ပြီး စာဖတ်သူကို ဘယ် key ကို နှိပ်ရမလဲ ဆိုတာ ရှင်းရှင်းလင်း သိစေပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<p>Copy လုပ်ရန်
+  <kbd>Ctrl</kbd> + <kbd>C</kbd> ကို နှိပ်ပါ။</p>
+```
+
+မှတ်ချက် — Kbd tag သည် keyboard keys များကို ပြသရန် သုံးပြီး ပုံမှန်အားဖြင့် monospace font ဖြင့် ပြသပါတယ်။
+
+### Samp Tag (Program Output)
+
+`<samp>` tag က computer program တစ်ခုရဲ့ output (ရလဒ်) ကို ပြသရန် အသုံးပြုပါတယ်။ ဥပမာ — စနစ်တစ်ခုရဲ့ message တစ်ခုကို samp tag ဖြင့် ဖော်ပြနိုင်ပါတယ်။ Samp က ကွန်ပျူတာကနေ ထွက်လာတဲ့ အချက်အလက်ကို ကိုယ်စားပြုပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<p>System က ပြန်လည်တုံ့ပြန်မှု-
+  <samp>File ကို ရှာမတွေ့ပါ။ ကျေးဇူးပြု၍ စစ်ဆေးပါ။</samp></p>
+```
+
+မှတ်ချက် — Samp tag က program ရဲ့ output ကို ပြသရန် သုံးပြီး browser က monospace font နဲ့ render လုပ်ပါတယ်။
+
+### Var Tag (Variable)
+
+`<var>` tag က programming variable တစ်ခု၏ အမည်ကို ခွဲခြားဖော်ပြရန် အသုံးပြုပါတယ်။ အများအားဖြင့် italic font ဖြင့် ပြသပါတယ်။ သင်္ချာပုံသေနည်းများ၊ programming variables များကို ဖော်ပြရာမှာ သုံးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<p>Circle တစ်ခု၏ ဧရိယာ =
+  <var>radius</var> အမြှောက် <var>radius</var> အမြှောက် pi ဖြစ်သည်။</p>
+```
+
+မှတ်ချက် — Var tag က variable name များကို ဖော်ပြရန် သုံးပြီး ပုံမှန် browser က italic style ဖြင့် ပြသပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Code tag က inline code snippet များအတွက် သုံးသည်။
+- Pre tag က space နှင့် line break များကို မူလအတိုင်း ထိန်းသိမ်းပြသည်။
+- Kbd tag က keyboard keys၊ samp tag က program output များအတွက်ဖြစ်သည်။
+- Var tag က variable name များကို ဖော်ပြရန် သုံးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Keyboard key များကို ပြသရန် ဘယ် tag ကို သုံးမလဲ?", options: ["samp", "kbd", "code", "var"], correctAnswer: 1, explanation: "kbd tag သည် keyboard input သို့မဟုတ် keys များကို ပြသရန် သုံးသည်။" },
+  { id: "q2", question: "Space နှင့် line break များကို မူလအတိုင်း ထိန်းသိမ်းပြသပေးသော tag က ဘာလဲ?", options: ["pre", "code", "div", "p"], correctAnswer: 0, explanation: "pre tag သည် space နှင့် line break များကို အတိအကျ ထိန်းသိမ်းပြသသည်။" },
+  { id: "q3", question: "Computer program ရဲ့ output ကို ပြသရန် ဘယ် tag ကို သုံးမလဲ?", options: ["var", "code", "samp", "output"], correctAnswer: 2, explanation: "samp tag သည် program ၏ sample output ကို ပြသရန် သုံးသည်။" } ]} />

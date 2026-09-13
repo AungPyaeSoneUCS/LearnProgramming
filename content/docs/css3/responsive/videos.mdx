@@ -1,0 +1,126 @@
+---
+title: "RWD Videos — Fluid Responsive Video"
+description: "Video တွေကို Screen အရွယ်အစားအားလုံးမှာ အချိုးအစား မပျက်ဘဲ ပြသနိုင်ဖို့ Fluid Video နည်းစနစ်များ။"
+---
+
+Video တွေက အသုံးပြုသူ တွေရဲ့ အာရုံစိုက်မှုကို ဖမ်းယူတဲ့ Media Type ဖြစ်ပါတယ်။ ဒါပေမဲ့ Video တွေက Fixed Dimension (ဥပမာ 640x360 Pixel) နဲ့ ပြလေ့ရှိတာမို့ Screen ကျဉ်းတဲ့ Device တွေမှာ Video က Overflow ဖြစ်ပြီး Layout ကို ဖျက်စေနိုင်ပါတယ်။ ဒါကြောင့် Video ကိုလည်း Image တွေလိုပဲ Flexible ဖြစ်အောင် ပြုလုပ်ဖို့ လိုအပ်ပါတယ်။
+
+### Video Element ကို Fluidity ဖြစ်စေခြင်း
+
+HTML5 Video Element ကို `max-width: 100%` ပေးရုံနဲ့ Container ရဲ့ Width ကို ကျော်လွန်မနေတော့ပါဘူး။ များသောအားဖြင့် Tantries Element တွေကို `width: 100%` ပေးပြီး ဖုန်းပေါ်မှာ Screen အပြည့် ဖြစ်စေဖို့လည်း အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+video {
+  max-width: 100%;
+  height: auto;
+}
+```
+
+မှတ်ချက် — ဒီ Rule လေးတစ်ကြောင်းတည်းနဲ့ ကိုယ်ပိုင် Video File တွေက Screen အရွယ်အစားအားလုံးမှာ အချိုးမပျက်ဘဲ ပြသပါတယ်။ `width: 100%` အစား `max-width` ကို သုံးတာမို့ Video က Container ထက် လိုအပ်ရင် မကျော်ပါဘူး။
+
+### Video Container ဖြင့် Fluid ဖြစ်စေခြင်း
+
+Video Element ကို Wrapper Container တစ်ခုထဲ ထည့်ပြီး Container ကို `width: 100%` ပေးတာက ပုံမှန်နည်းလမ်း ဖြစ်ပါတယ်။ တစ်နေရာထဲမှာ Video ရဲ့ Width နဲ့ အကန့်အသတ်တွေကို စုစည်းထားနိုင်တာမို့ Management လွယ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.video-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.video-container video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+```
+
+မှတ်ချက် — Video Container က Screen ကျယ်ရင် 900px အထိသာ ကြီးပြီး Screen ကျဉ်းရင် 100% အနေနဲ့ လိုက်ကျဉ်းပါတယ်။ ဒါက Video ကြီးလွန်းပြီး Layout မပျက်စေအောင် ထိန်းပေးတဲ့ နည်းလမ်းပါ။
+
+### Aspect Ratio ထိန်းသိမ်းနည်း
+
+Video တွေက သူ့ထဲမှာ တည်ဆောက်ထားတဲ့ Aspect Ratio (ဥပမာ 16:9) ရှိပါတယ်။ `aspect-ratio` Property သုံးပြီး Container ကို 16:9 ၊ 4:3 စသဖြင့် အချိုးတည်အောင် သတ်မှတ်ပြီး Video အပြင်ဘက်တွင် နေရာလွတ် တွေ မဖြစ်စေဖို့ ထိန်းနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.video-wrapper {
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.video-wrapper video,
+.video-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+```
+
+မှတ်ချက် — `aspect-ratio: 16 / 9` က Width ဘယ်လောက်ပြောင်းပြောင်း Height က 16:9 အချိုးအတိုင်း အလိုအလျောက် လိုက်ပြောင်းပေးပါတယ်။ ဒါကြောင့် Container က ပုံပျက်မသွားဘဲ Video အသွင်အပြင် လှပနေပါတယ်။
+
+### YouTube Iframe Video ပြုလုပ်နည်း
+
+YouTube စတဲ့ External Video တွေက Iframe နဲ့ ထည့်သွင်းရပါတယ်။ Iframe တွေက သူ့မှာ Fixed Size ပါလာတာမို့ အောက်ကလိုမျိုး Wrapper နဲ့ ထိန်းဖို့ လိုပါတယ်။ ဒီနည်းကတော့ Video တွေ အတွက် အလွယ်ဆုံး Fluid နည်းစနစ်တစ်ခုဖြစ်ပြီး ယနေ့ခေတ် Website တွေမှာ အသုံးအများဆုံး ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<div class="video-wrapper">
+  <iframe
+    src="https://www.youtube.com/embed/VIDEO_ID"
+    title="Introduction Video"
+    frameborder="0"
+    allowfullscreen></iframe>
+</div>
+```
+
+```css
+.video-wrapper {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+```
+
+မှတ်ချက် — Iframe Src ထဲက `VIDEO_ID` နေရာမှာ ကိုယ့် YouTube Video ရဲ့ ID ကို အစားထိုးရပါမယ်။ Wrapper ရဲ့ Optimization အပေါ်မှာ Video က Screen နဲ့ လိုက်လျောညီထွေ ဖြစ်နေတာကို မြင်ရမှာ ဖြစ်ပါတယ်။
+
+### Center ဖြစ်တဲ့ Fluid Video
+
+Video ကို Page အလယ်မှာ ထားပြီး Width Maximum ကို ကန့်သတ်ချင်ရင်တော့ Container ကို Margin Auto ပေးပြီး Fluid ဖြစ်စေနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.video-center {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.video-center video {
+  width: 100%;
+  height: 100%;
+}
+```
+
+မှတ်ချက် — `margin: 0 auto` က Container ကို အလျားလိုက် ဗဟိုကို ရောက်စေပါတယ်။ Width က 800px ထက် မကျော်ဘဲ Screen ပြည့်သလောက်ပဲ ကြီးတာမို့ Desktop မှာလည်း လှပပြီး Mobile မှာလည်း အပြည့်ပြပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Video တွေကို `max-width: 100%` ဖြင့် Container ထက် မကျော်အောင် ထိန်းနိုင်သည်။
+- `aspect-ratio` Property က Video အချိုးအစား 16:9 ကဲ့သို့ ထိန်းပေးသည်။
+- YouTube Iframe Video တွေကို Wrapper Container နဲ့ Fluid ဖြစ်စေနိုင်သည်။
+- `margin: 0 auto` ဖြင့် Video ကို Page အလယ်တွင် ထားနိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Video Element ကို Container ထက် မကျော်လွန်စေဖို့ ဘယ် CSS ကို သုံးမလဲ?", options: ["width: 200%", "max-width: 100%", "min-width: 100%", "max-height: 50%"], correctAnswer: 1, explanation: "max-width: 100% က Video ကို Container အကျယ်အတိုင်း ကန့်သတ်ပေးပါတယ်။" },
+    { id: "q2", question: "Video အချိုးအစား 16:9 ထိန်းသိမ်းဖို့ ဘယ် CSS Property ကို သုံးမလဲ?", options: ["width-ratio", "aspect-ratio", "screen-ratio", "size-ratio"], correctAnswer: 1, explanation: "aspect-ratio: 16 / 9 က Width နဲ့ လိုက်ပြီး Height ကို အချိုးအလိုက် ထိန်းပေးပါတယ်။" },
+    { id: "q3", question: "YouTube Video ကို ဘယ် HTML Element နဲ့ ထည့်သွင်းပါသလဲ?", options: ["iframe", "video", "embed-source", "media"], correctAnswer: 0, explanation: "YouTube လို External Video တွေကို iframe Element နဲ့ ထည့်သွင်းပါတယ်။" },
+  ]}
+/>

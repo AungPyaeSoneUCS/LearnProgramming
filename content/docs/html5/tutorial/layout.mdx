@@ -1,0 +1,143 @@
+---
+title: "HTML Layout — HTML Layout စီစဉ်ခြင်း"
+description: "Semantic layout element များနှင့် CSS flexbox grid ဖြင့် website layout ဆောက်ပုံတို့ကို လေ့လာကြမယ်။"
+---
+
+Website တစ်ခုရဲ့ layout ဆိုတာ content တွေကို စကြည့်လို့ ကောင်းအောင် စီစဉ်ဖြန့်ဝေထားတဲ့ ပုံစံဖြစ်ပါတယ်။ HTML5 မှာ semantic layout element တွေရှိပြီး ၎င်းတို့က content တွေရဲ့ အဓိပ္ပာယ်ကို browser နဲ့ developer တွေကို ရှင်းလင်းစွာ ပြသပေးပါတယ်။ Old school က div tag နဲ့ပဲ ပြုလုပ်ခဲ့ရပေမယ့် HTML5 မှာတော့ ပိုအဓိပ္ပာယ်ရှိတဲ့ tags တွေ ရှိပါပြီ။
+
+### Semantic Layout Elements
+
+Semantic element ဆိုတာ သူ့နာမည်ကြည့်ရုံနဲ့ သူ့ရဲ့ အဓိပ္ပာယ်ကို သိနိုင်တဲ့ element တွေပဲ ဖြစ်ပါတယ်။ `<header>` က page အပေါ်ပိုင်း၊ `<nav>` က navigation menu၊ `<section>` က ဆောင်းပါးအစိတ်အပိုင်း၊ `<article>` က သီးခြားရပ်တည်နိုင်တဲ့ content၊ `<aside>` က ဘေးဘက်ဆိုင်ရာ content၊ `<footer>` က page အောက်ခြေ ဖြစ်ပါတယ်။ ဒီ tags များက code ကို ဖတ်ရလွယ်ကူပြီး search engine အတွက်လည်း ပိုကောင်းပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<header>
+  <h1>Website အမည်</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Lessons</a>
+  </nav>
+</header>
+
+<section>
+  <article>
+    <h2>သင်ခန်းစာ ခေါင်းစဉ်</h2>
+    <p>ဒီနေရာမှာ ပါဝင်ကြောင်း content တွေ ရှိပါတယ်။</p>
+  </article>
+  <aside>
+    <p>အခြားဆက်စပ် အချက်အလက်များ။</p>
+  </aside>
+</section>
+
+<footer>
+  <p>Copyright 2026</p>
+</footer>
+```
+
+မှတ်ချက် — Semantic tags များက layout တစ်ခုကို အဓိပ္ပာယ်ရှိစေပြီး accessibility နှင့် SEO ကိုလည်း တိုးတက်စေပါတယ်။
+
+### Flexbox ဖြင့် Layout
+
+CSS `display: flex` က child element တွေကို အလျားလိုက် သို့မဟုတ် ဒေါင်းလိုက် တန်းစီ ဖြန့်ဝေပေးပါတယ်။ Flexbox က container တစ်ခုထဲမှာ element တွေကို တစ်ပြေးညီ ခွဲဝေထားရန် အလွန်လွယ်ကူပါတယ်။ Navbar တွေ၊ card group တွေမှာ အသုံးများပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #333;
+  padding: 10px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+}
+```
+
+```html
+<div class="navbar">
+  <a href="#">Home</a>
+  <a href="#">သင်ခန်းစာများ</a>
+  <a href="#">ဆက်သွယ်ရန်</a>
+</div>
+```
+
+မှတ်ချက် — `justify-content: space-between` က child element တွေကို အစွန်းနှစ်ဖက်နဲ့ အလယ်မှာ နေရာယူစေပါတယ်။
+
+### CSS Grid ဖြင့် Layout
+
+CSS Grid က စာမျက်နှာကို row နဲ့ column ကွန်ယက်များအဖြစ် ပိုင်းခြားပြီး content များကို နေရာချနိုင်ပါတယ်။ ပိုမိုရှုပ်ထွေးတဲ့ layout တွေ ဖန်တီးရန် Grid က သင့်တော်ပြီး Flexbox ထက် နှစ်ဖက်စလုံး (column နှင့် row) ကို ထိန်းချုပ်နိုင်ပါတယ်။ Main content နဲ့ sidebar layout မျိုးမှာ အသုံးများပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.layout main {
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.layout aside {
+  background-color: #ddd;
+  padding: 20px;
+}
+```
+
+```html
+<div class="layout">
+  <main>
+    <h2>အဓိက Content</h2>
+    <p>ဒီနေရာက ပင်မအကြောင်းအရာ ဖြစ်ပါတယ်။</p>
+  </main>
+  <aside>
+    <p>ဘေးဘက် Sidebar နေရာ။</p>
+  </aside>
+</div>
+```
+
+မှတ်ချက် — `grid-template-columns: 2fr 1fr` က column နှစ်ခုကို ၂ နဲ့ ၁ အချိုးဖြင့် ခွဲဝေပေးပြီး `gap` က ကွာဟမှုနေရာကို သတ်မှတ်ပေးပါတယ်။
+
+### Responsive Layout
+
+ဖုန်း၊ tablet၊ desktop စတဲ့ screen အရွယ်အစား အမျိုးမျိုးမှာ website ကောင်းမွန်စွာ ပြသရန် responsive design လိုအပ်ပါတယ်။ Media query များဖြင့် screen သေးငယ်တဲ့အခါ flex သို့မဟုတ် grid ကို ပြောင်းလဲနိုင်ပါတယ်။ Responsive layout က ယနေ့ခေတ် website တိုင်းရဲ့ မရှိမဖြစ် အစိတ်အပိုင်း ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
+မှတ်ချက် — Screen အကျယ် 600px အောက်ရောက်တဲ့အခါ sidebar က main column အောက်ကို ဆင်းသွားပြီး column တစ်ခုတည်းဖြင့် ပြသပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Semantic elements များက layout ကို အဓိပ္ပာယ်ရှိစေပြီး SEO ကို တိုးတက်စေသည်။
+- Flexbox က one-dimensional layout (row or column) အတွက် သုံးသည်။
+- Grid က two-dimensional layout များအတွက် ပိုသင့်လျော်သည်။
+- Media queries ဖြင့် screen အရွယ်အစားပေါ်လိုက် layout ပြောင်းနိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Semantic element မဟုတ်တဲ့အရာက ဘာလဲ?", options: ["header", "nav", "article", "div"], correctAnswer: 3, explanation: "div သည် semantic မဟုတ်ဘဲ layout element တစ်ခုသာဖြစ်သည်။" },
+  { id: "q2", question: "Flexbox တွင် child element များကို ဖြန့်ဝေရန် ဘယ် CSS property ကို သုံးသနည်း?", options: ["justify-content", "text-align", "margin", "align"], correctAnswer: 0, explanation: "justify-content သည် flex container အတွင်း element များကို ဖြန့်ဝေပေးသည်။" },
+  { id: "q3", question: "Screen အသေး အတွက် layout ပြောင်းရန် ဘာကို သုံးမလဲ?", options: ["flexbox", "media query", "fixed layout", "grid"], correctAnswer: 1, explanation: "Media queries ဖြင့် screen အရွယ်အစားပေါ်လိုက် CSS ကို ပြောင်းလဲနိုင်သည်။" } ]} />

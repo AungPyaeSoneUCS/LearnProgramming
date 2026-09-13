@@ -1,0 +1,41 @@
+---
+title: "Interactive Section - Events"
+description: "Events လက်တွေ့စမ်းသပ်ရန်"
+---
+
+သင့်ရဲ့ Webpage မှာ အောက်ပါ HTML Code တွေ ရှိနေတယ်လို့ မှတ်ယူပါ။
+
+```html
+<button id="alert-btn">Alert Me</button>
+<input type="text" id="name-input" placeholder="Type name...">
+<p id="display-text"></p>
+```
+
+## လေ့ကျင့်ခန်း ၁ (Exercise 1): Click Event 👆
+
+`#alert-btn` ခလုတ်ကို နှိပ်လိုက်တဲ့ အခါတိုင်း `alert("Hello!")` ဆိုတဲ့ Box လေး ပေါ်လာအောင် လုပ်ဆောင်ပါ။
+
+```javascript
+const btn = document.querySelector("#alert-btn");
+
+// DOMContentLoaded is safer if scripts are in head, but here assume body end
+btn.addEventListener("click", () => {
+    // သင်၏ Code များကို ဤနေရာတွင် ဆက်လက် ရေးသားပါ...
+});
+```
+
+## လေ့ကျင့်ခန်း ၂ (Exercise 2): Input Event ⌨️
+
+Input Box ထဲမှာ စာရိုက်လိုက်တဲ့ အချိန်တိုင်း (စာတစ်လုံး ရိုက်လိုက်တိုင်း)၊ အဲ့ဒီ ရိုက်လိုက်တဲ့ စာကို အောက်က `#display-text` ဆိုတဲ့ `p` Tag ထဲမှာ ချက်ချင်း လိုက်ပြနေအောင် ဖန်တီးပါ။ (Live Preview သဘောမျိုး ဖြစ်ပါတယ်)
+
+*သဲလွန်စ (Hint): `input` ဆိုတဲ့ Event ကို အသုံးပြုပါ။ `e.target.value` ကို အသုံးပြုပြီး Input ထဲမှာ ရိုက်ထည့်လိုက်တဲ့ စာကို ရယူနိုင်ပါတယ်။*
+
+```javascript
+const input = document.querySelector("#name-input");
+const display = document.querySelector("#display-text");
+
+input.addEventListener("input", (e) => {
+    // သင်၏ Code များကို ဤနေရာတွင် ဆက်လက် ရေးသားပါ...
+    // display.textContent = ???
+});
+```

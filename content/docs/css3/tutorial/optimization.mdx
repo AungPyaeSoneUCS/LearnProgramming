@@ -1,0 +1,118 @@
+---
+title: "CSS Optimization — စွမ်းဆောင်ရည် မြှင့်တင်ခြင်း"
+description: "Minify, Specificity လျှော့ချခြင်း, Selector ပေါင်းစပ်ခြင်း, Critical CSS တို့နဲ့ CSS ကို မြန်ဆန်အောင် လုပ်နည်း။"
+---
+
+### CSS Performance ကို ဘာကြောင့် အရေးထားသင့်သလဲ?
+
+CSS ဖိုင် ကြီးလာရင် Download အချိန်နဲ့ Parsing ကြာပြီး Page ဖွင့်နှုန်း နှောင့်နှေးစေပါတယ်။ Optimization (အကောင်းဆုံး ပြုလုပ်ခြင်း) က File Size သေးစေပြီး Render ပိုမြန်စေပါတယ်။
+
+### Minify — Compress (ချုံ့) လုပ်ခြင်း
+
+Minify က Whitespace, Comment, Newline တွေကို ဖယ်ရှားပြီး CSS ဖိုင်ကို ချုံ့ပေးပါတယ်။ Build Tool (Vite, Webpack စသည်) တွေက Production မှာ ကိုယ်တိုင် Minify လုပ်ပေးလေ့ ရှိပါတယ်။
+
+**ဥပမာ -**
+```css
+/* Development — ရေးရလွယ် */
+.container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Production (minified) — ဖိုင်သေး */
+.container{width:100%;margin:0 auto}
+```
+
+မှတ်ချက် — Minify ထားတဲ့ Code က ဖတ်ရခက်တာမို့ Development (ရေးချိန်) မှာ မချုံ့ဘဲ Production (ဖြန့်ချိချိန်) မှာသာ ချုံ့ပါ။
+
+### Specificity ကို လျှော့ချခြင်း
+
+Specificity မြင့်တဲ့ Selector တွေက နောက်ပိုင်း Override လုပ်ရခက်ပြီး CSS တွေ အဆက်ဆက်ကြီးလာစေပါတယ်။ ID နဲ့ `!important` ကို ရှောင်ပြီး Class ကို အသားပေး သုံးပါ။
+
+**ဥပမာ -**
+```css
+/* Bad — ID + ရှည်လျားတဲ့ Chain */
+#header .nav > ul li a.active {
+  color: #fff;
+}
+
+/* Good — Class-based */
+.link-active {
+  color: #fff;
+}
+```
+
+မှတ်ချက် — Class Selector က Specificity သင့်တင့်အောင် ထားနိုင်ပြီး Override လုပ်ရလည်းလွယ်လို့ ရေရှည် Maintain လုပ်ရတာ ပိုလွယ်ပါတယ်။
+
+### Selector ပေါင်းစပ်ခြင်း (Grouping)
+
+Rule တူညီတဲ့ Selector တွေကို Group (အုပ်စု) ဖွဲ့ပြီး ပေါင်းစပ်ခြင်းက Duplicate (ထပ်နေတဲ့) Rule တွေကို ဖယ်ရှားပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+/* Before — Rule ထပ်နေ */
+h1 { color: #2c3e50; }
+h2 { color: #2c3e50; }
+h3 { color: #2c3e50; }
+
+/* After — Grouped */
+h1, h2, h3 {
+  color: #2c3e50;
+}
+```
+
+မှတ်ချက် — Selector Group တွေက Rule တစ်ခုတည်းနဲ့ အားလုံးကို ထိန်းချုပ်လို့ရတာမို့ File အရွယ်အစား တိုသက်သာပြီး ပြောင်းလဲရလည်း လွယ်ပါတယ်။
+
+### Critical CSS
+
+Critical CSS က Page ရဲ့ ပထမဆုံး မြင်ရတဲ့ အပိုင်း (Above the Fold) အတွက် လိုအပ်တဲ့ Style အနည်းငယ်ကို သီးခြားဖြန့်ပြီး Render Blocking ကို လျှော့ချတဲ့ နည်းလမ်းပါ။
+
+**ဥပမာ -**
+```css
+/* critical.css — အပေါ်ဆုံးအပိုင်း အတွက်သာ */
+.hero {
+  background: #2c3e50;
+  color: #fff;
+  padding: 4rem 1rem;
+}
+```
+
+မှတ်ချက် — Critical Style တွေကို ဖိုင်ရဲ့ Head မှာ Inline ထည့်ပြီး ကျန်တဲ့ CSS တွေကို နောက်ကြောင်းမှာ Load လုပ်တာမို့ ပထမဆုံး Render ပိုမြန်ပါတယ်။
+
+### Shorthand သုံးပြီး File သေးစေခြင်း
+
+Longhand (Property တစ်ခုချင်း) ရေးတာထက် Shorthand (အစုဖွဲ့ထားတဲ့) Property သုံးတာက File ပိုသေးပြီး Maintain လုပ်ရပိုလွယ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+/* Before — Longhand */
+.alert {
+  background-color: #f8d7da;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+
+/* After — Shorthand */
+.alert {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+```
+
+မှတ်ချက် — Shorthand (background, border, margin, padding စသည်) က စာလုံးတွေ သက်သာစေပြီး Style တစ်ခုလုံးကို တစ်နေရာတည်းမှာ မြင်ရအောင် ကူညီပါတယ်။
+
+### အကျဉ်းချုပ်
+
+CSS Optimization အတွက် Minify လုပ်ခြင်း ၊ Specificity နည်းအောင် Class သုံးခြင်း ၊ Selector Group ဖွဲ့ခြင်း ၊ Critical CSS ထုတ်ခြင်း ၊ Shorthand သုံးခြင်း စတဲ့ အဆင့်တွေကို လိုက်နာပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Minify လုပ်တာက ဘာကို ပြုလုပ်ပေးပါသလဲ?", options: ["Whitespace နဲ့ Comment တွေဖယ်ပြီး File သေးစေတယ်", "Selector တွေကို ရှည်စေတယ်", "Style တွေကို ပြောင်းစေတယ်", "Color တွေကို ပြောင်းစေတယ်"], correctAnswer: 0, explanation: "Minify က Whitespace, Comment, Newline တွေဖယ်ပြီး CSS File Size ကို ချုံ့ပေးပါတယ်။" },
+    { id: "q2", question: "Specificity နည်းအောင် ဘယ် Selector ကို အသားပေး သုံးသင့်ပါသလဲ?", options: ["Class Selector", "ID Selector", "!important", "Element Selector"], correctAnswer: 0, explanation: "Class Selector က Specificity သိပ်မမြင့်ဘဲ Override လုပ်ရလည်းလွယ်ပါတယ်။" },
+    { id: "q3", question: "Page ဖွင့်ချိန် ပထမဆုံး မြင်ရတဲ့အပိုင်း Style ကို သီးခြားထုတ်တဲ့ နည်းလမ်းက ဘာလဲ?", options: ["Critical CSS", "CSS Reset", "CSS Gradients", "CSS Grid"], correctAnswer: 0, explanation: "Critical CSS က Above the Fold Content အတွက် ပထမဆုံး Render ရဖို့ Style ကို ဦးစားပေး ပေးပါတယ်။" },
+  ]}
+/>

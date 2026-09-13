@@ -1,0 +1,148 @@
+---
+title: "HTML Website — စာမျက်နှာ ၃ ပိုင်း Website ၁ ခု ဆောက်ကြမယ်"
+description: "Header၊ hero၊ cards နှင့် footer ပါဝင်သော Website ကို အဆင့်ဆင့် ဆောက်လုပ်နည်းနှင့် နောက်ဆုံး ကုဒ်အပြည့်အစုံ။"
+---
+
+ကိုယ်တိုင် လက်တွေ့ website တစ်ခု ဆောက်ကြည့်ခြင်းက HTML ကို ပုံဖော် နားလည်စေတဲ့ အလေ့အကျင့်ကောင်းတစ်ခု ဖြစ်ပါတယ်။ ဒီသင်ခန်းစာမှာ အခြေခံ website တစ်ခုကို ယင်း၏ အပိုင်းတွေ ခွဲပြီး တစ်ဆင့်ချင်း ဆောက်ကြမှာ ဖြစ်ပါတယ်။ နောက်ဆုံးမှာ ကုဒ်တစ်ခုလုံးကို အတူတူ ပေါင်းပြီး မြင်ရမှာ ဖြစ်ပါတယ်။
+
+### Header နှင့် Navigation
+
+Website ရဲ့ ထိပ်ဆုံး ပိုင်းကို `header` လို့ ခေါ်ပြီး ဒီထဲမှာ site နာမည်နဲ့ navigation link တွေ ထားပါတယ်။ Link စုထားတဲ့ list ကို `nav` tag ထဲမှာ ထည့်ထားတာ conventional ဖြစ်ပြီး screen reader တွေအတွက် အထောက်အကူ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<header>
+  <h1>Takkatho</h1>
+  <nav>
+    <ul>
+      <li><a href="#home">ပင်မ</a></li>
+      <li><a href="#courses">သင်တန်းများ</a></li>
+      <li><a href="#contact">ဆက်သွယ်ရန်</a></li>
+    </ul>
+  </nav>
+</header>
+```
+
+မှတ်ချက် — `href` ထဲမှာ `#` နဲ့ စတင်တဲ့ လိပ်စာက ဒီစာမျက်နှာထဲက id နှင့် ကိုက်ညီတဲ့ နေရာဆီ ခုန်သွားစေပါတယ်။
+
+### Hero Section
+
+Hero ဆိုတာ စာမျက်နှာ ရောက်တာနဲ့ ပထမဆုံး မြင်ရတဲ့ ကြီးမားတဲ့ ကြိုဆိုရေး ဆောင်ပုဒ်ပိုင်း ဖြစ်ပါတယ်။ Website ရဲ့ အကြောင်းအရာ တစ်ချက်တည်းကို ထင်ရှားစေဖို့ heading တိုတိုနဲ့ paragraph တစ်ခု ထားလေ့ရှိပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<section id="home">
+  <h2>Programming ကို လွတ်လပ်စွာ သင်ယူပါ</h2>
+  <p>ပညာသင်ယူချင်စိတ် ရှိရုံဖြင့် လုံလောက်ပါတယ်။</p>
+</section>
+```
+
+မှတ်ချက် — Hero ထဲမှာ `section` tag သုံးထားပြီး `id="home"` က header ထဲက link နဲ့ ချိတ်ဆက်ထားတာကို သတိထားကြည့်ပါ။
+
+### Cards Section
+
+Cards ဆိုတာ သတင်းအချက်အလက်တွေကို အကွက်ငယ်တွေ ခွဲပြီး ပြတဲ့ နည်းလမ်း ဖြစ်ပါတယ်။ Course တစ်ခုစီရဲ့ နာမည်၊ ဖော်ပြချက်နဲ့ လင့်တစ်ခုကို မိတ်ဆက်ရာမှာ ဒီပုံစံက အသုံးတဲ့ပါတယ်။ `article` tag က card တစ်ခုစီအတွက် ပိုသင့်လျော်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<section id="courses">
+  <article>
+    <h3>HTML5</h3>
+    <p>Website ရဲ့ အခြေခံ အဆောက်အဦကို သင်ယူပါ။</p>
+  </article>
+  <article>
+    <h3>CSS</h3>
+    <p>Website ကို လှပအောင် အလှဆင်ပါ။</p>
+  </article>
+  <article>
+    <h3>JavaScript</h3>
+    <p>Website ကို အသက်ဝင်လှုပ်ရှားအောင် လုပ်ပါ။</p>
+  </article>
+</section>
+```
+
+မှတ်ချက် — card တွေကို ရှေ့သို့ထိုးထားသော CSS အကြောင်းပါ နောက်သင်တန်းမှာ ဒီပုံစံကို ပိုကြည့်ကောင်းအောင် လုပ်ကြပါမယ်။
+
+### Footer
+
+Footer က စာမျက်နှာရဲ့ အောက်ဆုံး အပိုင်း ဖြစ်ပြီး copyright၊ ဆက်သွယ်ရန် link ဒါမှမဟုတ် နောက်ထပ် အချက်အလက်တွေ ထားပါတယ်။ Footer ရှိ `nav` ကိုလည်း ပုံမှန် navigation နဲ့ အလားတူ ရေးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<footer id="contact">
+  <p>2026 Takkatho — မြန်မာ Programming School</p>
+  <a href="mailto:hello@takkatho.com">ကျွန်တော်တို့ထံ စာပို့ပါ</a>
+</footer>
+```
+
+မှတ်ချက် — Footer ထဲမှာ `mailto:` link ကို သုံးထားတာကြောင့် နှိပ်လိုက်တာနဲ့ email အပလီကေးရှင်း ပွင့်ပါတယ်။
+
+### ကုဒ်တစ်ခုလုံး ပေါင်းစည်းခြင်း
+
+အပိုင်းလေး ပိုင်းလုံးကို တစ်နေရာတည်း ပေါင်းပြီး `<!DOCTYPE html>` နဲ့ `<html>`, `<head>`, `<body>` အစရှိတဲ့ page structure ဖြင့် ခြုံလိုက်ရင် website ပြည့်စုံပါပြီ။ ဒါက browser မှာ ဖွင့်ကြည့်လို့ရတဲ့ တစ်မျက်နှာတည်း website အပြည့်အစုံ ဖြစ်ပါတယ်။
+
+**Full website ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>Takkatho Home</title>
+</head>
+
+<body>
+  <header>
+    <h1>Takkatho</h1>
+    <nav>
+      <ul>
+        <li><a href="#home">ပင်မ</a></li>
+        <li><a href="#courses">သင်တန်းများ</a></li>
+        <li><a href="#contact">ဆက်သွယ်ရန်</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home">
+      <h2>Programming ကို လွတ်လပ်စွာ သင်ယူပါ</h2>
+      <p>ပညာသင်ယူချင်စိတ် ရှိရုံဖြင့် လုံလောက်ပါတယ်။</p>
+    </section>
+
+    <section id="courses">
+      <h2>အင်္ဂါရပ်များ</h2>
+      <article>
+        <h3>HTML5</h3>
+        <p>Website ရဲ့ အခြေခံ အဆောက်အဦကို သင်ယူပါ။</p>
+      </article>
+      <article>
+        <h3>CSS</h3>
+        <p>Website ကို လှပအောင် အလှဆင်ပါ။</p>
+      </article>
+      <article>
+        <h3>JavaScript</h3>
+        <p>Website ကို အသက်ဝင်လှုပ်ရှားအောင် လုပ်ပါ။</p>
+      </article>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <p>2026 Takkatho — မြန်မာ Programming School</p>
+    <a href="mailto:hello@takkatho.com">ကျွန်တော်တို့ထံ စာပို့ပါ</a>
+  </footer>
+</body>
+</html>
+```
+
+မှတ်ချက် — `main` tag က စာမျက်နှာရဲ့ အဓိက အကြောင်းအရာသာပါဝင်ကြောင်း screen reader ကို ပြောပြပြီး `lang="my"` က မြန်မာဘာသာ site ဖြစ်ကြောင်း သတ်မှတ်ပေးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Website ရဲ့ ထိပ်ဆုံးအပိုင်းကို ဘယ် tag နဲ့ ရေးသားသနည်း?", options: ["footer", "header", "main", "hero"], correctAnswer: 1, explanation: "header tag က စာမျက်နှာထိပ်မှာ navigation နဲ့ အမည်တို့ကို ထားရန် သုံးသည်။" },
+  { id: "q2", question: "card တစ်ခုစီအတွက် ပိုသင့်လျော်သော semantic tag မှာ ဘာလဲ?", options: ["article", "span", "div", "li"], correctAnswer: 0, explanation: "article tag က အမှီအခိုကင်းသော အကြောင်းအရာ block တစ်ခုကို ဖော်ပြသည်။" },
+  { id: "q3", question: "Doctype declaration ကို ဘာအတွက် သုံးသနည်း?", options: ["CSS ဖိုင် ချိတ်ရန်", "HTML version သတ်မှတ်ရန်", "JavaScript run ရန်", "ပုံထည့်ရန်"], correctAnswer: 1, explanation: "Doctype က browser အား HTML ဗားရှင်းကို အသိပေးပြီး မှန်ကန်စွာ render လုပ်စေသည်။" } ]} />

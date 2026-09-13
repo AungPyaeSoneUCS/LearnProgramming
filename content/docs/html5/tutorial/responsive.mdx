@@ -1,0 +1,116 @@
+---
+title: "HTML Responsive — Responsive Web Design အကြောင်း"
+description: "Screen အရွယ်အစားအားလုံးမှာ လှပစွာပြသနိုင်သော responsive design ပြုလုပ်နည်းကို လေ့လာကြမယ်။"
+---
+
+Responsive web design ဆိုတာ screen အရွယ်အစား အမျိုးမျိုး (ဖုန်း၊ tablet၊ desktop) ပေါ်မှာပါ website ကောင်းမွန်စွာ ပြသနိုင်အောင် ပြုလုပ်တဲ့ နည်းလမ်းဖြစ်ပါတယ်။ ယနေ့ခေတ်မှာ အသုံးပြုသူတွေရဲ့ အများစုက ဖုန်းနဲ့ပဲ website ကြည့်ကြတာမို့ responsive design ဟာ ဆောက်တဲ့ website တိုင်းမှာ မရှိမဖြစ် လိုအပ်ပါတယ်။
+
+### Viewport Meta Tag
+
+Mobile devices တွေမှာ page ကို မှန်မှန်ကန်ကန် ပြသနိုင်ဖို့ viewport meta tag ကို ထည့်ပေးရန်လိုပါတယ်။ ဒီ tag မရှိရင် mobile browser က desktop page ကို သေးငယ်တဲ့ screen ပေါ် ချုံ့ပြပြီး zoom လုပ်ရမှာ ဖြစ်ပါတယ်။ Responsive design ရဲ့ အခြေခံအုတ်မြစ်လို့ ဆိုနိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+```
+
+မှတ်ချက် — `width=device-width` က page width ကို device screen width နဲ့ လိုက်ညီစေပြီး `initial-scale=1.0` က အစပိုင်း zoom level ကို ပုံမှန်ထားပေးပါတယ်။
+
+### Responsive Images
+
+Image တွေက screen အရွယ်အစားနဲ့ လိုက်လျောညီထွေ အရွယ်ပြောင်းလဲရန် CSS `width: 100%` ကို သုံးနိုင်ပါတယ်။ အမြင့်ကို အလိုအလျောက် ထိန်းညှိရန်တော့ `height: auto` ကို သုံးပါတယ်။ ဒါကြောင့် image က container ကျယ်ရင် ကျယ်သလို ပြီး သေးရင်လည်း သေးသလို ပြသနိုင်ပါပြီ။
+
+**ဥပမာ -**
+
+```css
+img {
+  width: 100%;
+  height: auto;
+}
+```
+
+```html
+<img src="photo.jpg" alt="ဓာတ်ပုံဥပမာ">
+```
+
+မှတ်ချက် — `width: 100%` အစားအကြီးဆုံးမှာ 100% ထက် မကျော်စေဖို့ `max-width: 100%` ကို သုံးတဲ့နည်းလည်း ရှိပါတယ်။
+
+### Media Queries
+
+Media query က screen အရွယ်အစား သို့မဟုတ် device ရဲ့ သွင်ပြင်လက္ခဏာပေါ်လိုက် CSS style အမျိုးမျိုး သုံးနိုင်အောင် လုပ်ပေးပါတယ်။ `@media` rule အတွင်း `max-width` သို့မဟုတ် `min-width` ကန့်သတ်ချက်များကို ထည့်ပြီး ဘယ် screen အရွယ်မှာ ဘယ် style သုံးမလဲ ဆိုတာ သတ်မှတ်နိုင်ပါတယ်။ Responsive design ရဲ့ အဓိက ကိရိယာ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+body {
+  background-color: white;
+}
+
+@media (max-width: 600px) {
+  body {
+    background-color: lightgray;
+  }
+  .menu {
+    display: none;
+  }
+}
+```
+
+မှတ်ချက် — Screen အကျယ် 600px အောက်ရောက်တဲ့အခါ body background က ပြောင်းပြီး .menu က ဝှက်ထားပါတယ်။
+
+### Flexible Layout (Flexbox & Grid)
+
+Flexbox နဲ့ Grid တွေက element တွေကို screen ရဲ့ အရွယ်အစားပေါ်လိုက် လိုက်လျောညီထွေ ပြောင်းလဲစေတဲ့ flexible layout များကို ဖန်တီးပေးပါတယ်။ Flexbox က တစ်တန်း အလိုက် ဖြန့်ဝေရန် သင့်ပြီး Grid က row နဲ့ column နှစ်ဖက်စလုံးမှာ ထိန်းချုပ်နိုင်ပါတယ်။ Screen သေးလာတဲ့အခါ columns တွေက row တွေအဖြစ် ပြောင်းနိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
+မှတ်ချက် — Screen အကြီးမှာ column ၃ ခုပြပြီး screen သေးတဲ့အခါ column ၁ ခုသာ ပြသောကြောင့် ဖုန်းပေါ်မှာ reading အတွက် ပိုလွယ်ကူပါတယ်။
+
+### Text Size — vw Unit
+
+Text အရွယ်အစားကို screen ရဲ့ width နဲ့ အချိုးကျ ဖြစ်စေဖို့ `vw` (viewport width) unit ကို သုံးနိုင်ပါတယ်။ 1vw ဆိုတာ viewport width ရဲ့ ၁ ရာခိုင်နှုန်း ဖြစ်ပါတယ်။ သို့သော် သေးလွန်းတဲ့ screen တွေမှာတော့ စာတွေ အရမ်းသေးသွားနိုင်လို့ min သတ်မှတ်ဖို့ `clamp()` လို function နဲ့ ပေါင်းသုံးလေ့ရှိပါတယ်။
+
+**ဥပမာ -**
+
+```css
+h1 {
+  font-size: 6vw;
+}
+
+p {
+  font-size: clamp(14px, 2vw, 20px);
+}
+```
+
+မှတ်ချက် — `clamp(14px, 2vw, 20px)` က အနည်းဆုံး 14px၊ နှစ်သက်ရာ 2vw၊ အများဆုံး 20px ဖြစ်အောင် သတ်မှတ်ပေးပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Viewport meta tag သည် responsive design ရဲ့ အခြေခံဖြစ်သည်။
+- `max-width: 100%` က image များကို container အတွင်း အလိုက်ကိုက်ညီစေသည်။
+- Media queries များက screen အရွယ်အစားပေါ်လိုက် style ပြောင်းလဲပေးသည်။
+- Flexbox/grid နှင့် vw unit တို့က flexible layout နှင့် text အရွယ်များကို ဖန်တီးပေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Responsive design အတွက် head ထဲမှာ မဖြစ်မနေ ထည့်ရတဲ့ meta tag က ဘာလဲ?", options: ["viewport meta", "author meta", "keywords meta", "charset meta"], correctAnswer: 0, explanation: "viewport meta tag သည် responsive design အတွက် မရှိမဖြစ်လိုအပ်သည်။" },
+  { id: "q2", question: "Screen သေးလာတဲ့အခါ style ပြောင်းရန် ဘယ် CSS rule ကို သုံးမလဲ?", options: ["media query", "flex query", "responsive query", "screen query"], correctAnswer: 0, explanation: "media queries အသုံးပြု၍ screen အရွယ်အစားအလိုက် style ကို ပြောင်းလဲနိုင်သည်။" },
+  { id: "q3", question: "Image က container ထဲမှာ အရွယ်လွန်မသွားစေဖို့ ဘယ် CSS property ကို သုံးမလဲ?", options: ["width: 100%", "max-width: 100%", "height: 100%", "size: auto"], correctAnswer: 1, explanation: "max-width: 100% က image ကို container ထက် မကျော်လွန်အောင် ထိန်းပေးသည်။" } ]} />

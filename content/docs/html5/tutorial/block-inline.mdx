@@ -1,0 +1,120 @@
+---
+title: "HTML Block & Inline Elements"
+description: "Block-Level နဲ့ Inline Element တွေ ဘာကွာခြားပြီး ဘယ်အခါ ဘယ်ဟာ သုံးသလဲ လေ့လာကြပါမယ်။"
+---
+
+### Block-Level Elements ဆိုတာ ဘာလဲ?
+
+Block-Level Element တွေက စာကြောင်းတစ်ကြောင်း တစ်ကြောင်း လုံးလုံး နေရာ ယူပါတယ်။ နောက်တစ်ခုက အဲဒီ Element ရဲ့ အောက်ကနေ စတင်ပါတယ်။ ဥပမာ - `<div>`, `<p>`, `<h1>` ကနေ `<h6>`, `<ul>`, `<table>` စတာတွေပါ။ သူတို့က စာမျက်နှာရဲ့ အနံတစ်လျှောက် နေရာယူပြီး Height ကို သတ်မှတ်လို့ ရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<p>ပထမဆုံး Paragraph ပါ။</p>
+<p>ဒုတိယ Paragraph က အောက်မှာ သပ်သပ်ရပ်ရပ် ပေါ်ပါတယ်။</p>
+```
+
+မှတ်ချက် — Paragraph တစ်ခုစီက စာကြောင်း အသစ် အောက်ကနေ စတင်တာ သတိထားမိမှာပါ။ ဒါက Block-Level ရဲ့ လက္ခဏာပါ။
+
+### Inline Elements ဆိုတာ ဘာလဲ?
+
+Inline Element တွေက စာကြောင်းတစ်ကြောင်းရဲ့ အတွင်းမှာ ရှိနေပြီး လိုအပ်တဲ့ နေရာလောက်ပဲ ယူပါတယ်။ သူတို့က နောက် စာကြောင်းကို မချိုးဘဲ Text နဲ့ Text ကြားမှာ ရောနေပါတယ်။ ဥပမာ - `<span>`, `<a>`, `<strong>`, `<em>`, `<img>` စတာတွေပါ။ Inline Element တွေ ပေါ်မှာ Padding (ထောင့်လေး) ကို Margin လိုမျိုး ဒေါင်လိုက် အတိုင်းအတာ နဲ့ မသတ်မှတ်နိုင်ချေ များပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<p>Takkatho မှာ <strong>အခမဲ့</strong> Programming သင်တန်းတွေ ရှိပါတယ်။</p>
+```
+
+မှတ်ချက် — `<strong>` က စာလုံး ထူလာစေပြီး စာကြောင်း တစ်ကြောင်းထဲမှာ ဆက်ရှိနေပါတယ်။
+
+### `<div>` နဲ့ `<span>` ကွာခြားချက်
+
+`<div>` က Block-Level ဖြစ်ပြီး `<span>` က Inline ပါ။ `<div>` က Section တစ်ခုလုံးကို အုပ်ပြီး `<span>` က Text ရဲ့ တစ်စိတ်တစ်ပိုင်းလောက်ကို သပ်ရပ်အောင် စုဖို့ အသုံးပြုပါတယ်။ Layout ရဲ့ ဖွဲ့စည်းပုံအတွက် `<div>`, Text ရဲ့ အသေးစိတ် အပိုင်းအတွက် `<span>` ဆိုပြီး မှတ်ထားပါ။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <style>
+    .box {
+      background-color: lightblue;
+    }
+    .highlight {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <p>ဒီ Section တစ်ခုလုံးကို div ကဝိုင်းထားတာပါ။</p>
+  </div>
+  <p>ဒီစာထဲက <span class="highlight">ဒီစကားလုံး</span> က span ကဝိုင်းထားတာပါ။</p>
+</body>
+</html>
+```
+
+မှတ်ချက် — `.box` ရဲ့ background က Block တစ်ခုလုံးကို ဖုံးပေမယ့် `.highlight` က Text ရဲ့ အပိုင်းလေး အတွက် ရောင်ပြောင်းပေးတာပဲ မြင်ရပါတယ်။
+
+### Padding နဲ့ Margin ကွဲပြားမှု
+
+Block Elements တွေမှာ Padding နဲ့ Margin ကို ရှုထောင့် လေးမျိုးလုံးကနေ သတ်မှတ်နိုင်ပါတယ်။ Inline Elements တွေမှာ ဒေါင်လိုက် (Top/Bottom) Margin က မထင်သလောက် အကျိုးသက်ရောက်မှု မရှိဘဲ လက်ဝဲ/ညာ (Left/Right) Padding နဲ့ Margin တွေကပဲ ပိုပြီး ထိရောက်ပါတယ်။ ဒါကြောင့် Layout တွေ ဆောက်တဲ့အခါ ဒီအချက်ကို သတိထားပါ။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <style>
+    .block {
+      margin: 20px;
+      padding: 10px;
+      background-color: beige;
+    }
+    span {
+      margin: 20px;
+      padding: 5px;
+      background-color: yellow;
+    }
+  </style>
+</head>
+<body>
+  <div class="block">Block Div တစ်ခု</div>
+  <p>Inline tag တစ်ခု: <span>span လေး</span> ပါ။</p>
+</body>
+</html>
+```
+
+မှတ်ချက် — Block ပေါ်မှာ Margin တွေက ရှင်းရှင်းလင်းလင်း မြင်ရပေမယ့် Inline `span` ရဲ့ ဒေါင်လိုက် Margin တွေက အကျဉ်းကျ သွားတတ်ပါတယ်။
+
+### အသုံးများတဲ့ Block နဲ့ Inline Elements ဥပမာများ
+
+အသုံးများတဲ့ Block Elements တွေက `<div>`, `<p>`, `<h1>` ကနေ `<h6>`, `<ul>`, `<ol>`, `<li>`, `<table>`, `<section>`, `<header>`, `<footer>` တွေပါ။ Inline Elements တွေကတော့ `<span>`, `<a>`, `<strong>`, `<em>`, `<b>`, `<i>`, `<img>`, `<input>`, `<label>` တွေပါ။
+
+**ဥပမာ -**
+
+```html
+<div>ငါက block ပါ။</div>
+<span>ငါက inline ပါ။</span>
+<span>ငါ့ဘေးကိုပဲ ကပ်နေပါတယ်။</span>
+```
+
+မှတ်ချက် — `<div>` နဲ့ `<span>` နှစ်ခုထဲမှာ Text တစ်ဂဏန်း လောက်ပဲ ရှိပေမယ့် `<div>` ကပဲ စာကြောင်း အသစ်တစ်ကြောင်းမှာ ရှိနေတာ မြင်ရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Block Elements တွေက စာကြောင်း တစ်ကြောင်း လုံးလုံး နေရာယူပြီး စာကြောင်းသစ်ကနေ စပါတယ်။
+- Inline Elements တွေက စာကြောင်းထဲမှာ ရှိနေပြီး နေရာသိပ်မယူပါဘူး။
+- `<div>` က Block Layout အတွက်၊ `<span>` က Text အပိုင်းလေး တွေအတွက် သုံးပါတယ်။
+- Inline တွေရဲ့ ဒေါင်လိုက် Margin က ပုံမှန်မဟုတ်တဲ့ အပြုအမူ ရှိနိုင်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "အောက်ပါတို့ထဲက ဘယ်ဟာက Inline Element လဲ?", options: ["div", "p", "span", "h1"], correctAnswer: 2, explanation: "span က Inline Element ဖြစ်ပြီး စာကြောင်းထဲမှာ ရှိနေပါတယ်။" },
+  { id: "q2", question: "Block Element တစ်ခုရဲ့ လက္ခဏာက ဘာလဲ?", options: ["စာကြောင်းကြားမှာသာ ရှိနေတာ", "စာကြောင်းတစ်ကြောင်း လုံးလုံး နေရာယူတာ", "ပုံသာ ပြတာ", "Link ချိတ်လို့ရတာ"], correctAnswer: 1, explanation: "Block Elements တွေက စာကြောင်းတစ်ကြောင်း လုံးလုံးကို ယူပါတယ်။" },
+  { id: "q3", question: "Layout Section တစ်ခုလုံးကို အုပ်ချင်ရင် ဘယ် tag ကို သုံးသင့်လဲ?", options: ["span", "strong", "div", "i"], correctAnswer: 2, explanation: "div က Block Element ဖြစ်ပြီး Layout Section တွေ အတွက် သုံးပါတယ်။" }
+]} />

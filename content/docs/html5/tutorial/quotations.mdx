@@ -1,0 +1,89 @@
+---
+title: "HTML Quotations — Quote နဲ့ Citation Tags"
+description: "blockquote, q, abbr, address, cite, bdo စတဲ့ Quotation Tag တွေကို လေ့လာကြရအောင်။"
+---
+
+### blockquote — ရှည်လျားတဲ့ Quote
+
+`<blockquote>` က အခြားတစ်နေရာကနေ ကိုးကားလာတဲ့ ရှည်လျားတဲ့ Quotation တစ်ခုကို သီးသန့်စာပိုဒ်အနေနဲ့ ပြပါတယ်။ Browser က ပုံမှန်အားဖြင့် Indent (အနားသတ်စာရွေ့) ပေးပြီး ပြပါတယ်။
+
+**ဥပမာ -**
+```html
+<blockquote cite="https://example.com/source">
+  အသိပညာဆိုတာ အကန့်အသတ်မဲ့ တန်ဖိုးတစ်ခုပါ။
+</blockquote>
+```
+
+မှတ်ချက် — cite attribute ထဲမှာ အရင်းအမြစ် URL ထည့်နိုင်ပေမယ့် မျက်စိနဲ့မြင်ရတဲ့ ပုံစံကို မပြောင်းပါဘူး။
+
+### q — Inline Quote
+
+`<q>` က စာကြောင်းထဲမှာ ပါဝင်တဲ့ ခဏတာ Quotation ကို ပြတာဖြစ်ပြီး Browser က Quote Mark (”...”) ထည့်ပြီး ပြပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>Takkatho ရဲ့ ဆောင်ပုဒ်က <q>ကုဒ်တိုင်း သင်ပေးတယ်</q> ဖြစ်သည်။</p>
+```
+
+မှတ်ချက် — Quotation Mark တွေကို ကိုယ်တိုင်ရိုက်စရာမလိုဘဲ Browser က အလိုအလျောက် ထည့်ပေးပါတယ်။
+
+### abbr — အတိုကောက်
+
+`<abbr>` က အတိုကောက် (Abbreviation) တစ်ခုကို ပြဖို့ သုံးပါတယ်။ title attribute နဲ့ အပြည့်အစုံကို ထည့်ပေးနိုင်ပြီး Mouse Hover လုပ်လျှင် ထိုအပြည့်အစုံကို ပြပါမယ်။
+
+**ဥပမာ -**
+```html
+<p>Takkatho မှာ <abbr title="HyperText Markup Language">HTML</abbr> ကို သင်ရပါတယ်။</p>
+```
+
+မှတ်ချက် — Screen Reader သုံးသူတွေအတွက်လည်း အဓိပ္ပာယ် ပိုရှင်းစေပါတယ်။
+
+### address — ဆက်သွယ်ရန်အချက်အလက်
+
+`<address>` က စာရေးသူ ဒါမှမဟုတ် ပိုင်ရှင်ရဲ့ ဆက်သွယ်ရန် အချက်အလက်တွေ (နာမည်၊ Email စသည်) ပြဖို့ သုံးပါတယ်။ Browser က Italic နဲ့ ပြလေ့ရှိပါတယ်။
+
+**ဥပမာ -**
+```html
+<address>
+  Takkatho School ရေးသားသူ<br>
+  hello@takkatho.com
+</address>
+```
+
+မှတ်ချက် — Article ရဲ့ Author အချက်အလက်တွေကို Document အဆုံးမှာ သုံးလေ့ရှိပါတယ်။
+
+### cite — ရင်းမြစ်
+
+`<cite>` က လက်ရာတစ်ခု (စာအုပ်၊ ရုပ်ရှင်၊ သီချင်း) ရဲ့ ခေါင်းစဉ်ကို သတ်မှတ်ဖို့ သုံးပြီး Browser က Italic ဖြင့် ပြပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>ကျွန်တော်တို့ စာဖတ်နေတာက <cite>မြန်မာပြည်</cite> ဆိုတဲ့ စာအုပ်ပါ။</p>
+```
+
+မှတ်ချက် — cite က လူနာမည်မဟုတ်ဘဲ လက်ရာ (Work) ရဲ့ ခေါင်းစဉ်အတွက် ဖြစ်ပါတယ်။
+
+### bdo — စာသားဦးတည်ချက် ပြောင်းခြင်း
+
+`<bdo>` (Bidirectional Override) က စာသားရဲ့ ဦးတည်ချက် (Direction) ကို ဘယ်မှညာ ဒါမှမဟုတ် ညာမှဘယ် အတင်းပြောင်းပေးပါတယ်။ dir attribute နဲ့ တွဲသုံးပါတယ်။
+
+**ဥပမာ -**
+```html
+<bdo dir="rtl">ဒီစာသားက ညာကနေ ဘယ်ကို ဖတ်ရမှာပါ။</bdo>
+```
+
+မှတ်ချက် — rtl ဆိုတာ Right To Left ဖြစ်ပြီး အချို့ဘာသာစကားတွေ (ဥပမာ Arabic) အတွက် အသုံးဝင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- blockquote က ရှည်လျားတဲ့ Quote ၊ q က Inline Quote အတွက် ဖြစ်သည်။
+- abbr ရဲ့ title attribute နဲ့ အပြည့်အစုံကို ဖော်ပြနိုင်သည်။
+- bdo က dir နဲ့ စာသားဦးတည်ချက်ကို ပြောင်းပေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "ရှည်လျားတဲ့ Quotation တစ်ခုလုံးကို သီးသန့်ပြဖို့ ဘယ် Tag ကို သုံးပါသလဲ?", options: ["q", "blockquote", "cite", "abbr"], correctAnswer: 1, explanation: "blockquote က ရှည်လျားတဲ့ Quote ကို သီးသန့်စာပိုဒ်အနေနဲ့ ပြပါတယ်။" },
+  { id: "q2", question: "abbr Tag ရဲ့ title attribute က ဘာအတွက် ဖြစ်ပါသလဲ?", options: ["အရောင်သတ်မှတ်ရန်", "အပြည့်အစုံ အဓိပ္ပာယ်ပြရန်", "Link ချိတ်ရန်", "Font ပြောင်းရန်"], correctAnswer: 1, explanation: "title ထဲက အပြည့်အစုံကို Mouse Hover လုပ်ရင် Browser က ပြပါတယ်။" },
+  { id: "q3", question: "bdo Tag က ဘာကို ထိန်းချုပ်ပါသလဲ?", options: ["Text Direction", "Font Size", "Background Color", "Line Height"], correctAnswer: 0, explanation: "bdo က dir attribute နဲ့ စာသားဦးတည်ချက်ကို ပြောင်းပေးပါတယ်။" }
+]} />

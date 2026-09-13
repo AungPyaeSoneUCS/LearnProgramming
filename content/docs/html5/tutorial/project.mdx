@@ -1,0 +1,145 @@
+---
+title: "HTML Project — My Profile Page"
+description: "ခင်ဗျားရဲ့ Learning Path မှာ အသုံးဝင်မယ့် Profile Page တစ်ခုကို HTML တည်ဆောက်ပုံတွေနဲ့ အတူ လက်တွေ့ ဖန်တီးကြည့်ကြပါမယ်။"
+---
+
+### Project ရည်ရွယ်ချက်
+
+ဒီအခန်းမှာတော့ သင်ယူခဲ့သမျှ HTML အခြေခံတွေ ဖြစ်တဲ့ Headings၊ Paragraphs၊ Images၊ Links နဲ့ Lists တွေကို ပေါင်းစပ်ပြီး "My Profile" ဒါမှမဟုတ် "Resume" စာမျက်နှာ တစ်ခု လက်တွေ့ တည်ဆောက်ကြပါမယ်။ Coding လေ့လာဖို့ အကောင်းဆုံးနည်းလမ်းက ကိုယ်တိုင် ရေးကြည့်ခြင်းပါ။ ဒီ Project လေးကို အဆင့်ဆင့် လိုက်လုပ်သွားရင်း HTML ကို ပိုမို နားလည်လာမှာ သေချာပါတယ်။
+
+### အဆင့် ၁: စာမျက်နှာ အခြေခံဖွဲ့စည်းပုံ
+
+HTML document တိုင်းဟာ `<!DOCTYPE html>` နဲ့ စတင်ပြီး `<html>`, `<head>`, `<body>` တွေနဲ့ ပြည့်စုံရပါမယ်။ `<head>` ထဲမှာတော့ Page Title နဲ့ Character Set ကို ထည့်ပေးပါမယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - Su Su</title>
+</head>
+<body>
+</body>
+</html>
+```
+
+မှတ်ချက် — `<meta name="viewport">` က Mobile ဖုန်းတွေမှာ စာမျက်နှာကို မှန်ကန်စွာ ပြသဖို့ ကူညီပေးပါတယ်။ `<title>` က Browser Tab မှာ ပေါ်တဲ့ ခေါင်းစဉ်ပါ။
+
+### အဆင့် ၂: ကိုယ့်ကို မိတ်ဆက်တဲ့ Header ပိုင်း
+
+`<h1>` နဲ့ ကိုယ့် နာမည်၊ `<p>` နဲ့ ကိုယ့်အကြောင်း အကျဉ်းချုပ် ရေးပြီး `<img>` နဲ့ ကိုယ့်ပုံ (Profile Picture) ကို ထည့်ကြပါမယ်။
+
+**ဥပမာ -**
+
+```html
+<body>
+  <h1>Su Su</h1>
+  <p>Web Developer လေ့လာသူ တစ်ဦးပါ။ Coding နဲ့ Design ကို နှစ်ခြိုက်ပါတယ်။</p>
+  <img src="su-su.jpg" alt="Su Su Profile Photo" width="200">
+</body>
+```
+
+မှတ်ချက် — `<img>` ရဲ့ `alt` attribute က ပုံပေါ်မလာချိန် ဒါမှမဟုတ် Screen Reader အတွက် ပုံရဲ့ အကြောင်းကို ဖော်ပြပေးတဲ့အတွက် အမြဲ ထည့်ပေးသင့်ပါတယ်။
+
+### အဆင့် ၃: ကျွမ်းကျင်မှုတွေကို List နဲ့ ဖော်ပြခြင်း
+
+ကိုယ့် ကျွမ်းကျင်မှု (Skills) တွေ၊ အတွေ့အကြုံတွေကို Unordered List (`<ul>`) နဲ့ Ordered List (`<ol>`) သုံးပြီး စနစ်တကျ စီစဉ်ပြပါမယ်။
+
+**ဥပမာ -**
+
+```html
+<h2>Skills</h2>
+<ul>
+  <li>HTML</li>
+  <li>CSS</li>
+  <li>JavaScript</li>
+</ul>
+
+<h2>Experience</h2>
+<ol>
+  <li>Takkatho Student - 2025</li>
+  <li>Web Design Starter Project - 2026</li>
+</ol>
+```
+
+မှတ်ချက် — အစဉ်လိုက် အရေးမကြီးတဲ့ စာရင်းတွေမှာ `<ul>` ကို၊ အစဉ်လိုက် အရေးကြီးတဲ့ စာရင်းတွေမှာ `<ol>` ကို သုံးပါ။
+
+### အဆင့် ၄: Link နဲ့ အဆက်အသွယ် ပိုင်း
+
+`<a>` (Anchor) tag ကို သုံးပြီး ကိုယ့်ရဲ့ Email၊ GitHub ဒါမှမဟုတ် Social Media Link တွေကို ထည့်ပါမယ်။
+
+**ဥပမာ -**
+
+```html
+<h2>Contact</h2>
+<p>ကျွန်မကို ဒီ Link တွေကနေတဆင့် ဆက်သွယ်နိုင်ပါတယ်:</p>
+<ul>
+  <li><a href="mailto:susu@example.com">Email</a></li>
+  <li><a href="https://github.com/susu" target="_blank">GitHub</a></li>
+  <li><a href="https://facebook.com/susu">Facebook</a></li>
+</ul>
+```
+
+မှတ်ချက် — `mailto:` က Email Client ကို ဖွင့်ပေးပြီး `target="_blank"` က Link ကို Tab အသစ်မှာ ဖွင့်ပေးပါတယ်။
+
+### အဆင့် ၅: Final ပေါင်းစည်းခြင်း
+
+အပိုင်းအားလုံးကို ပေါင်းပြီး ပြည့်စုံတဲ့ Profile Page အပြည့်အစုံကို ဒီလိုမျိုး ရေးကြည့်ပါမယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - Su Su</title>
+</head>
+<body>
+  <h1>Su Su</h1>
+  <p>Web Developer လေ့လာသူ တစ်ဦးပါ။ Coding နဲ့ Design ကို နှစ်ခြိုက်ပါတယ်။</p>
+  <img src="su-su.jpg" alt="Su Su Profile Photo" width="200">
+
+  <h2>Skills</h2>
+  <ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>JavaScript</li>
+  </ul>
+
+  <h2>Experience</h2>
+  <ol>
+    <li>Takkatho Student - 2025</li>
+    <li>Web Design Starter Project - 2026</li>
+  </ol>
+
+  <h2>Contact</h2>
+  <ul>
+    <li><a href="mailto:susu@example.com">Email</a></li>
+    <li><a href="https://github.com/susu" target="_blank">GitHub</a></li>
+  </ul>
+</body>
+</html>
+```
+
+မှတ်ချက် — ဒါက ပြီးပြည့်စုံတဲ့ HTML file တစ်ခုပါ။ `.html` extension နဲ့ သိမ်းပြီး Browser ထဲမှာ ဖွင့်ကြည့်လို့ ရပါပြီ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Profile Page တိုင်းဟာ `<!DOCTYPE html>` ကနေ စပြီး `<html>`၊ `<head>`၊ `<body>` အစီအစဉ် မှန်ကန်ရပါမယ်။
+- `<h1>` ကို တစ်ကြိမ်ပဲ သုံးပြီး အပိုင်း အသစ်တွေမှာ `<h2>` ကစ တဲ့ နိမ့်တဲ့ Level တွေကို သုံးပါ။
+- `<img>` မှာ `alt` ထည့်ဖို့ မမေ့ပါနဲ့။
+- List တွေကို အကြောင်းအရာ ပေါ်မူတည်ပြီး `<ul>` ဒါမှမဟုတ် `<ol>` ရွေးသုံးပါ။
+- Project ကို ကိုယ့်ကိုယ်ကိုယ် မှတ်မိအောင် နာမည်၊ ဓာတ်ပုံ၊ Skills တွေကို ကိုယ့်ဟာနဲ့ လဲပြီး လေ့ကျင့်ကြည့်ပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "HTML document တစ်ခုရဲ့ ပထမဆုံး စာကြောင်းက ဘာဖြစ်ရမလဲ?", options: ["DOCTYPE declaration", "Title tag", "Heading tag", "Body tag"], correctAnswer: 0, explanation: "HTML file တိုင်းဟာ DOCTYPE declaration နဲ့ စတင်ရပါတယ်။" },
+  { id: "q2", question: "Profile Page မှာ ကိုယ့်ရဲ့ Skills တွေကို ဘယ် List နဲ့ ပြသဖို့ သင့်တော်လဲ?", options: ["Description list", "Ordered list", "Unordered list", "Table list"], correctAnswer: 2, explanation: "Skills လိုမျိုး အစဉ်လိုက် အရေးမကြီးတဲ့ စာရင်းတွေမှာ Unordered list ကို သုံးပါတယ်။" },
+  { id: "q3", question: "ပြင်ပ Link ကို Tab အသစ်မှာ ဖွင့်ဖို့ ဘယ် attribute ကို သုံးရလဲ?", options: ["href", "src", "alt", "target"], correctAnswer: 3, explanation: "target=_blank က Link ကို Tab အသစ်မှာ ဖွင့်ပေးပါတယ်။" }
+]} />

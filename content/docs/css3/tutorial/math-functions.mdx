@@ -1,0 +1,116 @@
+---
+title: "CSS Math Functions — သင်္ချာ Function များ"
+description: "calc(), min(), max(), clamp() တို့နဲ့ Responsive ဖြစ်တဲ့ Value တွေကို ဘယ်လို တွက်ချက် ရေးသားမလဲ လေ့လာကြည့်ရအောင်။"
+---
+
+### CSS Math Functions မိတ်ဆက်
+
+Math Functions တွေက CSS Property Value ထဲမှာ တွက်ချက်မှုတွေ ပြုလုပ်နိုင်စေပြီး Media Query တွေ အများကြီး မလိုဘဲ Responsive, Flexible Style တွေ ရေးဖို့ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.card {
+  width: calc(100% - 40px);
+}
+.sidebar {
+  width: calc(25% - 10px);
+}
+.grid-item {
+  width: calc((100% - 40px) / 3);
+}
+```
+
+မှတ်ချက် — calc() က Unit မတူတဲ့ Value တွေကို ပေါင်းနုတ်နိုင်လို့ 100% နုတ် 40px ဆိုတဲ့ တွက်နည်းမျိုး ရေးလို့ရပါတယ်။
+
+### `calc()` — တွက်ချက်ခြင်း
+
+calc() က + - * / Operator တွေနဲ့ တွက်ချက်ပြီး + နဲ့ - ရဲ့ နှစ်ဖက်မှာ Space မဖြစ်မနေ ထားရပါတယ်။ * နဲ့ / ကတော့ Space မလိုပါဘူး။
+
+**ဥပမာ -**
+```css
+.wrapper {
+  margin: 0 auto;
+  max-width: calc(1200px - 4rem);
+}
+.split {
+  width: calc(50% - 12px);
+}
+```
+
+မှတ်ချက် — + - ရဲ့ နှစ်ဖက်မှာ Space လိုအပ်ပြီး ပိုရှုပ်ထွေးတဲ့ တွက်ချက်မှုတွေကို Parentheses ( ) တွေနဲ့ စုစည်းလို့လည်း ရပါတယ်။
+
+### `min()` — အနိမ့်ဆုံး ရွေးခြင်း
+
+min() က ပေးထားတဲ့ Value တွေထဲက အနိမ့်ဆုံးကို ရွေးပါတယ်။ တန်ဖိုးတစ်ခု အပေါ်ဆုံး ကန့်သတ်ချက် (Cap) ထားချင်တဲ့နေရာမှာ သုံးပါတယ်။
+
+**ဥပမာ -**
+```css
+.title {
+  font-size: min(4rem, 8vw);
+}
+.page {
+  width: min(100%, 800px);
+}
+```
+
+မှတ်ချက် — min(100%, 800px) က Screen 800px ထက် ကျယ်ရင် 800px ထိ ပဲ ယူပြီး Mobile မှာ 100% ဖြစ်သွားလို့ Max-Width နဲ့ ဆင်တူပါတယ်။
+
+### `max()` — အမြင့်ဆုံး ရွေးခြင်း
+
+max() က ပေးထားတဲ့ Value တွေထဲက အမြင့်ဆုံးကို ရွေးပါတယ်။ တန်ဖိုးတစ်ခု သတ်မှတ်ထားတာထက် မနိမ့်စေချင်တဲ့နေရာမှာ သုံးပါတယ်။
+
+**ဥပမာ -**
+```css
+.footer-text {
+  font-size: max(1rem, 2vw);
+}
+```
+
+မှတ်ချက် — max(1rem, 2vw) က Font-Size 1rem ထက် မငယ်စေဘဲ Viewport ကျယ်လာရင်တော့ 2vw အတိုင်း ကြီးလာပါတယ်။
+
+### `clamp()` — Range အတွင်း ထိန်းခြင်း
+
+clamp(min, preferred, max) က Min ဖြစ်တဲ့ 3 တန်ဖိုးကြားမှာ Preferred Value ကို ထိန်းပေးပြီး Fluid Typography (Screen အလိုက် စာလုံးအရွယ် အလိုအလျောက် ပြောင်းခြင်း) အတွက် အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+h1 {
+  font-size: clamp(1.5rem, 4vw + 1rem, 3rem);
+}
+.container {
+  width: min(90%, 1100px);
+  padding: clamp(1rem, 3vw, 2.5rem);
+}
+```
+
+မှတ်ချက် — clamp() က 1.5rem နဲ့ 3rem ကြားမှာ 4vw + 1rem ရဲ့ Fluid တန်ဖိုးကို Screen အလိုက် ချိန်ညှိပေးပြီး min() နဲ့လည်း ပေါင်းသုံးလို့ ရပါတယ်။
+
+### ပေါင်းစပ် အသုံးပြုခြင်း
+
+Math Function တွေကို တစ်ခုနဲ့တစ်ခု ပေါင်းစပ်လို့ ရပြီး Media Query မလိုဘဲ Fluid Layout တွေကို ရေးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.hero {
+  min-height: calc(100vh - 80px);
+}
+.hero h1 {
+  font-size: clamp(2rem, 6vw, 5rem);
+}
+```
+
+မှတ်ချက် — Media Query ချိုး မလိုဘဲ Value တွေက Viewport နဲ့အတူ အလိုအလျောက် ပြောင်းလဲလို့ Responsive Design ရေးဖို့ အဆင်ပြေပါတယ်။
+
+### အကျဉ်းချုပ်
+
+calc() က တွက်ချက်မှု ၊ min() က အနိမ့်ဆုံး ၊ max() က အမြင့်ဆုံး ၊ clamp() က အတိုင်းအတာ (Range) အတွင်း ထိန်းပေးပါတယ်။ ဒါတွေကို သုံးပြီး ဖွင့်နိုင်တဲ့ Viewport အားလုံးမှာ ချောမွေ့တဲ့ Layout ရနိုင်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "calc() ထဲမှာ Space ဘယ်နေရာမှာ လိုအပ်ပါသလဲ?", options: ["+ နဲ့ - ရဲ့ နှစ်ဖက်မှာ", "* နဲ့ / ရဲ့ နှစ်ဖက်မှာ", "ဘယ်နေရာမှာမှ မလိုပါဘူး", "တန်ဖိုး အစပိုင်းမှာသာ"], correctAnswer: 0, explanation: "+ နဲ့ - က Space မဖြစ်မနေ လိုအပ်ပြီး * နဲ့ / ကတော့ Space မလိုပါဘူး။" },
+    { id: "q2", question: "ပေးထားတဲ့ Value တွေထဲက အမြင့်ဆုံးကို ရွေးတဲ့ Function က ဘာလဲ?", options: ["max()", "min()", "clamp()", "calc()"], correctAnswer: 0, explanation: "max() က ပေးထားတဲ့ Value တွေထဲက အကြီးဆုံးကို ရွေးပေးပါတယ်။" },
+    { id: "q3", question: "Fluid Typography အတွက် အကောင်းဆုံး Function က ဘာလဲ?", options: ["clamp()", "calc()", "min()", "var()"], correctAnswer: 0, explanation: "clamp(min, preferred, max) က Min နဲ့ Max ကြားမှာ Fluid ဖြစ်တဲ့ စာလုံးအရွယ်ကို ပေးပါတယ်။" },
+  ]}
+/>

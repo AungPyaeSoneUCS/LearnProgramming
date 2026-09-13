@@ -1,0 +1,116 @@
+---
+title: "Lists"
+description: "Lists"
+---
+
+import { Aside, Code } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import lists from '@/assets/html/lists.png'
+
+export const ulEg = `
+<ul>
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+</ul>
+`
+export const olEg = `
+<ol>
+  <li>First item</li>
+  <li>Second item</li>
+  <li>Third item</li>
+</ol>
+`
+
+export const nestedEg = `
+<ul>
+  <li>HTML
+    <ul>
+      <li>Structure</li>
+      <li>Semantic Tags</li>
+    </ul>
+  </li>
+  <li>CSS
+    <ul>
+      <li>Flexbox</li>
+      <li>Grid</li>
+    </ul>
+  </li>
+</ul>
+`
+
+export const dlEg = `
+<dl>
+  <dt>HTML</dt>
+  <dd>Webpage တွေရဲ့ structure ကို သတ်မှတ်တဲ့ language</dd>
+
+  <dt>CSS</dt>
+  <dd>Webpage တွေကို style ချတဲ့ language</dd>
+
+  <dt>JavaScript</dt>
+  <dd>Webpage တွေကို interactive ဖြစ်စေတဲ့ language</dd>
+</dl>
+`
+
+<Aside title="ရည်ရွယ်ချက်">
+ဒီအခန်းမှာတော့ HTML မှာ List အမျိုးမျိုးကို ဘယ်လို ဖန်တီးရမလဲဆိုတာ လေ့လာကြပါမယ် ခင်ဗျာ။ Bullet Point List တွေ၊ နံပါတ်စဉ် List တွေ၊ List ထဲမှာ List ထပ်ထည့်တာ (Nested Lists) တွေနဲ့ Description List (`<dl>`) တွေအကြောင်းကို သေသေချာချာ သင်ယူရမှာပါ။
+</Aside>
+
+ယေဘုယျအားဖြင့် HTML မှာ List အမျိုးအစား နှစ်မျိုး ဖန်တီးနိုင်ပါတယ် — အဲဒါတွေကတော့ **Unordered Lists (Bullet Point List)** နဲ့ **Ordered Lists (Number List)** တို့ပဲ ဖြစ်ပါတယ်။
+
+### Unordered Lists (`<ul>`)
+Unordered list ဆိုတာက Bullet Point တွေနဲ့ ပြတဲ့ List ပါ၊ `<ul>` tag ကိုသုံးပြီး ဖန်တီးရပါတယ်။ အထဲက Item တစ်ခုချင်းစီကိုတော့ `<li>` tag နဲ့ ထည့်ပေးရပါတယ်။
+
+**ဥပမာ**
+
+<Code title='HTML' lang='html' code={ulEg}/>
+
+### Ordered Lists (`<ol>`)
+Ordered list ဆိုတာက နံပါတ်စဉ် တွေနဲ့ ပြတဲ့ List ပါ၊ `<ol>` tag ကိုသုံးပြီး ဖန်တီးရပါတယ်။ List Item တစ်ခုချင်းစီကိုတော့ `<li>` tag နဲ့ပဲ ထည့်ပေးရပါတယ်။
+
+**ဥပမာ**
+
+<Code title='HTML' lang='html' code={olEg}/>
+
+ဒီလိုဆိုရင် Item တွေကို အလိုအလျောက် နံပါတ်စဉ် တပ်ပေးသွားပါလိမ့်မယ်။
+
+<ContentImage src={lists} alt="Lists" />
+
+### List ထဲမှာ List ထည့်ခြင်း (Nested Lists)
+List တစ်ခုရဲ့ `<li>` ထဲမှာ နောက်ထပ် List အသစ်တစ်ခု ထပ်ထည့်လို့ ရပါတယ်။ ဒါဟာ မာတိကာ (Menu) တွေ၊ Hierarchy ရှိတဲ့ အကြောင်းအရာတွေ ပြတဲ့အခါ အရမ်း အသုံးဝင်ပါတယ်။
+
+**ဥပမာ**
+
+<Code title='HTML' lang='html' code={nestedEg}/>
+
+<Aside type="caution" title="သတိပြုရန်">
+Nested list ကို `<li>` ထဲမှာပဲ ထည့်ရပါတယ် — `<ul>` ဒါမှမဟုတ် `<ol>` ရဲ့ အောက်မှာ တိုက်ရိုက် မထည့်မိဖို့ သတိပြုပါ ခင်ဗျာ။
+</Aside>
+
+### ဖော်ပြချက် List များ (Description Lists)
+Description list (`<dl>`) ဆိုတာက အသုံးအနှုန်းတွေ (`<dt>`) နဲ့ သူ့ရဲ့ ဖော်ပြချက်တွေ (`<dd>`) ကို တွဲပြီး ဖော်ပြဖို့အတွက် သုံးပါတယ်။ ဝေါဟာရ ရှင်းလင်းချက်တွေ၊ အမေးအဖြေ (FAQ) တွေ ရေးတဲ့အခါ အသင့်တော်ဆုံးပါပဲ။
+
+- `<dl>` — Description list တစ်ခုလုံးကို ငုံထားတဲ့ Container
+- `<dt>` — အသုံးအနှုန်း သို့မဟုတ် Item (Definition Term)
+- `<dd>` — ဖော်ပြချက် (Definition Description)
+
+**ဥပမာ**
+
+<Code title='HTML' lang='html' code={dlEg}/>
+
+<Aside type='tip' title='အကျဉ်းချုပ်'>
+
+- Headings (`<h1>` ကနေ `<h6>` အထိ) တွေက အကြောင်းအရာကို အဆင့်ဆင့် စနစ်တကျဖြစ်အောင် ကူညီပေးပါတယ်။
+
+- Paragraphs (`<p>`) တွေက စာသားတွေကို ဖတ်လို့ကောင်းတဲ့ အပိုင်းလေးတွေအဖြစ် ပုံစံချပေးပါတယ်။
+
+- Line breaks (`<br>`) က စာကြောင်းအသစ် ဆင်းစေပြီး၊ Horizontal rules (`<hr>`) က အပိုင်းတွေကို မျဉ်းတား ခွဲခြားပေးပါတယ်။
+
+- `<b>`, `<i>`, `<u>`, `<strong>`, `<em>`, နဲ့ `<mark>` လိုမျိုး Tag တွေသုံးပြီး စာသားကို လိုသလို ပုံစံပြောင်းနိုင်ပါတယ်။
+
+- Lists တွေကို `<ul>` (Bullet List) နဲ့ `<ol>` (နံပါတ်စဉ် List) သုံးပြီး ဖန်တီးနိုင်ပါတယ်၊ Item တစ်ခုချင်းစီကိုတော့ `<li>` tag ထဲမှာ ထည့်ရပါတယ်။
+
+- **Nested list** တွေကို `<li>` ထဲမှာ `<ul>` ဒါမှမဟုတ် `<ol>` ထပ်ထည့်ပြီး ဖန်တီးနိုင်ပါတယ်။
+
+- **Description list** (`<dl>`) က Term (`<dt>`) နဲ့ သူ့ရဲ့ ဖော်ပြချက် (`<dd>`) တွဲဖော်ပြဖို့ အရမ်း အသုံးဝင်ပါတယ်။
+</Aside>

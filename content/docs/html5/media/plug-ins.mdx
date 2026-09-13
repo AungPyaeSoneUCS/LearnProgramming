@@ -1,0 +1,50 @@
+---
+title: "HTML Plug-ins & Embed — Plugin တွေအကြောင်း"
+description: "Object နဲ့ Embed Element တွေ၊ Plugin နည်းပညာအဟောင်းတွေ ဘာကြောင့် မသုံးတော့တာလဲ လေ့လာကြည့်ရအောင်။"
+---
+
+### Plug-in ဆိုတာ ဘာလဲ?
+
+Plug-in ဆိုတာ HTML မှာ မလုပ်နိုင်တဲ့ အလုပ်တွေ (ဥပမာ - PDF ကြည့်တာ၊ Animation ဖွင့်တာ) ကို Browser ထဲမှာ ထည့်တပ်အသုံးပြုတဲ့ Software အပိုတွေပါ။ အရင်ခေတ်မှာ Flash Player, Silverlight လိုနာမည်ကြီး Plugin တွေ ရှိခဲ့ပြီး Video, Game, Animation တွေကို ဒီ Plugin တွေနဲ့ပဲ ဖွင့်ခဲ့ကြပါတယ်။ ဒီခေတ်မှာတော့ Plugin သုံးစရာမလိုတော့ဘဲ အများစုက မသုံးကြတော့ပါဘူး။
+
+`### <object>` Element
+
+`<object>` Element က External Resource (PDF, Flash, Image အစရှိသည်) တွေကို Webpage ထဲမှာ ထည့်သွင်းဖို့ သုံးတဲ့ ရှေးခေတ်နည်းလမ်းပါ။ `data` Attribute မှာ File ရဲ့ Path ထည့်ပြီး `type` Attribute မှာ MIME Type ကို ထည့်ပါတယ်။ `<param>` Element တွေနဲ့ Plugin ရဲ့ Setting တွေကိုလည်း ထည့်ပေးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<object data="swf-player.swf" type="application/x-shockwave-flash" width="400" height="300">
+  <param name="quality" value="high">
+</object>
+```
+
+မှတ်ချက် — အရင်ခေတ်တုန်းက Flash File ကို `<object>` နဲ့ ထည့်တာပေမယ့် အခုတော့ Flash ကိုယ်တိုင် Browser တွေမှာ မရှိတော့ပါဘူး။
+
+`### <embed>` Element
+
+`<embed>` Element က External Content တွေကို ထည့်ဖို့ `object` ထက်တောင် ပိုရိုးရှင်းတဲ့ Tag ဖြစ်ပါတယ်။ `src` Attribute နဲ့ File ကိုထည့်ပြီး `width`, `height` နဲ့ အရွယ်အစား သတ်မှတ်ပါတယ်။ `<object>` နဲ့ မတူတာက `<embed>` က Self-closing ဖြစ်ပြီး Fallback Content မထည့်နိုင်ပါဘူး။
+
+**ဥပမာ -**
+```html
+<embed src="movie.swf" width="400" height="300">
+```
+
+မှတ်ချက် — `<embed>` ကိုလည်း ယခုခေတ်မှာ Media ထည့်ဖို့ ISO မသုံးတော့ပေမယ့် နည်းပညာသမိုင်းကြောင်းအနေနဲ့တော့ သိထားသင့်ပါတယ်။
+
+### Plugin နည်းပညာတွေ ဘာကြောင့် မသုံးတော့တာလဲ?
+
+Plugin တွေက Security အားနည်းချက်တွေ များပြီး Hacker တွေ တိုက်ခိုက်တတ်တဲ့ ပြဿနာအများကြီး ရှိခဲ့ပါတယ်။ ပြီးတော့ Plugin တို့က Browser ပေါ်မူတည်ပြီး ဖွင့်လို့မရတာတွေ ဖြစ်တတ်ပြီး Mobile မှာ အလုပ်လုပ်ဖို့လည်း ခက်ခဲပါတယ်။ အဲဒါကြောင့် Browser တွေက Plugin Support ကို တစ်ခုပြီးတစ်ခု ဖယ်ရှားပြီး HTML5 ရဲ့ Native Features တွေနဲ့ အစားထိုးလိုက်ပါတယ်။
+
+### ခေတ်သစ် အစားထိုးနည်းလမ်းတွေ
+
+Plugin နေရာမှာ Video အတွက် `<video>`, Audio အတွက် `<audio>`, တခြား Content တွေအတွက် `<iframe>` စတဲ့ HTML5 Element တွေက အစားထိုးပါတယ်။ PDF တို့ာတွေ ကြည့်ဖို့ဆိုရင်လည်း Plugin မလိုဘဲ Browser ထဲမှာ ကိုယ်တိုင် ဖွင့်လို့ရပါတယ်။ ဒါကြောင့် ခေတ်သစ် Web Development မှာ Plugin တွေအတွက် စဉ်းစားစရာမလိုတော့ပါဘူး။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "External Resource တွေကို Webpage ထဲမှာ ထည့်ဖို့ သုံးတဲ့ ရှေးခေတ် Element နှစ်ခုက ဘာတွေလဲ?", options: ["Video နဲ့ Audio", "Object နဲ့ Embed", "Iframe နဲ့ Picture", "Canvas နဲ့ SVG"], correctAnswer: 1, explanation: "Object နဲ့ Embed က External Content ထည့်ဖို့ ရှေးခေတ် Element တွေပါ။" },
+    { id: "q2", question: "Plugin တွေ ဘာကြောင့် မသုံးကြတော့တာလဲ?", options: ["Mobile မှာ မကောင်းလို့", "Security အားနည်းလို့", "Browser တွေက Support ဖယ်ပစ်လို့", "အထက်ပါအားလုံး"], correctAnswer: 3, explanation: "Plugin တွေက Security ရော သဟဇာတဖြစ်မှုပါ ပြဿနာရှိလို့ ဖယ်ရှားခံရပါတယ်။" },
+    { id: "q3", question: "Plugin နေရာကို အစားထိုးတဲ့ HTML5 Element က ဘာလဲ?", options: ["Video Element", "Embed Element", "Object Element", "Param Element"], correctAnswer: 0, explanation: "Video ရော Audio ပါ HTML5 Element တွေက Plugin နေရာကို အစားထိုးပါတယ်။" },
+  ]}
+/>

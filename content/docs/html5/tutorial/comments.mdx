@@ -1,0 +1,72 @@
+---
+title: "HTML Comments — Comment ထည့်သွင်းနည်း"
+description: "HTML Comment ဘယ်လိုရေးရမလဲ၊ ဘာကြောင့် အသုံးဝင်လဲ ဆိုတာ လေ့လာကြရအောင်။"
+---
+
+### HTML Comment ဆိုတာ ဘာလဲ?
+
+HTML Comment က Browser မျက်နှာပြင်မှာ **လုံးဝမပေါ်**တဲ့ မှတ်စုတစ်မျိုးပါ။ ကုဒ်ထဲမှာ ရှင်းလင်းချက်၊ သတိပေးချက် စတာတွေကို Code ဖတ်တဲ့သူအတွက် ရေးထားနိုင်ပါတယ်။ Syntax ကတော့ `<!-- ... -->` ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<!-- ဒါက Comment ဖြစ်ပြီး Browser မှာ မပေါ်ပါဘူး -->
+<h1>မြင်ရတဲ့ခေါင်းစဉ်</h1>
+```
+
+မှတ်ချက် — Comment တွေက HTML Source Code ထဲမှာတော့ ရှိနေပြီး Browser ရဲ့ Inspect Tool နဲ့ ကြည့်လို့ ရပါတယ်။
+
+### Comment ရဲ့ အသုံးဝင်ပုံ
+
+Comment က ကုဒ်ရဲ့ အပိုင်းတစ်ပိုင်းချင်းစီကို ရှင်းပြဖို့၊ Code ရေးသူ အမျိုးမျိုးအတွက် မှတ်တမ်းထားဖို့၊ ပြီးတော့ Testing လုပ်တဲ့အခါ ကုဒ်တစ်စိတ်တစ်ပိုင်းကို ယာယီပိတ်ထားဖို့ (Disable) အတွက် အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<!-- Navigation Menu -->
+<nav>
+  <a href="home.html">ပင်မ</a>
+</nav>
+```
+
+မှတ်ချက် — ကြီးမားတဲ့ Project တွေမှာ Comment က အဖွဲ့လိုက်အလုပ်အတွက် အရမ်းအရေးပါတဲ့ လက်စွဲဖြစ်ပါတယ်။
+
+### Keyboard Shortcut
+
+VS Code လိုမျိုး Editor တွေမှာ Line တစ်ခုကို ရွေးပြီး **Ctrl + /** နှိပ်လိုက်ရင် Comment ဖြစ်သွားပြီး ထပ်နှိပ်ရင် ပြန်ဖျက်ပေးပါတယ်။
+
+**ဥပမာ -**
+```html
+<!-- <p>ဒီစာကြောင်းကို ခေတ္တ disable လုပ်ထားပါတယ်</p> -->
+<p>ဒါက အသက်ဝင်နေတဲ့ Element ပါ။</p>
+```
+
+မှတ်ချက် — Mac မှာဆိုရင် Command + / ကို သုံးရပါတယ်။
+
+### Conditional Hide (အခြေအနေအလိုက် ဖျောက်ခြင်း)
+
+HTML Comment ရဲ့ နောက်ထပ်အသုံးတစ်ခုက ကုဒ်တစ်ခြမ်းကို Comment ထဲပွတ်ပြီး Browser မှာ မပြဘဲ ထားနိုင်တာပါ။ အရာတစ်ခုကို ဖျက်ချင်ပေမယ့် နောက်နောင် ပြန်လိုအပ်နိုင်တဲ့အခါ ဒီနည်းနဲ့ သိမ်းထားနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>ဒါက ပုံမှန်ပြမယ့် စာသားပါ။</p>
+<!--
+<h2>ဒီအပိုင်းကို ယခုလောလောဆယ် ဖျောက်ထားပါတယ်</h2>
+<img src="old-banner.png" alt="ဟောင်းနေတဲ့ banner">
+-->
+<p>ဒါလည်း ဆက်ပြပါတယ်။</p>
+```
+
+မှတ်ချက် — Browser Inspector မှာတော့ Comment ထဲက ကုဒ်တွေက Visible ဖြစ်နေတာမို့ လုံခြုံရေးအတွက် ဒီနည်းကို မသုံးသင့်ပါဘူး။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Comment Syntax က `<!-- ... -->` ဖြစ်သည်။
+- Comment ထဲရှိ အရာအားလုံးကို Browser က Render မလုပ်ပါဘူး။
+- VS Code မှာ Ctrl + / နဲ့ အမြန် Comment ထည့်နိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "HTML Comment ရဲ့ Syntax က ဘာလဲ?", options: ["// comment", "/* comment */", "<!-- comment -->", "# comment"], correctAnswer: 2, explanation: "HTML Comment က <!-- ... --> ပုံစံနဲ့ ရေးရပါတယ်။" },
+  { id: "q2", question: "Browser က Comment ကို ဘယ်လိုပြပါသလဲ?", options: ["Screen ပေါ်မှာ ပြတယ်", "လုံးဝမပြပါဘူး", "မီးခိုးရောင်နဲ့ပြတယ်", "Error ဖြစ်စေတယ်"], correctAnswer: 1, explanation: "Comment ထဲက အရာတွေကို Browser က Render မလုပ်တာမို့ မပေါ်ပါဘူး။" },
+  { id: "q3", question: "VS Code မှာ Comment အမြန်ထည့်ဖို့ Shortcut ကဘာလဲ?", options: ["Ctrl + C", "Ctrl + V", "Ctrl + /", "Alt + Tab"], correctAnswer: 2, explanation: "Ctrl + / က Select လုပ်ထားတဲ့ Line ကို Comment ဖြစ်စေပါတယ်။" }
+]} />

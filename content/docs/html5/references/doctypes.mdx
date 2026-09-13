@@ -1,0 +1,73 @@
+---
+title: "HTML Doctypes — HTML Doctype အကြောင်း"
+description: "HTML4 ၊ XHTML ၊ HTML5 တို့ရဲ့ Doctype သမိုင်း ၊ <!DOCTYPE html> ၏ အဓိပ္ပာယ်ကို ရှင်းပြထားပါတယ်။"
+---
+
+### Doctype ဆိုတာ ဘာလဲ?
+
+`<!DOCTYPE>` ဆိုတာ HTML Document တစ်ခုရဲ့ ပထမဆုံး စာကြောင်း ဖြစ်ပြီး Browser ကို ဒီ Document ကို ဘယ် HTML စည်းမျဉ်း (Standard) နဲ့ ဖတ်ရမလဲဆိုတာ ပြောပြတဲ့ အချက်ပြချက် ဖြစ်ပါတယ်။ Doctype မပါရင် Browser က **Quirks Mode** လို့ ခေါ်တဲ့ စည်းမျဉ်းဟောင်း ပုံစံနဲ့ Page ကို ဖော်ပြတတ်ပြီး Layout တွေ မမှန်နိုင်ပါဘူး။ Doctype ပါမှသာ **Standards Mode** နဲ့ ရေးထားတဲ့အတိုင်း အတိအကျ ဖော်ပြပါတယ်။
+
+Doctype က Tag မဟုတ်ပါဘူး — HTML Element လည်း မဟုတ်၊ Attribute လည်း မဟုတ်ပါဘူး။ အပေါ်မှာ ပထမဆုံး နေရာမှာ ရေးရမယ့် Declaration (ကြေညာချက်) တစ်ခု ဖြစ်ပါတယ်။
+
+### HTML ဗားရှင်း အလိုက် Doctype သမိုင်း
+
+အစောပိုင်း HTML4 နဲ့ XHTML ခေတ်တွေမှာ Doctype က ရှည်လျားတဲ့ URL ပါတဲ့ စာကြောင်းကြီးတွေ ဖြစ်ပါတယ်။ အဲဒီ Doctype တွေက စည်းမျဉ်းသတ်မှတ်ချက် (Specification) ကို ညွှန်ပြတဲ့ DTD (Document Type Definition) လို့ ခေါ်ပါတယ်။ ရေးရတာ ရှည်လျားပြီး မှတ်ရခက်တဲ့အတွက် HTML5 ကို ရောက်တဲ့အခါ အားလုံးကို ရိုးရှင်းအောင် `<!DOCTYPE html>` တစ်ကြောင်းတည်းနဲ့ ပြင်၍ လွှင့်ပစ်လိုက်ပါပြီ။
+
+#### HTML4 Doctype
+
+HTML4 ခေတ်မှာ DTD အမျိုးအစားပေါင်း များစွာနဲ့ Doctype ကို အလွန် ရှည်လျားစွာ ရေးရပါတယ်။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+```
+
+မှတ်ချက် — ဒီလို ရှည်လျားတဲ့ ပုံစံဟောင်းတွေကို ယနေ့ခေတ်မှာ မသုံးတော့ဘဲ သမိုင်းအတွက် သိထားရုံပဲ ဖြစ်ပါတယ်။
+
+#### XHTML Doctype
+
+XHTML က XML စည်းမျဉ်းတွေနဲ့ ပိုတင်းကျပ်တဲ့ ပုံစံဖြစ်ပြီး Doctype ကလည်း ကိုယ်ပိုင် ရှည်လျားတဲ့ ပုံစံ ရှိပါတယ်။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+```
+
+မှတ်ချက် — XHTML မှာ Tag တိုင်း ပိတ်ဖို့ လိုအပ်ပြီး အမှားသည်းခံမှု (Tolerance) နည်းတဲ့အတွက် စတင်လေ့လာသူတွေအတွက် ခက်ခဲပါတယ်။
+
+#### HTML5 Doctype
+
+HTML5 မှာတော့ Doctype က တစ်ကြောင်းတည်းဖြစ်ပြီး Version ခွဲခြားစရာ မလိုတော့ပါဘူး။ `<!DOCTYPE html>` ဆိုရုံပဲ Browser အားလုံးက Standards Mode အဖြစ် နားလည်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html>
+<html lang="my">
+  <head>
+    <meta charset="UTF-8">
+    <title>Takkatho</title>
+  </head>
+  <body>
+    <p>HTML5 Document တစ်ခုပါ။</p>
+  </body>
+</html>
+```
+
+မှတ်ချက် — HTML5 တိုင်း `<!DOCTYPE html>` ကို ပထမဆုံး စာကြောင်းမှာ ရေးရပြီး အကြီးအင်္ဂလိပ် စာလုံးဖြစ်စေ ၊ အသေး ဖြစ်စေ ရေးလို့ ရပါတယ် (`<!doctype html>`)။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `<!DOCTYPE html>` က HTML5 Document တိုင်းရဲ့ ပထမဆုံး စာကြောင်း ဖြစ်ရပါမယ်။
+- Doctype မပါရင် Browser က Quirks Mode နဲ့ ဖော်ပြနိုင်ပါတယ်။
+- HTML4 ၊ XHTML တို့ရဲ့ Doctype တွေက ရှည်လျားပြီး မသုံးတော့ပါဘူး။
+- Doctype က Element မဟုတ်ဘဲ Declaration တစ်ခု ဖြစ်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "HTML5 Document ရဲ့ Doctype က ဘယ်ပုံစံ ဖြစ်ပါသလဲ?", options: ["<!DOCTYPE html>", "<!DOCTYPE HTML PUBLIC...>", "<!DOCTYPE html5>", "<!DOCTYPE XML>"], correctAnswer: 0, explanation: "HTML5 မှာ <!DOCTYPE html> တစ်ကြောင်းတည်းနဲ့ လုံလောက်ပါတယ်။" },
+  { id: "q2", question: "Doctype ကို ဘယ်နေရာမှာ ရေးရပါသလဲ?", options: ["File ရဲ့ အစဆုံး", "body ထဲမှာ", "head ထဲမှာ", "File ရဲ့ အဆုံး"], correctAnswer: 0, explanation: "Doctype က Document ရဲ့ ပထမဆုံး စာကြောင်း အဖြစ် ရေးရပါတယ်။" },
+  { id: "q3", question: "Doctype က Browser ကို ဘာကို ပြောပြတဲ့ အချက်ပြချက် ဖြစ်ပါသလဲ?", options: ["ဘယ် HTML စည်းမျဉ်းနဲ့ ဖတ်ရမလဲ", "Page ရဲ့ အရောင်", "Server ရဲ့ တည်နေရာ", "User ရဲ့ နာမည်"], correctAnswer: 0, explanation: "Doctype က Browser ကို Standards Mode သို့မဟုတ် Legacy Mode ရွေးချယ်ပေးပါတယ်။" },
+]} />

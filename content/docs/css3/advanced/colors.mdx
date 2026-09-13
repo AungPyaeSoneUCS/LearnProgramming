@@ -1,0 +1,83 @@
+---
+title: "CSS Colors (Advanced) — အရောင် အဆင့်မြင့်သတ်မှတ်နည်းများ"
+description: "HSL, HSLA, Color Keywords, currentColor တို့နဲ့အတူ Color Contrast အကြောင်းကို လေ့လာကြမယ်။"
+---
+
+### HSL နဲ့ HSLA
+
+Hex code တွေက မှတ်ရခက်တတ်ပြီး `hsl()` Function ကိစ္စကတော့ ပိုနားလည်ရလွယ်ပါတယ်။ Hue (အရောင်အမျိုးအစား 0 ကနေ 360 ဒီဂရီ) ၊ Saturation (ပြေပြစ်မှု ရာ ခိုင်နှုန်း) ၊ Lightness (အလင်းရောင် ရာ ခိုင်နှုန်း) ဆိုတဲ့ Value သုံးခုနဲ့ အရောင်ကို သတ်မှတ်ပေးတာပါ။ `hsla()` က ဒါတွေအပြင် Alpha (ဖောက်ထွင်းမြင်ရမှု) ကိုပါ ထည့်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.a { color: hsl(120, 100%, 25%); }
+.b { color: hsla(120, 100%, 25%, 0.5); }
+.c { background-color: hsl(0, 0%, 0%); }
+```
+
+မှတ်ချက် — Hue က အရောင်ဘီးပေါ်က ဒီဂရီအနေအထား ဖြစ်ပြီး Saturation နဲ့ Lightness တွေက percentage ဖြစ်ပါတယ်။
+
+### Color Keywords (အရောင်နာမည်များ)
+
+CSS မှာ ကြိုသတ်မှတ်ထားတဲ့ အရောင်နာမည်တွေ ရှိပြီး red, blue, tomato, transparent စသဖြင့် မှတ်ရ အလွန်လွယ်ပါတယ်။ transparent က လုံးဝဖောက်ထွင်းမြင်ရအောင် လုပ်ပေးပြီး currentColor ဆိုတဲ့ Keyword ကတော့ Element ရဲ့ လက်ရှိ `color` Value ကို ပြန်သုံးစေနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.box { color: tomato; }
+.box2 {
+  border: 2px solid red;
+  background: transparent;
+}
+```
+
+မှတ်ချက် — နာမည်ရှိတဲ့ အရောင်တွေက ရိုးရှင်းပေမယ့် အရောင်ရွေးချယ်မှု လွတ်လပ်မှု နည်းတာမို့ Hex (သို့) HSL နဲ့ တွဲသုံးလေ့ ရှိပါတယ်။
+
+### currentColor အသုံးပြုနည်း
+
+`currentColor` ကို border ၊ background စတဲ့ Property တွေမှာ သုံးရင် စာသားရဲ့ အရောင်နဲ့ အမြဲကိုက်ညီနေပါတယ်။ ဒါကြောင့် color တစ်နေရာတည်း ပြောင်းရုံနဲ့ တစ်ကိုယ်ရည်တစ်သွေး ပုံစံကို ထိန်းသိမ်းနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.title {
+  color: #e74c3c;
+  border-bottom: 3px solid currentColor;
+}
+.title:hover {
+  color: #2c3e50;
+}
+```
+
+မှတ်ချက် — hover မှာ စာသားအရောင် ပြောင်းရင် border က currentColor မို့ အလိုအလျောက် လိုက်ပြောင်းသွားပါတယ်။
+
+### Color Contrast (အရောင် ဆန့်ကျင်မှု)
+
+စာသားအရောင်နဲ့ နောက်ခံအရောင် ကြားမှာ ဆန့်ကျင်ကွာခြားမှု (Contrast) ကောင်းဖို့ အရေးကြီးပါတယ်။ WCAG စံချိန်မှာ သာမန်စာသားအတွက် Contrast Ratio 4.5:1 ထက် မနည်းရန် အကြံပြုထားပြီး နောက်ခံနဲ့ ဆင်တူတဲ့ စာသားအရောင်ဆိုရင် ဖတ်ရ အခက်အခဲ ရှိပါတယ်။
+
+**ဥပမာ -**
+```css
+body {
+  background-color: #ffffff;
+  color: #333333;
+}
+.warn {
+  background-color: #ffcccc;
+  color: #990000;
+}
+```
+
+မှတ်ချက် — Contrast ကောင်းဖို့ အဖြူ နောက်ခံမှာ မဲ/နီပြရောင် စာသား ဒါမှမဟုတ် မဲ နောက်ခံမှာ အဖြူစာသား စသဖြင့် ဆန့်ကျင်ဘက် အရောင်တွဲတွေကို ရွေးသင့်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- HSL က Hue, Saturation, Lightness သုံးခုနဲ့ အရောင် သတ်မှတ်သည်။
+- currentColor က Element ရဲ့ color value ကို ပြန်သုံးပေးသည်။
+- Contrast Ratio ကောင်းမှ စာသား ဖတ်ရလွယ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "hsl() ရဲ့ အဓိက Value သုံးခုက ဘာတွေလဲ?", options: ["Hue, Saturation, Lightness", "Red, Green, Blue", "Cyan, Magenta, Yellow", "Top, Left, Right"], correctAnswer: 0, explanation: "HSL ရဲ့ အဓိပ္ပါယ်က Hue, Saturation, Lightness သုံးခု ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "currentColor က ဘာကို ပြန်သုံးပေးပါသလဲ?", options: ["နောက်ခံအရောင်", "Element ရဲ့ လက်ရှိ color value", "Browser ရဲ့ Default အရောင်", "Parent Element ရဲ့ background"], correctAnswer: 1, explanation: "currentColor က Element ရဲ့ color Value ကိုပဲ ပြန်သုံးပေးတာဖြစ်ပါတယ်။" },
+    { id: "q3", question: "စာသား ဖတ်ရလွယ်ဖို့ အရေးအကြီးဆုံး စဉ်းစားစရာက ဘာလဲ?", options: ["စာသားအရောင်နဲ့ နောက်ခံအရောင် ဆန့်ကျင်ကွာခြားမှု", "Font အရွယ်အစားတစ်ခုတည်း", "Margin အရွယ်အစား", "Border အထူ"], correctAnswer: 0, explanation: "စာသားနဲ့ နောက်ခံ ဆန့်ကျင်မှု ကောင်းမှ ဖတ်ရလွယ်ကူပါတယ်။" }
+  ]}
+/>

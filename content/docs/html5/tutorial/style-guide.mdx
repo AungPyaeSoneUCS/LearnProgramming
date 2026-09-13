@@ -1,0 +1,90 @@
+---
+title: "HTML Style Guide — သန့်ရှင်းသော Code ရေးနည်း"
+description: "ဖတ်ရလွယ်၊ ပြုပြင်ရလွယ်တဲ့ HTML Code ရေးဖို့ Style Guide ကောင်းကောင်း လေ့လာကြည့်ရအောင်။"
+---
+
+### ဘာကြောင့် HTML Style Guide လိုအပ်ပါသလဲ?
+
+HTML Code တွေက အများကြီး ဖတ်ရှုပြီး ပြုပြင်ရတဲ့ Code မျိုးဖြစ်ပါတယ်။ Error တွေမရှိဘဲ Code က အလုပ်လုပ်နေရင်လည်း Style Guide စနစ်တကျ မရေးထားရင် နောက်ကုဒ်ရေးသူ (ဒါမှမဟုတ် ကိုယ်တိုင်ပဲ ဖြစ်ဖြစ်) နားလည်ရခက်ပါလိမ့်မယ်။ ဒါကြောင့် **Readability (ဖတ်ရလွယ်ခြင်း)** နဲ့ **Maintainability (ပြုပြင်ရလွယ်ခြင်း)** အတွက် စည်းမျဉ်းတချို့ လိုအပ်ပါတယ်။
+
+မှတ်ချက် — Style Guide ဆိုတာ Formatting ဆိုင်ရာ အခြေခံစည်းမျဉ်းတွေ ဖြစ်ပြီး Code ကို ပိုမိုတသမတ်တည်း ဖြစ်စေပါတယ်။
+
+### Tag တွေကို Lowercase (အက္ခရာငယ်) နဲ့ ရေးပါ
+
+HTML Tag တွေက Case-sensitive မဟုတ်ပါဘူး — `<P>` ရေးရော `<p>` ရေးရော Browser က တူညီစွာ ပြတာပါ။ ဒါပေမဲ့ ဖတ်ရ ပိုလွယ်ပြီး စနစ်တကျရှိစေဖို့ **Lowercase** နဲ့သာ ရေးသင့်ပါတယ်။ Lowercase က ပိုပြီး Standard ဖြစ်ပြီး Validation ကိုလည်း ချောမွေ့စေပါတယ်။
+
+**ဥပမာ -**
+```html
+<!-- မှားလေ့ရှိတဲ့ နည်း -->
+<P>Hello World</P>
+<Div CLASS="box">Content</Div>
+
+<!-- မှန်ကန်သော နည်း -->
+<p>Hello World</p>
+<div class="box">Content</div>
+```
+
+မှတ်ချက် — Tag အမည်နဲ့ Attribute အမည်တွေကို Lowercase letter တွေနဲ့သာ ရေးပါ။
+
+### Attribute Value တွေကို Quote တွေနဲ့ ပတ်ပါ
+
+Attribute Value တွေက မရှိမဖြစ် Double Quotes နဲ့ ပတ်ပေးပါ။ HTML5 မှာ Value တွေက Quotes မလိုဘဲ ရေးလို့ရတတ်ပါသေးတယ် — ဥပမာ `class=box` ။ ဒါပေမဲ့ Value ထဲမှာ Space ပါရင် Error ဖြစ်တတ်လို့ **အမြဲတမ်း Quotes နဲ့ ပတ်ခြင်းက** ဘေးကင်းပြီး ဖတ်ရလည်း လွယ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<!-- မှားလေ့ရှိတဲ့ နည်း (Value ထဲ Space ပါနေတယ်) -->
+<a class=course link href=home.html>Home</a>
+
+<!-- မှန်ကန်သော နည်း -->
+<a class="course-link" href="home.html">Home</a>
+```
+
+မှတ်ချက် — Attribute Value တိုင်းကို Double Quotes (" ") နဲ့ ပတ်ပါ။
+
+### အသုံးဝင်သော Comment များနဲ့ Indentation
+
+HTML မှာ Comment ကို `<!-- -->` နဲ့ ရေးပါတယ်။ Comment တွေက Code ရဲ့ ရည်ရွယ်ချက်ကို ရှင်းပြပေးတာမို့ ရှည်လွန်းတာ၊ မလိုအပ်တာတွေ မရေးဘဲ လိုအပ်တဲ့နေရာမှာသာ သုံးပါ။ Indentation (စာကြောင်း အနောက်ဆုတ်) ကလည်း Element တွေရဲ့ နက်ရှိုင်းမှုကို ပြဖို့ အရေးကြီးပြီး Space (၂) ခု (သို့) Tab တစ်ခုကို တသမတ်တည်း သုံးပါ။
+
+**ဥပမာ -**
+```html
+<!-- Navigation -->
+<nav>
+  <ul>
+    <li><a href="home.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+```
+
+မှတ်ချက် — Child Element တွေကို Parent Element ထက် ညာဘက်ကို အနည်းငယ် ရှေ့တိုး (Indent) ပြီး ရေးပါ။
+
+### Tag တွေကို အမြဲ ပိတ်ပါ၊ ရှည်လျားသောစာကြောင်းကို ရှောင်ပါ
+
+Empty Element တွေ (`<br>`, `<img>`) ကလွဲရင် Tag တိုင်းကို ပိတ် (Close) ပေးပါ။ Tag မပိတ်ရင် Browser က အလိုအလျောက် ပြင်ပေးတတ်ပေမဲ့ Element တွေ တစ်ခုထဲအပ် ထည့်ဝင်သွားပြီး Layout ပျက်စေနိုင်ပါတယ်။ Line တစ်ကြောင်း အရမ်းရှည်ရင် ဖတ်ရခက်တဲ့အတွက် Attribute တွေများရင် စာကြောင်း ခွဲရေးလို့ ရပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>ဒါက စာပိုဒ်တစ်ခုပါ။ Tag အားလုံးကို သေချာ ပိတ်ထားပါတယ်။</p>
+
+<img src="logo.png" alt="Takkatho Logo"
+     width="200" height="100">
+```
+
+မှတ်ချက် — Code Editor မှာ Horizontal Scrollbar ပေါ်မလာလောက်အောင် Line တွေကို သင့်တင့်ရုံထား ရေးပါ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Tag နဲ့ Attribute name ကို Lowercase နဲ့ ရေးပါ။
+- Attribute Value တိုင်းကို Double Quotes နဲ့ ပတ်ပါ။
+- Comment ကို လိုအပ်တဲ့နေရာမှာသာ ရေးပါ။
+- Indentation ကို ပုံမှန်ထည့်ပြီး Tag တွေကို အမြဲပိတ်ပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "HTML Tag တွေကို ဘယ်လို ရေးတာ အကောင်းဆုံးပါလဲ?", options: ["Uppercase", "Lowercase", "Mixed Case", "ဘာမဆို ရတယ်"], correctAnswer: 1, explanation: "Tag အမည်တွေကို Lowercase နဲ့ ရေးတာ ဖတ်ရလွယ်ပြီး Standard ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "Attribute Value တွေကို ဘာနဲ့ အမြဲ ပတ်သင့်ပါသလဲ?", options: ["Single Quote", "Double Quote", "Backtick", "Bracket"], correctAnswer: 1, explanation: "Attribute Value တိုင်းကို Double Quotes နဲ့ ပတ်ခြင်းက ဘေးကင်းဆုံး နည်းပါတယ်။" },
+    { id: "q3", question: "ဘယ် Element တွေကို ပိတ်စရာ (Closing Tag) မလိုပါလဲ?", options: ["<p>", "<h1>", "<div>", "<img>"], correctAnswer: 3, explanation: "Empty Element ဖြစ်တဲ့ <img>, <br> တို့ကသာ Closing Tag မလိုပါဘူး။" },
+  ]}
+/>

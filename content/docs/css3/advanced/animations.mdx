@@ -1,0 +1,129 @@
+---
+title: "CSS Animations — Animation အသုံးပြုနည်း"
+description: "keyframes rule နှင့် animation property များဖြင့် Element များကို သက်ဝင်လှုပ်ရှားစေမည့် Animation ဖန်တီးနည်းကို လေ့လာကြမယ်။"
+---
+
+CSS Transition က Style ပြောင်းလဲမှု တစ်ခုအတွက်သာ ဖြစ်ပြီး Animation ကတော့ Keyframe တွေကြားမှာ အကြိမ်ကြိမ် ပြန်လည် လှုပ်ရှားနေတဲ့ အသွင်ကူးပြောင်းမှုတွေကို ဖန်တီးပေးနိုင်ပါတယ်။ `@keyframes` rule နဲ့ ကိုယ်ပိုင် Animation ကို သတ်မှတ်ပြီး `animation` property တွေနဲ့ အသုံးပြုပါတယ်။
+
+### `@keyframes` Rule ဆိုတာဘာလဲ
+
+`@keyframes` ထဲမှာ Animation ရဲ့ အဆင့်တစ်ခုချင်းစီကို Define လုပ်ပါတယ်။ `from` နဲ့ `to` က စတင်ပုံ နဲ့ ဆုံးပုံကို ကိုယ်စားပြုပြီး `0%` ၊ `50%` ၊ `100%` လိုမျိုး ရာခိုင်နှုန်းနဲ့လည်း အသေးစိတ် ရေးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@keyframes float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-20px);
+  }
+}
+
+.balloon {
+  animation-name: float;
+  animation-duration: 2s;
+}
+```
+
+မှတ်ချက် — `animation-name` က Keyframe နာမည်နဲ့ ချိတ်ဆက်ပေးပြီး `animation-duration` က စက်ဝိုင်းတစ်ပတ်စီအတွက် ကြာချိန်ကို သတ်မှတ်ပေးပါတယ်။
+
+### animation-iteration-count
+
+Animation ကို ဘယ်နှစ်ကြိမ် ပြန်လည်လုပ်မလဲဆိုတာကို `animation-iteration-count` နဲ့ သတ်မှတ်ပါတယ်။ `infinite` တန်ဖိုးပေးရင် အဆုံးမရှိ ပြန်လည်လုပ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #ddd;
+  border-top-color: blue;
+  border-radius: 50%;
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+```
+
+မှတ်ချက် — `border-top-color` ကိုသာ အရောင်ပေးထားလို့ ပတ်လည်နေတဲ့ Loader ပုံစံ ဖြစ်ပေါ်လာပါတယ်။
+
+### Animation Shorthand
+
+`animation` Shorthand Property တစ်ခုထဲမှာ Name ၊ Duration ၊ Timing Function ၊ Delay ၊ Iteration Count အားလုံးကို စဉ်မှန်စွာ ရေးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+```
+
+မှတ်ချက် — `animation: pulse 1.5s ease-in-out infinite;` ဆိုတာ Pulse Animation ကို 1.5s ကြာ Ease-In-Out အရှိန်နဲ့ အဆုံးမရှိ လုပ်မယ်လို့ အဓိပ္ပာယ်ရပါတယ်။
+
+### Animation အများအပြား တစ်ပြိုင်နက် အသုံးပြုခြင်း
+
+Element တစ်ခုမှာ Animation အများကြီးကို Comma (,) နဲ့ ခြားပြီး တစ်ပြိုင်နက် အသုံးပြုနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.badge {
+  animation: bounce 1s infinite, fadeIn 2s ease-out;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+```
+
+မှတ်ချက် — `bounce` နဲ့ `fadeIn` နှစ်ခုလုံး တစ်ပြိုင်နက် သက်ရောက်ပြီး ပဋိပက္ခမဖြစ်အောင် မတူတဲ့ Property တွေကိုသာ အသုံးပြုထားပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `@keyframes` ထဲမှာ Animation ရဲ့ အဆင့်တွေကို သတ်မှတ်ပါသည်။
+- animation-name ၊ animation-duration ၊ animation-iteration-count တို့ဖြင့် Animation ကို ထိန်းချုပ်ပါသည်။
+- `animation` Shorthand ဖြင့် အားလုံးကို တစ်ကြောင်းတည်း ရေးနိုင်ပြီး Animation များစွာကိုလည်း တွဲသုံးနိုင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Animation ရဲ့ အဆင့်တစ်ခုချင်းစီကို ဘယ် Rule ထဲမှာ သတ်မှတ်ပါသလဲ?", options: ["frame rule", "keyframes rule", "move rule", "play rule"], correctAnswer: 1, explanation: "keyframes rule ထဲမှာ from to သို့မဟုတ် ရာခိုင်နှုန်းတွေဖြင့် Animation အဆင့်တွေကို သတ်မှတ်ပါတယ်။" },
+  { id: "q2", question: "Animation ကို အဆုံးမရှိ ပြန်လည် လုပ်ဖို့ ဘယ် Value ကို သုံးမလဲ?", options: ["once", "loop", "infinite", "repeat"], correctAnswer: 2, explanation: "animation-iteration-count: infinite ဆိုရင် Animation က အဆုံးမရှိ ပြန်လည် လုပ်ပါတယ်။" },
+  { id: "q3", question: "Animation အများကြီးကို တစ်ပြိုင်နက် သုံးချင်ရင် ဘယ်လို ခြားပြီး ရေးပါသလဲ?", options: ["Semicolon", "Comma", "Colon", "Plus"], correctAnswer: 1, explanation: "Animation တွေကို Comma နဲ့ ခြားပြီး Shorthand Property ထဲမှာ စာရင်းရေးပါတယ်။" }
+]} />

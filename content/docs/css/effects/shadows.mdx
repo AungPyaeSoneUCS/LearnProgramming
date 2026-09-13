@@ -1,0 +1,49 @@
+---
+title: "Shadows (အရိပ်များ)"
+description: "Element များကို ကြွတက်လာအောင် လုပ်ခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import boxShadowImg from '@/assets/css/box-shadow.png'
+import textShadowImg from '@/assets/css/text-shadow.png'
+
+<Aside title="3D ခံစားမှု">
+Element တွေကို အရိပ် (Shadow) လေးတွေ ထည့်ပေးလိုက်တဲ့အခါမှာ၊ ပြားကပ်နေတဲ့ 2D ဒီဇိုင်းလေးတွေကနေ အပြင်ဘက်ကို ကြွတက်လာသယောင် 3D ခံစားမှု (Depth) ကို ရရှိစေပါတယ် ခင်ဗျာ။
+</Aside>
+
+### Box Shadow
+သူကတော့ Box လို့ခေါ်တဲ့ Element တစ်ခုလုံးကို အနောက်ကနေ အရိပ်ချပေးတာပါ။
+ဒီမှာ တန်ဖိုး (၄) ခု နဲ့ အရောင် တစ်ခုကို သတ်မှတ်ပေးဖို့ လိုအပ်ပါတယ်။ အဲဒါတွေကတော့ -
+`offset-x` (ဘယ်/ညာ ရွေ့မယ့် ပမာဏ), `offset-y` (အပေါ်/အောက် ရွေ့မယ့် ပမာဏ), `blur-radius` (အရိပ်ကို ဝါးသွားစေမယ့် ပမာဏ), `spread-radius` (အရိပ်ရဲ့ အရွယ်အစား - ဒါကတော့ မထည့်လည်း ရပါတယ်) တို့ပဲ ဖြစ်ပါတယ်။
+
+```css
+.card {
+  /* x-offset, y-offset, blur, color */
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 5px;
+}
+```
+
+*   **5px (x):** အရိပ်ကို ညာဘက်ကို 5px ရွေ့မယ်။
+*   **5px (y):** အရိပ်ကို အောက်ဘက်ကို 5px ရွေ့မယ်။
+*   **10px (blur):** အရိပ်ကို ဝါးဝါးလေး (Blur) ဖြစ်သွားစေမယ်။ (ဒီလို ဝါးထားမှသာ ပိုပြီး သဘာဝကျတဲ့ အရိပ်ကို ရမှာပါ)
+*   **rgba(...):** အရိပ်ရဲ့ အရောင်ပါ။ (အမည်းရောင် အတိကြီး သုံးမယ့်အစား Opacity 0.2 လောက်လေး လျှော့သုံးတာက ပိုလှပါတယ် ခင်ဗျာ)
+
+<ContentImage src={boxShadowImg} alt="Box Shadow Example" />
+
+### Text Shadow (စာလုံး အရိပ်)
+သူကတော့ Box ကို မဟုတ်ဘဲ စာသား (Text) တွေကို သီးသန့် အရိပ်ချပေးတာပါ။ အထူးသဖြင့် ခေါင်းစဉ်ကြီး (Heading) တွေမှာ သုံးရင် အရမ်းကို လှပပါတယ်။
+
+```css
+h1 {
+  text-shadow: 2px 2px 4px #000000;
+}
+```
+
+<ContentImage src={textShadowImg} alt="Text Shadow Example" />
+
+<Aside type="tip">
+**Soft Shadow:** ဒီနေ့ခေတ် Modern ဒီဇိုင်းတွေမှာ အရိပ်ကို အမည်းရောင် အတိကြီးတွေ သိပ်မသုံးကြတော့ပါဘူး။ အဲဒီအစား အရိပ်ကို ဝါးဝါးလေးနဲ့ ကျယ်ကျယ်လေး (Large Blur နဲ့ Low Opacity) တွဲသုံးတာက ပိုပြီး ခေတ်မီလှပပါတယ် ခင်ဗျာ။
+</Aside>

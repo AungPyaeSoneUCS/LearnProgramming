@@ -1,0 +1,37 @@
+---
+title: "Architecture ကို အကဲဖြတ်ခြင်း နှင့် Architectural Fitness Functions"
+description: "Architecture ကို အကဲဖြတ်ခြင်း နှင့် Architectural Fitness Functions"
+---
+
+import { Aside, Code } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import fitnessFuctions from '@/assets/software-architecture/fitness-functions.png'
+
+<Aside title="ရည်ရွယ်ချက်">
+  အချိန်ကြာလာတာနဲ့အမျှ ကိုယ့် System ကြီးက မူလရည်ရွယ်ထားတဲ့ Architecture စည်းမျဉ်းတွေကနေ သွေဖည်မသွားအောင် ဘယ်လို အလိုအလျောက် စစ်ဆေးမလဲဆိုတာကို လေ့လာပါမယ်။
+</Aside>
+
+#### ပြဿနာ - Architecture ပုံစံ သွေဖည်သွားခြင်း (Architectural Drift)
+Architect တွေက ဘယ်လောက်ပဲ သေသေချာချာ ပုံကြမ်းတွေဆွဲ၊ စည်းမျဉ်းတွေ သတ်မှတ်ခဲ့ပါစေ... အချိန်ကြာလာတာနဲ့အမျှ Code အသစ်တွေ ထပ်ပေါင်းထည့်ရင်း၊ Deadline တွေ အမီလိုက်ရင်းနဲ့ တကယ့် Code က ရည်ရွယ်ထားတဲ့ Architecture ကနေ တဖြည်းဖြည်း သွေဖည်သွားတတ်ပါတယ်။ စည်းမျဉ်းတွေ အချိုးခံရပြီး System ကြီး ရှုပ်ပွလာပါတယ်။
+
+#### ဖြေရှင်းချက် - Architectural Fitness Functions
+ဒီပြဿနာကို ဖြေရှင်းဖို့ **Fitness Function** ဆိုတာကို သုံးပါတယ်။ သူက ကိုယ်ချမှတ်ထားတဲ့ Architecture စည်းမျဉ်းတွေကို လိုက်နာရဲ့လားဆိုတာကို အလိုအလျောက် စစ်ဆေးပေးတဲ့ **Automated Test** တစ်ခုပါပဲ။ အလွယ်ပြောရရင် **"Architecture အတွက် ရေးထားတဲ့ Unit Test"** လို့ မှတ်ယူနိုင်ပါတယ်။
+
+**ဘယ်လို အလုပ်လုပ်လဲ?**
+ကိုယ့်ရဲ့ ပုံမှန် CI/CD Pipeline (ကုဒ်တွေကို အလိုအလျောက် စစ်ဆေးတဲ့နေရာ) ထဲမှာ ဒီ Fitness Function တွေကို ထည့်ပြီး Run ထားလိုက်ရုံပါပဲ။
+
+**Fitness Function ဥပမာများ:**
+- **ချိတ်ဆက်မှု (Dependencies) ကို စစ်ဆေးခြင်း:** `PaymentService` ရဲ့ ကုဒ်က `UserService` ကို တိုက်ရိုက်လှမ်းခေါ်ရင် (ဒါက Loose Coupling ကို ချိုးဖောက်တာဖြစ်လို့) ချက်ချင်း Error တက်ပြီး Test Fail ဖြစ်သွားစေမယ့် Test မျိုး။
+- **မြန်နှုန်း (Metrics) ကို စစ်ဆေးခြင်း:** အရေးကြီးတဲ့ API တစ်ခုကို ခေါ်ကြည့်လို့ Response Time က **100 milliseconds** ထက် ကျော်သွားရင် ချက်ချင်း Test Fail ဖြစ်သွားစေမယ့် Test မျိုး။
+- **လုံခြုံရေး (Security) ကို စစ်ဆေးခြင်း:** ကိုယ်သုံးထားတဲ့ Library တွေမှာ Security ပိုင်း အားနည်းချက် (Vulnerability) တွေ ပါလာလားဆိုတာကို အလိုအလျောက် စစ်ဆေးပေးတဲ့ Test မျိုး။
+
+ဒီလို Test လေးတွေက အရေးကြီးတဲ့ Architecture စည်းမျဉ်းတစ်ခုကို ချိုးဖောက်မိတာနဲ့ ချက်ချင်း သတိပေးနိုင်လို့၊ System ကြီး လမ်းလွဲမသွားအောင် ကာကွယ်ပေးတဲ့ "ဘေးကင်းလုံခြုံရေး ပိုက်ကွန်" တစ်ခုအနေနဲ့ အလုပ်လုပ်ပေးပါတယ်။
+
+<ContentImage src={fitnessFuctions}  alt='Fitness Functions'/>
+
+<Aside title="အနှစ်ချုပ်">
+- Architect တစ်ယောက်ဖြစ်ရခြင်းဆိုတာ Project ရဲ့ ရည်မှန်းချက်တွေ၊ အခက်အခဲတွေကို သေချာချိန်ထိုးပြီး အကောင်းဆုံးဖြစ်အောင် **အပေးအယူ (Trade-offs)** လုပ်ကာ ဆုံးဖြတ်ချက်ချရခြင်း ဖြစ်ပါတယ်။
+- **C4 Model** ဆိုတာက လူတိုင်းနားလည်အောင် အဆင့်ဆင့် (Zoom In / Zoom Out) ချဲ့ကြည့်လို့ရတဲ့ **Architecture ပုံကြမ်း** ဆွဲတဲ့ နည်းလမ်းဖြစ်ပါတယ်။
+- **Architectural Decision Records (ADRs)** ဆိုတာက အရေးကြီးတဲ့ ဆုံးဖြတ်ချက်တွေရဲ့ နောက်ကွယ်က "ဘာကြောင့်လဲ" ဆိုတာကို အလွယ်တကူ မှတ်တမ်းတင်ထားတဲ့ **စာရွက်စာတမ်း** လေးတွေ ဖြစ်ပါတယ်။
+- **Architectural Fitness Functions** ဆိုတာကတော့ System ကြီးက ကိုယ်ချမှတ်ထားတဲ့ Architecture စည်းမျဉ်းတွေအတိုင်း သွားနေရဲ့လားဆိုတာကို အလိုအလျောက် စစ်ဆေးပေးတဲ့ **Automated Tests** တွေ ဖြစ်ပါတယ်။
+</Aside>

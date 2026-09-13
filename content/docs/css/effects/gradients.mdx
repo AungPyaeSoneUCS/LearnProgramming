@@ -1,0 +1,58 @@
+---
+title: "Gradients (အရောင်ပြေး)"
+description: "အရောင်များကို ရောစပ် အသုံးပြုခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import gradientExample from '@/assets/css/gradients.png'
+import textGradientImg from '@/assets/css/text-gradient.png'
+
+<Aside title="အရောင်စုံ">
+အရောင် တစ်ရောင်တည်းကိုပဲ (Solid Color) အသုံးပြုမယ့်အစား၊ အရောင်နှစ်ရောင် ဒါမှမဟုတ် အဲဒီထက်ပိုတဲ့ အရောင်တွေကို ရောစပ်ပြီး ဖန်တီးထားတဲ့ Gradient တွေက Website ရဲ့ ဒီဇိုင်းကို ပိုပြီး ဆွဲဆောင်မှု ရှိစေပါတယ် ခင်ဗျာ။
+</Aside>
+
+### Linear Gradient (အတန်းလိုက် အရောင်ပြေး)
+သူက အရောင်တစ်ခုကနေ နောက်အရောင်တစ်ခုကို တစ်တန်းတည်း (Linear) ဖြည်းဖြည်းချင်း ပြောင်းလဲသွားတဲ့ ပုံစံပါ။
+သူ့ကို သုံးချင်ရင် `background-color` မှာ သုံးလို့မရဘဲ `background-image` မှာ သုံးပေးရပါတယ်။
+
+```css
+.box {
+  /* အပေါ်ကနေ အောက် (Default) */
+  background-image: linear-gradient(red, yellow);
+}
+
+.box-right {
+  /* ဘယ်ကနေ ညာ */
+  background-image: linear-gradient(to right, blue, purple);
+}
+
+.box-diagonal {
+  /* ထောင့်ဖြတ် (၄၅ ဒီဂရီ) */
+  background-image: linear-gradient(45deg, #ff9a9e, #fad0c4);
+}
+```
+
+### Radial Gradient (အဝိုင်းလိုက် အရောင်ပြေး)
+သူကကျတော့ Linear လို တစ်တန်းတည်း မဟုတ်ဘဲ၊ အလယ်ဗဟိုကနေ ဘေးဘက်ကို အဝိုင်းပုံစံ (Radial) ဖြာထွက်သွားတဲ့ Gradient မျိုး ဖြစ်ပါတယ်။
+
+```css
+.circle {
+  background-image: radial-gradient(circle, yellow, red);
+}
+```
+
+<ContentImage src={gradientExample} alt="Gradient Example" />
+
+<Aside type="tip">
+**Text Gradient:** Box တွေကို မဟုတ်ဘဲ စာသား (Text) တွေကိုပါ Gradient အရောင် ထည့်ချင်တယ်ဆိုရင်တော့ ရေးရတာ နည်းနည်းလေး ရှုပ်ပါတယ်။ အောက်က Code လေးကို လေ့လာကြည့်ပါ ခင်ဗျာ -
+```css
+h1 {
+  background: linear-gradient(to right, red, blue);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+```
+<ContentImage src={textGradientImg} alt="Text Gradient Example" />
+</Aside>

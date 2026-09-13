@@ -1,0 +1,74 @@
+---
+title: "CSS Default Values — Property တန်ဖိုး ပုံမှန်များ"
+description: "CSS Property အမျိုးမျိုး၏ Default (ပုံမှန်) တန်ဖိုးနဲ့ အမွေဆက်ခံမှု အခြေအနေကို ပြသသည့် ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### Default Value ဆိုတာ ဘာလဲ?
+
+CSS Property တိုင်းမှာ Browser က ကြိုတင် သတ်မှတ်ထားတဲ့ **Initial (Default) Value** တစ်ခုစီ ရှိပါတယ်။ Style မရေးရင် (သို့) Author Style မရှိရင် အဲဒီ Default တန်ဖိုးက သက်ရောက်ပါတယ်။ တချို့ Property တွေက Parent ရဲ့ တွက်ချက်ပြီးသား တန်ဖိုးကို **ဆက်ခံ** (Inherit) တတ်ပြီး ကျန်တာတွေက Initial Value ဖြစ်ပါတယ်။
+
+### Common Default Values ဇယား
+
+| Property | Default Value | ဆက်ခံမှု |
+| ---- | ---- | ---- |
+| `color` | System Foreground (black) | Inherited |
+| `font-family` | Browser Default Font | Inherited |
+| `font-size` | 16px (များသောအားဖြင့်) | Inherited |
+| `line-height` | Normal | Inherited |
+| `text-align` | Start (LTR တွင် left) | Inherited |
+| `list-style` | `disc outside none` | Inherited |
+| `visibility` | `visible` | Inherited |
+| `width` | `auto` | Not Inherited |
+| `height` | `auto` | Not Inherited |
+| `margin` | `0` | Not Inherited |
+| `padding` | `0` | Not Inherited |
+| `position` | `static` | Not Inherited |
+| `display` | Element အလိုက် (`block` ၊ `inline`) | Not Inherited |
+| `background-color` | `transparent` | Not Inherited |
+| `border` | `medium none currentColor` | Not Inherited |
+| `box-sizing` | `content-box` | Not Inherited |
+| `float` | `none` | Not Inherited |
+| `overflow` | `visible` | Not Inherited |
+| `z-index` | `auto` | Not Inherited |
+| `vertical-align` | `baseline` | Not Inherited |
+
+မှတ်ချက် — Text နဲ့ ဆိုင်တဲ့ Property တွေက ဆက်ခံ (Inherited) လေ့ ရှိပြီး Box/Layout နဲ့ ဆိုင်တာတွေက Not Inherited ပါ။
+
+### Inherit ၊ Initial ၊ Unset ဆိုတာ ဘာတွေလဲ?
+
+Global Keyword တွေက Default ကို ကိုယ်တိုင် ထိန်းချုပ်ဖို့ သုံးပါတယ်။ `inherit` က Parent တန်ဖိုးကို အတင်း ဆက်ခံစေပြီး `initial` က Spec ရဲ့ Initial Value သို့ ပြန်သွားစေပါတယ်။ `unset` က Property ပေါ် မူတည်ပြီး inherit/initial နှစ်မျိုးစလုံးကြားက ပြုမူပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  color: inherit;
+}
+
+.plain {
+  color: initial;
+}
+```
+
+မှတ်ချက် — Reset (သို့) Normalize CSS File တွေက `margin` ၊ `padding` Default တွေကို သုတ်သင်ပြီး Browser အကြား အတူတူ စတင်နိုင်အောင် လုပ်ပေးပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Property တိုင်းမှာ Initial Value ရှိပါတယ်။
+- Text Property အများစုက Inherited ဖြစ်ပါတယ်။
+- `inherit` က Parent မှ အတင်း ဆက်ခံစေပါတယ်။
+- `initial` က Spec Default သို့ ပြန်သွားစေပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "CSS Property တွေရဲ့ Default value ကို Browser က ဘယ်လို သက်ရောက်စေပါသလဲ?", options: ["Style မရေးရင် Default value သက်ရောက်ပါတယ်", "Default value ဆိုတာ မရှိပါဘူး", "JavaScript နဲ့မှသာ အလုပ်လုပ်ပါတယ်", "Browser တိုင်းမှာ မတူပါဘူး"], correctAnswer: 0, explanation: "Author Style မရေးရင် Browser က Property ရဲ့ Initial Value ကို သုံးပါတယ်။" },
+    { id: "q2", question: "margin Property ရဲ့ Default Value က ဘာလဲ?", options: ["0", "auto", "10px", "1em"], correctAnswer: 0, explanation: "margin ရဲ့ Default Value က 0 ဖြစ်ပြီး width နဲ့ height တို့ရဲ့ Default ကတော့ auto ပါ။" },
+    { id: "q3", question: "Parent ရဲ့ တန်ဖိုးကို အတင်း ဆက်ခံစေတဲ့ Keyword က ဘာလဲ?", options: ["inherit", "initial", "auto", "none"], correctAnswer: 0, explanation: "inherit က Property ရဲ့ Parent တန်ဖိုးကို အတင်း ဆက်ခံစေပါတယ်။" },
+  ]}
+/>

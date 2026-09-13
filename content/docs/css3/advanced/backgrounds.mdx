@@ -1,0 +1,83 @@
+---
+title: "CSS Backgrounds (Advanced) — background အဆင့်မြင့်သတ်မှတ်နည်းများ"
+description: "Multiple Backgrounds, background-clip, background-origin, background-blend-mode တို့ဖြင့် background ကို လှပစွာ စီစဉ်နည်းကို လေ့လာကြမယ်။"
+---
+
+### Background အများအပြား ထည့်ခြင်း (Multiple Backgrounds)
+
+Element တစ်ခုမှာ Background Image တွေ အများကြီး ထည့်လို့ရပါတယ်။ Comma (,) နဲ့ ခြားပြီး `background-image` တွေကို တစ်ခုပြီးတစ်ခု စီပါတယ်။ ရှေ့ဆုံးကပုံက ထိပ်ဆုံးအလွှာဖြစ်ပြီး နောက်ဆုံးပုံက အောက်ဆုံးအလွှာဖြစ်ပါတယ်။ Property တစ်ခုချင်းစီမှာလည်း value များစွာ စီပြီး layer တစ်ခုစီအတွက် သီးခြားသတ်မှတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.hero {
+  background-image: url("top.png"), url("bottom.png");
+  background-position: top center, bottom center;
+  background-repeat: no-repeat, repeat-x;
+}
+```
+
+မှတ်ချက် — Value တွေရဲ့ အစဉ်အတိုင်း layer တစ်ခုစီနဲ့ ကိုက်ညီပြီး ပထမဆုံး value က ပထမဆုံး image နဲ့ သက်ဆိုင်ပါတယ်။
+
+### background-clip (Background ဖြတ်တောက်ခြင်း)
+
+`background-clip` Property က Background ကို ဘယ်နေရာအထိ ပြမလဲ ဖြတ်တောက် သတ်မှတ်ပေးပါတယ်။ border-box က ဘောင်အပါအဝင် ဧရိယာအကုန် ပြပြီး padding-box က ဘောင်အတွင်းကစပြီး content-box က Content ဧရိယာတစ်ခုတည်းမှာသာ ပြပါတယ်။ text value ကတော့ Background ကို စာလုံးပုံစံအတိုင်း ဖြတ်ပြသဖို့ သုံးတာပါ။
+
+**ဥပမာ -**
+```css
+.gradient-text {
+  background: linear-gradient(45deg, #ff7e5f, #feb47b);
+  background-clip: text;
+  color: transparent;
+  font-size: 48px;
+  font-weight: bold;
+}
+```
+
+မှတ်ချက် — background-clip: text သုံးရင် `color: transparent` ထားမှ Gradient က စာလုံးပုံစံအတိုင်း ပေါ်လာပြီး နောက်ကျ browser တွေမှာ `-webkit-background-clip` ထည့်ရန် လိုနိုင်ပါတယ်။
+
+### background-origin (Background စတင်မည့်နေရာ)
+
+`background-origin` Property က Background ရဲ့ တည်နေရာ စတင်မှုကို သတ်မှတ်ပေးပါတယ်။ border-box, padding-box, content-box တို့နဲ့ Background Position ရဲ့ အကိုးအကွယ်စတင်ချက်ကို ပြောင်းနိုင်ပါတယ်။ ဒီ Property နဲ့ `background-clip` ကို မရောထွေးဖို့ အရေးကြီးပါတယ်။
+
+**ဥပမာ -**
+```css
+.logo-box {
+  background-image: url("logo.png");
+  background-origin: content-box;
+  border: 10px dashed #999;
+  padding: 20px;
+}
+```
+
+မှတ်ချက် — background-origin က Background ဘယ်ကစဆွဲမလဲကို ထိန်းပြီး background-clip ကတော့ Background ကို ဘယ်အထိ ဖြတ်ပြမလဲကို ထိန်းပေးပါတယ်။
+
+### background-blend-mode (Background ရောစပ်ခြင်း)
+
+Background Layer နှစ်ခုရဲ့ အရောင်တွေကို `background-blend-mode` နဲ့ ရောစပ်နိုင်ပါတယ်။ multiply က အရောင်များကို မြှောက်၍ ပိုမှောင်စေပြီး screen က ပေါ့ပါးစေကာ overlay ၊ darken ၊ lighten စတဲ့ Blend Mode တွေလည်း ရှိပါတယ်။ div တစ်ခုထဲမှာ ပုံနဲ့ အရောင် ပေါင်းကာ လှပတဲ့ Effect တွေ ဖန်တီးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.banner {
+  background-color: #1e3c72;
+  background-image: url("pattern.png");
+  background-blend-mode: multiply;
+}
+```
+
+မှတ်ချက် — background-blend-mode က Background Layers တစ်ခုထက်ပိုမှ အလုပ်လုပ်နိုင်ပြီး အရောင်နဲ့ ပုံတွဲသုံးတာ အသုံးအများဆုံးပါ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Multiple Backgrounds တွေကို Comma (,) နဲ့ ခြားပြီး စီသည်။
+- background-clip က ပြ/ဖြတ်မည့် ဧရိယာကို ထိန်းပြီး background-origin က စတင်မည့်နေရာကို ထိန်းသည်။
+- background-blend-mode က Layers တွေကို ရောစပ်ပေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Background Image အများကြီး ထည့်တဲ့အခါ ဘာနဲ့ ခြားပါသလဲ?", options: ["Semicolon (;)", "Comma (,)", "Slash (/)", "Space"], correctAnswer: 1, explanation: "background-image layers တွေကို Comma (,) နဲ့ ခြားပြီး စီရေးပါတယ်။" },
+    { id: "q2", question: "Background ကို စာလုံးပုံစံအတိုင်း ဖြတ်တောက်ဖို့ ဘယ် value ကို သုံးပါသလဲ?", options: ["border-box", "padding-box", "content-box", "text"], correctAnswer: 3, explanation: "background-clip: text က Background ကို စာလုံးပုံစံအတိုင်း ဖြတ်တောက်ပေးပါတယ်။" },
+    { id: "q3", question: "background-origin နဲ့ background-clip ရဲ့ ကွာခြားချက်က ဘာလဲ?", options: ["လုံးဝတူညီပါတယ်", "origin က ဘယ်ကစမလဲကို ထိန်းပြီး clip က ဘယ်အထိပြမလဲကို ထိန်းပါတယ်", "origin က ရောစပ်မှုကိုသာ ပြောင်းပါတယ်", "clip က ပုံအရေအတွက်ကို ထိန်းပါတယ်"], correctAnswer: 1, explanation: "origin က Background စတင်မည့်နေရာကို ထိန်းပြီး clip က ပြသ ဖြတ်တောက်မှုကို ထိန်းပေးပါတယ်။" }
+  ]}
+/>

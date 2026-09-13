@@ -1,0 +1,62 @@
+---
+title: "HTML YouTube — YouTube Video ထည့်နည်း"
+description: "Iframe နဲ့ YouTube Video ကို Webpage မှာ ဘယ်လိုထည့်ရမလဲ လေ့လာကြည့်ရအောင်။"
+---
+
+### YouTube Video ကို Iframe နဲ့ ထည့်ပါတယ်
+
+YouTube Video ကို Webpage ထဲမှာ ထည့်ဖို့က `<video>` Tag နဲ့ မဟုတ်ဘဲ `<iframe>` Tag ကို သုံးရပါတယ်။ ဆိုလိုတာက Video File ကို ကိုယ့် Server မှာ သိမ်းထားစရာ မလိုတော့ဘဲ YouTube ရဲ့ Player ကိုပဲ ကိုယ့် Page မှာ ထည့်ပြလိုက်တာပါ။ YouTube မှာ Video တစ်ခုဖွင့်ပြီး Share ကိုနှိပ်ရင် Embed Option ရှိပြီး ဒီ Option ကနေ Copy လို့ရတဲ့ Code က `<iframe>` တစ်ခုပါပဲ။
+
+**ဥပမာ -**
+```html
+<iframe width="560" height="315"
+        src="https://www.youtube.com/embed/VIDEO_ID"
+        title="YouTube video player"
+        frameborder="0"
+        allowfullscreen></iframe>
+```
+
+မှတ်ချက် — Video URL မှာ `/watch?v=...` ပုံစံဖြစ်နေရင် Embed မှာတော့ `/embed/...` ပုံစံပြောင်းထားတဲ့ URL လိုပါတယ်။
+
+### Aspect Ratio အကောင်းဆုံးအလေ့အကျင့်
+
+Iframe ကို Fixed Width နဲ့ Height ထည့်ထားရင် Screen သေးတဲ့ Device တွေမှာ Video က ညစ်ညမ်း ဆန့်ထွက်နေတာမျိုး ဖြစ်နိုင်ပါတယ်။ ဒီပြဿနာရှောင်ဖို့ Iframe ကို Responsive ဖြစ်အောင် CSS နဲ့ ချိန်ညှိဖို့ အကြံပြုထားပါတယ်။ အကောင်းဆုံးကတော့ Width ကို 100% လုပ်ပြီး Height ကို 16/9 Aspect Ratio (Video ရဲ့ပုံမှန်အချိုး) နဲ့ ထိန်းထားတာပါ။
+
+**ဥပမာ -**
+```css
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.video-wrapper iframe {
+  width: 100%;
+  height: 100%;
+}
+```
+
+မှတ်ချက် — Aspect Ratio 16/9 ဆိုတာ Width 16 ဆိုရင် Height 9 ဆိုတဲ့ အချိုးဖြစ်ပြီး YouTube Video တွေရဲ့ Standard ပါ။
+
+### Embedding က Iframe Src နဲ့ အလုပ်လုပ်ပါတယ်
+
+YouTube Embed က Video Player အပြည့်အစုံကို အဝေးကနေ Load လုပ်ပြီး ကိုယ့် Page မှာ ပြသပေးတာပါ။ `<iframe>` ရဲ့ `src` ထဲက `/embed/VIDEO_ID` က YouTube ကိုပြောပြပြီး ဘယ် Video ကို ထည့်ရမလဲ ဆိုတာကို သတ်မှတ်ပေးပါတယ်။ ဒါကြောင့် Video တစ်ခုစီအတွက် Embed Code မှာ `VIDEO_ID` နေရာတစ်ခုတည်းပဲ ကွဲပြားပြီး ကျန်တာ နီးပါးတူပါတယ်။
+
+**ဥပမာ -**
+```html
+<div class="video-wrapper">
+  <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen>
+  </iframe>
+</div>
+```
+
+မှတ်ချက် — အပေါ်ကနည်းကို သုံးရင် Video က Screen ဘယ်အရွယ်မှာမဆို ကောင်းကောင်း Fit ဖြစ်နေမှာပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "YouTube Video ကို Webpage မှာ ထည့်ဖို့ ဘယ် Element ကို သုံးပါသလဲ?", options: ["Video Element", "Source Element", "Iframe Element", "Embed Element"], correctAnswer: 2, explanation: "YouTube Embed က Iframe Element နဲ့ ထည့်ပါတယ်။" },
+    { id: "q2", question: "YouTube Video ရဲ့ Standard Aspect Ratio က ဘာလဲ?", options: ["4/3", "16/9", "21/9", "1/1"], correctAnswer: 1, explanation: "YouTube Video တွေရဲ့ Standard Aspect Ratio က 16/9 ပါ။" },
+    { id: "q3", question: "Embed URL ထဲမှာ ဘယ် Path ကို သုံးရပါသလဲ?", options: ["/watch?v=", "/play?v=", "/embed/", "/stream/"], correctAnswer: 2, explanation: "Embed URL က /embed/ Video ID ပုံစံဖြစ်ပါတယ်။" },
+  ]}
+/>

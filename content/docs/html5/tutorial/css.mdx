@@ -1,0 +1,113 @@
+---
+title: "HTML CSS — CSS ထည့်သွင်းနည်း ၃ မျိုး"
+description: "Inline, Internal, External CSS သုံးမျိုးနဲ့ ဦးစားပေးစဉ်ကို လေ့လာကြရအောင်။"
+---
+
+### CSS ဆိုတာနဲ့ ထည့်သွင်းနည်း ၃ မျိုး
+
+**CSS (Cascading Style Sheets)** က HTML Element တွေကို လှပအောင် အလှဆင်ပေးတဲ့ Style ဘာသာစကားပါ။ HTML ထဲကို CSS ထည့်တဲ့နည်း သုံးခုရှိပြီး **Inline CSS** (Element ထဲ) ၊ **Internal CSS** (head ထဲက style tag) ၊ **External CSS** (သီးခြား .css ဖိုင်) ဆိုပြီး ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<p style="color:red;">ဒါက Inline CSS ဖြစ်သည်။</p>
+```
+
+မှတ်ချက် — Inline CSS က style attribute ထဲမှာ CSS Property တွေကို တိုက်ရိုက်ရေးတာပါ။
+
+### Inline CSS
+
+Inline CSS က Element တစ်ခုချင်းစီကို style attribute နဲ့ Style လုပ်တာပါ။ သေးငယ်တဲ့ ပြောင်းလဲမှု တစ်ခုတည်းအတွက် သင့်တော်ပေမယ့် Code ထပ်ခါထပ်ခါ ရေးရလို့ ကြီးတဲ့ Project အတွက် အဆင်မပြေပါဘူး။
+
+**ဥပမာ -**
+```html
+<h1 style="color:blue; text-align:center;">Blue Center Heading</h1>
+<p style="font-size:20px;">ဒီစာကြောင်းက 20px ဖြစ်ပါမယ်။</p>
+```
+
+မှတ်ချက် — Inline Style က သတ်မှတ်ထားတဲ့ Element တစ်ခုကိုသာ သက်ရောက်ပြီး အလွန်အကျွံသုံးရင် ကုဒ်ထိန်းသိမ်းရ ခက်ပါတယ်။
+
+### Internal CSS (head ထဲမှာ)
+
+Internal CSS က `<style>` Tag ကို `<head>` ထဲထည့်ပြီး Page တစ်ခုလုံးအတွက် Style တွေကို တစ်နေရာတည်းမှာ ရေးလို့ရတာပါ။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { background-color:linen; }
+    h1 { color:maroon; text-align:center; }
+  </style>
+</head>
+<body>
+  <h1>Internal CSS နဲ့ Style လုပ်ထားတဲ့ ခေါင်းစဉ်</h1>
+</body>
+</html>
+```
+
+မှတ်ချက် — Selector (body, h1) နောက်က { } အတွင်းမှာ Property နဲ့ Value တစ်စုံချင်းကို Semicolon နဲ့ခြားပြီး ရေးပါတယ်။
+
+### External CSS ဖိုင် (style.css)
+
+External CSS က Style တွေကို သီးခြား .css ဖိုင်တစ်ခုထဲ ရေးတာပါ။ Website တစ်ခုလုံးရဲ့ Style ကို တစ်နေရာတည်းက ထိန်းချုပ်နိုင်လို့ အသုံးအများဆုံးနည်းလည်း ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+h1 {
+  color: #333;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+}
+```
+
+မှတ်ချက် — ဒီ style.css ထဲမှာ HTML ကိုမထည့်ဘဲ CSS Syntax သပ်သပ်တစ်ခုတည်းကိုသာ ရေးပါတယ်။
+
+### External CSS ကို ချိတ်ဆက်ခြင်း
+
+သီးခြား .css ဖိုင်ကို HTML ထဲကို `<link>` Tag နဲ့ ချိတ်ဆက်ပါတယ်။ rel="stylesheet" နဲ့ href ထဲမှာ ဖိုင်လမ်းကြောင်းကို ထည့်ပေးရပါမယ်။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>External CSS မှ Style ရနေတဲ့ ခေါင်းစဉ်</h1>
+</body>
+</html>
+```
+
+မှတ်ချက် — href ထဲက style.css လမ်းကြောင်းက HTML ဖိုင်ရှိတဲ့နေရာနဲ့ ဆက်စပ်ပြီး မှန်ကန်အောင် ညွှန်ကြားရပါမယ်။
+
+### Style Precedence (ဦးစားပေးစဉ်)
+
+Style အမျိုးမျိုး ထပ်နေရင် ဘယ်တစ်ခုက အနိုင်ရလဲဆိုတာ စည်းကမ်းရှိပါတယ်။ အခြေခံအားဖြင့် **Inline CSS** က ဦးစားပေး အမြင့်ဆုံးရပြီး နောက်မှ Internal ၊ နောက်ဆုံးမှာ External ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<style> p { color: blue; } </style>
+<p style="color:red;">Inline Style က Internal CSS ထက် ဦးစားပေးပါတယ်။</p>
+```
+
+မှတ်ချက် — ဦးစားပေးစဉ်မှာ Inline က အမြင့်ဆုံးဖြစ်ပြီး Precedence တူညီရင် နောက်မှာရေးထားတဲ့ စည်းကမ်းက အနိုင်ရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- CSS ထည့်သွင်းနည်း သုံးခုမှာ Inline ၊ Internal ၊ External ဖြစ်သည်။
+- External CSS က Website တစ်ခုလုံးကို စီမံဖို့ အကောင်းဆုံးနည်းဖြစ်သည်။
+- ဦးစားပေးစဉ်မှာ Inline က အမြင့်ဆုံး ဖြစ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "External CSS ကို HTML ထဲ ချိတ်ဆက်ဖို့ ဘယ် Tag ကို သုံးပါသလဲ?", options: ["style", "link", "script", "meta"], correctAnswer: 1, explanation: "link tag မှာ rel=stylesheet နဲ့ href ကို သုံးပြီး .css ဖိုင်ကို ချိတ်ဆက်ပါတယ်။" },
+  { id: "q2", question: "Internal CSS ကို ဘယ်နေရာမှာ ရေးပါသလဲ?", options: ["body အတွင်း", "head အတွင်းက style tag", "footer အတွင်း", "နောက်ဆုံး တစ်နေရာမဆို"], correctAnswer: 1, explanation: "Internal CSS ကို head ထဲက style tag အတွင်းမှာ ရေးပါတယ်။" },
+  { id: "q3", question: "ဦးစားပေး (Precedence) အမြင့်ဆုံး CSS က ဘာလဲ?", options: ["External CSS", "Internal CSS", "Inline Style", "အားလုံး တန်းတူ"], correctAnswer: 2, explanation: "Inline Style က ဦးစားပေး အမြင့်ဆုံး ဖြစ်ပြီး ကျန်တာတွေကို ကျော်လွန်ပြီး သက်ရောက်ပါတယ်။" }
+]} />

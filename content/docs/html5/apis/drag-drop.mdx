@@ -1,0 +1,75 @@
+---
+title: "HTML Drag and Drop — ဆွဲယူချပေးခြင်း"
+description: "draggable Attribute နဲ့ Drag and Drop Event တွေ ဘယ်လိုအလုပ်လုပ်လဲ လေ့လာကြည့်ရအောင်။"
+---
+
+### Drag and Drop ဆိုတာ ဘာလဲ?
+
+Drag and Drop ဆိုတာ Element တစ်ခုကို Mouse ဒါမှမဟုတ် Touch နဲ့ ဆွဲယူပြီး တခြားနေရာကို ရွှေ့ချတဲ့ Interaction ပါ။ ဖိုင်ချပို့တာ (File Upload), Puzzle Game, Dashboard စီစဉ်တာတွေမှာ အသုံးများပါတယ်။ HTML5 မှာတော့ JavaScript Event တွေနဲ့ ဒီ Drag and Drop ကို Browser က ကိုယ်တိုင် ထောက်ပံ့ပေးပါတယ်။
+
+### draggable Attribute နဲ့ Drag လုပ်နိုင်အောင်
+
+Element တစ်ခုကို Drag လုပ်နိုင်ဖို့ `draggable="true"` Attribute ထည့်ပေးရပါတယ်။ ဒီ Attribute မရှိရင် Browser က Element ကို ဆွဲလို့မရဘဲ Text ရွေးတာလို Default Behavior သာ လုပ်ပါလိမ့်မယ်။ Drag လုပ်ဖို့ Element ကို သတ်မှတ်ပေးတာမို့ `draggable` က အခြေခံအကျဆုံး အဆင့်ပါ။
+
+**ဥပမာ -**
+```html
+<div id="dragItem" draggable="true">ဒီကို ဆွဲယူနိုင်ပါတယ်</div>
+```
+
+မှတ်ချက် — `draggable="true"` ရှိမှသာ Element ကို Drag လုပ်နိုင်မှာဖြစ်ပြီး Drag လုပ်တာနဲ့ Event တွေ စပြီး Fired ဖြစ်ပါတယ်။
+
+### Drag and Drop Events တွေ
+
+Drag and Drop မှာ Event များစွာ ပါဝင်ပါတယ်။ `dragstart` က Element ကို စဆွဲတဲ့အချိန်မှာ၊ `dragenter` က Target ထဲဝင်တဲ့အခါ၊ `dragover` က Target ပေါ်မှာ ပေါ်နေတဲ့အခါ၊ `drop` က လွှတ်ချလိုက်တဲ့အခါ Fired ဖြစ်ပါတယ်။ အရေးကြီးတာက Drop ဖြစ်နိုင်ဖို့ `dragover` Event မှာ `preventDefault()` ခေါ်ပေးရပါတယ်။
+
+**ဥပမာ -**
+```javascript
+var item = document.getElementById("dragItem");
+
+item.addEventListener("dragstart", function(event) {
+  event.dataTransfer.setData("text/plain", event.target.id);
+});
+```
+
+မှတ်ချက် — `dragstart` မှာ Data ကို `dataTransfer` ထဲ သိမ်းပြီး Drop ဖြစ်တဲ့အခါ ပြန်ထုတ်သုံးပါတယ်။
+
+### dataTransfer.setData နဲ့ getData
+
+`event.dataTransfer` က Drag လုပ်နေတဲ့ကြားထဲ Data ကို သယ်ယူပေးတဲ့ Container ဖြစ်ပါတယ်။ `setData("text/plain", value)` နဲ့ Data သိမ်းပြီး Drop ဖြစ်တဲ့အခါ `getData("text/plain")` နဲ့ ပြန်ထုတ်ပါတယ်။ ဒီလိုမျိုး Drag လုပ်တဲ့ Element က ဘယ်ဟာလဲဆိုတာကို Target ဆီ အချက်အလက် ပို့ပေးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<div id="box"></div>
+```
+
+```javascript
+var box = document.getElementById("box");
+
+box.addEventListener("dragover", function(event) {
+  event.preventDefault();
+});
+
+box.addEventListener("drop", function(event) {
+  event.preventDefault();
+  var id = event.dataTransfer.getData("text/plain");
+  box.appendChild(document.getElementById(id));
+});
+```
+
+မှတ်ချက် — `dragover` မှာ `preventDefault()` မခေါ်ရင် `drop` Event က မဖြစ်နိုင်တာမို့ အမြဲ မှတ်ထားပါ။
+
+### မှတ်ထားရမယ့် အချက်များ
+
+- `draggable="true"` ရှိမှ Element ကို ဆွဲလို့ရတယ်။
+- `dragover` မှာ `preventDefault()` က Drop အတွက် မဖြစ်မနေ လိုအပ်တယ်။
+- Data ကို `setData`/`getData` နဲ့ လွှဲပြောင်းတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Element တစ်ခုကို Drag လုပ်နိုင်ဖို့ ဘာ Attribute ထည့်ရပါသလဲ?", options: ["draggable=true", "drag=true", "move=true", "grab=true"], correctAnswer: 0, explanation: "draggable=true Attribute ရှိမှ Element ကို ဆွဲလို့ရပါတယ်။" },
+    { id: "q2", question: "Drop Event ဖြစ်နိုင်ဖို့ Dragover Event မှာ ဘာလုပ်ရပါသလဲ?", options: ["stopPropagation ခေါ်ရတယ်", "preventDefault ခေါ်ရတယ်", "getData ခေါ်ရတယ်", "ဘာမှမလုပ်ရဘူး"], correctAnswer: 1, explanation: "preventDefault မခေါ်ရင် Browse က Drop ကို ခွင့်မပြုပါဘူး။" },
+    { id: "q3", question: "Drag လုပ်နေတဲ့ Data တွေကို ဘာနဲ့ သယ်ယူပါသလဲ?", options: ["Event Object", "DataTransfer Object", "Window Object", "Screen Object"], correctAnswer: 1, explanation: "DataTransfer Object က Drag ကြားထဲ Data တွေကို သယ်ယူပေးပါတယ်။" },
+  ]}
+/>

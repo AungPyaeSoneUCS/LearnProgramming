@@ -1,0 +1,58 @@
+---
+title: "HTML Global Attributes — Global Attribute များ"
+description: "Tag အားလုံးနီးပါးမှာ သုံးလို့ရတဲ့ Global Attribute များအကြောင်း ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### Global Attribute ဆိုတာ ဘာလဲ?
+
+Attribute ဆိုတာ Tag ရဲ့ အတွင်းမှာ ထည့်သွင်း သတ်မှတ်ပေးတဲ့ အပိုဂုဏ်သတ္တိ ဖြစ်ပါတယ်။ **Global Attribute** တွေကတော့ HTML Tag အားလုံးနီးပါးမှာ သုံးလို့ ရတဲ့ အထူးအင်္ဂါရပ်တွေ ဖြစ်ပါတယ်။ ဥပမာ `<div>` မှာရော `<p>` မှာရော `<img>` မှာရော `id` ဆိုတဲ့ Attribute ကို တူညီတဲ့ ပုံစံနဲ့ သုံးနိုင်ပါတယ်။
+
+Attribute တွေကို Tag ရဲ့ Opening Tag ထဲမှာ `attribute="value"` ပုံစံနဲ့ ရေးပါတယ်။ Attribute နဲ့ Value ကို `=` နဲ့ ဆက်ပြီး Value ကို Double Quote ထဲ ထည့်လေ့ ရှိပါတယ်။
+
+### Global Attribute များ စာရင်း
+
+| Attribute | ဖော်ပြချက် |
+| ---- | ---- |
+| `class` | Element ကို အုပ်စုဖွဲ့သတ်မှတ်ရန် ၊ CSS အတွက် အသုံးများ |
+| `id` | Element အတွက် ထူးခြားသော နာမည် ၊ Page ထဲမှာ တစ်ခုသာ ရှိရမည် |
+| `style` | Inline Style (CSS) ကို တိုက်ရိုက် ထည့်ရန် |
+| `title` | Element ပေါ်သို့ Mouse ရွှေ့သည့်အခါ Tooltip ပြသရန် |
+| `lang` | Element ရဲ့ ဘာသာစကား သတ်မှတ်ရန် ဥပမာ `lang="my"` |
+| `dir` | စာသား ရေးလမ်းညွှန် သတ်မှတ်ရန် `ltr` (သို့) `rtl` |
+| `tabindex` | Keyboard ဖြင့် Tab ရွှေ့သည့်အခါ စဉ်သတ်မှတ်ရန် |
+| `hidden` | Element ကို Page ပေါ်မှ ဝှက်ထားရန် |
+| `contenteditable` | Element ရဲ့ စာသားကို သုံးစွဲသူ ပြန်တည်းဖြတ်နိုင်စေရန် |
+| `draggable` | Element ကို ဆွဲယူနိုင်စေရန် (Drag and Drop) |
+| `data-*` | ကိုယ်ပိုင် Custom Data သိမ်းဆည်းရန် ဥပမာ `data-price` |
+
+### Global Attribute များကို အသုံးပြုပုံ
+
+`id` ကို JavaScript သို့မဟုတ် CSS Selector တွေအတွက် ပစ်မှတ်ထားဖို့ အသုံးပြုပါတယ်။ `class` ကိုတော့ Element အများအပြားကို တစ်လိုက်တည်း Style ချရန် သုံးပြီး `data-*` ကို JavaScript ထဲကို Custom Data တွေ ပို့ရန် သုံးပါတယ်။ `hidden` နဲ့ `contenteditable` တို့က Value မပါဘဲ ရေးလို့ ရတာတွေ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<p id="intro" class="highlight" lang="my" title="ဤသည်မှာ မိတ်ဆက်">မင်္ဂလာပါ</p>
+
+<p hidden>ဒီစာသားက Page ပေါ်မှာ မပေါ်ပါဘူး</p>
+
+<div contenteditable="true">ဒီစာသားကို ပြန်တည်းဖြတ်လို့ ရပါတယ်</div>
+
+<button draggable="true" data-course="html5">HTML5</button>
+```
+
+မှတ်ချက် — `id` သည် Page ထဲမှာ ထူးခြားရပါမည် ၊ `class` ကိုတော့ Element များစွာမှာ ပြန်သုံးနိုင်ပါတယ်။ `data-*` ရဲ့ နောက်မှာ ကိုယ်ကြိုက်တဲ့ နာမည် ထည့်သုံးလို့ ရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `class` သည် Class များစွာ ထည့်လို့ ရပြီး Space ခြားပြီး ရေးပါတယ်။
+- `id` ကို JavaScript ထဲ `getElementById` နဲ့ ရှာလေ့ ရှိပါတယ်။
+- `style` ကို အသေးစားနေရာတွေမှာပဲ သုံးပြီး CSS File ကို ဦးစားပေးပါ။
+- `hidden` ထည့်ထားတဲ့ Element က Browser မှာ လုံးဝ ပေါ်မလာပါဘူး။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Element တစ်ခုအတွက် ထူးခြားတဲ့ နာမည် သတ်မှတ်ပေးတဲ့ Attribute က ဘာလဲ?", options: ["id", "class", "style", "title"], correctAnswer: 0, explanation: "id သည် Page ထဲမှာ တစ်ခုတည်းသာ ဖြစ်ရပြီး ထူးခြားသော နာမည် သတ်မှတ်ပါတယ်။" },
+  { id: "q2", question: "Element တစ်ခုကို Page ပေါ်မှာ မပြဘဲ ဝှက်ထားချင်ရင် ဘယ် Attribute ကို သုံးပါသလဲ?", options: ["hidden", "invisible", "secret", "ghost"], correctAnswer: 0, explanation: "hidden Attribute ပါရင် Browser က အဲဒီ Element ကို မပြပါဘူး။" },
+  { id: "q3", question: "Element ရဲ့ ဘာသာစကားကို သတ်မှတ်တဲ့ Attribute က ဘာလဲ?", options: ["lang", "dir", "title", "data"], correctAnswer: 0, explanation: "lang Attribute သည် ဘာသာစကား ကုဒ်ကို သတ်မှတ်ပေးပါတယ် ၊ ဥပမာ lang=my ။" },
+]} />

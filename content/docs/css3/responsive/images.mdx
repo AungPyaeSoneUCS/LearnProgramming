@@ -1,0 +1,107 @@
+---
+title: "RWD Images — Responsive Images"
+description: "Image တွေကို Screen အရွယ်အစားအားလုံးမှာ လှပစွာ ပြသနိုင်ဖို့ max-width ၊ srcset နဲ့ background-size နည်းစနစ်များ။"
+---
+
+Image တွေက Website တစ်ခုရဲ့ အရေးကြီးတဲ့ အစိတ်အပိုင်းဖြစ်ပြီး Screen အရွယ်အစား အမျိုးမျိုးမှာ ကောင်းမွန်စွာ ပြသနိုင်ဖို့လည်း လိုအပ်ပါတယ်။ Screen ကျဉ်းပေမဲ့ Image က ကျယ်ကျယ်ကြီး ကျန်နေရင် Content က ပြည့်လျှံပြီး Scroll လုပ်ရခက်စေပါတယ်။ ဒါကြောင့် Image တွေကို Flexible ဖြစ်အောင် CSS နဲ့ HTML ပေါင်းပြီး ထိန်းညှိဖို့ လိုပါတယ်။
+
+### max-width: 100% နဲ့ height: auto
+
+Responsive Image ရဲ့ အခြေခံအကျဆုံးနည်းကတော့ Image ရဲ့ အကြီးဆုံး Width ကို Container ရဲ့ Width အတိုင်း ကန့်သတ်ပေးတာပါ။ `max-width: 100%` က Container ထက် ကျော်လွန်မသွားစေပြီး Container ပိုကျဉ်းရင် အလိုက်သင့် ကျဉ်းသွားပါတယ်။ `height: auto` က အချိုးအစား (Aspect Ratio) မပျက်စေအောင် ထိန်းပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+img {
+  max-width: 100%;
+  height: auto;
+}
+```
+
+မှတ်ချက် — `max-width: 100%` က Image ကို Container ထက် မကျော်လွန်စေဘဲ ကျဉ်းတဲ့ Screen မှာ အလိုက်သင့် သေးစေပါတယ်။ `width: 100%` နဲ့ မတူတာက Image က လိုအပ်ရင် မူရင်း အရွယ်ထက်လည်း ကြီးသလောက် မကြီးဘဲ ၊ Container ထက် ကျော်ရင် ကျော်မှ သေးပါတယ်။
+
+### Width အပြည့်ချဲ့တဲ့ Banner Image
+
+ဖုန်းမှာ Full-Width Image တစ်ခုလိုချင်ရင် `width: 100%` ကို သုံးနိုင်ပါတယ်။ ဒါက Container ရဲ့ Width အတိုင်း Image ကို အမြဲတန်း ပြည့်အောင် ချဲ့ပါတယ်။
+
+**ဥပမာ -**
+```css
+.banner-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+```
+
+```html
+<img class="banner-image" src="banner.jpg" alt="Banner ရုပ်ပုံ">
+```
+
+မှတ်ချက် — `display: block` က Image အောက်မှာ ဖြစ်တတ်တဲ့ Inline Gap လေးတွေကို ဖယ်ရှားပေးပြီး Layout ကို သန့်စေပါတယ်။
+
+### srcset နဲ့ sizes အသုံးပြုနည်း
+
+High-DPI Screen တွေ အတွက် `srcset` Attribute က Browser က ရွေးချယ်စရာ Image တွေ ပေးပါတယ်။ `sizes` ကတော့ Image က Display မှာ ဘယ်လောက် နေရာယူမယ်ဆိုတာ သတ်မှတ်ပါတယ်။ Browser က ဒီနှစ်ခုကို ထောက်ပြီး သင့်တော်ဆုံး Image ကို Download လုပ်မှာ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<img
+  src="flower-800.jpg"
+  srcset="flower-400.jpg 400w, flower-800.jpg 800w, flower-1600.jpg 1600w"
+  sizes="(max-width: 600px) 100vw, 800px"
+  alt="ပန်းပွင့်ရုပ်ပုံ">
+```
+
+မှတ်ချက် — `400w` လိုမျိုး တန်ဖိုးတွေက Image ရဲ့ Width ကို Pixel အဖြစ် ဖော်ပြတာပါ။ Screen ကျဉ်းရင် Browser က သေးငယ်တဲ့ Image ကို ရွေးပြီး Data Usage လည်း သက်သာပါတယ်။
+
+### Background Image — background-size: cover
+
+Background Image တွေကိုလည်း Screen အရွယ်အစား မရွေး လှပစွာ ပြသနိုင်ပါတယ်။ `background-size: cover` က Background ကို Container တစ်ခုလုံး ဖုံးအောင်ချဲ့ပြီး အချိုးအစား ထိန်းသိမ်းပေးပါတယ်။ `background-position` နဲ့ပေါင်းရင် ပိုကောင်းတဲ့ ရလဒ်ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.hero {
+  background-image: url("hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  min-height: 400px;
+}
+```
+
+မှတ်ချက် — `cover` က Container ထက် သေးနေတဲ့ Image ကို Crop လုပ်ပြီး အပြည့်ဖုံးပါတယ်။ `contain` ဆိုရင်တော့ Crop မလုပ်ဘဲ အကုန်မြင်အောင် ချဲ့တာမို့ ဘေးတွေ ဟင်းလင်းနေနိုင်ပါတယ်။
+
+### Image Loading အတွက် Media Query
+
+Screen အမျိုးအစားပေါ်လိုက် Image အရွယ်အစား သို့မဟုတ် ဖေါ်ပြပုံကို ထပ်ဆောင်း ချိန်ညှိလိုရင် Media Query နဲ့လည်း ထိန်းနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.thumbnail {
+  width: 30%;
+  height: auto;
+}
+
+@media (max-width: 600px) {
+  .thumbnail {
+    width: 60%;
+  }
+}
+```
+
+မှတ်ချက် — Screen ကျဉ်းတဲ့အခါ Thumbnail ပိုကြီးလာတာမို့ Image ကို ကြည့်ရလွယ်ပါတယ်။ ဒီလိုမျိုး ပျော့ပျောင်းတဲ့ Control တွေနဲ့ Image ပြသနည်းကို လုံးလုံးထိန်းချုပ်နိုင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `max-width: 100%` နဲ့ `height: auto` က Image ကို အချိုးမပျက် သေးစေသည်။
+- `srcset` နဲ့ `sizes` က Browser ကို သင့်တော်တဲ့ Image ရွေးနိုင်အောင် ကူညီသည်။
+- `background-size: cover` က Background Image ကို Container အပြည့် ဖုံးစေသည်။
+- Media Query နဲ့ Image အရွယ်အစားကို ထပ်ဆင့် ထိန်းချုပ်နိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Image က Container ထက် မကျော်လွန်စေဖို့ ဘယ် CSS ကို သုံးမလဲ?", options: ["width: 100%", "max-width: 100%", "height: 100%", "size: auto"], correctAnswer: 1, explanation: "max-width: 100% က Image ကို Container ထက် ကျော်မသွားအောင် ကန့်သတ်ပေးပါတယ်။" },
+    { id: "q2", question: "Image အချိုးအစား မပျက်စေဖို့ ဘယ် Property ကို ပေါင်းသုံးရပါသလဲ?", options: ["height: auto", "width: auto", "margin: auto", "display: inline"], correctAnswer: 0, explanation: "height: auto က Width ပြောင်းတဲ့အခါ အချိုးအစား မပျက်အောင် ထိန်းပေးပါတယ်။" },
+    { id: "q3", question: "Background Image ကို Container တစ်ခုလုံး ဖုံးအောင်ပြချင်ရင် ဘာကို သုံးမလဲ?", options: ["background-size: cover", "background-size: contain", "background-repeat: repeat", "background-position: top"], correctAnswer: 0, explanation: "background-size: cover က Image ကို Crop လုပ်ပြီး Container အပြည့် ဖုံးအုပ်ပေးပါတယ်။" },
+  ]}
+/>

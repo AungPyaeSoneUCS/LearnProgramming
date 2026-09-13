@@ -1,0 +1,68 @@
+---
+title: "HTML Lang Codes — Language Code များ"
+description: "lang Attribute သုံးနည်း ၊ အသုံးများတဲ့ Language Code များနဲ့ Accessibility/SEO အတွက် အကျိုးကို ရှင်းပြထားပါတယ်။"
+---
+
+### `lang` Attribute ဆိုတာ ဘာလဲ?
+
+`lang` Attribute က HTML Element ရဲ့ ဘာသာစကားကို Browser ကို ပြောပြပါတယ်။ အများအားဖြင့် `<html>` Tag ပေါ်မှာ `lang="en"` စတဲ့ ပုံစံနဲ့ တစ်ခါ သတ်မှတ်လိုက်ရုံပဲ ဖြစ်ပါတယ်။ Browser က ဒီအချက်ကို ကြည့်ပြီး စာလုံး ရွေးချယ်မှု ၊ အသံထွက်ဖတ်ပြသမှု စတာတွေကို မှန်ကန်စွာ ပြုလုပ်ပါတယ်။
+
+`lang` ကို `<html>` ပေါ်မှာ တစ်ခါ ထည့်ရုံနဲ့ Document တစ်ခုလုံး အကျုံးဝင်ပြီး တစ်စိတ်တစ်ပိုင်းသာ ဘာသာစကား ကွဲပြားတဲ့ Paragraph ရှိရင် အဲဒီ Element ပေါ်လည်း သီးခြား ထည့်နိုင်ပါတယ်။
+
+### အသုံးများတဲ့ Language Code များ
+
+| Code | ဘာသာစကား |
+| ---- | ---- |
+| `en` | English (အင်္ဂလိပ်) |
+| `my` | မြန်မာ (Myanmar / Burmese) |
+| `zh` | တရုတ် (Chinese) |
+| `ja` | ဂျပန် (Japanese) |
+| `es` | စပိန် (Spanish) |
+| `fr` | ပြင်သစ် (French) |
+| `de` | ဂျာမန် (German) |
+
+Region ခွဲလိုလည်း `lang="en-US"` ၊ `lang="en-GB"` စသဖြင့် နိုင်ငံကုဒ် တွဲရေးလို့ ရပါတယ်။
+
+### `lang` ကို ဘာကြောင့် ထည့်ရပါသလဲ?
+
+အဓိကအကျိုး (၂) ခု ရှိပါတယ် — **Accessibility** နဲ့ **SEO**။ Screen Reader တွေက `lang` ကို ကြည့်ပြီး အသံထွက် စည်းမျဉ်းကို ရွေးချယ်တဲ့အတွက် မြန်မာစာ တွေကို မှန်ကန်စွာ ဖတ်နိုင်ပါတယ်။ Search Engine တွေကလည်း Page ရဲ့ ဘာသာစကားကို သိရင် ပစ်မှတ် Audience အတွက် ပိုတိကျစွာ ပြသလို့ ရပါတယ်။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html>
+<html lang="my">
+  <head>
+    <meta charset="UTF-8">
+    <title>Myanmar Page</title>
+  </head>
+  <body>
+    <p>မင်္ဂလာပါ ။ ဒါက မြန်မာဘာသာနဲ့ ရေးထားတဲ့ Page တစ်ခုပါ။</p>
+  </body>
+</html>
+```
+
+မှတ်ချက် — Screen Reader က ဒီ Page ဖတ်တဲ့အခါ မြန်မာ အသံထွက်စည်းမျဉ်းနဲ့ ဖတ်ပါလိမ့်မယ်။
+
+RTL (Right to Left) စာရေးတဲ့ ဘာသာစကား ဥပမာ အာရဗီ အတွက်တော့ `dir="rtl"` ဆိုတဲ့ Attribute ပါ ထည့်ပေးရပါတယ်။
+
+**ဥပမာ -**
+```html
+<html lang="ar" dir="rtl">
+```
+
+မှတ်ချက် — မြန်မာ ၊ အင်္ဂလိပ်တို့က ဘယ်မှညာ (LTR) ဖြစ်လို့ `dir` ထည့်စရာ မလိုပါဘူး။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Document တိုင်း `<html lang="...">` ထည့်ပါ — မြန်မာ Page ဆိုရင် `lang="my"` ။
+- `lang` က Accessibility (Screen Reader) နဲ့ SEO အားလုံးအတွက် အထောက်အကူ ဖြစ်ပါတယ်။
+- Region ခွဲရန် `en-US` လို Format သုံးနိုင်ပါတယ်။
+- RTL ဘာသာစကားအတွက် `dir="rtl"` ထည့်ပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "မြန်မာ ဘာသာစကားအတွက် lang Code က ဘာလဲ?", options: ["my", "mm", "bu", "mym"], correctAnswer: 0, explanation: "Myanmar / Burmese ရဲ့ ISO Code က my ဖြစ်ပါတယ်။" },
+  { id: "q2", question: "lang Attribute က ဘာအတွက် အဓိက အကျိုးရှိပါသလဲ?", options: ["Screen Reader နဲ့ SEO", "အရောင်အတွက်", "Page Speed အတွက်", "Font အရွယ်အစားအတွက်"], correctAnswer: 0, explanation: "lang က Screen Reader အသံထွက်နဲ့ Search Engine ဘာသာစကား သိမှုကို ကူညီပါတယ်။" },
+  { id: "q3", question: "ဘယ်မှညာမဟုတ်ဘဲ ညာမှဘယ် ရေးတဲ့ ဘာသာစကား အတွက် ဘယ် Attribute ကို ထည့်ပါသလဲ?", options: ["dir", "lang", "way", "row"], correctAnswer: 0, explanation: "dir=rtl က Right to Left စာရေးဟန်ကို သတ်မှတ်ပေးပါတယ်။" },
+]} />

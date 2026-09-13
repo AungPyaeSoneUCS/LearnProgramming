@@ -1,0 +1,60 @@
+---
+title: "HTTP Methods — HTTP Method များ"
+description: "HTTP Method အမျိုးမျိုး (GET ၊ POST ၊ PUT ၊ PATCH ၊ DELETE ၊ HEAD ၊ OPTIONS) ၏ အသုံးပြုပုံများကို ရှင်းပြထားပါတယ်။"
+---
+
+### HTTP Method ဆိုတာ ဘာလဲ?
+
+**HTTP Method** ဆိုတာ Client (Browser) က Server ပေါ်ရှိ Resource (အရင်းအမြစ်) တစ်ခုကို ဘယ်လို လုပ်ဆောင်စေချင်လဲဆိုတာကို Request Line မှာ သတ်မှတ်ပေးတဲ့ လုပ်ဆောင်ချက် နာမည် ဖြစ်ပါတယ်။ အသုံးများဆုံးတွေက GET နဲ့ POST ဖြစ်ပြီး ကျန်တာတွေက Data စီမံခန့်ခွဲမှုအတွက် Method များ ဖြစ်ပါတယ်။
+
+Method တစ်ခုချင်းစီမှာ ကိုယ့်အခန်းကဏ္ဍ ရှိပြီး Web Application တွေ ဖန်တီးတဲ့အခါ API (Application Programming Interface) တွေနဲ့ တွဲဖက်သုံးပါတယ်။ ဒီနည်းကို RESTful API လို့ ခေါ်ပြီး Method ကို လုပ်ဆောင်ချက်နဲ့ တွက်ချက်ကိုက်ညီစွာ သုံးတာ အကောင်းဆုံး ဖြစ်ပါတယ်။
+
+### HTTP Method များ ဇယား
+
+| Method | အသုံးပြုပုံ | ဘယ်အခါ သုံးမလဲ |
+| ---- | ---- | ---- |
+| GET | Data ဖတ်ရန် (Read) | Page ဖွင့်ချိန် ၊ စာရင်း ကြည့်ချိန် |
+| POST | Data အသစ် ဖန်တီး/ပို့ရန် (Create) | Form Submit ၊ Account အသစ် ဖွင့်ချိန် |
+| PUT | Data တစ်ခုလုံးကို အစားထိုးရန် (Replace) | Profile တစ်ခုလုံး Update လုပ်ချိန် |
+| PATCH | Data တစ်စိတ်တစ်ပိုင်း ပြင်ရန် (Partial Update) | Email တစ်ခုတည်း ပြောင်းချိန် |
+| DELETE | Data ဖျက်ရန် (Delete) | Post ဖျက်ချိန် |
+| HEAD | Header များသာ ရရန် (Response Body မပါ) | Resource ရှိ/မရှိ စစ်ချိန် |
+| OPTIONS | Server က ခွင့်ပြုထားတဲ့ Method များ စစ်ရန် | CORS စစ်ဆေးချိန် |
+
+### Method ကို လက်တွေ့ သုံးပုံ
+
+GET က Data ကို URL ရဲ့ နောက်မှာ Query String အနေနဲ့ သယ်ဆောင်လို့ ရပြီး သိမ်းပြီးသား Data တွေကို Browser History မှာ ကျန်နေတတ်ပါတယ်။ POST ကတော့ Data တွေကို Request Body ထဲ ထည့်ပို့လို့ URL ပေါ်မှာ မပြတာကြောင့် စကားဝှက် စတဲ့ လျှို့ဝှက်အချက်အလက်တွေအတွက် ပိုသင့်တော်ပါတယ်။
+
+**ဥပမာ -**
+```http
+GET /students?course=html5 HTTP/1.1
+Host: api.takkatho.com
+```
+
+```http
+POST /students HTTP/1.1
+Host: api.takkatho.com
+Content-Type: application/json
+
+{
+  "name": "Maung Maung",
+  "course": "html5"
+}
+```
+
+မှတ်ချက် — GET က URL ပေါ်မှာ Data ပြတယ် ၊ POST က Body ထဲမှာ ပို့ပြီး Body ရှိ JSON Data တွေကို Server က ယူပြီး Resource အသစ် ဖန်တီးပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- GET = ဖတ်ရန် ၊ POST = ဖန်တီးရန် ၊ PUT/PATCH = Update ၊ DELETE = ဖျက်ရန်။
+- POST က Request Body ပါ သုံးလို့ URL မှာ Data မပြတတ်ဘူး။
+- PUT က တစ်ခုလုံး အစားထိုး ၊ PATCH က တစ်စိတ်တစ်ပိုင်း ပြင်ပါတယ်။
+- HEAD နဲ့ OPTIONS တို့က Body မပါတဲ့ စစ်ဆေးမှုများ အတွက် သုံးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Form Submit လုပ်တဲ့အခါ ယေဘုယျအားဖြင့် သုံးတဲ့ Method က ဘာလဲ?", options: ["POST", "GET", "PATCH", "OPTIONS"], correctAnswer: 0, explanation: "POST က Data အသစ် ပို့ရန် သုံးပြီး Form Submit တွင် အသုံးများပါတယ်။" },
+  { id: "q2", question: "Data တစ်စိတ်တစ်ပိုင်းသာ ပြင်ဆင်ချင်ရင် ဘယ် Method ကို သုံးပါသလဲ?", options: ["PATCH", "PUT", "DELETE", "HEAD"], correctAnswer: 0, explanation: "PATCH က Data ရဲ့ အပိုင်းတစ်ချို့သာ ပြင်ဆင်ရန် သုံးပါတယ်။" },
+  { id: "q3", question: "GET နဲ့ POST ရဲ့ ခြားနားချက် တစ်ခုက ဘာလဲ?", options: ["GET က Data ကို URL မှာ သယ်ဆောင်တယ်", "GET က ပိုမြန်တယ်", "POST မှာ Data မပါဘူး", "POST က ပိုလုံခြုံတဲ့ Method မဟုတ်ဘူး"], correctAnswer: 0, explanation: "GET က Query String နဲ့ URL ပေါ်မှာ Data ပြတာကြောင့် လျှို့ဝှက်အချက်အလက်အတွက် မသင့်တော်ပါဘူး။" },
+]} />

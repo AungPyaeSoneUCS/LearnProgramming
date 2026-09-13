@@ -1,0 +1,38 @@
+---
+title: "SQL Command အမျိုးအစားများ"
+description: "DDL, DML, DCL နှင့် TCL အကြောင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="ရည်ရွယ်ချက်">
+    SQL မှာ အသုံးပြုတဲ့ Command တွေကို သူတို့ရဲ့ လုပ်ဆောင်ချက်အပေါ် မူတည်ပြီး ဘယ်လို အမျိုးအစားခွဲခြားထားလဲ ဆိုတာကို လေ့လာကြပါမယ်。
+</Aside>
+
+## SQL Command ၄ မျိုး
+
+SQL Command တွေကို သူတို့ရဲ့ သဘောသဘာဝအရ အဓိက အုပ်စု ၄ စု ခွဲခြားထားပါတယ်။
+
+### 1. DDL (Data Definition Language)
+Database ထဲက **Structure (ဖွဲ့စည်းပုံ)** တွေကို တည်ဆောက်ဖို့၊ ပြင်ဆင်ဖို့နဲ့ ဖျက်ပစ်ဖို့ သုံးတဲ့ Command တွေပါ။ (Data တွေကို တိုက်ရိုက် မကိုင်တွယ်ပါဘူး)
+- `CREATE`: Database အသစ်၊ Table အသစ်တွေ တည်ဆောက်ရန်။
+- `ALTER`: ရှိပြီးသား Table တွေရဲ့ ပုံစံကို (ဥပမာ - Column အသစ်ထပ်ထည့်တာ) ပြင်ဆင်ရန်။
+- `DROP`: Table တွေ ဒါမှမဟုတ် Database တစ်ခုလုံးကို ဖျက်ပစ်ရန်။
+- `TRUNCATE`: Table ရဲ့ ပုံစံကို ချန်ထားပြီး ထဲမှာရှိတဲ့ Data တွေကိုပဲ အကုန် ရှင်းထုတ်ရန်။
+
+### 2. DML (Data Manipulation Language)
+Table တွေထဲမှာရှိတဲ့ **Data (အချက်အလက်)** တွေကို တိုက်ရိုက် ကိုင်တွယ်ဖို့ သုံးတဲ့ Command တွေပါ။ Developer တွေ အများဆုံး သုံးရတဲ့ အပိုင်း ဖြစ်ပါတယ်။
+- `SELECT`: ကိုယ်လိုချင်တဲ့ Data တွေကို ရှာဖွေ ဆွဲထုတ်ရန်။ (တချို့က သူ့ကို DQL - Data Query Language လို့လည်း သီးသန့် ခွဲထုတ်လေ့ ရှိပါတယ်။)
+- `INSERT`: Data (Row) အသစ်တွေ ထည့်သွင်းရန်။
+- `UPDATE`: ရှိပြီးသား Data တွေကို ပြင်ဆင်ရန်။
+- `DELETE`: မလိုတော့တဲ့ Data (Row) တွေကို ဖျက်ပစ်ရန်။
+
+### 3. DCL (Data Control Language)
+Database ရဲ့ **Security (လုံခြုံရေး)** နဲ့ User တွေရဲ့ လုပ်ပိုင်ခွင့် (Permissions) တွေကို ထိန်းချုပ်ဖို့ သုံးတဲ့ Command တွေပါ။ Database Administrator (DBA) တွေ အများဆုံး သုံးပါတယ်။
+- `GRANT`: User တွေကို Database သုံးခွင့်၊ Data ကြည့်ခွင့် စတဲ့ Permissions တွေ ပေးရန်။
+- `REVOKE`: ပေးထားတဲ့ Permissions တွေကို ပြန်လည် ရုပ်သိမ်းရန်။
+
+### 4. TCL (Transaction Control Language)
+Database မှာ အပြောင်းအလဲတွေ လုပ်တဲ့အခါ အမှားအယွင်းမရှိ သေချာအောင် **Transaction တွေကို ထိန်းချုပ်ဖို့** သုံးတဲ့ Command တွေပါ။ DML (Insert, Update, Delete) တွေနဲ့ တွဲသုံးလေ့ ရှိပါတယ်။
+- `COMMIT`: လုပ်ဆောင်ပြီးသား အပြောင်းအလဲတွေကို Database ထဲမှာ အပြီးတိုင် (Save) မှတ်တမ်းတင်ရန်။
+- `ROLLBACK`: လုပ်ဆောင်နေဆဲ အပြောင်းအလဲတွေကို သဘောမကျလို့ အရင် မူလအခြေအနေကို ပြန်ဆုတ် (Undo) ရန်။

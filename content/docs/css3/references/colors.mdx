@@ -1,0 +1,66 @@
+---
+title: "CSS Colors — အရောင်သတ်မှတ်နည်း ကိုးကားချက်"
+description: "Color Name, HEX, Short HEX, RGB, RGBA, HSL, HSLA, currentColor, transparent စသည့် CSS Color Syntax များနဲ့ ဥပမာ တန်ဖိုးများ ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### CSS Color Value များ
+
+CSS မှာ အရောင် သတ်မှတ်မယ်ဆိုရင် Syntax အမျိုးမျိုး ထဲက ရွေးချယ် သုံးနိုင်ပါတယ်။ `color` ၊ `background-color` ၊ `border-color` ၊ `fill` စတဲ့ Property တိုင်းမှာ ဒီ Syntax တွေ တူညီစွာ အလုပ်လုပ်ပါတယ်။
+
+### အရောင်သတ်မှတ်နည်း Syntax ဇယား
+
+| Syntax | ဥပမာ တန်ဖိုး | ဖော်ပြချက် |
+| ---- | ---- | ---- |
+| Color Name | `red` ၊ `tomato` | ကြိုတင် သတ်မှတ်ထားသော နာမည် 140+ |
+| HEX | `#ff0000` | `#RRGGBB` — အနီ၊ အစိမ်း၊ အပြာ တစ်စုံစီ |
+| Short HEX | `#f00` | `#RGB` — Digit တစ်ခုစီ နှစ်ဆပြန် |
+| RGB | `rgb(255, 0, 0)` | တစ်ရောင်လျှင် 0-255 |
+| RGBA | `rgba(255, 0, 0, 0.5)` | RGB + Alpha (0-1 အကြည်) |
+| HSL | `hsl(0, 100%, 50%)` | Hue ၊ Saturation ၊ Lightness |
+| HSLA | `hsla(0, 100%, 50%, 0.5)` | HSL + Alpha |
+| `currentColor` | `currentColor` | `color` တန်ဖိုးကို တစ်နေရာရာတွင် ပြန်သုံး |
+| `transparent` | `transparent` | `rgba(0, 0, 0, 0)` နဲ့ ညီသော အကြည်အရောင် |
+
+မှတ်ချက် — Short HEX `#f00` က `#ff0000` နဲ့ တူညီပြီး နှစ်လုံးတွဲ ထပ်နေတဲ့ Digit မျိုးတွေမှာသာ တိုနိုင်ပါတယ်။
+
+### HSL ဖော်မြူလာ
+
+HSL မှာ Hue က ခိုင်းဘီးပေါ်မှ ထောင့် 0-360 (အနီ 0 ၊ အစိမ်း 120 ၊ အပြာ 240) ၊ Saturation က 0-100% ၊ Lightness က 0-100% ဖြစ်ပါတယ်။ စိတ်ကြိုက် အရောင် အဆင့်တွေ ဖန်တီးရ လွယ်ကူပါတယ်။
+
+**ဥပမာ -**
+```css
+.heading {
+  color: #1a1a2e;
+}
+
+.alert {
+  background-color: rgba(220, 53, 69, 0.15);
+}
+
+.link {
+  color: hsla(217, 91%, 60%, 1);
+}
+
+.icon {
+  fill: currentColor;
+}
+```
+
+မှတ်ချက် — `currentColor` က SVG Icon နဲ့ Border တွေမှာ စာသား အရောင်နဲ့ တညီတည်း ဖြစ်စေရန် သုံးလေ့ ရှိပြီး `transparent` က နောက်ခံ အကြည် လိုချင်တဲ့အခါ သုံးပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Color Name 140+ ရှိပါတယ်။
+- HEX = `#RRGGBB` ၊ Short HEX = `#RGB` ။
+- RGBA/HSLA က Alpha နဲ့ အကြည်အား ထိန်းနိုင်ပါတယ်။
+- `currentColor` နဲ့ `transparent` က အထူး Value များ ဖြစ်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Short HEX Code တစ်ခုရဲ့ ဥပမာက ဘာလဲ?", options: ["#f00", "#ff0000", "rgb(255, 0, 0)", "hsl(0, 100%, 50%)"], correctAnswer: 0, explanation: "Short HEX က နှစ်လုံးတွဲ ထပ်နေတာတွေကို တစ်လုံးတည်း တိုနိုင်တာမို့ #f00 ပုံစံ ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "Element ရဲ့ color တန်ဖိုးကို တသမတ်တည်း ပြန်သုံးချင်ရင် ဘယ် Value ကို သုံးပါသလဲ?", options: ["currentColor", "transparent", "unset", "auto"], correctAnswer: 0, explanation: "currentColor က color Property ရဲ့ တန်ဖိုးကို တစ်နေရာရာမှာ ပြန်သုံးပေးပါတယ်။" },
+    { id: "q3", question: "rgba() ရဲ့ နောက်ဆုံး ဂဏန်းက ဘာကို ထိန်းချုပ်ပါသလဲ?", options: ["Alpha အကြည်အား", "Lightness", "Hue", "Saturation"], correctAnswer: 0, explanation: "rgba ရဲ့ နောက်ဆုံး a က Alpha ဖြစ်ပြီး 0 ကနေ 1 အကြည်အထူ သတ်မှတ်ပါတယ်။" },
+  ]}
+/>

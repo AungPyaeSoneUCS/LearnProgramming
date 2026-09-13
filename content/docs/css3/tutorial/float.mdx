@@ -1,0 +1,102 @@
+---
+title: "CSS Float — ဘယ်ညာ မျှောထားခြင်း"
+description: "float property နဲ့ clear, clearfix တွေသုံးပြီး element တွေကို ဘယ်ညာချိန်ညှိပုံကို လေ့လာကြရအောင်။"
+---
+
+### Float ဆိုတာဘာလဲ
+
+**Float** ဆိုတာ Element တစ်ခုကို Container ရဲ့ ဘယ် ဒါမှမဟုတ် ညာဘက်ကို မျှောပြီး ကျန်တဲ့ Content တွေကို ဘေးမှာ စီးဆင်းစေတဲ့ Layout Technique ပါ။ ဓာတ်ပုံဘေးမှာ စာသားတွေ ရစ်ပတ်လာအောင် (text wrap) လုပ်ချင်တဲ့အခါ အဓိက အသုံးပြုပါတယ်။
+
+**`float` Property** မှာ Value သုံးမျိုး ရှိပါတယ် —
+
+- `left` — Element ကို ဘယ်ဘက် မျှောမယ်
+- `right` — Element ကို ညာဘက် မျှောမယ်
+- `none` — Float မလုပ်ဘဲ ပုံမှန် နေရာချမယ် (Default)
+
+**ဥပမာ -**
+```css
+img {
+  float: left;
+  margin-right: 15px;
+}
+```
+
+မှတ်ချက် — img ကို `float: left` ပေးလိုက်တဲ့အခါ နောက်က paragraph တွေက ပုံရဲ့ ညာဘက်မှာ ဝိုင်းပြီး စီးဆင်းသွားပါမယ်။
+
+### Float Right (ညာဘက် မျှောခြင်း)
+
+Element တွေကို ညာဘက်ခြမ်းကို မျှောချင်ရင်တော့ `float: right` ကို သုံးပါတယ်။ Layout တွေ ဆောက်တဲ့အခါ Box တွေကို ဘေးချင်းကပ်စေဖို့ Float တွေ အများကြီး တွဲသုံးလေ့ ရှိပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  width: 25%;
+  float: left;
+  padding: 10px;
+  box-sizing: border-box;
+}
+```
+
+မှတ်ချက် — width 25% ရှိတဲ့ Box လေးခုကို `float: left` လုပ်ရင် သူတို့အားလုံး ဒေါင်လိုက် မကျဘဲ ဘေးချင်းကပ် အတန်းတစ်ကြောင်းမှာ မျှောနေပါမယ်။
+
+ဒါကိုလုပ်ဖို့ HTML မှာ container ထဲထည့်ပြီး CSS မှာ float ပေးတာပဲ ဖြစ်ပါတယ်လို့ သတိရပါ။
+
+**ဥပမာ -**
+```html
+<div class="container">
+  <div class="box">Box 1</div>
+  <div class="box">Box 2</div>
+  <div class="box">Box 3</div>
+  <div class="box">Box 4</div>
+</div>
+```
+
+မှတ်ချက် — Float Left ဖြစ်ဖြစ် Right ဖြစ်ဖြစ် အနားသတ် (clear) မလုပ်ထားရင် Container ရဲ့ အမြင့်က ပြိုကျ (collapse) တတ်တဲ့ အားနည်းချက် ရှိပါတယ်။
+
+### Clear နဲ့ မျှောမှုကို ဖျက်ခြင်း
+
+**`clear` Property** က Element တစ်ခုဘေးမှာ Float နေတဲ့ Element တွေ မရှိတော့ဘဲ နောက်မျဉ်းမှာ ဆက် ဆင်းစေချင်တဲ့အခါ သုံးပါတယ်။ Clear ရဲ့ Value တွေကို float ဘေးသတ်မှတ်မှုတွေနဲ့ တွဲဖက် သုံးရပါတယ် —
+
+- `clear: left` — ဘယ်ဘက်က float ကို ရှင်းမယ်
+- `clear: right` — ညာဘက်က float ကို ရှင်းမယ်
+- `clear: both` — နှစ်ဖက်စလုံးက float ကို ရှင်းမယ်
+
+**ဥပမာ -**
+```css
+.footer {
+  clear: both;
+}
+```
+
+မှတ်ချက် — float နေတဲ့ Box တွေအောက်မှာ Footer တစ်ခု ထားချင်ရင် footer မှာ `clear: both` ပေးလိုက်ရုံနဲ့ footer က နောက်မျဉ်းမှာ ကျသွားပါတယ်။
+
+### Clearfix Technique (Float ပြဿနာ ဖြေရှင်းနည်း)
+
+Float Element တွေက Parent Container ရဲ့ အမြင့်ကို မထောက်မကန့်လို့ Container ပြိုကျတဲ့ ပြဿနာကို ဖြေရှင်းဖို့ **Clearfix** Technique ကို အများအားဖြင့် သုံးပါတယ်။ `overflow: auto` ဒါမှမဟုတ် **::after** Pseudo-element နဲ့ လုပ်လို့ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+```
+
+မှတ်ချက် — ဒီ `.clearfix` Class ကို Float ပါတဲ့ Container တိုင်းမှာ ထည့်ပေးရင် Container အမြင့်က ဆက်ထိန်းနိုင်ပြီး Layout ပြိုကျတာ မရှိ ပါတော့ဘူး။
+
+#### တိုတိုနဲ့လိုရင်း
+
+- Float က Element ကို ဘယ်ညာ မျှောပြီး ကျန်တဲ့ content ကို ဘေးမှာ စီးဆင်းစေသည်။
+- Clear က float နောက်မှာ နေရာ ဆက် ဝင်ခွင့် ပြန်ပေးသည်။
+- Clearfix က Container အမြင့် ပြိုကျတဲ့ ပြဿနာကို ကာကွယ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Element တစ်ခုကို container ရဲ့ ညာဘက်ကို မျှောချင်ရင် ဘာ value သုံးပါသလဲ?", options: ["float: left", "float: right", "float: none", "clear: both"], correctAnswer: 1, explanation: "float: right က element ကို container ရဲ့ ညာဘက်ကို မျှောပေးပါတယ်။" },
+    { id: "q2", question: "float နေတဲ့ element တွေ မရှိတော့ ဘဲ နောက်မျဉ်းမှာ ဆင်း ချင်ရင် ဘာကို သုံးပါသလဲ?", options: ["float: left", "margin: auto", "clear: both", "position: static"], correctAnswer: 2, explanation: "clear: both က ဘယ်ညာ float နှစ်ဖက်စလုံးကို ရှင်းပြီး အောက်မျဉ်းမှာ ဆင်းစေပါတယ်။" },
+    { id: "q3", question: "Float element တွေကြောင့် container အမြင့် ပြိုကျတာကို ဖြေရှင်းတဲ့ technique က ဘာလဲ?", options: ["Overflow hidden", "Clearfix", "Flexbox", "Margin collapse"], correctAnswer: 1, explanation: "clearfix က float အပြီး clear လုပ်ပြီး container အမြင့်ကို ပြန်ထိန်းပေးပါတယ်။" }
+  ]}
+/>

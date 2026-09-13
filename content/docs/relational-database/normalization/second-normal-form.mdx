@@ -1,0 +1,68 @@
+---
+title: "Second Normal Form (2NF)"
+description: "Normalization ၏ ဒုတိယအဆင့် (2NF) နှင့် Functional Dependency"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from "@/components/Content-image.astro";
+import secondNFOrders from "@/assets/relational-database/second-nf-orders.png";
+import secondNFOrderItems from "@/assets/relational-database/second-nf-orderitems.png";
+import secondNFBooks from "@/assets/relational-database/second-nf-books.png";
+
+<Aside title="💡 ရည်ရွယ်ချက်">
+  Second Normal Form (2NF) သဘောတရားကို နားလည်ရန်အတွက် Functional Dependency နှင့် Partial Dependency ဖယ်ရှားနည်းများကို ရှင်းရှင်းလင်းလင်း လေ့လာသွားကြပါမယ်။
+</Aside>
+
+## 2NF ၏ မဖြစ်မနေ စည်းမျဉ်း ၂ ခု
+
+Table တစ်ခုသည် Second Normal Form (2NF) အဆင့်သို့ ရောက်ရှိရန် အောက်ပါ စည်းမျဉ်း ၂ ခုနှင့် ကိုက်ညီရပါမည်:
+
+1. **1NF အဆင့် ပြီးမြောက်ပြီးသား ဖြစ်ရမည်။**
+2. **No Partial Dependency (တစ်စိတ်တစ်ပိုင်း မှီခိုမှု လုံးဝ မရှိရပါ):**
+   Table ထဲရှိ Non-Key Attributes (Primary Key မဟုတ်သော Columns) တိုင်းသည် Composite Primary Key **တစ်ခုလုံး အပေါ်၌သာ** အပြည့်အဝ မှီခိုမှု (Fully Functionally Dependent) ရှိရပါမည်။
+
+---
+
+## Functional Dependency ဆိုတာ ဘာလဲ?
+
+**Functional Dependency (FD)** ဆိုတာ Column တစ်ခု၏ တန်ဖိုး (Value) ကို သိရှိရရုံဖြင့် အခြား Column တစ်ခု၏ တန်ဖိုးကို တိကျစွာ ခန့်မှန်း ဆုံးဖြတ်ပေးနိုင်သော ဆက်စပ်မှုကို ခေါ်ဆိုခြင်း ဖြစ်ပါတယ်။
+
+သင်္ကေတ အားဖြင့် **A -> B** ဟု ရေးသားကြပါတယ်:
+- **A (Determinant):** ကို သိပါက **B (Dependent)** ကို တိကျစွာ ရရှိနိုင်သည်။
+
+<Aside title="💡 ဥပမာ">
+  `employee_id -> first_name, last_name`
+  
+  `employee_id` (`101`) ကို သိရုံဖြင့် ဝန်ထမ်း၏ နာမည် "Sarah Connor" ဖြစ်သည်ကို တိကျစွာ ရရှိသဖြင့် `first_name` နှင့် `last_name` တို့သည် `employee_id` အပေါ် မှီခို (Dependent) နေပါတယ်။
+</Aside>
+
+---
+
+## Full vs. Partial Dependency
+
+Composite Primary Key (Column ၂ ခု သို့မဟုတ် ၎င်းထက်ပို၍ ပေါင်းစပ်ထားသော Primary Key) တွင် Dependency ၂ မျိုး ကွဲပြားပါတယ်:
+
+- **Full Dependency (အပြည့်အဝ မှီခိုမှု):** Non-Key Column သည် Composite Primary Key ၏ အစိတ်အပိုင်း **အားလုံး** အပေါ်တွင်သာ မှီခိုနေခြင်း။
+- **Partial Dependency (တစ်စိတ်တစ်ပိုင်း မှီခိုမှု):** Non-Key Column သည် Composite Primary Key ၏ **တစ်စိတ်တစ်ပိုင်း (Column တစ်ခုတည်း)** အပေါ်၌သာ မှီခိုနေခြင်း။
+
+---
+
+## 1NF မှ 2NF သို့ ပြောင်းလဲခြင်း
+
+1NF Table တွင် `(order_id, book_id)` သည် Composite Primary Key ဖြစ်ခဲ့ပါတယ်။
+
+Functional Dependencies များကို စစ်ဆေးပါက:
+- `customer_name`, `customer_address` တို့သည် `order_id` အပေါ်၌သာ မှီခိုနေပါတယ် (Partial Dependency)။
+- `book_title`, `price` တို့သည် `book_id` အပေါ်၌သာ မှီခိုနေပါတယ် (Partial Dependency)။
+- `quantity` သည်သာ `order_id` နှင့် `book_id` နှစ်ခုလုံး သိမှ ရရှိနိုင်ပါတယ် (Full Dependency)။
+
+2NF ပြုလုပ်ရန်အတွက် အဆိုပါ **Partial Dependencies များကို ဖယ်ရှား၍ Table သီးခြား ခွဲထုတ်** ရပါမယ်။
+
+ခွဲထုတ်လိုက်သည့်အခါ အောက်ပါအတိုင်း Table ၃ ခု ရရှိလာပါမည်:
+
+| Orders Table (2NF) | OrderItems Table (2NF) | Books Table (2NF) |
+|:---:|:---:|:---:|
+| <ContentImage src={secondNFOrders} alt="2NF Orders Table" /> | <ContentImage src={secondNFOrderItems} alt="2NF Order Items Table" /> | <ContentImage src={secondNFBooks} alt="2NF Books Table" /> |
+| Customer အချက်အလက်များ | Order နှင့် Book ချိတ်ဆက်မှု (Quantity) | စာအုပ် အချက်အလက်များ |
+
+ယခုဆိုပါက Table တိုင်းတွင် Partial Dependency လုံးဝ မရှိတော့သဖြင့် **Second Normal Form (2NF)** အဆင့်သို့ အောင်မြင်စွာ ရောက်ရှိသွားပြီ ဖြစ်ပါတယ်။

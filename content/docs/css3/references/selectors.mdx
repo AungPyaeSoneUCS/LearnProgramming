@@ -1,0 +1,82 @@
+---
+title: "CSS Selectors — Selector အားလုံး"
+description: "Element, ID, Class, Universal, Grouping, Attribute နဲ့ Pseudo Selector တွေကို ဥပမာနဲ့တကွ စုစည်းထားတဲ့ ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### CSS Selector ဆိုတာ ဘာလဲ?
+
+Selector က CSS Rule တစ်ခုထဲမှာ ဘယ် HTML Element တွေကို Style လုပ်မယ်ဆိုတာကို ရွေးချယ်ပေးတဲ့ အစိတ်အပိုင်း ဖြစ်ပါတယ်။ Selector Pattern မျိုးစုံ ရှိတာမို့ Element ကို တစ်ခုလုံးဖြစ်စေ ၊ သီးခြားတစ်ခုဖြစ်စေ ၊ Attribute ပေါ်မူတည်၍ဖြစ်စေ ရွေးချယ်နိုင်ပါတယ်။ အောက်မှာ အသုံးအများဆုံး Selector တွေကို စုစည်းပေးထားပါတယ်။
+
+### Basic Selector များ
+
+| Selector | ဥပမာ | ဘာကို ရွေးချယ်သလဲ |
+| ---- | ---- | ---- |
+| Element (Type) | `p` | Tag နာမည်နဲ့ တူတဲ့ Element တွေ အားလုံး |
+| ID | `#header` | `id="header"` ရှိတဲ့ Element တစ်ခုတည်း |
+| Class | `.card` | `class="card"` ရှိတဲ့ Element တွေ အားလုံး |
+| Universal | `*` | Page ထဲက Element တိုင်း |
+| Grouping | `h1, h2, h3` | စာရင်းပြုထားတဲ့ Selector တွေ အားလုံး |
+
+### Descendant နဲ့ Sibling Selector များ
+
+| Selector | ဥပမာ | ဘာကို ရွေးချယ်သလဲ |
+| ---- | ---- | ---- |
+| Descendant | `div p` | `div` အတွင်းမှာ ရှိတဲ့ `p` တွေ အားလုံး (အဆင့်မရွေး) |
+| Child | `ul > li` | `ul` ရဲ့ ကလေးတိုက်ရိုက် `li` တွေ |
+| Adjacent Sibling | `h2 + p` | `h2` နောက်မှာ ချက်ချင်း လိုက်တဲ့ `p` တစ်ခုတည်း |
+| General Sibling | `h2 ~ p` | `h2` ရဲ့ နောက်မှာ ရှိတဲ့ `p` တွေ အားလုံး |
+
+### Attribute Selector များ
+
+| Selector | ဥပမာ | ဘာကို ရွေးချယ်သလဲ |
+| ---- | ---- | ---- |
+| `[attr]` | `[target]` | Attribute ပါဝင်တဲ့ Element |
+| `[attr="value"]` | `[type="text"]` | Attribute ရဲ့ Value အတိအကျ တူတဲ့ Element |
+| `[attr^="value"]` | `[href^="https"]` | Value က `https` နဲ့ စတဲ့ Element |
+| `[attr$="value"]` | `[href$=".pdf"]` | Value က `.pdf` နဲ့ ဆုံးတဲ့ Element |
+| `[attr*="value"]` | `[href*="tak"]` | Value ထဲမှာ `tak` ပါဝင်တဲ့ Element |
+
+### Pseudo Selector များ
+
+| Selector | ဥပမာ | ဘာကို ရွေးချယ်သလဲ |
+| ---- | ---- | ---- |
+| Pseudo-class | `a:hover` | Element ရဲ့ State ပေါ် မူတည်ပြီး ရွေးချယ်ခြင်း |
+| Pseudo-element | `p::first-line` | Element ရဲ့ အစိတ်အပိုင်း (ဥပမာ ပထမစာကြောင်း) |
+
+**ဥပမာ -**
+```css
+#header {
+  background-color: #222;
+}
+
+.box, .card {
+  border-radius: 8px;
+}
+
+ul > li {
+  list-style: none;
+}
+
+input[type="text"] {
+  border: 1px solid #ccc;
+}
+```
+
+မှတ်ချက် — Descendant Selector တွေက Selector နှစ်ခုကို Space ခွဲပြီး ရေးရပြီး Nested HTML ထဲမှာ အတွင်းရှိ Element တွေကို ရွေးဖို့ အသုံးဝင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- ID က Page တစ်ခုထဲမှာ Unique ဖြစ်ပြီး Class က Element အများအပြားမှာ ပြန်သုံးနိုင်ပါတယ်။
+- Attribute Selector တွေက Form နဲ့ Link တွေကို အတိအကျ ရွေးဖို့ အသုံးဝင်ပါတယ်။
+- Pseudo-class က Colon နှစ်ထပ် မဟုတ်ဘဲ တစ်လုံး `:` နဲ့ စပြီး Pseudo-element က နှစ်လုံး `::` နဲ့ စပါတယ်။
+- Grouping Selector က CSS ကုဒ် ထပ်ခြင်းကို လျှော့ချပေးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Element တိုင်းကို ရွေးချယ်တဲ့ Universal Selector က ဘယ်ပုံစံလဲ?", options: ["Asterisk တစ်လုံး", "Hash တစ်လုံး", "Period တစ်လုံး", "Colon တစ်လုံး"], correctAnswer: 0, explanation: "Universal Selector က asterisk (*) ဖြစ်ပြီး Element အားလုံးကို ရွေးပါတယ်။" },
+    { id: "q2", question: "ID Selector က Class Selector နဲ့ ဘာကွာပါသလဲ?", options: ["ရေးပုံ symbol သာ ကွာသည်", "ID က unique ဖြစ်ပြီး class က ပြန်သုံးလို့ ရသည်", "class ကို attribute ထဲ မထည့်ရပါ", "ID က style ထဲမှာသာ သုံးရသည်"], correctAnswer: 1, explanation: "ID က page ထဲမှာ တစ်ခုတည်းသာ ရှိရပြီး class က element အများအပြားမှာ ပြန်သုံးလို့ ရပါတယ်။" },
+    { id: "q3", question: "Value က string တစ်ခုနဲ့ စတဲ့ attribute ကို ရွေးဖို့ ဘယ် symbol သုံးပါသလဲ?", options: ["Equal sign", "Exponent sign", "Dollar sign", "Tilde sign"], correctAnswer: 1, explanation: "^= က attribute value က သတ်မှတ်ထားတဲ့ string နဲ့ စတင်တဲ့ element ကို ရွေးပါတယ်။" },
+  ]}
+/>

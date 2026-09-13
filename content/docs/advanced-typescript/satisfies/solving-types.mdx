@@ -1,0 +1,79 @@
+---
+title: "Type Annotation(:) နဲ့ Type Assertion (as) ရဲ့ ပြဿနာ"
+description: "Type Annotation(:), Type Assertion (as) ရဲ့ ပြဿနာ"
+---
+
+import { Code, Aside } from "@astrojs/starlight/components";
+
+export const typeAnnotation = `
+// AppConfig ဆိုတဲ့ Type ဖြစ်ကြောင်း Annotation (:) သုံးပြီး သတ်မှတ်လိုက်တယ်။
+const annotatedConfig: AppConfig = { 
+  env: "development",
+  port: 3000,
+  featureFlags: {
+    darkMode: true,
+    newOnboarding: false
+  }
+};
+`;
+
+export const annotationProblem = `
+// console.log(annotatedConfig.featureFlags.darkMode);
+// ^^^^ Error ပြပါလိမ့်မယ်: Property 'darkMode' does not exist on type 'Record<string, boolean>'.
+
+// အကြောင်းရင်းကတော့ TypeScript က 'featureFlags' ဟာ ယေဘုယျအားဖြင့် (Record<string, boolean>) string key ကနေ boolean value ပြန်ပေးနိုင်တဲ့ Object တစ်ခုလို့ပဲ သိသွားလို့ပါ။
+// 'darkMode' ဆိုတဲ့ သီးခြား Key အတိအကျ ပါဝင်နေတယ် ဆိုတာကို မမှတ်မိတော့ပါဘူး။
+`
+
+export const asKeyword = `
+const constConfig = {
+  env: "development",
+  port: 3000,
+  featureFlags: { darkMode: true, newOnboarding: false }
+} as const; // ဒီ Object တစ်ခုလုံးကို 'as const' (ပြောင်းလဲလို့ မရတဲ့ အရာ) လို့ သတ်မှတ်လိုက်တယ်။
+
+// ဒါဆိုရင် TypeScript က constConfig အကြောင်းကို အောက်ပါအတိုင်း အသေးစိတ် အတိအကျ သိသွားပါမယ်:
+// {
+//   readonly env: "development"; // 'development' လို့ အတိအကျ သိတယ်။ Readonly ဖြစ်လို့ ပြင်လို့မရဘူး။
+//   readonly port: 3000; // 3000 လို့ အတိအကျ သိတယ်။
+//   readonly featureFlags: {
+//     readonly darkMode: true; // 'darkMode' ပါတယ်လို့ အတိအကျ သိတယ်။
+//     readonly newOnboarding: false; // 'newOnboarding' ပါတယ်လို့ အတိအကျ သိတယ်။
+//   };
+// }
+`
+
+## Type Annotation (`:`) ကြောင့် ဖြစ်တဲ့ ပြဿနာ - Type ကျယ်ပြန့်သွားခြင်း (The Widening Effect)
+
+ပြီးခဲ့တဲ့ သင်ခန်းစာက ဖန်တီးခဲ့တဲ့ `myAppConfig` ဟာ `AppConfig` Type အတိုင်း မှန်ကန်ကြောင်းကို Type Annotation (`:`) သုံးပြီး သေချာအောင် လုပ်ချင်ရင် ဘာဖြစ်သွားမလဲ ဆိုတာ ကြည့်ရအောင်။
+
+<Code lang="typescript" code={typeAnnotation} title="config.ts" />
+
+ဒီလို `annotatedConfig: AppConfig` လို့ ရေးပြီး Type ကပ်ပေးလိုက်တာနဲ့ TypeScript က `annotatedConfig` အကြောင်း ဘာတွေ ပြောင်းလဲ သိရှိသွားသလဲ ဆိုတာကို လေ့လာကြည့်ရအောင်။
+
+- `annotatedConfig.env`: သူ့ရဲ့ Type ဟာ ယခင်က `"development"` အတိအကျ ဖြစ်နေရာကနေ၊ အခုတော့ `"development" | "production" | "test"` ဆိုပြီး Union Type ကြီး ဖြစ်သွားပါပြီ။
+  - အရေးကြီးတဲ့ အချက်က `"development"` လို့ အတိအကျ သိထားခဲ့တဲ့ အသေးစိတ် အချက်အလက်လေး ပျောက်ဆုံးသွားတာပါ။ TypeScript က "ဒီ `env` က ၃ ခုထဲက တစ်ခုခုတော့ ဖြစ်နိုင်တယ်။ ဒါပေမဲ့ ဘယ်တစ်ခုလဲ ဆိုတာကိုတော့ အတိအကျ မသိတော့ဘူး" လို့ မှတ်ယူသွားပါတယ်။
+- `annotatedConfig.featureFlags`: သူ့ရဲ့ Type ဟာ `Record<string, boolean>` အဖြစ် ပြောင်းလဲသွားပါတယ်။
+  - ဒီနေရာမှာလည်း ပြဿနာက `darkMode` နဲ့ `newOnboarding` ဆိုတဲ့ သီးခြား Keys တွေ ပါဝင်တယ်ဆိုတဲ့ အချက်ကို TypeScript က မသိတော့ပါဘူး။ သူက "ဒီအထဲမှာ Key က စာသား (string) ဖြစ်ရမယ်၊ Value က true/false ဖြစ်ရမယ်" လို့ ယေဘုယျလောက်သာ မှတ်သားထားပါတော့တယ်။
+
+### အဓိက ပြဿနာ (The Crux)
+
+ဒီလို ဖြစ်သွားတဲ့အတွက် ကျွန်တော်တို့က `annotatedConfig.featureFlags.darkMode` လိုမျိုး အတိအကျ ရှိနေတဲ့ Property ကို Access လုပ်ဖို့ ကြိုးစားတဲ့အခါ -
+
+<Code lang="typescript" code={annotationProblem} title="config.ts" />
+
+<Aside title="💡 ရှင်းပြချက်">
+  `AppConfig` ဆိုတဲ့ Type ကို `:` လေးခံပြီး သတ်မှတ်ပေးလိုက်တဲ့အတွက် ကျွန်တော်တို့က TypeScript ကို "ဒီ Object ကြီးဟာ `AppConfig` ရဲ့ စည်းမျဉ်းတွေနဲ့ ကိုက်ညီတယ်နော်" လို့ ပြောလိုက်တာပါ။ TypeScript ကလည်း စည်းမျဉ်းအတိုင်း ကိုက်ညီမှု ရှိ/မရှိ သေချာ စစ်ဆေးပေးပါတယ်။ (ဥပမာ - `port` နေရာမှာ စာသား (string) သွားထည့်မိရင် Error ပြပါလိမ့်မယ်)။ ဒါပေမဲ့ ဒီလို ယေဘုယျ စည်းမျဉ်းနဲ့ စစ်ဆေးလိုက်တဲ့အတွက်၊ မူလက သိထားတဲ့ `env` ဟာ `"development"` အတိအကျ ဖြစ်တယ် ဆိုတာရယ်၊ `featureFlags` ထဲမှာ `darkMode` ဆိုတဲ့ Key ပါဝင်တယ် ဆိုတာရယ် စတဲ့ အသေးစိတ် အချက်အလက် (Specificity) တွေကို လျစ်လျူရှုပြီး `Record<string, boolean>` လိုမျိုး ယေဘုယျ Type (General Type) အဖြစ် ပြောင်းလဲပစ်လိုက်ပါတယ်။ ဒါကြောင့် အဲ့ဒီ အသေးစိတ် အချက်အလက်တွေကို Code ထဲမှာ ပြန်လည် ခေါ်သုံးဖို့ ခက်ခဲသွားတာ ဖြစ်ပါတယ်။
+</Aside>
+
+## တစ်စိတ်တစ်ပိုင်း ဖြေရှင်းနည်း: `as const`
+
+ဒီပြဿနာကို ယာယီ ဖြေရှင်းဖို့အတွက် `as const` (Type Assertion ရဲ့ ပုံစံကွဲ) ကို အသုံးပြုလို့ ရပါတယ်။
+
+<Code lang="typescript" code={asKeyword} title="config.ts" />
+
+<Aside title="💡 ရှင်းပြချက်" type="danger">
+  `as const` ဆိုတာက TypeScript ကို "ဒီ Object က အတိအကျ ဒီပုံစံအတိုင်းပဲ ဖြစ်နေမယ်။ ဘယ်တော့မှ ပြောင်းလဲမှာ မဟုတ်ဘူး (Immutable)" လို့ အမိန့်ပေးလိုက်တာပါ။ ဒါကြောင့် `as const` တပ်လိုက်တာနဲ့ TypeScript က အချက်အလက် အကုန်လုံးကို အတိအကျကြီး သိသွားပါတယ်။ ပြီးတော့ ပြင်ဆင်လို့ မရအောင် (Readonly) ပါ တစ်ခါတည်း လုပ်ပေးပါတယ်။ 
+
+  **ဒါပေမဲ့ အဓိက အားနည်းချက်က**, `as const` ဟာ ဒီ Object ကြီးက `AppConfig` ဆိုတဲ့ စည်းမျဉ်း (Interface) နဲ့ ကိုက်ညီမှု ရှိ/မရှိ ကိုတော့ **လုံးဝ မစစ်ဆေးပေးပါဘူး**။ ဥပမာ - `env` နေရာမှာ `development` အစား စာလုံးပေါင်း မှားပြီး `environment` လို့ ရေးမိရင်တောင်မှ၊ `as const` တပ်ထားတဲ့အတွက် TypeScript က ဘာ Error မှ ပြမှာ မဟုတ်ဘဲ အမှားအတိုင်း ဆက်လက် အလုပ်လုပ်နေမှာ ဖြစ်ပါတယ်။ ဒါဟာ အလွန် အန္တရာယ် များပါတယ်။
+</Aside>

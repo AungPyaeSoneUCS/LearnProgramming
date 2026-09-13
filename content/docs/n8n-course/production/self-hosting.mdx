@@ -1,0 +1,104 @@
+---
+title: "Production Self-Hosting (VPS & Docker Deployment)"
+description: "n8n ကို VPS Server ပေါ်တွင် Docker Compose, PostgreSQL 15, Nginx Reverse Proxy, Let's Encrypt SSL နှင့် Backups များဖြင့် Production-ready Deploy ပြုလုပ်ခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="💡 ရည်ရွယ်ချက်">
+  n8n Cloud ၏ Execution Cost ကြီးမြင့်မှုများကို ကျော်လွန်၍ မိမိ၏ ကိုယ်ပိုင် VPS Server ပေါ်တွင် **Docker Compose (PostgreSQL 15 + n8n)** ဖြင့် တည်ငြိမ် လုံခြုံစွာ Production Self-Host ပြုလုပ်နည်းကို အစအဆုံး သင်ယူရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## n8n Cloud vs. Self-hosted VPS
+
+| အကြောင်းအရာ | n8n Cloud | Self-hosted VPS (Recommended) |
+|---|---|---|
+| **ကုန်ကျစရိတ်** | $20+ / လ (Execution အရေအတွက်ပေါ် မူတည်၍ တက်သည်) | $5 - $10 / လ (Flat Rate - Unlimited Executions) |
+| **Database Engine** | Managed Database | PostgreSQL 15 (Docker Container) |
+| **Data Control** | Third-party Cloud | မိမိ၏ ကိုယ်ပိုင် VPS (Full Privacy) |
+| **Maintenance** | Auto-managed | Docker Compose, Backups, SSL ကိုယ်တိုင် ထိန်းချုပ် |
+
+---
+
+## 1. Docker Compose Stack (PostgreSQL 15 + n8n)
+
+VPS Server (Ubuntu 22.04 LTS, 1-2 vCPU, 2GB RAM) ပေါ်တွင် အဆင်သင့် သုံးနိုင်သော `docker-compose.yml` တည်ဆောက်ပုံ:
+
+```yaml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=DB_STRONG_PASSWORD_HERE
+      - POSTGRES_DB=n8n
+    volumes:
+      - postgres_storage:/var/lib/postgresql/data
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=n8n
+      - DB_POSTGRESDB_PASSWORD=DB_STRONG_PASSWORD_HERE
+      - N8N_ENCRYPTION_KEY=YOUR_ENCRYPTION_KEY_HERE
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=168
+    volumes:
+      - n8n_storage:/home/node/.n8n
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_storage:
+  n8n_storage:
+```
+
+<Aside type="caution" title="⚠️ N8N_ENCRYPTION_KEY ၏ အရေးပါမှု">
+  `openssl rand -hex 32` ဖြင့် ထုတ်ယူရရှိသော `N8N_ENCRYPTION_KEY` သည် မိမိ၏ Credentials များ (API Keys, Passwords) ကို Encrypt လုပ်ရန် သုံးသော သော့ဖြစ်ပါတယ်။ ဤ Key ပျောက်ဆုံးပါက Credentials များ အားလုံး ပျက်စီးသွားမည် ဖြစ်သဖြင့် လုံခြုံစွာ Backup မှတ်ထားပါ။
+</Aside>
+
+---
+
+## 2. Domain, Nginx Reverse Proxy & SSL Setup
+
+Telegram Trigger Webhook များ (HTTPS မဖြစ်မနေ လိုအပ်သည်) အလုပ်လုပ်စေရန် Nginx နှင့် Let's Encrypt SSL (Certbot) ကို တပ်ဆင်ရပါမည်:
+
+```nginx
+server {
+    server_name n8n.yourdomain.com;
+
+    location / {
+        proxy_pass http://localhost:5678;
+        proxy_set_header Connection '';
+        proxy_http_version 1.1;
+        chunked_transfer_encoding off;
+        proxy_buffering off;
+        proxy_cache off;
+    }
+}
+```
+
+```bash
+# Obtain Free SSL Certificate
+sudo certbot --nginx -d n8n.yourdomain.com
+```
+
+---
+
+## 3. Maintenance & Automated Backups (Cron Job)
+
+- **Execution Cleanup (Prune):** Database မဖောင်းပွစေရန် `EXECUTIONS_DATA_PRUNE=true` ဖြင့် ၇ ရက်ထက် ကျော်လွန်သော Log များကို အလိုအလျောက် ရှင်းထုတ်ပါ။
+- **Automated Backup Script:** ညစဉ် 2 AM တွင် Postgres Dump ယူ၍ Backup ပြုလုပ်ရန် Cron Job သတ်မှတ်ပါ:
+
+```bash
+0 2 * * * pg_dump -U n8n -h localhost n8n > /backups/n8n_backup_$(date +\%F).sql
+```

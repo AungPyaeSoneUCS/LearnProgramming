@@ -1,0 +1,109 @@
+---
+title: "CSS Media Queries — Responsive ဒီဇိုင်းအတွက် Condition သတ်မှတ်ခြင်း"
+description: "Media Queries ဖြင့် Screen အရွယ်အစားအလိုက် Style ပြောင်းခြင်း၊ Breakpoints သတ်မှတ်ခြင်းနဲ့ Mobile-First အစီအစဉ်ကို လေ့လာကြမယ်။"
+---
+
+Responsive Web Design ရဲ့ အခြေခံက `@media` Rule ဖြစ်ပါတယ်။ Screen အရွယ် ၊ Orientation ၊ Resolution စတဲ့ Condition တွေ ကိုက်ညီမှသာ အတွင်းက Style တွေ သက်ရောက်ပါတယ်။
+
+### Media Query ဆိုတာဘာလဲ
+
+`@media` Rule က Condition တစ်ခုကို စစ်ဆေးပြီး မှန်တဲ့အခါမှသာ အတွင်းမှာရှိတဲ့ Rule တွေကို အသုံးပြုပါတယ်။ Condition မှားရင် Style တွေကို လုံးဝ သက်ရောက်စေမှာ မဟုတ်ပါဘူး။
+
+### min-width နဲ့ max-width
+
+`min-width` က သတ်မှတ်ထားတဲ့ Width နဲ့အထက် ကြီးမှ သက်ရောက်ပြီး `max-width` က သတ်မှတ်ထားတဲ့ Width နဲ့အောက် သေးမှ သက်ရောက်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
+}
+```
+
+မှတ်ချက် — `min-width: 768px` ဆိုရင် Screen အကျယ် 768px နဲ့အထက်မှသာ ၊ `max-width: 600px` ကတော့ 600px နဲ့အောက်တွင်သာ သက်ရောက်ပါတယ်။
+
+### Breakpoints များ
+
+Breakpoint က Mobile ၊ Tablet ၊ Desktop Screen တွေကြားမှာ Style ပြောင်းဖို့ သတ်မှတ်တဲ့ Width အမှတ်များ ဖြစ်ပါတယ်။ အသုံးများတဲ့ နမူနာတွေကတော့ 576px ၊ 768px ၊ 992px ၊ 1200px တို့ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@media (max-width: 600px) {
+  .menu {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 900px) {
+  .menu {
+    flex-direction: row;
+  }
+}
+```
+
+မှတ်ချက် — Breakpoint တန်ဖိုးတွေက ကိုယ့် Design အတွက် ကိုယ့်ပုံစံ ရွေးနိုင်ပြီး Screen ကြီးလေလေ Desktop Layout ကို ပိုပြသလေလေ ဖြစ်ပါတယ်။
+
+### Mobile-First အစီအစဉ်
+
+Mobile-First ဆိုတာ အခြေခံ Style ကို Mobile အရွယ်အတွက် ဦးစွာ ရေးပြီး Screen ကြီးလာတာနဲ့ `min-width` Media Query တွေနဲ့ ထပ်ဖြည့်တဲ့ နည်းလမ်း ဖြစ်ပါတယ်။ Cascade ကို ပိုမိုရှင်းလင်းစေလို့ အကြံပြုခံရပါတယ်။
+
+**ဥပမာ -**
+```css
+.grid {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+```
+
+မှတ်ချက် — Mobile-First မှာ Base Style က Mobile အတွက် ဖြစ်ပြီး `min-width` Query တွေက အပေါ်ကနေ ထပ်ဖြည့်သွားတာမို့ အစဉ်လိုက် ရေးသားဖို့ အရေးကြီးပါတယ်။
+
+### Device vs Viewport
+
+`@media` Query တွေက Browser ရဲ့ Viewport (စခရင်ပေါ်မှာ မြင်ရတဲ့ Area) ကို အခြေခံပြီး စစ်ဆေးတာ ဖြစ်ပြီး Device ရဲ့ Physical Screen Resolution ကို တိုက်ရိုက် မကြည့်ပါဘူး။ Zoom ပြောင်းလဲခြင်းကလည်း Viewport Width ကို ပြောင်းလဲစေနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@media (orientation: landscape) {
+  .app {
+    flex-direction: row;
+  }
+}
+
+@media (min-resolution: 2dppx) {
+  .logo {
+    background-image: url("logo-2x.png");
+  }
+}
+```
+
+မှတ်ချက် — Media Query က Device Model ၏ အမည်ကို မစစ်ဘဲ Viewport Width ၊ Orientation ၊ Resolution စတဲ့ Media Features တွေကိုသာ ကြည့်ပြီး ဆုံးဖြတ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `@media` Rule ဖြင့် Screen အရွယ်အလိုက် Style ပြောင်းလဲနိုင်ပါသည်။
+- `min-width` က သတ်မှတ်ထားထက် ကြီးမှ ၊ `max-width` က သေးမှ သက်ရောက်ပါသည်။
+- Mobile-First နည်းက Base Style ကို Mobile အတွက် ရေးပြီး `min-width` ဖြင့် ချဲ့ထွင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Screen Width က သတ်မှတ်ထားတာနဲ့အထက် ကြီးရင် Style သက်ရောက်စေဖို့ ဘယ်ကို သုံးပါသလဲ?", options: ["max-width", "min-width", "width: 100%", "device-width"], correctAnswer: 1, explanation: "min-width က သတ်မှတ်ထားတဲ့ Width နဲ့အထက် ကြီးမှသာ Style သက်ရောက်ပါတယ်။" },
+    { id: "q2", question: "Mobile-First နည်းမှာ Base Style ကို ဘယ် Screen အရွယ်အတွက် ရေးပါသလဲ?", options: ["Desktop", "Tablet", "Mobile", "Printer"], correctAnswer: 2, explanation: "Mobile-First နည်းက Base Style ကို Mobile မှ စတင်ရေးပြီး ချဲ့ထွင်ပါတယ်။" },
+    { id: "q3", question: "Media Query တွေက ဘာကို အခြေခံပြီး စစ်ဆေးပါသလဲ?", options: ["Device Model", "Viewport Size", "Browser Version", "Font Size"], correctAnswer: 1, explanation: "Media Query တွေက Viewport Size ၊ Orientation စတဲ့ Media Features တွေကို ကြည့်ပြီး စစ်ဆေးပါတယ်။" }
+  ]}
+/>

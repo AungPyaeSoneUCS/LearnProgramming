@@ -1,0 +1,157 @@
+---
+title: "SASS Tutorial — SASS/SCSS ဆိုတာ ဘာလဲ?"
+description: "Variable ၊ Nesting ၊ Mixin ၊ Partial စတဲ့ SASS/SCSS Feature တွေနဲ့ CSS ရေးနည်းကို ပိုမိုအစွမ်းထက်စေမယ့် Preprocessor အကြောင်း။"
+---
+
+SASS (Syntactically Awesome Style Sheets) က CSS ရဲ့ အစွမ်းကို မြှင့်တင်ပေးတဲ့ CSS Preprocessor တစ်ခုပါ။ SASS မှာ Variable ၊ Nesting ၊ Mixin ၊ Function စတဲ့ Programming Concept တွေကို သုံးနိုင်ပြီး Final Output ကတော့ Browser တွေ နားလည်တဲ့ Plain CSS ပဲ ဖြစ်ပါတယ်။ SASS File တွေကို Compile လုပ်ပြီးမှ Web Browser ထဲမှာ သွင်းရမှာ ဖြစ်ပါတယ်။
+
+### SASS vs SCSS
+
+SASS က Original ဖြစ်ပြီး Bracket တွေ ၊ Semicolon တွေ မလိုဘဲ Indentation နဲ့ ရေးရပါတယ်။ SCSS (Sassy CSS) က ပိုခေတ်စားတဲ့ Syntax ဖြစ်ပြီး CSS ရဲ့ ပုံစံပေါ်မှာ အခြေခံတာမို့ ရှိပြီးသား CSS Code တွေကို တိုက်ရိုက် ပြောင်းသုံးလို့ ရပါတယ်။ ဒီသင်ခန်းစာမှာ SCSS Syntax ကို အသုံးပြုပါမယ်။ ဥပမာအားဖြင့် SASS မှာ `body` ထဲက `color: $color` ဆိုတာကို Bracket မပါဘဲ Indentation နဲ့သာ ရေးရပြီး SCSS မှာ `body { color: $color; }` ဆိုပြီး CSS အတိုင်း Bracket နဲ့ ရေးရပါတယ်။ နှစ်ခုလုံးက တူညီတဲ့ CSS ကို ထုတ်ပေးပါတယ်။
+
+### Variables ($)
+
+Variable တွေက ထပ်ခါတလဲလဲ သုံးရမယ့် Value တွေကို နေရာတစ်ခုတည်း သိမ်းထားနိုင်ပါတယ်။ ဒေတာတစ်ခုပြောင်းရင် Variable တစ်နေရာတည်းပြောင်းရုံနဲ့ အားလုံး လိုက်ပြောင်းပါတယ်။ Variable နာမည်က `$` နဲ့စပါတယ်။
+
+**ဥပမာ -**
+```scss
+$primary-color: #3498db;
+$font-stack: "Helvetica", sans-serif;
+$base-padding: 16px;
+
+.header {
+  background-color: $primary-color;
+  font-family: $font-stack;
+  padding: $base-padding;
+}
+
+.button {
+  background-color: $primary-color;
+  padding: $base-padding;
+}
+```
+
+မှတ်ချက် — `$primary-color` ကို နေရာနှစ်ခုမှာ သုံးထားပါတယ်။ အရောင်ပြောင်းချင်ရင် Variable တစ်ကြောင်းတည်း ပြောင်းလိုက်တာနဲ့ Button နဲ့ Header နှစ်ခုလုံး လိုက်ပြောင်းသွားပါတယ်။
+
+### Nesting (အသိုက်အမြုံ ရေးနည်း)
+
+Nesting က Selector တွေကို HTML Structure အတိုင်း အသိုက်အဝှန်းရေးခွင့်ပေးပါတယ်။ ဒါကြောင့် Code ဖတ်ရလွယ်ပြီး Specificity ကိုလည်း ရှင်းလင်းစွာ ထိန်းနိုင်ပါတယ်။ Compile လုပ်တဲ့အခါ Browser နားလည်တဲ့ CSS Selector တွေအဖြစ် အလိုအလျောက် ပြောင်းလဲပေးပါတယ်။
+
+**ဥပမာ -**
+```scss
+.navbar {
+  background-color: #333;
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      color: #ff0;
+    }
+  }
+}
+```
+
+မှတ်ချက် — ဒီ SCSS က Compile လုပ်ရင် `.navbar a` နဲ့ `.navbar a:hover` ဆိုတဲ့ CSS နှစ်ကြောင်း ထွက်ပါတယ်။ `&` က Parent Selector (ငြိမ့် `.navbar a`) ကိုပဲ ဆိုလိုတာပါ။
+
+### Mixins (@mixin နဲ့ @include)
+
+Mixin က Style တွဲလုံးကို နေရာပေါင်းများစွာမှာ ပြန်သုံးနိုင်အောင် သတ်မှတ်တဲ့နည်းပါ။ Argument (Parameter) လက်ခံနိုင်တာမို့ Value ပြောင်းပြီး ပြန်သုံးလို့လည်း ရပါတယ်။ `@mixin` နဲ့ အဓိပ္ပါယ်ဖွင့်ပြီး `@include` နဲ့ အသုံးပြုပါတယ်။
+
+**ဥပမာ -**
+```scss
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin rounded($radius: 8px) {
+  border-radius: $radius;
+}
+
+.card {
+  @include flex-center;
+  @include rounded(12px);
+  padding: 20px;
+}
+
+.avatar {
+  @include flex-center;
+  @include rounded;
+  width: 50px;
+  height: 50px;
+}
+```
+
+မှတ်ချက် — `@mixin rounded($radius: 8px)` မှာ Default Value 8px ရှိပါတယ်။ `.card` က 12px ပေးပြီး `.avatar` က Default 8px ကိုပဲ သုံးပါတယ်။ Mixin တွေက CSS ထပ် Code တွေကို အများကြီး လျှော့ချပေးပါတယ်။
+
+### Partials နဲ့ @use
+
+Project ကြီးလာတဲ့အခါ SASS Code တွေကို File အသေးများစွာ ခွဲထားဖို့ Partials ကို သုံးပါတယ်။ Partial File နာမည်က Underscore နဲ့စပြီး (ဥပမာ `_variables.scss`) Separate File အဖြစ် Compile မထွက်စေဖို့ ပြုလုပ်ပါတယ်။ နောက်ပြီး Parameter File ကို `@use` နဲ့ ပြန်ခေါ်ပါတယ်။ SASS ၏ ပိုဟောင်းတဲ့ Version တွေမှာတော့ `@import` ကို သုံးပါတယ်။
+
+**ဥပမာ -**
+```scss
+// File: _theme.scss
+$primary: #3498db;
+$secondary: #2ecc71;
+
+// File: main.scss
+@use "theme";
+
+body {
+  color: theme.$primary;
+  background-color: theme.$secondary;
+}
+```
+
+မှတ်ချက် — ဒီအချိန်မှာ `_theme.scss` က Compile လုပ်ရင် Standalone File မထွက်ဘဲ `main.scss` ထဲကိုသာ ပေါင်းစပ်သွားပါတယ်။ `@use` မှာတော့ Variable တွေကို `theme.$primary` ဆိုပြီး Namespace Prefix နဲ့ ခေါ်သုံးရပါတယ်။
+
+### Functions (လုပ်ဆောင်ချက်များ)
+
+SASS မှာ Value တွေကို တွက်ချက် ၊ ပြောင်းလဲဖို့ Built-in Function တွေ ပါပါတယ်။ Section အရေအတွက် ပေါ်မူတည်ပြီး Width တွက်တာမျိုး ၊ မိမိပိုင် Function သတ်မှတ်တာမျိုး တွေလည်း လုပ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```scss
+$container-width: 960px;
+$columns: 12;
+
+@function column-width($col) {
+  @return ($container-width / $columns) * $col;
+}
+
+.col-3 {
+  width: column-width(3);
+}
+
+$base: 10px;
+.box {
+  padding: $base * 2;
+  margin: $base / 2;
+}
+```
+
+မှတ်ချက် — `column-width(3)` က 960px နဲ့စားလို့ 80px ၊ 3 နဲ့မြှောက်လို့ 240px ပြန်ပေးပါတယ်။ SASS က Math Operation အားလုံးကို Compile ချိန်မှာပဲ အရင်တွက်ပေးတာမို့ Runtime မှာ အလုပ်မရှိပါဘူး။
+
+### Compile လုပ်ခြင်း
+
+SASS/SCSS File တွေက Browser ကို တိုက်ရိုက်နားမလည်တာမို့ CSS အဖြစ် Compile လုပ်ဖို့ လိုပါတယ်။ Dart Sass ပါတဲ့ Command-line Tool (ဥပမာ `sass input.scss output.css`) ဒါမှမဟုတ် Node.js ရဲ့ Build Tool တွေ (Webpack ၊ Vite) ကတစ်ဆင့် ပြုလုပ်နိုင်ပါတယ်။ Compile လုပ်ပြီးတဲ့ CSS File ကိုမှ HTML ထဲမှာ `link` Tag နဲ့ ထည့်သွင်းပြီး Browser တွေကို ပို့ပေးရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- SASS က CSS Preprocessor ဖြစ်ပြီး SCSS သည် ၎င်း၏ အသုံးအများဆုံး Syntax ဖြစ်သည်။
+- Variable တွေ (`$`) နဲ့ Value တွေကို နေရာတစ်နေရာတည်းက ထိန်းချုပ်နိုင်သည်။
+- Nesting ၊ Mixin တွေက Code ကို ထပ်နေခြင်းမှ သက်သာစေသည်။
+- Partials (`_`) နဲ့ `@use` ကို သုံး၍ Code တွေကို File ခွဲနိုင်သည်။
+- SASS တွေကို CSS အဖြစ် Compile လုပ်မှသာ Browser များတွင် သုံးနိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "SASS ဆိုတာ ဘာမျိုးလဲ?", options: ["JavaScript Framework", "CSS Preprocessor", "HTML Template Engine", "Database Management System"], correctAnswer: 1, explanation: "SASS က CSS Preprocessor ဖြစ်ပြီး CSS ကို ပိုအစွမ်းထက်အောင် လုပ်ပေးပါတယ်။" },
+    { id: "q2", question: "SASS Variable နာမည်က ဘယ် Symbol နဲ့ စပါသလဲ?", options: ["#", "@", "$", "%"], correctAnswer: 2, explanation: "SASS Variable တွေက dollar sign ($) နဲ့ စတင်ပါတယ်။" },
+    { id: "q3", question: "Style block တစ်ခုလုံးကို နေရာမျိုးစုံမှာ ပြန်သုံးချင်ရင် ဘာကို သုံးမလဲ?", options: ["Mixin", "Function", "Variable", "Property"], correctAnswer: 0, explanation: "Mixin က Style block တစ်ခုလုံးကို နေရာပေါင်းများစွာမှာ ပြန်သုံးနိုင်အောင် လုပ်ပေးပါတယ်။" },
+  ]}
+/>

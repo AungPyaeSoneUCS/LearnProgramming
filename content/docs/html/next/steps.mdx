@@ -1,0 +1,110 @@
+---
+title: "နောက်ထပ် ဘာတွေဆက်လေ့လာမလဲ"
+description: "နောက်ထပ် ဘာတွေဆက်လေ့လာမလဲ"
+---
+
+import { Aside, Code, LinkCard } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import before from '@/assets/html/before.png';
+
+<Aside title="ရည်ရွယ်ချက်">
+ဒီသင်ခန်းစာကတော့ HTML ကို လေ့လာပြီးတဲ့နောက်မှာ ဘာတွေ ဆက်လုပ်ရမလဲဆိုတာကို လမ်းညွှန်ပေးသွားမှာပါ ခင်ဗျာ။ Webpage အခြေခံ တည်ဆောက်တာ၊ စာသားတွေ၊ ပုံတွေ၊ Link တွေ၊ Form တွေ၊ Table တွေနဲ့ Multimedia တွေကို အသုံးပြုတာတွေ အကုန်လုံး လုပ်ခဲ့ပြီးပါပြီ။ အခုဆိုရင် ခင်ဗျားရဲ့ Website တွေကို ဘယ်လို ပိုလှအောင် လုပ်မလဲ၊ User တွေနဲ့ Interactive ဖြစ်အောင် (အပြန်အလှန် တုံ့ပြန်မှုရှိအောင်) ဘယ်လို လုပ်မလဲ၊ ဖုန်းဖြစ်ဖြစ် ကွန်ပျူတာဖြစ်ဖြစ် Device မျိုးစုံမှာ အဆင်ပြေအောင် ဘယ်လို လုပ်မလဲဆိုတာတွေကို ဆက်ပြီး လေ့လာရမယ့် အချိန် ရောက်ပါပြီ။
+</Aside>
+
+### CSS (Cascading Style Sheets) မိတ်ဆက်
+HTML က Structure (တည်ဆောက်ပုံ) ကို သတ်မှတ်ပေးပြီး CSS ကတော့ Style (အမြင်ပိုင်းဆိုင်ရာ အလှဆင်ခြင်း) ကို သတ်မှတ်ပါတယ်။ CSS ကို အောက်ပါ ကိစ္စတွေအတွက် အဓိက သုံးပါတယ်:
+
+- စာသားနဲ့ Background အရောင်တွေ ပြောင်းလဲဖို့
+
+- Font တွေနဲ့ စာလုံး အရွယ်အစားတွေ သတ်မှတ်ဖို့
+
+- နေရာအကွာအဝေး၊ ဘောင်တွေနဲ့ Layout တွေကို လှပအောင် ချိန်ညှိဖို့
+
+- Hover effect တွေ၊ Animation တွေ ထည့်သွင်းဖို့
+
+<LinkCard
+  title="CSS Course"
+  description="Website တွေ ပိုလှပဖို့ CSS ကို လေ့လာရန်"
+  href="/css/introduction/welcome"
+  icon="seti:css"
+/>
+
+**ဥပမာ: ခေါင်းစဉ် အရောင်ပြောင်းခြင်း**
+
+```html
+<h1 style="color: blue;">Hello World</h1>
+```
+ဒီဥပမာကတော့ `style=""` ကိုသုံးထားတဲ့ **Inline CSS** ဖြစ်ပါတယ်။ နောက်ပိုင်းမှာတော့ ပိုသပ်ရပ်ပြီး ပြန်လည် အသုံးပြုလို့ရတဲ့ Internal နဲ့ External CSS တွေအကြောင်းကို ဆက်ပြီး လေ့လာရမှာပါ။
+
+### JavaScript နှင့် မိတ်ဆက်
+JavaScript (JS) က Website တွေကို Interactive ဖြစ်စေပါတယ် (အပြန်အလှန် တုံ့ပြန်မှု ရှိစေပါတယ်)။ JS နဲ့ဆိုရင် အောက်ပါ အရာတွေကို လုပ်ဆောင်နိုင်ပါတယ်:
+
+- Alert တွေ၊ Message လေးတွေ ပြဖို့
+
+- Form မှာ ဖြည့်ထားတဲ့ အချက်အလက်တွေကို မှန်မမှန် စစ်ဆေးဖို့
+
+- Page ကို Reload လုပ်စရာမလိုဘဲ Content တွေကို ချက်ချင်း ပြောင်းလဲပစ်ဖို့
+
+- Slider တွေ၊ Pop-up တွေနဲ့ Animation တွေ ထည့်ဖို့
+
+<LinkCard
+  title="JavaScript Course"
+  description="Web ၏ Programming Language ဖြစ်သော JavaScript ကို လေ့လာရန်"
+  href="/javascript/introduction/intro"
+  icon="seti:javascript"
+/>
+
+**ဥပမာ: Alert message ပြခြင်း**
+
+```html
+<button onclick="alert('Hello! Welcome to my website')">Click Me</button>
+```
+User က ခလုတ်ကို နှိပ်လိုက်တဲ့အခါ Pop-up message တစ်ခု ပေါ်လာမှာ ဖြစ်ပါတယ်။
+
+### Responsive Web Design
+ယနေ့ခေတ် Website တွေက Desktop, Tablet, Mobile စတဲ့ Device အားလုံးမှာ ကောင်းကောင်းမွန်မွန် ပေါ်နေဖို့ လိုအပ်ပါတယ်။
+
+- Responsive design က Layout တွေကို ဝင်ကြည့်တဲ့ Device အလိုက် အလိုအလျောက် အချိုးကျ ပြောင်းလဲသွားစေပါတယ်။
+
+- ဒါကို **CSS Media Query** တွေသုံးပြီး လုပ်ဆောင်နိုင်ပါတယ်:
+
+```css
+@media screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+```
+အပေါ်က Code ကတော့ Screen size 600px ထက် ငယ်တဲ့ Device (ဥပမာ ဖုန်း) တွေမှာ Background အရောင်ကို အပြာနုရောင် ပြောင်းသွားစေမှာ ဖြစ်ပါတယ်။
+
+### လေ့ကျင့်ရန် နေရာများနှင့် Resource များ
+HTML လေ့လာခြင်းက ဒီမှာတင် မပြီးဆုံးသေးပါဘူး။ ခင်ဗျားရဲ့ Skill တွေကို ပိုပြီး တိုးတက်အောင်လုပ်ဖို့နဲ့ လက်တွေ့ စမ်းသပ်ဖို့အတွက် ဒီ Site တွေကို အသုံးပြုနိုင်ပါတယ်:
+
+- **W3Schools –** Interactive HTML, CSS, JS tutorials (လက်တွေ့ စမ်းသပ်ရေးလို့ရတဲ့ သင်ခန်းစာများ)
+
+- **MDN Web Docs –** Detailed documentation (ပြည့်စုံတဲ့ Document များ)
+
+- **FreeCodeCamp –** Project-based learning (Project အခြေခံ လေ့လာခြင်း)
+
+### Project အသေးစားလေးများ တည်ဆောက်ခြင်း
+အခုဆိုရင် ခင်ဗျား သင်ယူခဲ့သမျှ အားလုံးကို ပေါင်းစပ်ပြီး အောက်ပါ Project လေးတွေ စပြီး လက်တွေ့ လုပ်ကြည့်နိုင်ပါပြီ:
+
+- ရိုးရှင်းတဲ့ ကိုယ်ပိုင် Webpage (Personal Webpage) တစ်ခု
+
+- ပုံတွေ၊ Table တွေ၊ Contact form တွေပါတဲ့ Portfolio တစ်ခု
+
+- ခေါင်းစဉ်တွေ၊ စာပိုဒ်တွေ၊ Link တွေပါတဲ့ Blog page တစ်ခု
+
+<Aside title="အနှစ်ချုပ်">
+- CSS ကို HTML element တွေကို Style လုပ်ဖို့နဲ့ Webpage တွေကို ဆွဲဆောင်မှုရှိအောင် လုပ်ဖို့ သုံးတယ်။
+
+- JavaScript က Webpage တွေကို Interactivity နဲ့ Dynamic behavior တွေ (အသက်ဝင်မှုတွေ) ထည့်ပေးတယ်။
+
+- Responsive design က ခင်ဗျားရဲ့ Website ဟာ Device အားလုံးမှာ အဆင်ပြေစေအောင် ကူညီပေးတယ်။
+
+- အခမဲ့ Online resource တွေကိုသုံးပြီး HTML, CSS, JS ကို ဆက်လက် လေ့ကျင့်နေပါ။
+
+- သင်ယူခဲ့သမျှကို ပေါင်းစပ်နိုင်ဖို့ Project အသေးစားလေးတွေ စတင် တည်ဆောက်ကြည့်ပါ။
+
+- HTML ကို လေ့လာခြင်းဟာ အစပဲ ရှိပါသေးတယ်။ နောက်အဆင့်တွေမှာ Styling, Interactivity, နဲ့ Responsive design တို့ ပါဝင်လာမှာ ဖြစ်ပါတယ် ခင်ဗျာ။
+</Aside>

@@ -1,0 +1,110 @@
+---
+title: "CSS Specificity — ဘယ် Style က အနိုင်ရမလဲ"
+description: "Selector တွေရဲ့ Specificity ကို တွက်နည်း ၊ Specificity နည်းစနစ် အဆင့်တွေကို ဥပမာများနဲ့တကွ လေ့လာကြည့်ရအောင်။"
+---
+
+### CSS Specificity ဆိုတာ ဘာလဲ?
+
+CSS Rule အများအပြား Element တစ်ခုတည်းကို ပစ်မှတ်ထားတဲ့အခါ ဘယ်စည်းမျဉ်းက အနိုင်ရမလဲဆိုတာကို **Specificity** က ဆုံးဖြတ်ပေးပါတယ်။ ပိုတိကျတဲ့ (Specific) Selector တွေ ပိုအားကြီးပါတယ်။
+
+`<p id="intro" class="lead">` လိုမျိုး Element ပေါ်မှာ အောက်ပါ Rule (၄) ခု သက်ရောက်နေပါစို့။
+
+**ဥပမာ -**
+```css
+p      { color: gray; }
+.lead  { color: orange; }
+#intro { color: red; }
+p.lead { color: purple; }
+```
+
+မှတ်ချက် — ဒီ ၄ ခုထဲမှာ ID Selector (`#intro`) က Specificity အမြင့်ဆုံး ဖြစ်လို့ စာသားက အနီရောင် (red) ဖြစ်ပါတယ်။
+
+### Specificity တွက်နည်း
+
+Selector ရဲ့ Specificity ကို Category (အမျိုးအစား) ၄ ခုအလိုက် ရေတွက်ပြီး ဘယ်ဘက်ဆုံး Category က ပိုမြင့်ရင် အနိုင်ရပါတယ်။
+
+| Selector အမျိုးအစား | ဥပမာ | အလေးချိန် |
+|---|---|---|
+| Inline Style | style attribute | 1000 |
+| ID | id attribute | 100 |
+| Class / Attribute / Pseudo-class | class, type, hover | 10 |
+| Element / Pseudo-element | div, p, before | 1 |
+
+မှတ်ချက် — Specificity တန်ဖိုးကို Column (၄) ခုနဲ့ ဖော်ပြတတ်ပြီး ဘယ်ဘက် Column က ဦးစားပေး အမြင့်ဆုံး ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+div p              { }   /* element 2 ခု ၊ ရလဒ် 0-0-0-2  */
+.note p            { }   /* class 1 + element 1 ၊ ရလဒ် 0-0-1-1  */
+#article .note p   { }   /* id 1 + class 1 + element 1 ၊ ရလဒ် 0-1-1-1  */
+```
+
+မှတ်ချက် — 0-1-1-1 က 0-0-2-0 ထက် အနိုင်ရပြီး ID Column ရှိတဲ့ Selector က Class/Element Column တွေထက် အမြဲ အားကြီးပါတယ်။
+
+### Specificity ရဲ့ အဆင့်စဉ်
+
+အနိမ့်ကနေ အမြင့်အထိ Element ၊ Class ၊ ID ၊ Inline Style ဆိုတဲ့ အစဉ်အတိုင်း Specificity မြင့်တက်ပါတယ်။ အောက်မှာ Level အလိုက် ဥပမာ ကြည့်ကြရအောင်။
+
+**ဥပမာ -**
+```css
+/* Level 3 — Inline Style (အမြင့်ဆုံး) */
+/* style="color: red;" */
+
+/* Level 2 — ID */
+#header { color: blue; }
+
+/* Level 1 — Class */
+.nav .item-link { color: green; }
+
+/* Level 0 — Element (အနိမ့်ဆုံး) */
+div p { color: gray; }
+```
+
+မှတ်ချက် — Selector တွေ ပေါင်းစပ်တိုင်း Specificity တန်ဖိုး တပ်ဆင်မြင့်တက်ပြီး Inline Style ကတော့ Stylesheet ထဲက Declarations အားလုံးကို ကျော်ဖြတ်ပါတယ်။
+
+### Equal Specificity — Source Order
+
+Specificity တူညီနေရင် CSS ဖိုင်ထဲမှာ **နောက်ဆုံး ရေးထားတဲ့ Rule** က အနိုင်ရပါတယ်။ ဒါကို Source Order လို့ ခေါ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.btn { background: #337ab7; }
+.btn { background: #2c3e50; }   /* နောက်ဆုံး ရေးထားတာမို့ အနိုင်ရ */
+```
+
+မှတ်ချက် — Specificity တူညီတဲ့အခါ Source Order စည်းမျဉ်းနဲ့ နောက်မှ ရေးထားတဲ့ Rule က အနိုင်ရပြီး Cascade ရဲ့ အခြေခံ Concept တစ်ခု ဖြစ်ပါတယ်။
+
+### လက်တွေ့ Tips
+
+- Class Selector (`.`) ကို အသားပေး သုံးပါ — ID တွေထက် Override လုပ်ရလွယ်ပါတယ်။
+- Selector Chain တွေ မရှည်အောင် ထားပါ — Specificity မြင့်လွန်းရင် နောက်ပိုင်း ပြင်ရခက်ပါတယ်။
+- `!important` ကို ရှောင်ပါ — Specificity အားလုံးကို ကျော်လို့ CSS ပျက်လွယ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+/* Bad — ID နဲ့ Specificity အမြင့်ဆုံး ထားခြင်း */
+#nav-menu-item-3 {
+  color: red;
+}
+
+/* Good — Class နဲ့ ထားပြီး Maintain လွယ်အောင် */
+.menu-item-active {
+  color: red;
+}
+```
+
+မှတ်ချက် — Specificity ကို သိထားရင် Style မပြောင်းတဲ့ ပြဿနာကို Browser Developer Tools နဲ့ မြန်မြန် ရှာဖွေနိုင်ပါတယ်။
+
+### အကျဉ်းချုပ်
+
+Specificity အစဉ် — Inline Style (1000) ကို ဦးစားပေး ၊ နောက်မှ ID (100) ၊ Class/Attribute/Pseudo-class (10) ၊ Element/Pseudo-element (1) ဖြစ်ပါတယ်။ တူညီရင် နောက်ဆုံးရေးထားတာ အနိုင်ရပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "ဘယ် Selector က Specificity အမြင့်ဆုံး ဖြစ်ပါသလဲ?", options: ["ID Selector", "Class Selector", "Element Selector", "Universal Selector"], correctAnswer: 0, explanation: "ID Selector က Class နဲ့ Element Selector တွေထက် Specificity တန်ဖိုး ပိုမြင့်ပါတယ်။" },
+    { id: "q2", question: ".note p ရဲ့ Specificity တန်ဖိုးက ဘာလဲ?", options: ["0-0-1-1", "0-0-2-0", "0-1-0-1", "1-0-0-0"], correctAnswer: 0, explanation: "Class တစ်ခုနဲ့ Element တစ်ခု ပါတာမို့ 0-0-1-1 ဖြစ်ပါတယ်။" },
+    { id: "q3", question: "Specificity တူညီနေရင် ဘယ် Rule က အနိုင်ရပါသလဲ?", options: ["နောက်ဆုံး ရေးထားတဲ့ Rule", "ပထမဆုံး ရေးထားတဲ့ Rule", "စာလုံးအရှည်ဆုံး Rule", "အရောင်များတဲ့ Rule"], correctAnswer: 0, explanation: "Specificity တူညီရင် Source Order နဲ့ နောက်ဆုံး ရေးထားတဲ့ Rule က အနိုင်ရပါတယ်။" },
+  ]}
+/>

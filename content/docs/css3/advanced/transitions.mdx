@@ -1,0 +1,101 @@
+---
+title: "CSS Transitions — Transition အသုံးပြုနည်း"
+description: "Element တစ်ခုရဲ့ style ပြောင်းလဲမှုကို ချောမွေ့စွာ အသွင်ကူးပြောင်းပြသပေးနိုင်တဲ့ CSS transition property များကို လေ့လာကြမယ်။"
+---
+
+CSS Transition ဆိုတာ Element တစ်ခုရဲ့ Style ပြောင်းလဲမှုကို ချက်ချင်း မပြောင်းဘဲ အချိန်ယူပြီး ချောမွေ့စွာ အသွင်ကူးပြောင်းစေတဲ့ နည်းပညာတစ်ခုပါ။ `:hover` လိုမျိုး Pseudo-class တွေနဲ့တွဲသုံးရင် Website က ပိုပြီး သက်ဝင် လှုပ်ရှားနေပြီး ကြည့်ရတာ လှစေပါတယ်။
+
+### transition-property နဲ့ transition-duration
+
+`transition-property` က ဘယ် CSS Property တွေကို Transition လုပ်မလဲ သတ်မှတ်ပေးပြီး `transition-duration` က ဘယ်လောက်ကြာကြာ အသွင်ကူးပြောင်းမလဲ ဆိုတာကို သတ်မှတ်ပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+button {
+  background-color: blue;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
+
+button:hover {
+  background-color: red;
+}
+```
+
+မှတ်ချက် — Mouse နဲ့ Hover လုပ်လိုက်ရင် Background အရောင်က Blue ကနေ Red ကို 0.5 စက္ကန့်ကြာအောင် ချောမွေ့စွာ ပြောင်းသွားပါတယ်။
+
+### transition-timing-function နဲ့ transition-delay
+
+`transition-timing-function` က အသွင်ကူးပြောင်းမှုရဲ့ အရှိန်ပုံစံကို သတ်မှတ်ပါတယ်။ `ease`, `linear`, `ease-in`, `ease-out`, `ease-in-out` ဆိုပြီး တန်ဖိုးတွေ ရှိပါတယ်။ `transition-delay` က အသွင်ကူးပြောင်းမှု မစခင် ဘယ်လောက်ကြာ စောင့်မလဲ ဆိုတာကို သတ်မှတ်ပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  width: 100px;
+  height: 100px;
+  background: teal;
+  transition-property: width, transform;
+  transition-duration: 1s;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0.2s;
+}
+
+.box:hover {
+  width: 200px;
+  transform: translateX(40px);
+}
+```
+
+မှတ်ချက် — Property အများကြီးကို Transition လုပ်ချင်ရင် Comma (,) နဲ့ စာရင်းရေးပေးရပြီး ဒီဥပမာမှာ Width ရော Transform ရော နှစ်ခုလုံး တစ်ပြိုင်နက် ပြောင်းလဲပါတယ်။
+
+### Transition Shorthand
+
+`transition` ဆိုတဲ့ Shorthand Property တစ်ခုတည်းနဲ့ property, duration, timing-function, delay အားလုံးကို ရေးလို့ရပါတယ်။ ရေးပုံကတော့ `transition: property duration timing-function delay;` ဆိုတဲ့ အတိုင်းဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+a {
+  color: black;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: orange;
+}
+```
+
+မှတ်ချက် — `transition: color 0.3s ease;` ဆိုတာ Color Property ကို 0.3s ကြာအောင် Ease အရှိန်နဲ့ ပြောင်းမယ်လို့ အဓိပ္ပာယ်ရပါတယ်။
+
+### Property အားလုံးကို Transition လုပ်ခြင်း
+
+Property အမှန်အတိုင်း စာရင်းရေးနေဖို့ မလိုဘဲ `transition: all` ဆိုပြီးလည်း အသုံးပြုနိုင်ပါတယ်။ ဒါပေမဲ့ မလိုအပ်တဲ့ Property တွေအထိ အသွင်ကူးပြောင်းလို့ Performance ပိုဆိုးစေနိုင်တာမို့ သတိထားသုံးသင့်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.card {
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s linear;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+```
+
+မှတ်ချက် — `rgba()` ရဲ့ နောက်ဆုံးတန်ဖိုး 0.2 နဲ့ 0.3 က အရိပ်ရဲ့ ပွင့်လင်းမှုကို ထိန်းချုပ်ပေးပြီး Hover လုပ်တဲ့အခါ Card က အနည်းငယ် ကြီးလာပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- transition-property က ဘယ် Property ပြောင်းမလဲ၊ transition-duration က ဘယ်လောက်ကြာမလဲ သတ်မှတ်ပေးသည်။
+- transition-timing-function က အရှိန်ပုံစံ နှင့် transition-delay က စောင့်ရမည့်ချိန်ကို သတ်မှတ်ပေးသည်။
+- Shorthand ဖြစ်တဲ့ `transition` ဖြင့် Property အားလုံးကို တစ်ကြောင်းထဲ ရေးနိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Transition ရဲ့ ကြာချိန်ကို ဘယ် Property နဲ့ သတ်မှတ်ပါသလဲ?", options: ["transition-duration", "transition-property", "transition-timing-function", "transition-delay"], correctAnswer: 0, explanation: "transition-duration က transition ရဲ့ကြာချိန်ကို စက္ကန့်နဲ့ သတ်မှတ်ပေးပါတယ်။" },
+  { id: "q2", question: "Property အားလုံးကို Transition လုပ်ချင်ရင် ဘယ် Value ကို သုံးမလဲ?", options: ["none", "all", "each", "every"], correctAnswer: 1, explanation: "transition: all ဆိုရင် style ပြောင်းသမျှ Property တိုင်း ချောမွေ့စွာ ကူးပြောင်းပါတယ်။" },
+  { id: "q3", question: "Transition မစတင်မီ စောင့်ရမည့် အချိန်ကို ဘယ် Property က ထိန်းပါသလဲ?", options: ["transition-duration", "transition-delay", "transition-timing", "transition-wait"], correctAnswer: 1, explanation: "transition-delay က transition မစတင်မီ စောင့်ရမည့်အချိန်ကို သတ်မှတ်ပေးပါတယ်။" }
+]} />

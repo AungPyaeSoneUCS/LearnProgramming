@@ -1,0 +1,90 @@
+---
+title: "RWD Viewport — Viewport Meta Tag"
+description: "Mobile Browser တွေမှာ Website ကို မှန်မှန်ကန်ကန် ပြသနိုင်ဖို့ Viewport Meta Tag ကို ဘယ်လိုအသုံးပြုမလဲ။"
+---
+
+Viewport ဆိုတာ Browser ထဲမှာ Website တစ်ခုကို အသုံးပြုသူ မြင်နိုင်တဲ့ မြင်ကွင်းနေရာ (Visible Area) ပါ။ Desktop Browser တွေမှာ Viewport က Window အရွယ်အစားပေါ် မူတည်ပြီး Screen ကျဉ်းရင် Viewport က ကျဉ်းပါတယ်။ ဒါပေမဲ့ Mobile Device တွေရဲ့ Screen က သေးငယ်တာမို့ Browser တွေက Page ကို ချုံ့ပြီး Zoom လုပ်ရတဲ့ အခက်အခဲမျိုး ဖြစ်နိုင်ပါတယ်။ ဒီပြဿနာကို ဖြေရှင်းဖို့ Viewport Meta Tag ကို အသုံးပြုပါတယ်။
+
+### Meta Viewport Tag ထည့်သွင်းနည်း
+
+Responsive Design ရဲ့ ပထမဆုံး အဆင့်ကတော့ HTML Page ရဲ့ `<head>` ထဲမှာ Viewport Meta Tag တစ်ခုထည့်သွင်းဖို့ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+
+မှတ်ချက် — ဒီ Tag တစ်ကြောင်းလေးက ဖုန်းပေါ်မှာ Page ကို မှန်ကန်တဲ့ အကျယ်အဝန်းနဲ့ မြင်နိုင်စေဖို့ Browser ကို ညွှန်ကြားပါတယ်။
+
+### width=device-width ဆိုတာ ဘာလဲ?
+
+`width=device-width` က Page ရဲ့ Width ကို Device ရဲ့ Screen Width နဲ့ လိုက်ညီစေပါတယ်။ ဒီနည်းဖြင့် Page က ဖုန်းရဲ့ မျက်နှာပြင်အကျယ်အတိုင်း ချိန်ညှိပြီး ပြပါတယ်။ ဒီအစား `width` ကို တိကျတဲ့ Pixel ပမာဏ အဖြစ်လည်း သတ်မှတ်နိုင်ပါသေးတယ်။ သို့သော် Device အမျိုးမျိုးအတွက် ကိုက်ညီမှု မရှိနိုင်လို့ `device-width` ကို အသုံးပြုတာ ပိုကောင်းပါတယ်။
+
+**ဥပမာ -**
+```html
+<meta name="viewport" content="width=400">
+```
+
+မှတ်ချက် — အပေါ်က ဥပမာက Width ကို 400px သတ်မှတ်ထားတာမို့ Screen ကျယ်တဲ့ ဖုန်းတွေမှာတောင် အလယ်မှာ သေးသေးလေး ပြမှာ ဖြစ်ပါတယ်။ ဒါကြောင့် `device-width` ကို ဦးစားပေးပါ။
+
+### initial-scale ဆိုတာ ဘာလဲ?
+
+`initial-scale` က Page တင်စဉ်မှာ အသုံးပြုရမယ့် ကနဦး Zoom Level ကို သတ်မှတ်ပါတယ်။ Value 1.0 က Zoom မလုပ်ဘဲ ပုံမှန် အရွယ်နဲ့ ပြစေပါတယ်။ Viewport Meta Tag ထဲမှာ attribute တွေကို Comma နဲ့ ခွဲပြီး ပေါင်းစပ်ရေးသားနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+```
+
+မှတ်ချက် — `maximum-scale=1.0` က အသုံးပြုသူ Zoom လုပ်နိုင်တာကို ကန့်သတ်ပါတယ်။ ဒါပေမဲ့ Accessibility အတွက် Zoom ပိတ်ထားတာကို Developer တော်တော်များက မထောက်ခံပါဘူး။
+
+### အဆင့်ပြည့်သော HTML ဥပမာ
+
+Page တစ်ခုလုံးမှာ Viewport Meta Tag ကို ဘယ်နေရာမှာ ထည့်ရမလဲဆိုတာ အောက်ပါအတိုင်း ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Page</title>
+</head>
+<body>
+  <h1>မင်္ဂလာပါ</h1>
+  <p>ဒီ Page က Screen အရွယ်အစားတိုင်းမှာ အဆင်ပြေပါတယ်။</p>
+</body>
+</html>
+```
+
+မှတ်ချက် — Viewport Meta Tag ကို `head` ထဲမှာ အခြား Meta Tag တွေနဲ့အတူ ထားရပြီး Browser က Page ကို စဖတ်ကတည်းက မြင်စေပါတယ်။
+
+### ဘာကြောင့် Mobile တွေမှာ မရှိမဖြစ် လိုအပ်ပါသလဲ?
+
+Mobile Browser တွေက Viewport Meta Tag မရှိတဲ့ Page ကို Default အနေနဲ့ Desktop Width (ဥပမာ 980px) လိုမျိုး ကျယ်တဲ့ Width နဲ့ ယူဆပြီး ဖုန်းရဲ့ Screen ပေါ်ကို ဖိချုံ့ပြပါတယ်။ ရလဒ်အနေနဲ့ စာလုံးတွေ သေးငယ်ပြီး အသုံးပြုသူက Zoom လုပ်ရမှုတွေ ရှိနိုင်ပါတယ်။ Viewport Tag ရှိရင် Content က Device Width အတိုင်း ချိန်ညှိပြီး Reading Experience အဆင်ပြေစေပါတယ်။
+
+**ဥပမာ -**
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1">
+```
+
+မှတ်ချက် — ဒီ Content Value က စံသတ်မှတ်ထားတဲ့ နည်းလမ်း ဖြစ်ပြီး ဒီထက် အခြားရွေးချယ်စရာမလိုဘဲ Responsive Page တိုင်းရဲ့ စတင်ချက် ဖြစ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Viewport သည် Browser မှာ Website ကို မြင်နိုင်သော ဧရိယာ ဖြစ်သည်။
+- Viewport Meta Tag ကို HTML Page ၏ `head` ထဲတွင် ထည့်သွင်းရသည်။
+- `width=device-width` က Page Width ကို Device Screen Width နှင့် လိုက်ညီစေသည်။
+- `initial-scale=1.0` က ကနဦး Zoom အဆင့်ကို သတ်မှတ်ပေးသည်။
+- Viewport Tag မပါလျှင် Mobile Browser များက Desktop Width ဖြင့် ဖိချုံ့ပြလေ့ ရှိသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Viewport Meta Tag ကို HTML Page ရဲ့ ဘယ်နေရာမှာ ထည့်ရပါသလဲ?", options: ["body အတွင်းမှာ", "head အတွင်းမှာ", "footer အတွင်းမှာ", "Style Tag ထဲမှာ"], correctAnswer: 1, explanation: "Viewport Meta Tag ကို Page ရဲ့ head ထဲမှာ ထည့်သွင်းရပါတယ်။" },
+    { id: "q2", question: "width=device-width က ဘာကို ပြုလုပ်ပေးပါသလဲ?", options: ["Page Width ကို Device Screen Width နဲ့ လိုက်ညီစေသည်", "Page Width ကို 980px အမြဲ သတ်မှတ်သည်", "Text အရောင်ကို ပြောင်းသည်", "Image တွေကို ဖျက်သည်"], correctAnswer: 0, explanation: "width=device-width က Page ၏ Width ကို Device ၏ Screen Width နဲ့ လိုက်ညီစေပါတယ်။" },
+    { id: "q3", question: "Viewport Meta Tag မရှိရင် Mobile Browser တွေက Page ကို ဘယ်လို ပြလေ့ရှိပါသလဲ?", options: ["Desktop Width အတိုင်း ဖိချုံ့ပြီး ပြသည်", "အမြဲတမ်း ပြည့်ပြည့်ဝဝ ပြသည်", "Page ကို လုံးဝ မပြဘဲ နေသည်", "Text တွေကိုသာ ပြသည်"], correctAnswer: 0, explanation: "Viewport Tag မပါရင် Browser က Desktop Width ဖြင့် ယူဆပြီး Screen ပေါ် ဖိချုံ့ပြပါတယ်။" },
+  ]}
+/>

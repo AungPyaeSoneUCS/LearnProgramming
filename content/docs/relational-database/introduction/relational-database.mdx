@@ -1,0 +1,40 @@
+---
+title: "Relational Database"
+description: "Relational Database ဆိုတာ ဘာလဲ၊ ဘယ်လို အလုပ်လုပ်လဲ"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from "@/components/Content-image.astro";
+
+<Aside title="💡 ရည်ရွယ်ချက်">
+  Relational Database ရဲ့ အဓိက သဘောတရားတွေနဲ့ RDBMS (Relational Database Management System) ဆိုတာ ဘာလဲဆိုတာကို ရှင်းရှင်းလင်းလင်း နားလည်သွားစေဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## Relational Database ဆိုတာ ဘာလဲ?
+
+**Relational Database** ဆိုတာ Data တွေကို ဇယား (Table) တွေ အဖြစ် စနစ်တကျ ခွဲခြား သိုလှောင်တဲ့ စနစ် ဖြစ်ပါတယ်။ Table တစ်ခုချင်းစီမှာ Data တွေကို အတန်း (Row / Record) နဲ့ ဒေါင်လိုက်တိုင် (Column / Field) တွေ ခွဲပြီး သိမ်းဆည်းထားပါတယ်။
+
+အရေးအကြီးဆုံး အချက်ကတော့ ဒီ Table တွေဟာ သီးခြားစီ သီးသန့် ကင်းလွတ်နေတာ မဟုတ်ဘဲ၊ တစ်ခုနဲ့ တစ်ခုကြားမှာ **ဆက်စပ်မှု (Relationships)** တွေ ခိုင်မာစွာ ရှိနေတာပဲ ဖြစ်ပါတယ်။
+
+### လက်တွေ့ ဥပမာ - ကျောင်းသားနဲ့ အတန်းစာရင်း
+
+ဆိုပါစို့ - ခင်ဗျားမှာ Student Table နဲ့ Class Table ဆိုပြီး Table ၂ ခု ရှိတယ်ဆိုကြပါစို့:
+- **Student Table** မှာ ကျောင်းသားတွေရဲ့ အချက်အလက် (ID, Name, Age) တွေ ရှိမယ်။
+- **Class Table** မှာ သင်တန်းအတန်းတွေရဲ့ အချက်အလက် (Class ID, Subject Name) တွေ ရှိမယ်။
+
+ဒီ Table ၂ ခုကို ချိတ်ဆက်လိုက်ခြင်းအားဖြင့် "ဘယ်ကျောင်းသားက ဘယ်အတန်းကို တက်နေသလဲ" ဆိုတာကို အလွယ်တကူ ရှာဖွေ ဆွဲထုတ်နိုင်သွားပါတယ်။
+
+တကယ်လို့ Table တွေဟာ Physically တွဲလျက် မရှိရင်တောင်၊ Primary Key နဲ့ Foreign Key လိုမျိုး Logical Connections တွေကတစ်ဆင့် ချိတ်ဆက်ထားတဲ့အတွက် Data တွေကို အချင်းချင်း လွယ်လွယ်ကူကူ ဆက်စပ် Query လုပ်နိုင်ပါတယ်။
+
+## RDBMS (Relational Database Management System)
+
+**RDBMS** ဆိုတာကတော့ Relational Database တွေကို တည်ဆောက်ဖို့၊ စီမံခန့်ခွဲဖို့နဲ့ Data ရယူအသုံးပြုဖို့ ဖန်တီးထားတဲ့ Software System ဖြစ်ပါတယ်။
+
+Relational Model ဆိုတာ Data တွေကို ဘယ်လိုဖွဲ့စည်းမလဲ (Table, Row, Relationship) ဆိုတဲ့ **သဘောတရား (Theory)** မျှသာ ဖြစ်ပြီး၊ အဲ့ဒီ သဘောတရားကို လက်တွေ့ အလုပ်ဖြစ်အောင် အကောင်အထည်ဖော်ပေးတာကတော့ **RDBMS (Software)** ပါပဲ။
+
+RDBMS ကို Database ရဲ့ "ဦးနှောက်" လို့ တင်စားနိုင်ပါတယ်။ သူက Data သိုလှောင်တာ၊ ပြန်လည် ထုတ်ယူတာ၊ Security နဲ့ Access Control ထိန်းချုပ်တာ၊ Data Consistency (Integrity) မှန်ကန်အောင် မပျက်မကွက် တာဝန်ယူပေးပါတယ်။ ဒါကြောင့် Developer တွေအနေနဲ့ နောက်ကွယ်က Data Storage လုပ်ငန်းစဉ်တွေကို ခေါင်းစားစရာမလိုဘဲ Application Logic ပိုင်းကိုပဲ အာရုံစိုက် ရေးသားနိုင်သွားပါတယ်။
+
+<Aside title="💡 Theory vs. Practice">
+- **Relational Database Model:** Data တွေကို Table တွေနဲ့ သိမ်းမယ်၊ Keys တွေသုံးပြီး ချိတ်ဆက်မယ် ဆိုတဲ့ **သဘောတရား (Theory)** ပါ။
+- **RDBMS:** အဲ့ဒီ သဘောတရားကို လက်တွေ့ အကောင်အထည်ဖော်ပေးတဲ့ **Software / Engine (Practice)** ပါ။
+</Aside>

@@ -1,0 +1,52 @@
+---
+title: "Animations (လှုပ်ရှားမှုများ)"
+description: "Keyframes အသုံးပြု၍ Animation ဖန်တီးခြင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="ရုပ်ရှင်ရိုက်မယ်">
+ရှေ့က သင်ခဲ့တဲ့ Transition ဆိုတာက အခြေအနေ A ကနေ B ကို (နှစ်ခုတည်း) ပြောင်းလဲဖို့လောက်ပဲ ရပါတယ်။
+ဒါပေမဲ့ Animation တွေကတော့ အဲဒီလို မဟုတ်ပါဘူး။ A -> B -> C -> D ဆိုပြီး မိမိလိုချင်တဲ့ အဆင့်ဆင့်ကို ဇာတ်လမ်းတစ်ပုဒ်လို အသေးစိတ် ပြောင်းလဲဖန်တီးလို့ ရပါတယ် ခင်ဗျာ။
+</Aside>
+
+### Step 1: Keyframes ကြေညာခြင်း
+Animation လုပ်တော့မယ်ဆိုရင် အရင်ဆုံး အဲဒီ Animation အတွက် ဇာတ်ညွှန်း (Keyframes) ကို အရင် ရေးဆွဲပေးရပါတယ်။ ပြီးရင် အဲဒီ Keyframes ကို နာမည်တစ်ခုခု ပေးထားရပါမယ်။
+
+```css
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px); /* အပေါ် ခုန်တက် */
+  }
+  100% {
+    transform: translateY(0); /* ပြန်ကျ */
+  }
+}
+```
+
+### Step 2: Animation ကို ခေါ်သုံးခြင်း
+Keyframes ဇာတ်ညွှန်း ရေးပြီးသွားပြီဆိုရင်တော့၊ အဲဒီ Animation ကို သုံးချင်တဲ့ Element ဆီမှာ `animation` Property ကို အသုံးပြုပြီး သွားချိတ်ဆက်ပေးရပါမယ်။
+
+```css
+.ball {
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  border-radius: 50%;
+  
+  /* Name, Duration, Timing, Iteration */
+  animation: bounce 1s infinite; 
+}
+```
+
+*   **bounce:** ဒါက ကိုယ်ချိတ်ဆက်ချင်တဲ့ Keyframe ရဲ့ နာမည်ပါ။
+*   **1s:** Animation တစ်ခါ အလုပ်လုပ်ရင် ၁ စက္ကန့် အချိန်ယူမယ် လို့ ဆိုလိုတာပါ။
+*   **infinite:** ဒီ Animation ကို ရပ်မသွားဘဲ အဆုံးမရှိ (Loop) ဆက်တိုက် လုပ်နေစေချင်တာပါ။
+*   **alternate:** (ဒါကတော့ မထည့်လည်း ရပါတယ်) သူက Animation ကို အသွားအပြန် လုပ်စေတာပါ။ (ဥပမာ - ကြီးသွားလိုက်၊ ပြန်သေးလာလိုက်)။
+
+<Aside type="tip">
+Animation တွေက Browser ရဲ့ CPU နဲ့ GPU ကို တော်တော်လေး အသုံးပြုရပါတယ်။ ဒါကြောင့် တကယ်လိုအပ်တဲ့ နေရာမျိုးမှာမှသာ ချင့်ချိန်ပြီး သုံးသင့်ပါတယ်။ အများကြီး သုံးမိရင် Website ကြီး လေးလံသွားတတ်ပါတယ် ခင်ဗျာ။
+</Aside>

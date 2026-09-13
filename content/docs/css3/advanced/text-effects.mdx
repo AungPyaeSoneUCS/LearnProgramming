@@ -1,0 +1,80 @@
+---
+title: "CSS Text Effects — စာသားအတွက် အကျိုးသက်ရောက်မှုများ"
+description: "text-overflow, overflow-wrap ၊ writing-mode တို့နဲ့ စာသားကို လှပစွာ စီမံနည်းကို လေ့လာကြမယ်။"
+---
+
+### text-overflow: ellipsis (စာသားဖြတ်ခြင်း)
+
+စာသားက ၎င်း၏ Box ထက် ရှည်သွားတဲ့အခါ `text-overflow: ellipsis` နဲ့ အဆုံးမှာ သုံးစက် (...) ပြပြီး ဖြတ်တောက်ပြသနိုင်ပါတယ်။ ဒါကြောင့် ရှည်လျားတဲ့ Title ဒါမှမဟုတ် Description တွေကို လိုင်းတစ်ကြောင်းတည်းနဲ့ သပ်သပ်ရပ်ရပ် ပြနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.title-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+```
+
+မှတ်ချက် — white-space: nowrap မပါရင် စာသားက နောက်လိုင်းကို ဆင်းသွားလို့ ellipsis ဖြစ်မလာပါဘူး။
+
+### overflow-wrap (ရှည်လွန်းတဲ့ စာလုံးများ)
+
+URL လိုမျိုး Space မပါဘဲ ရှည်လျားတဲ့ စာလုံးတစ်ခုတည်းက Box ကို ကျော်ထွက်နိုင်ပါတယ်။ `overflow-wrap` က break-word (သို့) anywhere စတဲ့ Value တွေနဲ့ ဒီပြဿနာကို ဖြေရှင်းပေးပြီး နဂိုစံ `word-wrap` ကိုလည်း ဒီအတိုင်း ဆက်သုံးလို့ ရပါသေးတယ်။
+
+**ဥပမာ -**
+```css
+.text {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+```
+
+မှတ်ချက် — break-word က မဖြစ်မနေ လိုအပ်မှသာ စာလုံးကို ဖြတ်ပြီး anywhere ကတော့ ရှိသမျှ ဖြစ်နိုင်တဲ့နေရာတိုင်းမှာ ဖြတ်နိုင်ပါတယ်။
+
+### writing-mode (စာရေးဦးတည်ချက်)
+
+`writing-mode` Property က စာသားရေးတဲ့ ဦးတည်ချက်ကို ပြောင်းပေးပါတယ်။ horizontal-tb က ပုံမှန် အလျားလိုက် ဖြစ်ပြီး vertical-rl က ဒေါင်လိုက် ဖြစ်ပြီး ညာဘက်ကနေ စာကြောင်းတွေ ဆင်းကာ vertical-lr ကတော့ ဒေါင်လိုက် ဘယ်ဘက်ကနေ စပါတယ်။
+
+**ဥပမာ -**
+```css
+.vtext-rl { writing-mode: vertical-rl; }
+.vtext-lr { writing-mode: vertical-lr; }
+```
+
+မှတ်ချက် — ဒီ Property က ဒေါင်လိုက်စာရေး ယဉ်ကျေးမှုတွေရဲ့ စာနဲ့ Creative Layout တွေမှာ အသုံးဝင်ပါတယ်။
+
+### ပေါင်းစပ်ထားတဲ့ လက်တွေ့ပုံစံ
+
+Card ထဲက ခေါင်းစဉ်ရှည်တာကို ellipsis နဲ့ ဖြတ်ပြီး ဘေးမှာ ဒေါင်လိုက် Badge လေးတွေ ဝေယူထားတဲ့ ပုံစံမျိုး ဖန်တီးကြည့်ပါမယ်။
+
+**ဥပမာ -**
+```css
+.card h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.badge {
+  writing-mode: vertical-rl;
+  background-color: #eee;
+}
+```
+
+မှတ်ချက် — ellipsis နဲ့ overflow-wrap နှစ်ခုစလုံးက Mobile UI တွေမှာ Space ခြွေတာဖို့ အရမ်းသုံးလေ့ရှိတဲ့ Technique တွေပါ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- ellipsis ဖြစ်ဖို့ white-space: nowrap နဲ့ overflow: hidden ပါ လိုသည်။
+- overflow-wrap က အရမ်းရှည်တဲ့ စာလုံးကို ဖြတ်ပေးသည်။
+- writing-mode က စာသားကို ဒေါင်လိုက် ရေးစေသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "text-overflow: ellipsis အလုပ်လုပ်ဖို့ ဘယ် Property နှစ်ခု ထပ်ထားရမလဲ?", options: ["white-space: nowrap နဲ့ overflow: hidden", "text-align နဲ့ font-size", "color နဲ့ background", "padding နဲ့ margin"], correctAnswer: 0, explanation: "white-space: nowrap နဲ့ overflow: hidden နှစ်ခုလုံး ရှိမှသာ ellipsis အလုပ်လုပ်ပါတယ်။" },
+    { id: "q2", question: "break-word နဲ့ anywhere ရဲ့ ကွာခြားချက်က ဘာလဲ?", options: ["လုံးဝတူညီပါတယ်", "break-word က ပိုကြီးစေပါတယ်", "anywhere က URL တွေမှာသာ အလုပ်လုပ်ပါတယ်", "anywhere က နေရာတိုင်းမှာ ဖြတ်နိုင်ပြီး break-word က မလွှဲသာမှသာ ဖြတ်ပါတယ်"], correctAnswer: 3, explanation: "break-word က လိုအပ်မှသာ ဖြတ်ပြီး anywhere ကတော့ နေရာတိုင်းတွင် ဖြတ်နိုင်ပါတယ်။" },
+    { id: "q3", question: "ဒေါင်လိုက် ညာဘက်ကနေ စာကြောင်းတွေ ဆင်းလာအောင် ဘယ် value ကို သုံးမလဲ?", options: ["horizontal-tb", "vertical-rl", "vertical-lr", "horizontal-vr"], correctAnswer: 1, explanation: "vertical-rl က ဒေါင်လိုက် ဖြစ်ပြီး Right to Left အနေနဲ့ စာကြောင်းတွေ စီးဆင်းပါတယ်။" }
+  ]}
+/>

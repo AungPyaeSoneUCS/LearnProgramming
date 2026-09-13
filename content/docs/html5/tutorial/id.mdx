@@ -1,0 +1,122 @@
+---
+title: "HTML Id"
+description: "Id attribute ရဲ့ ထူးခြားချက်၊ CSS Bookmark Link နဲ့ JavaScript မှာ သုံးပုံတွေကို Class နဲ့ ယှဉ်ပြီး လေ့လာကြပါမယ်။"
+---
+
+### `id` Attribute ဆိုတာ ဘာလဲ?
+
+`id` attribute က HTML Element တစ်ခုကို သီးသန့် (Unique) နာမည် တစ်ခု ပေးတာပါ။ စာမျက်နှာ တစ်ခုလုံးမှာ `id` နာမည် နှစ်ခု တူနေလို့ မရပါဘူး။ Class ကတော့ Element အများကြီးမှာ သုံးလို့ ရပေမယ့် `id` က တစ်ခုစီမှာ မတူညီတဲ့ နာမည် ရှိရပါတယ်။ ဒါကြောင့် Element တစ်ခုကို တိကျစွာ ရွေးချယ်ဖို့ `id` ကို သုံးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<h1 id="page-title">Welcome to My Page</h1>
+<p>ဒီ title ရဲ့ id က page-title ပါ။</p>
+```
+
+မှတ်ချက် — `id` နာမည်က စာမျက်နှာ တစ်ခုလုံးမှာ တစ်ကြိမ်သာ ရှိရမှာဖြစ်လို့ `id` ကို Element တစ်ခုတည်းမှာပဲ သုံးပါ။
+
+### CSS မှာ `#id` Selector
+
+CSS မှာ `id` Selector ကို `#` (Hash) လက္ခဏာနဲ့ ရေးပါတယ်။ ဥပမာ - `#page-title` ဆိုရင် `id="page-title"` ရှိတဲ့ Element တစ်ခုတည်းကိုသာ Style လုပ်ပါတယ်။ Class လိုမဟုတ်ဘဲ `id` က Element တစ်ခုကိုပဲ ရွေးလို့ Specificity (ဦးစားပေးမှု) လည်း ပိုမြင့်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <style>
+    #header {
+      background-color: navy;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="header">My Website Header</div>
+</body>
+</html>
+```
+
+မှတ်ချက် — `#` (Hash) နဲ့ စတင်တဲ့ Selector တွေက `id` Selector ပါ။ `id` ရှိတဲ့ Element တစ်ခုပေါ်မှာပဲ Style ကျရောက်ပါတယ်။
+
+### Bookmark Links — `href="#id"`
+
+`id` ကို သုံးပြီး စာမျက်နှာ ထဲက နေရာ တစ်ခုကို တိုက်ရိုက် ခုန်ပြီး သွားလို့ ရပါတယ်။ Link ရဲ့ `href` ထဲမှာ `#` နဲ့ `id` နာမည်ကို ပေါင်းရေးပါတယ်။ ဒါကို Bookmark Link လို့ ခေါ်ပါတယ်။ ရှည်လျားတဲ့ Section တွေ ရှိတဲ့ စာမျက်နှာတွေမှာ အရမ်း အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<a href="#contact">အောက်က Contact Section ကို ခုန်သွားမယ်</a>
+...
+<h2 id="contact">Contact Us</h2>
+```
+
+မှတ်ချက် — Link ကို Click လုပ်တာနဲ့ `id="contact"` ရှိတဲ့ Section ဆီကို စာမျက်နှာ ပြေးသွားပါတယ်။
+
+### JavaScript မှာ `getElementById()`
+
+JavaScript မှာ `getElementById()` method ကို သုံးပြီး `id` နာမည်နဲ့ Element တစ်ခုကို တိုက်ရိုက် ရှာနိုင်ပါတယ်။ Class လိုမဟုတ်ဘဲ Element တစ်ခုတည်းပဲ ပြန်ရတဲ့အတွက် Loop ထည့်စရာ မလိုပါဘူး။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<body>
+  <p id="greeting">မင်္ဂလာပါ</p>
+  <button onclick="changeText()">Text ပြောင်း</button>
+  <script>
+    function changeText() {
+      var el = document.getElementById("greeting");
+      el.textContent = "ဟယ်လို!";
+    }
+  </script>
+</body>
+</html>
+```
+
+မှတ်ချက် — Button ကို Click လုပ်တဲ့အခါ `greeting` ရဲ့ စာလုံး ပြောင်းလဲသွားတာ မြင်ရပါမယ်။
+
+### Id နဲ့ Class ကွာခြားချက်
+
+`class` က Element အများကြီးကို အုပ်စုဖွဲ့ဖို့ သုံးပြီး Style တွေ အတွက် သင့်ပါတယ်။ `id` ကတော့ Element တစ်ခုကို သီးသန့် သတ်မှတ်ဖို့ သုံးပြီး Link ခုန်ခြင်း နဲ့ JavaScript ရှာဖွေခြင်း အတွက် သင့်ပါတယ်။ ပြီးတော့ CSS ထဲမှာ `id` က `class` ထက် Specificity ပိုမြင့်မားတဲ့အတွက် Conflict ဖြစ်ရင် `id` ရဲ့ Style က အနိုင်ရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <style>
+    .box { background-color: lightblue; }
+    #special { background-color: gold; }
+  </style>
+</head>
+<body>
+  <div class="box" id="special">ဒါရဲ့ အရောင် ဘာဖြစ်လဲ?</div>
+  <div class="box">ဒါက lightblue ပါ။</div>
+</body>
+</html>
+```
+
+မှတ်ချက် — ID Selector က Class ထက် Specificity မြင့်တာကြောင့် ပထမ `div` ရဲ့ အရောင်က Gold ဖြစ်သွားပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `id` က စာမျက်နှာ အတွင်း Unique ဖြစ်ရပါတယ်။
+- CSS မှာ `id` ကို `#` (Hash) နဲ့ ရွေးပါတယ်။
+- `href="#id"` က Section ဆီကို ခုန်သွားစေပါတယ်။
+- JavaScript မှာ `getElementById()` method ကို သုံးပါတယ်။
+- `id` က `class` ထက် Specificity ပိုမြင့်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Id နာမည်က Document ထဲမှာ ဘယ်လို ရှိရပါသလဲ?", options: ["ထပ်ခွင့်ရှိ", "Unique ဖြစ်ရမယ်", "အမြဲတမ်း နံပါတ်ဖြစ်ရမယ်", "အင်္ဂလိပ်လို ရေးရမယ်"], correctAnswer: 1, explanation: "Id က Document ထဲမှာ Unique ဖြစ်ရပါတယ်။" },
+  { id: "q2", question: "CSS မှာ Id Selector ကို ဘယ်လို ရေးပါသလဲ?", options: ["Dot နဲ့", "Hash နဲ့ Id နာမည်", "Star နဲ့", "Slash နဲ့"], correctAnswer: 1, explanation: "Id Selector ကို Hash နဲ့ Id နာမည် ပေါင်းပြီး ရေးပါတယ်။" },
+  { id: "q3", question: "Document ထဲက Section တစ်ခုဆီကို ခုန်သွားဖို့ href မှာ ဘာထည့်လဲ?", options: ["Id နာမည် သက်သက်", "Hash နဲ့ Id နာမည်", "Class နာမည်", "Tag နာမည်"], correctAnswer: 1, explanation: "Bookmark Link ကို href=#id ပုံစံနဲ့ ရေးရပါတယ်။" }
+]} />

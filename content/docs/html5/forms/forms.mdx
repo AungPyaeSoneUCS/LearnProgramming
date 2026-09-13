@@ -1,0 +1,98 @@
+---
+title: "HTML Forms — ဖောင်တွေနဲ့ ဒေတာပို့တာ သင်ယူကြမယ်"
+description: "HTML Form ဆိုတာဘာလဲ၊ ဘာကြောင့်လိုအပ်လဲ၊ ဒြပ်စင်တွေကို ဘယ်လိုသုံးလဲ လေ့လာကြမယ်။"
+---
+
+Forms တွေ (ဖောင်တွေ) ဆိုတာ website ပေါ်မှာ User ဆီက data (ဒေတာ) တွေ ကောက်ယူဖို့ သုံးတဲ့ အရေးကြီးတဲ့ အစိတ်အပိုင်းပါ။ Login form, Sign up form, Search bar, Feedback form စတာတွေဟာ Forms တွေပါပဲ။ User ရိုက်ထည့်တဲ့ အချက်အလက်တွေကို **Server** ဆီ ပို့ပြီး သိမ်းဖို့၊ စစ်ဆေးဖို့ Forms က သုံးပါတယ်။
+
+### Form ဆိုတာဘာလဲ?
+
+Form ဆိုတာ User ရဲ့ input (ထည့်သွင်းမှု) ကို လက်ခံပြီး Server ဆီ ပို့ပေးနိုင်တဲ့ container (ထည့်ရာနေရာ) တစ်ခုပါ။ `<form>` element ထဲမှာ input box တွေ၊ ခလုတ်တွေ ထည့်ပြီး User တွေ data ထည့်နိုင်အောင် လုပ်ပေးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<form action="/signup" method="post">
+  <input type="text" name="username">
+  <input type="submit" value="Submit">
+</form>
+```
+
+မှတ်ချက် — `<form>` ရဲ့ `action` က data ကို ဘယ်နေရာကို ပို့မယ်ဆိုတာ ပြောပြီး `method` က ဘယ်လို ပို့မယ်ဆိုတာ သတ်မှတ်ပါတယ်။
+
+### Input Element
+
+`<input>` ဆိုတာ User က စာသား၊ နံပါတ်၊ password စတာတွေ ထည့်လို့ရတဲ့ အသုံးအများဆုံး element ပါ။ `type` attribute (အရည်အချင်း) ပေါ်မူတည်ပြီး ဘယ်လို input မျိုးဖြစ်မယ်ဆိုတာ ပြောင်းလဲပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<input type="text" name="firstname" placeholder="အမည်ရိုက်ပါ">
+<input type="password" name="password">
+<input type="email" name="email">
+```
+
+မှတ်ချက် — `name` attribute က Server ဆီပို့တဲ့အခါ ဘယ် field ဆိုတာ ခွဲခြားဖို့ မဖြစ်မနေ လိုပါတယ်။
+
+### Label — Field ရဲ့ အမည်
+
+`<label>` က input box တစ်ခုချင်းစီအတွက် လွယ်ကူတဲ့ နာမည်တပ်ပေးပါတယ်။ Label တစ်ခုကို input နဲ့ ချိတ်ဖို့ `for` attribute ကို input ရဲ့ `id` နဲ့ တူအောင် ထားပေးရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<label for="username">အသုံးပြုသူအမည်</label>
+<input type="text" id="username" name="username">
+```
+
+မှတ်ချက် — Label ကို နှိပ်ရင်လည်း သက်ဆိုင်ရာ input ထဲ cursor ဝင်သွားပြီး Screen Reader အတွက်လည်း အကျိုးရှိပါတယ်။
+
+### Select နဲ့ Textarea
+
+`<select>` က dropdown menu (ရွေးစရာစာရင်း) ပြပြီး `<textarea>` က စာကြောင်းပေါင်းများစွာ ရိုက်လို့ရတဲ့ box ပါ။
+
+**ဥပမာ -**
+
+```html
+<select name="city">
+  <option value="yangon">ရန်ကုန်</option>
+  <option value="mandalay">မန္တလေး</option>
+</select>
+
+<textarea name="message" rows="4" cols="30">သင့်စကား...</textarea>
+```
+
+မှတ်ချက် — `<textarea>` ရဲ့ `rows` နဲ့ `cols` က box ရဲ့ အမြင့်နဲ့ အနံကို ချိန်ညှိပေးပါတယ်။
+
+### Button နဲ့ Submit
+
+`<button>` နဲ့ `<input type="submit">` နှစ်မျိုးလုံးက form ကို အတည်ပြုပြီး ပို့ဖို့ သုံးပါတယ်။ Button ထဲမှာ စာသားတင် မဟုတ်ဘဲ icon တွေပါ ထည့်လို့ရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<form action="/search" method="get">
+  <input type="text" name="query">
+  <button type="submit">ရှာမယ်</button>
+</form>
+```
+
+မှတ်ချက် — `type="submit"` မထည့်ရင် form ထဲက button က အလုပ်မလုပ်ပါဘူး။
+
+### Form Data ကို Server ဆီ ပို့တာ
+
+Form ကို နှိပ်လိုက်တာနဲ့ Browser က field တွေထဲက value တွေကို စုပြီး `action` မှာပြောထားတဲ့ နေရာကို `method` အတိုင်း ပို့လိုက်ပါတယ်။ Server ကရတဲ့ data ကို ပြန်စစ်ပြီး သိမ်းတာ၊ စစ်ဆေးတာ လုပ်ပေးနိုင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Form ဆိုတာ User data ကောက်ယူဖို့ သုံးတဲ့ container ဖြစ်တယ်
+- `<input>` က input box၊ `<label>` က နာမည်
+- `<select>` က dropdown၊ `<textarea>` က စာကြောင်းမျိုးစုံ box
+- `name` attribute မပါရင် data က Server ဆီ မရောက်ဘူး
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "User ရဲ့ data တွေကို ကောက်ယူဖို့ ဘယ် element ကို သုံးလဲ", options: ["form", "div", "table", "img"], correctAnswer: 0, explanation: "User data ကောက်ယူဖို့ form element ကို သုံးပါတယ်" },
+  { id: "q2", question: "input နဲ့ label ကို ချိတ်ဖို့ ဘာ attribute ကို သုံးလဲ", options: ["class", "for", "style", "lang"], correctAnswer: 1, explanation: "label ရဲ့ for ကို input ရဲ့ id နဲ့ တွဲပြီး ချိတ်ပါတယ်" },
+  { id: "q3", question: "Form data ကို ဘယ်ကို ပို့မယ်ဆိုတာ ဘယ် attribute က သတ်မှတ်လဲ", options: ["method", "target", "action", "name"], correctAnswer: 2, explanation: "action attribute က data ပို့ရမယ့် နေရာကို သတ်မှတ်ပါတယ်" } ]} />

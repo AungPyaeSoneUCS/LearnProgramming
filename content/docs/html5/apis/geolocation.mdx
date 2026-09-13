@@ -1,0 +1,75 @@
+---
+title: "HTML Geolocation — တည်နေရာ ရယူနည်း"
+description: "navigator.geolocation နဲ့ User ရဲ့တည်နေရာကို ရယူနည်း၊ Error တွေကို စီမံနည်း လေ့လာကြည့်ရအောင်။"
+---
+
+### Geolocation API ဆိုတာ ဘာလဲ?
+
+Geolocation API က User ရဲ့ Physical Location (တည်နေရာ) ကို Webpage တွေ ရယူနိုင်ဖို့ ပေးထားတဲ့ Web API တစ်ခုပါ။ ဒီ API က GPS, Wi-Fi, Mobile Network စတဲ့ အချက်အလက်တွေပေါင်းပြီး Latitude (လတ္တီတွဒ်) နဲ့ Longitude (လောင်ဂျီတွဒ်) ကို တွက်ပေးပါတယ်။ Weather App, Map, Delivery App လိုနေရာတွေမှာ ဒီ API ကို အသုံးများပါတယ်။
+
+### navigator.geolocation နဲ့ တည်နေရာရယူပုံ
+
+JavaScript မှာ `navigator.geolocation` Object ကနေ `getCurrentPosition()` Method ကို ခေါ်ပြီး Location ကို ရယူပါတယ်။ ဒီ Method က Asynchronous ဖြစ်တာမို့ ရလာတဲ့ Location ကို Callback Function ထဲမှာ လက်ခံရပါတယ်။ Callback ရဲ့ Parameter ထဲက `coords` Object ထဲမှာ Latitude နဲ့ Longitude တို့ ပါပါတယ်။
+
+**ဥပမာ -**
+```javascript
+navigator.geolocation.getCurrentPosition(function(position) {
+  console.log("Latitude:", position.coords.latitude);
+  console.log("Longitude:", position.coords.longitude);
+});
+```
+
+မှတ်ချက် — `getCurrentPosition()` က တစ်ခါပဲ ခေါ်ပြီး Position ကိုရ ပေမယ့် ဆက်တိုက်လိုချင်ရင် `watchPosition()` ကို သုံးနိုင်ပါတယ်။
+
+### Permission Prompt အကြောင်း
+
+Location က Sensitive Data ဖြစ်တာမို့ Browser က User ကို ခွင့်ပြုချက်မေးပါတယ်။ User က Allow နှိပ်မှပဲ Location ကို API က ရနိုင်မှာဖြစ်ပြီး Deny နှိပ်ရင်တော့ Error ပြန်လာပါတယ်။ Browser တိုင်းလိုလိုက ဒီလို Permission Prompt တွေ ပြတတ်ပြီး Secure (HTTPS) Page တွေမှာသာ အလုပ်လုပ်ပါတယ်။
+
+### Latitude နဲ့ Longitude အသုံးပြုပုံ
+
+ရလာတဲ့ Latitude နဲ့ Longitude က Coordinates တွေဖြစ်ပြီး Map ပေါ်မှာ နေရာချဖို့၊ Distance တွက်ဖို့၊ Weather အချက်အလက် ရယူဖို့ အသုံးပြုနိုင်ပါတယ်။ ဥပမာအားဖြင့် ဒီ Coordinates နှစ်ခုကို Google Maps ရဲ့ URL ထဲ ထည့်ရင် နေရာကို တိုက်ရိုက် ပြသနိုင်ပါတယ်။ ဒီ Coordinates က Number နှစ်ခုဆိုတာမို့ လိုသလို ပြန်တွက်ချက်လို့ လွယ်ကူပါတယ်။
+
+**ဥပမာ -**
+```javascript
+function showLocation(position) {
+  var lat = position.coords.latitude;
+  var lon = position.coords.longitude;
+  var url = "https://maps.google.com/maps?q=" + lat + "," + lon;
+  window.location.href = url;
+}
+navigator.geolocation.getCurrentPosition(showLocation);
+```
+
+မှတ်ချက် — Latitude က မြောက်-တောင် အနေအထား၊ Longitude က အရှေ့-အနောက် အနေအထားကို ပြသပါတယ်။
+
+### Error Handling (အမှားကိုင်တွယ်ခြင်း)
+
+User က Permission မပေးဘူး၊ Location မရနိုင်ဘူး စတဲ့အခြေအနေတွေမှာ Error ဖြစ်နိုင်ပါတယ်။ `getCurrentPosition()` မှာ ဒုတိယ Callback ထည့်ရင် Error ကို ကိုင်တွယ်နိုင်ပါတယ်။ Error မှာ Code ပါပြီး `1` ဆိုရင် Permission ငြင်းတာ၊ `2` ဆိုရင် Position မရနိုင်တာကို ဆိုလိုပါတယ်။
+
+**ဥပမာ -**
+```javascript
+navigator.geolocation.getCurrentPosition(function(position) {
+  console.log("Success");
+}, function(error) {
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      console.log("Permission denied");
+      break;
+    case error.POSITION_UNAVAILABLE:
+      console.log("Position unavailable");
+      break;
+  }
+});
+```
+
+မှတ်ချက် — Error Code တွေကို စစ်ဆေးပြီး User အတွက် ရှင်းရှင်းလင်းလင်း Message ပြပေးတာ အကောင်းဆုံးအလေ့အကျင့်ပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Geolocation API က ဘာ Data တွေကို ပြန်ပေးပါသလဲ?", options: ["Username နဲ့ Password", "Latitude နဲ့ Longitude", "Email နဲ့ Phone", "City နဲ့ State"], correctAnswer: 1, explanation: "Geolocation က Coordinates နှစ်ခုဖြစ်တဲ့ Latitude နဲ့ Longitude ပြန်ပေးပါတယ်။" },
+    { id: "q2", question: "Permission ငြင်းပယ်ခံရရင် Error Code ကဘာဖြစ်ပါသလဲ?", options: ["1", "2", "3", "0"], correctAnswer: 0, explanation: "Error Code 1 က Permission ငြင်းပယ်ခံရတာကို ဆိုလိုပါတယ်။" },
+    { id: "q3", question: "Location ဆက်တိုက်ရယူချင်ရင် ဘယ် Method ကို သုံးရပါသလဲ?", options: ["getCurrentPosition", "watchPosition", "getPosition", "trackPosition"], correctAnswer: 1, explanation: "watchPosition က Location အပြောင်းအလဲတွေကို ဆက်တိုက် ခြေရာခံပေးပါတယ်။" },
+  ]}
+/>

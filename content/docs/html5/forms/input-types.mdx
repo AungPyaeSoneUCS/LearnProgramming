@@ -1,0 +1,91 @@
+---
+title: "HTML Input Types — Input အမျိုးအစားမျိုးစုံ"
+description: "text, password, email, number, date, checkbox, radio, color, range, file စတဲ့ input types တွေကို လေ့လာကြမယ်။"
+---
+
+`<input>` element ရဲ့ `type` attribute ကိုပြောင်းရုံနဲ့ ရိုးရိုးစာသား box ကနေ number, date, color စတဲ့ ပုံစံမျိုးစုံကို ပြောင်းနိုင်ပါတယ်။ ဒီ type တွေကို တစ်ခုချင်းစီ လေ့လာကြည့်ရအောင်။
+
+### Text, Password, Email
+
+`text` က စာသား၊ `password` က ဝှက်ထားတဲ့ စာသား (••• အနေနဲ့ပြပြီး)၊ `email` က အီးမေးလ်ပုံစံ ဟုတ်မဟုတ် Browser က စစ်ပေးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<input type="text" name="name" placeholder="အမည်">
+<input type="password" name="pass" placeholder="လျှို့ဝှက်နံပါတ်">
+<input type="email" name="email" placeholder="example@gmail.com">
+```
+
+မှတ်ချက် — `email` type မှာ @ မပါရင် Browser က submit မပေးပါဘူး။
+
+### Number နဲ့ Date
+
+`number` က နံပါတ် ထည့်ဖို့ arrows ပါတဲ့ box ဖြစ်ပြီး `date` က ပြက္ခဒိန်ကနေ နေ့စွဲ ရွေးချယ်လို့ရတဲ့ picker ပါ။
+
+**ဥပမာ -**
+
+```html
+<input type="number" name="age" min="1" max="100">
+<input type="date" name="birthday">
+```
+
+မှတ်ချက် — `number` က စာလုံး မရိုက်လို့ရဘဲ နံပါတ်ပဲ ထည့်လို့ရပါတယ်။
+
+### Checkbox နဲ့ Radio
+
+`checkbox` က tick ပြီး ရွေးလို့ရတဲ့ သေးငယ်တဲ့ box ဖြစ်ပြီး တစ်ခုထက်ပို ရွေးလို့ရပါတယ်။ `radio` က အုပ်စုထဲမှာ တစ်ခုထဲပဲ ရွေးလို့ရတဲ့ ရွေးချယ်မှု ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<input type="checkbox" name="interest" value="music"> ဂီတ
+<input type="checkbox" name="interest" value="sport"> အားကစား
+
+<input type="radio" name="gender" value="male" checked> အမျိုးသား
+<input type="radio" name="gender" value="female"> အမျိုးသမီး
+```
+
+မှတ်ချက် — Radio တွေကို အုပ်စုဖွဲ့ဖို့ `name` attribute ကို တစ်ခုတည်း ထားရပါတယ်။
+
+### Color, Range, File
+
+`color` က color picker ဖွင့်ပေးပြီး `range` က slider (လျှောခလုတ်) ပါ။ `file` က ကိုယ့်စက်ထဲက ဖိုင်တစ်ခု ရွေးဖို့ သုံးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<input type="color" name="favcolor" value="#ff0000">
+<input type="range" name="volume" min="0" max="100">
+<input type="file" name="photo">
+```
+
+မှတ်ချက် — File ကို Upload လုပ်ဖို့ form မှာ `enctype="multipart/form-data"` ထည့်ပေးရပါတယ်။
+
+### Submit, Tel, URL
+
+`submit` က form data ကို ပို့တဲ့ ခလုတ်ပါ။ `tel` က ဖုန်းနံပါတ် ရိုက်ဖို့ ဖြစ်ပြီး Mobile မှာ နံပါတ်ကို ခေါ်ရိုက်တတ်တဲ့ ကီးဘုတ်ပြပေးပါတယ်။ `url` က web address ပုံစံ ဟုတ်မဟုတ် စစ်ပေးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<input type="tel" name="phone" placeholder="09xxxxxxxxx">
+<input type="url" name="website">
+<input type="submit" value="ပို့မယ်">
+```
+
+မှတ်ချက် — `submit` ကိုနှိပ်တာနဲ့ form က action မှာရှိတဲ့ နေရာကို ချက်ချင်း ပို့ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `type` ကိုပြောင်းရုံနဲ့ input ပုံစံ ပြောင်းသွားတယ်
+- `password` က စာကို ဝှက်ပြတယ်
+- `radio` က အုပ်စုထဲ တစ်ခုပဲ ရွေးလို့ရတယ်
+- `file` သုံးရင် enctype သတိထားရမယ်
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "ဖုန်းနံပါတ် ရိုက်ဖို့ ဘယ် input type ကို သုံးလဲ", options: ["number", "tel", "text", "email"], correctAnswer: 1, explanation: "tel type က ဖုန်းနံပါတ် ရိုက်ဖို့ သင့်တော်ပါတယ်" },
+  { id: "q2", question: "အုပ်စုထဲ တစ်ခုထဲပဲ ရွေးချယ်လို့ရတဲ့ type ကဘာလဲ", options: ["checkbox", "radio", "select", "range"], correctAnswer: 1, explanation: "radio က အုပ်စုထဲ တစ်ခုထဲပဲ ရွေးလို့ရပါတယ်" },
+  { id: "q3", question: "Color picker ဖွင့်ဖို့ ဘယ် input type ကို သုံးလဲ", options: ["range", "color", "file", "url"], correctAnswer: 1, explanation: "color type က color picker ဖွင့်ပေးပါတယ်" } ]} />

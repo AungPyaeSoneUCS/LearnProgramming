@@ -1,0 +1,118 @@
+---
+title: "CSS Align — အလယ်တည့်တည့် ချိန်ညှိခြင်း"
+description: "Block element, text, image တွေကို center လုပ်နည်းနဲ့ vertical alignment နည်းလမ်းတွေကို လေ့လာကြရအောင်။"
+---
+
+### Margin Auto နဲ့ Block Element ကို Center လုပ်ခြင်း
+
+Block Element တစ်ခုကို အလျားလိုက် (horizontally) center လုပ်ချင်ရင် `margin: auto` နဲ့ ပုံသေအကျယ် (fixed width) ပေးရပါမယ်။ Element ပတ်လည်မှာ ကျန်နေတဲ့ နေရာတွေကို margin တွေက ညီတူ ခွဲယူလိုက်လို့ Element က အလယ်မှာ ရပ်တည်သွားပါတယ်။
+
+**ဥပမာ -**
+```css
+.center-box {
+  width: 70%;
+  margin: auto;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+```
+
+မှတ်ချက် — width အကျယ် မသတ်မှတ်ဘူးဆိုရင် Block Element က နေရာအပြည့် ယူနေတာကြောင့် `margin: auto` ရဲ့ effect ကို မမြင်ရပါဘူး။
+
+### Text ကို Center လုပ်ခြင်း
+
+စာသားတွေကို **အလျားလိုက်** center လုပ်ဖို့ `text-align: center` ကို သုံးပြီး **ဒေါင်လိုက် (vertically)** center လုပ်ဖို့ကတော့ Container ရဲ့ `line-height` ကို Element အမြင့်နဲ့ တူအောင် သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+h1 {
+  text-align: center;
+}
+
+.center-text {
+  height: 100px;
+  line-height: 100px;
+}
+```
+
+မှတ်ချက် — line-height ကို height နဲ့တူအောင် ထားရင် စာကြောင်းတစ်ကြောင်းတည်းက ဒေါင်လိုက် centre ဖြစ်သွားပါတယ်။ စာကြောင်း အများကြီးဆိုရင် ဒီနည်းက မတော်ပါဘူး။
+
+### Image ကို Center လုပ်ခြင်း
+
+Image က Inline-level Element ဖြစ်လို့ Parent မှာ `text-align: center` ထားရင် Image က center ဖြစ်ပါတယ်။ ဒါမှမဟုတ် Image ကိုပဲ Block + `margin: auto` ပေးလည်း အလုပ်လုပ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.image-wrap {
+  text-align: center;
+}
+
+.image-wrap img {
+  max-width: 100%;
+  height: auto;
+}
+
+.block-img {
+  display: block;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+```
+
+မှတ်ချက် — Image ကိုယ်တိုင် display: block လုပ်ပြီး margin-left/right auto ပေးတာက Modern Layout တွေမှာ ပိုပြီး ယုံကြည်စိတ်ချရပြီး နှစ်နည်းစလုံးက ပုံကို center ဖြစ်စေပါတယ်။
+
+### Vertical Alignment (ဒေါင်လိုက် ချိန်ညှိခြင်း)
+
+`vertical-align` Property က Inline နဲ့ Inline-block Element တွေကို သူ့ပတ်ဝန်းကျင်က Element တွေနဲ့ ယှဉ်ပြီး ဒေါင်လိုက် ချိန်ညှိပေးတာပါ။ ဒါပေမယ့် Block Element ကို ဒေါင်လိုက် center လုပ်တာကိုတော့ မပြုလုပ်နိုင်ပါဘူး။
+
+**ဥပမာ -**
+```css
+.pic {
+  vertical-align: middle;
+}
+
+.pic-bottom {
+  vertical-align: bottom;
+}
+```
+
+မှတ်ချက် — vertical-align က Table Cell ၊ Inline Element နဲ့ Flex Container တွေမှာသာ အာနိသင် ရှိပြီး ပုံမှန် Block Element ကို center လုပ်ဖို့ အသုံးမဝင်ပါဘူး။
+
+### Float + Padding Trick (ဂန္တဝင် နည်းပညာ)
+
+Flexbox မပေါ်ခင်က Block Element ကို ဒေါင်လိုက် center လုပ်ဖို့ **Float + Padding** Trick ကို အသုံးပြုခဲ့ကြပါတယ်။ Parent မှာ padding ပေး၊ Child ကို float လုပ်ပြီး လိုက်လျောညီထွေ (compensate) စီစဉ်တဲ့နည်း ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.parent {
+  height: 200px;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+.child {
+  float: left;
+  width: 50%;
+  background-color: lightblue;
+}
+```
+
+မှတ်ချက် — ဒီနည်းက code ပိုရှုပ်ပြီး ထိန်းရခက်တာကြောင့် ယနေ့ခေတ်မှာ align ပြဿနာအားလုံးအတွက် Flexbox နဲ့ Grid ကို အဓိက အသုံးပြုကြပါတယ်။
+
+#### တိုတိုနဲ့လိုရင်း
+
+- Block Element center ဖို့ margin: auto + width ပေးရသည်။
+- Text center ဖို့ text-align: center ဖြစ်သည်။
+- Image center ဖို့ text-align center သို့မဟုတ် margin auto သုံးနိုင်သည်။
+- Vertical align ရှုပ်ထွေးရင် Flexbox ကို အသုံးပြုပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Block element တစ်ခုကို အလျားလိုက် center လုပ်ဖို့ ဘာလိုအပ်ပါသလဲ?", options: ["Text align center", "Fixed width နဲ့ margin auto", "Float left", "Overflow hidden"], correctAnswer: 1, explanation: "block element ကို margin auto နဲ့ center လုပ်ဖို့ width ပုံသေ သတ်မှတ်ရပါတယ်။" },
+    { id: "q2", question: "စာသားတွေကို အလျားလိုက် center လုပ်ဖို့ ဘယ် property ကို သုံးပါသလဲ?", options: ["Line height", "Margin auto", "Text align center", "Vertical align"], correctAnswer: 2, explanation: "text-align: center က block container ထဲက text တွေကို center ဖြစ်စေပါတယ်။" },
+    { id: "q3", question: "Inline element တွေကို သူ့ဘေးက element တွေနဲ့ ယှဉ်ချိန်ညှိဖို့ ဘယ် property ကို သုံးပါသလဲ?", options: ["Vertical align", "Text align", "Float", "Position relative"], correctAnswer: 0, explanation: "vertical-align က inline နဲ့ inline-block element တွေကြားမှာ ဒေါင်လိုက် ချိန်ညှိပေးပါတယ်။" }
+  ]}
+/>

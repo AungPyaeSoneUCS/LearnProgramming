@@ -1,0 +1,63 @@
+---
+title: "HTML Entities — အထူးစာလုံးများကို ပြသခြင်း"
+description: "Reserved Character တွေနဲ့ Symbol တွေကို HTML မှာ Entity Name (သို့) Number သုံးပြီး ဘယ်လို ပြသမလဲ လေ့လာကြည့်ရအောင်။"
+---
+
+### HTML Entities ဆိုတာ ဘာလဲ?
+
+HTML Document ထဲမှာ အချို့စာလုံးတွေက **Reserved (သီးသန့်)** ပြီး Browser တွေက အဲဒီစာလုံးတွေကို HTML Code ရဲ့ အစိတ်အပိုင်းလို မှတ်ယူပါတယ်။ ဥပမာ `<` နဲ့ `>` က Tag တွေရဲ့ အစနဲ့ အဆုံးအတွက် ဖြစ်လို့၊ ဒီစာလုံးတွေကို ပုံမှန်စာသားလို ပြချင်ရင် **Entity** တွေ သုံးရပါတယ်။
+
+HTML **Entity** က အမြဲတမ်း Ampersand (`&`) နဲ့ စပြီး Semicolon (`;`) နဲ့ အဆုံးသတ်ပါတယ်။ Entity မှာ **Entity Name** (ဥပမာ `&lt;`) ရော **Entity Number** (ဥပမာ `&#60;`) ရော နှစ်မျိုးလုံး ရှိပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>5 &lt; 10</p>
+<p>HTML &amp; CSS</p>
+```
+
+မှတ်ချက် — Entity တွေက Semicolon နဲ့ သေချာဆုံးရပါမယ်။ မလုပ်ရင် Browser က Symbol ကို မှန်ကန်စွာ ပြချင်မှပြပါလိမ့်မယ်။
+
+### အသုံးများသော HTML Entities
+
+အသုံးအများဆုံး Entities တွေက Reserved Character တွေ ဖြစ်ပြီး တစ်ခုချင်းစီအတွက် Name ရော Number ရော ရှိပါတယ်။ Name တွေက မှတ်ရပိုလွယ်ပြီး Number တွေက Browser အားလုံးမှာ ပိုသေချာ အလုပ်လုပ်ပါတယ်။
+
+| Result | Description | Entity Name | Entity Number |
+|--------|-------------|-------------|---------------|
+| `<` | Less than (ငယ်သည်) | `&lt;` | `&#60;` |
+| `>` | Greater than (ကြီးသည်) | `&gt;` | `&#62;` |
+| & | Ampersand (နှင့်) | `&amp;` | `&#38;` |
+| " | Double quote (အကွက်နှစ်ထပ်) | `&quot;` | `&#34;` |
+| ' | Apostrophe (အကွက်တစ်ထပ်) | `&apos;` | `&#39;` |
+| (Space) | Non-breaking space | `&nbsp;` | `&#160;` |
+| © | Copyright | `&copy;` | `&#169;` |
+
+မှတ်ချက် — Entity Name က Case-sensitive ဖြစ်ပါတယ်။ `&copy;` နဲ့ `&COPY;` က မတူပါဘူး။
+
+### Entity Name နဲ့ Entity Number ဘယ်လို ရွေးသုံးမလဲ?
+
+Entity နှစ်မျိုးလုံးက Browser မှာ တူညီတဲ့အရာ (Symbol) ကို ပြပါတယ်။ အကြံပြုချက်က Entities အများစုမှာ **Name ကို သုံးတာ** ပိုလွယ်ပြီး ဖတ်ရလည်း လွယ်ပါတယ်။ ဒါပေမဲ့ Name မရှိတဲ့ Symbol တွေ (ဆိုလိုတာက သင်္ကေတအသစ်အများစု) အတွက်ကတော့ **Number ကို သုံးရပါတယ်**။
+
+```html
+<h1>HTML&amp;CSS သင်တန်း</h1>
+<p>လိုင်စင်: &copy; 2026 Takkatho</p>
+<p class="code">&#60;p&#62; ဒါက Tag တစ်ခုပါ&#60;/p&#62;</p>
+```
+
+မှတ်ချက် — Code ကို Page ပေါ်မှာ တိုက်ရိုက် ပြချင်ရင် `<` နဲ့ `>` တွေကို `&lt;` နဲ့ `&gt;` အဖြစ် ပြောင်းရေးရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Entity က Ampersand (`&`) နဲ့ စပြီး Semicolon (`;`) နဲ့ ဆုံးပါတယ်။
+- `<`, `>`, `&`, `"`, `'` တို့ဟာ Reserved Character တွေ ဖြစ်ပါတယ်။
+- Entity Name (ဥပမာ `&lt;`) နဲ့ Entity Number (ဥပမာ `&#60;`) နှစ်မျိုးလုံး ရှိပါတယ်။
+- Name မရှိတဲ့ Symbol တွေအတွက် Number ကို သုံးပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "HTML Entity က ဘာနဲ့ စတင်ပါသလဲ?", options: ["Dollar ($)", "Hash (#)", "Ampersand (&)", "Slash (/)"], correctAnswer: 2, explanation: "Entity အားလုံးက Ampersand (&) နဲ့ စပြီး Semicolon (;) နဲ့ ဆုံးပါတယ်။" },
+    { id: "q2", question: "Less than (<) သင်္ကေတအတွက် Entity Name က ဘာလဲ?", options: ["&lt;", "&gt;", "&amp;", "&quot;"], correctAnswer: 0, explanation: "Less than အတွက် Entity Name က lt (less than) ကို ဆိုလိုတဲ့ &lt; ဖြစ်ပါတယ်။" },
+    { id: "q3", question: "Entity Number ဘယ်အချိန်မှာ သုံးရပါသလဲ?", options: ["အမြဲတမ်း မလိုအပ်ဘူး", "Entity Name မရှိတဲ့ Symbol အတွက်", "Color ပြဖို့", "Image ထည့်ဖို့"], correctAnswer: 1, explanation: "Entity Name မရှိတဲ့ Symbol တွေအတွက် Entity Number ကို သုံးရပါတယ်။" },
+  ]}
+/>

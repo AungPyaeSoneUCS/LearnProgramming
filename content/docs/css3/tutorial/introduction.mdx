@@ -1,0 +1,86 @@
+---
+title: "CSS Introduction — CSS အကြောင်း မိတ်ဆက်"
+description: "CSS ဆိုတာ ဘာလဲ၊ ဘာကြောင့် သုံးရလဲ၊ Webpage တွေကို ဘယ်လို အလှဆင်ပေးလဲ ဆိုတာ လေ့လာကြရအောင်။"
+---
+
+### CSS ဆိုတာ ဘာလဲ?
+
+**CSS (Cascading Style Sheets)** ဆိုတာ HTML Element တွေကို Screen ပေါ်မှာ ဘယ်လိုပြရမယ်ဆိုတာကို သတ်မှတ်ပေးတဲ့ Style Sheet ဘာသာစကားပါ။ **Cascade** ဆိုတဲ့စကားလုံးက Rule တွေ တစ်ခုနဲ့တစ်ခု ထပ်နေရင် ဘယ်ဟာက အနိုင်ရမလဲ ဆိုတာကို စည်းမျဉ်းတကျ တွက်ချက်တာကို ဆိုလိုပြီး **Style Sheet** က Style Declaration တွေရဲ့ စာရင်းကို ဆိုလိုပါတယ်။
+
+**ဥပမာ -**
+```css
+h1 {
+  color: blue;
+  font-size: 36px;
+}
+```
+
+မှတ်ချက် — ဒီ Rule က `h1` ခေါင်းစဉ်တွေကို အပြာရောင် ၊ 36px အရွယ် နဲ့ ပြဖို့ ပြောထားတာပါ။
+
+### ဘာကြောင့် CSS ကို သုံးရလဲ?
+
+Webpage ရဲ့ အကြောင်းအရာ (Content) ကို HTML က ထိန်းပြီး ပုံပန်းသဏ္ဌာန် (Presentation) ကို CSS က ထိန်းပါတယ်။ CSS မသုံးရင် Webpage တွေ အားလုံးက အစိမ်းကြမ်း အနက်ရောင် စာသားတွေနဲ့ပဲ ပေါ်နေမှာပါ။ CSS ကြောင့်သာ Website တွေက အရောင် ၊ Font ၊ Layout တွေ စုံလင်စွာ လှပလာတာပါ။
+
+**ဥပမာ -**
+```css
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+```
+
+မှတ်ချက် — Font Family ၊ နောက်ခံအရောင် ၊ စာသားအရောင်တွေကို တစ်နေရာတည်းမှာ ထိန်းချုပ်လို့ ရပါတယ်။
+
+### CSS က ဘယ်လို Webpage ကို လှစေလဲ?
+
+Style Rule ငယ်လေးတွေ ထပ်ပေါင်းလိုက်တာနဲ့ ပရော်ဖက်ရှင်နယ် ဖြစ်တဲ့ Design တွေ ဖန်တီးလို့ ရပါတယ်။ Element တွေကို ဘောင်သွင်းတာ (Border) ၊ ထောင့်ချွတ်တာ (Border Radius) ၊ အရိပ်ချတာ (Box Shadow) စတာတွေ လုပ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+```
+
+မှတ်ချက် — ဒီလိုလေးဖွဲ့တဲ့ Style တွေ ပေါင်းတာက နောက်မှာ Box Model သင်ခန်းစာမှာ ပိုပြီး အသေးစိတ် လေ့လာရမှာပါ။
+
+### Webpage မှာ ပါဝင်သော အဓိက နည်းပညာ (၃) ခု
+
+| နည်းပညာ | အခန်းကဏ္ဍ | ဥပမာ |
+|---|---|---|
+| HTML | ဖွဲ့စည်းပုံ (Structure) | Heading, Paragraph |
+| CSS | အလှအပပုံစံ (Style) | အရောင်, Font, Layout |
+| JavaScript | တုံ့ပြန်မှု (Behavior) | Click, Form, Animation |
+
+**ဥပမာ -**
+```css
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+}
+```
+
+မှတ်ချက် — ဒီ CSS က Button ကို အပြာရောင် နောက်ခံ ၊ အဖြူရောင် စာသားတွေနဲ့ လှပတဲ့ Button ဖြစ်အောင် ပြောင်းပေးပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- CSS က Content ကို Presentation နဲ့ ခွဲထုတ်ပေးသော Style ဘာသာစကား ဖြစ်သည်။
+- HTML က Structure ၊ CSS က Style ၊ JavaScript က Behavior ကို တာဝန်ယူသည်။
+- CSS မရှိရင် Webpage တွေက အရောင်မရှိတဲ့ စာသားတွေချည်း ဖြစ်နေမည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "CSS ရဲ့ အပြည့်အစုံနာမည်က ဘာလဲ?", options: ["Computer Style System", "Cascading Style Sheets", "Creative Styling Sheets", "Central Style Syntax"], correctAnswer: 1, explanation: "CSS က Cascading Style Sheets ရဲ့ အတိုကောက်ပါ။" },
+    { id: "q2", question: "CSS က Webpage ရဲ့ ဘယ်အပိုင်းကို ထိန်းချုပ်ပါသလဲ?", options: ["ဖွဲ့စည်းပုံ", "အလှအပပုံစံ", "Database", "Server"], correctAnswer: 1, explanation: "CSS က Webpage ရဲ့ အရောင်, Font, Layout စတဲ့ Style ကို ထိန်းချုပ်ပါတယ်။" },
+    { id: "q3", question: "Webpage ရဲ့ ဖွဲ့စည်းပုံ (Structure) ကို ဘယ်သူက တာဝန်ယူပါသလဲ?", options: ["HTML", "JavaScript", "CSS", "Browser Plugin"], correctAnswer: 0, explanation: "HTML က Element တွေ တည်ဆောက်ပြီး Webpage ရဲ့ ဖွဲ့စည်းပုံကို ပေးပါတယ်။" },
+  ]}
+/>

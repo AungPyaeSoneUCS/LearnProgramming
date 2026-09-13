@@ -1,0 +1,104 @@
+---
+title: "CSS object-fit — Object Fit နည်းလမ်းများ"
+description: "object-fit property ဖြင့် image နှင့် video များကို box အတွင်း မည်သို့ပြသမည်ဆိုသည်ကို cover၊ contain၊ fill စသည့် value များဖြင့် သတ်မှတ်နည်း။"
+---
+
+`object-fit` Property က Image ဒါမှမဟုတ် Video လို Replaced Element တွေကို ၎င်းတို့ရဲ့ Content Box အတွင်းမှာ ဘယ်လိုပြသမလဲ ဆိုတာကို သတ်မှတ်ပေးပါတယ်။ `cover`, `contain`, `fill`, `none`, `scale-down` ဆိုပြီး တန်ဖိုး ၅ မျိုး အဓိက ရှိပါတယ်။
+
+### cover နဲ့ contain
+
+`cover` က Box တစ်ခုလုံးပြည့်အောင် ဆွဲချဲ့ပြီး လိုအပ်ရင် ပုံရဲ့ အစွန်းတွေကို ဖြတ်တောက်ပါတယ်။ `contain` ကတော့ ပုံတစ်ခုလုံး မပြတ်စေဘဲ Box အတွင်းမှာ ဝင်ဆံ့အောင် ချုံ့ပြပါတယ်။
+
+**ဥပမာ -**
+```css
+.cover-photo {
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.contain-photo {
+  width: 400px;
+  height: 300px;
+  object-fit: contain;
+}
+```
+
+မှတ်ချက် — Cover က Hero Image လို Box ပြည့်စေချင်တဲ့နေရာမှာ သုံးပြီး Contain က ပုံအပြည့်အဝ မြင်ရမယ့် Product Photo လိုနေရာတွေမှာ သုံးပါတယ်။
+
+### fill နဲ့ none
+
+`fill` က Box နဲ့ ကိုက်ညီအောင် ပုံကို ဆွဲချဲ့လို့ Aspect Ratio ပျက်နိုင်ပါတယ်။ `none` က ပုံရဲ့ မူရင်းအရွယ်အတိုင်း ပြပြီး Box ထဲမဝင်ရင် လျှံထွက်နေပါမယ်။
+
+**ဥပမာ -**
+```css
+.fill-photo {
+  width: 400px;
+  height: 300px;
+  object-fit: fill;
+}
+
+.none-photo {
+  width: 400px;
+  height: 300px;
+  object-fit: none;
+}
+```
+
+မှတ်ချက် — `fill` က Aspect Ratio ကို မထိန်းပေးလို့ ပုံပြားသွားတာ ပိန်သွားတာ ဖြစ်နိုင်ပြီး `none` က ပုံရဲ့ မူရင်းအရွယ် အတိုင်းပြလို့ Box ထဲ မဝင်တဲ့အခါ လျှံထွက်နေပါတယ်။
+
+### scale-down တန်ဖိုး
+
+`scale-down` က Image ရဲ့ မူရင်းအရွယ် ထက် မကျော်ဘဲ Box ထဲမှာ ဝင်ဆံ့အောင် ချုံ့ပေးပါတယ်။ Effect အနေနဲ့ `none` နဲ့ `contain` မှာ ပိုသေးတဲ့အရွယ်ကို ရွေးပြသပါတယ်။
+
+**ဥပမာ -**
+```css
+.scale-photo {
+  width: 600px;
+  height: 200px;
+  object-fit: scale-down;
+  background: lavender;
+}
+```
+
+မှတ်ချက် — ပုံမူရင်းက 600px ထက် သေးရင် မူရင်းအရွယ်အတိုင်း ပြပြီး ပုံကြီးရင် Box ထဲ ဝင်ဆံ့အောင် ချုံ့ပြသပါတယ်။
+
+### Video များတွင် object-fit
+
+`object-fit` က Image တွေတင် မကဘဲ Video တွေမှာလည်း သုံးလို့ရပါတယ်။ Video ကို Box ပြည့်အောင် ဖြတ်တောက်ပြပြီး ပြချင်ရင် `cover` ကို သုံးပါတယ်။
+
+**ဥပမာ -**
+```html
+<video class="intro-video" controls>
+  <source src="intro.mp4" type="video/mp4">
+</video>
+```
+
+မှတ်ချက် — Video ကို CSS နဲ့ Size သတ်မှတ်ဖို့အတွက် `width` နဲ့ `height` ကို သေချာ ပေးရပါမယ်။
+
+**ဥပမာ -**
+```css
+.intro-video {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+```
+
+မှတ်ချက် — Screen နဲ့ အကျယ်လိုက်လုပ်ထားတဲ့ Video က Height 300px အတွင်းမှာ Cover နဲ့ ဖြတ်တောက်ပြပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `cover` က Box ပြည့်အောင် ဖြတ်တောက်ပြသပါသည်။
+- `contain` က ပုံအပြည့်အဝ မြင်ရအောင် ချုံ့ပြ ပါသည်။
+- `fill` က Aspect Ratio ပျက်စေနိုင်ပြီး `none` က မူရင်းအရွယ် ပြသပါသည်။
+- `scale-down` က none နဲ့ contain အနက် ပိုသေးတာကို အလိုအလျောက် ရွေးပါသည်။
+- Video Element များမှာလည်း `object-fit` ကို အသုံးပြုနိုင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Box တစ်ခုလုံး ပြည့်အောင် ဖြတ်တောက်ပြသဖို့ ဘယ် Value ကို သုံးမလဲ?", options: ["contain", "cover", "none", "fill"], correctAnswer: 1, explanation: "cover က Box ပြည့်အောင် ဆွဲချဲ့ပြီး လိုအပ်တဲ့ အစွန်းတွေကို ဖြတ်တောက်ပါတယ်။" },
+  { id: "q2", question: "Aspect Ratio ပျက်စေနိုင်တဲ့ Value ကဘာလဲ?", options: ["cover", "contain", "fill", "scale-down"], correctAnswer: 2, explanation: "fill က Box နဲ့ကိုက်ညီအောင် ဆွဲချဲ့လို့ Image ရဲ့ အချိုးအစား ပျက်နိုင်ပါတယ်။" },
+  { id: "q3", question: "ပုံ မူရင်းအရွယ် အတိုင်း ပြသချင်ရင် ဘယ် Value ကို သုံးမလဲ?", options: ["none", "cover", "contain", "scale-down"], correctAnswer: 0, explanation: "none က Image ရဲ့ မူရင်းအရွယ်အတိုင်း ပြသပြီး Box ကြီးရင် လျှံထွက်နိုင်ပါတယ်။" }
+]} />

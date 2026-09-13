@@ -1,0 +1,95 @@
+---
+title: "CSS Height / Width — Element အကျယ်နဲ့ အမြင့် ထိန်းချုပ်နည်း"
+description: "height, width, max-width, min-width, max-height, min-height တွေကို ဥပမာတွေနဲ့ လေ့လာကြမယ်။"
+---
+
+### `height` နဲ့ `width` အခြေခံ
+
+`width` က element ရဲ့ အကျယ်၊ `height` က element ရဲ့ အမြင့်ကို သတ်မှတ်ပါတယ်။ Block element တွေက default အနေနဲ့ မိဘရဲ့ full width ကို ယူထားလို့ width ပေးမှပဲ ကျဉ်းသွားပြီး height ကတော့ content အပေါ် မူတည်ပြီး အလိုအလျောက် ကြီးပါတယ်။
+
+**ဥပမာ -**
+```css
+.div1 {
+  width: 300px;
+  height: 150px;
+  background-color: lightblue;
+}
+
+.div2 {
+  width: 50%;
+  height: 100px;
+}
+```
+
+မှတ်ချက် — Height ကို fixed ပေးထားရင် content ပိုများလာတဲ့အခါ ပြည့်လျှံသွားနိုင်လို့ `overflow` property နဲ့ တွဲသုံးလေ့ ရှိပါတယ်။
+
+### max-width (အကျယ်ဆုံး ကန့်သတ်ချက်)
+
+`max-width` က element ရဲ့ အကျယ်ကို ဒီတန်ဖိုးထက် မပိုစေဘဲ ထိန်းထားပါတယ်။ Browser ပြောင်းရင် element က ကျဉ်းသွားလို့ responsive design မှာ မရှိမဖြစ် သုံးပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.responsive-img {
+  max-width: 100%;
+  height: auto;
+}
+```
+
+မှတ်ချက် — Image တွေမှာ `max-width: 100%; height: auto;` ပေးရင် container ထက် မကျော်ဘဲ အချိုးကျ ကျုံ့သွားပါတယ်။
+
+### min-width (အနည်းဆုံး အကျယ်)
+
+`min-width` က element ရဲ့ အကျယ်ကို ဒီထက် မကျဉ်းစေဘဲ ထိန်းထားပါတယ်။ Content ဘယ်လောက်ပဲ ကျဉ်းကျဉ်း min-width အောက်ကို မဆင်းပါဘူး။
+
+**ဥပမာ -**
+```css
+.sidebar {
+  min-width: 200px;
+  width: 25%;
+}
+
+.btn {
+  min-width: 120px;
+}
+```
+
+မှတ်ချက် — min-width က အောက်ကန့်သတ်ချက်ပဲ ဖြစ်လို့ container ကျယ်နေရင် element ကလည်း ပိုကျယ်လို့ ရပါတယ်။
+
+### max-height နဲ့ min-height
+
+`max-height` နဲ့ `min-height` က အမြင့်အတွက် အတူတူ ကန့်သတ်ပေးပါတယ်။ max-height ထက် content များနေရင် overflow ဖြစ်တတ်လို့ scroll နဲ့ တွဲသုံးလေ့ ရှိပါတယ်။
+
+**ဥပမာ -**
+```css
+.notice {
+  min-height: 80px;
+  max-height: 300px;
+  overflow: hidden;
+}
+
+.dropdown-menu {
+  max-height: 200px;
+  overflow: auto;
+}
+```
+
+မှတ်ချက် — Menu တွေ၊ notification box တွေမှာ max-height နဲ့ `overflow: auto;` တွဲပြီး scroll လုပ်ပေးတာက အသုံးများပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `width` နဲ့ `height` က element ရဲ့ အကျယ်၊ အမြင့်ကို သတ်မှတ်ပါတယ်။
+- `max-width` က responsive layout အတွက် အရေးကြီးပါတယ်။
+- `min-width`, `min-height`, `max-height` တွေက ကန့်သတ်ချက် အတိုင်းအတာကို သတ်မှတ်ပေးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "max-width: 600px; ပေးထားတဲ့ paragraph ရဲ့ အပြုအမူက ဘယ်လိုလဲ?", options: ["အမြဲ 600px ပဲ ဖြစ်တယ်", "600px ထက် မပိုဘဲ နေရာလိုက်လျောညီထွေ ကျဉ်းနိုင်တယ်", "600px ထက် ကျော်ပြီး ကျယ်နိုင်တယ်", "width လုံးဝ မသက်ရောက်ဘူး"], correctAnswer: 1, explanation: "max-width က အပေါ်ကန့်သတ်ချက်ပဲ ဖြစ်လို့ အောက်ဘက်ကို ကျုံ့နိုင်ပါတယ်။" },
+  { id: "q2", question: "Responsive image တွေအတွက် အကောင်းဆုံး CSS ကဘာလဲ?", options: ["width: 100%;", "max-width: 100%; height: auto;", "height: 100%;", "min-width: 100%;"], correctAnswer: 1, explanation: "max-width 100% နဲ့ height auto က container ထက် မကျော်ဘဲ အချိုးကျ ကျုံ့ပေးပါတယ်။" },
+  { id: "q3", question: "max-height: 300px; overflow: hidden; ရှိတဲ့ box ထဲ content က 500px ဆိုရင် ဘာဖြစ်မလဲ?", options: ["ပိုနေတဲ့ အပိုင်းကို ဖျောက်ပြီး 300px ပဲ ပြမယ်", "500px အကုန် ပြမယ်", "box က 800px ဖြစ်သွားမယ်", "error တက်မယ်"], correctAnswer: 0, explanation: "max-height က 300px မှာ ရပ်ပြီး overflow hidden က ပိုတဲ့ နေရာကို ဖျောက်ပါတယ်။" }
+]} />

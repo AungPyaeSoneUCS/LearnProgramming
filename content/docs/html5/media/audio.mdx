@@ -1,0 +1,57 @@
+---
+title: "HTML Audio — Audio Element အကြောင်း"
+description: "<audio> Tag နဲ့ Audio ထည့်နည်း၊ Attribute တွေနဲ့ Source Fallback တွေကို လေ့လာကြည့်ရအောင်။"
+---
+
+`### <audio>` Element မိတ်ဆက်
+
+`<audio>` Element က Sound, Music File တွေကို Webpage မှာ ဖွင့်ဖို့ သုံးပါတယ်။ `<video>` Element နဲ့ တည်ဆောက်ပုံ ဆင်တူပြီး `src` Attribute မှာ Audio File ရဲ့ Path ထည့်ပါတယ်။ `controls` Attribute ထည့်မှပဲ Play, Pause, Volume ခလုတ်တွေ မြင်ရမှာဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<audio src="song.mp3" controls></audio>
+```
+
+မှတ်ချက် — `controls` မထည့်ထားရင် Audio ဖွင့်နေရင်တောင် ခလုတ်တွေ မမြင်ရတာမို့ User က ထိန်းချုပ်လို့ ရနိုင်မှာ မဟုတ်ပါဘူး။
+
+### Audio Attributes တွေ
+
+`controls` က ထိန်းချုပ်ခလုတ်တွေကို ပြသပေးပြီး `autoplay` က Page ဖွင့်တာနဲ့ Audio ကို အလိုအလျောက် ဖွင့်ပေးပါတယ်။ `loop` က Audio ကုန်သွားရင် ပြန်ပြန်ဖွင့်စေပြီး `muted` က အသံကို ပိတ်ထားပေးပါတယ်။ `preload` က Page ဖွင့်တာနဲ့ Audio ဖိုင်ကို ကြိုတင် ဒေါင်းလုတ်လုပ်မလား ဆိုတာကို သတ်မှတ်ပေးပါတယ်။
+
+**ဥပမာ -**
+```html
+<audio src="song.mp3" controls autoplay muted loop preload="auto"></audio>
+```
+
+မှတ်ချက် — `autoplay` ကို `muted` နဲ့ တွဲမသုံးရင် Browser အများစုက ပိတ်ပေးတတ်ပြီး `preload` မှာ auto, metadata, none ဆိုပြီး Option (၃) မျိုး ရှိပါတယ်။
+
+`### <source>` နဲ့ Fallback
+
+`<source>` Element အမျိုးမျိုး ထည့်ထားရင် Browser က သူ့အတွက် ဖွင့်နိုင်တဲ့ ပထမဆုံး Format ကို ရွေးပါတယ်။ Format တစ်ခုမှ မဖွင့်နိုင်ရင် `<audio>` ရဲ့ အတွင်းထဲမှာ ရေးထားတဲ့ Fallback Text ကို ပြသပါတယ်။ ဒီနည်းနဲ့ Browser အဟောင်းတွေမှာတောင် Audio ကို ကောင်းကောင်း စီစဉ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<audio controls>
+  <source src="song.mp3" type="audio/mpeg">
+  <source src="song.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+```
+
+မှတ်ချက် — Browser က `<source>` တွေထဲက ပထမဆုံး ဖွင့်နိုင်တဲ့ဟာကို သုံးပြီး ဘယ်ဟာမှ မရရင် အတွင်းကစာသားကို Fallback အဖြစ် ပြပါတယ်။
+
+### မှတ်ထားရမယ့် အချက်များ
+
+- Audio Element က Sound File တွေအတွက်သာ ဖြစ်ပြီး Video အတွက် `<video>` ကို သုံးရတယ်။
+- `controls` က User အတွက် မဖြစ်မနေ လိုအပ်တယ်။
+- `autoplay` ကို `muted` နဲ့ တွဲသုံးရတတ်တယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Browser က Source Element တွေထဲက ဘယ်ဟာကို ရွေးပါသလဲ?", options: ["ပထမဆုံး ဖွင့်နိုင်တဲ့ Source", "နောက်ဆုံး Source", "အကြီးဆုံး Source", "အားလုံးကို ဖွင့်ပါတယ်"], correctAnswer: 0, explanation: "Browser က ဖွင့်နိုင်တဲ့ ပထမဆုံး Source ကို ရွေးပါတယ်။" },
+    { id: "q2", question: "Audio Element မှာ Controls မပါရင် ဘာဖြစ်ပါသလဲ?", options: ["ဘာမှမဖြစ်ဘူး", "Audio အသံပျက်သွားတယ်", "Play ခလုတ်တွေ မမြင်ရတော့ဘူး", "Audio ရပ်သွားတယ်"], correctAnswer: 2, explanation: "Controls မပါရင် User က Audio ကို မထိန်းချုပ်နိုင်တော့ပါဘူး။" },
+    { id: "q3", question: "Preload Attribute က ဘာအတွက် သုံးပါသလဲ?", options: ["Volume ချိန်တာ", "Audio ဖိုင်အရွယ်အစား သတ်မှတ်တာ", "Page ဖွင့်တာနဲ့ Audio ကို ကြိုတင်ဒေါင်းလုတ်လုပ်မလား သတ်မှတ်တာ", "အသံပိတ်တာ"], correctAnswer: 2, explanation: "Preload က Audio ဖိုင်ကို ကြိုတင် load လုပ်မလား ဆိုတာ သတ်မှတ်ပါတယ်။" },
+  ]}
+/>

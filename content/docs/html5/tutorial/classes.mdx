@@ -1,0 +1,121 @@
+---
+title: "HTML Classes"
+description: "Class attribute ကို CSS နဲ့ JavaScript မှာ ဘယ်လို သုံးသလဲ ဥပမာတွေနဲ့ လေ့လာကြပါမယ်။"
+---
+
+### `class` Attribute ဆိုတာ ဘာလဲ?
+
+`class` attribute က HTML Element တစ်ခုကို နာမည်တစ်ခု (Label) ပေးတာပါ။ အဲဒီနာမည် ကို သုံးပြီး Element အများကြီးကို တစ်ပြိုင်နက် Browser က သိစေနိုင်ပါတယ်။ Class ရဲ့ ထူးခြားချက်က Element အများကြီးမှာ တူညီတဲ့ Class နာမည်ကို ထပ်ခါထပ်ခါ သုံးလို့ ရတာပါ။ ဒါကြောင့် Styling နဲ့ Scripting တွေမှာ Class ကို မကြာခဏ သုံးကြပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<p class="note">ဒါက note တစ်ခုပါ။</p>
+<p class="note">ဒါလည်း note ပါ။</p>
+```
+
+မှတ်ချက် — `class` attribute ကို ဘယ် HTML tag မှာမဆို ထည့်လို့ ရပြီး Element သုံးခု လေးခု မှာ နာမည်တူ Class ကို သုံးလို့ ရပါတယ်။
+
+### Element တစ်ခုမှာ Class အများကြီး ထည့်ခြင်း
+
+Element တစ်ခုမှာ Class အများကြီးကို နေရာလွတ် (Space) နဲ့ ခွဲပြီး ထည့်နိုင်ပါတယ်။ ဥပမာ - Flexible Class တစ်ခုနဲ့ အရောင်အတွက် Class တစ်ခု ပေါင်းပြီး သုံးလို့ ရပါတယ်။ ဒါက Class တစ်ခုချင်းစီရဲ့ Style တွေ အားလုံး Element ပေါ်မှာ သက်ရောက်စေပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<div class="card active">Active Card</div>
+<div class="card">Normal Card</div>
+```
+
+မှတ်ချက် — ဒီမှာ `.card` နဲ့ `.active` Class နှစ်ခုလုံးရဲ့ Style က ပထမ `div` ပေါ်မှာ သက်ရောက်ပါတယ်။
+
+### Class ကို CSS မှာ သုံးခြင်း
+
+CSS မှာ Class Selector ကို အစက်လေး (`.`) နဲ့ ရေးပါတယ်။ ဥပမာ - `.note` ဆိုတဲ့ Class ကို Style လုပ်ဖို့ `.note {}` လို့ ရေးပါတယ်။ ဒါဆိုရင် `.note` Class ပါတဲ့ Element အားလုံးကိုအဲဒီ Style တွေ ကျရောက်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <style>
+    .note {
+      background-color: lightyellow;
+      border-left: 5px solid orange;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h3>Alert!</h3>
+  <p class="note">ဒီအတွက် သတိထားဖို့ လိုပါတယ်။</p>
+</body>
+</html>
+```
+
+မှတ်ချက် — `.` (dot) နဲ့ စတဲ့ Selector တွေက Class Selector ပါ။ Class နာမည်နဲ့ dot ကို အတူတူ ရေးရပါတယ်။
+
+### Class ကို JavaScript မှာ သုံးခြင်း
+
+JavaScript မှာ `getElementsByClassName()` method ကို သုံးပြီး Class နာမည် တစ်ခုပေါ်မူတည်ပြီး Element တွေအားလုံးကို ရှာနိုင်ပါတယ်။ ရလာတဲ့ ရလဒ်က Element စာရင်း (Collection) ဖြစ်တဲ့အတွက် Loop နဲ့ တစ်ခုချင်း ကိုင်တွယ်ရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<body>
+  <button class="btn">Click</button>
+  <button class="btn">Cancel</button>
+  <script>
+    var buttons = document.getElementsByClassName("btn");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].style.color = "blue";
+    }
+  </script>
+</body>
+</html>
+```
+
+မှတ်ချက် — `.btn` Class ပါတဲ့ Button တွေ အားလုံးရဲ့ စာလုံးအရောင် က Blue ပြောင်းသွားပါမယ်။
+
+### Element တစ်ခုကို Class နဲ့ ရွေးချယ်ခြင်း
+
+Selector ၂ ခု ပေါင်းပြီး Element တစ်ခုကို တိကျစွာ ရွေးနိုင်ပါတယ်။ ဥပမာ - `p.note` ဆိုရင် Class `note` ရှိတဲ့ Paragraph တွေကိုသာ ရွေးပြီး Class `note` ရှိတဲ့ တခြား Element တွေကို မရွေးပါဘူး။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <style>
+    p.note {
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+  <p class="note">ဒါ paragraph note ပါ။</p>
+  <div class="note">ဒါ div note ပါ။</div>
+</body>
+</html>
+```
+
+မှတ်ချက် — Color က Paragraph မှာသာ သက်ရောက်ပြီး `div` မှာ မသက်ရောက်တာ သတိထားမိမှာပါ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `class` attribute က Element တစ်ခုကို နာမည် ပေးပါတယ်။
+- Class တစ်ခုကို Element အများကြီးမှာ သုံးလို့ ရပါတယ်။
+- CSS မှာ Class ကို `.` နဲ့ ရွေးပါတယ်။
+- JavaScript မှာ `getElementsByClassName()` method ကို သုံးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Class Selector ကို CSS မှာ ဘယ်လို ရေးပါသလဲ?", options: ["နံပါတ်နဲ့", "အစက်လေး နဲ့ Class နာမည်", "Marks နဲ့", "Knight အက္ခရာ နဲ့"], correctAnswer: 1, explanation: "CSS မှာ Class ကို dot နဲ့ Class နာမည် ပေါင်းပြီး ရေးပါတယ်။" },
+  { id: "q2", question: "Element တစ်ခုမှာ Class အများကြီးကို ဘာနဲ့ ခွဲပြီး ထည့်လဲ?", options: ["Comma", "Semicolon", "နေရာလွတ်", "Line Break"], correctAnswer: 2, explanation: "Class အများကြီးကို နေရာလွတ် နဲ့ ခွဲပြီး ထည့်ရပါတယ်။" },
+  { id: "q3", question: "Class နာမည်နဲ့ Element တွေကို JavaScript မှာ ဘယ် method နဲ့ ရှာလဲ?", options: ["getElementById", "querySelector", "getElementsByClassName", "getClass"], correctAnswer: 2, explanation: "getElementsByClassName က Class နာမည်နဲ့ Element တွေကို ရှာပေးပါတယ်။" }
+]} />

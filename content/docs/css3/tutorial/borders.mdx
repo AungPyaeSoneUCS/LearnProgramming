@@ -1,0 +1,103 @@
+---
+title: "CSS Borders — Border ရဲ့ ပုံစံ၊ အထူ နဲ့ အရောင် သတ်မှတ်နည်း"
+description: "element တွေရဲ့ ဘောင်လေးဘက်ကို border-style, border-width, border-color နဲ့ shorthand သုံးပြီး အလှဆင်နည်း။"
+---
+
+### Border ဆိုတာ ဘာလဲ?
+
+Element တိုင်းက Box တစ်ခုဖြစ်ပြီး သူ့ရဲ့ အစွန်းမှာ **Border** ဆိုတဲ့ ဘောင်တစ်ခု ထားလို့ရပါတယ်။ Border က element ရဲ့ layout ထဲမှာ နေရာယူပြီး နောက်ခံအရောင်ရှိတဲ့ box တွေကို ပိုလှပစေပါတယ်။ Border တစ်ခုမှာ **style**, **width**, **color** ဆိုတဲ့ အစိတ်အပိုင်း သုံးခု ပါဝင်ပါတယ်။
+
+### border-style (ဘောင်ပုံစံ)
+
+`border-style` က border ရဲ့ ပုံစံကို သတ်မှတ်ပါတယ်။ `solid`, `dashed`, `dotted`, `double` စတဲ့ value တွေ ရှိပြီး ပုံမှန် (default) က `none` ပါ။
+
+**ဥပမာ -**
+```css
+.box-solid { border-style: solid; }
+.box-dashed { border-style: dashed; }
+.box-dotted { border-style: dotted; }
+.box-double { border-style: double; }
+```
+
+မှတ်ချက် — `border-style` မပေးရင် ပုံမှန် `none` ဖြစ်နေလို့ width, color ဘယ်လောက်ပဲ ပေးပေး border ကို လုံးဝ မမြင်ရပါဘူး။
+
+### border-width (ဘောင်အထူ)
+
+`border-width` က border ရဲ့ အထူကို သတ်မှတ်ပါတယ်။ Pixel (px) စတဲ့ unit တွေနဲ့ဖြစ်ဖြစ် `thin`, `medium`, `thick` ဆိုတဲ့ keyword တွေနဲ့ဖြစ်ဖြစ် ပေးလို့ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  border-style: solid;
+  border-width: 5px;
+}
+
+.box-thick {
+  border-style: solid;
+  border-width: thick;
+}
+```
+
+မှတ်ချက် — `border-width` မှာ value နှစ်လုံး၊ သုံးလုံး၊ လေးလုံး ပေးရင်လည်း အပေါ်၊ ညာ၊ အောက်၊ ဘယ် အစဉ်အတိုင်း သက်ရောက်ပါတယ်။
+
+### border-color (ဘောင်အရောင်)
+
+`border-color` က border ရဲ့ အရောင်ကို သတ်မှတ်ပါတယ်။ Color name, hex code, rgb ဘယ်ဟာနဲ့မဆို ပေးလို့ရပြီး တစ်ဖက်ချင်း အရောင်ကွဲလည်း ပေးလို့ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  border-style: solid;
+  border-width: 4px;
+  border-color: red green blue orange;
+}
+```
+
+မှတ်ချက် — `border-color` မှာ value လေးလုံး ပေးရင် top, right, bottom, left အစဉ်အတိုင်း အရောင်တစ်မျိုးစီ ရပါတယ်။
+
+### Border Shorthand (တစ်ကြောင်းတည်း ရေးနည်း)
+
+`border` shorthand နဲ့ width, style, color သုံးခုလုံးကို တစ်ကြောင်းထဲ ရေးလို့ရပါတယ်။ အစဉ်ကတော့ **width က style က color** ဖြစ်ပြီး style က မဖြစ်မနေ ပါရမယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  border: 4px solid #ff5722;
+}
+
+.card {
+  border: 2px dashed gray;
+}
+```
+
+မှတ်ချက် — Shorthand သုံးတဲ့အခါ `border-width`, `border-style`, `border-color` သုံးခုလုံးကို တစ်ပြိုင်နက် သတ်မှတ်လိုက်တာပဲ ဖြစ်ပါတယ်။
+
+### Individual Sides (တစ်ဖက်ချင်း သတ်မှတ်ခြင်း)
+
+`border-top`, `border-right`, `border-bottom`, `border-left` တွေနဲ့ ဘယ်ဖက်ကို ဖြစ်ဖြစ် သီးခြား သတ်မှတ်လို့ရပြီး တစ်ဖက်ချင်းစီမှာလည်း shorthand သုံးလို့ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  border-top: 3px solid red;
+  border-right: 5px dashed blue;
+  border-bottom: 2px dotted green;
+  border-left: 4px solid orange;
+}
+```
+
+မှတ်ချက် — လေးဖက်လုံး တူညီတဲ့ border လိုချင်ရင် `border` shorthand ကို သုံးပြီး တစ်ဖက်ချင်း ကွဲပြားချင်ရင်တော့ `border-top` စတဲ့ properties တွေကို သုံးပါ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Border မှာ style, width, color ဆိုတဲ့ အစိတ်အပိုင်း သုံးခု ရှိပြီး style က မဖြစ်မနေ လိုအပ်ပါတယ်။
+- `border` shorthand ရဲ့ အစဉ်က width, style, color ဖြစ်ပါတယ်။
+- `border-top`, `border-right` စတာတွေနဲ့ တစ်ဖက်ချင်း သတ်မှတ်နိုင်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "border-style မပေးထားရင် ဘာဖြစ်မလဲ?", options: ["border က solid ဖြစ်မယ်", "border ကို မမြင်ရပါဘူး", "border အရောင် အနက်ဖြစ်မယ်", "border က double ဖြစ်မယ်"], correctAnswer: 1, explanation: "border-style ရဲ့ default က none ဖြစ်လို့ border ကို မမြင်ရပါဘူး။" },
+  { id: "q2", question: "border shorthand ရဲ့ တိကျတဲ့ order ကဘာလဲ?", options: ["width color style", "style width color", "width style color", "color style width"], correctAnswer: 2, explanation: "border shorthand က width style color အစဉ်အတိုင်း ဖြစ်ပြီး style က mandatory ပါ။" },
+  { id: "q3", question: "dashed line ဘောင်လိုချင်ရင် ဘယ် property ကို သတ်မှတ်ရလဲ?", options: ["border-color", "border-width", "border-style", "border-spacing"], correctAnswer: 2, explanation: "border-style မှာ solid, dashed, dotted, double စတဲ့ value တွေ ထားလို့ရပါတယ်။" }
+]} />

@@ -1,0 +1,131 @@
+---
+title: "CSS Image Modal — Lightbox Modal ဖန်တီးနည်း"
+description: "Image ပေါ်နှိပ်လိုက်လျှင် မျက်နှာပြင်အပြည့် ဖြည့်ပြသော Lightbox Modal ကို CSS နှင့် JavaScript ဖြင့် ဖန်တီးနည်း လေ့လာကြမယ်။"
+---
+
+Lightbox Modal ဆိုတာ Image ကို Click လုပ်တဲ့အခါ Screen တစ်ခုလုံးကို ဖုံးအုပ်ပြီး ပုံကို ပိုကြီးကျယ်စွာ ပြသပေးတဲ့ ကြည့်ရှုမှုပုံစံပါ။ CSS ရဲ့ `:target` Pseudo-class တစ်ခုတည်းနဲ့လည်း ဖန်တီးနိုင်ပြီး JavaScript နဲ့ဆိုရင် ပိုပြီး အသေးစိတ် ထိန်းချုပ်နိုင်ပါတယ်။
+
+### HTML Structure ပြင်ဆင်ခြင်း
+
+Modal အတွက် Image Element ၊ Link နဲ့ Modal Box ကို HTML မှာ ပြင်ဆင်ရပါတယ်။ Link ရဲ့ `href` က Modal Box ရဲ့ `id` ဆီကို ညွှန်ပြပါတယ်။
+
+**ဥပမာ -**
+```html
+<div class="gallery">
+  <a href="#myModal">
+    <img src="photo1.jpg" alt="ဓာတ်ပုံ ၁">
+  </a>
+</div>
+
+<div class="modal" id="myModal">
+  <a href="#" class="close">X</a>
+  <img src="photo1.jpg" alt="ဓာတ်ပုံကြီး">
+</div>
+```
+
+မှတ်ချက် — Link ကို Click လုပ်လိုက်ရင် Browser က `#myModal` ဆီကို ရွေ့သွားပြီး `:target` Pseudo-class က Modal ကို ပြသဖို့ ပြင်ဆင်ပေးပါတယ်။
+
+### `:target` နဲ့ Modal ကိုပြသခြင်း
+
+`position: fixed` နဲ့ Modal Box က Screen တစ်ခုလုံးကို ဖုံးအုပ်ပြီး `:target` ဖြစ်မှသာ `display: flex` အသုံးပြု၍ ပြသပါတယ်။
+
+**ဥပမာ -**
+```css
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal:target {
+  display: flex;
+}
+```
+
+မှတ်ချက် — `rgba(0, 0, 0, 0.8)` က မှိန်ဖျော့သော အနက်ရောင် Overlay ဖြစ်စေပြီး နောက်က Page ကို ဖုံးအုပ်ထားပါတယ်။
+
+### Modal Image နဲ့ Close Button
+
+Modal ထဲက Image ကို Screen နဲ့ အချိုးကျ ပြရန် ချိန်ညှိပြီး Close Button ကို Modal ရဲ့ အပေါ်ညာဖက်မှာ နေရာချပါမယ်။
+
+**ဥပမာ -**
+```css
+.modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 32px;
+  text-decoration: none;
+}
+
+.close:hover {
+  color: #ff4444;
+}
+```
+
+မှတ်ချက် — `max-width` နဲ့ `max-height` က ကြီးလွန်းတဲ့ ပုံတွေကိုပါ Screen အတွင်း ဝင်ဆံ့အောင် ချိန်ညှိပေးပါတယ်။
+
+### JavaScript ဖြင့် Modal ထိန်းချုပ်ခြင်း
+
+JavaScript သုံးရင် URL မပြောင်းဘဲ Modal တစ်ခုထဲမှာပဲ ပုံမျိုးစုံ ပြောင်းပြနိုင်လို့ Gallery တွေအတွက် ပိုအဆင်ပြေပါတယ်။
+
+**ဥပမာ -**
+```html
+<button onclick="openModal()">ပုံကြည့်မယ်</button>
+
+<div class="modal" id="jsModal">
+  <span class="close" onclick="closeModal()">X</span>
+  <img src="photo.jpg" alt="ကြည့်ရှုရန်">
+</div>
+```
+
+မှတ်ချက် — Button နဲ့ Modal အတွင်းမှာရှိတဲ့ `class` နာမည်တွေက JavaScript က အသုံးပြုမှာပါ။
+
+**ဥပမာ -**
+```css
+.modal.show {
+  display: flex;
+}
+```
+
+မှတ်ချက် — `.show` Class ရှိနေမှ Modal က `display: flex` ဖြင့် ပြသမယ့် Rule ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```javascript
+function openModal() {
+  document.getElementById("jsModal").classList.add("show");
+}
+
+function closeModal() {
+  document.getElementById("jsModal").classList.remove("show");
+}
+```
+
+မှတ်ချက် — `classList.add` က `show` Class ထည့်ပေးလို့ Modal ပေါ်လာပြီး `classList.remove` နဲ့ ပြန်ဖျောက်လိုက်လို့ Modal ပိတ်သွားပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `position: fixed` ဖြင့် Modal က Screen တစ်ခုလုံးကို ဖုံးအုပ်ပါသည်။
+- `:target` Pseudo-class ဖြင့် CSS တစ်ခုတည်းနဲ့ Modal ဖွင့်ပိတ်နိုင်ပါသည်။
+- JavaScript ဖြင့် Class ထည့်ဖျောက်ပြီး Modal ကို ပိုမိုထိန်းချုပ်နိုင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Modal Box က Screen တစ်ခုလုံးကို ဖုံးအုပ်ဖို့ ဘယ် Positioning ကို သုံးပါသလဲ?", options: ["position: fixed", "position: relative", "position: static", "position: sticky"], correctAnswer: 0, explanation: "position fixed က Element ကို viewport နှင့် ဆက်စပ်ပြီး Screen တစ်ခုလုံး ဖုံးအုပ်စွာ နေရာချပေးပါတယ်။" },
+  { id: "q2", question: "CSS တစ်ခုတည်းနဲ့ Modal ပြသဖို့ Link ရဲ့ href က ဘာဆီကို ညွှန်ပြရပါသလဲ?", options: ["Modal Box ရဲ့ id", "Image ရဲ့ src", "Body ရဲ့ class", "Page ရဲ့ title"], correctAnswer: 0, explanation: "Link ရဲ့ href က Modal Box ရဲ့ id ကို ညွှန်ပြမှ target Pseudo-class က Modal ကို ပြနိုင်ပါတယ်။" },
+  { id: "q3", question: "JavaScript နဲ့ Modal ဖွင့်ဖို့ Class ထည့်ရန် ဘယ် Method ကို သုံးပါသလဲ?", options: ["classList.add", "classList.write", "style.addClass", "display.show"], correctAnswer: 0, explanation: "classList.add Method က Element ကို Class ထည့်ပေးလို့ Modal ကို ပြသနိုင်ပါတယ်။" }
+]} />

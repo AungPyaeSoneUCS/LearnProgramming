@@ -1,0 +1,81 @@
+---
+title: "Fifth Normal Form (5NF)"
+description: "Normalization ၏ ပဉ္စမအဆင့် (5NF) နှင့် Join Dependency"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="💡 ရည်ရွယ်ချက်">
+  Database Architecture ၏ အဆင့်မြင့်ဆုံး Normalization တစ်ခုဖြစ်သည့် **Fifth Normal Form (5NF / Project-Join Normal Form - PJNF)** နှင့် **Join Dependency** သဘောတရားကို လေ့လာသွားကြပါမယ်။
+</Aside>
+
+## 5NF ၏ မဖြစ်မနေ စည်းမျဉ်း ၂ ခု
+
+Table တစ်ခုသည် Fifth Normal Form (5NF) အဆင့်သို့ ရောက်ရှိရန် အောက်ပါ စည်းမျဉ်း ၂ ခုနှင့် ကိုက်ညီရပါမည်:
+
+1. **4NF အဆင့် ပြီးမြောက်ပြီးသား ဖြစ်ရမည်။**
+2. **No Non-trivial Join Dependency:**
+   Table တစ်ခုကို Lossless Decomposition (Data မပျောက်မပျက်ဘဲ အစိတ်အပိုင်း အလွတ်များ မကျန်အောင် ခွဲထုတ်ခြင်း) ပြုလုပ်၍ မရနိုင်တော့သည့် အဆင့်အထိ အဆင့်မြင့်မားစွာ ခွဲခြား သိုလှောင်ထားပြီး ဖြစ်ရပါမည်။
+
+---
+
+## Join Dependency ဆိုတာ ဘာလဲ?
+
+**Join Dependency** ဆိုသည်မှာ Table ကြီးတစ်ခုကို သေးငယ်သော Table အစိတ်အပိုင်းများအဖြစ် ခွဲထုတ် (Decompose) လိုက်သည့်အခါ၊ ထို ခွဲထုတ်ထားသော Table အစိတ်အပိုင်း သုံးခု သို့မဟုတ် သုံးခုထက်ပို၍ အားလုံးကို `JOIN` ပြန်လည် ပြုလုပ်မှသာ မူလ Table Data များကို တိကျစွာ (Lossless) ပြန်လည် ရရှိနိုင်သည့် အခြေအနေမျိုးကို ခေါ်ဆိုခြင်း ဖြစ်ပါတယ်။
+
+---
+
+## 5NF လိုအပ်လာပုံ (လက်တွေ့ ဥပမာ)
+
+Salesperson (အရောင်းကိုယ်စားလှယ်)၊ Company (ကုမ္ပဏီ) နှင့် Product (ပစ္စည်း) အချက်အလက်များ ပါဝင်သော Table ကို ကြည့်ပါမည်:
+
+**Business Rules:**
+1. Salesperson တစ်ဦးသည် Company တစ်ခုအတွက် အလုပ်လုပ်သည်။
+2. ထို Company သည် Product တစ်ခုကို ထုတ်လုပ်သည်။
+3. ထို့ကြောင့် Salesperson သည် ထို Product ကို ရောင်းချပေးရသည်။
+
+| salesperson | company | product |
+|:---:|:---:|:---:|
+| Smith | MegaCorp | Laptops |
+| Smith | MegaCorp | Phones |
+| Bob | TechInc | Laptops |
+| Smith | TechInc | Laptops |
+
+**ဒီ Table တွင် ဖြစ်ပေါ်နေသော ပြဿနာ:**
+`Smith` သည် `Laptops` ရောင်းချသည်ဟူသော Fact သည် MegaCorp အတွက်ရော TechInc အတွက်ပါ ပွား၍ အကြိမ်ကြိမ် မှတ်တမ်းတင်နေရပါတယ်။ တကယ်လို့ Smith သည် Laptop ရောင်းချခြင်း မပြုတော့ပါက ထို Data အားလုံးကို လိုက်လံ ဖျက်ဆီးနေရမည် ဖြစ်ပါတယ်။
+
+ဒါဟာ Table ကြီးတစ်ခုထဲတွင် သီးခြား Relationship များကို ပေါင်းစပ် သိုလှောင်ထားခြင်းကြောင့် ဖြစ်ပေါ်လာသည့် **Join Dependency** ပြဿနာ ဖြစ်ပါတယ်။
+
+---
+
+## 4NF မှ 5NF သို့ ပြောင်းလဲခြင်း
+
+ဒီ ပြဿနာကို ဖြေရှင်းရန် 5NF စည်းမျဉ်းအရ မူရင်း Table ကြီးကို သီးခြား ဆက်စပ်နေသော Table အသေး ၃ ခုအဖြစ် **Lossless Decompose** ပြုလုပ်လိုက်ပါမည်။
+
+**Table 1: `salesperson_company`**
+| salesperson | company |
+|:---:|:---:|
+| Smith | MegaCorp |
+| Smith | TechInc |
+| Bob | TechInc |
+
+**Table 2: `company_product`**
+| company | product |
+|:---:|:---:|
+| MegaCorp | Laptops |
+| MegaCorp | Phones |
+| TechInc | Laptops |
+
+**Table 3: `salesperson_product`**
+| salesperson | product |
+|:---:|:---:|
+| Smith | Laptops |
+| Smith | Phones |
+| Bob | Laptops |
+
+ယခုအခါ `Smith သည် Laptops ရောင်းချသည်` ဟူသော Fact သည် `salesperson_product` Table တွင် Single Row ဖြင့်သာ စနစ်တကျ ရှိပါတော့မည်။ ကုမ္ပဏီများ မည်မျှပင် တိုးပွားလာပါစေ Data Duplication ဖြစ်ပေါ်တော့မည် မဟုတ်ပါ။
+
+<Aside title="💡 အနှစ်ချုပ်">
+  - **5NF** ဆိုသည်မှာ Database Table များကို ထပ်မံ၍ Lossless Decompose ပြုလုပ်၍ မရတော့သည့် အခြေခံအကျဆုံး အနုစိတ် သိုလှောင်မှု အဆင့်သို့ ရောက်ရှိသွားခြင်း ဖြစ်ပါတယ်။
+  - Production-ready Systems များတွင်မူ **3NF သို့မဟုတ် BCNF အထိ** Design ရေးဆွဲနိုင်ပါက အလွန် အရည်အသွေးမြင့်မားသော Database Architecture ကို ရရှိပြီ ဖြစ်ပါတယ်။
+</Aside>

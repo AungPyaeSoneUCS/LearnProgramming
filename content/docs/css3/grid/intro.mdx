@@ -1,0 +1,92 @@
+---
+title: "Grid Intro — Grid Layout ဆိုတာဘာလဲ"
+description: "CSS Grid ရဲ့ အခြေခံ concept များ၊ display grid, flexbox နဲ့ grid ကွာခြားချက်များနဲ့ ပထမဆုံး 3-column layout အကြောင်း လေ့လာကြမယ်။"
+---
+
+CSS Grid ဟာ CSS3 မှာ ပါဝင်တဲ့ **two-dimensional** layout system တစ်ခုဖြစ်ပြီး row နဲ့ column နှစ်ဖက်လုံးကို တစ်ပြိုင်တည်း ထိန်းချုပ်နိုင်ပါတယ်။ Flexbox က item တွေကို တစ်ဖက်တည်းမှာ စီပေးတယ်ဆိုရင် Grid ကတော့ စားပွဲပေါ် အခန်းကွက်တွေ (grid lines) ချပြီး item တွေကို ကွက်ထဲ ထည့်တဲ့ ပုံစံနဲ့ ပိုပြီး တိကျစွာ နေရာချနိုင်ပါတယ်။
+
+### Grid vs Flexbox — ဘယ်ဟာကို ဘယ်အချိန်သုံးမလဲ
+
+- **Flexbox** — content က သေးငယ်တဲ့ ဒါမှမဟုတ် အရေအတွက် မသိတဲ့ items တွေကို row ဒါမှမဟုတ် column တစ်တန်းတည်းမှာ ဖြန့်တဲ့အခါ။
+- **Grid** — row ရော column ပါ ထည့်သွင်းစဉ်းစားရတဲ့ page structure တစ်ခုလုံးအတွက်။
+
+**ဥပမာ -**
+
+```css
+/* Flexbox — item တွေကို တစ်တန်းတည်းမှာ ဖြန့်သည် */
+.flex-row {
+  display: flex;
+  gap: 10px;
+}
+
+/* Grid — row ရော column ပါ သတ်မှတ်သည် */
+.grid-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+```
+
+မှတ်ချက် — Flexbox က item အရေအတွက် ပြောင်းလဲနေတဲ့ layout တွေအတွက် သင့်ပြီး Grid က page တစ်ခုလုံးရဲ့ blueprint ဆွဲရာမှာ ပိုမို သင့်တော်ပါတယ်။
+
+### display: grid သတ်မှတ်ခြင်း
+
+Flexbox လိုပဲ Grid ကိုလည်း container ပေါ်မှာ `display: grid` သတ်မှတ်တာနဲ့ စတင်ပါတယ်။ ဒါပေမယ့် columns တွေ မသတ်မှတ်ရသေးချိန်မှာတော့ item တွေက column တစ်ခုတည်းမှာ အောက်ဆင့် စီနေဦးမှာ ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.container {
+  display: grid;
+}
+```
+
+မှတ်ချက် — `display: grid` တစ်ခုတည်းဖြင့် item တွေက row အနေနဲ့ စီပေမယ့် column track တွေကို သတ်မှတ်ပေးမှသာ လိုချင်တဲ့ grid shape ကို ရမှာ ဖြစ်ပါတယ်။
+
+### ပထမဆုံး 3-Column Layout
+
+`grid-template-columns` က grid ရဲ့ column track တွေကို သတ်မှတ်ပေးပါတယ်။ `1fr 1fr 1fr` ဆိုတဲ့စကားလုံးက column သုံးခု၊ အကျယ်ညီတူ ဖြစ်ပါတယ်။ `fr` unit က "fraction" (အပိုင်းအစ) ကို ဆိုလိုပြီး နေရာရှိသလောက်ကို အချိုးကျ ခွဲဝေပေးတဲ့ unit ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.grid-three {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+```
+
+မှတ်ချက် — Container ဘယ်လောက်ပဲ ကျယ်ကျယ် item သုံးခုစလုံးက အကျယ်ညီတူ ဖြစ်နေမှာပါ။ Flexbox မှာ `flex: 1` နဲ့ ရတဲ့ပုံစံမျိုးကို Grid မှာ 1fr နဲ့ သတ်မှတ်နိုင်ပါတယ်။
+
+### fr Unit ကို ပိုနားလည်အောင်
+
+fr unit က အချိုးကျ ခွဲဝေပေးတာမို့ `1fr 2fr 1fr` ဆိုရင် item နှစ်ခုက 25% စီ ပြီး အလယ်က 50% ယူပါတယ်။ ဒါက သင်ခန်းစာ အမျိုးမျိုးမှာ ပြန်သုံးနိုင်တဲ့ အစွမ်းထက်တဲ့ unit ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 16px;
+}
+```
+
+မှတ်ချက် — ဒီ layout က sidebar ဘယ်၊ main content အလယ်၊ sidebar ညာ ဆိုတဲ့ page structure တွေမှာ အလွန် အသုံးဝင်ပါတယ်။ Column track တွေရဲ့ နာမည်တွေကိုလည်း နောက်သင်ခန်းစာတွေမှာ သတ်မှတ်နိုင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- CSS Grid သည် two-dimensional layout system ဖြစ်သည်။
+- Flexbox က one-dimensional၊ Grid က two-dimensional အတွက် သင့်တော်သည်။
+- `display: grid` ဖြင့် grid layout ကို စတင်သည်။
+- `grid-template-columns` + fr unit ဖြင့် column track များကို သတ်မှတ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "CSS Grid က layout ကို ဘယ်လိုပုံစံနဲ့ စီစဉ်ပေးပါသလဲ?", options: ["One dimensional", "Two dimensional", "No dimension", "Fixed dimension"], correctAnswer: 1, explanation: "Grid က row ရော column ပါ နှစ်ဖက်လုံးကို တစ်ပြိုင်တည်း ထိန်းချုပ်နိုင်တဲ့ two-dimensional system ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "Grid container ကို စတင်ဖို့ ဘယ် property ကို သုံးပါသလဲ?", options: ["Display grid", "Display flex", "Position grid", "Layout grid"], correctAnswer: 0, explanation: "display: grid က container ကို grid container အဖြစ် သတ်မှတ်ပေးပါတယ်။" },
+    { id: "q3", question: "Column သုံးခုကို အကျယ်ညီတူ ဖြစ်စေချင်ရင် grid-template-columns ကို ဘယ်လို ရေးပါသလဲ?", options: ["3fr 3fr 3fr", "1fr 1fr 1fr", "1fr 2fr 3fr", "Fix 1fr"], correctAnswer: 1, explanation: "1fr 1fr 1fr က track သုံးခုလုံးကို နေရာညီတူ ခွဲဝေပေးပြီး column သုံးခု ညီတူကျယ်စေပါတယ်။" }
+  ]}
+/>

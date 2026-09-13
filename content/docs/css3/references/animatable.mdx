@@ -1,0 +1,71 @@
+---
+title: "CSS Animatable — Animation ပြုလုပ်နိုင်သော Property များ"
+description: "CSS Property များထဲမှ transition နဲ့ animation အတွက် Animatable ဖြစ်/မဖြစ် ခွဲထားတဲ့ ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### Animatable Property ဆိုတာ ဘာလဲ?
+
+**Animatable** ဆိုတာ Property တစ်ခုရဲ့ တန်ဖိုးကို `transition` (သို့) `animation` နဲ့ အဆင့်များစွာ ခွဲပြီး ချောမွေ့စွာ ပြောင်းလဲပြနိုင်ခြင်း ဖြစ်ပါတယ်။ Popup တစ်ခု ဝင်လာတာ ၊ ခလုတ်ပေါ် Mouse တင်တိုင်း အနည်းငယ် ကြီးလာတာ စတာတွေက Animatable Property တွေကို သုံးထားတာပါ။
+
+Animatable မဟုတ်တဲ့ Property ကို `transition` ထည့်ထားရင် အလယ်အဆင့်တွေ မရှိဘဲ တည့်တည့် ပြောင်းသွားပါတယ်။
+
+### Animatable Property များ ဇယား
+
+| Property | Animatable? | မှတ်ချက် |
+| ---- | ---- | ---- |
+| `opacity` | Yes | အကြည်အထူ 0 ကနေ 1 ချောမွေ့စွာ ပြောင်းသည် |
+| `transform` | Yes | Move ၊ Scale ၊ Rotate အားလုံး ရသည် |
+| `margin` | Yes | Layout တုန်ခါမှု ဖြစ်တတ်သည် |
+| `padding` | Yes | Hover Effect များမှာ သုံးလေ့ ရှိသည် |
+| `color` | Yes | စာသား အရောင် ပြောင်းသည် |
+| `background-color` | Yes | နောက်ခံ အရောင် ပြောင်းသည် |
+| `width` | Yes | ပြောင်းရင် Reflow ဖြစ်တတ်သည် |
+| `height` | Yes | ပြောင်းရင် Reflow ဖြစ်တတ်သည် |
+| `filter` | Yes | Blur ၊ Brightness စသည် |
+| `box-shadow` | Yes | ရိပ်လွှာ Effect |
+| `top` ၊ `left` | Yes | Transform ထက် Performance နည်းသည် |
+| `flex-grow` | Yes | Flex Item ကြီးထွားမှု အချိုး |
+| `flex-shrink` | Yes | Flex Item ကျုံ့မှု အချိုး |
+| `flex-basis` | Yes | Flex Item ရဲ့ ပင်မ အရွယ် |
+| `gap` | Yes | Item ကြား အကွာအဝေး |
+| `display` | No | Discrete — တည့်တည့် ပြောင်းသွားသည် |
+| `font-family` | No | Discrete — အလယ်အဆင့် မရှိ |
+
+မှတ်ချက် — Animatable ဖြစ်တဲ့ Property က ဂဏန်း (သို့) အရောင်တန်ဖိုးလို အလယ်အဆင့် တွက်လို့ရတာတွေ ဖြစ်ပြီး `display` လို Discrete Property တွေကတော့ Animatable မဟုတ်ပါဘူး။
+
+### Performance ဂရုပြုချက်
+
+`transform` နဲ့ `opacity` က GPU မှာ အလုပ်လုပ်လို့ Animation ချောမွေ့ပြီး `width` ၊ `height` ၊ `margin` လို Layout Property တွေက Reflow နဲ့ Repaint ပိုလုပ်လို့ ပိုနှေးတတ်ပါတယ်။ Animation များများ လုပ်မယ်ဆိုရင် GPU-friendly Property တွေကို ဦးစားပေး ရွေးပါ။
+
+**ဥပမာ -**
+```css
+.card {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  opacity: 0.75;
+  transform: scale(1.06);
+}
+```
+
+မှတ်ချက် — Hover မှာ `transform` နဲ့ `opacity` ပဲ သုံးထားလို့ Animation ချောမွေ့ပြီး Layout Shift မဖြစ်ပါဘူး။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Animatable Property က အလယ်အဆင့် တွက်လို့ရတာတွေ ဖြစ်ပါတယ်။
+- `transform` နဲ့ `opacity` က GPU Acceleration ရလို့ ချောမွေ့ပါတယ်။
+- `display` နဲ့ `font-family` တို့သည် Animatable မဟုတ်ပါဘူး။
+- Width ၊ Height ၊ Margin ကို Animation လုပ်ရင် Reflow ဖြစ်တတ်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "အောက်ပါထဲက Animatable မဟုတ်တဲ့ Property က ဘာလဲ?", options: ["display", "opacity", "color", "transform"], correctAnswer: 0, explanation: "display က Discrete ဖြစ်လို့ Animatable မဟုတ်ပါဘူး။" },
+    { id: "q2", question: "GPU မှာ အလုပ်လုပ်လို့ Animation လုပ်ရင် ချောမွေ့တဲ့ Property နှစ်ခုက ဘာတွေလဲ?", options: ["transform နဲ့ opacity", "width နဲ့ height", "margin နဲ့ padding", "top နဲ့ left"], correctAnswer: 0, explanation: "transform နဲ့ opacity က GPU Acceleration ရလို့ Performance ကောင်းပါတယ်။" },
+    { id: "q3", question: "opacity ရဲ့ Animatable Range က ဘယ်လောက် ကဘယ်လောက်လဲ?", options: ["0 ကနေ 1", "0 ကနေ 100", "1 ကနေ 10", "0 ကနေ 255"], correctAnswer: 0, explanation: "opacity က 0 လုံးဝအကြည် ကနေ 1 အရောင်ထူ ကြားမှာ Animatable ဖြစ်ပါတယ်။" },
+  ]}
+/>

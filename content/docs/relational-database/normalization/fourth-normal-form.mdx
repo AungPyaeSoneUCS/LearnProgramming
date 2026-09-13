@@ -1,0 +1,71 @@
+---
+title: "Fourth Normal Form (4NF)"
+description: "Normalization ၏ စတုတ္ထအဆင့် (4NF) နှင့် Multi-valued Dependency"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="💡 ရည်ရွယ်ချက်">
+  Database တွင် အတွေ့ရ အနည်းသော်လည်း စနစ်ကျသော Architecture အတွက် အရေးပါသည့် **Fourth Normal Form (4NF)** နှင့် **Multi-valued Dependency (MVD)** ဖယ်ရှားနည်းကို လေ့လာသွားကြပါမယ်။
+</Aside>
+
+## 4NF ၏ မဖြစ်မနေ စည်းမျဉ်း ၂ ခု
+
+Table တစ်ခုသည် Fourth Normal Form (4NF) အဆင့်သို့ ရောက်ရှိရန် အောက်ပါ စည်းမျဉ်း ၂ ခုနှင့် ကိုက်ညီရပါမည်:
+
+1. **BCNF အဆင့် ပြီးမြောက်ပြီးသား ဖြစ်ရမည်။**
+2. **No Multi-valued Dependency (MVD):**
+   Table ထဲတွင် အပြန်အလှန် မသက်ဆိုင်သော Multi-valued Dependencies (မတူညီသော Independent Multi-valued Attributes) များ ကိန်းဝပ် မနေရပါ။
+
+## Multi-valued Dependency ဆိုတာ ဘာလဲ?
+
+**Multi-valued Dependency (MVD)** ဆိုသည်မှာ Primary Key တစ်ခုနှင့် ဆက်စပ်နေသော Independent Multi-valued Attributes အစုအဝေး ၂ ခု သို့မဟုတ် ၂ ခုထက်ပို၍ ပါဝင်နေသော်လည်း၊ အဆိုပါ Attributes ဦးစီး အစုအဝေးများ အချင်းချင်းမူ ဘာမျှ တိုက်ရိုက် မသက်ဆိုင်ဘဲ ကင်းလွတ်နေသည့် အခြေအနေမျိုး ဖြစ်ပါတယ်။
+
+MVD ကို သင်္ကေတအားဖြင့် `A ->> B` ဟု ရေးသားကြပါတယ်။
+
+---
+
+## 4NF လိုအပ်လာပုံ (လက်တွေ့ ဥပမာ)
+
+ဝန်ထမ်းများ၏ ကျွမ်းကျင်မှု (Skills) နှင့် ပြောဆိုနိုင်သော ဘာသာစကား (Languages) များကို သိမ်းဆည်းထားသည့် Table ကို ကြည့်ပါမည်:
+
+**Business Rules:**
+- ဝန်ထမ်းတစ်ဦးတွင် Skill များစွာ ရှိနိုင်သည်။
+- ဝန်ထမ်းတစ်ဦးတွင် ပြောဆိုနိုင်သော Language များစွာ ရှိနိုင်သည်။
+- သို့သော် Skill နှင့် Language အချင်းချင်းသည် သီးခြား ကင်းလွတ်နေသည် (ဥပမာ - Python တတ်မြောက်ခြင်းနှင့် French စကားပြောတတ်ခြင်းသည် သီးခြားကင်းလွတ်ပါသည်)။
+
+| employee_id | skill | language |
+|:---:|:---:|:---:|
+| 101 | Programming | English |
+| 101 | Programming | French |
+| 101 | Design | English |
+| 101 | Design | French |
+
+**ဒီ Table တွင်:**
+- Primary Key သည် **`(employee_id, skill, language)`** ၃ ခုစလုံး ပေါင်းစပ်ထားသော Composite Primary Key ဖြစ်ပါတယ်။
+- Non-Key Column မပါဝင်သဖြင့် BCNF အဆင့် ရောက်ရှိနေပါတယ်။
+
+**ဖြစ်ပေါ်နေသော Redundancy ပြဿနာ:**
+Employee `101` သည် Skill အသစ် `Marketing` ထပ်မံ ရရှိလာပါက၊ သူပြောဆိုနိုင်သည့် Language ၂ မျိုး ရှိနေသဖြင့် Row ၂ ခု (`Marketing-English`, `Marketing-French`) ထပ်မံ ရေးသွင်းရပါတော့မည်။ ဒါဟာ **Multi-valued Dependency** ကြောင့် Data Redundancy ဖြစ်ပေါ်ရခြင်း ဖြစ်ပါတယ်။
+
+---
+
+## BCNF မှ 4NF သို့ ပြောင်းလဲခြင်း
+
+ဒီ ပြဿနာကို ဖြေရှင်းရန် အချင်းချင်း မသက်ဆိုင်သော Multi-valued Attributes များကို သီးသန့် Table နှင့် ခွဲထုတ်လိုက်ပါမည်။
+
+**Table 1: `employee_skills`**
+| employee_id | skill |
+|:---:|:---:|
+| 101 | Programming |
+| 101 | Design |
+
+**Table 2: `employee_languages`**
+| employee_id | language |
+|:---:|:---:|
+| 101 | English |
+| 101 | French |
+
+ယခုအခါ Skill အသစ် ထပ်မံ ရရှိပါက `employee_skills` Table တွင် Row တစ်ကြောင်းတည်းသာ ထည့်သွင်းရတော့မည် ဖြစ်ပါတယ်။
+
+ဒီလို ခွဲထုတ်လိုက်သည့်အတွက် Data Redundancy ပြဿနာကို ဖြေရှင်းနိုင်သွားပြီး **Fourth Normal Form (4NF)** အဆင့်သို့ အောင်မြင်စွာ ရောက်ရှိသွားပြီ ဖြစ်ပါတယ်။

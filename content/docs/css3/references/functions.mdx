@@ -1,0 +1,74 @@
+---
+title: "CSS Functions — တွက်ချက်မှုနှင့် အရောင် Function များ"
+description: "rgb(), hsl(), calc(), min(), max(), clamp(), var(), url(), translate() စတဲ့ CSS Function တွေက ဘာတွေ တွက်ချက်ပေးတယ်ဆိုတာ စုစည်းထားတဲ့ ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### CSS Function ဆိုတာ ဘာလဲ?
+
+CSS **Function** က Property Value ကို မေးထားတဲ့ နေရာမှာ တွက်ချက်မှု ၊ အရောင် သတ်မှတ်မှု ၊ ပြောင်းလဲမှု (Transform) စတာတွေကို ဆောင်ရွက်ပေးတဲ့ ပုံစံတစ်ခု ဖြစ်ပြီး Function နာမည်နဲ့တကွ `(` နဲ့ `)` အကြားမှာ Argument တွေ ထည့်၍ ရေးပါတယ်။
+
+### အရောင် Function များ
+
+| Function | တွက်ချက်ပေးသောအရာ | ဥပမာ |
+| ---- | ---- | ---- |
+| `rgb()` | အနီ ၊ အစိမ်း ၊ အပြာ (0-255) ၃ တန်ဖိုးနဲ့ အရောင် | `rgb(41, 98, 255)` |
+| `rgba()` | `rgb()` လို ဖြစ်ပြီး Alpha (0 မှ 1) နဲ့ အကြည်ရေ | `rgba(0, 0, 0, 0.5)` |
+| `hsl()` | Hue (အရောင်) ၊ Saturation ၊ Lightness နဲ့ အရောင် | `hsl(220, 100%, 58%)` |
+| `hsla()` | `hsl()` လို ဖြစ်ပြီး Alpha ပါ ထည့်နိုင်ခြင်း | `hsla(120, 60%, 40%, 0.7)` |
+
+### သင်္ချာ (Math) Function များ
+
+| Function | တွက်ချက်ပေးသောအရာ | ဥပမာ |
+| ---- | ---- | ---- |
+| `calc()` | `+` `-` `*` `/` နဲ့ Value တစ်ခုကို တွက်ချက်ခြင်း | `calc(100% - 40px)` |
+| `min()` | ပေးထားတဲ့ Value တွေထဲက အနိမ့်ဆုံး ရွေးခြင်း | `min(100%, 800px)` |
+| `max()` | ပေးထားတဲ့ Value တွေထဲက အမြင့်ဆုံး ရွေးခြင်း | `max(1rem, 2vw)` |
+| `clamp()` | Min နဲ့ Max ကြားမှာ Preferred Value ထိန်းခြင်း | `clamp(1rem, 3vw, 2.5rem)` |
+
+### Variable နဲ့ Resource Function များ
+
+| Function | တွက်ချက်ပေးသောအရာ | ဥပမာ |
+| ---- | ---- | ---- |
+| `var()` | Custom Property (CSS Variable) ရဲ့ တန်ဖိုးကို ပြန်ထုတ်ခြင်း | `var(--brand-color)` |
+| `url()` | ပုံ ၊ Font စတဲ့ အရင်းအမြစ်ကို ညွှန်ပြခြင်း | `url("bg.png")` |
+
+### Transform (ပြောင်းလဲမှု) Function များ
+
+| Function | တွက်ချက်ပေးသောအရာ | ဥပမာ |
+| ---- | ---- | ---- |
+| `translate()` | Element ကို ဘယ်/ညာ ၊ အပေါ်/အောက် ရွှေ့ခြင်း | `translate(10px, 20px)` |
+| `translateX()` | X ဝင်ရိုးပေါ် ရွှေ့ခြင်း | `translateX(-50%)` |
+| `translateY()` | Y ဝင်ရိုးပေါ် ရွှေ့ခြင်း | `translateY(20px)` |
+| `rotate()` | Element ကို ဒီဂရီ (°) ဖြင့် လှည့်ခြင်း | `rotate(45deg)` |
+| `scale()` | Element ကို အချိုးအစားအလိုက် ချဲ့ / ချုံ့ခြင်း | `scale(1.2)` |
+| `skew()` | Element ကို စောင်း၍ ပုံပျက်စေခြင်း | `skew(10deg)` |
+
+**ဥပမာ -**
+```css
+.card {
+  background-color: rgba(41, 98, 255, 0.1);
+  width: min(100%, 800px);
+  padding: clamp(1rem, 3vw, 2rem);
+  color: var(--text-color);
+  transform: translate(10px, 10px) rotate(2deg);
+}
+```
+
+မှတ်ချက် — Transform Function တွေကို Space ခွဲ၍ တစ်ကြောင်းထဲမှာ ဆက်တိုက် ပေါင်းသုံးနိုင်ပြီး `rgb()` ထက် `hsl()` က လူဖတ်ရလွယ်တာမို့ ခေတ်စားလာပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `calc()` ထဲမှာ `+` နဲ့ `-` ရဲ့ နှစ်ဖက်မှာ Space မဖြစ်မနေ လိုအပ်ပါတယ်။
+- `var()` က `--` နဲ့ စတဲ့ Custom Property နာမည်ကို ယူပြီး သုံးပါတယ်။
+- Transform Function တွေက Element ရဲ့ Layout ကို မပြောင်းဘဲ Visual ပိုင်းကိုသာ ပြောင်းလဲပေးပါတယ်။
+- Color Function တွေမှာ Alpha ထည့်ချင်ရင် `rgba()` သို့မဟုတ် `hsla()` ကို သုံးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Unit မတူတဲ့ Value တွေကို ပေါင်းနုတ် တွက်ချက်ဖို့ ဘယ် Function သုံးပါသလဲ?", options: ["clamp()", "calc()", "max()", "hsl()"], correctAnswer: 1, explanation: "calc() က 100% နုတ် 40px လိုမျိုး unit မတူတဲ့ value တွေကို တွက်ချက်နိုင်ပါတယ်။" },
+    { id: "q2", question: "CSS Variable ရဲ့ တန်ဖိုးကို ပြန်ထုတ်ပေးတဲ့ Function က ဘာလဲ?", options: ["url()", "var()", "min()", "skew()"], correctAnswer: 1, explanation: "var(--name) က သတ်မှတ်ထားတဲ့ custom property ရဲ့ တန်ဖိုးကို ပြန်ထုတ်ပေးပါတယ်။" },
+    { id: "q3", question: "Element ကို 45 deg ဖြင့် လှည့်ချင်ရင် ဘယ် Function သုံးပါသလဲ?", options: ["scale()", "translate()", "rotate()", "skew()"], correctAnswer: 2, explanation: "rotate() က element ကို degree နဲ့ လှည့်ပေးပြီး rotate(45deg) လို ရေးပါတယ်။" },
+  ]}
+/>

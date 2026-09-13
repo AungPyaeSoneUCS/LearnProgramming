@@ -1,0 +1,91 @@
+---
+title: "CSS Overflow — Content ပိုလျှံမှု ကိုင်တွယ်နည်း"
+description: "overflow: visible ၊ hidden ၊ scroll ၊ auto နဲ့ overflow-x ၊ overflow-y တို့ကို ဥပမာနဲ့ လေ့လာကြမယ်။"
+---
+
+### Overflow ဆိုတာ
+
+Element ရဲ့ Box ထဲမှာ Content တွေ ဝင်မဆံ့တဲ့အခါ ဖြစ်ပေါ်တာကို Overflow လို့ ခေါ်ပါတယ်။ `overflow` Property က ဒီလို ပိုလျှံနေတဲ့ Content တွေကို ဘယ်လို ကိုင်တွယ်မလဲ သတ်မှတ်ပေးပါတယ်။ Value တွေက `visible` ၊ `hidden` ၊ `scroll` ၊ `auto` ဆိုပြီး လေးမျိုး ရှိပါတယ်။
+
+**ဥပမာ -**
+```css
+div {
+  height: 80px;
+  overflow: visible;
+}
+```
+
+မှတ်ချက် — `visible` က Default ဖြစ်ပြီး Content က Box ကို ကျော်လွန် ထွက်ပြီး အပြင်ဘက်မှာ မြင်ရပါတယ်။
+
+### hidden — ဖျောက်ခြင်း
+
+`overflow: hidden;` ဆိုရင် Box ထဲကနေ ထွက်နေတဲ့ Content တွေကို ဖြတ်တောက်ပြီး မမြင်ရအောင် ထားပါတယ်။ ဒါပေမယ့် Scrollbar ကို မပေးပါဘူး။
+
+**ဥပမာ -**
+```css
+.clip-box {
+  width: 200px;
+  height: 100px;
+  overflow: hidden;
+}
+```
+
+မှတ်ချက် — Content တွေ ဖြတ်ခံရလို့ ဖတ်လို့မရအောင် ဖြစ်တတ်ပါတယ်။ Photo Thumbnail စတာတွေမှာ အသုံးများပါတယ်။
+
+### scroll — Scrollbar အမြဲ
+
+`overflow: scroll;` ဆိုရင် Content များမများ Scrollbar ကို အမြဲ ပြပေးပါတယ်။ Content ပမာဏ မသေချာတဲ့ Box တွေအတွက် သင့်တော်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.scroll-box {
+  width: 200px;
+  height: 120px;
+  overflow: scroll;
+}
+```
+
+မှတ်ချက် — Content နည်းနေတဲ့အချိန်မှာတောင် Scrollbar နေရာကို သိမ်းထားလို့ Layout ကို နည်းနည်း ဖိနိုင်ပါတယ်။
+
+### auto — လိုမှသာ Scroll
+
+`overflow: auto;` က Content ပိုလျှံမှသာ Scrollbar ပြပြီး မပိုရင် ဘာမှ မပြတဲ့ စမတ်ကျတဲ့ Option ပါ။ လက်တွေ့မှာ အသုံးအများဆုံး ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.auto-box {
+  width: 200px;
+  height: 120px;
+  overflow: auto;
+}
+```
+
+မှတ်ချက် — Content က Box ထဲမှာ လုံလောက်နေရင် Scrollbar မပေါ်ဘဲ ပိုလာမှသာ ပေါ်လာပါတယ်။
+
+### overflow-x နဲ့ overflow-y
+
+`overflow-x` က အလျားလိုက် (Horizontal) ၊ `overflow-y` က ဒေါင်လိုက် (Vertical) ပိုလျှံမှုကို သီးခြား ကိုင်တွယ်နိုင်ပါတယ်။ Horizontal Scrollbar ကို ဖျောက်ပြီး Vertical ကို ထားချင်ရင်လည်း ဒီနည်းနဲ့ ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.table-wrap {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+```
+
+မှတ်ချက် — Mobile မှာ Horizontal Scrollbar ပေါ်တာကို ဖျောက်ချင်တဲ့အခါ `overflow-x: hidden;` ကို သုံးတတ်ပါတယ်။ ဒါပေမယ့် Content ဖြတ်ခံရတာ သတိထားဖို့ လိုပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `visible` က Default အတိုင်း ထွက်ပြပြီး `hidden` က ဖြတ်ဖျောက်ပါတယ်။
+- `scroll` က Scrollbar အမြဲ ပြပြီး `auto` က လိုမှသာ ပြပါတယ်။
+- `overflow-x` နဲ့ `overflow-y` က Axis တစ်ခုချင်းစီကို သီးခြား ကိုင်တွယ်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "overflow ရဲ့ Default Value က ဘာလဲ?", options: ["hidden", "scroll", "visible", "auto"], correctAnswer: 2, explanation: "Default က visible ဖြစ်ပြီး Content တွေက Box ကို ကျော်ထွက်ပြီး မြင်ရပါတယ်။" },
+  { id: "q2", question: "Content ပိုလျှံမှသာ Scrollbar ပြချင်ရင် ဘယ် Value ကို သုံးရပါသလဲ?", options: ["scroll", "auto", "hidden", "visible"], correctAnswer: 1, explanation: "auto က Content မလုံလောက်ရင် Scrollbar မပြဘဲ ပိုလာမှသာ ပြပါတယ်။" },
+  { id: "q3", question: "Box ထဲကနေ ထွက်နေတဲ့ Content တွေကို လုံးဝ ဖြတ်ဖျောက်ချင်ရင် ဘယ် Value ကို သုံးပါသလဲ?", options: ["visible", "scroll", "auto", "hidden"], correctAnswer: 3, explanation: "hidden က Overflow ဖြစ်နေတဲ့ Content ကို ဖြတ်တောက်ပြီး မမြင်ရအောင် ထားပါတယ်။" }
+]} />

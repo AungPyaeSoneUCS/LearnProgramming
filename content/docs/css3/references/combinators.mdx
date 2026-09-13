@@ -1,0 +1,75 @@
+---
+title: "CSS Combinators — Selector ပေါင်းစပ်နည်းများ"
+description: "Descendant, Child, Adjacent Sibling, General Sibling Combinator လေးမျိုးလုံးကို ဥပမာနဲ့တကွ စုစည်းထားတဲ့ ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### Combinator ဆိုတာ ဘာလဲ?
+
+**Combinator** ဆိုတာ CSS Selector နှစ်ခုကို ဆက်စပ်ပေးပြီး Element တွေကြားက ဆက်စပ်မှု (Relationship) ပေါ် မူတည်၍ Element တွေကို ရွေးချယ်တဲ့ သင်္ကေတ ဖြစ်ပါတယ်။ Space က Descendant ၊ `>` က Child ၊ `+` က Adjacent Sibling ၊ `~` က General Sibling ကို ကိုယ်စားပြုပါတယ်။
+
+### Combinator လေးမျိုး
+
+| Combinator | သင်္ကေတ | ဖော်ပြချက် | ဥပမာ |
+| ---- | ---- | ---- | ---- |
+| Descendant | `A B` (Space) | `A` အတွင်းမှာ ရှိတဲ့ `B` အားလုံး (အဆင့်မရွေး) | `div p` |
+| Child | `A > B` | `A` ရဲ့ ကလေးတိုက်ရိုက် `B` | `ul > li` |
+| Adjacent Sibling | `A + B` | `A` နောက်မှာ ချက်ချင်း လိုက်တဲ့ `B` တစ်ခုတည်း | `h2 + p` |
+| General Sibling | `A ~ B` | `A` နောက်မှာ ရှိတဲ့ `B` တွေ အားလုံး | `h2 ~ p` |
+
+ဒီလို HTML Structure လေးတစ်ခု စိတ်ကူးကြည့်ပါ — `<div class="main">` ထဲမှာ `p` တစ်ခုနဲ့ `<section>` တစ်ခု ရှိပြီး section ထဲမှာလည်း `p` တစ်ခု ၊ `.main` ရဲ့ အပြင်မှာလည်း `p` တစ်ခု ရှိပါတယ်။
+
+**ဥပမာ -**
+```css
+.main p {
+  color: #2962ff;
+}
+
+.main > p {
+  font-weight: bold;
+}
+
+h2 + p {
+  margin-top: 0;
+}
+
+h2 ~ p {
+  padding-left: 10px;
+}
+```
+
+မှတ်ချက် — `.main p` က section ထဲက `p` ပါ အပါအဝင် အတွင်းရှိ `p` တွေ အားလုံးကို ရွေးပြီး `.main > p` ကတော့ ကလေးတိုက်ရိုက် ဖြစ်တဲ့ `p` တစ်ခုကိုသာ ရွေးပါတယ်။
+
+### Combinator တွေ ပေါင်းစပ်အသုံးပြုခြင်း
+
+Combinator သင်္ကေတတွေကို ဆက်တိုက် ပေါင်းပြီးလည်း သုံးလို့ ရပါတယ်။ ရှုပ်ထွေးတဲ့ Nested Structure တွေမှာ Target Element ကို အတိအကျ ညွှန်ပြချင်တဲ့အခါ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+ul > li > a {
+  text-decoration: none;
+  color: #333;
+}
+
+nav ul > li:first-child {
+  font-weight: bold;
+}
+```
+
+မှတ်ချက် — Nested Menu တွေမှာ Menu Item Individual တစ်ခုချင်းစီကို ချိန်ညှိရတဲ့အခါ ဒီလို Combination Selector က အလွန် အသုံးဝင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Space က အတွင်းမှာ ရှိသမျှ (Descendant) ကို ရွေးသည်။
+- Greater-than sign (`>`) က Direct Child ကိုသာ ရွေးသည်။
+- Plus sign (`+`) က ပထမနောက်လိုက် Sibling တစ်ခုတည်း ရွေးသည်။
+- Tilde sign (`~`) က နောက်မှာ ရှိသမျှ Sibling တွေ အားလုံး ရွေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Selector နှစ်ခုကို Space ခွဲပြီး ရေးရင် ဘယ်လို ရွေးချယ်ပါသလဲ?", options: ["ကလေးတိုက်ရိုက်ကိုသာ", "အတွင်းမှာ ရှိသမျှ အားလုံး", "ပထမနောက်လိုက် တစ်ခုတည်း", "နောက်မှာရှိတဲ့ ဖြစ်သမျှ"], correctAnswer: 1, explanation: "Space က Descendant Combinator ဖြစ်ပြီး အဆင့်မရွေး အတွင်းမှာ ရှိတဲ့ element တွေ အားလုံးကို ရွေးပါတယ်။" },
+    { id: "q2", question: "Direct Child ကိုသာ ရွေးချင်ရင် ဘယ်သင်္ကေတ သုံးပါသလဲ?", options: ["Space", "Plus sign", "Greater-than sign", "Tilde sign"], correctAnswer: 2, explanation: "Child Combinator ကို greater-than sign နဲ့ ရေးပြီး တိုက်ရိုက် ကလေး element တွေကိုသာ ရွေးပါတယ်။" },
+    { id: "q3", question: "General Sibling Combinator က element နှစ်ခုကြား ဘာအခြေအနေ လိုအပ်ပါသလဲ?", options: ["ကြားမှာ တစ်ခုခု မရှိရဘူး", "ကလေးတိုက်ရိုက် ဖြစ်ရတယ်", "တူညီတဲ့ parent အောက်မှာ ရှိရတယ်", "ရှေ့မှာ ရှိရတယ်"], correctAnswer: 2, explanation: "General Sibling က တူညီတဲ့ parent အောက်မှာ ရှိပြီး ရှေ့ element ရဲ့ နောက်မှာ ဖြစ်ရပါတယ်။" },
+  ]}
+/>

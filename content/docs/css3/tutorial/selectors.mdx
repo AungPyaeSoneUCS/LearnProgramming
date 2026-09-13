@@ -1,0 +1,94 @@
+---
+title: "CSS Selectors — Element ရွေးချယ်နည်း"
+description: "Element, ID, Class, Universal, Grouping Selector တွေနဲ့ ဘယ် Element ကို Style လုပ်မယ်ဆိုတာ ရွေးချယ်ပုံ။"
+---
+
+### CSS Selector ဆိုတာ ဘာလဲ?
+
+Selector က CSS Rule တစ်ခုတွင် ဘယ် HTML Element တွေကို Style လုပ်မယ်ဆိုတာကို ရွေးချယ်ပေးသော အစိတ်အပိုင်းပါ။ Selector အမျိုးမျိုး ရှိတာမို့ သင့်လိုအပ်ချက်နဲ့ ကိုက်ညီတာကို ရွေးသုံးနိုင်ပါတယ်။
+
+### Element Selector
+
+Element Selector က Tag နာမည်ကို တိုက်ရိုက် ရေးပြီး ရွေးပါတယ်။ Page ထဲမှာ ရှိတဲ့ ထို Element အမျိုးအစား အားလုံးကို သက်ရောက်ပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  color: green;
+}
+```
+
+မှတ်ချက် — Page ထဲမှာရှိတဲ့ `p` Element တွေ အားလုံးကို အစိမ်းရောင် ဖြစ်စေပါတယ်။
+
+### ID Selector
+
+ID Selector က `#` နဲ့ စပြီး id attribute ပေါ် မူတည်ပြီး Element တစ်ခုတည်းကို ရွေးပါတယ်။ ID က Page တစ်ခုထဲမှာ **တစ်ခုတည်းသာ** ရှိရပြီး Unique ဖြစ်ရပါတယ်။
+
+**ဥပမာ -**
+```css
+#header {
+  background-color: black;
+  color: white;
+}
+```
+
+မှတ်ချက် — HTML မှာ `<div id="header">` ဆိုတဲ့ Element ရှိရမှာဖြစ်ပြီး ဒီ Selector က ထို Element တစ်ခုတည်းကိုသာ Style လုပ်ပါတယ်။
+
+### Class Selector
+
+Class Selector က `.` နဲ့ စပြီး class attribute ပေါ်မူတည်ပြီး ရွေးပါတယ်။ Class တစ်ခုကို Element တွေ အများအပြားမှာ ပြန်သုံးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.center {
+  text-align: center;
+  color: white;
+}
+```
+
+မှတ်ချက် — `<h1 class="center">` လိုမျိုး Element ပေါင်းများစွာမှာ class တစ်ခုတည်းကို ဝေမျှသုံးလို့ ရပါတယ်။
+
+### Universal Selector
+
+Universal Selector `*` က Page ထဲက Element တိုင်းကို ရွေးချယ်ပါတယ်။ Reset Style တွေ ကနဦး အသုံးပြုဖို့ အတွက် အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+```
+
+မှတ်ချက် — Default Margin ၊ Padding တွေကို ဖယ်ရှားပြီး Browser အားလုံးမှာ တစ်ပုံစံတည်း စတင်နိုင်ဖို့ Reset အနေနဲ့ သုံးလေ့ရှိပါတယ်။
+
+### Grouping Selector
+
+Selector တွေကို Comma နဲ့ စာရင်းပြုပြီး ရေးလိုက်ရင် ထို Selector တွေအားလုံးကို တစ်ကြိမ်တည်း Style သတ်မှတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+h1, h2, h3 {
+  font-family: Georgia, serif;
+  color: navy;
+}
+```
+
+မှတ်ချက် — Rule တစ်ခုအတွက် Selector တွေ ဘယ်နှစ်ခုမဆို Group လုပ်နိုင်ပြီး ကုဒ်ထပ်နေခြင်းကို လျှော့ချပေးပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Element Selector က Tag နာမည်နဲ့ ရွေးသည် ၊ ID Selector က `#` ၊ Class Selector က `.` နဲ့ စသည်။
+- ID က Unique ဖြစ်ပြီး Class က ပြန်သုံးနိုင်သည်။
+- Universal Selector `*` က Element အားလုံး ၊ Grouping Selector က Selector စာရင်းတစ်ခုလုံးကို ရွေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Element တိုင်းကို ရွေးချယ်တဲ့ Universal Selector က ဘာလဲ?", options: ["#", ".", "*", "+"], correctAnswer: 2, explanation: "Universal Selector က * (Asterisk) ဖြစ်ပြီး Element တိုင်းကို ရွေးပါတယ်။" },
+    { id: "q2", question: "ID Selector ကို ဘာ Symbol နဲ့ စပါသလဲ?", options: ["#", ".", "*", ":"], correctAnswer: 0, explanation: "ID Selector က # နဲ့ စပြီး Unique ဖြစ်တဲ့ Element တစ်ခုတည်းကို ရွေးပါတယ်။" },
+    { id: "q3", question: "Selector တွေကို စာရင်းပြုပြီး တစ်ကြိမ်တည်း Style လုပ်ဖို့ ဘာကို သုံးပါသလဲ?", options: ["Semicolon", "Colon", "Comma", "Slash"], correctAnswer: 2, explanation: "Comma ( , ) နဲ့ Selector တွေကို စာရင်းပြုပြီး Group လုပ်လို့ ရပါတယ်။" },
+  ]}
+/>

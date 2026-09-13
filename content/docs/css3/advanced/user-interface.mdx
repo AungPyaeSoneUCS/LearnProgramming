@@ -1,0 +1,112 @@
+---
+title: "CSS User Interface — Interface Style ပုံသွင်းခြင်း"
+description: "resize ၊ outline ၊ box-sizing ၊ cursor နဲ့ user-select property တို့ဖြင့် User Interface ကို ပိုမို အသုံးပြုရ လွယ်ကူအောင် ပြုလုပ်နည်း လေ့လာကြမယ်။"
+---
+
+User Interface ကို ပိုမိုကောင်းမွန်အောင် လုပ်ဖို့အတွက် CSS မှာ Property အမျိုးမျိုး ပါဝင်ပါတယ်။ ဒီသင်ခန်းစာမှာ Form နဲ့ Control တွေကို ချိန်ညှိရာမှာ အသုံးအများဆုံး Property တွေ ဖြစ်တဲ့ `resize` ၊ `outline` ၊ `box-sizing` ၊ `cursor` နဲ့ `user-select` တို့ကို လေ့လာကြပါမယ်။
+
+### resize Property
+
+`resize` က Element ကို User ကိုယ်တိုင် ဆွဲပြီး အရွယ်ပြောင်းနိုင် မပြောင်းနိုင် သတ်မှတ်ပေးပါတယ်။ `both` ၊ `horizontal` ၊ `vertical` အနေနဲ့ အသုံးပြုနိုင်ပြီး `none` က အရွယ်ပြောင်းခြင်းကို ပိတ်ပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+textarea {
+  resize: vertical;
+}
+
+.note-box {
+  resize: both;
+  overflow: auto;
+}
+```
+
+မှတ်ချက် — Resize အလုပ်လုပ်ဖို့ Element မှာ `overflow` က Auto သို့မဟုတ် Hidden ရှိရပါတယ်။
+
+### outline နဲ့ Input Focus
+
+`outline` က Element ရဲ့ ပြင်ဘက် အနားတစ်ဝိုက်မှာ ဆွဲပြီး Focus ဖြစ်နေတဲ့ Input တွေကို ထင်ရှားလှည့်စားစေပါတယ်။ Default Outline ကို ချွင်းချက်ရှိပြီး ကိုယ်တိုင် Style လုပ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+input:focus {
+  outline: 2px solid #2196f3;
+  outline-offset: 2px;
+}
+
+.input-clean {
+  outline: none;
+}
+```
+
+မှတ်ချက် — `outline: none` နဲ့ Default Outline ကို ဖယ်နိုင်ပေမယ့် Keyboard User တွေအတွက် Visible Focus Indicator ရှိနေစေဖို့ သတိပြုရပါတယ်။
+
+### box-sizing Property
+
+`box-sizing` က Width အတွင်းမှာ Padding နဲ့ Border ပါ ထည့်တွက်မလား မထည့်တွက်လား ဆုံးဖြတ်ပါတယ်။ `border-box` က တွက်ချက်ရ လွယ်ကူစေလို့ UI Element တွေမှာ အသုံးများပါတယ်။
+
+**ဥပမာ -**
+```css
+.input-field {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+```
+
+မှတ်ချက် — `border-box` ဖြစ်လို့ Width 100% ထဲ Padding နဲ့ Border ပါ ပါဝင်ပြီး Box က Container ထဲကနေ လျှံထွက်မသွားပါဘူး။
+
+### cursor Property
+
+`cursor` က Mouse Pointer ရဲ့ ပုံသဏ္ဍာန်ကို ပြောင်းပေးပါတယ်။ Element တစ်ခုရဲ့ အသုံးပြုပုံကို Pointer ကတစ်ဆင့် အချက်ပြနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.draggable {
+  cursor: grab;
+}
+
+.loading {
+  cursor: progress;
+}
+
+.busy {
+  cursor: not-allowed;
+}
+```
+
+မှတ်ချက် — `grab` က ဆွဲလို့ရကြောင်း ၊ `progress` က လုပ်ဆောင်နေဆဲ ၊ `not-allowed` က မသုံးနိုင်ကြောင်း User ကို အချက်ပြတဲ့ Cursor တွေ ဖြစ်ပါတယ်။
+
+### user-select နဲ့ Text Selection
+
+`user-select` က Text ကို User က Select ၊ Copy လုပ်နိုင် မလုပ်နိုင် ထိန်းချုပ်ပါတယ်။ `none` က Selection ကို ပိတ်ပြီး `all` က တစ်ချက်နှိပ်ရုံနဲ့ အားလုံး Select လုပ်စေပါတယ်။
+
+**ဥပမာ -**
+```css
+.no-copy {
+  user-select: none;
+}
+
+.copy-block {
+  user-select: all;
+}
+```
+
+မှတ်ချက် — `user-select: none` က User Experience ကို ထိခိုက်စေနိုင်လို့ Select မလုပ်စေချင်တဲ့ UI Element တွေမှာသာ သုံးသင့်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `resize` က Element ကို User ဆွဲပြီး အရွယ်ပြောင်းနိုင်မှုကို ထိန်းချုပ်ပါသည်။
+- `outline` က Focus Indicator ကို အစားထိုးနိုင်ပြီး `box-sizing: border-box` က Width တွက်ချက်မှုကို လွယ်ကူစေပါသည်။
+- `cursor` နဲ့ `user-select` က Pointer ပုံနဲ့ Text Selection ကို ထိန်းချုပ်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Element ကို User က ဆွဲပြီး အရွယ်ပြောင်းနိုင်စေဖို့ ဘယ် Property ကို သုံးပါသလဲ?", options: ["resize", "scale", "transform", "overflow"], correctAnswer: 0, explanation: "resize Property က Element ကို User ကအရွယ်ပြောင်းနိုင်စေပါတယ်။" },
+    { id: "q2", question: "Padding နဲ့ Border ကို Width ထဲမှာ ထည့်တွက်ဖို့ ဘယ် Value ကို သုံးပါသလဲ?", options: ["content-box", "border-box", "flex-box", "margin-box"], correctAnswer: 1, explanation: "border-box က Width ထဲ Padding နဲ့ Border ပါ ထည့်တွက်ပေးပါတယ်။" },
+    { id: "q3", question: "Text ကို Select လုပ်လို့မရအောင် ပိတ်ဖို့ ဘယ် Value ကို သုံးပါသလဲ?", options: ["user-select: none", "user-select: off", "select: false", "pointer: none"], correctAnswer: 0, explanation: "user-select: none က Text Selection ကို ပိတ်ပေးပါတယ်။" }
+  ]}
+/>

@@ -1,0 +1,115 @@
+---
+title: "CSS Attribute Selectors — Attribute အလိုက် Style ရွေးချယ်ခြင်း"
+description: "Element များကို Attribute ရှိနေရုံ သို့မဟုတ် Value ကိုက်ညီမှုအလိုက် ရွေးချယ်ပေးတဲ့ Selector များကို လေ့လာကြည့်ရအောင်။"
+---
+
+### Attribute Selector ဆိုတာ ဘာလဲ?
+
+Attribute Selector က Element ရဲ့ Attribute Name ဒါမှမဟုတ် Value ကို ကြည့်ပြီး Style ရွေးချယ်ပေးတဲ့ Selector တစ်မျိုးပါ။ Class နဲ့ ID မထည့်ဘဲ Input, Link, Image စတာတွေကို တိုက်ရိုက် ရွေးချယ်လို့ ရပါတယ်။
+
+**ဥပမာ -**
+```css
+/* Attribute ရှိနေရုံနဲ့ ရွေးခြင်း */
+a[target] {
+  color: #2c3e50;
+  font-weight: bold;
+}
+a[download] {
+  color: #27ae60;
+}
+```
+
+မှတ်ချက် — Attribute Selector ကို Bracket `[ ]` ထဲမှာ ရေးပြီး HTML Attribute တွေ အားလုံးနဲ့ အသုံးပြုလို့ ရပါတယ်။
+
+### `[attr=value]` — Value အတိအကျ
+
+Attribute Value အတိအကျ ကိုက်ညီတဲ့ Element တွေကို `[attr="value"]` ပုံစံနဲ့ ရွေးပါတယ်။ Input တွေကို Type အလိုက် Style ခွဲဖို့ အသုံးအများဆုံး ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+input[type="text"] {
+  border: 2px solid #337ab7;
+  padding: 6px 10px;
+}
+input[type="submit"] {
+  background: #337ab7;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+```
+
+မှတ်ချက် — `[attr=value]` က Case Sensitive ဖြစ်လို့ type="text" နဲ့ type="TEXT" ကို တူညီတယ်လို့ မယူဆပါဘူး။
+
+### `[attr~=value]` — Space ခွဲထားတဲ့ Value
+
+Value မှာ Space နဲ့ ခွဲထားတဲ့စာလုံးများစွာ ရှိပြီး စာလုံးတစ်လုံးနဲ့ ကိုက်ညီတာကို `[attr~="value"]` နဲ့ ရွေးပါတယ်။ `class="important secret"` လိုမျိုး Attribute Value မျိုးစုံထဲက တစ်ခုခု ကိုက်ညီတာကို ရွေးဖို့ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+img[alt~="takkatho"] {
+  border: 2px solid #e67e22;
+}
+a[class~="external"] {
+  font-style: italic;
+}
+```
+
+မှတ်ချက် — `~=` က စာလုံးတစ်လုံးလုံး (Whole Word) ကိုက်ညီမှုကိုသာ ရှာပြီး tak လို Substring ကိုတော့ မရွေးပါဘူး။
+
+### `[attr|=value]` — Dash နဲ့ ခွဲထားတဲ့ Value
+
+Value က ပေးထားတဲ့စာလုံးနဲ့ စပြီး Hyphen (-) နဲ့ ဆက်ထားတဲ့ Value တွေကို `[attr|="value"]` နဲ့ ရွေးပါတယ်။ lang="en-US" လိုမျိုး Language Code တွေအတွက် အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+[lang|="en"] {
+  background-color: #dff0d8;
+  padding: 4px;
+}
+```
+
+မှတ်ချက် — `[lang|=en]` က lang="en" နဲ့ lang="en-US" တို့ကို ရွေးပြီး lang="english" လို Value ကိုတော့ မရွေးပါဘူး။
+
+### Substring Selectors — `[attr^=]` ၊ `[attr$=]` ၊ `[attr*=]`
+
+အစပိုင်းနဲ့ ကိုက်ညီတာ (`^=`), အဆုံးပိုင်းနဲ့ ကိုက်ညီတာ (`$=`), ဘယ်နေရာမှာမဆို ပါဝင်တာ (`*=`) ဆိုပြီး တစ်စိတ်တစ်ပိုင်း ကိုက်ညီမှုတွေကို ရွေးပါတယ်။
+
+**ဥပမာ -**
+```css
+a[href^="https://"] { color: #337ab7; }   /* https:// နဲ့ စတဲ့ Link */
+a[href$=".pdf"]     { color: #c0392b; }   /* .pdf နဲ့ ဆုံးတဲ့ Link */
+a[href*="takkatho"] { font-weight: bold; } /* takkatho ပါနေတဲ့ Link */
+```
+
+မှတ်ချက် — `^=` က အစပိုင်း၊ `$=` က အဆုံးပိုင်း၊ `*=` က နေရာမရွေး ပါဝင်မှုကို ရှာတာဖြစ်ပြီး Link နဲ့ File Type ခွဲခြားရာမှာ အသုံးဝင်ပါတယ်။
+
+### Selector တွေ ပေါင်းစပ်ခြင်း
+
+Attribute Selector တွေကို Class, Element စတာတွေနဲ့ ပေါင်းစပ်လို့ ရပြီး Specificity ကတော့ Class Selector နဲ့ တူညီပါတယ်။ ဒါပေမဲ့ Attribute (၂) ခု ပေါင်းတာက Specificity ကို ပိုမြင့်စေတာမို့ သတိထားပါ။
+
+**ဥပမာ -**
+```css
+input[type="text"][name="username"] {
+  border-color: #e67e22;
+}
+input:not([disabled]) {
+  background: #fafafa;
+}
+```
+
+မှတ်ချက် — Attribute တွေ (၂) ခု ပေါင်းစပ်ရွေးချယ်ရင် Style Override လုပ်ရတာ ခက်လာတတ်ပြီး Selector ကို လိုတာထက် ပိုမရှည်အောင် ထားပါ။
+
+### အကျဉ်းချုပ်
+
+`[attr]`, `[attr=value]`, `[attr~=value]`, `[attr|=value]`, `[attr^=value]`, `[attr$=value]`, `[attr*=value]` ဆိုတဲ့ Selector (၇) မျိုးနဲ့ Element တွေကို Attribute အလိုက် တိကျစွာ ရွေးချယ်နိုင်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "type ရဲ့ Value က text ဖြစ်တဲ့ Input တွေကို ရွေးဖို့ ဘယ် Selector သုံးမလဲ?", options: ["input[type=text]", "input#text", "input.text", "input[href]"], correctAnswer: 0, explanation: "[attr=value] က type attribute ရဲ့ value text နဲ့ အတိအကျ ကိုက်ညီတာကို ရွေးပါတယ်။" },
+    { id: "q2", question: "Value မှာ Space ခွဲထားတဲ့စာလုံးတစ်လုံးနဲ့ ကိုက်ညီတာကို ရွေးတဲ့ Selector က ဘာလဲ?", options: ["[attr~=value]", "[attr=value]", "[attr^=value]", "[attr$=value]"], correctAnswer: 0, explanation: "Tilde လို့ခေါ်တဲ့ ~= က Space ခွဲထားတဲ့ List ထဲက စာလုံးတစ်လုံးနဲ့ ကိုက်ညီတာကို ရှာပါတယ်။" },
+    { id: "q3", question: "https:// နဲ့ စတဲ့ Link တွေကို ရွေးချင်ရင် ဘယ် Selector သုံးမလဲ?", options: ["a[href^=https]", "a[href$=https]", "a[href*=https]", "a[href|=https]"], correctAnswer: 0, explanation: "Caret လို့ခေါ်တဲ့ ^= က Value ရဲ့ အစပိုင်းကို ကြည့်ပြီး ရွေးပါတယ်။" },
+  ]}
+/>

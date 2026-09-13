@@ -1,0 +1,242 @@
+---
+title: "API Integration လက်တွေ့"
+description: "Google Sheets, Notion, Airtable နဲ့ Custom APIs တွေကို n8n နဲ့ ဘယ်လို ချိတ်ဆက်မလဲ"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import FlowDiagram from "@/components/diagrams/FlowDiagram.astro";
+import ParallelFlow from "@/components/diagrams/ParallelFlow.astro";
+
+## Popular Integrations Overview
+
+n8n မှာ လူသုံးအများဆုံး Integrations တွေကတော့ -
+
+- **Data Storage** — Google Sheets, Airtable, Notion Database
+- **Communication** — Slack, Discord, Telegram, Email
+- **E-commerce** — Shopify, WooCommerce, Stripe
+- **Development** — GitHub, Jira, Linear, Webhooks
+- **AI** — OpenAI, Anthropic Claude, Hugging Face
+
+## Google Sheets Integration
+
+Google Sheets ကို Database လိုမျိုး သုံးပြီး n8n နဲ့ အလွယ်တကူ ချိတ်ဆက်လို့ ရပါတယ် -
+
+### Workflow: Form Response → Google Sheet
+
+<FlowDiagram
+  nodes={[
+    { label: "Webhook: Form", type: "trigger" },
+    { label: "Set: Format", type: "data" },
+    { label: "Google Sheets", sublabel: "Append Row", type: "action" }
+  ]}
+/>
+
+### Google Sheets Node Operations
+
+| Operation | ရည်ရွယ်ချက် |
+|-----------|------------|
+| **Append Row** | Sheet ရဲ့ နောက်ဆုံး Row မှာ Data အသစ် ထည့်ဖို့ |
+| **Read Rows** | Sheet ထဲက Data တွေကို ဖတ်ဖို့ |
+| **Update Row** | ရှိပြီးသား Row ကို ပြင်ဖို့ |
+| **Delete Row** | Row တစ်ခုကို ဖျက်ဖို့ |
+| **Clear** | Sheet တစ်ခုလုံးကို ရှင်းလင်းဖို့ |
+
+### Configuration ဥပမာ
+
+Google Sheets — Append Row လုပ်မယ်ဆိုရင် -
+- Credential: [Google Sheets OAuth2]
+- Resource: Spreadsheet
+- Operation: Append Row
+- Spreadsheet: [Google Drive ကနေ ရွေးပါ]
+- Sheet Name: Sheet1
+
+Columns တွေမှာ ထည့်မယ့် Data -
+
+| Column | Value |
+|--------|-------|
+| Timestamp | `{{ $now.toISO() }}` |
+| Name | `{{ $json.name }}` |
+| Email | `{{ $json.email }}` |
+| Message | `{{ $json.message }}` |
+
+<Aside type="tip" title="Sheet ကို Database ပုံစံ သုံးခြင်း">
+Google Sheets ကို Simple Database အနေနဲ့ သုံးလို့ ရပါတယ်။ Row 1 ကို Header (Name, Email, Status စသဖြင့်) ထားပြီး၊ Row 2 ကနေစပြီး Data တွေ ထည့်သွားတာပါ။ n8n ကနေ Row ကို ID (Row Number) သုံးပြီး Update/Delete လုပ်နိုင်ပါတယ်။
+</Aside>
+
+## Notion Integration
+
+Notion Database ကို CRM, Project Tracker, Content Calendar အစရှိသဖြင့် n8n နဲ့ အလွယ်တကူ Automate လုပ်နိုင်ပါတယ် -
+
+### Workflow: Lead → Notion CRM
+
+<FlowDiagram
+  nodes={[
+    { label: "Form Webhook", type: "trigger" },
+    { label: "Notion", sublabel: "Create Page in Leads DB", type: "action" },
+    { label: "Slack", sublabel: "#sales channel notify", type: "action" }
+  ]}
+/>
+
+### Notion Node Configuration
+
+Notion — Create a Page ဆိုရင် -
+- Resource: Database Page
+- Operation: Create
+- Database: ["Leads" database ကို ရွေးပါ]
+
+Properties တွေမှာ -
+
+| Property | Value |
+|----------|-------|
+| Name (Title) | `{{ $json.name }}` |
+| Email | `{{ $json.email }}` |
+| Status | New Lead |
+| Source | Website Form |
+| Date | `{{ $now.toISO() }}` |
+
+## AI Integration — OpenAI/Claude ချိတ်ဆက်ခြင်း
+
+n8n မှာ AI ကိုပါ Workflow ထဲ ထည့်ပြီး ပိုစမတ်ကျတဲ့ Automation တွေ ဆောက်နိုင်ပါတယ် -
+
+### Workflow: Email → AI Summary → Slack
+
+<FlowDiagram
+  nodes={[
+    { label: "Gmail Trigger", sublabel: "New Email", type: "trigger" },
+    { label: "OpenAI", sublabel: "Summarize Email", type: "action" },
+    { label: "Slack", sublabel: "Post Summary in #inbox", type: "action" }
+  ]}
+/>
+
+### AI Node Configuration
+
+```
+OpenAI - Message a Model:
+  Credential:  [OpenAI API Credential]
+  Resource:    Chat
+  Operation:   Message a Model
+  Model:       gpt-4o-mini
+
+  Messages:
+  System: "You are an email assistant. Summarize
+           the email in 2-3 bullet points in
+           Myanmar language."
+
+  User:   "Email Subject: {{ $json.subject }}
+           Email Body: {{ $json.text }}"
+```
+
+**Output ကို Slack ထဲ ပို့မယ်ဆိုရင် -**
+
+```
+Slack Message:
+  📧 *{{ $('Gmail').item.json.subject }}*
+  From: {{ $('Gmail').item.json.from[0].address }}
+
+  *AI Summary:*
+  {{ $json.message.content }}
+```
+
+<Aside type="note" title="Token ကုန်ကျမှု">
+AI API တွေက Token အပေါ်မူတည်ပြီး ပိုက်ဆံပေးရပါတယ်။ အရမ်းရှည်တဲ့ Email တွေကို Summarize လုပ်ရင် Input Token များသွားနိုင်ပါတယ်။ အဲ့ဒါကြောင့် `text.slice(0, 2000)` လိုမျိုး သုံးပြီး Character Limit ထားတာ ပိုကောင်းပါတယ်။
+</Aside>
+
+## HTTP Request — Custom API Integration
+
+n8n မှာ Built-in Node မပါတဲ့ တခြား API တွေအတွက်ဆိုရင် HTTP Request Node ကို သုံးနိုင်ပါတယ် -
+
+### Myanmar Payment Gateway ဥပမာ
+
+```javascript
+// HTTP Request Node — Custom Payment API
+{
+  "method": "POST",
+  "url": "https://api.mypayment.com/v1/charge",
+  "headers": {
+    "Authorization": "Bearer {{ $credentials.apiKey }}",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "amount": "{{ $json.amount }}",
+    "currency": "MMK",
+    "phone": "{{ $json.phone }}",
+    "description": "Order #{{ $json.orderId }}"
+  }
+}
+```
+
+### Response ကို ကိုင်တွယ်ခြင်း
+
+```javascript
+// Code Node — Payment Response Handle
+const response = $input.first().json;
+
+if (response.status === 'success') {
+  return [{
+    json: {
+      success: true,
+      transactionId: response.transaction_id,
+      message: `Payment of ${response.amount} MMK succeeded`
+    }
+  }];
+} else {
+  throw new Error(`Payment failed: ${response.error_message}`);
+}
+```
+
+## Airtable Integration
+
+Airtable ကို Low-code Database အနေနဲ့ သုံးပြီးတော့လည်း n8n နဲ့ ချိတ်လို့ ရပါတယ် -
+
+Airtable ကို အများဆုံး သုံးလေ့ရှိတာက -
+- Product inventory management
+- Customer support ticket tracking
+- Content publishing calendar
+- Project task management
+
+### Airtable CRUD Operations
+
+```
+Airtable Node:
+  Base:      [သင့် Airtable Base ကို ရွေးပါ]
+  Table:     Customers
+  Operation: Create Record
+
+  Fields:
+  Name     → {{ $json.name }}
+  Email    → {{ $json.email }}
+  Plan     → Free
+  SignedUp → {{ $now.toFormat('yyyy-MM-dd') }}
+```
+
+## Complete Integration Example: Customer Onboarding
+
+Customer အသစ် တစ်ယောက် Sign-up ဝင်လာတဲ့အခါ အလုပ် (၄) ခုကို တစ်ပြိုင်နက်တည်း Run ပါမယ် -
+
+<ParallelFlow
+  source="Webhook: Sign-up Form → Set: Format + Validate"
+  sourceType="trigger"
+  targets={[
+    "Gmail: Welcome Email",
+    "Notion: Add to CRM DB",
+    "Slack: Notify Sales Team",
+    "Airtable: Add to Customer List"
+  ]}
+  caption="Customer Onboarding Automation — Sign-up တစ်ကြိမ်ဝင်တာနဲ့ (၄) ခုကို တစ်ပြိုင်နက်တည်း Run ခြင်း"
+/>
+
+### Timing ဆိုင်ရာ အကြံပြုချက်
+
+Workflow တစ်ခုလုံး Run ဖို့ ကြာချိန် (ခန့်မှန်းချက်) -
+- Webhook receive: ~10ms
+- Set/Code Node: ~5ms
+- Gmail send: ~500ms
+- Notion create: ~300ms
+- Slack post: ~200ms
+- Airtable write: ~250ms
+- **Total (parallel): ~500ms** (အနှေးဆုံး Node အတိုင်းပဲ ကြာမှာပါ)
+- **Total (sequential): ~1.3s** (တစ်ခုပြီးမှ တစ်ခုလုပ်ရင် ကြာမယ့်အချိန်)
+
+n8n က ပုံမှန်ဆိုရင် Node တွေကို **Sequential** (တစ်ခုပြီးမှ တစ်ခု) Run ပေမဲ့၊ Parallel Branch တွေ ခွဲလိုက်ရင်တော့ **Concurrent** (တစ်ပြိုင်နက်တည်း) Run ပေးသွားမှာပါ။
+
+နောက်သင်ခန်းစာမှာ **Database Operations** ကို ဆက်ပြီး လေ့လာကြပါမယ် ခင်ဗျာ။

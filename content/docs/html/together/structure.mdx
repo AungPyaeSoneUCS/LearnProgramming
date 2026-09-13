@@ -1,0 +1,177 @@
+---
+title: "အားလုံးကိုပေါင်းစပ်တည်ဆောက်ကြည့်ကြစို့"
+description: "အားလုံးကိုပေါင်းစပ်တည်ဆောက်ကြည့်ကြစို့"
+---
+
+import { Aside, Code, LinkCard } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import before from '@/assets/html/before.png';
+
+<Aside title="ရည်ရွယ်ချက်">
+ဒီသင်ခန်းစာကတော့ အရင် သင်ခဲ့သမျှ အားလုံးကို ပေါင်းစပ်ပြီး HTML webpage အပြည့်အစုံတစ်ခုကို လက်တွေ့ တည်ဆောက်သွားမယ့် အပိုင်းပဲ ဖြစ်ပါတယ် ခင်ဗျာ။ Heading တွေ၊ စာသားတွေ၊ Link တွေ၊ ပုံတွေ၊ Table တွေ၊ Form တွေနဲ့ HTML5 feature တွေကို အတူတကွ အသုံးပြုပြီး လက်တွေ့ Project အသေးစားလေး တစ်ခုကို ဖန်တီးသွားမှာပါ။ ဒီသင်ခန်းစာ အဆုံးမှာတော့ HTML ရဲ့ အစိတ်အပိုင်း တစ်ခုချင်းစီက တကယ့် Webpage တစ်ခုမှာ ဘယ်လို အလုပ်လုပ်သွားတယ်ဆိုတာကို သေချာ နားလည်သွားမှာပါ။
+</Aside>
+
+### Webpage တစ်ခုရဲ့ တည်ဆောက်ပုံ
+HTML page တိုင်းမှာ အခြေခံကျတဲ့ တည်ဆောက်ပုံ (Structure) တစ်ခု အမြဲ လိုအပ်ပါတယ်။
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My First Webpage</title>
+</head>
+    <body>
+
+    </body>
+</html>
+```
+- `<!DOCTYPE html>`: Browser ကို ဒါက HTML5 page တစ်ခုဖြစ်ကြောင်း ကြိုတင် ပြောပြပါတယ်။
+
+- `<html>`: အဓိက Root element ဖြစ်ပါတယ်။
+
+- `<head>`: Meta အချက်အလက်တွေ၊ Page title တွေနဲ့ Stylesheet link တွေကို ထည့်သွင်းပါတယ်။
+
+- `<body>`: User တွေ မျက်မြင် မြင်တွေ့ရမယ့် အရာအားလုံးကို ထည့်သွင်းပါတယ်။
+
+### Navigation Bar ထည့်သွင်းခြင်း
+Navigation bar က User တွေကို Webpage ထဲမှာ အလွယ်တကူ သွားလာနိုင်အောင် ကူညီပေးပါတယ်။ `<nav>` element ထဲမှာ Link တွေကို အခုလို ထည့်သွင်း အသုံးပြုနိုင်ပါတယ်။
+
+```html
+<nav>
+  <a href="#home">Home</a> |
+  <a href="#about">About</a> |
+  <a href="#contact">Contact</a>
+</nav>
+```
+စာမျက်နှာတစ်ခုတည်းမှာပဲ Scroll လုပ်ပြီး အလွယ်တကူ သွားလာဖို့အတွက် `#section-id` ကိုသုံးပြီး Internal link တွေကို ဖန်တီးနိုင်ပါတယ်။
+
+### Hero Section
+Hero section ဆိုတာက Visitor တွေ Website ကို ဝင်ဝင်ချင်း ပထမဆုံး မြင်ရမယ့် အပိုင်းဖြစ်ပါတယ်။ များသောအားဖြင့် အောက်ပါအရာတွေ ပါဝင်လေ့ရှိပါတယ်:
+
+- ခေါင်းစဉ်ကြီး (`<h1>` သို့မဟုတ် `<h2>`)
+
+- ဆွဲဆောင်မှုရှိတဲ့ ပုံ (`<img>`)
+
+- Call-to-action ခလုတ် (ဥပမာ - "ဆက်ဖတ်ရန်" `<a>` သို့မဟုတ် `<button>`)
+
+```html
+<section id="home">
+  <h1>Welcome to My Webpage</h1>
+    <img
+        src="https://placehold.co/600x400"
+        alt="Hero Image"
+        width="600"
+      />
+  <a href="#about">Learn More</a>
+</section>
+```
+
+### About Section (အကြောင်းအရာပိုင်း)
+ဒီအပိုင်းကတော့ ခင်ဗျားအကြောင်း ဒါမှမဟုတ် ခင်ဗျားရဲ့ Content အကြောင်းကို မိတ်ဆက်ပေးတဲ့ နေရာပါ။ စာပိုဒ်တွေ၊ ပုံတွေနဲ့ ခေါင်းစဉ်တွေကို အသုံးပြုနိုင်ပါတယ်။
+
+```html
+<section id="about">
+  <h2>About Me</h2>
+  <p>Hello! I am learning HTML and building my first webpage.</p>
+     <img
+        src="https://placehold.co/400x300"
+        alt="About Image"
+        width="400"
+      />
+</section>
+```
+
+### Table Section (ဇယားပိုင်း)
+Table (ဇယား) တွေက အချက်အလက်တွေကို စနစ်တကျ ဖော်ပြဖို့အတွက် အလွန် အသုံးဝင်ပါတယ်။
+
+```html
+<section>
+  <h2>My Skills</h2>
+  <table border="1">
+    <caption>Skills and Levels</caption>
+    <tr>
+      <th>Skill</th>
+      <th>Level</th>
+    </tr>
+    <tr>
+      <td>HTML</td>
+      <td>Intermediate</td>
+    </tr>
+    <tr>
+      <td>CSS</td>
+      <td>Beginner</td>
+    </tr>
+  </table>
+</section>
+```
+ဇယားခေါင်းစဉ်အတွက် `<caption>`၊ ခေါင်းစဉ် Column အတွက် `<th>`၊ Row အတွက် `<tr>` နဲ့ Data cell (အချက်အလက်ထည့်မယ့် အကွက်) အတွက် `<td>` ကို အသီးသီး သုံးပါတယ်။
+
+### Contact Form (ဆက်သွယ်ရန် ဖောင်)
+Form တွေကို သုံးပြီး User တွေက လိုအပ်တဲ့ အချက်အလက်တွေ ပေးပို့နိုင်ပါတယ်။ အောက်ပါတို့ကို ထည့်သွင်းသင့်ပါတယ်:
+
+- Text input field များ
+
+- Email input field
+
+- Submit ခလုတ်
+
+```html
+<section id="contact">
+  <h2>Contact Me</h2>
+  <form action="submit.html" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br><br>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+    
+    <button type="submit">Send</button>
+  </form>
+</section>
+```
+
+### Footer Section (အောက်ခြေပိုင်း)
+Footer ကတော့ စာမျက်နှာရဲ့ အောက်ဆုံးမှာ ရှိပြီး များသောအားဖြင့် Link တွေ၊ မူပိုင်ခွင့် (Copyright) အချက်အလက်တွေ ပါဝင်ပါတယ်။
+
+```html
+<footer>
+  <p>&copy; 2025 My Webpage. All rights reserved.</p>
+  <a href="#home">Back to top</a>
+</footer>
+```
+
+### Multimedia ထည့်သွင်းခြင်း (Optional)
+ခင်ဗျား ဆန္ဒရှိရင် HTML5 ကိုသုံးပြီး Audio, Video, ဒါမှမဟုတ် Animation တွေကိုပါ ထပ်မံ ထည့်သွင်းနိုင်ပါတယ်။
+
+```html
+<video width="320" controls>
+  <source src="intro.mp4" type="video/mp4">
+</video>
+```
+
+#### အကုန်လုံးကို ပေါင်းစပ်လိုက်တဲ့အခါ - 
+<ContentImage src={before} alt="Complete HTML structure example" height={600}  />
+
+> နောက်ပိုင်းမှာ CSS ကိုပါ တွဲသုံးပြီး ဒီ Structure ကြီးကို ပိုပြီး လှပအောင် ပြင်ဆင်သွားနိုင်ပါတယ်။
+
+<Aside type="tip" title="အကျဉ်းချုပ်">
+- Webpage တစ်ခုဟာ ခေါင်းစဉ်၊ စာသား၊ Link၊ ပုံ၊ ဇယား၊ Form နဲ့ Media တွေကို ပေါင်းစပ် ဖွဲ့စည်းထားတာ ဖြစ်တယ်။
+
+- Navigation bar က User experience ကို ပိုကောင်းစေပြီး Page structure ကိုလည်း စနစ်တကျ ဖြစ်စေတယ်။
+
+- Hero နဲ့ About section တွေက Page ကို ပိုပြီး ဆွဲဆောင်မှု ရှိစေတယ်။
+
+- Table တွေက အချက်အလက်တွေကို စနစ်တကျနဲ့ ဖတ်ရလွယ်အောင် စုစည်းပေးတယ်။
+
+- Form တွေက User တွေကို Data တွေ ဒါမှမဟုတ် Message တွေ ပေးပို့နိုင်အောင် လုပ်ဆောင်ပေးတယ်။
+
+- Footer က စာမျက်နှာရဲ့ အောက်ခြေမှာ တသမတ်တည်း ရှိနေမယ့် အချက်အလက်တွေကို ဖော်ပြပေးတယ်။
+
+- HTML element တွေ အားလုံးကို အတူတကွ အသုံးပြုခြင်းအားဖြင့် Webpage အပြည့်အစုံတစ်ခုကို ဖန်တီးနိုင်ပါတယ် ခင်ဗျာ။
+</Aside>
+
+<Aside type="tip" title="နောက်တစ်ဆင့်">
+ဂုဏ်ယူပါတယ်! HTML ကို အခြေခံအဆင့် လေ့လာပြီးပါပြီ။ ရှေ့ဆက်ပြီး ဘာတွေ ဆက်သင်ယူမလဲ ဆုံးဖြတ်ဖို့ Next Steps ကို သွားကြည့်လိုက်ကြစို့ ခင်ဗျာ။
+</Aside>

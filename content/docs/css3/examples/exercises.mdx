@@ -1,0 +1,261 @@
+---
+title: "CSS Exercises — လေ့ကျင့်ခန်းများ"
+description: "Box အလှဆင်ခြင်းမှ zebra table အထိ အခြေခံ CSS လေ့ကျင့်ခန်း ၆ ခုကို စတင်ကုဒ်၊ မျှော်လင့်ထားသည့် ရလဒ်နှင့် အဖြေများ တွဲလျက် လေ့လာကြမယ်။"
+---
+
+ဒီလေ့ကျင့်ခန်းတွေက CSS ရဲ့ အခြေခံ property တွေကို လက်တွေ့ ကျင့်သုံးဖို့ ဖြစ်ပါတယ်။ တစ်ခုချင်းစီမှာ စတင်ရန် code နဲ့ မျှော်လင့်ထားတဲ့ ရလဒ်ကို အရင်ဖတ်ပြီး ကိုယ်တိုင် ဖြည့်စွက် စမ်းရေးကြည့်ပါ။ နောက်ဆုံးမှာ အဖြေကုဒ်နဲ့ ယှဉ်ကြည့်ပြီး ဘာတွေ ကွာခြားလဲ ဆိုတာ သုံးသပ်ပါ။ ကွာတယ်ဆိုလည်း မစိုးရိမ်ပါနဲ့ — ကိုယ်ရေးတဲ့နည်း မှန်နေသမျှ ရလဒ် တူရင် အောင်မြင်ပါတယ်။
+
+### လေ့ကျင့်ခန်း ၁ — Box တစ်ခုကို အလှဆင်ခြင်း
+
+`.box` class ရှိတဲ့ `div` တစ်ခုကို အကျယ်၊ padding၊ border၊ background အရောင်၊ ဝိုင်းသော ထောင့် (border-radius) နဲ့ စင်တာချစာသား ရှိအောင် လုပ်ပါ။ Property အသစ်တွေ ထည့်ခြင်းဖြင့် box model ကို လက်တွေ့ ခံစားကြည့်ပါ။
+
+#### စတင်ရန် Code
+
+**ဥပမာ -**
+
+```html
+<div class="box">Box Model</div>
+```
+
+မှတ်ချက် — `div` က block element ဖြစ်လို့ `width` ပေးမှသာ သတ်မှတ်ထားသည့် အကျယ်အတိုင်း ပေါ်ပြီး margin မပေးရသေးသမျှ စာမျက်နှာ တစ်ပြင်လုံး နေရာ ယူနေပါလိမ့်မယ်။
+
+#### မျှော်လင့်ထားသော ရလဒ်
+
+အနီရောင် ဘောင်၊ ဖျော့သော အနီနောက်ခံ၊ ဝိုင်းသော ထောင့်များနဲ့ box တစ်ခု ပေါ်ရပြီး အတွင်းက စာသားက စင်တာမှာ ရှိရမည်။ Border နဲ့ padding ရဲ့ ကြားက နေရာလွတ်ကို ရှင်းရှင်းလင်းလင်း မြင်နိုင်ရမည်။
+
+#### အဖြေ
+
+**ဥပမာ -**
+
+```css
+.box {
+  width: 160px;
+  padding: 30px;
+  border: 4px solid #e74c3c;
+  background: #fdecea;
+  border-radius: 12px;
+  text-align: center;
+}
+```
+
+မှတ်ချက် — `border-radius` က ထောင့်လေးခုလုံးကို 12px ဝိုင်းစေပြီး `padding` က စာသားနဲ့ ဘောင်ကြား နေရာလွတ် ဖြစ်ပါတယ်။
+
+### လေ့ကျင့်ခန်း ၂ — Alert Box တစ်ခု ဖန်တီးခြင်း
+
+သတိပေးချက် ဖော်ပြတဲ့ alert box တစ်ခုကို ပြုလုပ်ပါ။ Box က အနီရောင် ဘယ်ဘက် sidebar ဘောင် (border-left)၊ အနီဖျော့နောက်ခံနဲ့ အတွင်းက နေရာလွတ် ကြီးကြီး ရှိရမည်။
+
+#### စတင်ရန် Code
+
+**ဥပမာ -**
+
+```html
+<div class="alert alert-error">
+  အချက်အလက် မှားယွင်းနေပါသည်။ ပြန်လည် စစ်ဆေးပါ။
+</div>
+```
+
+မှတ်ချက် — Class နှစ်ခု ထည့်ထားတာကို သတိထားပါ — `alert` က အခြေခံပုံစံ၊ `alert-error` က အရောင် သီးသန့် ဖြစ်ပြီး နောက်ပိုင်း `alert-success` လို မျိုးကွဲတွေ ထပ်ထည့်ရလွယ်ပါတယ်။
+
+#### မျှော်လင့်ထားသော ရလဒ်
+
+ဘယ်ဘက်မှာ အနီရောင် အကွင်းခံ strips တစ်ခု ပါပြီး နောက်ခံ အနီဖျော့ရောင် အကွက်၊ အတွင်းမှာ သတိပေးစာ ပေါ်ရမည်။ Mouse ရွှေ့လည်း ဘာမှ မပြောင်းပါ။
+
+#### အဖြေ
+
+**ဥပမာ -**
+
+```css
+.alert {
+  padding: 16px 20px;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.alert-error {
+  background: #fbeaea;
+  border-left: 6px solid #c0392b;
+  color: #7b241c;
+}
+```
+
+မှတ်ချက် — `border-left` တစ်ဖက်တည်းသာ သတ်မှတ်ထားလို့ sidebar ပုံစံ ဖြစ်ပြီး Alert Message စာသားအရောင်ကို သေချာမြင်ရအောင် `color` ပါ သတ်မှတ်ထားပါတယ်။
+
+### လေ့ကျင့်ခန်း ၃ — Card တစ်ခုကို စင်တာချခြင်း
+
+`max-width` နဲ့ `margin: 0 auto;` ကို သုံးပြီး Card တစ်ခုကို စာမျက်နှာအလယ် စင်တာမှာ ထားပါ။ Card မှာ padding၊ box-shadow နဲ့ border-radius ပါ ထည့်ပါ။
+
+#### စတင်ရန် Code
+
+**ဥပမာ -**
+
+```html
+<div class="card">
+  <h3>သင်တန်း အသစ်</h3>
+  <p>CSS ကို သေချာ လေ့လာချင်သူတိုင်းအတွက် ဖြစ်ပါတယ်။</p>
+</div>
+```
+
+မှတ်ချက် — `h3` နဲ့ `p` က block element များ ဖြစ်လို့ browser ၏ default margin ကြောင့် Card က ဘယ်ဘက်ခြမ်းမှာ ပေါ်နေတတ်ပါတယ်။
+
+#### မျှော်လင့်ထားသော ရလဒ်
+
+Card က browser window ၏ အလယ် စင်တာ အတိအကျ မှာ ရောက်နေပြီး အောက်မှာ ဖျော့သော အရိပ် (shadow) ရှိရမည်။ Window ကို ကျဉ်းလိုက်ပြီး ချဲ့လိုက်ရင်လည်း Card က စင်တာမှာ အမြဲ ရှိနေရမည်။
+
+#### အဖြေ
+
+**ဥပမာ -**
+
+```css
+.card {
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 24px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+```
+
+မှတ်ချက် — `margin: 0 auto;` က အပေါ်အောက် margin ကို 0 ထားပြီး ဘယ်ညာ margin တွေကို အလိုအလျောက် အညီအမျှ ခွဲပေးလို့ block element က စင်တာချခံရပါတယ်။
+
+### လေ့ကျင့်ခန်း ၄ — Zebra Table ဇယား
+
+Data table တစ်ခုမှာ စာတန်း အလှည့်ကျ အရောင်ခြယ်တဲ့ zebra styling လုပ်ပါ — စုံနံပါတ် (even) စာတန်းတွေမှာ ဖျော့တဲ့ နောက်ခံအရောင်။ `nth-child` သုံးပြီး ဇယားခေါင်းစဉ်တန်း (`th`) ကိုလည်း သီးခြား အရောင် ပေးပါ။
+
+#### စတင်ရန် Code
+
+**ဥပမာ -**
+
+```html
+<table>
+  <tr><th>နာမည်</th><th>မြို့</th></tr>
+  <tr><td>အောင်မိုး</td><td>ရန်ကုန်</td></tr>
+  <tr><td>မြင့်ဝင်း</td><td>မန္တလေး</td></tr>
+  <tr><td>သန်းနိုင်</td><td>လားရှိုး</td></tr>
+  <tr><td>စုစု</td><td>နေပြည်တော်</td></tr>
+</table>
+```
+
+မှတ်ချက် — ဒီ HTML မှာ CSS မထည့်ရသေးသရွေ့ table က default black border မပါတဲ့ ရိုးရိုး ဇယားပုံ ဖြစ်နေပါလိမ့်မယ်။
+
+#### မျှော်လင့်ထားသော ရလဒ်
+
+ခေါင်းစဉ်တန်းက နက်ရောင် နောက်ခံနဲ့ အဖြူစာလုံး ဖြစ်ပြီး ဒေတာ စာတန်း နှစ်တန်းခြား တစ်ကြိမ် ပေါ့ပါးသော အရောင် ရှိရမည်။ Border ကြားမျဉ်းများပါ ရှင်းရှင်းလင်းလင်း မြင်ရမည်။
+
+#### အဖြေ
+
+**ဥပမာ -**
+
+```css
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+th {
+  background: #2c3e50;
+  color: #fff;
+}
+tr:nth-child(even) {
+  background: #f2f2f2;
+}
+```
+
+မှတ်ချက် — `border-collapse: collapse;` က border နှစ်ထပ်ကို တစ်ထပ်တည်း ဖြစ်စေပြီး `tr:nth-child(even)` က စဉ်တန်းစဉ် စုံနံပါတ် စာတန်းတွေကို ရွေးချယ် အရောင်ပေးပါတယ်။
+
+### လေ့ကျင့်ခန်း ၅ — Button Hover Effect
+
+Button တစ်ခုကို အရောင်အားဖြင့် ဖော်ပြပြီး mouse ရွှေ့လိုက်တဲ့အခါ အရောင် ပြောင်းဖို့ `:hover` နဲ့ `transition` ကို သုံးပါ။
+
+#### စတင်ရန် Code
+
+**ဥပမာ -**
+
+```html
+<a class="btn" href="#">ဆက်လက် လေ့လာမည်</a>
+```
+
+မှတ်ချက် — Link ကို button ပုံဖော်ဖို့ Class နာမည် `btn` ပေးထားပြီး default link ရဲ့ underline ကို ဖျောက်ရပါလိမ့်မယ်။
+
+#### မျှော်လင့်ထားသော ရလဒ်
+
+အနီဖျော့ နောက်ခံနဲ့ button တစ်ခု ပေါ်ပြီး mouse ရွှေ့လိုက်တာနဲ့ နက်ရောင် ပြောင်းသွားရမည်။ အရောင်ပြောင်းတာ ရုတ်တရက် မဟုတ်ဘဲ ချောမွေ့စွာ (0.3 စက္ကန့်) ပြောင်းရမည်။
+
+#### အဖြေ
+
+**ဥပမာ -**
+
+```css
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #e74c3c;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+.btn:hover {
+  background: #c0392b;
+}
+```
+
+မှတ်ချက် — `:hover` က mouse ရွှေ့တဲ့ state ကို ရွေးပြီး `transition` က အရောင်ပြောင်းမှုကို ချောမွေ့စေတာမို့ နှစ်ခုတွဲ သုံးမှ ရလဒ်ကောင်း ရပါတယ်။
+
+### လေ့ကျင့်ခန်း ၆ — Flexbox Nav Bar
+
+Navigation menu တစ်ခုကို `display: flex;` နဲ့ ဝေငှပြီး link တွေကြား `gap` သတ်မှတ်ပါ။ Item တွေကို စင်တာချပြီး hover တဲ့အခါ underline ပေါ်စေပါ။
+
+#### စတင်ရန် Code
+
+**ဥပမာ -**
+
+```html
+<nav class="nav">
+  <a href="#">ပင်မ</a>
+  <a href="#">သင်တန်းများ</a>
+  <a href="#">သင်ရိုး</a>
+  <a href="#">ဆက်သွယ်ရန်</a>
+</nav>
+```
+
+မှတ်ချက် — Link တွေက inline element ဖြစ်လို့ `display: flex;` ပေးမှသာ ကိုယ်ပိုင်အရွယ်အစားနဲ့ spacing ထိန်းနိုင်ပါတယ်။
+
+#### မျှော်လင့်ထားသော ရလဒ်
+
+Link ၄ ခုက အလယ်မှာ ဘေးချင်းကပ် စီနေပြီး အကွာအဝေး တူညီရမည်။ Mouse ရွှေ့တဲ့ link အောက်မှာ အနီရောင် underline ပေါ်ရမည်။
+
+#### အဖြေ
+
+**ဥပမာ -**
+
+```css
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 16px;
+  background: #ecf0f1;
+}
+.nav a {
+  text-decoration: none;
+  color: #2c3e50;
+  padding-bottom: 4px;
+}
+.nav a:hover {
+  color: #e74c3c;
+  border-bottom: 2px solid #e74c3c;
+}
+```
+
+မှတ်ချက် — Flexbox က item တွေကို ဘေးချင်းကပ် စီရာမှာ အလွယ်ကူဆုံး နည်းလမ်းဖြစ်ပြီး `gap` က item ကြား အကွာအဝေးကို ထိန်းပေးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Zebra table မှာ စာတန်းအလှည့်ကျ အရောင်ခြယ်ဖို့ မည်သည့် selector ကို အသုံးပြုသနည်း?", options: [":nth-child(even)", ":first-child", ":last-child", ":only-child"], correctAnswer: 0, explanation: "tr:nth-child(even) က စဉ်တန်းစဉ် စုံနံပါတ် စာတန်းများကို ရွေးချယ်၍ အရောင်ခြယ်ပေးသည်။" },
+  { id: "q2", question: "Block element ကို အလျားလိုက် စင်တာချရန် မည်သည့် နည်းလမ်းက မှန်ကန်သနည်း?", options: ["max-width နှင့် margin: 0 auto", "float: left", "margin-top ကြီးကြီး", "text-align: justify"], correctAnswer: 0, explanation: "margin: 0 auto က ဘယ်ညာ margin ကို အညီအမျှ ခွဲပေးလို့ element က စင်တာတွင် ရောက်သည်။" },
+  { id: "q3", question: "Hover အခါ အရောင် ချောမွေ့စွာ ပြောင်းဖို့ မည်သည့် property ကို ထည့်ရသနည်း?", options: ["transition", "transform", "opacity", "display"], correctAnswer: 0, explanation: "transition က state ပြောင်းမှုကို အချိန်ယူ ချောမွေ့စွာ ပြုလုပ်ပေးသည်။" } ]} />

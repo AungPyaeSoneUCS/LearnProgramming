@@ -1,0 +1,139 @@
+---
+title: "CSS Navigation Bars — မီနူးဘား တည်ဆောက်ခြင်း"
+description: "Vertical နဲ့ Horizontal nav bar ဆောက်နည်း၊ hover/active state နဲ့ full-width bar ပြုလုပ်နည်းကို လေ့လာကြရအောင်။"
+---
+
+### Navigation Bar ဆိုတာဘာလဲ
+
+**Navigation Bar** ဆိုတာ Website ရဲ့ အဓိက Page တွေကို Link လုပ်ပေးတဲ့ Menu ပါ။ List-based nav က Standard ဖြစ်ပြီး `<ul>` + `<li>` + `<a>` ကို Style လုပ်ပြီးတော့ ဆောက်ပါတယ်။ HTML5 Course ကနေ `<ul>` ၊ `<li>` ၊ `<a>` တွေ မှတ်မိပြီးသားဆိုရင် ဒီသင်ခန်းစာမှာ CSS Style ကို အဓိကထား လေ့လာပါမယ်။
+
+**ဥပမာ -**
+```html
+<ul class="nav">
+  <li><a href="index.html">မူလ</a></li>
+  <li><a href="about.html">အကြောင်း</a></li>
+  <li><a href="contact.html">ဆက်သွယ်ရန်</a></li>
+</ul>
+```
+
+မှတ်ချက် — Nav ဆောက်တာအမြဲတမ်း ul ထဲမှာ li နဲ့ a ဖြစ်ပြီး CSS ထဲမှာ bullet point တွေ နဲ့ underline တွေကို ဖျောက်ရပါတယ်။
+
+### Vertical Navigation Bar (ဒေါင်လိုက် မီနူးဘား)
+
+Vertical Nav မှာ list-style နဲ့ text-decoration တွေကို ဖျောက်ပြီး Link တွေ display: block လုပ်ပါတယ်။ Link တစ်ခုချင်းစီက တစ်ကြောင်းစီ ဖြစ်ပြီး အကျယ်အပြည့် ယူပါတယ်။
+
+**ဥပမာ -**
+```css
+ul.vertical {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+}
+
+ul.vertical li a {
+  display: block;
+  color: #000;
+  padding: 12px 16px;
+  text-decoration: none;
+}
+
+ul.vertical li a:hover {
+  background-color: #555;
+  color: white;
+}
+```
+
+မှတ်ချက် — `display: block` ကြောင့် Link တွေက အကျယ်အပြည့် အဆင်ပြေတဲ့ Click target ဖြစ်လာပြီး Mobile မှာလည်း နှိပ်ရလွယ်ပါတယ်။
+
+### Horizontal Navigation Bar (တစ်ကြောင်းတည်း မီနူးဘား)
+
+Horizontal Nav ဆောက်ဖို့ကတော့ Link တွေကို Float ဒါမှမဟုတ် **Flexbox** နဲ့ ဘေးတစ်ကပ်ထားပါတယ်။ Flexbox က ယနေ့ခေတ်မှာ အသုံးအဝင်ဆုံး ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+ul.horizontal {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #333;
+  display: flex;
+}
+
+ul.horizontal li a {
+  display: block;
+  color: white;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+ul.horizontal li a:hover {
+  background-color: #111;
+}
+```
+
+မှတ်ချက် — Flexbox က Float ရဲ့ collapse ပြဿနာ မရှိဘဲ အလွယ်တကူ nav item တွေ ဘေးချင်းကပ် စီစဉ်နိုင်ပါတယ်။
+
+### Active State (လက်ရှိစာမျက်နှာ)
+
+User အခုရောက်နေတဲ့ Page ရဲ့ Link ကို မီးမောင်းထိုးပြဖို့ **`.active` Class** ကို HTML ထဲမှာ ထည့်ပြီး Style ပေးပါတယ်။ HTML ထဲမှာတော့ ဒီလို ထည့်ပါ — `<li><a class="active" href="index.html">မူလ</a></li>` ဆိုပြီး လက်ရှိ Page ရဲ့ Link မှာ active class ကို ထည့်ပေးရပါမယ်။
+
+**ဥပမာ -**
+```css
+ul.horizontal li a.active {
+  background-color: #04aa6d;
+  color: white;
+}
+```
+
+မှတ်ချက် — active class က လက်ရှိ page ကို အစိမ်းရောင်နဲ့ မီးမောင်းထိုးပြပြီး user ကို site ပေါ် ဘယ်ရောက်နေလဲ ရှင်းရှင်းပြနေပါတယ်။
+
+### Full-Width နဲ့ Center Border Nav
+
+Nav Bar ကို Screen အပြည့် ဖြန့်ပြီး Link တွေကိုကြားမှာ Separator Border ထည့်ချင်ရင် `border-right` ကို li တွေ ပေါ်မှာ ထည့်ပါတယ်။ Mobile မှာတော့ Media Query နဲ့ ချိန်ညှိပါတယ်။
+
+**ဥပမာ -**
+```css
+ul.full {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.full li {
+  flex: 1;
+}
+
+ul.full li a {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  color: white;
+  background-color: #555;
+  text-decoration: none;
+}
+
+ul.full li a:hover {
+  background-color: #04aa6d;
+}
+```
+
+မှတ်ချက် — `flex: 1` က nav item တွေကို width ညီတူညီတူ ခွဲပေးလို့ nav bar က Screen အပြည့် လှလှပပ ဖြန့်ပါတယ်။
+
+#### တိုတိုနဲ့လိုရင်း
+
+- Nav ဆောက်တာ ul + li + a ကို CSS နဲ့ Style လုပ်တာဖြစ်သည်။
+- Vertical အတွက် display block ၊ Horizontal အတွက် Flexbox သုံးသည်။
+- Active class နဲ့ hover state တွေက User ကို နေရာဖော်ပြပေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Nav bar မှာ bullet point တွေ ဖျောက်ဖို့ ဘယ် property ကို သုံးပါသလဲ?", options: ["Text decoration none", "List style none", "Display flex", "Padding zero"], correctAnswer: 1, explanation: "list-style-type: none က ul ရဲ့ bullet point တွေကို ဖျောက်ပေးပါတယ်။" },
+    { id: "q2", question: "လက်ရှိ ရောက်နေတဲ့ page ရဲ့ link ကို မီးမောင်းထိုးပြဖို့ ဘာကို သုံးပါသလဲ?", options: ["Active class", "Hover state", "Float left", "Border radius"], correctAnswer: 0, explanation: "active class ကို html မှာ ထည့်ပြီး style နဲ့ လက်ရှိစာမျက်နှာကို ပြနိုင်ပါတယ်။" },
+    { id: "q3", question: "Horizontal nav item တွေကို width ညီတူညီတူ ခွဲဖို့ flexbox မှာ ဘာ property ကို သုံးပါသလဲ?", options: ["Flex grow 1", "Flex basis 0", "Flex 1", "Flex direction column"], correctAnswer: 2, explanation: "flex: 1 က item တွေကို container ထဲမှာ နေရာအညီအမျှ ခွဲယူစေပါတယ်။" }
+  ]}
+/>

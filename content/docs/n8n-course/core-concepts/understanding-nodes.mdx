@@ -1,0 +1,62 @@
+---
+title: "Nodes, Triggers, Credentials: n8n ၏ အုတ်မြစ် ၃ ခု"
+description: "n8n Architecture တွင် ပါဝင်သော Nodes, Triggers နှင့် Credentials အယူအဆများ"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="💡 ရည်ရွယ်ချက်">
+  n8n ၏ အခြေခံ အုတ်မြစ် ၃ ခုဖြစ်သော Nodes (အလုပ်လုပ်ပေးသော အစိတ်အပိုင်းများ)၊ Triggers (စတင်စေသောအချက်များ) နှင့် Credentials (လုံခြုံရေးသော့များ) တို့ကို တိကျစွာ နားလည်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## 1. Node ဆိုတာ ဘာလဲ?
+
+n8n တွင် Workflow တစ်ခုလုံး၏ အခြေခံအကျဆုံး အစိတ်အပိုင်းကို **Node** ဟု ခေါ်ဆိုပါတယ်။
+
+Node များကို **LEGO တုံးများ** ကဲ့သို့ စဉ်းစားနိုင်ပါတယ်။ တုံးတစ်တုံးချင်းစီသည် သီးသန့် အလုပ်တစ်ခုစီ လုပ်ဆောင်ပေးပြီး၊ ထိုတုံးများကို မြှားများဖြင့် ဆက်စပ်လိုက်ပါက Workflow ကြီးတစ်ခု ဖြစ်လာပါတယ်။
+
+### Node တစ်ခု၏ ပါဝင်သော အစိတ်အပိုင်း ၃ ခု:
+- **Input:** ယခင် Node ဆီမှ စီးဆင်း ဝင်ရောက်လာသော Data များ (JSON items)။
+- **Parameters:** ထို Node အနေဖြင့် မည်သို့ အလုပ်လုပ်ရမည်ကို သတ်မှတ်ပေးသည့် Setting များ။
+- **Output:** Node မှ အလုပ်လုပ်ပြီး၍ ထွက်ရှိလာသော ရလဒ် Data များ (နောက် Node ထံသို့ ဆက်လက် စီးဆင်းမည်)။
+
+---
+
+## 2. Node အမျိုးအစား ၃ ခု (Categories)
+
+n8n တွင် Node မျိုးစုံ ရာပေါင်းများစွာ ပါဝင်သော်လည်း အဓိက အုပ်စု ၃ စုအဖြစ် ခွဲခြားနိုင်ပါတယ်။
+
+| Node အမျိုးအစား | တာဝန် | ဥပမာများ |
+|---|---|---|
+| **1. Trigger Nodes** | Workflow ကို အလိုအလျောက် စတင်စေခြင်း | Schedule (Cron), Webhook, Gmail Trigger, Manual Trigger |
+| **2. Action Nodes** | သီးသန့် အလုပ်တစ်ခုခုကို ဆောင်ရွက်ပေးခြင်း | Google Sheets (Append Row), Telegram (Send Message), HTTP Request |
+| **3. Core / Utility Nodes** | Data များကို စီမံခန့်ခွဲခြင်းနှင့် လမ်းကြောင်းခွဲခြင်း | IF, Switch, Set (Edit Fields), Merge, Code (JS/Python) |
+
+---
+
+## 3. Data စီးဆင်းပုံနှင့် Expression များ
+
+n8n တွင် Data များသည် အမြဲတမ်း **ဘယ်ဘက်မှ ညာဘက်သို့ (Left-to-Right)** စီးဆင်းသွားပါတယ်။
+
+Data များသည် **JSON Format** ဖြင့် စီးဆင်းသွားပြီး၊ ရှေ့ Node ထံမှ Data များကို ကိုးကားရန် **Expressions** များကို အသုံးပြုရပါတယ်။
+
+- `{{ $json.fieldName }}` : လက်ရှိ Node သို့ ဝင်ရောက်လာသော Data ထဲမှ `fieldName` ၏ တန်ဖိုးကို ယူသုံးခြင်း။
+- `{{ $node["NodeName"].json.fieldName }}` : သီးသန့် 지정ထားသော Node ထံမှ Data ကို ယူသုံးခြင်း။
+
+---
+
+## 4. Credentials & Security (လုံခြုံရေး)
+
+API Keys များ၊ Password များနှင့် Token များကို Workflow ၏ Node Parameters ထဲတွင် တိုက်ရိုက် မရေးဘဲ **Credentials Manager** တွင် သီးသန့် လုံခြုံစွာ Encrypt (AES-256) လုပ်၍ သိုလှောင်ရပါတယ်။
+
+### Credential အမျိုးအစားများ:
+1. **API Key:** Third-party Service များမှ ထုတ်ပေးသော Secret Key (ဥပမာ - OpenAI API Key, Telegram Bot Token)။
+2. **OAuth2:** Google Sheets, Facebook Graph API တို့ကဲ့သို့ Account Permission ပေး၍ ချိတ်ဆက်ခြင်း။
+3. **Basic Auth:** Username/Password ဖြင့် ချိတ်ဆက်ခြင်း။
+
+---
+
+## ဖြစ်တတ်သော အတွေ့များသည့် အမှားများ (Common Pitfalls)
+
+- **Hardcoding Secrets:** API Key များကို Node Parameters ထဲတွင် တိုက်ရိုက် ရေးမိခြင်း (အခြားသူများ ပေါက်ကြားနိုင်ပါသည်)။
+- **Credential Scopes:** OAuth2 ပေးစဉ် Scope (Permission) လုံလောက်အောင် မပေးမိခြင်း။

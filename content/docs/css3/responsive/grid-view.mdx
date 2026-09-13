@@ -1,0 +1,126 @@
+---
+title: "RWD Grid View — Responsive Grid System"
+description: "ရာခိုင်နှုန်း (%) တွေနဲ့ တည်ဆောက်တဲ့ Responsive 12-Column Grid နည်းစနစ်ကို လေ့လာကြမယ်။"
+---
+
+Grid View ဆိုတာ Website Layout ကို Column အပိုင်းကားများအဖြစ် ပိုင်းခြားပြီး Content တွေကို လှပသပ်ရပ်စွာ စုစည်းတဲ့ နည်းလမ်းပါ။ Responsive Design မှာ ဒီ Grid တွေကို ရာခိုင်နှုန်း (%) တွေနဲ့ တည်ဆောက်တာမို့ Screen အရွယ်အစား ပြောင်းသလို Column အကျယ်တွေ လိုက်ပြောင်းပါတယ်။ ယနေ့ခေတ် CSS Framework တွေရဲ့ အခြေခံလည်း ဖြစ်ပါတယ်။
+
+### 12-Column Grid ဆိုတာ ဘာလဲ?
+
+12-Column Grid က Page Width တစ်ခုလုံးကို အပိုင်း ၁၂ ခု ခွဲပြီး Content တစ်ခုစီက Column အရေအတွက် ဘယ်လောက်ယူမယ်ဆိုတာ သတ်မှတ်တဲ့နည်းပါ။ 12 ကို 2 ၊ 3 ၊ 4 ၊ 6 နဲ့ စားလို့ရတာမို့ Layout အမျိုးအစား ပေါင်းများစွာကို ညီညီမျှမျှ ခွဲနိုင်ပါတယ်။
+
+- 6 Column ဖြစ်ရင် အပိုင်း ၂ ခု ပိုင်းလို့ ရသည်။
+- 4 Column ဖြစ်ရင် အပိုင်း ၃ ခု ပိုင်းလို့ ရသည်။
+- 3 Column ဖြစ်ရင် အပိုင်း ၄ ခု ပိုင်းလို့ ရသည်။
+- 2 Column ဖြစ်ရင် အပိုင်း ၆ ခု ပိုင်းလို့ ရသည်။
+
+### Column Width တွေ တွက်နည်း
+
+Column တစ်ခုရဲ့ Width ကို တွက်ဖို့ Class တန်ဖိုးကို 12 နဲ့ စားပြီး 100 နဲ့ မြှောက်ရပါတယ်။ ဥပမာ `col-3` ဆိုရင် 3 ကို 12 နဲ့ စားလို့ 0.25 ၊ 100 နဲ့ မြှောက်လို့ 25% ရပါတယ်။ ဒီနည်းနဲ့ အောက်ပါ Column Class တွေကို ဖန်တီးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+* {
+  box-sizing: border-box;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.col-3 { width: 25%; }
+.col-4 { width: 33.33%; }
+.col-6 { width: 50%; }
+.col-8 { width: 66.66%; }
+.col-12 { width: 100%; }
+
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+}
+```
+
+မှတ်ချက် — `box-sizing: border-box` ကို သုံးထားတာမို့ Padding ထည့်တာတောင် Width က ပိုမပြည့်သွားပါဘူး။ Float တွေကို Clear လုပ်ဖို့ `.row::after` ကို သုံးပါတယ်။
+
+### Container နဲ့ Row တွေ ဖန်တီးနည်း
+
+Grid System မှာ Container က Column တွေအားလုံးကို ဘောင်ခတ်ဖို့ ၊ Row က Column တစ်တန်းစီကို စုစည်းဖို့ အသုံးပြုပါတယ်။ Row အတွင်းမှာမှ Column Class တွေ ထည့်သွင်းရပါတယ်။
+
+**ဥပမာ -**
+```html
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <h2>ဘယ်ဘက်အပိုင်း</h2>
+      <p>Column ၆ ခု ယူထားတဲ့ Content ။</p>
+    </div>
+    <div class="col-6">
+      <h2>ညာဘက်အပိုင်း</h2>
+      <p>Column ၆ ခု ယူထားတဲ့ Content ။</p>
+    </div>
+  </div>
+</div>
+```
+
+မှတ်ချက် — ဒီအချိန်မှာ Column နှစ်ခုစလုံးက `col-6` ဖြစ်တာမို့ Screen ကြီးပေါ်မှာ တစ်တန်းတည်း ဘေးချင်းကပ်ပြပါတယ်။ Screen ကျဉ်းတဲ့အခါ အောက်က အတိုင်း Media Query နဲ့ ထိန်းနိုင်ပါတယ်။
+
+### Mobile အတွက် Media Query ထည့်သွင်းနည်း
+
+Screen ကျဉ်းလာတဲ့အခါ Column တွေ တစ်ခုပေါ် တစ်ခု ထပ်မသွားစေဖို့ (Stack) Width 100% အဖြစ် ပြောင်းပေးရပါတယ်။ ဒီလိုလုပ်ဖို့ Media Query ကို အသုံးပြုပါတယ်။
+
+**ဥပမာ -**
+```css
+/* Mobile နဲ့ Tablet သေးသေး အတွက် */
+@media only screen and (max-width: 768px) {
+  [class*="col-"] {
+    width: 100%;
+  }
+}
+```
+
+မှတ်ချက် — Screen Width 768px အောက်ရောက်ရင် Column တိုင်းက 100% ဖြစ်ပြီး ဒေါင်လိုက် တစ်ခုပြီး တစ်ခု စီပါတယ်။ ဒါကြောင့် ဖုန်းပေါ်မှာ Content တွေ ဖတ်လို့လွယ်ပါတယ်။
+
+### Responsive Grid ဥပမာ အပြည့်အစုံ
+
+ခေါင်းစီး ၊ ဘေးဘားတစ်ဖက် ၊ Content မျှမျှ ၊ နောက်ဘေးဘားတစ်ဖက် စီစီစဉ်ထားတဲ့ သာမန် Layout တစ်ခုကို Grid Class တွေနဲ့ တည်ဆောက်ကြည့်ကြရအောင်။
+
+**ဥပမာ -**
+```css
+.header, .footer {
+  background-color: #333;
+  color: white;
+  padding: 15px;
+}
+
+.col-2 { width: 16.66%; }
+.col-7 { width: 58.33%; }
+```
+
+```html
+<div class="row">
+  <div class="col-2">ဘေးဘား ဘယ်</div>
+  <div class="col-7">အဓိက Content</div>
+  <div class="col-3">ဘေးဘား ညာ</div>
+</div>
+```
+
+မှတ်ချက် — Column ပေါင်းလေ့ရှိ 2 + 7 + 3 = 12 ဖြစ်တာမို့ Layout က ညီညီညာညာ ပြည့်စုံပါတယ်။ Column ပေါင်းက 12 ထက် ကျော်ရင် နောက်တန်း ဆက်သွားတာမျိုး ဖြစ်နိုင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Grid View က Layout ကို Column အပိုင်းများအဖြစ် ပိုင်းခြားပေးသည်။
+- 12-Column Grid က အပိုင်း ၁၂ ခု ခွဲပြီး ညီမျှစွာ ခွဲနိုင်အောင် ကူညီသည်။
+- Column Width ကို ရာခိုင်နှုန်း (%) တွေနဲ့ တွက်ချက်သည်။
+- Screen သေးလာလျှင် Media Query သုံး၍ Column တစ်ခုချင်းကို 100% ပြောင်းပေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "12-Column Grid မှာ col-3 Class ရဲ့ Width က ဘယ်လောက်လဲ?", options: ["25%", "33%", "50%", "75%"], correctAnswer: 0, explanation: "3 ကို 12 နဲ့ စားပြီး 100 နဲ့ မြှောက်လို့ 25% ရပါတယ်။" },
+    { id: "q2", question: "Column Width ကို ဘယ်လို Unit တွေနဲ့ သတ်မှတ်လေ့ရှိပါသလဲ?", options: ["Pixel တွေနဲ့သာ", "ပုံသေ ဂဏန်း အတိုင်း", "ရာခိုင်နှုန်း တွေနဲ့", "Em တွေနဲ့သာ"], correctAnswer: 2, explanation: "Responsive Grid တွေက Screen နဲ့ လိုက်လျောညီထွေဖို့ ရာခိုင်နှုန်းတွေနဲ့ သတ်မှတ်ပါတယ်။" },
+    { id: "q3", question: "Screen သေးလာတဲ့အခါ Column တွေ ဒေါင်လိုက် စီစေချင်ရင် ဘာလုပ်ရပါသလဲ?", options: ["Width တွေကို 100% ပြောင်းတဲ့ Media Query ရေးရသည်", "Font Size တွေသာ ပြောင်းရသည်", "Column တွေကို ဖျက်ရသည်", "Float မသုံးဘဲ နေရသည်"], correctAnswer: 0, explanation: "Mobile အတွက် Column Width တွေကို 100% ပြောင်းတဲ့ Media Query ရေးခြင်းဖြင့် Column တွေ ဒေါင်လိုက် စီပါတယ်။" },
+  ]}
+/>

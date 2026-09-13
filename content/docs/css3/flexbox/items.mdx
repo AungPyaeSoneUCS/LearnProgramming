@@ -1,0 +1,138 @@
+---
+title: "Flex Items — Flex Item တွေကို ထိန်းချုပ်ခြင်း"
+description: "flex-grow, flex-shrink, flex-basis, flex shorthand, order, align-self နဲ့ two-axis centering အကြောင်း လေ့လာကြမယ်။"
+---
+
+Container level property တွေက layout တစ်ခုလုံးကို ထိန်းချုပ်ပြီး **flex item** တစ်ခုချင်းစီပေါ်မှာ သတ်မှတ်တဲ့ property တွေကတော့ item တစ်ခုချင်းစီရဲ့ အရွယ်အစား၊ နေရာချထားမှုကို သတ်မှတ်ပေးပါတယ်။ ဒီသင်ခန်းစာမှာ flex items တွေအတွက် အရေးအကြီးဆုံး property တွေကို လေ့လာကြရအောင်။
+
+### flex-grow — Item ကို ပိုကျယ်လာစေခြင်း
+
+`flex-grow` က container မှာ နေရာပိုကျန်နေတဲ့အခါ ဒီ item က ကျန်တဲ့နေရာကို ဘယ်လောက် ယူမလဲ သတ်မှတ်ပါတယ်။ Default က `0` ဖြစ်ပြီး နေရာပိုရှိရင်တောင် item က မဆန့်လာပါဘူး။ တန်ဖိုးကို 1 ဒါမှမဟုတ် 2 စသဖြင့် ပေးလိုက်တဲ့အခါ နေရာပိုတွေကို အချိုးလိုက် ခွဲယူပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.item {
+  flex-grow: 1;
+}
+
+.double {
+  flex-grow: 2;
+}
+```
+
+မှတ်ချက် — `flex-grow: 1` ရှိတဲ့ item နှစ်ခုက နေရာပိုကို 50/50 ခွဲပြီး၊ တစ်ခုက 1 နောက်တစ်ခုက 2 ဆိုရင် နေရာပိုကို 1/3 နဲ့ 2/3 နဲ့ ခွဲယူပါတယ်။
+
+### flex-shrink နဲ့ flex-basis
+
+`flex-basis` က item ရဲ့ မူလအရွယ်အစား (width) ကို သတ်မှတ်ပြီး `flex-shrink` က container ကျဉ်းလာတဲ့အခါ item က ဘယ်လောက် ကျုံ့သွားမလဲ ထိန်းချုပ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.item {
+  flex-basis: 200px;
+  flex-shrink: 1;
+}
+
+.fixed {
+  flex-shrink: 0; /* ဘယ်တော့မှ မကျုံ့ပါ */
+}
+```
+
+မှတ်ချက် — `flex-basis: 200px` ဆိုတဲ့ item က စတင်ဖို့ width 200px ရှိပြီး `flex-shrink: 0` ကတော့ item ကို width မကျုံ့ဘဲ မူလအရွယ်အတိုင်း ထားပေးပါတယ်။
+
+### flex Shorthand — တစ်ကြောင်းထဲ ရေးခြင်း
+
+`flex-grow`, `flex-shrink`, `flex-basis` သုံးခုကို သီးခြားစီ ရေးရတာကို `flex` shorthand property တစ်ခုနဲ့ ပေါင်းရေးနိုင်ပါတယ်။ ပုံစံက `flex: grow shrink basis` ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.item {
+  flex: 1; /* နေရာပိုကို 1 အချိုး ယူပြီး basis 0 */
+}
+
+.item-wide {
+  flex: 2 1 300px;
+}
+
+.item-fixed {
+  flex: 0 0 150px;
+}
+```
+
+မှတ်ချက် — `flex: 1` တစ်လုံးတည်းက flexbox layout တွေမှာ အသုံးအများဆုံးပဲ ဖြစ်ပြီး item တွေကို ညီတူကျယ်စေဖို့ လွယ်ကူစွာ ရေးနိုင်ပါတယ်။
+
+### order — Item ၏ အစီအစဉ်ကို ပြောင်းခြင်း
+
+HTML ထဲက item တွေရဲ့ order ကို ဖျက်ပစ်စရာမလိုဘဲ `order` property နဲ့ CSS ကနေ ပြန်စီနိုင်ပါတယ်။ Default က `0` ဖြစ်ပြီး ဂဏန်နည်းတဲ့ item တွေက ရှေ့မှာ စီပါတယ်။ Negative ဂဏန်တွေလည်း သုံးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.first {
+  order: -1;
+}
+
+.last {
+  order: 2;
+}
+```
+
+မှတ်ချက် — order တန်ဖိုးတူတဲ့ item တွေကိုတော့ HTML ထဲမှာ မူရင်းစီတစ်အတိုင်း ထားပေးပါတယ်။ ဒါကြောင့် order ကို သေချာစဉ်းစားပြီး သုံးပါ။
+
+### align-self — Item တစ်ခုချင်းစီကို Cross Axis ပေါ်မှာ ချိန်ညှိခြင်း
+
+`align-self` က container ပေါ်က `align-items` တန်ဖိုးကို ကျော်လွှားပြီး item တစ်ခုချင်းစီအတွက် cross axis ချိန်ညှိမှုကို သတ်မှတ်ပေးပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.container {
+  display: flex;
+  align-items: flex-start;
+  height: 200px;
+}
+
+.special {
+  align-self: center;
+}
+```
+
+မှတ်ချက် — ကျန်တဲ့ item တွေက အပေါ်မှာ ရှိနေပေမယ့် `.special` item တစ်ခုတည်းကတော့ ဒေါင်လိုက် အလယ်မှာ ရပ်နေပါလိမ့်မယ်။
+
+### Two-Axis Centering — ဗဟိုချက် နှစ်ဖက်စလုံး
+
+Flexbox ရဲ့ အကျော်ကြားဆုံး trick ကတော့ element တစ်ခုကို container ရဲ့ **အလယ်အတိအကျ** မှာ ထားနိုင်တဲ့ centering ဖြစ်ပါတယ်။ Main axis အတွက် `justify-content: center` + Cross axis အတွက် `align-items: center` ဆိုတဲ့ ပေါင်းစပ်မှု ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.card-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+```
+
+မှတ်ချက် — ဒီနည်းက vertical centering လုပ်ဖို့ အရင်ခေတ်က သုံးခဲ့တဲ့ margin auto နဲ့ float tricks တွေထက် ပိုမိုရိုးရှင်းပြီး ယုံကြည်စိတ်ချရပါတယ်။ Modal, loader, hero text တွေမှာ အသုံးများပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `flex-grow` က item များ နေရာပိုကို ခွဲယူမှုကို ထိန်းချုပ်သည်။
+- `flex: grow shrink basis` သည် shorthand ဖြစ်ပြီး flex items များအတွက် အသုံးအများဆုံး ဖြစ်သည်။
+- `order` က HTML မပြောင်းဘဲ item အစီအစဉ်ကို ပြောင်းနိုင်သည်။
+- `align-self` က container ၏ align-items ကို item တစ်ခုချင်းတွင် ကျော်လွှားနိုင်သည်။
+- Center လုပ်ရန် justify-content + align-items နှစ်ခုလုံး center ပေးရသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Container မှာ နေရာပိုရှိရင် item က ကျန်တဲ့နေရာကို ခွဲယူဖို့ ဘယ် property ကို သုံးပါသလဲ?", options: ["Flex shrink", "Flex grow", "Flex wrap", "Flex order"], correctAnswer: 1, explanation: "flex-grow က နေရာပိုရှိတဲ့အခါ item က ဘယ်လောက် ခွဲယူမလဲ သတ်မှတ်ပေးပါတယ်။" },
+    { id: "q2", question: "flex-grow, flex-shrink, flex-basis သုံးခုကို တစ်ကြောင်းထဲ ရေးဖို့ ဘယ် shorthand property ကို သုံးပါသလဲ?", options: ["Flex box", "Flex line", "Flex", "Flex control"], correctAnswer: 2, explanation: "flex property က grow, shrink, basis သုံးခုကို တစ်ကြောင်းထဲ သတ်မှတ်နိုင်ပါတယ်။" },
+    { id: "q3", question: "Item တစ်ခုကို container ရဲ့ ဒေါင်လိုက် အလယ်မှာ ထားဖို့ align-items center နဲ့ အတူ ဘာကို ပေါင်းသုံးရပါသလဲ?", options: ["Justify content center", "Flex direction column", "Flex wrap reverse", "Align content start"], correctAnswer: 0, explanation: "justify-content center က main axis မှာ center ဖြစ်စေပြီး align-items center နဲ့ ပေါင်းရင် နှစ်ဖက်စလုံး center ဖြစ်ပါတယ်။" }
+  ]}
+/>

@@ -1,0 +1,109 @@
+---
+title: "RWD Intro — Responsive Web Design ဆိုတာ ဘာလဲ?"
+description: "Screen အရွယ်အစားအမျိုးမျိုးပေါ်မှာ Website ကောင်းမွန်စွာ ပြသနိုင်ဖို့ Responsive Web Design ရဲ့ အခြေခံသဘောတရားများ။"
+---
+
+Responsive Web Design (RWD) ဆိုတာ ဖုန်း၊ Tablet၊ Laptop၊ Desktop စတဲ့ screen အရွယ်အစား အမျိုးမျိုးပေါ်မှာ Website တစ်ခု ကောင်းမွန်စွာ ပြသနိုင်အောင် ပြုလုပ်တဲ့ ဒီဇိုင်းနည်းလမ်း တစ်ခုပါ။ ဒီနည်းစနစ်မှာ Developer တစ်ယောက်က Website တစ်ခုကို ဖန်တီးပြီး ၎င်းက screen ကြီးတွေမှာ ဖြစ်စေ ၊ သေးငယ်တဲ့ screen တွေမှာ ဖြစ်စေ အလိုအလျောက် လိုက်လျောညီထွေ ပြောင်းလဲပြသနိုင်ပါတယ်။
+
+### Responsive Design ဘာကြောင့် လိုအပ်ပါသလဲ?
+
+ဒီနေ့ခေတ်မှာ အင်တာနက်အသုံးပြုသူ အများစုက ကွန်ပျူတာထက် ဖုန်းနဲ့ Pinterest ကြည့်ကြတာ ပိုများပါတယ်။ အသုံးပြုသူတွေက Website ကြည့်ရှုဖို့ ဖုန်း၊ Tablet၊ Laptop ဘယ် device ကို သုံးမယ်ဆိုတာ Developer ကို ကြိုမပြောနိုင်ပါဘူး။ ဒါကြောင့် Website တစ်ခုကို Screen အရွယ်အစားတိုင်းမှာ အဆင်ပြေစေဖို့ အောက်ပါ အကြောင်းရင်းများကြောင့် လိုအပ်ပါတယ်။
+
+- Mobile Traffic တွေ ဆက်တိုက် တိုးလာနေပါတယ်။
+- Google က Mobile-Friendly Website တွေကို Search Result မှာ အဆင့်မြင့်ပေးပါတယ်။
+- Code နဲ့ Content ကို တစ်ခါတည်း ဝေမျှသုံးလို့ Maintenance လွယ်ကူပါတယ်။
+- အသုံးပြုသူ အများစုက Screen နဲ့ မလိုက်ဖက်တဲ့ Website ကို စွန့်ခွာသွားတတ်ပါတယ်။
+
+### Fluid Layout (အရည်ကဲ့သို့ ပြောင်းလွယ်သော Layout)
+
+Fluid Layout ဆိုတာ Pixel တွေ အသေသတ်မှတ်ထားတဲ့ Fixed Width အစား ရာခိုင်နှုန်း (%) သို့မဟုတ် Flexible Unit တွေနဲ့ Element တွေရဲ့ အကျယ်ကို သတ်မှတ်တဲ့ နည်းလမ်းပါ။ Container ကို ကျယ်စေချင်ရင် Element တွေက လိုက်ကျယ်ပြီး သေးစေချင်ရင်လည်း လိုက်သေးသွားပါတယ်။
+
+**ဥပမာ -**
+```css
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.content {
+  width: 70%;
+  float: left;
+}
+
+.sidebar {
+  width: 25%;
+  float: right;
+}
+```
+
+မှတ်ချက် — `width: 90%` က Screen ဘယ်လောက်ကျယ်ကျယ် ရာခိုင်နှုန်းနဲ့ အချိုးကျ ပြောင်းပေးတာမို့ Screen အကြီး/အသေး အားလုံးမှာ အဆင်ပြေပါတယ်။ `max-width` က Screen ကျယ်ရင် များလွန်းမသွားအောင် ထိန်းပေးပါတယ်။
+
+### အခြေခံအုတ်မြစ် သုံးခု (The Three Pillars)
+
+Responsive Web Design မှာ မဖြစ်မနေ လိုအပ်တဲ့ အုတ်မြစ်အခြေခံ သုံးခု ရှိပါတယ်။
+
+1. **Flexible Layout (Fluid Grid)** — ရာခိုင်နှုန်း၊ Viewport Unit တွေနဲ့ ပြောင်းလွယ်တဲ့ Layout။
+2. **Flexible Media** — Image ၊ Video တွေကို Container ထဲ မပြည့်လျှံအောင် ခုခံနိုင်သော အရွယ်အစား သတ်မှတ်ခြင်း။
+3. **Media Queries** — Screen အရွယ်အစားပေါ်လိုက် CSS Style အမျိုးမျိုး အသုံးချနိုင်ခြင်း။
+
+အုတ်မြစ်သုံးခု ပေါင်းစပ်ထားတဲ့ အခြေခံဥပမာကို ကြည့်ကြရအောင်။
+
+**ဥပမာ -**
+```css
+/* 1. Flexible Layout */
+.main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* 2. Flexible Media */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 3. Media Queries */
+@media (max-width: 700px) {
+  .main {
+    flex-direction: column;
+  }
+}
+```
+
+မှတ်ချက် — ဒီ Rule သုံးခုစလုံးကို ပေါင်းသုံးမှသာ Website တစ်ခုက Screen အမျိုးမျိုးမှာ တကယ်အလုပ်လုပ်နိုင်တဲ့ Responsive Design ဖြစ်ပါတယ်။
+
+### Responsive Design ၏ ရလဒ်ကောင်းများ
+
+Responsive Website တွေက အသုံးပြုသူအတွက် လှပတဲ့ Dynamic Content နဲ့ ချောမွေ့တဲ့ Reading Experience ကို ပေးစွမ်းပါတယ်။ Screen အရွယ်အစားပေါ် မမူတည်ဘဲ တစ်နေရာတည်းကနေ Control လုပ်နိုင်တာမို့ Time နဲ့ Developer Resource တွေ သက်သာစေပါတယ်။
+
+**ဥပမာ -**
+```css
+body {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1 {
+  font-size: clamp(1.6rem, 5vw, 3rem);
+}
+```
+
+မှတ်ချက် — `clamp()` function ကြီးမားတဲ့ screen မှာ စာတွေ ကြီးသင့်သလောက် ကြီးပြီး သေးငယ်တဲ့ screen မှာ သေးသင့်သလောက် သေးအောင် အလိုအလျောက် ထိန်းညှိပေးပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Responsive Web Design က Screen အရွယ်အစားတိုင်းမှာ Website ကောင်းမွန်စွာ ပြသနိုင်အောင် ပြုလုပ်ခြင်း ဖြစ်သည်။
+- Modern Web မှာ Mobile Traffic များပြားလာသောကြောင့် RWD သည် မရှိမဖြစ် လိုအပ်သည်။
+- RWD ၏ အခြေခံ အုတ်မြစ်သုံးခုမှာ Flexible Layout ၊ Flexible Media နဲ့ Media Queries ဖြစ်သည်။
+- Fluid Layout ကရာခိုင်နှုန်းနဲ့ Flexible Unit တွေကို အသုံးပြုသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Responsive Web Design ဆိုတာ ဘာလဲ?", options: ["Screen အရွယ်အစားတစ်ခုတည်းအတွက်သာ ဒီဇိုင်းလုပ်ခြင်း", "Screen အရွယ်အစားအမျိုးမျိုးမှာ Website ကောင်းမွန်စွာ ပြသနိုင်အောင် ပြုလုပ်ခြင်း", "Website ကို ဖုန်းမှာသာ ကြည့်နိုင်အောင် ပြုလုပ်ခြင်း", "Image တွေကိုသာ အရွယ်ပြောင်းနိုင်အောင် ပြုလုပ်ခြင်း"], correctAnswer: 1, explanation: "RWD က Screen အားလုံးမှာ Website ကောင်းမွန်စွာ ပြသနိုင်အောင် ပြုလုပ်တဲ့ နည်းလမ်းဖြစ်သည်။" },
+    { id: "q2", question: "RWD ရဲ့ အခြေခံအုတ်မြစ် သုံးခုထဲက တစ်ခု မဟုတ်တာက ဘာလဲ?", options: ["Flexible Layout", "Flexible Media", "Media Queries", "Fixed Width Layout"], correctAnswer: 3, explanation: "Fixed Width Layout က RWD ရဲ့ အုတ်မြစ်မဟုတ်ဘဲ ဆန့်ကျင်ဘက်ဖြစ်သည်။" },
+    { id: "q3", question: "Fluid Layout မှာ Element အကျယ်ကို ဘာတွေနဲ့ သတ်မှတ်လေ့ရှိပါသလဲ?", options: ["Pixel တွေနဲ့သာ", "ရာခိုင်နှုန်းနဲ့ Flexible Unit တွေနဲ့", "Point တွေနဲ့သာ", "Centimeter တွေနဲ့သာ"], correctAnswer: 1, explanation: "Fluid Layout က အရည်ကဲ့သို့ ပြောင်းလွယ်ဖို့ ရာခိုင်နှုန်းနဲ့ Flexible Unit တွေကို သုံးသည်။" },
+  ]}
+/>

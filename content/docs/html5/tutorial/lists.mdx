@@ -1,0 +1,122 @@
+---
+title: "HTML Lists"
+description: "Unordered ၊ Ordered နဲ့ Description List အမျိုးအစား သုံးမျိုးကို ဘယ်လို ရေးသလဲ လေ့လာကြပါမယ်။"
+---
+
+### List ဆိုတာ ဘာလဲ?
+
+List ဆိုတာ Item တွေကို စဉ် (Bullet Point) ဒါမှမဟုတ် နံပါတ်တပ်ပြီး စီစဉ်ပြတဲ့ နည်းလမ်းပါ။ Menu တင်ခြင်း၊ စာအုပ်ပါ အကြောင်းအရာတွေ၊ Settings စာရင်း စတာတွေမှာ List ကို အများကြီး သုံးပါတယ်။ HTML မှာ List အမျိုးအစား သုံးမျိုး ရှိပါတယ်။ Unordered List (`<ul>`), Ordered List (`<ol>`), Description List (`<dl>`) တို့ပါ။
+
+**ဥပမာ -**
+
+```html
+<ul>
+  <li>HTML</li>
+  <li>CSS</li>
+  <li>JavaScript</li>
+</ul>
+```
+
+မှတ်ချက် — `<ul>` ထဲက Item တစ်ခုချင်းစီကို `<li>` (List Item) နဲ့ ရေးပါတယ်။
+
+### Unordered List — `<ul>`
+
+Unordered List က Item တွေကို Bullet Point (အစက်လေး) တွေနဲ့ ပြပါတယ်။ အစဉ်လိုက် အရေးမကြီးတဲ့ စာရင်းတွေ (ဥပမာ - စျေးဝယ်စာရင်း) အတွက် သုံးပါတယ်။ CSS နဲ့ `list-style-type` ကို ပြောင်းလို့ ရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <style>
+    ul {
+      list-style-type: square;
+    }
+  </style>
+</head>
+<body>
+  <h3>Shopping List</h3>
+  <ul>
+    <li>Rice</li>
+    <li>Vegetables</li>
+    <li>Fish</li>
+  </ul>
+</body>
+</html>
+```
+
+မှတ်ချက် — `list-style-type: square;` ဆိုရင် Bullet Point ကို စတုရန်းလေး ဖြစ်အောင် ပြောင်းပေးပါတယ်။ `circle`, `none` စတာတွေနဲ့လည်း စမ်းလို့ရပါတယ်။
+
+### Ordered List — `<ol>`
+
+Ordered List က Item တွေကို နံပါတ်တပ်ပြီး ပြပါတယ်။ အစဉ်လိုက် အရေးကြီးတဲ့ စာရင်း (ဥပမာ - Recipe Steps, Top 10) အတွက် သင့်တော်ပါတယ်။ `type` နဲ့ `start` attribute တွေကို သုံးပြီး နံပါတ်ပုံစံ နဲ့ စတင်နံပါတ်ကို သတ်မှတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<ol type="A" start="3">
+  <li>Wash the rice</li>
+  <li>Boil water</li>
+  <li>Cook for 20 minutes</li>
+</ol>
+```
+
+မှတ်ချက် — `type="A"` ဆိုရင် အကြီး အက္ခရာ (A, B, C) နဲ့ ပြပြီး `start="3"` ဆိုတော့ C ကနေ စပါတယ်။ `type="1"` က ပုံမှန် နံပါတ်တွေပါ။
+
+### Description List — `<dl>`
+
+Description List က အသုံးအနှုန်း (Term) တစ်ခုရဲ့ အဓိပ္ပါယ် ဖွင့်ဆိုချက် (Description) ကို တွဲပြပါတယ်။ `<dl>` (Description List), `<dt>` (Description Term), `<dd>` (Description Details) ဆိုပြီး Tag သုံးမျိုး ပါဝင်ပါတယ်။ Glossary (အဘိဓာန်) လိုပုံစံ မျိုးတွေမှာ သုံးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<dl>
+  <dt>HTML</dt>
+  <dd>Webpage ရဲ့ အရိုးစု ဖွဲ့စည်းပုံကို သတ်မှတ်ပေးတဲ့ markup language ပါ။</dd>
+  <dt>CSS</dt>
+  <dd>Webpage ကို အရောင်အသွေး နဲ့ အလှဆင်ပေးတဲ့ language ပါ။</dd>
+</dl>
+```
+
+မှတ်ချက် — `<dt>` က Term (အသုံးအနှုန်း)၊ `<dd>` က အဲဒီ Term ရဲ့ ရှင်းလင်းချက်ပါ။
+
+### Nested Lists — List ထဲ List
+
+List တစ်ခုရဲ့ Item တစ်ခုထဲမှာ နောက် List တစ်ခု ထပ်ထားလို့ ရပါတယ်။ ဒါကို Nested List လို့ ခေါ်ပါတယ်။ ဥပမာ - Menu တွေမှာ အဓိက အမျိုးအစား အောက်မှာ အဆင့်ခွဲတွေ ထားချင်ရင် သုံးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<ul>
+  <li>Frontend
+    <ul>
+      <li>HTML</li>
+      <li>CSS</li>
+    </ul>
+  </li>
+  <li>Backend
+    <ul>
+      <li>Node.js</li>
+      <li>Python</li>
+    </ul>
+  </li>
+</ul>
+```
+
+မှတ်ချက် — Nested List တွေမှာ List ကို `<li>` ရဲ့ အတွင်းမှာ ထားရပါတယ်။ ဒါဆိုရင် အဆင့်ခွဲ (Sub Items) တွေ ဖြစ်သွားပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `<ul>` က Bullet Point၊ `<ol>` က နံပါတ် List ပါ။
+- List Item တိုင်းကို `<li>` နဲ့ ရေးရပါတယ်။
+- `<dl>` က Term နဲ့ Definition ကို တွဲပြပါတယ်။
+- List ထဲ နောက် List ထပ်ထားလို့ ရပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Bullet Point ပုံစံ List ကို ဘယ် tag နဲ့ ရေးပါသလဲ?", options: ["ol", "ul", "dl", "li"], correctAnswer: 1, explanation: "ul က Unordered List ဖြစ်ပြီး Bullet Point အသုံးပြုပါတယ်။" },
+  { id: "q2", question: "နံပါတ်တပ်ထားတဲ့ List ကို ဘယ် tag နဲ့ ရေးပါသလဲ?", options: ["ul", "dl", "ol", "dt"], correctAnswer: 2, explanation: "ol က Ordered List ဖြစ်ပြီး နံပါတ်တပ်ပါတယ်။" },
+  { id: "q3", question: "Term တစ်ခုရဲ့ အဓိပ္ပါယ် ဖွင့်ဆိုချက်ကို တွဲပြဖို့ ဘယ် List ကို သုံးရလဲ?", options: ["Description list", "Ordered list", "Unordered list", "Nested list"], correctAnswer: 0, explanation: "Description list က dt နဲ့ dd ကို တွဲပြပါတယ်။" }
+]} />

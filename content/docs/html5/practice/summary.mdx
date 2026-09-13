@@ -1,0 +1,29 @@
+---
+title: "HTML Summary — သင်တန်း အကျဉ်းချုပ်"
+description: "HTML သင်တန်း တစ်ခုလုံး၏ တစ်စာပိုဒ်ပြည့် အကျဉ်းချုပ်နှင့် ယခု သင်တတ်မြောက်နိုင်ပြီဖြစ်သော အောင်မြင်မှုများ။"
+---
+
+ဒီသင်တန်းမှာတော့ HTML ၏ အခြေခံ element နဲ့ attribute ကို နားလည်သဘောပေါက်ပြီး web page တစ်ခုကို အစမှ အဆုံးအထိ တည်ဆောက်နိုင်လာပါပြီ။ Semantic structure (header, nav, main, footer) သုံးပြီး ရှင်းလင်းတဲ့ layout ဖန်တီးခြင်း၊ form နဲ့ table ရေးခြင်း၊ ပုံ၊ ဗီဒီယို၊ အသံစတဲ့ media ထည့်သွင်းခြင်းအပြင် alt text နဲ့ label ကဲ့သို့သော accessibility အလေ့အကျင့်တွေကိုပါ ကိုင်တွယ်တတ်လာကြပါပြီ။ ဒါကြောင့် screen reader သုံးစွဲသူများအပါအဝင် လူတိုင်း သုံးစွဲလို့ရတဲ့ webpage ကို ယုံကြည်စိတ်ချစွာ ရေးနိုင်ပြီး ဖြစ်ပါတယ်။ နောက်တစ်ဆင့်မှာ ဤ HTML ကို အခြေခံ၍ CSS ဖြင့် အလှဆင်ခြင်း၊ JavaScript ဖြင့် လှုပ်ရှားမှု ဖန်တီးခြင်းများကို ဆက်လက် သင်ယူနိုင်ပါတယ်။
+
+### ယခု သင်တတ်မြောက်နိုင်ပြီဖြစ်သောအရာများ
+
+- ကိုယ်ပိုင် web page တစ်ခုကို `h1` မှ `table`, `form` အထိ အသုံးပြု၍ တည်ဆောက်နိုင်သည်
+- Image နှင့် link ကို `alt`, `href` စသော attribute များနှင့်တကွ မှန်ကန်စွာ ထည့်သွင်းနိုင်သည်
+- သုံးစွဲသူ အချက်အလက် စုဆောင်းရန် form တစ်ခုကို `label` နှင့် `input` ဖြင့် ရေးဆွဲနိုင်သည်
+- Semantic tag `header`, `nav`, `main`, `footer` တို့ကို သုံး၍ ရှင်းလင်းသော page structure ဖန်တီးနိုင်သည်
+- Video နှင့် audio အပါအဝင် media element များကို ထည့်သွင်းနိုင်သည်
+- `alt` text နှင့် keyboard navigation ကဲ့သို့သော accessibility အခြေခံများကို သိရှိနားလည်သည်
+- ကိုယ်တိုင် သင်ယူသူအဖြစ် သင်ရိုးနှင့် practice ဖိုင်များဖြင့် ဆက်လက် လေ့လာတတ်သည်
+
+### နောက်ထပ် လေ့လာစရာများ
+
+HTML 5 ကို တတ်မြောက်ပြီးပါက CSS ဖြင့် အရောင်အဆင်းနှင့် layout ပြုပြင်ခြင်း၊ JavaScript ဖြင့် interactive feature များ ထည့်သွင်းခြင်းတို့ကို သင်ယူနိုင်ပါတယ်။ Websites ဆိုတာ ဒီ layer သုံးခု ပေါင်းစပ်တဲ့ အရာဖြစ်ပြီး သင်က ပထမဆုံး layer ကို အောင်မြင်စွာ ပြီးမြောက်ခဲ့ပါပြီ။ Takkatho မှာ CSS သင်တန်းကလည်း ရှိလို့ ဆက်လေ့လာဖို့ ဖိတ်ခေါ်ပါတယ်။
+
+မှတ်ချက် — ဤ အောင်မြင်မှုများကို portfolio ဒါမှမဟုတ် certificate အဖြစ် မှတ်တမ်းတင်ထားပြီး ၁ လ အကြာမှာ ​ပြန်လေ့လာကြည့်ဖို့ အကြံပြုပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "HTML သင်တန်း အပြီးမှာ ဘာကို ဆက်လေ့လာသင့်သနည်း?", options: ["CSS နှင့် JavaScript", "Server ပြုပြင်ခြင်း", "Database", "Mobile app"], correctAnswer: 0, explanation: "web page ကို အလှဆင်ရန်အတွက် CSS နှင့် JavaScript ကို ဆက်လေ့လာသင့်သည်။" },
+  { id: "q2", question: "semantic tag ဥပမာ မှာ ဘာပါသနည်း?", options: ["div", "span", "nav", "b"], correctAnswer: 2, explanation: "nav, header, main, footer တို့သည် semantic tag များ ဖြစ်သည်။" },
+  { id: "q3", question: "Form ရေးဆွဲရာတွင် label နဲ့ input ကို ဘာနဲ့ ချိတ်ဆက်သနည်း?", options: ["class", "for နှင့် id", "style", "width"], correctAnswer: 1, explanation: "label ၏ for attribute နှင့် input ၏ id တူညီအောင် ပေးခြင်းဖြင့် ချိတ်ဆက်သည်။" } ]} />

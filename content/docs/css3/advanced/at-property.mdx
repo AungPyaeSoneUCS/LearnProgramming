@@ -1,0 +1,111 @@
+---
+title: "CSS @property — Custom Property မှတ်ပုံတင်ခြင်း"
+description: "@property rule ဖြင့် Custom Property တစ်ခုကို Syntax ၊ Initial Value ၊ Inherits သတ်မှတ်ပြီး Variable ကို Animation ပြုလုပ်နည်း လေ့လာကြမယ်။"
+---
+
+`@property` rule ဟာ Custom Property (Variable) တွေကို တရားဝင် Register လုပ်ပေးပြီး သူ့ရဲ့ Data Type ကို Browser ကို သိစေပါတယ်။ Type ကို သိမှသာ Browser က Variable တွေကို Transition နဲ့ Animation မှာ ချောမွေ့စွာ Interpolate လုပ်နိုင်ပါတယ်။
+
+### @property Rule ဆိုတာဘာလဲ
+
+`@property` rule အတွင်းမှာ `syntax` က Data Type ၊ `initial-value` က စတင် တန်ဖိုး ၊ `inherits` က Child Element တွေကို ဆက်ခံစေခြင်း ရှိမရှိကို သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+```
+
+မှတ်ချက် — `syntax` က `<angle>` ဖြစ်လို့ ဒီ Variable ကို Angle Value တွေနဲ့သာ သက်ဆိုင်စေပြီး Numeric Animation အတွက် ပြင်ဆင်ပေးပါတယ်။
+
+### Syntax Type အမျိုးမျိုး
+
+`syntax` မှာ `<color>` ၊ `<length>` ၊ `<number>` ၊ `<percentage>` ၊ `<angle>` စတဲ့ Type တွေကို သတ်မှတ်နိုင်ပြီး `*` က တန်ဖိုး ဘာမဆို လက်ခံကြောင်း ပြပါတယ်။
+
+**ဥပမာ -**
+```css
+@property --brand-color {
+  syntax: "<color>";
+  initial-value: #3498db;
+  inherits: true;
+}
+
+@property --size {
+  syntax: "<length>";
+  initial-value: 1rem;
+  inherits: false;
+}
+```
+
+မှတ်ချက် — Type ကို သတ်မှတ်ထားမှ Browser က Variable ကို ဘယ်လို Interpret လုပ်ရမလဲ သိပြီး Transition အတွင်း ချောမွေ့စွာ ပြောင်းလဲပေးနိုင်ပါတယ်။
+
+### Variable ကို Transition ပြုလုပ်ခြင်း
+
+Register လုပ်ထားတဲ့ Variable ကို `transition` ထဲမှာ ထည့်နိုင်ပြီး Hover လို Interaction တွေမှာ ချောမွေ့စွာ ပြောင်းနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.spinner {
+  transform: rotate(var(--rotate));
+  transition: --rotate 1s ease-in-out;
+}
+
+.spinner:hover {
+  --rotate: 180deg;
+}
+```
+
+မှတ်ချက် — Property Register မလုပ်ထားတဲ့ Variable ကို Transition ရေးရင် Browser က Interpolate လုပ်နည်း မသိလို့ ရုတ်တရက် Jump ဖြစ်တတ်ပါတယ်။
+
+### @keyframes နဲ့ Variable Animation
+
+Register လုပ်ထားတဲ့ Variable ကို `@keyframes` ထဲမှာလည်း ပြောင်းလဲနိုင်ပြီး အဆုံးမရှိ Loop လုပ်တဲ့ Effect တွေ ဖန်တီးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@property --deg {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.rainbow-ring {
+  background: conic-gradient(from var(--deg), red, yellow, lime, aqua, blue, magenta, red);
+  animation: spin-angle 3s linear infinite;
+}
+
+@keyframes spin-angle {
+  from {
+    --deg: 0deg;
+  }
+  to {
+    --deg: 360deg;
+  }
+}
+```
+
+မှတ်ချက် — Register လုပ်ထားလို့ Variable က `@keyframes` ထဲမှာ ချောမွေ့စွာ Interpolate ဖြစ်ပြီး Conic Gradient က လှည့်နေတဲ့ Effect ရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `@property` rule က Custom Property ကို Type ၊ Initial Value ၊ Inherits နဲ့ Register လုပ်ပါသည်။
+- `syntax` မှာ `<color>` ၊ `<length>` ၊ `<angle>` စသည့် Type များ သတ်မှတ်နိုင်ပါသည်။
+- Register လုပ်ထားသော Variable များသည် Transition နဲ့ Animation တွင် ချောမွေ့စွာ ပြောင်းလဲနိုင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Custom Property ရဲ့ Data Type ကို ဘယ် Field မှာ သတ်မှတ်ပါသလဲ?", options: ["type", "syntax", "format", "mode"], correctAnswer: 1, explanation: "syntax Field မှာ Data Type တန်ဖိုးများကို သတ်မှတ်ပါတယ်။" },
+    { id: "q2", question: "Register မလုပ်ထားတဲ့ Variable ကို Animation လုပ်ရင် ဘယ်လို ဖြစ်တတ်ပါသလဲ?", options: ["ချောမွေ့စွာ ပြောင်း", "ရုတ်တရက် Jump ဖြစ်", "Error တက်", "Style ပျက်"], correctAnswer: 1, explanation: "Type မသိတဲ့ Variable ကို Animation လုပ်ရင် Intermediate တန်ဖိုးတွေ မတွက်နိုင်လို့ Jump ဖြစ်ပါတယ်။" },
+    { id: "q3", question: "Child Element တွေကို Variable ဆက်ခံစေဖို့ ဘယ် Field ကို True ပေးပါသလဲ?", options: ["syntax", "initial-value", "inherits", "applies"], correctAnswer: 2, explanation: "inherits: true က Custom Property ကို Child Element များသို့ ဆက်ခံစေပါတယ်။" }
+  ]}
+/>

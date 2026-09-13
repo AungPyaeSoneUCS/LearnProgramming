@@ -1,0 +1,161 @@
+---
+title: "HTML Tables"
+description: "Data တွေကို Rows နဲ့ Columns စနစ်တကျ ပြသဖို့ Table တည်ဆောက်နည်းကို လေ့လာကြပါမယ်။"
+---
+
+### Table ဆိုတာ ဘာလဲ?
+
+Table ဆိုတာ Data တွေကို အလျားလိုက် (Rows) နဲ့ ဒေါင်လိုက် (Columns) ပုံစံနဲ့ စနစ်တကျ ပြသပေးတဲ့ ဖွဲ့စည်းမှုတစ်ခုပါ။ ဈေးနှုန်းစာရင်း၊ သင်တန်းအချိန်ဇယား၊ ရမှတ်စာရင်း စတဲ့ အချက်အလက်တွေကို Table နဲ့ ပြသရင် ရှင်းလင်းလွယ်ကူပါတယ်။ Table ကို ဆောက်တဲ့အခါ `<table>`, `<tr>`, `<th>`, `<td>` ဆိုတဲ့ Tag အခြေခံ လေးခုကို သုံးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<table>
+  <tr>
+    <th>Course</th>
+    <th>Duration</th>
+  </tr>
+  <tr>
+    <td>HTML</td>
+    <td>2 hours</td>
+  </tr>
+  <tr>
+    <td>CSS</td>
+    <td>3 hours</td>
+  </tr>
+</table>
+```
+
+မှတ်ချက် — `<table>` က Table တစ်ခုလုံး၊ `<tr>` (Table Row) က အလျားလိုက် စာကြောင်း၊ `<th>` (Table Header) က ခေါင်းစဉ် Cell၊ `<td>` (Table Data) က ပုံမှန် Data Cell တွေကို ဖန်တီးပေးပါတယ်။
+
+### Border နဲ့ Collapse လုပ်ခြင်း
+
+HTML ထဲမှာ `border` attribute နဲ့ ရေးလို့ ရပေမယ့် ခေတ်မီဆန်းတဲ့နည်းက CSS နဲ့ Style လုပ်တာပါ။ `border-collapse: collapse;` က Cell နှစ်ခုကြားက နှစ်ထပ် Border တွေကို ပေါင်းပြီး သပ်ရပ်စေပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Score</th>
+    </tr>
+    <tr>
+      <td>Maung Aung</td>
+      <td>85</td>
+    </tr>
+  </table>
+</body>
+</html>
+```
+
+မှတ်ချက် — CSS ကို `<style>` block ထဲမှာ ထားပြီး `th, td` နှစ်ခုလုံးကို တစ်ပြိုင်နက် Style လုပ်လို့ ရပါတယ်။
+
+### `colspan` နဲ့ `rowspan` — Cell ပေါင်းစပ်ခြင်း
+
+တစ်ခါတလေ Cell တစ်ခုက Columns အများကြီး ဒါမှမဟုတ် Rows အများကြီး ဖြတ်ဖို့ လိုပါတယ်။ `<td colspan="2">` က ညာဘက်က Cell နှစ်ခုကို ပေါင်းပြီး `<td rowspan="2">` က အောက်က Row နှစ်ခုကို ပေါင်းပေးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<table border="1">
+  <tr>
+    <th colspan="2">Smartphone Specs</th>
+  </tr>
+  <tr>
+    <td>Brand</td>
+    <td>Model</td>
+  </tr>
+  <tr>
+    <td rowspan="2">XPhone</td>
+    <td>Pro 12</td>
+  </tr>
+  <tr>
+    <td>Mini 8</td>
+  </tr>
+</table>
+```
+
+မှတ်ချက် — `colspan` က နှစ်တန်း Columns ပေါင်းပြီး `rowspan` က နှစ်တန်း Rows ပေါင်းပါတယ်။ ဒီလို ပေါင်းတဲ့အခါ Cell အရေအတွက်ကို သေချာ ရေတွက်ဖို့ လိုပါတယ်။
+
+### Table Caption
+
+`<caption>` tag က Table ရဲ့ ခေါင်းစဉ် ဒါမှမဟုတ် ရည်ရွယ်ချက်ကို ဖော်ပြပေးပါတယ်။ သူက Table ရဲ့ အပေါ်မှာ ပေါ်ပြီး Screen Reader တွေအတွက် Table ကို နားလည်စေဖို့လည်း ကူညီပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<table border="1">
+  <caption>Weekly Study Schedule</caption>
+  <tr>
+    <th>Day</th>
+    <th>Topic</th>
+  </tr>
+  <tr>
+    <td>Monday</td>
+    <td>HTML Tables</td>
+  </tr>
+</table>
+```
+
+မှတ်ချက် — `<caption>` ကို `<table>` ရဲ့ အစဆုံး ပထမဆုံး Tag အဖြစ် ထည့်ရပါတယ်။
+
+### Zebra Stripes လုပ်ခြင်း
+
+Zebra Stripes ဆိုတာ Row တစ်ခုချင်းစီကို အရောင်လှည့်ပေးတဲ့ နည်းလမ်းပါ။ ဒါဆိုရင် Row တစ်ခုနဲ့ တစ်ခု စာဖတ်ရတာ လွယ်ပါတယ်။ CSS `nth-child` ကို သုံးပြီး အကောင်အထည်ဖော်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <style>
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <table border="1">
+    <tr><th>Student</th><th>Grade</th></tr>
+    <tr><td>Aung</td><td>A</td></tr>
+    <tr><td>Su</td><td>B</td></tr>
+    <tr><td>Htet</td><td>A</td></tr>
+  </table>
+</body>
+</html>
+```
+
+မှတ်ချက် — `even` (စုံကိန်း) Row တွေ background အရောင် ပြောင်းသွားတာ မြင်ရပါလိမ့်မယ်။ `odd` လို့ ပြောင်းရေးရင်လည်း ရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `<tr>` က Row၊ `<th>` က Header Cell၊ `<td>` က Data Cell ပါ။
+- Border နဲ့ တခြား Style တွေကို CSS နဲ့ လုပ်ပါ။
+- `colspan` နဲ့ `rowspan` က Cell တွေကို ပေါင်းပေးပါတယ်။
+- `<caption>` က Table ရဲ့ ခေါင်းစဉ် ဖြစ်ပါတယ်။
+- Zebra Stripes က Row ဖတ်ရတာ လွယ်စေပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Table ထဲက ခေါင်းစဉ် Cell တွေကို ဘယ် tag နဲ့ ရေးပါသလဲ?", options: ["td", "th", "tr", "caption"], correctAnswer: 1, explanation: "th က Table Header Cell ဖြစ်ပြီး ခေါင်းစဉ်တွေအတွက် သုံးပါတယ်။" },
+  { id: "q2", question: "Cell တစ်ခုက Columns နှစ်ခု ဖြတ်ဖို့ ဘယ် attribute ကို သုံးရလဲ?", options: ["rowspan", "colspan", "merge", "width"], correctAnswer: 1, explanation: "colspan က Columns နှစ်ခုကို တစ်ခုတည်းအဖြစ် ပေါင်းပေးပါတယ်။" },
+  { id: "q3", question: "Table ရဲ့ ခေါင်းစဉ်ကို ထည့်ဖို့ ဘယ် tag ကို သုံးပါသလဲ?", options: ["title", "header", "caption", "heading"], correctAnswer: 2, explanation: "caption tag က Table ရဲ့ ခေါင်းစဉ်ကို ဖော်ပြပေးပါတယ်။" }
+]} />

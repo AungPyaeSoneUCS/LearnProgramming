@@ -1,0 +1,119 @@
+---
+title: "CSS Snippets — ပြန်လည်သုံးနိုင်သော CSS ကုဒ် အပိုင်းများ"
+description: "Centered container၊ text truncate၊ aspect-ratio box၊ scrollbar styling၊ smooth scroll နဲ့ zebra table စတဲ့ ပြန်သုံးလို့ရတဲ့ CSS snippet များ။"
+---
+
+Snippet ဆိုတာ ပြန်လည်သုံးဖို့ အသင့်ဖြတ်ထားတဲ့ ကုဒ် အပိုင်းတိုလေးတွေပါ။ ဒီစာမျက်နှာမှာပါတဲ့ Snippet တွေက Project တိုင်းမှာ လိုသလို ကူးသုံးလို့ရတဲ့ အသုံးအများဆုံးတွေကို ရွေးထားပါတယ်။
+
+### Centered Container (ဘယ်ညာ ဗဟိုချ ကွန်တိန်နာ)
+
+Page Content ကို Screen အလယ်မှာ ထားပြီး ပတ်ပတ်လည်မှာ သဘာဝကျကျ နေရာလွတ် ထားချင်ရင် ဒီပုံစံကို သုံးပါတယ်။ `margin: 0 auto;` က ဘယ်ညာ တစ်ဖက်စီ ညီမျှစွာ ခွဲပြီး Center ဖြစ်စေပါတယ်။
+
+**ဥပမာ -**
+```css
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+```
+
+မှတ်ချက် — `max-width` နဲ့ ပေးထားလို့ Screen ကြီးရင်လည်း Content က 960px ကျော်မကျယ်ဘဲ မျက်စိအမြင်အတွက် ပိုအဆင်ပြေပါတယ်။
+
+### Truncate Text (စာသား ဖြတ်တောက် ပြသခြင်း)
+
+စာသားက Container ထဲကို မဝင်ဘဲ လျှံနေရင် နောက်ဆုံးမှာ သုံးစက် (…) နဲ့ ဖြတ်ပြထားဖို့ Property သုံးခု အတူ သုံးပါတယ်။ Width အကန့်အသတ် ရှိနေဖို့လည်း လိုပါတယ်။
+
+**ဥပမာ -**
+```css
+.truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+```
+
+မှတ်ချက် — `white-space: nowrap;` က စာသား မညီးအောင် တားဆီးပြီး `text-overflow: ellipsis;` က ကျော်တဲ့အပိုင်းကို သုံးစက် (…) နဲ့ အစားထိုးပါတယ်။
+
+### Aspect-Ratio Box (အချိုးအစား ပုံသေ Box)
+
+Box တစ်ခုကို ဘယ်လောက် အကျယ် ကျယ်ကျယ် 16:9 ကဲ့သို့ အချိုးကို မပြောင်းဘဲ ထားချင်ရင် `aspect-ratio` Property ကို သုံးပါတယ်။ Video Placeholder နဲ့ Image Frame တွေမှာ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.video-box {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  background: #111;
+}
+```
+
+မှတ်ချက် — Width ကို Layout နဲ့ အလိုက်သင့် ပြောင်းရင် Height က Aspect Ratio အတိုင်း အလိုအလျောက် လိုက်ပြောင်းပြီး Box ပုံမပျက်ပါဘူး။
+
+### Scrollbar ပုံစံ ပြောင်းခြင်း
+
+Browser ရဲ့ Default Scrollbar အစား ကိုယ်ပိုင် အရောင်နဲ့ အဝိုင်းချွန်ရှိတဲ့ Scrollbar ဖော်ပြဖို့ `::-webkit-scrollbar` လိုမျိုး Pseudo-element တွေကို သုံးပါတယ်။ Track က Scrollbar ရဲ့ နောက်ခံလမ်းကြောင်း ၊ Thumb က ဆွဲရွှေ့တဲ့ အပိုင်း ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+```
+
+မှတ်ချက် — ဒီ Style က Chrome ၊ Edge ၊ Safari စတဲ့ WebKit Browser တွေမှာ အလုပ်လုပ်ပြီး Firefox ကိုတော့ `scrollbar-width` နဲ့ `scrollbar-color` Property နဲ့ ချိန်ညှိရပါတယ်။
+
+### Smooth Scroll (ချောမွေ့စွာ ရွေ့လျားခြင်း)
+
+Same-Page Link (Photo) တွေ နှိပ်တဲ့အခါ ခုန်ရုတ်တရက် ရောက်သွားမယ့်အစား ချောမွေ့စွာ ဖြည်းဖြည်း Scroll ဆင်း လိုချင်ရင် `html` Selector မှာ Scrolling ကို သတ်မှတ်ရုံပါပဲ။
+
+**ဥပမာ -**
+```css
+html {
+  scroll-behavior: smooth;
+}
+```
+
+မှတ်ချက် — ဒီလိုင်း တစ်ကြောင်းတည်းနဲ့ Anchor Link တွေ ၊ Back-to-top Button တွေ အားလုံး ချောမွေ့စွာ ရွေ့လျားလာပါတယ်။
+
+### Zebra Table (ဇယား အတန်းစုံ အရောင်ခြယ်ခြင်း)
+
+ဇယားရဲ့ အတန်းတစ်ဖက်ခြား (even ၊ odd) ကို နောက်ခံအရောင် ခြယ်ရင် ဖတ်ရတာ ပိုလွယ်ပြီး ဖြိုင်ဖြိုင်စီ ရှည်လျားတဲ့ ဇယားတွေမှာ ပိုအသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+```
+
+မှတ်ချက် — `nth-child(even)` က အတန်းစုံတွေကို ရွေးတာဖြစ်ပြီး ခေါင်းစဉ်အတန်း (`th`) ရဲ့ အရောင်နဲ့ မရောထွေးအောင် သတိထားရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Container Center ကို `max-width` နဲ့ `margin: 0 auto;` နဲ့ လုပ်သည်။
+- Text ဖြတ်ရန် Property သုံးခု — `overflow` ၊ `white-space` ၊ `text-overflow` တို့ တွဲသုံးရသည်။
+- Scrollbar နဲ့ Zebra Table တွေက WebKit Pseudo-element နဲ့ `nth-child()` ကို သုံးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Text ကို ellipsis နဲ့ ဖြတ်ဖို့ ဘယ် Property သုံးခုကို အတူ သုံးရပါသလဲ?", options: ["overflow, white-space, text-overflow", "color, width, height", "display, position, float", "padding, margin, border"], correctAnswer: 0, explanation: "overflow hidden နဲ့ nowrap ပေးပြီး text-overflow: ellipsis က သုံးစက်နဲ့ ဖြတ်ပြပါတယ်။" },
+    { id: "q2", question: "Container ကို ဘယ်ညာ Center ချဖို့ အသုံးများတဲ့ နည်းက ဘာလဲ?", options: ["margin: 0 auto", "float: left", "position: fixed", "text-align: right"], correctAnswer: 0, explanation: "margin: 0 auto က ဘယ်ညာ တစ်ဖက်စီ ညီမျှခွဲပြီး Block Element ကို Center ချပေးပါတယ်။" },
+    { id: "q3", question: "ဇယားအတန်းစုံကို အရောင်ခြယ်ဖို့ ဘယ် Pseudo-class ကို သုံးပါသလဲ?", options: ["nth-child(even)", "hover", "visited", "focus"], correctAnswer: 0, explanation: "tr:nth-child(even) က အတန်းစုံတွေကို ရွေးပြီး နောက်ခံအရောင် ခြယ်ပေးပါတယ်။" }
+  ]}
+/>

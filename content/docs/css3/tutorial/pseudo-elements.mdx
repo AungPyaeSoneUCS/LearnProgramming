@@ -1,0 +1,118 @@
+---
+title: "CSS Pseudo-elements — Element အပိုင်းအစ များကို Style"
+description: "before, after, first-line, first-letter, selection တို့နဲ့ ပထမဆစ်သုံး Element တွေကို အလှဆင်နည်း လေ့လာကြရအောင်။"
+---
+
+### Pseudo-element ဆိုတာဘာလဲ
+
+**Pseudo-element** က Element ထဲက အစိတ်အပိုင်း တစ်ခုကိုသာ Style လုပ်နိုင်တဲ့ Selector ပါ။ Pseudo-class က Colon တစ်လုံးနဲ့ဆို Pseudo-element က **Colon နှစ်လုံး (::)** နဲ့ စပါတယ်။ `::before` ၊ `::after` ၊ `::first-line` ၊ `::first-letter` ၊ `::selection` တို့က အသုံးအများဆုံးတွေပါ။
+
+**ဥပမာ -**
+```css
+p::first-letter {
+  font-size: 40px;
+  color: #ff5722;
+}
+```
+
+မှတ်ချက် — ဒါက Paragraph ရဲ့ ပထမဆုံးစာလုံးကိုသာ ကြီးပြီး အရောင်ရင်လိုက်စေတဲ့ Drop Cap effect ပါ။
+
+### ::before နဲ့ ::after (Content ထည့်ခြင်း)
+
+`::before` က Element ရဲ့မီ အကြောင်းအရာထည့်ပြီး `::after` က Element ရဲ့နောက်မှာ ထည့်ပါတယ်။ သူတို့နှစ်ခုလုံးမှာ **content** Property ကို မဖြစ်မနေ ထည့်ရပါတယ်။ Quote Mark တွေ ၊ Icon တွေ ၊ စကြာအမှတ်အသားတွေ ထည့်ဖို့ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+blockquote::before {
+  content: "\201C";
+  font-size: 30px;
+  color: #999;
+}
+
+.tip::after {
+  content: "!";
+  color: #fff;
+  background-color: #2962ff;
+  border-radius: 50%;
+  padding: 2px 8px;
+}
+```
+
+မှတ်ချက် — content မှာ text သာမက quote code လို special character တွေပါ ထည့်လို့ရပြီး Symbol font မလို ဘဲ Icon လိုအနေအထားမျိုး ဖန်တီးနိုင်ပါတယ်။
+
+### ::first-line နဲ့ ::first-letter
+
+`::first-line` က Element ရဲ့ ပထမဆုံး စာကြောင်းကို ရွေးပြီး `::first-letter` က ပထမဆုံး စာလုံးကို ရွေးပါတယ်။ Newspaper လို Editorial Layout တွေမှာ Typography လှဖို့ သုံးလေ့ရှိပါတယ်။
+
+**ဥပမာ -**
+```css
+p::first-line {
+  font-variant: small-caps;
+  letter-spacing: 2px;
+}
+
+p::first-letter {
+  float: left;
+  font-size: 48px;
+  line-height: 1;
+  margin-right: 8px;
+  font-weight: bold;
+}
+```
+
+မှတ်ချက် — first-line နဲ့ first-letter က Block-Level Element (p, h1, div ကဲ့သို့) တွေအတွက်သာ အလုပ်လုပ်ပြီး Inline Element တွေမှာ မသက်ရောက်ပါဘူး။
+
+### ::selection (Highlight ပြောင်းလဲခြင်း)
+
+`::selection` က User က Text ကို Mouse နဲ့ Highlight လုပ်တဲ့အခါ ပေါ်တဲ့အရောင်ကို Style လုပ်ပါတယ်။ Website ရဲ့ Brand Color နဲ့ Match လုပ်ပြီးတော့ Highlight ပြောင်းဖို့ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+::selection {
+  background-color: #ffeb3b;
+  color: #000;
+}
+
+p::selection {
+  background-color: #ff5722;
+  color: #fff;
+}
+```
+
+မှတ်ချက် — element name မထည့်ဘဲ ::selection ချည်းပဲ ရေးရင် page ပေါ်မှာ ရှိသမျှ အားလုံးကို သက်ရောက်ပြီး ပိုတိကျဖို့ selector နဲ့ ချိန်လို့လည်း ရပါတယ်။
+
+### ::marker နဲ့ အခြား Pseudo-element များ
+
+List Item ရဲ့ Bullet သို့မဟုတ် Number ကို Style လုပ်ချင်ရင် `::marker` ကို သုံးပါတယ်။ ခေတ်သစ် CSS မှာတော့ `::placeholder` လို အထူးပြုသူတွေ ပါ ထပ်ပေါင်းလာပါတယ်။
+
+**ဥပမာ -**
+```css
+li::marker {
+  content: "✦ ";
+  color: #2962ff;
+  font-size: 1.2em;
+}
+
+input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+```
+
+မှတ်ချက် — marker က li ရဲ့ bullet ကို custom symbol နဲ့ အစားထိုးလို့ ရပြီး placeholder က form ထဲက hint text ကို style လုပ်ပါတယ်။
+
+#### တိုတိုနဲ့လိုရင်း
+
+- Pseudo-element တွေက Colon နှစ်လုံး (double colon) နဲ့ စသည်။
+- before နဲ့ after မှာ content property မဖြစ်မနေ လိုအပ်သည်။
+- First-line နဲ့ first-letter က Block-level element တွေမှာသာ အလုပ်လုပ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Pseudo-element တွေရဲ့ syntax က ဘယ်လိုစပါသလဲ?", options: ["Colon တစ်လုံးနဲ့", "Double colon နဲ့", "Hash နဲ့", "Asterisk နဲ့"], correctAnswer: 1, explanation: "pseudo-element တွေက double colon (ဥပမာ before) နဲ့ စပြီး pseudo-class ကတော့ colon တစ်လုံးပါ။" },
+    { id: "q2", question: "before နဲ့ after pseudo-element တွေမှာ မဖြစ်မနေ ထည့်ရတဲ့ property က ဘာလဲ?", options: ["Width", "Position", "Content", "Float"], correctAnswer: 2, explanation: "before နဲ့ after မှာ content property မပါရင် element ကို ပေါင်းမထည့်တာပါပဲ။" },
+    { id: "q3", question: "User က text ကို highlight လုပ်တဲ့အခါ style ပြောင်းဖို့ ဘာကို သုံးပါသလဲ?", options: ["First line", "Before", "Marker", "Selection"], correctAnswer: 3, explanation: "selection က user ရဲ့ highlight ကိုအရောင်တွေ ပြောင်းလဲပေးနိုင်ပါတယ်။" }
+  ]}
+/>

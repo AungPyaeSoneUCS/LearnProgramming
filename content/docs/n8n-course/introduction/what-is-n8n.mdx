@@ -1,0 +1,74 @@
+---
+title: "n8n ဆိုတာ ဘာလဲ + ကိုယ့်စက်ထဲ Install လုပ်ခြင်း"
+description: "n8n ၏ အခြေခံ သဘောတရားများ၊ အားသာချက်များနှင့် Local Machine တွင် တည်ဆောက် နည်းလမ်းများ"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="💡 ရည်ရွယ်ချက်">
+  n8n ဆိုသည်မှာ မည်သည့် Tool ဖြစ်ကြောင်း၊ Zapier / Make တို့နှင့် မည်သို့ ကွာခြားကြောင်း နားလည်ပြီး၊ မိမိ၏ ကိုယ်ပိုင် စက်ထဲတွင် အောင်မြင်စွာ Install လုပ်၍ စတင် အသုံးပြုနိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## n8n ဆိုတာ ဘာလဲ?
+
+**n8n** ("အန်-အိတ်-အန်" ဟု ဖတ်ပါသည်) ဆိုသည်မှာ Open-source **Workflow Automation Tool** တစ်ခု ဖြစ်ပါတယ်။
+
+"If This, Then That" (ဒီအခြေအနေ ဖြစ်ပေါ်ပါက → ဒီ Action ကို လုပ်ဆောင်ပါ) ဟူသော လုပ်ငန်းစဉ်များကို Code ရေးသားစရာ မလိုဘဲ Node များကို Drag-and-Drop ဖြင့် မြှားများ ချိတ်ဆက်ကာ အလွယ်တကူ တည်ဆောက်နိုင်သော Platform ဖြစ်ပါတယ်။
+
+### n8n ရဲ့ အဓိက အားသာချက် ၄ ခု
+1. **Open-source:** အခမဲ့ စတင် အသုံးပြုနိုင်ပြီး Source Code များကို ပွင့်လင်းမြင်သာစွာ ကြည့်ရှုနိုင်ခြင်း။
+2. **Self-hostable:** မိမိ၏ ကိုယ်ပိုင် စက် သို့မဟုတ် VPS Server တွင် တိုက်ရိုက် Host ပြုလုပ်နိုင်သဖြင့် Data Privacy ၁၀၀% လုံခြုံခြင်း။
+3. **400+ Integrations:** Gmail, Telegram, Google Sheets, PostgreSQL, Facebook (Graph API), OpenAI စသည့် App များစွာကို အသင့် ပါဝင်သော Node များဖြင့် ချိတ်ဆက်နိုင်ခြင်း။
+4. **Code Flexibility:** လိုအပ်ပါက JavaScript သို့မဟုတ် Python Code များကို Custom ရေးသား၍ စိတ်ကြိုက် ပြုပြင်နိုင်ခြင်း။
+
+---
+
+## n8n vs. Zapier vs. Make
+
+| အင်္ဂါရပ်များ | **n8n** | **Zapier / Make** |
+|---|---|---|
+| **ကုန်ကျစရိတ်** | Self-host ပြုလုပ်ပါက **အခမဲ့ (Unlimited Tasks)** | Task အရေအတွက်အပေါ် မူတည်၍ လစဉ်ကြေး ကြီးမြင့်စွာ ပေးဆောင်ရ |
+| **Data လုံခြုံရေး** | မိမိ၏ စက်/Server တွင်သာ ရှိသည် (High Privacy) | Third-party Cloud ပေါ်တွင် သိုလှောင်ရ |
+| **Code ရေးသားနိုင်မှု** | JavaScript / Python စိတ်ကြိုက် ရေးသားနိုင် | အကန့်အသတ် ရှိ |
+| **သင်ယူရလွယ်ကူမှု** | အခြေခံ နည်းပညာ အယူအဆ အနည်းငယ် လိုအပ် | ချက်ချင်း စတင် သုံးစွဲနိုင် |
+
+---
+
+## n8n ကို Local စက်ထဲ Install လုပ်နည်း ၃ မျိုး
+
+### နည်းလမ်း ၁: `npx` ဖြင့် Run ခြင်း (အလွယ်ဆုံး နည်းလမ်း)
+
+မိမိ စက်တွင် **Node.js (v18.17+)** ရှိပါက Terminal (Command Prompt / PowerShell) တွင် အောက်ပါ Command တစ်ကြောင်းတည်း ရိုက်နှိပ်၍ Run နိုင်ပါတယ်:
+
+```bash
+npx n8n
+```
+
+ခဏအကြာတွင် Browser တွင် `http://localhost:5678` ဖြင့် n8n Dashboard ပွင့်လာမည် ဖြစ်ပါတယ်။
+
+---
+
+### နည်းလမ်း ၂: Docker ဖြင့် Run ခြင်း (အငြိမ်ဆုံး နည်းလမ်း)
+
+Docker သုံးစွဲသူများအတွက် Container အဖြစ် တည်ဆောက် ရန်းယူနည်း:
+
+```bash
+docker run -it --rm \
+  --name n8n \
+  -p 5678:5678 \
+  -v ~/.n8n:/home/node/.n8n \
+  docker.n8n.io/n8nio/n8n
+```
+
+---
+
+### နည်းလမ်း ၃: n8n Cloud သုံးစွဲခြင်း
+
+Install မလုပ်လိုပါက [n8n.io](https://n8n.io) တွင် Account ဖွင့်လှစ်၍ Cloud Managed Instance အဖြစ်လည်း စတင် သုံးစွဲနိုင်ပါတယ်။
+
+---
+
+## ဖြစ်တတ်သော အတွေ့များသည့် အမှားများ (Troubleshooting)
+
+- **Port 5678 Conflict:** တခြား App က Port 5678 ကို ယူသုံးထားပါက `N8N_PORT=5679 npx n8n` ဖြင့် Port ပြောင်းလဲ Run ပါ။
+- **Permission Error:** Linux/Mac တွင် Permission မရပါက `chmod 700 ~/.n8n` ဖြင့် Folder Permission ပေးပါ။

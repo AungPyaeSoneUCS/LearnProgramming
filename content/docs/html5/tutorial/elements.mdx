@@ -1,0 +1,64 @@
+---
+title: "HTML Elements — HTML Element တွေရဲ့ သဘောတရား"
+description: "Start Tag, End Tag, Empty Element စတဲ့ HTML Element တွေရဲ့ အခြေခံ သဘောတရားတွေကို လေ့လာမယ်။"
+---
+
+### Element ဆိုတာ ဘာလဲ?
+HTML Element ဆိုတာ Start Tag တစ်ခုကစပြီး Content နဲ့ End Tag ပါဝင်တဲ့ တစ်ခုလုံးကို ခေါ်ပါတယ်။ ဥပမာ `<p>ဒီစာသား</p>` ဆိုတာ Element တစ်ခုပဲ ဖြစ်ပါတယ်။ Browser က Element တွေကို ဖတ်ပြီးမှ Webpage ကို ဆောက်ပေးတာမို့ Element ရဲ့ ဖွဲ့စည်းပုံကို နားလည်ထားဖို့ အရမ်း အရေးကြီးပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>ဒီစာသားက Paragraph element တစ်ခုပါ။</p>
+```
+မှတ်ချက် — `<p>` က Start Tag၊ စာသားက Content၊ `</p>` က End Tag ဖြစ်ပြီး ဒီသုံးခုပေါင်းရင် Element တစ်ခု ဖြစ်ပါတယ်။
+
+#### Start Tag နဲ့ End Tag
+Start Tag က `<p>` ပုံစံ၊ End Tag က `</p>` ပုံစံ ဖြစ်ပြီး Element အမည်တူပေမယ့် End Tag မှာ Slash (/) ပါပါတယ်။ Content ရှိတဲ့ Element တွေကို အမြဲတမ်း ဒီနှစ်ခုနဲ့ တွဲပြီး ရေးရပါတယ်။ End Tag မေ့သွားရင် Browser က မမျှော်လင့်တဲ့ ပုံစံပြနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<h1>ဒါက ခေါင်းစဉ်</h1>
+```
+မှတ်ချက် — `</h1>` ကို မေ့သွားရင် အောက်က Content တွေပါ Heading ပုံစံ ဖြစ်သွားတတ်ပါတယ်။
+
+#### Empty Element များ
+Content မရှိတဲ့ Element တွေကို Empty Element လို့ ခေါ်ပါတယ်။ `<br>` နဲ့ `<img>` တို့က အသုံးများတဲ့ ဥပမာတွေ ဖြစ်ပြီး သူတို့မှာ End Tag မလိုပါဘူး။ ဒီ Element တွေက ကိုယ့်ဘာသာ အလုပ်ပြီးသွားလို့ Self-closing Element တွေလို့လည်း ခေါ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<br>
+<img src="cat.jpg" alt="ကြောင်လေး">
+```
+မှတ်ချက် — ဒီ Element တွေက အလုပ်လုပ်ဖို့ Closing Tag မလိုအပ်ပါဘူး။
+
+#### Nested Elements (အတွင်းအပြင် ထည့်ခြင်း)
+Element ရဲ့ အတွင်းမှာ အခြား Element ထပ်ထည့်လို့ ရပြီး ဒါကို Nesting (အသိုက်အဝှယ်) လို့ ခေါ်ပါတယ်။ ထည့်တဲ့အခါ အပြင်ဆုံး Element ကို နောက်ဆုံး ပိတ်ရမယ့် နည်းနဲ့ ရေးရပါတယ်။ မှန်ကန်တဲ့ Nesting ကို Proper Nesting လို့ ခေါ်ပြီး Code ကို စနစ်တကျ ဖြစ်စေပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>ဒါက <strong>အရေးကြီး</strong> စကားလုံးပါ။</p>
+```
+မှတ်ချက် — `<strong>` က Paragraph ရဲ့ အတွင်းမှာ ရှိပြီး `</p>` ကို နောက်ဆုံးမှသာ ပိတ်ထားပါတယ်။
+
+#### Open Tag နဲ့ Closed Tag
+Start Tag တစ်ခုတည်း ရှိတာကို Open Tag လို့ ခေါ်ပြီး Start ရော End ရော ရှိတာကို Closed Tag လို့ ခေါ်ပါတယ်။ Empty Element တွေက Start Tag တစ်ခုတည်းနဲ့ ပြီးသွားလို့ Self-closing Tag တွေ ဖြစ်ပါတယ်။ HTML မှာ Closing Slash ကို အမြဲတမ်းတော့ မလိုပါဘူး။
+
+**ဥပမာ -**
+```html
+<h1>Title</h1>   <!-- closed tag -->
+<br>             <!-- empty / self-closing -->
+```
+မှတ်ချက် — Source code မှာ `<h1>` နဲ့ `<br>` ပုံစံ ကွဲနေပေမယ့် နှစ်ခုလုံး အလုပ်လုပ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+* Element = Start Tag + Content + End Tag တို့ ပေါင်းစည်းထားတာပါ။
+* Content ရှိတဲ့ Element တိုင်းကို End Tag နဲ့ ပိတ်ပေးရပါမယ်။
+* `<br>` နဲ့ `<img>` တို့က Empty (Self-closing) Element တွေပါ။
+* Element ထဲ Element ထည့်တဲ့အခါ အစဉ်လိုက် မှန်အောင် ပိတ်ရပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+<Quiz questions={[
+  { id: "q1", question: "Element တစ်ခုရဲ့ အဓိက အစိတ်အပိုင်း သုံးခုထဲက တစ်ခု မဟုတ်တာက ဘာလဲ?", options: ["Start tag", "Content", "End tag", "Attribute value"], correctAnswer: 3, explanation: "Element က Start tag, Content, End tag သုံးခုနဲ့ ဆောက်ထားပါတယ်။" },
+  { id: "q2", question: "End Tag မလိုတဲ့ Element က ဘယ်ဟာလဲ?", options: ["p", "h1", "br", "strong"], correctAnswer: 2, explanation: "br က Empty element ဖြစ်လို့ End tag မလိုပါဘူး။" },
+  { id: "q3", question: "Proper Nesting ဆိုတာ ဘာလဲ?", options: ["Element တွေကို ဘေးချင်းကပ် ထားခြင်း", "Element ကို နောက်တစ်ခုရဲ့ အတွင်းမှာ အစဉ်လိုက်မှန် ထည့်ခြင်း", "Element တိုင်းကို Class ထည့်ခြင်း", "Element တွေကို ဖျက်ပစ်ခြင်း"], correctAnswer: 1, explanation: "Proper nesting က အပြင်ဆုံး element ကို နောက်ဆုံး ပိတ်တဲ့ မှန်ကန်တဲ့ ထည့်သွင်းမှုပါ။" }
+]} />

@@ -1,0 +1,75 @@
+---
+title: "CSS Web Safe Fonts — Web ပေါ်တွင် စိတ်ချရသော Font များ"
+description: "Operating System အများစုမှာ ကြိုတင်ပါဝင်နေတဲ့ Web Safe Font Family များနဲ့ Fallback Stack အသုံးပြုနည်း ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### Web Safe Font ဆိုတာ ဘာလဲ?
+
+**Web Safe Font** တွေက Windows ၊ macOS ၊ Linux ၊ Android ၊ iOS စတဲ့ Operating System အများစုမှာ ကြိုတင် ထည့်သွင်းပြီးသား Font တွေ ဖြစ်ပါတယ်။ ဒါကြောင့် Font File ကို Download လုပ်စရာ မလိုဘဲ Website မှာ သုံးလိုက်ရင် Browser အများစုမှာ ခပ်ဆင်ဆင် တူညီတဲ့ ပြသမှု ရပါတယ်။
+
+နာမည်မှာ Space ပါတဲ့ Font Family ဥပမာ `Trebuchet MS` ကို `font-family` ထဲမှာ Double Quote နဲ့ ပတ်ပြီး ရေးရပါတယ်။
+
+### Web Safe Font Family များ
+
+| Font Family | အမျိုးအစား | Fallback Stack ဥပမာ |
+| ---- | ---- | ---- |
+| `Arial` | Sans-serif | `Arial, Helvetica, sans-serif` |
+| `Verdana` | Sans-serif | `Verdana, Geneva, sans-serif` |
+| `Tahoma` | Sans-serif | `Tahoma, Geneva, sans-serif` |
+| `Trebuchet MS` | Sans-serif | `"Trebuchet MS", Helvetica, sans-serif` |
+| `Times New Roman` | Serif | `"Times New Roman", Times, serif` |
+| `Georgia` | Serif | `Georgia, "Times New Roman", serif` |
+| `Garamond` | Serif | `Garamond, "Times New Roman", serif` |
+| `Courier New` | Monospace | `"Courier New", Courier, monospace` |
+| `Brush Script MT` | Cursive | `"Brush Script MT", cursive` |
+
+မှတ်ချက် — `Arial` ၊ `Verdana` ၊ `Georgia` စတာတွေက OS တော်တော်များများမှာ ပါနေပြီး `Garamond` နဲ့ `Brush Script MT` တို့က OS အချို့မှာ မပါနိုင်တာမို့ Fallback ကို သေချာ ထည့်ပါ။
+
+### Fallback Stack သုံးနည်း
+
+`font-family` Property မှာ Font စာရင်း အများအပြား ရေးနိုင်ပြီး ပထမ Font ရှိရင် သုံး ပြီး မရှိရင် နောက်တစ်ခုသို့ ဆင်းသွားပါတယ်။ နောက်ဆုံးမှာ Generic Family (`sans-serif` ၊ `serif` ၊ `monospace` ၊ `cursive`) တစ်ခုကို အမြဲ ထည့်ပါ။
+
+**ဥပမာ -**
+```css
+body {
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+code {
+  font-family: "Courier New", Courier, monospace;
+}
+```
+
+မှတ်ချက် — Fallback Stack မှာ Generic Family ထည့်ထားရင် Font တစ်ခုမှ မရှိတော့တာတောင် Browser က သင့်တော်တဲ့ Font နဲ့ ဖတ်လို့ရအောင် ပြသပါမယ်။
+
+### ဘယ် Font ကို ဘယ်အခါ ရွေးမလဲ?
+
+| ရည်ရွယ်ချက် | သင့်လျော်သော Family |
+| ---- | ---- |
+| Body စာသား | Sans-serif (`Verdana` ၊ `Arial`) |
+| ခေါင်းစဉ် (Heading) | Serif (`Georgia`) |
+| Code ပြသရန် | Monospace (`Courier New`) |
+| အလှဆင် စာသား | Cursive (`Brush Script MT`) |
+
+မှတ်ချက် — Serif က ခေါင်းစဉ်နဲ့ ဆောင်းပါးရှည်တွေမှာ လှပြီး Sans-serif က စခရင်ပေါ်မှာ ဖတ်ရ ပိုလွယ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Web Safe Font က OS အများစုမှာ ပါပြီးသား ဖြစ်ပါတယ်။
+- Space ပါတဲ့ နာမည်ကို Double Quote နဲ့ ပတ်ပါ။
+- Fallback Stack မှာ Generic Family အမြဲ ထည့်ပါ။
+- Font မရှိရင် Browser က နောက်တစ်ခု ဆက်လုပ်ပေးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Web Safe Font ဆိုတာ ဘာကို ဆိုလိုပါသလဲ?", options: ["OS အများစုမှာ ကြိုပြီးသား ပါနေတဲ့ Font", "Online ကနေသာ Download လုပ်ရတဲ့ Font", "ပိုက်ဆံနဲ့သာ ဝယ်ရတဲ့ Font", "Browser တစ်ခုတည်းမှာပဲ ရှိတဲ့ Font"], correctAnswer: 0, explanation: "Web Safe Font တွေက Operating System အများစုမှာ ကြိုတင် ပါဝင်နေပါတယ်။" },
+    { id: "q2", question: "Space ပါတဲ့ Font Family ကို ဘယ်လို ရေးရပါသလဲ?", options: ["Double Quote နဲ့ ပတ်ပြီး", "Space ကို ဖျက်ပြီး", "နာမည် အကြီးရေးပြီး", "Underscore သုံးပြီး"], correctAnswer: 0, explanation: "Trebuchet MS လို Space ပါတဲ့ နာမည်ကို Double Quote နဲ့ ပတ်ရပါတယ်။" },
+    { id: "q3", question: "နောက်ဆုံး Fallback အနေနဲ့ အမြဲ ထည့်သင့်တာ ဘာလဲ?", options: ["Generic Family", "Color Value", "Media Query", "Border Style"], correctAnswer: 0, explanation: "sans-serif လို Generic Family ကို နောက်ဆုံးမှာ ထည့်ထားရင် Font မရှိရင်တောင် ဖတ်လို့ရပါတယ်။" },
+  ]}
+/>

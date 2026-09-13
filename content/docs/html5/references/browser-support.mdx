@@ -1,0 +1,66 @@
+---
+title: "HTML Browser Support — Browser Support အကြောင်း"
+description: "Evergreen Browser များအကြောင်း ၊ Browser အသီးသီးရဲ့ ပံ့ပိုးမှုကို စစ်ဆေးနည်း ၊ လိုက်ဖက်ညီမှု ဇယားတို့ကို ရှင်းပြထားပါတယ်။"
+---
+
+### Evergreen Browser ဆိုတာ ဘာလဲ?
+
+ယနေ့ခေတ် Browser အဓိကတွေ ဖြစ်တဲ့ Chrome ၊ Edge ၊ Firefox ၊ Safari တွေကို **Evergreen Browser** လို့ ခေါ်ပါတယ်။ သူတို့က သုံးစွဲသူဘက်ကနေ ဘာမှ လုပ်စရာမလိုဘဲ နောက်ဆုံးပေါ် Version ကို ကိုယ်တိုင် အလိုအလျောက် Update လုပ်ပေးနေတဲ့ Browser တွေ ဖြစ်ပါတယ်။ ဒါကြောင့် HTML5 Feature အသစ်တွေကို Browser Version အဟောင်း စောင့်စရာမလိုဘဲ မကြာခင်မှာ သုံးလို့ ရလာပါတယ်။
+
+Evergreen မဟုတ်တဲ့ နောက်မှာ မရှိတော့တဲ့ Browser အဟောင်းတွေ ဥပမာ Internet Explorer အတွက်တော့ JavaScript Feature အများစု အလုပ်မလုပ်တော့ပါဘူး။ ဒါကြောင့် ခေတ်ပေါ် Feature တွေကို သုံးတဲ့အခါ Evergreen Browser တွေကို ပစ်မှတ်ထားပြီး သုံးလို့ ရပါတယ်။
+
+| Browser | Engine | အလိုအလျောက် Update |
+| ---- | ---- | ---- |
+| Chrome | Blink | Yes |
+| Edge | Blink | Yes |
+| Firefox | Gecko | Yes |
+| Safari | WebKit | Yes |
+
+### Browser Support ကို ဘယ်လို စစ်ဆေးမလဲ?
+
+HTML ၊ CSS ၊ JavaScript Feature တစ်ခု ဘယ် Browser တွေမှာ ရပြီးသားလဲ ဆိုတာ သိချင်ရင် **caniuse.com** ဆိုတဲ့ Website ကို သုံးပါတယ်။ Feature နာမည် ရိုက်ထည့်လိုက်ရင် Browser အသီးသီးကို ထောက်ပံ့မှု အဆင့်နဲ့ ပြပေးပါတယ်။ Subtle Coding Trick — အဲဒီမှာ Partial Support ဖြစ်နေတဲ့ Feature တွေကိုတော့ သေချာ ဆန်းစစ်ပြီးမှ သုံးသင့်ပါတယ်။
+
+Feature တိုင်းကို Browser အားလုံးမှာ တူညီစွာ မရနိုင်တဲ့အတွက် အရေးကြီးတဲ့ Feature တစ်ခုကို သုံးခါနီး ၁) ကိုယ့်ပစ်မှတ် Audience ရဲ့ Browser ဘာလဲ ၊ ၂) အဲဒီ Feature ရနိုင်သလားဆိုတာ စစ်ပါ။ Library (ဥပမာ Modernizr) သုံးပြီး Feature ရှိ/မရှိကို JavaScript ထဲမှာလည်း စစ်နိုင်ပါတယ်။
+
+### HTML5 Feature Compatibility ဇယား
+
+အောက်က Feature တွေက Evergreen Browser အားလုံးမှာ ယုံကြည်စိတ်ချစွာ အလုပ်လုပ်တဲ့ Feature တွေ ဖြစ်ပါတယ်။
+
+| Feature | Chrome | Edge | Firefox | Safari |
+| ---- | ---- | ---- | ---- | ---- |
+| `<video>` ၊ `<audio>` | Supported | Supported | Supported | Supported |
+| localStorage | Supported | Supported | Supported | Supported |
+| Geolocation API | Supported | Supported | Supported | Supported |
+| `<input type="date">` | Supported | Supported | Supported | Supported |
+| Flexbox (CSS) | Supported | Supported | Supported | Supported |
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html>
+<html lang="my">
+  <head>
+    <meta charset="UTF-8">
+    <title>Browser Support Check</title>
+  </head>
+  <body>
+    <p>ဒီ Page ကို Chrome ၊ Edge ၊ Firefox ၊ Safari အားလုံးမှာ ဖွင့်ကြည့်လို့ ရပါတယ်။</p>
+  </body>
+</html>
+```
+
+မှတ်ချက် — Evergreen Browser တွေက အလိုအလျောက် Update ဖြစ်နေပေမယ့် Feature တစ်ခုစီရဲ့ Status ကို caniuse.com မှာ သေချာ စစ်တာ အကောင်းဆုံး ဖြစ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Evergreen Browser = အလိုအလျောက် Update ရနေတဲ့ ခေတ်ပေါ် Browser များ။
+- Browser အားလုံးက Feature တွေကို တစ်ပြိုင်နက် မရပါဘူး။
+- Browser Support စစ်ရန် caniuse.com ကို သုံးပါ။
+- Feature မလုပ်မချင်း Fallback (အစားထိုး) နည်းလမ်း ထည့်ထားတာ ကောင်းပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Evergreen Browser ဆိုတာ ဘာလဲ?", options: ["ကိုယ်တိုင် အလိုအလျောက် Update ရနေတဲ့ Browser", "အစိမ်းရောင် Logo ရှိတဲ့ Browser", "စဖွင့်စ Browser", "Windows အတွက်ပဲ ရှိတဲ့ Browser"], correctAnswer: 0, explanation: "Evergreen Browser တွေက သုံးစွဲသူ ဘာမှမလုပ်ဘဲ Update အလိုအလျောက် ရပါတယ်။" },
+  { id: "q2", question: "Feature တစ်ခုကို Browser ဘယ်နှစ်မှာ ရှိသလဲ စစ်ချင်ရင် ဘယ် Website ကို သွားပါသလဲ?", options: ["caniuse.com", "wikipedia.org", "google.com/maps", "store.microsoft.com"], correctAnswer: 0, explanation: "caniuse.com မှာ Feature တိုင်းရဲ့ Browser Support ကို စစ်လို့ ရပါတယ်။" },
+  { id: "q3", question: "Safari Browser ရဲ့ Engine က ဘာလဲ?", options: ["WebKit", "Blink", "Gecko", "Trident"], correctAnswer: 0, explanation: "Safari က WebKit Engine ကို သုံးပါတယ် ၊ Chrome နဲ့ Edge ကတော့ Blink ပါ။" },
+]} />

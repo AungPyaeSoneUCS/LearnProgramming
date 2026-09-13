@@ -1,0 +1,39 @@
+---
+title: "Interactive Section - DOM Intro"
+description: "DOM Selecting လက်တွေ့စမ်းသပ်ရန်"
+---
+
+အောက်ပါ HTML Code တွေ ရှိနေတယ်လို့ သတ်မှတ်လိုက်ပါ။
+
+```html
+<h1 id="main-title">JavaScript Course</h1>
+<p class="content">Paragraph 1</p>
+<p class="content">Paragraph 2</p>
+<button id="click-btn">Click Me</button>
+```
+
+## လေ့ကျင့်ခန်း ၁ (Exercise 1): Select by ID
+
+အထက်ပါ HTML ထဲက `h1` Element ကို ၎င်းရဲ့ ID ကို အသုံးပြုပြီး ဖမ်းယူမယ့် JavaScript Code ကို ရေးသားပါ။
+
+```javascript
+// "main-title" ဆိုသည့် ID ကို အသုံးပြု၍ h1 ကို ဖမ်းယူရန် Code ရေးပါ
+let title = document.getElementById("main-title");
+console.log(title);
+```
+
+## လေ့ကျင့်ခန်း ၂ (Exercise 2): Using querySelector
+
+Class name က `.content` လို့ ပေးထားတဲ့ Paragraph (၂) ခု ရှိပါတယ်။ အဲ့ဒီအထဲကနေ **ပထမဆုံး** Paragraph ကို `querySelector` ကို အသုံးပြုပြီး ဖမ်းယူပါ။
+
+```javascript
+// သင်၏ Code ကို ဤနေရာတွင် ရေးပါ...
+```
+
+## အထူးစိန်ခေါ်မှု (Challenge): Select All
+
+`class="content"` လို့ ပေးထားတဲ့ Paragraph (၂) ခုလုံးကို Variable တစ်ခုတည်း ထဲကို ရောက်သွားအောင် ဖမ်းယူကြည့်ပါ။ (ရလဒ်အနေနဲ့ Array-like List တစ်ခု ရရှိရပါမယ်)
+
+```javascript
+// သဲလွန်စ (Hint): querySelectorAll သို့မဟုတ် getElementsByClassName ကို အသုံးပြုနိုင်ပါတယ်
+```

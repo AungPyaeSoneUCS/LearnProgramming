@@ -1,0 +1,97 @@
+---
+title: "CSS Colors — အရောင်သတ်မှတ်နည်းများ"
+description: "Color Name, HEX, RGB, RGBA စတဲ့ CSS Color သတ်မှတ်နည်းတွေကို ဥပမာနဲ့တကွ လေ့လာကြရအောင်။"
+---
+
+### CSS Color သတ်မှတ်နည်း အမျိုးမျိုး
+
+CSS မှာ အရောင် သတ်မှတ်ဖို့ **Color Name** ၊ **HEX** ၊ **RGB** ၊ **RGBA** ၊ **HSL** စတဲ့ နည်းလမ်း အမျိုးမျိုး ရှိပါတယ်။ ဥပမာ Property တွေဖြစ်တဲ့ `color` (စာသားအရောင်) ၊ `background-color` (နောက်ခံအရောင်) ၊ `border-color` (ဘောင်အရောင်) တွေမှာ တူညီစွာ သုံးနိုင်ပါတယ်။
+
+### Color Names
+
+အရောင်နာမည် (Color Name) အားဖြင့် 140 ကျော် သုံးနိုင်ပါတယ်။ red, blue, green စတဲ့နာမည်တွေက ရိုးရှင်းပြီး စတင်လေ့လာသူတွေအတွက် အလွယ်ကူဆုံးပါ။
+
+**ဥပမာ -**
+```css
+h1 {
+  color: orange;
+}
+p {
+  background-color: tomato;
+}
+```
+
+မှတ်ချက် — Color Name က နားလည်ရလွယ်ပေမယ့် ရနိုင်တဲ့ အရောင် 140 ကျော်သာ ရှိပါတယ်။
+
+### HEX Code (`#RRGGBB`)
+
+HEX Code က `#` နောက်မှာ Hex Digit (0-9, A-F) ၆ လုံးနဲ့ အရောင် သတ်မှတ်တာပါ။ ပထမတစ်စုံက အနီ (Red) ၊ ဒုတိယတစ်စုံက အစိမ်း (Green) ၊ တတိယတစ်စုံက အပြာ (Blue) ကို ကိုယ်စားပြုပါတယ်။
+
+**ဥပမာ -**
+```css
+h1 { color: #ff0000; }
+h2 { color: #00ff00; }
+h3 { color: #0000ff; }
+```
+
+မှတ်ချက် — `#ff0000` မှာ `ff` က အနီအားအပြည့် ၊ `00` နှစ်ခုက အစိမ်းနဲ့ အပြာ လုံးဝမပါတာကို ဆိုလိုပါတယ်။
+
+### RGB Color
+
+`rgb(red, green, blue)` ပုံစံမှာ အရောင်တစ်ခုစီကို ဂဏန်း **0 ကနေ 255** ကြား ပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  color: rgb(255, 0, 0);
+}
+div {
+  background-color: rgb(0, 128, 0);
+}
+```
+
+မှတ်ချက် — `rgb(255, 0, 0)` က အနီအားအပြည့် ၊ ကျန်သူတွေက 0 ဖြစ်လို့ အနီရောင် ဖြစ်ပြီး `rgb(0, 128, 0)` က အစိမ်းအလတ် ဖြစ်ပါတယ်။
+
+### RGBA (Transparency)
+
+`rgba()` မှာတော့ နောက်ဆုံးမှာ **Alpha (a)** ထည့်ပြီး အကြည်အနက် အား (Transparency) ကို **0 ကနေ 1** ကြား သတ်မှတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+div {
+  background-color: rgba(0, 0, 255, 0.5);
+}
+```
+
+မှတ်ချက် — Alpha က 0 ဆိုရင် လုံးဝအကြည် ၊ 1 ဆိုရင် အရောင်ထူပြီး 0.5 ဆိုရင် တစ်ဝက်အကြည် ဖြစ်ပါတယ်။
+
+### Text နဲ့ Background ပေါင်းစပ်သုံးခြင်း
+
+Color Property အမျိုးမျိုးကို ပေါင်းစပ်ပြီး Element တစ်ခုကို ဘက်စုံလှအောင် လုပ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  color: white;
+  background-color: #222;
+  border: 2px solid #ff0000;
+}
+```
+
+မှတ်ချက် — စာသားအဖြူ ၊ နောက်ခံမည်း ၊ Border အနီ ပေါင်းစပ်ထားတာကို မြင်ရမှာဖြစ်ပြီး Contrast ကောင်းတဲ့ Design ရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Color Name က အလွယ်ဆုံး ၊ HEX က `#RRGGBB` ပုံစံ ဖြစ်သည်။
+- RGB က အရောင်တစ်ခုစီ 0-255 ၊ RGBA က Alpha နဲ့ Transparency ထိန်းနိုင်သည်။
+- `color` ၊ `background-color` ၊ `border-color` တွေမှာ တူညီစွာ သုံးနိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "CSS မှာ အရောင်သတ်မှတ်နည်း ဘယ်နှမျိုး ရှိပါသလဲ?", options: ["Color Name နဲ့ HEX", "RGB နဲ့ RGBA", "HSL", "အထက်ပါ အားလုံး"], correctAnswer: 3, explanation: "Color Name, HEX, RGB, RGBA, HSL ဆိုပြီး နည်းလမ်းများစွာ ရှိပါတယ်။" },
+    { id: "q2", question: "rgba() ရဲ့ နောက်ဆုံး a က ဘာကို သတ်မှတ်ပါသလဲ?", options: ["Alpha Transparency", "Angle", "Animation", "Area"], correctAnswer: 0, explanation: "a က Alpha ဖြစ်ပြီး အရောင် အရင့်အကြည်ကို 0 ကနေ 1 ကြား သတ်မှတ်ပါတယ်။" },
+    { id: "q3", question: "HEX Code ရဲ့ ပထမတစ်စုံနှစ်လုံးက ဘာအရောင်ကို ကိုယ်စားပြုပါသလဲ?", options: ["Green", "Blue", "Red", "Alpha"], correctAnswer: 2, explanation: "HEX Code ရဲ့ ပထမတစ်စုံက Red ၊ ဒုတိယက Green ၊ တတိယက Blue ဖြစ်ပါတယ်။" },
+  ]}
+/>

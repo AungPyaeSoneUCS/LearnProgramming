@@ -1,0 +1,73 @@
+---
+title: "CSS Shadows — Shadow ဖြင့် အနက်ရိပ် အလှဆင်ခြင်း"
+description: "box-shadow နဲ့ text-shadow ရဲ့ offset, blur, spread, inset စတဲ့ Value တွေကို အသေးစိတ် လေ့လာကြမယ်။"
+---
+
+### box-shadow မိတ်ဆက်
+
+`box-shadow` Property က Element ရဲ့ Box နောက်မှာ အရိပ်တစ်ခု ဖန်တီးပေးပါတယ်။ အခြေခံ Value တွေက Horizontal Offset ၊ Vertical Offset ၊ Color တို့ ဖြစ်ပြီး Horizontal Offset က ဘယ်ညာရွေ့မှုကို ရိုးရိုး Vertical Offset ကတော့ အပေါ်အောက် ရွေ့မှုကို ကိုယ်စားပြုပါတယ်။
+
+**ဥပမာ -**
+```css
+.card { box-shadow: 5px 5px #888888; }
+.card2 { box-shadow: -5px -5px #888888; }
+```
+
+မှတ်ချက် — Offset တွေ Positive ဆိုရင် ညာဘက်နဲ့ အောက်ဘက်ကို ရွေ့ပြီး Negative ဆိုရင် ဘယ်ဘက်နဲ့ အပေါ်ဘက်ကို ရွေ့ပါတယ်။
+
+### Blur နဲ့ Spread
+
+Third Value က Blur Radius ဖြစ်ပြီး ကြီးလေ အရိပ် ပိုပျော့လေ ဖြစ်ပါတယ်။ Fourth Value က Spread ဖြစ်ပြီး အရိပ်ရဲ့ အရွယ်အစားကို ကျယ်စေချင်ရင် Positive ၊ ကျဉ်းစေချင်ရင် Negative ပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+.soft { box-shadow: 10px 10px 20px 5px rgba(0, 0, 0, 0.3); }
+.tight { box-shadow: 0 0 10px 0 #000; }
+```
+
+မှတ်ချက် — Blur 0 ဆိုရင် ချွန်ထက်တဲ့ အရိပ် ဖြစ်ပြီး Spread Positive က အရိပ်ကို ပိုကျယ်စေပါတယ်။
+
+### Inset Shadow (အတွင်းဘက် အရိပ်)
+
+`inset` Keyword ထည့်ရင် အရိပ်က Element ရဲ့ ဘောင်အတွင်းဘက်မှာ ပေါ်ပါတယ်။ Press Button လို အတွင်းသို့ မြှုပ်နေတဲ့ ပုံစံ (Depressed) တွေအတွက် အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.inset { box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4); }
+.depressed { box-shadow: inset 3px 3px 5px #777; }
+```
+
+မှတ်ချက် — inset မထည့်ရင် Default က Outer Shadow ဖြစ်ပြီး inset နဲ့သာ အတွင်းဘက်ကို ရွေးချယ်နိုင်ပါတယ်။
+
+### Multiple Shadows နဲ့ text-shadow
+
+Shadow အများကြီးကို Comma (,) နဲ့ စီပြီး ထပ်တင်နိုင်ပါတယ်။ `text-shadow` ကတော့ Element ရဲ့ စာသားအတွက် အရိပ်ဖြစ်ပြီး Offset ၊ Blur ၊ Color ကို သတ်မှတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.layer {
+  box-shadow: 0 1px 2px #999, 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.special-text {
+  color: #333;
+  text-shadow: 2px 2px 4px #ccc;
+}
+```
+
+မှတ်ချက် — text-shadow မှာ Spread Value မပါဝင်ဘဲ Offset ၊ Blur ၊ Color သုံးခုပဲ ပါပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- box-shadow ရဲ့ Value အစဉ်က Offset ၊ Blur ၊ Spread ၊ Color ဖြစ်သည်။
+- inset က အရိပ်ကို အတွင်းဘက်သို့ ပြောင်းပေးသည်။
+- text-shadow မှာ Spread Value မရှိပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "box-shadow ရဲ့ Vertical Offset Positive ဆိုရင် အရိပ်က ဘယ်ကို ရွေ့ပါသလဲ?", options: ["အပေါ်ကို", "အောက်ကို", "ဘယ်ကို", "ညာကို"], correctAnswer: 1, explanation: "Vertical Offset Positive က အရိပ်ကို အောက်ဘက်သို့ ရွေ့ပေးပါတယ်။" },
+    { id: "q2", question: "အရိပ်ကို Element ရဲ့ အတွင်းဘက်မှာ ပေါ်စေဖို့ ဘယ် Keyword ကို သုံးပါသလဲ?", options: ["inside", "inner", "inset", "inward"], correctAnswer: 2, explanation: "inset Keyword က Shadow ကို Element ရဲ့ အတွင်းဘက်မှာ ပြစေပါတယ်။" },
+    { id: "q3", question: "text-shadow မှာ မပါဝင်တဲ့ Value က ဘာလဲ?", options: ["Offset", "Blur", "Color", "Spread"], correctAnswer: 3, explanation: "text-shadow မှာ Spread Value မရှိပါဘူး။" }
+  ]}
+/>

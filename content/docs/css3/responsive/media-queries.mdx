@@ -1,0 +1,139 @@
+---
+title: "RWD Media Queries — Mobile-First Media Query"
+description: "Screen အရွယ်အစားပေါ်လိုက် Style ပြောင်းလဲပေးတဲ့ Media Query တွေနဲ့ Mobile-First Approach ကို လေ့လာမယ်။"
+---
+
+Media Query က CSS3 ရဲ့ အစွမ်းထက်တဲ့ Feature တစ်ခုဖြစ်ပြီး Browser ရဲ့ Width ၊ Height ၊ Orientation စတဲ့ အခြေအနေပေါ်မူတည်ပြီး Style အမျိုးမျိုး သုံးနိုင်အောင် လုပ်ပေးပါတယ်။ Device တစ်ခုက သတ်မှတ်ချက်နဲ့ ကိုက်ညီမှသာ ထို Style Block က အလုပ်လုပ်ပါတယ်။ Responsive Design ရဲ့ အဓိကကိရိယာ ဖြစ်ပါတယ်။
+
+### Media Query ကို ဘယ်လိုရေးမလဲ?
+
+Media Query က `@media` ကီးဝေါစ် အတွင်းမှာ Condition တစ်ခုထည့်ပြီး ရေးပါတယ်။ Condition ဖြစ်မှ အောက်က Style တွေ အသုံးချပါတယ်။ `min-width` နဲ့ `max-width` တွေက အသုံးအများဆုံး Condition တွေပါ။
+
+**ဥပမာ -**
+```css
+/* Screen Width 600px အောက်ဆိုရင် */
+@media (max-width: 600px) {
+  body {
+    background-color: lightgray;
+    font-size: 15px;
+  }
+}
+```
+
+မှတ်ချက် — Screen 600px အောက် ကျဉ်းတဲ့အခါ Background က မီးခိုးရောင် ပြောင်းပြီး Font က အနည်းငယ် သေးသွားပါတယ်။
+
+### Mobile-First Approach
+
+Mobile-First ဆိုတာ ဖုန်းအတွက် Style ကို အရင်ရေးပြီး Tablet ၊ Desktop တွေအတွက် နောက်မှ ချဲ့ထွင်ရေးတဲ့နည်းပါ။ Base Style ကို Mobile အနေနဲ့ ရေးပြီး Screen ကျယ်လာတာနဲ့ `min-width` Media Query တွေနဲ့ ပြန်ပြင်ပါတယ်။ ဒါက Maintenance လွယ်ပြီး Performace လည်း ကောင်းပါတယ်။
+
+**ဥပမာ -**
+```css
+/* 1. Mobile အရင် (Base Styles) */
+.search-bar {
+  width: 100%;
+  display: block;
+}
+
+/* 2. Tablet နဲ့ အထက် */
+@media (min-width: 768px) {
+  .search-bar {
+    width: 50%;
+  }
+}
+
+/* 3. Desktop အတွက် */
+@media (min-width: 1024px) {
+  .search-bar {
+    width: 25%;
+  }
+}
+```
+
+မှတ်ချက် — ဒီနည်းမှာ Mobile က 100% ၊ Tablet က 50% ၊ Desktop က 25% ဖြစ်လို့ Screen ကြီးလာတဲ့အခါ Search Bar က ပိုကျဉ်းပါတယ်။ `min-width` က Screen ကြီးလာမှ စအလုပ်လုပ်တာမို့ Mobile-First Concept ဖြစ်ပါတယ်။
+
+### အသုံးများတဲ့ Breakpoints
+
+Breakpoints တွေက Layout ပြောင်းသင့်တဲ့ Screen Width အချက်များပါ။ Device ပေါင်းစုံက ပြောင်းမှုမတူပေမဲ့ အောက်ပါ တန်ဖိုးတွေက အသုံးအများဆုံး Reference ဖြစ်ပါတယ်။
+
+- **Mobile:** 480px အောက်
+- **Tablet:** 768px
+- **Laptop:** 1024px
+- **Desktop:** 1280px
+
+**ဥပမာ -**
+```css
+/* Mobile (Default) */
+.card { width: 100%; }
+
+/* Tablet */
+@media (min-width: 768px) {
+  .card { width: 50%; }
+}
+
+/* Laptop နဲ့အထက် */
+@media (min-width: 1024px) {
+  .card { width: 33.33%; }
+}
+```
+
+မှတ်ချက် — Cards တွေက Mobile မှာ 1 တန်း ၊ Tablet မှာ 2 တန်း ၊ Laptop မှာ 3 တန်း ဖြစ်ပြီး Screen နဲ့ လိုက်လျောညီထွေဖြစ်ပါတယ်။
+
+### Element တွေ ဝှက်/ပြန် ပြုလုပ်နည်း
+
+Media Query အတွင်းမှာ `display: none` သုံးပြီး Element တွေကို အခြေအနေပေါ်လိုက် ဝှက်ထားလို့ ရပါတယ်။ ဥပမာ Desktop မှာပြတဲ့ Menu ကို Mobile မှာ ဝှက်ပြီး Mobile Menu Button တစ်ခုကို ပြခိုင်းတာမျိုး ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.desktop-menu {
+  display: block;
+}
+
+.mobile-menu-btn {
+  display: none;
+}
+
+/* Screen ကျဉ်းရင် Desktop Menu ဝှက်ပြီး Button ပြမယ် */
+@media (max-width: 600px) {
+  .desktop-menu {
+    display: none;
+  }
+  .mobile-menu-btn {
+    display: block;
+  }
+}
+```
+
+မှတ်ချက် — `display: none` က Element ကို Layout ထဲကပါ လုံးဝ ဖယ်လိုက်တာမို့ နေရာလည်း မယူပါဘူး။ ဝှက်ချင်ရင် `display` အစား `visibility` သုံးရင် နေရာက ကျန်ခဲ့ပါတယ်။
+
+### Logic ပေါင်းစပ်အသုံးပြုခြင်း
+
+Media Feature တွေကို `and` နဲ့ ပေါင်းပြီး Condition တစ်ခုထက်ပိုပြီး သတ်မှတ်လို့ ရပါတယ်။ Landscape (ဖုန်းလှဲ) ၊ Portrait (ဖုန်းထောင်) လိုမျိုး Orientation တွေကိုလည်း ထည့်သွင်းထိန်းချုပ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+/* Width 600px နဲ့ 900px ကြားဖြစ်ပြီး Landscape ဖြစ်မှ */
+@media (min-width: 600px) and (max-width: 900px) and (orientation: landscape) {
+  .banner {
+    font-size: 2rem;
+  }
+}
+```
+
+မှတ်ချက် — ဒီ Style က Tablet ကို အလျားလှဲ ကြည့်တဲ့အခါမှသာ အလုပ်လုပ်ပါတယ်။ Condition တွေ များလေ သတ်မှတ်ချက်က တိတိကျကျ ဖြစ်လေပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Media Query က Screen ပေါ်လိုက် Style ပြောင်းလဲပေးသည်။
+- `max-width` က Screen ထက် မကျယ်တဲ့အခါ ၊ `min-width` က Screen ကျယ်တဲ့အခါ အလုပ်လုပ်သည်။
+- Mobile-First ဆိုသည်မှာ Mobile Style ကို အရင်ရေး၍ `min-width` ဖြင့် ချဲ့ထွင်ခြင်း ဖြစ်သည်။
+- Element တွေကို `display: none` ဖြင့် ဝှက်ထားနိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Mobile-First Approach မှာ ဘယ် Media Feature ကို အသုံးများပါသလဲ?", options: ["max-width", "min-width", "min-height", "resolution"], correctAnswer: 1, explanation: "Mobile First က Mobile Style ကို အရင်ရေးပြီး Screen ကျယ်လာမှ ချဲ့ဖို့ min-width ကို သုံးပါတယ်။" },
+    { id: "q2", question: "Element တစ်ခုကို Layout ထဲကပါ လုံးဝ ဝှက်ထားချင်ရင် ဘယ် Property ကို သုံးမလဲ?", options: ["visibility: hidden", "display: none", "opacity: 0", "position: absolute"], correctAnswer: 1, explanation: "display: none က Element ကို Layout ထဲကပါ ဖယ်ရှားပြီး ဝှက်ထားပါတယ်။" },
+    { id: "q3", question: "Screen Width 600px နဲ့ 900px ကြားအတွက်သာ Style သုံးချင်ရင် ဘယ်လိုရေးမလဲ?", options: ["min-width နဲ့ max-width တွေကို and နဲ့ ပေါင်းရေးရသည်", "max-width တစ်ခုတည်းသာ ရေးရသည်", "min-width တစ်ခုတည်းသာ ရေးရသည်", "orientation သာ ရေးရသည်"], correctAnswer: 0, explanation: "Media Query အတွင်းမှာ min-width နဲ့ max-width ကို and နဲ့ ပေါင်းပြီး ရေးနိုင်ပါတယ်။" },
+  ]}
+/>

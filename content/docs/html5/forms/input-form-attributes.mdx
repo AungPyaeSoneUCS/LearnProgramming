@@ -1,0 +1,97 @@
+---
+title: "HTML Input Form Attributes — Form အပြင်ကနေ ထိန်းချုပ်ခြင်း"
+description: "form, formaction, formmethod, formtarget, autocomplete, autofocus စတဲ့ input form attribute တွေကို လေ့လာကြမယ်။"
+---
+
+Input field တွေဟာ ကိုယ့်မိခင်နဲ့ မတူတဲ့ form နဲ့လည်း ချိတ်နိုင်ပြီး button ကတစ်ဆင့် submit ပုံစံကိုလည်း ပြောင်းလဲလို့ရပါတယ်။ ဒီလို ထိန်းချုပ်နိုင်တဲ့ input form attributes တွေကို လေ့လာကြည့်ရအောင်။
+
+### Form Attribute
+
+`form` attribute က input field ကို form tag ထဲမှာ မထည့်ထားဘဲနဲ့တောင် သီးခြားပေါ်နေတဲ့ form ထဲကို ချိတ်ပေးနိုင်ပါတယ်။ Form ရဲ့ `id` ကို ညွှန်းပေးရုံပါပဲ။
+
+**ဥပမာ -**
+
+```html
+<form id="mainform" action="/save" method="post">
+  <input type="text" name="username">
+</form>
+
+<input type="email" name="email" form="mainform">
+```
+
+မှတ်ချက် — Form အပြင်မှာရှိတဲ့ input ကိုလည်း `form="id"` နဲ့ ချိတ်ပြီး submit လုပ်လို့ရပါတယ်။
+
+### Formaction နဲ့ Formmethod
+
+`formaction` နဲ့ `formmethod` တွေက button တစ်ခုစီအတွက် သီးခြား action နဲ့ method ကို သတ်မှတ်ပေးနိုင်ပါတယ်။ Form ကြီးရဲ့ ပုံမှန် သတ်မှတ်ချက်ကို ဒီ attribute များက ကျော်လွန်သွားပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<form action="/draft" method="post">
+  <input type="text" name="title">
+  <button type="submit">Draft သိမ်းမယ်</button>
+  <button type="submit" formaction="/publish" formmethod="post">Publish လုပ်မယ်</button>
+</form>
+```
+
+မှတ်ချက် — Button တစ်ခုစီကို မတူတဲ့ နေရာဆီ ပို့ချင်ရင် `formaction` ကို သုံးပါတယ်။
+
+### Formtarget Attribute
+
+`formtarget` က button ရဲ့ response ကို ဘယ်မှာပြမယ်ဆိုတာကို သတ်မှတ်ပေးနိုင်ပါတယ်။ Form ရဲ့ `target` ကို ကျော်ပြီး button အတွက်သက်သက် သတ်မှတ်လို့ရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<form action="/result" method="get">
+  <input type="text" name="query">
+  <button type="submit" formtarget="_blank">New Tab မှာ ကြည့်မယ်</button>
+</form>
+```
+
+မှတ်ချက် — `_blank` ဆိုရင် ရလဒ်ကို tab အသစ်မှာ ဖွင့်ပြပါတယ်။
+
+### Autocomplete Attribute
+
+`autocomplete` က input field တစ်ခုချင်းစီအတွက် Browser ရဲ့ ခေါ်ရိုက်ဖူးတာ အကြံပြုချက်တွေကို ဖွင့်/ပိတ်ပါတယ်။ Form တစ်ခုလုံးမှာသာမက field တစ်ခုချင်းစီမှာလည်း သုံးလို့ရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<form action="/login" method="post" autocomplete="on">
+  <input type="text" name="firstname">
+  <input type="text" name="otp" autocomplete="off">
+</form>
+```
+
+မှတ်ချက် — OTP လိုမျိုး လျှို့ဝှက် နံပါတ်တွေအတွက် `autocomplete="off"` က သင့်တော်ပါတယ်။
+
+### Autofocus Attribute
+
+`autofocus` က စာမျက်နှာ ပွင့်လာတာနဲ့ အဲ့ဒီ field ထဲမှာ cursor ရောက်နေအောင် အလိုအလျောက် ထားပေးပါတယ်။ User က ချက်ချင်း စရိုက်လို့ရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<form action="/login" method="post">
+  <label for="email">အီးမေးလ်</label>
+  <input type="email" id="email" name="email" autofocus>
+</form>
+```
+
+မှတ်ချက် — Page တစ်ခုမှာ `autofocus` ကိုတော့ တစ်နေရာတည်းမှာပဲ သုံးသင့်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `form="id"` ဆိုရင် input က form အပြင်မှာရှိနေရင်တောင် ချိတ်လို့ရတယ်
+- `formaction`၊ `formmethod`၊ `formtarget` က button တစ်ခုစီအတွက် သတ်မှတ်ပေးတယ်
+- `autocomplete` က field တစ်ခုချင်းစီမှာ ဖွင့်ပိတ်လို့ရတယ်
+- `autofocus` က page ဖွင့်တာနဲ့ cursor ထားပေးတယ်
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Form အပြင်မှာရှိတဲ့ input ကို form နဲ့ ဘယ်လို ချိတ်လဲ", options: ["class နဲ့", "form attribute နဲ့", "style နဲ့", "src နဲ့"], correctAnswer: 1, explanation: "input မှာ form attribute ထည့်ပြီး form ရဲ့ id နဲ့ ချိတ်ပါတယ်" },
+  { id: "q2", question: "Button တစ်ခုစီအတွက် သီးခြား action သတ်မှတ်ချင်ရင် ဘာကို သုံးလဲ", options: ["formaction", "action", "target", "method"], correctAnswer: 0, explanation: "formaction က button တစ်ခုစီအတွက် သီးခြား action ပေးပါတယ်" },
+  { id: "q3", question: "Page ဖွင့်တာနဲ့ cursor ရောက်နေစေဖို့ ဘာ attribute ကို သုံးလဲ", options: ["focus", "autofocus", "active", "selected"], correctAnswer: 1, explanation: "autofocus က page ဖွင့်တာနဲ့ field ထဲ cursor ထားပေးပါတယ်" } ]} />

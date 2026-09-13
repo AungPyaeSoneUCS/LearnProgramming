@@ -1,0 +1,246 @@
+---
+title: "Modules နဲ့ Packages များ"
+description: "Python မှာ Built-in Modules အသုံးပြုနည်း, ကိုယ်ပိုင် Module ဆောက်နည်း, pip နဲ့ __name__ Pattern အကြောင်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="ဒီ Module ပြီးရင် ခင်ဗျားလုပ်နိုင်မှာများ">
+- Built-in Modules (math, random, datetime, os) တွေကို သုံးနိုင်မယ်
+- ကိုယ်ပိုင် Module ဆောက်ပြီး ခေါ်သုံးနိုင်မယ်
+- `if __name__ == '__main__':` Pattern ကို နားလည်သွားမယ်
+- `from module import ...` နဲ့ `import module` ကွာခြားချက်ကို သိမယ်
+</Aside>
+
+<Aside type="tip" title="ဒီ Module မစခင်">
+Module 6.5 (Virtual Environments) ကို ပြီးမှသာ ဆက်ကြည့်ပေးပါ။ venv ကို Activate လုပ်ပြီးမှသာ pip install လုပ်ဖို့ အရေးကြီးပါတယ်။ လိုအပ်ရင် Module 6.5 ကို ပြန်ကြည့်ပါ။
+</Aside>
+
+Programming လုပ်တဲ့အခါ အရာအားလုံးကို အစကနေ ကိုယ်တိုင် ရေးစရာ မလိုပါဘူး — Python မှာ အသင့်ရှိပြီးသား Module တွေကို ယူသုံးနိုင်ပါတယ်။
+
+---
+
+### Module ဆိုတာ ဘာလဲ?
+
+Module ဆိုတာ Python Code တွေ ရေးထားတဲ့ `.py` ဖိုင် တစ်ခုပါပဲ — Functions, Variables, Classes တွေ ပါဝင်နိုင်ပါတယ်။ `import` လုပ်ပြီး အလွယ်တကူ ယူသုံးနိုင်ပါတယ်:
+
+```python
+import math          # ← Module တစ်ခုလုံးကို ယူမယ်
+from math import pi  # ← Module ထဲကနေ တစ်စိတ်တည်း (pi) ကိုပဲ ယူမယ်
+from math import sqrt, pi, floor  # ← လိုအပ်တာတွေကို တစ်ချက်တည်း ရွေးယူမယ်
+```
+
+---
+
+### Built-in Modules — Python မှာ အသင့်ပါတဲ့ Module များ
+
+#### math — သင်္ချာ လုပ်ဆောင်ချက်များ
+
+```python
+import math
+
+print(math.pi)          # 3.141592653589793
+print(math.e)           # 2.718281828459045  (Euler's number)
+print(math.sqrt(16))    # 4.0
+print(math.floor(3.9))  # 3   (အောက်ဘက်ကို ဆင်းမယ်)
+print(math.ceil(3.1))   # 4   (အပေါ်ဘက်ကို တက်မယ်)
+print(math.pow(2, 10))  # 1024.0  (2 ရဲ့ 10 ထပ်)
+print(math.log(100, 10))  # 2.0  (log base 10 of 100)
+```
+
+#### random — ကျပန်းဂဏန်းများ
+
+```python
+import random
+
+print(random.randint(1, 10))   # 1 ကနေ 10 ကြား ကျပန်း Integer
+print(random.random())          # 0.0 ကနေ 1.0 ကြား Float
+print(random.uniform(1.5, 5.5)) # ၁.၅ ကနေ ၅.၅ ကြား Float
+
+# List ထဲကနေ ကျပန်းရွေးမယ်
+fruits = ["Apple", "Banana", "Orange", "Mango"]
+print(random.choice(fruits))         # တစ်ခုတည်း ရွေးမယ်
+print(random.sample(fruits, 2))      # ၂ ခု ရွေးမယ် (မထပ်စေရပါ)
+
+# List ကို ကျပန်း ရောနှောမယ်
+cards = [1, 2, 3, 4, 5]
+random.shuffle(cards)
+print(cards)   # [3, 1, 5, 2, 4]  ← ကျပန်း ဖြစ်သွားပြီ
+```
+
+#### datetime — ရက်စွဲနဲ့ အချိန်
+
+```python
+from datetime import datetime, date, timedelta
+
+# ယခု ရက်စွဲနဲ့ အချိန်
+now = datetime.now()
+print(now)                          # 2024-01-15 14:30:22.123456
+print(now.year)                     # 2024
+print(now.month)                    # 1
+print(now.strftime("%Y-%m-%d"))     # 2024-01-15
+print(now.strftime("%d/%m/%Y %H:%M")) # 15/01/2024 14:30
+print(f"ယနေ့ — {now.strftime('%d %B %Y')}")   # ယနေ့ — 15 January 2024
+
+# ရက် ရှေ့နောက် တွက်ခြင်း
+tomorrow = now + timedelta(days=1)
+last_week = now - timedelta(weeks=1)
+print(f"မနက်ဖြန်: {tomorrow.strftime('%Y-%m-%d')}")
+```
+
+#### os — Operating System လုပ်ဆောင်ချက်များ
+
+```python
+import os
+
+print(os.getcwd())              # လက်ရှိ Folder လမ်းကြောင်း (Current Working Directory)
+print(os.listdir("."))          # Folder ထဲက ဖိုင်တွေကို ကြည့်မယ်
+print(os.path.exists("test.txt"))  # ဖိုင်ရှိမရှိ စစ်မယ်
+print(os.path.join("folder", "file.txt"))  # Path လမ်းကြောင်းတွေ ချိတ်ဆက်မယ်
+
+os.makedirs("my_folder", exist_ok=True)  # Folder အသစ် ဆောက်မယ်
+```
+
+---
+
+### ကိုယ်ပိုင် Module ဆောက်ခြင်း
+
+Function တွေကို သီးသန့် ဖိုင်တစ်ခုထဲမှာ ထည့်ပြီး Module အဖြစ် ယူသုံးနိုင်ပါတယ်:
+
+**helpers.py:**
+```python
+def greet(name):
+    return f"မင်္ဂလာပါ {name}!"
+
+def add(a, b):
+    return a + b
+
+PI = 3.14159
+```
+
+**main.py (တူညီတဲ့ Folder ထဲမှာထားပါ):**
+```python
+import helpers
+
+print(helpers.greet("Aung"))   # မင်္ဂလာပါ Aung!
+print(helpers.add(5, 3))       # 8
+print(helpers.PI)              # 3.14159
+
+# သို့မဟုတ် ရွေးချယ်ပြီး Import လုပ်ချင်ရင်
+from helpers import greet, PI
+print(greet("Su"))   # မင်္ဂလာပါ Su!
+```
+
+---
+
+### if `__name__` == `'__main__':` Pattern
+
+ဒါဟာ Python မှာ အများသုံးတဲ့ Pattern တစ်ခုဖြစ်ပြီး Code ကို တိုက်ရိုက် Run တဲ့ အချိန်နဲ့ Module အဖြစ် Import လုပ်တဲ့ အချိန်ကို ခွဲခြားပေးပါတယ်:
+
+```python
+# calculator.py
+
+def add(a, b):
+    return a + b
+
+def multiply(a, b):
+    return a * b
+
+if __name__ == "__main__":
+    # ဒီ Block ကို python calculator.py နဲ့ တိုက်ရိုက် Run တဲ့ အချိန်မှာသာ အလုပ်လုပ်ပါမယ်
+    # import calculator ဆိုပြီး ခေါ်သုံးရင် ဒီ Block ကို ကျော်သွားပါမယ်
+    result = add(10, 5)
+    print(f"10 + 5 = {result}")
+```
+
+**ဘာကြောင့် အရေးကြီးသလဲ:**
+
+```python
+# main.py
+import calculator   # ← add() နဲ့ multiply() ကိုသာ ရရှိပြီး
+                    #   calculator.py ရဲ့ "Run Part" က အလုပ်လုပ်မှာ မဟုတ်ပါဘူး
+```
+
+<Aside type="tip" title="ဘာကြောင့် ဒါ အရေးကြီးသလဲ">
+Python File တစ်ခုကို Module အဖြစ် Import လုပ်လိုက်တဲ့အခါ `if __name__ == '__main__':` မပါရင် File ထဲက Code တွေ **အားလုံး Run** သွားပါတယ်။ ဒါကြောင့် Test Code၊ Demo Code တွေကို ဒီ Block ထဲမှာ ထည့်ထားပေးရင် Import လုပ်တဲ့အခါ မလိုအပ်ဘဲ Run သွားတာမျိုးကို ကာကွယ်နိုင်ပါတယ်။
+</Aside>
+
+---
+
+### Package ဆိုတာ ဘာလဲ?
+
+Package ဆိုတာ Module တွေ အများကြီးကို Folder တစ်ခုထဲမှာ စုထားတာပါ:
+
+```
+mypackage/
+├── __init__.py    # ← ဒါလေး ပါမှ Python က Package အဖြစ် မှတ်ယူပါမယ်
+├── math_utils.py
+└── string_utils.py
+```
+
+<Aside type="caution" title="pip မသုံးခင် venv အရင်ဖွင့်ပါ">
+`pip install` မလုပ်ခင် **Virtual Environment** ကို အရင် ဖွင့်ထားဖို့ မမေ့ပါနဲ့ (Module 6.5 ကို ကြည့်ပါ)။ venv မပါဘဲ System Python ထဲ Install လုပ်မိရင် Projects တွေကြားမှာ Version Conflict တွေ ဖြစ်လာနိုင်ပါတယ်:
+
+```bash
+# venv ဖွင့်ပြီးမှ
+pip install requests
+pip install pandas
+pip install django
+```
+</Aside>
+
+#### ခေါ်ဆိုနည်း နှစ်ခု နှိုင်းယှဉ်ခြင်း
+
+```python
+# နည်း ၁: Module တစ်ခုလုံးကို ယူမယ်
+import math
+result = math.sqrt(16)    # Module နာမည်ကို ရှေ့ကနေ အမြဲရေးရမယ်
+
+# နည်း ၂: Function တစ်ချို့ကိုသာ ရွေးယူမယ်
+from math import sqrt
+result = sqrt(16)         # တိုက်ရိုက် ခေါ်သုံးလို့ ရမယ်
+
+# ဘယ်နည်းက ပိုကောင်းလဲ? — Module ကြီးတွေဆိုရင် နည်း ၁ ကို ဦးစားပေး သုံးပါ
+# (ဒါမှသာ sqrt() ဆိုတဲ့ Function က ဘယ် Module က လာတာလဲ ဆိုတာ ရှင်းလင်းနေမှာပါ)
+```
+
+---
+
+### ဥပမာ — ကောင်းမွန်တဲ့ Module ပုံစံ
+
+```python
+# grade_calculator.py
+"""
+ကျောင်းသားတွေရဲ့ Grade တွက်ချက်မှုကို စီမံပေးတဲ့ Module
+"""
+
+GRADE_BOUNDARIES = {
+    "A": 80, "B": 70, "C": 60, "D": 50
+}
+
+def get_grade(score):
+    """Score ပေါ်မူတည်ပြီး Grade ပြန်ပေးပါမယ်"""
+    for grade, minimum in GRADE_BOUNDARIES.items():
+        if score >= minimum:
+            return grade
+    return "F"
+
+def calculate_gpa(scores):
+    """Score List ကနေ GPA တွက်ချက်ပါမယ်"""
+    if not scores:
+        raise ValueError("Scores list က အလွတ်ဖြစ်နေပါတယ်")
+    return sum(scores) / len(scores)
+
+if __name__ == "__main__":
+    # Test လုပ်ကြည့်ခြင်း
+    test_scores = [85, 72, 60, 45, 91]
+    for score in test_scores:
+        print(f"Score {score}: Grade {get_grade(score)}")
+    
+    gpa = calculate_gpa(test_scores)
+    print(f"GPA: {gpa:.1f}")
+```
+
+<Aside title="နောက်တစ်ဆင့်">
+Modules တွေအကြောင်း နားလည်သွားပြီဆိုရင်တော့ **Module 8 — Mini Project** မှာ ဒီသင်ခန်းစာတွေ အားလုံးကို ပေါင်းစပ်ပြီး Game လေးတစ်ခု တည်ဆောက်ကြပါမယ်!
+</Aside>

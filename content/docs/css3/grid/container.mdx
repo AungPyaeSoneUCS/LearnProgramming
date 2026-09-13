@@ -1,0 +1,124 @@
+---
+title: "Grid Container — Grid Track တွေကို ထိန်းချုပ်ခြင်း"
+description: "grid-template-columns ရဲ့ fr, repeat, minmax, grid-template-rows, gap, justify/align-content နဲ့ grid-auto-rows အကြောင်း လေ့လာကြမယ်။"
+---
+
+Grid container ပေါ်ကသတ်မှတ်တဲ့ property တွေက page ရဲ့ အကွက်တွေ (tracks) ဘယ်လို ဆောက်မလဲ၊ item တွေကို ဘယ်လို ချိန်ညှိမလဲ ဆိုတာ သတ်မှတ်ပေးပါတယ်။ ဒီသင်ခန်းစာမှာ grid track တွေ တည်ဆောက်နည်းရဲ့ အဓိက property တွေကို လေ့လာပါမယ်။
+
+### grid-template-columns — Column Track တွေကို သတ်မှတ်ခြင်း
+
+`grid-template-columns` က grid ရဲ့ column တွေကို သတ်မှတ်ပါတယ်။ fr unit ကိုသုံးပြီး အချိုးကျ ခွဲဝေနိုင်၊ px လို fixed unit ကိုသုံးပြီး ပုံသေ အရွယ်လည်း ထားနိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;
+  gap: 20px;
+}
+```
+
+မှတ်ချက် — ပထမ column က 200px ပုံသေထားပြီး ကျန်တဲ့ နေရာကို ဒုတိယနဲ့ တတိယ column နှစ်ခုက ညီတူ ခွဲယူပါတယ်။ Sidebar + content layout တွေမှာ ဒီပုံစံကို မကြာခဏ တွေ့ရမှာ ဖြစ်ပါတယ်။
+
+### repeat() — ထပ်ခါတလဲလဲ Column တွေ
+
+Column များလာတဲ့အခါ `1fr 1fr 1fr 1fr` လိုရှည်လျားရေးစရာ မလိုဘဲ `repeat()` function ကို သုံးနိုင်ပါတယ်။ ပုံစံက `repeat(အကြိမ်ရေ, track)` ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+```
+
+မှတ်ချက် — `repeat(6, 1fr)` ဟာ `1fr 1fr 1fr 1fr 1fr 1fr` နဲ့ အတူတူပါပဲ။ Column ၆ ခုကို ပြတ်သားတဲ့ စာကြောင်းတစ်ကြောင်းနဲ့ သတ်မှတ်လိုက်တာပဲ ဖြစ်ပါတယ်။
+
+### minmax() — အဆင့်သတ်မှတ်ထားတဲ့ Track
+
+`minmax(min, max)` က track တစ်ခုရဲ့ အနည်းဆုံးနဲ့ အများဆုံး အရွယ်ကို သတ်မှတ်ပေးပါတယ်။ ဒါကြောင့် container ကျဉ်းတဲ့အခါ track က သတ်မှတ်ထားတဲ့ အနည်းဆုံးထက် မကျော်လွန်ပါဘူး။
+
+**ဥပမာ -**
+
+```css
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+```
+
+မှတ်ချက် — Card တွေက အနည်းဆုံး 250px ရဖို့ ကြိုးစားပြီး နေရာရှိသလောက် 1fr အထိ ဆန့်နိုင်ပါတယ်။ auto-fit ကြောင့် screen အကျယ်ပေါ်မူတည်ပြီး column အရေအတွက် အလိုအလျောက် တိုးလျော့နေပါတယ်။ ဒါက pure CSS နဲ့ responsive grid ရဲ့ နည်းပညာ ဖြစ်ပါတယ်။
+
+### grid-template-rows — Row Track တွေကို သတ်မှတ်ခြင်း
+
+Column တွေလိုပဲ row တွေကိုလည်း `grid-template-rows` နဲ့ သတ်မှတ်နိုင်ပါတယ်။ သတ်မှတ်ထားတဲ့ row အရေအတွက် ကျော်တဲ့ item တွေကတော့ implicit row တွေမှာ အလိုအလျောက် နေရာချပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 100px 200px;
+  gap: 12px;
+}
+```
+
+မှတ်ချက် — ပထမ row က 100px၊ ဒုတိယ row က 200px ဖြစ်ပြီး column ၂ ခုရှိတာမို့ item ၄ ခုအထိ ဒီအတိုင်း နေရာချပါတယ်။ ပိုတဲ့ item တွေက row တစ်ခု ထပ်တိုးပြီး ထည့်ပေးပါတယ်။
+
+### justify-content နဲ့ align-content
+
+Grid ရဲ့ track တွေပေါင်းပြီး container ထက် ကျဉ်းနေတဲ့အခါ track အစုကို container ရဲ့ ဘယ်နေရာမှာ ထားမလဲ ဆိုတာကို `justify-content` (အလျားလိုက်) နဲ့ `align-content` (ဒေါင်လိုက်) က ထိန်းချုပ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  justify-content: center;
+  align-content: center;
+  gap: 10px;
+  height: 400px;
+}
+```
+
+မှတ်ချက် — Column တွေက 100px ပုံသေဖြစ်လို့ container ကျယ်နေရင် ကျန်တဲ့နေရာ ပေါ်လာပြီး ဒီမှာတော့ track တွေက အလယ်မှာ စုနေပါတယ်။ Flexbox ရဲ့ justify-content နဲ့ ဆင်တူပါတယ်။
+
+### grid-auto-rows — Implicit Row များအတွက် Default
+
+ကြိုတင်သတ်မှတ်ထားတဲ့ row တွေ ကျော်သွားတဲ့ item တွေအတွက် အလိုအလျောက် ဖြစ်ပေါ်လာမယ့် row တွေရဲ့ အရွယ်ကို `grid-auto-rows` က သတ်မှတ်ပေးပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 150px;
+  gap: 16px;
+}
+```
+
+မှတ်ချက် — `grid-template-rows` မသတ်မှတ်ထားလို့ item တွေ ထည့်သလောက် row တွေက 150px အမြင့်နဲ့ အလိုအလျောက် ပေါ်လာပါတယ်။ Gallery တွေမှာ equal-height rows ရဖို့ အသုံးဝင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `grid-template-columns` က column track များကို သတ်မှတ်သည်။
+- `repeat()` ဖြင့် ထပ်ခါတလဲလဲ track များကို တိုတိုရေးနိုင်သည်။
+- `minmax(min, max)` ဖြင့် track ၏ အနည်းဆုံးနဲ့ အများဆုံးကို သတ်မှတ်နိုင်သည်။
+- `grid-auto-rows` က implicit row များ၏ default အမြင့်ကို သတ်မှတ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Column track တွေ ထပ်ခါထပ်ခါ ရေးနေရတာကို တိုတိုရလွယ်အောင် ဘယ် function ကို သုံးပါသလဲ?", options: ["Repeat", "Minify", "Track", "Fraction"], correctAnswer: 0, explanation: "repeat(6, 1fr) လို function က track တွေ ထပ်ရေးခြင်းကို ရှောင်ရှားနိုင်ပါတယ်။" },
+    { id: "q2", question: "Track တစ်ခုရဲ့ အနည်းဆုံးနဲ့ အများဆုံး အရွယ်ကို သတ်မှတ်ဖို့ ဘာကို သုံးပါသလဲ?", options: ["Max width", "Minmax", "Range", "Limit"], correctAnswer: 1, explanation: "minmax(250px, 1fr) က track ကို 250px အောက် မကျုံ့စေဘဲ 1fr အထိ ဆန့်စေပါတယ်။" },
+    { id: "q3", question: "Implicit row တွေရဲ့ default အမြင့်ကို သတ်မှတ်ဖို့ ဘယ် property ကို သုံးပါသလဲ?", options: ["Grid auto rows", "Grid template columns", "Row height auto", "Track height"], correctAnswer: 0, explanation: "grid-auto-rows က ကြိုသတ်မှတ်မထားတဲ့ row အသစ်တွေအတွက် အမြင့်ကို သတ်မှတ်ပေးပါတယ်။" }
+  ]}
+/>

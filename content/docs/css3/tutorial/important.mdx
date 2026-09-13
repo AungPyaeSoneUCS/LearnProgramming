@@ -1,0 +1,111 @@
+---
+title: "CSS !important — Priority အမြင့်ဆုံး Declaration"
+description: "!important က Style တွေကို ဘယ်လို ကျော်ဖြတ်ပေးသလဲ ၊ ဘယ်အခါ သုံး ၊ ဘယ်အခါ ရှောင်ရမလဲ ဆိုတာကို လေ့လာကြည့်ရအောင်။"
+---
+
+### `!important` ဆိုတာ ဘာလဲ?
+
+`!important` က Declaration ရဲ့ အဆုံးမှာ ထည့်ရေးလို့ရတဲ့ Keyword ဖြစ်ပြီး Specificity ဘယ်လောက်ပဲ မြင့်ပါစေ အားလုံးကို ကျော်ဖြတ်ကာ ဒီ Style ကို အတည်ပြုစေပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  color: red !important;
+}
+#note {
+  color: blue;
+}
+```
+
+မှတ်ချက် — `#note` က Specificity ပိုမြင့်ပေမဲ့ `!important` ရှိတဲ့ color: red က အနိုင်ရပါတယ်။
+
+### Priority (ဦးစားပေး) နည်းစနစ်
+
+Browser က Declaration တွေကို အောက်ပါအတိုင်း ဦးစားပေး ဆုံးဖြတ်ပါတယ်။
+
+1. `!important` ပါတဲ့ Declaration
+2. Inline Style
+3. ID Selector
+4. Class / Attribute / Pseudo-class
+5. Element / Pseudo-element
+6. Source Order (နောက်ဆုံး ရေးထားတာ)
+
+မှတ်ချက် — `!important` မပါတဲ့ Style တွေ အားလုံးထက် `!important` ပါတဲ့ Style က အမြဲတမ်း ဦးစားပေး ခံရပါတယ်။
+
+**ဥပမာ -**
+```css
+.button {
+  background: #337ab7;
+}
+body .main .button {
+  background: red;
+}
+.button {
+  background: green !important;
+}
+```
+
+မှတ်ချက် — Specificity ဘယ်လောက်ပဲ မြင့်မြင့် `!important` မပါရင် အထက်က ၃ ခုလုံးထဲမှာ Green သာ အနိုင်ရပါတယ်။
+
+### `!important` ကို ဘာကြောင့် ရှောင်သင့်သလဲ?
+
+`!important` ကို မကြာခဏ သုံးလေလေ Style တွေကို ထိန်းချုပ်ရခက်လေလေ ဖြစ်ပြီး နောက်ပိုင်း Developer က Override လုပ်ဖို့ `!important` နဲ့ပဲ ထပ်ရေးရတဲ့ ဆိုးရွားတဲ့အလေ့အထ ဖြစ်လာပါတယ်။ Code Base ကြီးလာရင် Maintain (ပြုပြင်ရ) ခက်ခဲသွားပါတယ်။
+
+**ဥပမာ -**
+```css
+/* Bad — လိုသလို မဖြစ်တိုင်း !important ထည့်နေခြင်း */
+.footer { color: #fff !important; }
+.footer a { color: #fff !important; }
+
+/* Good — Specificity ကို စဉ်းစားပြီး ရေးခြင်း */
+.footer { color: #fff; }
+.footer a { color: #ddd; }
+```
+
+မှတ်ချက် — `!important` ကို နေ့စဉ်ရေးနည်းထဲမှာ မထည့်ဘဲ ဆုံးဖြတ်ချက် Policy အဖြစ်သာ သုံးတာက ပိုကောင်းပြီး CSS ကြီးထွားမှုကိုလည်း ကာကွယ်ပါတယ်။
+
+### `!important` သုံးသင့်တဲ့ အခါများ
+
+- Third-party Library (Plugin) တွေရဲ့ Style ကို ကျော်ဖြတ်ဖို့
+- Script ကနေ ထည့်လိုက်တဲ့ Inline Style ကို ပယ်ဖို့
+- Utility Class လိုမျိုး ရည်ရွယ်ချက် တိကျတဲ့နေရာမျိုးမှာ
+
+**ဥပမာ -**
+```css
+.hidden-important {
+  display: none !important;
+}
+.plugin-banner {
+  background: #2c3e50 !important;
+}
+```
+
+မှတ်ချက် — Plugin/Library Style တွေကို ကျော်ဖို့ Utility Class ပမာဏ နည်းနည်းနဲ့ သုံးတာက အကျိုးရှိပြီး Debug လုပ်ရလည်း လွယ်ကူပါတယ်။
+
+### `!important` အစား လုပ်နိုင်တဲ့ နည်းလမ်းများ
+
+Specificity ကို မြှင့်တဲ့ Class တစ်ခု ထပ်ထည့်ခြင်း ၊ Naming စနစ်တကျ ထားခြင်းဖြင့် `!important` မလိုဘဲ Override လုပ်လို့ ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.button { background: #337ab7; }
+.button.button-primary {
+  background: #2c3e50;
+}
+```
+
+မှတ်ချက် — Class (၂) ခု ပေါင်းထားတဲ့ Selector က Specificity ပိုမြင့်လို့ `!important` မလိုဘဲ Priority ရပါတယ်။
+
+### အကျဉ်းချုပ်
+
+`!important` က Cascade နဲ့ Specificity အားလုံးကို ကျော်ဖြတ်တဲ့ အားအကြီးဆုံး Declaration ဖြစ်ပြီး ရှောင်နိုင်သမျှ ရှောင်ပါ။ Utility Class အနေနဲ့ ဖြစ်ဖြစ် ၊ Specificity မြှင့်ခြင်းဖြင့် ဖြစ်ဖြစ် ဦးစားပေး စဉ်းစားပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "!important က ဘာကို ကျော်ဖြတ်နိုင်ပါသလဲ?", options: ["တခြားသော Declaration တွေနဲ့ Specificity အားလုံး", "ဖိုင်ရဲ့ အရွယ်အစားကိုသာ", "HTML Tag နာမည်တွေကိုသာ", "Media Query တွေကိုသာ"], correctAnswer: 0, explanation: "!important က Specificity လေးလွန်းပါစေ တခြား Declaration တွေကို ကျော်ဖြတ်ပါတယ်။" },
+    { id: "q2", question: "!important ကို မကြာခဏ မသုံးသင့်တဲ့ အကြောင်းရင်းက ဘာလဲ?", options: ["Style ပြန်ပြင်ရ ခက်ခဲလာလို့", "Page ပိုနှေးသွားလို့", "HTML Invalid ဖြစ်လို့", "Mobile တွေမှာ အလုပ်မလုပ်လို့"], correctAnswer: 0, explanation: "!important များလာရင် Cascade ပျက်ပြီး နောက်ပိုင်း Style Override လုပ်ရ ခက်ခဲပါတယ်။" },
+    { id: "q3", question: "!important ပါတဲ့ Declaration နဲ့ Inline Style ယှဉ်ရင် ဘယ်ဟာ အနိုင်ရပါသလဲ?", options: ["!important ပါတဲ့ Declaration", "Inline Style", "ID Selector", "Element Selector"], correctAnswer: 0, explanation: "!important က Inline Style နဲ့ ID Selector ကိုတောင် ကျော်ဖြတ်တဲ့အတွက် Priority အမြင့်ဆုံး ဖြစ်ပါတယ်။" },
+  ]}
+/>

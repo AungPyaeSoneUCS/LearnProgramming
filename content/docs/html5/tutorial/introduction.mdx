@@ -1,0 +1,70 @@
+---
+title: "HTML Introduction — HTML အကြောင်း မိတ်ဆက်"
+description: "HTML ဆိုတာ ဘာလဲ၊ Webpage တစ်ခုရဲ့ အခြေခံဖွဲ့စည်းပုံကို နားလည်ကြည့်ရအောင်။"
+---
+
+### HTML ဆိုတာ ဘာလဲ?
+
+**HTML (HyperText Markup Language)** ဆိုတာ Webpage တွေ ဆောက်ဖို့အတွက် သုံးတဲ့ **Markup Language** ဖြစ်ပါတယ်။ သူက Programming Language မဟုတ်ဘဲ၊ "Tags" လို့ခေါ်တဲ့ အမှတ်အသားတွေနဲ့ စာတမ်း (Document) ရဲ့ ဖွဲ့စည်းပုံကို သတ်မှတ်ပေးတာပါ။ Browser (Chrome, Edge, Firefox) တွေက အဲဒီ HTML ကို ဖတ်ပြီး လှပသော Webpage အဖြစ် Screen ပေါ်မှာ ပြသပေးပါတယ်။
+
+**ဥပမာ -**
+```html
+<h1>First Heading</h1>
+<p>First paragraph.</p>
+```
+
+- `<h1>` နဲ့ `</h1>` ကြားက စာသားကို **ခေါင်းစဉ်ကြီး** အဖြစ် ပြပါမယ်။
+- `<p>` နဲ့ `</p>` ကြားက စာသားကို **စာပိုဒ်** အဖြစ် ပြပါမယ်။
+
+### HTML Tags ရဲ့ သဘောတရား
+
+HTML Element တိုင်းက အများအားဖြင့် **Start Tag** နဲ့ **End Tag** နှစ်ခု ပါဝင်ပါတယ်။ End Tag မှာ ရှေ့က **Slash (**/**) ** ပါပါတယ်။ ဥပမာ - `<p>...</p>` ။
+
+```html
+<p>ဒါက စာပိုဒ်တစ်ခုပါ။</p>
+<h2>ဒါက ခေါင်းစဉ်တစ်ခုပါ။</h2>
+```
+
+- **Start Tag:** `<p>`
+- **Content:** `ဒါက စာပိုဒ်တစ်ခုပါ။`
+- **End Tag:** `</p>`
+
+### HTML Document တစ်ခုရဲ့ အခြေခံဖွဲ့စည်းပုံ
+
+HTML Document အားလုံးက `<html>`, `<head>`, `<body>` ဆိုတဲ့ အဓိကအပိုင်း (၃) ပိုင်း ပါဝင်ပါတယ်။
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Title</title>
+</head>
+<body>
+  <h1>My First Heading</h1>
+  <p>My first paragraph.</p>
+</body>
+</html>
+```
+
+- `<!DOCTYPE html>` — Browser ကို "ဒါက HTML5 document" ဆိုတာ ပြောပြတာ။
+- `<html>` — Document တစ်ခုလုံးရဲ့ အမြစ် (Root)။
+- `<head>` — Meta data နဲ့ Page Title တွေ ထည့်တဲ့ နေရာ။
+- `<body>` — Browser မှာ မြင်ရတဲ့ Content တွေ အားလုံး ထည့်တဲ့ နေရာ။
+
+### Webpage တွင်ပါသော အဓိက နည်းပညာ (၃) ခု
+
+1. **HTML** — ဖွဲ့စည်းပုံ (Structure)။
+2. **CSS** — အလှအပပုံစံ (Style)။
+3. **JavaScript** — အပြန်အလှန် တုံ့ပြန်မှု (Behavior)။
+
+မှတ်ထားရမယ့်အချက် — HTML က Structure တည်ဆောက်ရေး၊ CSS က Styling ၊ JavaScript က Interactivity အတွက် အဓိက တာဝန်ယူပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "HTML ဆိုတာ ဘာလဲ?", options: ["Programming Language", "Markup Language", "Database Language", "Styling Language"], correctAnswer: 1, explanation: "HTML က Markup Language ဖြစ်ပြီး Document ရဲ့ ဖွဲ့စည်းပုံကို Tags နဲ့ သတ်မှတ်ပါတယ်။" },
+    { id: "q2", question: "End Tag မှာ ဘာတစ်ခု ထည့်ပေးရပါသလဲ?", options: ["Ampersand (&)", "Hash (#)", "Slash (/)", "Percent (%)"], correctAnswer: 2, explanation: "End Tag က / (Slash) နဲ့ စပါတယ်။ ဥပမာ </p>" },
+    { id: "q3", question: "Browser မှာ မြင်ရတဲ့ Content တွေကို ဘယ် Element ထဲ ထည့်ပါသလဲ?", options: ["<head>", "<body>", "<html>", "<title>"], correctAnswer: 1, explanation: "မြင်ရတဲ့ Content တွေအားလုံးက <body> ထဲမှာ ရှိပါတယ်။" },
+  ]}
+/>

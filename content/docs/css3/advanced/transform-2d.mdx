@@ -1,0 +1,72 @@
+---
+title: "CSS 2D Transforms — Element ရွှေ့ခြင်း၊ လှည့်ခြင်း၊ ချဲ့ခြင်း"
+description: "translate, rotate, scale, skew, matrix, transform-origin တို့ဖြင့် 2D Transform ပြုလုပ်နည်းကို လေ့လာကြမယ်။"
+---
+
+### transform ဆိုတာ ဘာလဲ?
+
+`transform` Property က Element တစ်ခုကို ရွှေ့ခြင်း၊ လှည့်ခြင်း၊ အရွယ်ပြောင်းခြင်း၊ စောင်းခြင်း စတဲ့ အပြောင်းအလဲတွေကို 2D မျက်နှာပြင်မှာ ပြုလုပ်ပေးပါတယ်။ ထူးခြားချက်က Transform က Layout ကို မထိခိုက်ဘဲ Visual သက်သက်သာ ပြောင်းလဲပေးတာမို့ ဘေးနားတစ်လျှောက်က Element တွေကို မတွန်းဖယ်ပါဘူး။
+
+**ဥပမာ -**
+```css
+.box { transform: translate(20px, 10px); }
+.box2 { transform: translateX(-15px); }
+```
+
+မှတ်ချက် — translate က Element ကို ဆွဲရွှေ့ပေးတာမို့ အပြောင်းအလဲ ဖြစ်သွားပေမယ့် ပတ်ဝန်းကျင် Layout က မပြောင်းလဲပါဘူး။
+
+### rotate (လှည့်ခြင်း)
+
+`rotate()` Function က Element ကို ၎င်း၏ ဗဟိုမှာ ဒီဂရီ (deg) နဲ့ လှည့်ပေးပါတယ်။ Positive Degree က နာရီလုံးချိန်နဲ့ တူညီတဲ့ဘက် လှည့်ပြီး Negative Degree က ဆန့်ကျင်ဘက်သို့ လှည့်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.rotated { transform: rotate(45deg); }
+.back-rotated { transform: rotate(-90deg); }
+```
+
+မှတ်ချက် — 360deg ဆိုရင် တစ်ပတ် အပြည့် ဖြစ်ပြီး rotate က Hover Animation တွေမှာ အသုံးအများဆုံး Transform ပါ။
+
+### scale နဲ့ skew
+
+`scale()` က Element ကို Factor အရ ချဲ့/ချုံ့ပေးပြီး 1 ထက် ကြီးရင် ချဲ့ပြီး 1 ထက် ငယ်ရင် ချုံ့ပါတယ်။ `skew()` ကတော့ Element ကို X နဲ့ Y ဝင်ရိုးအလိုက် ဒီဂရီနဲ့ စောင်းပေးပြီး Italic Text ရဲ့ စာလုံးစောင်း ပုံစံမျိုး ဖြစ်စေပါတယ်။
+
+**ဥပမာ -**
+```css
+.zoom { transform: scale(1.5); }
+.squeeze { transform: scale(0.5, 1); }
+.tilt { transform: skew(20deg, 10deg); }
+```
+
+မှတ်ချက် — scale(2) ဆိုရင် Original ရဲ့ နှစ်ဆ ကြီးပြီး transform များစွာကို ပေါင်းချင်ရင် Space နဲ့ ခြားပြီး တစ်ကြောင်းတည်းထဲ ရေးနိုင်ပါတယ်။
+
+### matrix နဲ့ transform-origin
+
+`matrix()` Function က value ခြောက်ချောင်း (scaleX, skewY, skewX, scaleY, translateX, translateY) တစ်စုတည်းနဲ့ Transform တွေ အားလုံးကို ပေါင်းသတ်မှတ်ပေးတာပါ။ `transform-origin` ကတော့ Transform လုပ်တဲ့အခါ လှည့်ပတ်/ဆွဲငင်ရမယ့် ဗဟိုနေရာကို ပြောင်းပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+.matrix-box { transform: matrix(1, 0, 0, 1, 20, 10); }
+.orbit {
+  transform-origin: top left;
+  transform: rotate(30deg);
+}
+```
+
+မှတ်ချက် — matrix က ရှုပ်ထွေးတတ်လို့ ရိုးရှင်းတဲ့ Function တွေကို အများအားဖြင့် သုံးပြီး transform-origin ရဲ့ Default ကတော့ Element ရဲ့ ဗဟို (center) ဖြစ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- translate က ရွှေ့ ၊ rotate က လှည့် ၊ scale က အရွယ် ၊ skew က စောင်းစေသည်။
+- Transform က Layout ကို မပြောင်းလဲစေပါ။
+- transform-origin ရဲ့ Default က ဗဟိုနေရာ ဖြစ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Element တစ်ခုကို Original ရဲ့ နှစ်ဆ ကြီးအောင် ဘယ် Transform ကို သုံးမလဲ?", options: ["scale(0.5)", "scale(2)", "rotate(2deg)", "skew(2deg)"], correctAnswer: 1, explanation: "scale(2) က Factor 2 နဲ့ Element ကို နှစ်ဆ ချဲ့ပေးပါတယ်။" },
+    { id: "q2", question: "rotate က Element ကို Default အနေနဲ့ ဘယ်နေရာကနေ လှည့်ပေးပါသလဲ?", options: ["Top Left", "Bottom Right", "ဗဟိုကနေ", "ဘယ်အစွန်းကနေ"], correctAnswer: 2, explanation: "Transform ရဲ့ Default Origin က Element ရဲ့ ဗဟိုနေရာဖြစ်ပါတယ်။" },
+    { id: "q3", question: "Element ကို ဘယ်ဘက်သို့ 15px ရွှေ့ချင်ရင် ဘယ် Transform ကို သုံးမလဲ?", options: ["translateX(15px)", "translateX(-15px)", "translateY(15px)", "rotate(-15deg)"], correctAnswer: 1, explanation: "translateX Negative က Element ကို ဘယ်ဘက်သို့ ရွှေ့ပေးပါတယ်။" }
+  ]}
+/>

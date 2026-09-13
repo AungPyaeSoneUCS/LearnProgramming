@@ -1,0 +1,90 @@
+---
+title: "CSS Margins — Element အကြား အကွာအဝေး သတ်မှတ်နည်း"
+description: "margin shorthand, auto centering, negative margin နဲ့ margin collapse အကြောင်း လေ့လာကြမယ်။"
+---
+
+### Margin ဆိုတာ ဘာလဲ?
+
+**Margin** က element တစ်ခုရဲ့ အပြင်ဘက်က နေရာလွတ်ပါ။ Element နဲ့ နောက် element တွေကြားက အကွာအဝေးကို ထိန်းချုပ်ပေးပြီး background color ထည့်ထားရင်တောင် margin ထဲကို အရောင် မဝင်ပါဘူး။ Margin က box model ရဲ့ အပြင်ဆုံး layer ဖြစ်ပါတယ်။
+
+### Margin Shorthand (တန်ဖိုး တစ်လုံးကနေ လေးလုံး)
+
+`margin` မှာ တန်ဖိုး ၁ လုံး၊ ၂ လုံး၊ ၃ လုံး၊ ၄ လုံး ပေးလို့ရပြီး တစ်မျိုးစီ အဓိပ္ပာယ် ကွာပါတယ်။
+
+**ဥပမာ -**
+```css
+.m-one { margin: 10px; }                 /* လေးဖက်လုံး */
+.m-two { margin: 10px 20px; }            /* အပေါ်အောက် ဘယ်ညာ */
+.m-three { margin: 10px 20px 30px; }     /* အပေါ် ဘယ်ညာ အောက် */
+.m-four { margin: 10px 20px 30px 40px; } /* top right bottom left */
+```
+
+မှတ်ချက် — Value လေးလုံး ပေးရင် နာရီလက်တံ လည်တဲ့အတိုင်း top, right, bottom, left အစဉ်အတိုင်း သက်ရောက်ပါတယ်။
+
+### Auto Margin (အလယ်တည့် Center ပို့ခြင်း)
+
+အကျယ် သတ်မှတ်ထားတဲ့ block element တစ်ခုမှာ `margin: 0 auto;` ပေးရင် element က ဘယ်ညာ အလယ်တည့်တည့် ရောက်ပါတယ်။ `auto` က ကျန်နေတဲ့ နေရာလွတ်ကို ဘယ်ညာ အညီအမျှ ခွဲဝေပေးတာပါ။
+
+**ဥပမာ -**
+```css
+.container {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.hero {
+  max-width: 800px;
+  margin: 0 auto;
+}
+```
+
+မှတ်ချက် — `margin: 0 auto;` က horizontal centering အတွက်ပါ၊ vertical center အတွက်တော့ မဟုတ်ပါဘူး။
+
+### Negative Margin (အနုတ် Margin)
+
+Margin ကို negative value နဲ့ ပေးရင် element က နီးနီးကပ်ကပ် ရွေ့ပြီး နောက် element တွေနဲ့ ထပ်သွားအောင် လုပ်နိုင်ပါတယ်။ အသုံးများတာကတော့ layout တစ်မျိုးမှာ element တွေကို တွဲကပ်စေဖို့ပါ။
+
+**ဥပမာ -**
+```css
+.card {
+  margin-top: -20px;
+}
+
+.overlap-item {
+  margin-left: -10px;
+}
+```
+
+မှတ်ချက် — Negative margin က layout ကို ရှုပ်ထွေးစေနိုင်လို့ လိုအပ်တဲ့ နေရာမှာပဲ သတိထား သုံးပါ။
+
+### Margin Collapse (Margin ပြိုကျခြင်း)
+
+Block element နှစ်ခုရဲ့ ဒေါင်လိုက် margin တွေ (top/bottom) က ကပ်တဲ့အခါ ပေါင်းမသွားဘဲ **ပိုကြီးတဲ့တစ်ခု တည်းသာ** ကျန်ပါတယ်။ ဒါကို **margin collapse** လို့ ခေါ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+/* h1 ရဲ့ margin-bottom နဲ့ h2 ရဲ့ margin-top က collapse ဖြစ်ပြီး 20px ပဲ ကျန်မယ် */
+h1 {
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-top: 20px;
+}
+```
+
+မှတ်ချက် — Horizontal margin (ဘယ်/ညာ) တွေကတော့ collapse မဖြစ်ဘဲ vertical margin တွေမှာပဲ အဖြစ်များပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Margin က element ရဲ့ အပြင်ဘက် နေရာလွတ်ဖြစ်ပြီး background က မဝင်ပါဘူး။
+- `margin` shorthand က value ၁ လုံးကနေ ၄ လုံး အထိ လက်ခံပြီး top, right, bottom, left အစဉ် သက်ရောက်ပါတယ်။
+- `margin: 0 auto;` က block element ကို အလယ်တည့်တည့် ပို့ပေးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "margin: 10px 20px; မှာ 20px က ဘယ်နေရာကို သက်ရောက်လဲ?", options: ["အပေါ်အောက်", "ဘယ်ညာ", "လေးဖက်လုံး", "ဘယ်ဘက် တစ်ဖက်တည်း"], correctAnswer: 1, explanation: "နှစ်လုံးပေးရင် ပထမ value က အပေါ်အောက် ဒုတိယ value က ဘယ်ညာပါ။" },
+  { id: "q2", question: "Block element တစ်ခုကို အလယ်တည့်တည့် center ချင်ရင် ဘယ်လိုလုပ်လဲ?", options: ["margin: 50px;", "width သတ်မှတ်ပြီး margin: 0 auto;", "text-align: center;", "margin-top: auto;"], correctAnswer: 1, explanation: "အကျယ်ရှိတဲ့ block element မှာ margin: 0 auto; ပေးမှ ဘယ်ညာ center ဖြစ်ပါတယ်။" },
+  { id: "q3", question: "Margin collapse ဆိုတာ ဘာလဲ?", options: ["margin တွေ အကုန် ပျောက်တာ", "ဒေါင်လိုက် margin နှစ်ခု ပေါင်းပြီး ပိုကြီးတဲ့တစ်ခု ကျန်တာ", "margin အရောင် ပြောင်းတာ", "margin က padding ဖြစ်သွားတာ"], correctAnswer: 1, explanation: "Collapse ဖြစ်တဲ့အခါ margin နှစ်ခု ပေါင်းမသွားဘဲ ပိုကြီးတဲ့တစ်ခု တည်းသာ ကျန်ပါတယ်။" }
+]} />

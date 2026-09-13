@@ -1,0 +1,136 @@
+---
+title: "Flex Container — Layout ကို Flex Container နဲ့ ထိန်းချုပ်ခြင်း"
+description: "flex-direction, flex-wrap, justify-content, align-items, align-content နဲ့ gap ဆိုတဲ့ flex container properties တွေအကြောင်း လေ့လာကြမယ်။"
+---
+
+Flex container ပေါ်မှာ သတ်မှတ်နိုင်တဲ့ property တွေက item တွေ ဘယ်လိုစီမယ်၊ ဘယ်လို ချိန်ညှိမယ်၊ ဘယ်လောက် ကွာဝေးမယ်ဆိုတာကို အပြည့်အဝ ထိန်းချုပ်ပေးပါတယ်။ Int မှာ flexbox ရဲ့ အခြေခံကို လေ့လာပြီးပြီမို့ ဒီသင်ခန်းစာမှာ container level property တွေကို အသေးစိတ် လေ့လာကြရအောင်။
+
+### flex-direction — Item တွေ စီစဉ်ရမယ့် ဦးတည်ချက်
+
+`flex-direction` က main axis ရဲ့ ဦးတည်ချက်ကို သတ်မှတ်ပေးပါတယ်။ Default က `row` ဖြစ်ပြီး `row-reverse`, `column`, `column-reverse` ဆိုပြီး တန်ဖိုးတွေ ရွေးချယ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.reverse {
+  flex-direction: row-reverse;
+}
+```
+
+မှတ်ချက် — `column` ဆိုရင် item တွေက ဒေါင်လိုက် စီပြီး `row-reverse` ဆိုရင် ဘယ်ကနေ စီမယ့်အစား ညာကနေ စီထွက်လာပါတယ်။
+
+### flex-wrap — Item တွေ ကျော်လွှားခြင်း (Wrapping)
+
+Container ကျဉ်းတဲ့အခါ item တွေ overflow မဖြစ်ဘဲ နောက် line တစ်ကြောင်းဆီ ကျော်ရောက်သွားအောင် `flex-wrap: wrap` က လုပ်ပေးပါတယ်။ Default ဖြစ်တဲ့ `nowrap` ကတော့ item အားလုံးကို တစ်ကြောင်းတည်းမှာ ကျဉ်းကျဉ်းချုံ့ပြီး ထားပေးပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+```
+
+မှတ်ချက် — `wrap` သုံးထားရင် container width မလောက်တဲ့အခါ item တွေက အောက် line ကို ဆက်ပြီး ကျော်သွားပါတယ်။ Responsive layout တွေမှာ ဒီ property ကို အလွန် အသုံးများပါတယ်။
+
+### justify-content — Main Axis ပေါ်မှာ ချိန်ညှိခြင်း
+
+`justify-content` က item တွေကို **main axis** ပေါ်မှာ ဘယ်လို ဖြန့်ဝေမလဲ ဆိုတာ သတ်မှတ်ပေးပါတယ်။ `flex-start`, `flex-end`, `center`, `space-between`, `space-around`, `space-evenly` ဆိုပြီး တန်ဖိုးတွေ ရှိပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.center-row {
+  display: flex;
+  justify-content: center;
+}
+
+.evenly-row {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.between-row {
+  display: flex;
+  justify-content: space-between;
+}
+```
+
+မှတ်ချက် — `space-between` က ပထမနဲ့ နောက်ဆုံး item ကို နှစ်ဖက်စွန်းမှာ ကပ်ထားပြီး ကြားက နေရာတွေကို ညီတူ ခွဲယူပါတယ်။ Navbar လို layout တွေမှာ အသုံးများပါတယ်။
+
+### align-items — Cross Axis ပေါ်မှာ ချိန်ညှိခြင်း
+
+`align-items` က item တွေကို **cross axis** ပေါ်မှာ ချိန်ညှိပေးပါတယ်။ `stretch` (default), `flex-start`, `flex-end`, `center`, `baseline` တန်ဖိုးတွေ ရှိပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.container {
+  display: flex;
+  align-items: center;
+  height: 300px;
+}
+```
+
+မှတ်ချက် — `align-items: center` မရှိရင် item တွေက container ရဲ့ အပေါ်ထိပ်မှာ စီနေပါမယ်။ ဒီ property ကြောင့် အရင်ခေတ်က ကျော်ကြားစွာ ခက်ခဲခဲ့တဲ့ vertical centering ကို CSS တစ်ကြောင်းနဲ့ ဖြေရှင်းနိုင်ပါပြီ။
+
+### align-content — Line အများစုကို ချိန်ညှိခြင်း
+
+`align-content` က cross axis ပေါ်မှာ **line အများစု** အကြားက နေရာခွဲဝေမှုကို ထိန်းချုပ်ပါတယ်။ `flex-wrap: wrap` နဲ့ line ၂ ကြောင်းထက် ပိုလာတဲ့အခါမှသာ အလုပ်လုပ်ပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+  height: 400px;
+}
+```
+
+မှတ်ချက် — `align-content` နဲ့ `align-items` ကို မရောထွေးပါနဲ့။ align-items က item တစ်ခုချင်းစီကို၊ align-content က line တစ်ကြောင်းလုံးတွေကို ချိန်ညှိပေးတာ ဖြစ်ပါတယ်။
+
+### gap — Item ကြားက အကွာအဝေး
+
+`gap` က item တွေကြားမှာ အကွာအဝေးကို row နဲ့ column နှစ်ဖက်လုံးမှာ တစ်ပြိုင်တည်း သတ်မှတ်ပေးပါတယ်။ Old CSS မှာ margin နဲ့ ကိုယ်တိုင် တွက်ရတဲ့ ကိစ္စကို ရိုးရှင်းစွာ ဖြေရှင်းပေးပါတယ်။
+
+**ဥပမာ -**
+
+```css
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.grid-gap {
+  gap: 10px 30px; /* row-gap 10px, column-gap 30px */
+}
+```
+
+မှတ်ချက် — `gap: 20px` က ဘေးနဲ့ အောက်က item တွေကြားမှာ 20px စီ ထားပေးပါတယ်။ Container ရဲ့ အနားတွေမှာတော့ space မထည့်ပေးတာမို့ margin ထက် ပိုမို ခန့်မှန်းရ လွယ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `flex-direction` က main axis ၏ ဦးတည်ချက်ကို သတ်မှတ်သည်။
+- `flex-wrap: wrap` က item များကို line ကျော်စေနိုင်သည်။
+- `justify-content` က main axis၊ `align-items` က cross axis ပေါ်တွင် ချိန်ညှိသည်။
+- `align-content` က line အများစုကိုလည်း ထိန်းချုပ်နိုင်သည်။
+- `gap` က item များကြား အကွာအဝေးကို လွယ်ကူစွာ သတ်မှတ်ပေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Item တွေကို main axis ပေါ်မှာ ချိန်ညှိဖို့ ဘယ် property ကို သုံးပါသလဲ?", options: ["Align items", "Justify content", "Flex wrap", "Flex direction"], correctAnswer: 1, explanation: "justify-content က main axis ပေါ်၊ align-items က cross axis ပေါ်မှာ ချိန်ညှိပေးပါတယ်။" },
+    { id: "q2", question: "Item တွေ နေရာမလောက်တဲ့အခါ နောက် line ကို ကျော်ရောက်အောင် ဘယ် property ကို သုံးပါသလဲ?", options: ["Justify content center", "Align items center", "Flex wrap wrap", "Flex direction row"], correctAnswer: 2, explanation: "flex-wrap: wrap က item တွေ container width မလောက်တဲ့အခါ အောက် line ကို ကျော်ရောက်စေပါတယ်။" },
+    { id: "q3", question: "Item နှစ်ခုကြားမှာ အကွာအဝေး သတ်မှတ်ဖို့ အလွယ်ဆုံး နည်းလမ်းက ဘာလဲ?", options: ["Flex wrap", "Gap", "Overflow", "Flex direction column"], correctAnswer: 1, explanation: "gap property က row နဲ့ column နှစ်ဖက်လုံးမှာ item ကြားက အကွာအဝေးကို ရိုးရှင်းစွာ သတ်မှတ်ပေးပါတယ်။" }
+  ]}
+/>

@@ -1,0 +1,139 @@
+---
+title: "n8n ထည့်သွင်းခြင်းနှင့် Setup"
+description: "n8n ကို Local Machine ပေါ်တွင် Install လုပ်ပြီး စတင်အသုံးပြုနည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import FlowDiagram from "@/components/diagrams/FlowDiagram.astro";
+
+## n8n ကို ဘယ်လို Run မလဲ?
+
+n8n ကို (၃) မျိုး Run လို့ ရပါတယ် -
+
+- **npx / npm** — Local Development (အလွယ်ဆုံး)
+- **Docker** — Isolated Environment
+- **n8n Cloud** — Managed Service (Credit Card လိုအပ်သည်)
+
+Beginner တွေအနေနဲ့ **npx** ကို သုံးဖို့ အကြံပြုပါတယ်။
+
+## Option 1: npx ဖြင့် စတင်ခြင်း (အမြန်ဆုံး)
+
+### လိုအပ်ချက်
+
+- **Node.js** version 18.17+ ထည့်ထားဖို့ လိုပါတယ်။
+
+Node.js ရှိ/မရှိ စစ်ကြည့်ပါ -
+```bash
+node --version
+# v20.11.0 လိုမျိုး Output ထွက်ရပါမယ်
+```
+
+မရှိသေးရင် [nodejs.org](https://nodejs.org) ကနေ Download လုပ်ပြီး Install လုပ်နိုင်ပါတယ်။
+
+### n8n ကို Run ခြင်း
+
+```bash
+npx n8n
+```
+
+ပထမဆုံး Run ရင် n8n ကို Download ဆွဲပြီး အလိုအလျောက် စတင်ပေးသွားမှာပါ။
+
+Terminal မှာ ဒီလို Output မြင်ရရင် အောင်မြင်ပါပြီ -
+
+```
+n8n ready on 0.0.0.0, port 5678
+Editor is now accessible via:
+http://localhost:5678
+```
+
+Browser ဖွင့်ပြီး **http://localhost:5678** ကို သွားပါ။
+
+<Aside type="tip" title="တစ်ကြိမ် Install ပြီးနောက် ပိုမြန်သည်">
+`npx n8n` ကို ဒုတိယအကြိမ် Run ရင် Download မလုပ်တော့ဘဲ တိုက်ရိုက် စတင်မှာပါ။
+</Aside>
+
+## Option 2: Docker ဖြင့် Run ခြင်း
+
+Docker သုံးတတ်ရင်တော့ ပိုစနစ်ကျပါတယ် -
+
+```bash
+docker run -it --rm \
+  --name n8n \
+  -p 5678:5678 \
+  -v ~/.n8n:/home/node/.n8n \
+  docker.n8n.io/n8nio/n8n
+```
+
+| Flag | ရည်ရွယ်ချက် |
+|------|------------|
+| `-p 5678:5678` | Port ချိတ်ဆက်ရန် |
+| `-v ~/.n8n:/home/node/.n8n` | Data သိမ်းဆည်းရန် Volume |
+| `--rm` | Container ပိတ်ရင် ဖျက်ပစ်ရန် |
+
+## Option 3: npm global install
+
+```bash
+npm install -g n8n
+n8n start
+```
+
+## n8n ကို ပထမဆုံး ဖွင့်ရာတွင်
+
+Browser ကနေ `http://localhost:5678` ကို သွားလိုက်ရင် Owner Account Setup Screen ပေါ်လာပါမယ်။ အဲဒီမှာ Admin User တစ်ဦး ဖန်တီးရမှာပါ -
+
+1. First Name, Last Name, Email နဲ့ Password ထည့်ပါ။
+2. "Get Started" ကို နှိပ်ပါ။
+
+## n8n Interface Overview
+
+Login ဝင်ပြီးတာနဲ့ Main Dashboard ကို မြင်ရပါပြီ။ Left Sidebar မှာ Navigation Menu ရှိပြီး Main Area မှာ Workflows တွေကို ပြသပေးမှာပါ။
+
+### Sidebar Navigation
+
+| Menu | ရည်ရွယ်ချက် |
+|------|------------|
+| **Workflows** | Automation Workflows တွေကို ကြည့်ရန် / ဖန်တီးရန် |
+| **Templates** | Built-in Templates များ ရှာဖွေရန် |
+| **Credentials** | API Keys နဲ့ Passwords လုံခြုံစွာ သိမ်းဆည်းရန် |
+| **Executions** | Workflow အလုပ်လုပ်ခဲ့တဲ့ History ကြည့်ရန် |
+| **Settings** | n8n Configuration ပြင်ဆင်ရန် |
+
+## Workflow Editor ကို ဖွင့်ကြည့်ခြင်း
+
+"+ New Workflow" ကို နှိပ်ပါ။ Editor ရဲ့ ဘယ်ဘက်က Node Panel မှာ Apps တွေကို ရှာဖွေနိုင်ပြီး Canvas ပေါ်ကို Drag ဆွဲယူပြီး ထည့်နိုင်ပါတယ်။
+
+<FlowDiagram
+  nodes={[
+    { label: "Node Panel", sublabel: "Search & Browse", type: "data" },
+    { label: "Canvas", sublabel: "Drag & Drop", type: "action" },
+    { label: "Node Config", sublabel: "Right Panel", type: "action" }
+  ]}
+  caption="Workflow Editor ၏ အဓိကနေရာ (၃) ခု"
+/>
+
+<Aside type="note" title="Data သိမ်းဆည်းရာ နေရာ">
+Default အနေနဲ့ n8n Data တွေကို `~/.n8n` Directory အောက်မှာ SQLite နဲ့ သိမ်းဆည်းပါတယ်။ Production အတွက်ဆိုရင်တော့ PostgreSQL သုံးဖို့ Configure ပြောင်းလုပ်သင့်ပါတယ်။
+</Aside>
+
+## Troubleshooting
+
+### Port 5678 Already in Use
+
+```bash
+# Port သုံးနေတဲ့ Process ကို ရှာရန်
+lsof -i :5678       # macOS / Linux
+netstat -ano | findstr :5678  # Windows
+
+# Port ပြောင်းပြီး Run ချင်ရင်
+N8N_PORT=5679 npx n8n
+```
+
+### Permission Error (Linux/macOS)
+
+```bash
+# n8n Data Folder Permission ပြင်ရန်
+mkdir -p ~/.n8n
+chmod 700 ~/.n8n
+```
+
+ဆက်ပြီးတော့ Core Concepts တွေကို လေ့လာကြပါမယ် ခင်ဗျာ။

@@ -1,0 +1,78 @@
+---
+title: "CSS Custom Fonts — စိတ်ကြိုက် Font တပ်ဆင်ခြင်း"
+description: "font-face Rule နဲ့ Google Fonts ကို သုံးပြီး Website မှာ စိတ်ကြိုက် Font တပ်ဆင်နည်းကို လေ့လာကြမယ်။"
+---
+
+### font-face နဲ့ စိတ်ကြိုက် Font
+
+Browser မှာ မရှိတဲ့ Font ကို Website ထဲ သွင်းချင်ရင် `@font-face` Rule နဲ့ ကြေငြာပြီး သုံးနိုင်ပါတယ်။ `font-family` မှာ ကိုယ်တိုင် နာမည်ပေးပြီး `src` ထဲမှာတော့ Font ဖိုင်ရဲ့ လမ်းကြောင်းကို url() နဲ့ ထည့်ပါတယ်။ နာမည်ပေးပြီးတဲ့နောက် သာမန် Font တွေလိုပဲ အဲဒီနာမည်နဲ့ ပြန်ခေါ်သုံးလို့ရပါတယ်။
+
+**ဥပမာ -**
+```css
+@font-face {
+  font-family: "MyFont";
+  src: url("myfont.woff2") format("woff2");
+}
+h1 {
+  font-family: "MyFont", sans-serif;
+}
+```
+
+မှတ်ချက် — font-family နာမည်ကို ကြိုက်သလို ပေးနိုင်ပြီး အဲဒီနာမည်တူညီစွာနဲ့ပဲ ပြန်ခေါ်သုံးရပါတယ်။
+
+### Google Fonts နဲ့ သုံးနည်း
+
+Font ဖိုင်တွေကို ကိုယ်တိုင် ဒေါင်းလုဒ်ပြီး ဝေယူစရာမလိုဘဲ `link` Tag နဲ့ Google Fonts ကနေ တိုက်ရိုက် သွင်းလို့ရပါတယ်။ `head` ထဲမှာ Link ထည့်ပြီးတာနဲ့ CSS မှာ Font နာမည်ကို ဖြောင့်ဖြောင့်ကြီး ခေါ်သုံးလို့ရပါတယ်။
+
+**ဥပမာ -**
+```html
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+```
+
+မှတ်ချက် — Google Fonts က Font တွေကို CDN ကနေ ပေးတာမို့ Internet မရှိတဲ့အခါ မတက်မြင်နိုင်ပါဘူး။
+
+### Font Formats (ဖိုင်ပုံစံများ)
+
+Font Format အမျိုးမျိုး ရှိပြီး woff2 က ဖိုင်အရွယ်ငယ်ပြီး Browser ထောက်ခံမှု အကောင်းဆုံးဖြစ်ပါတယ်။ woff ၊ ttf/otf ၊ eot စတာတွေလည်း ရှိပါသေးတယ်။ Format အများကြီး ထည့်ချင်ရင် `src` မှာ url() တစ်ခုပြီးတစ်ခု Comma နဲ့ စီနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@font-face {
+  font-family: "MyFont";
+  src: url("myfont.woff2") format("woff2"),
+       url("myfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+```
+
+မှတ်ချက် — Browser က ပထမဆုံး ကောင်းမွန်စွာ နားလည်နိုင်တဲ့ Format ကို ရွေးသုံးတာမို့ woff2 ကို အရင်ဆုံး ထားသင့်ပါတယ်။
+
+### Font Family Fallback
+
+`font-family` မှာ Fallback အများကြီး စီနိုင်ပြီး ပထမ Font မရရင် နောက်တစ်ခု ဆက်သုံးပါတယ်။ အဆုံးမှာ serif (သို့) sans-serif စတဲ့ Generic Family ထားခြင်းက အမြဲတမ်း နောက်ဆုံးအသုံးပြုနိုင်တဲ့ Fallback ရှိနေစေပါတယ်။
+
+**ဥပမာ -**
+```css
+body {
+  font-family: "Myanmar Text", "Noto Sans Myanmar", sans-serif;
+}
+```
+
+မှတ်ချက် — Fallback အစဉ် မှန်ဖို့ လိုချင်တဲ့ Font ကို ရှေ့ဆုံးထားပြီး နာမည်နဲ့ No Match ဖြစ်ခဲ့ရင်နောက်တစ်ခုသို့ ဆက်ရွေ့ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- @font-face နဲ့ စိတ်ကြိုက် Font ကို ကြေငြာနိုင်သည်။
+- Google Fonts ကို link Tag နဲ့ Website ထဲ ထည့်နိုင်သည်။
+- Font Format တွေထဲ woff2 က ထောက်ခံမှု အကောင်းဆုံးဖြစ်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "@font-face ထဲမှာ Font နာမည် သတ်မှတ်ဖို့ ဘယ် Property ကို သုံးပါသလဲ?", options: ["font-name", "font-descriptor", "font-family", "font-source"], correctAnswer: 2, explanation: "font-family နဲ့ စိတ်ကြိုက် Font နာမည် သတ်မှတ်ပြီး အဲဒီနာမည်နဲ့ပဲ ပြန်ခေါ်သုံးပါတယ်။" },
+    { id: "q2", question: "Browser တွေရဲ့ ဖိုင်အရွယ်ငယ်၍ ထောက်ခံမှု အကောင်းဆုံး Font Format က ဘာလဲ?", options: ["woff2", "eot", "ttf", "jpg"], correctAnswer: 0, explanation: "woff2 က ဖိုင်အရွယ်ငယ်ပြီး Browser တွေက အကောင်းဆုံး ထောက်ခံပါတယ်။" },
+    { id: "q3", question: "Google Fonts ကို HTML ထဲ ဘယ်လို သွင်းပါသလဲ?", options: ["script Tag", "link Tag", "img Tag", "style Tag"], correctAnswer: 1, explanation: "head ထဲမှာ link Tag နဲ့ Google Fonts URL ကို ထည့်ပါတယ်။" }
+  ]}
+/>

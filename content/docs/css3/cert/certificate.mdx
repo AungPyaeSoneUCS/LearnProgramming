@@ -1,0 +1,48 @@
+---
+title: "CSS Certificate — စာမေးပွဲ ဖြေဆိုမည်"
+description: "CSS3 သင်တန်း တစ်သင်တန်းလုံး နားလည်မှု စစ်ဆေးရန် နောက်ဆုံး စာမေးပွဲ — မေးခွန်း ၂၀။"
+---
+
+### CSS Certificate စာမေးပွဲ
+
+ဒီသင်ခန်းစာက CSS3 သင်တန်း တစ်သင်တန်းလုံးရဲ့ နောက်ဆုံး Certificate စာမေးပွဲ ဖြစ်ပါတယ်။ ဒီ စာမေးပွဲကို ဖြေဆို အောင်မြင်ခဲ့ရင် သင်တန်း တစ်လျှောက်လုံး သင်ယူထားတဲ့ အကြောင်းအရာတွေကို ခြုံငုံ နားလည်ပြီးသား ဖြစ်တယ်လို့ အသိအမှတ်ပြုနိုင်ပါတယ်။
+
+မေးခွန်း (၂၀) လုံးက Tutorial ၊ Advanced ၊ Flexbox ၊ Grid ၊ Responsive ၊ SASS ၊ Examples နဲ့ References အပါအဝင် သင်တန်း အပိုင်း အားလုံးကို ခြုံငုံထားတာ ဖြစ်ပါတယ်။ မေးခွန်း တစ်ခုစီမှာ အဖြေမှန် တစ်ခုသာ ရှိပြီး အဖြေ မသေချာရင် ဂရုတစိုက် စဉ်းစားပါ — အမှား တစ်ခုစီက နောက်ထပ် လေ့လာရမယ့် နေရာကို ပြပေးမှာ ဖြစ်လို့ အမှားတွေကနေလည်း အကျိုးရှိပါတယ်။
+
+### စာမေးပွဲအတွက် လေ့လာသင့်သည့် အကြောင်းအရာများ
+
+- Syntax နဲ့ Selector များ (ID ၊ Class ၊ Attribute ၊ Pseudo-class)
+- Box Model — `margin` ၊ `padding` ၊ `border` ၊ content နဲ့ `box-sizing`
+- Color ၊ Background နဲ့ Gradient များ
+- `position` (`relative` ၊ `absolute` ၊ `fixed`) ၊ `z-index` နဲ့ `overflow`
+- Flexbox — `flex-direction` ၊ `justify-content` ၊ `align-items`
+- Grid — `grid-template-columns` ၊ `grid-template-areas` ၊ `gap`
+- Responsive Design နဲ့ `@media` query
+- `transition` ၊ Animation နဲ့ `transform` များ
+- CSS Variables (custom properties) ၊ Units (`px` ၊ `em` ၊ `rem`) နဲ့ Specificity
+- `display` ၊ `float` ၊ List ၊ Table ၊ Text နဲ့ Font များ
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "CSS rule တစ်ခုရဲ့ ပုံမှန် ဖွဲ့စည်းပုံက ဘာတွေနဲ့ ဖွဲ့စည်းထားသလဲ?", options: ["Selector နဲ့ Declaration Block", "Tag နဲ့ Attribute", "Element နဲ့ Class", "Variable နဲ့ Value"], correctAnswer: 0, explanation: "CSS rule တစ်ခုက selector နဲ့ declaration block နဲ့ ဖွဲ့စည်းပြီး declaration block ထဲမှာ property နဲ့ value တွဲတွေ ပါပါတယ်။" },
+  { id: "q2", question: "CSS မှာ Comment ရေးတဲ့ ပုံစံက ဘာလဲ?", options: ["Less than နဲ့ greater than ကြားမှာ (<!-- comment -->)", "Forward slash နဲ့ star ကြားမှာ (/* comment */)", "Double dash နဲ့ (-- comment)", "Hash နဲ့ (# comment)"], correctAnswer: 1, explanation: "CSS comment က forward slash နဲ့ asterisk အတွဲကြားမှာ ရေးပြီး browser က မပြပါဘူး။" },
+  { id: "q3", question: "Box model ရဲ့ အလွှာတွေကို အပြင်ဆုံးကနေ အတွင်းဆုံးအထိ စီကြည့်ရင် ဘယ်လိုလဲ?", options: ["Content, Padding, Border, Margin", "Border, Margin, Content, Padding", "Margin, Border, Padding, Content", "Padding, Content, Margin, Border"], correctAnswer: 2, explanation: "Margin က အပြင်ဆုံး၊ ပြီးတော့ Border ၊ Padding နဲ့ Content က အတွင်းဆုံး ဖြစ်ပါတယ်။" },
+  { id: "q4", question: "box-sizing: border-box; ရဲ့ အကျိုးသက်ရောက်မှုက ဘာလဲ?", options: ["Margin ကို width ထဲ ထည့်တွက်တယ်", "width ထဲမှာ padding နဲ့ border ပါ ထည့်တွက်တယ်", "Padding နဲ့ border ကို ဖယ်လိုက်တယ်", "Content ကို အပြင်ဘက်ကို ဖိထုတ်တယ်"], correctAnswer: 1, explanation: "border-box မှာ width က total width ဖြစ်ပြီး padding နဲ့ border တွေ အတွင်းဘက်ကို ကျုံ့ပါတယ်။" },
+  { id: "q5", question: "Hex color (ဥပမာ #ff0000) မှာ သုံးနိုင်တဲ့ ဂဏန်း နဲ့ စာလုံးတွေက ဘာတွေလဲ?", options: ["0-9 နဲ့ A-F", "0-9 ချည်းပဲ", "A-Z ချည်းပဲ", "1-10 နဲ့ K-Z"], correctAnswer: 0, explanation: "Hex color က base 16 ကို သုံးထားလို့ 0-9 နဲ့ A-F အထိ စာလုံးတွေ ပါဝင်ပါတယ်။" },
+  { id: "q6", question: "တစ်ရောင်ကနေ နောက်တစ်ရောင်ကို အဆင့်ဆင့် ဖြည်းဖြည်းချင်း ပြောင်းတဲ့ background ဖန်တီးဖို့ ဘယ် function ကို သုံးသလဲ?", options: ["linear-gradient", "linear-fade", "smooth-color", "background-blend"], correctAnswer: 0, explanation: "linear-gradient function က color တစ်ခုကနေ နောက်တစ်ခုကို ချောမွေ့စွာ ပြောင်းလဲပြတဲ့ gradient ကို ဖန်တီးပါတယ်။" },
+  { id: "q7", question: "position: relative; က element ကို ဘယ်လို သက်ရောက်မှုရှိလဲ?", options: ["Page scroll နဲ့အတူ ကပ်ပါသွားတယ်", "မူလ နေရာကနေ offset တွေနဲ့ ရွေ့နိုင်တယ်", "Element ကို document flow ကနေ ဖယ်လိုက်တယ်", "Element ကို center မှာ ထားလိုက်တယ်"], correctAnswer: 1, explanation: "relative က ကိုယ့်ရဲ့ မူလ နေရာကနေ top ၊ left စတဲ့ offset တွေနဲ့ ရွေ့နိုင်ပြီး နေရာအဟောင်းကိုတော့ ထိန်းထားပါတယ်။" },
+  { id: "q8", question: "Element ရဲ့ content က box အပြင်ကို ကျော်လျှံနေခဲ့ရင် ကျော်လျှံနေတဲ့ အပိုင်းကို ဝှက်ထားချင်ရင် overflow ရဲ့ ဘယ် value ကို သုံးလဲ?", options: ["hidden", "visible", "scroll", "auto"], correctAnswer: 0, explanation: "overflow: hidden က ကျော်လျှံနေတဲ့ အပိုင်းကို မပြဘဲ ဖြတ်ဝှက်ပြီး scroll bar ကိုလည်း မပြပါဘူး။" },
+  { id: "q9", question: "Flexbox container ရဲ့ default flex-direction က ဘာလဲ?", options: ["column", "row", "row-reverse", "column-reverse"], correctAnswer: 1, explanation: "Default flex-direction က row ဖြစ်ပြီး items တွေက ဘယ်မှညာသို့ တန်းစီပါတယ်။" },
+  { id: "q10", question: "Flexbox မှာ items တွေကို main axis အလိုက် အလယ်မှာ ညှိချင်ရင် justify-content ရဲ့ ဘယ် value ကို သုံးလဲ?", options: ["flex-start", "flex-end", "space-around", "center"], correctAnswer: 3, explanation: "justify-content: center က main axis ပေါ်မှာ items အုပ်စုတစ်ခုလုံးကို အလယ်မှာ ထားပေးပါတယ်။" },
+  { id: "q11", question: "CSS Grid မှာ column တွေရဲ့ အကျယ် သတ်မှတ်ဖို့ ဘယ် property ကို သုံးလဲ?", options: ["grid-gap", "flex-direction", "grid-template-columns", "justify-content"], correctAnswer: 2, explanation: "grid-template-columns က grid ရဲ့ column တစ်ခုချင်းစီရဲ့ အကျယ်တွေကို သတ်မှတ်ပေးပါတယ်။" },
+  { id: "q12", question: "Grid ထဲက cell တွေကြား နေရာလွတ် သတ်မှတ်ဖို့ သုံးတဲ့ property က ဘာလဲ?", options: ["gap", "padding-sides", "grid-template", "grid-area"], correctAnswer: 0, explanation: "gap property က rows ကြား နဲ့ columns ကြား ကွာဟမှုကို တစ်ကြိမ်တည်း သတ်မှတ်ပေးပါတယ်။" },
+  { id: "q13", question: "Screen width စတဲ့ အခြေအနေပေါ် မူတည်ပြီး style ပြောင်းဖို့ CSS မှာ ဘာကို သုံးလဲ?", options: ["import rule", "media query", "font-face rule", "keyframes rule"], correctAnswer: 1, explanation: "media query က viewport ရဲ့ condition (ဥပမာ min-width) ကို စစ်ပြီး သက်ဆိုင်ရာ style တွေကို အသုံးချပါတယ်။" },
+  { id: "q14", question: "Responsive web design ရဲ့ အဓိက သဘောတရားက ဘာလဲ?", options: ["Screen အရွယ်အစား အမျိုးမျိုးနဲ့ လိုက်ဖက်အောင် ဒီဇိုင်းလုပ်တာ", "Image တွေကို ဝှက်ထားတာ", "အကြီးဆုံး screen အတွက်ပဲ တည်ဆောက်တာ", "Flash နဲ့ plugin တွေ သုံးတာ"], correctAnswer: 0, explanation: "Responsive design က screen အမျိုးမျိုးမှာ content တွေ ဖတ်ရ လွယ်ကူအောင် flexible layout ၊ fluid grid နဲ့ media query တွေ ပေါင်းသုံးပါတယ်။" },
+  { id: "q15", question: "Hover လုပ်တဲ့အခါ color က ဖြည်းဖြည်းချင်း ပြောင်းသွားစေချင်ရင် ဘယ် property ကို သုံးလဲ?", options: ["transform", "transition", "flex", "box-shadow"], correctAnswer: 1, explanation: "transition property က style တစ်ခုမှ တစ်ခုသို့ ပြောင်းတာကို သတ်မှတ်ထားတဲ့ duration အတိုင်း ချောမွေ့စွာ ပြောင်းပေးပါတယ်။" },
+  { id: "q16", question: "Element တစ်ခုကို 45 ဒီဂရီ လှည့်ချင်ရင် transform ရဲ့ ဘယ် function ကို သုံးလဲ?", options: ["rotate(45deg)", "translate(45px)", "scale(1.5)", "skew(45deg)"], correctAnswer: 0, explanation: "rotate(45deg) က element ကို 45 ဒီဂရီ လှည့်ပေးပြီး translate က ရွှေ့၊ scale က အချိုးပြောင်းပါတယ်။" },
+  { id: "q17", question: "အောက်ပါ selector တွေထဲမှာ - ဘယ် selector က specificity အမြင့်ဆုံး လဲ?", options: ["Tag selector (p)", "Class selector (.box)", "Universal selector", "ID selector (#main)"], correctAnswer: 3, explanation: "ID selector က class ၊ attribute နဲ့ tag selector တွေထက် specificity ပိုများပြီး ရလဒ်ချင်း ဆန့်ကျင်ရင် အနိုင်ရပါတယ်။" },
+  { id: "q18", question: "CSS variable (custom property) ကို ကြေညာတဲ့အခါ variable name ရဲ့ ရှေ့မှာ ဘယ် prefix ကို သုံးလဲ?", options: ["Double underscore ရှေ့ဆက် (__color)", "Single dash (-color)", "Double dash (--color)", "Hash (#color)"], correctAnswer: 2, explanation: "Custom properties တွေက double dash နဲ့ စပြီး var() function ကို သုံးပြီး ခေါ်ပါတယ်။" },
+  { id: "q19", question: "ပုံတစ်ပုံကို ဘယ်ဘက်ကို မျှောပြီး ကျန်တဲ့ text တွေ ညာဘက်မှာ စီးပေါက်နေစေချင်ရင် float ရဲ့ ဘယ် value ကို သုံးလဲ?", options: ["right", "left", "center", "none"], correctAnswer: 1, explanation: "float: left က element ကို container ရဲ့ ဘယ်ဘက်ကို မျှောပြီး နောက်က content တွေ ညာဘက်မှာ စီးပါတယ်။" },
+  { id: "q20", question: "width ၊ margin ၊ padding သတ်မှတ်လို့ ရပေမဲ့ ဘေးချင်း နီးကပ်စွာ တန်းစီနေစေချင်ရင် display ရဲ့ ဘယ် value ကို သုံးလဲ?", options: ["inline", "block", "inline-block", "none"], correctAnswer: 2, explanation: "inline-block က inline လို တစ်တန်းတည်း စီးပေမဲ့ block လို width ၊ height ၊ margin ၊ padding တွေ သတ်မှတ်လို့ ရပါတယ်။" },
+]} />

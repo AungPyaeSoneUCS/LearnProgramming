@@ -1,0 +1,153 @@
+---
+title: "HTML Div"
+description: "Div ကို Section Container အဖြစ် ဘယ်လို သုံးပြီး Flexbox နဲ့ Grid နဲ့ Layout ဆွဲပုံကို လေ့လာကြပါမယ်။"
+---
+
+### `<div>` ဆိုတာ ဘာလဲ?
+
+`<div>` (Division) က Block-Level Container ပါ။ သူ့အလိုအလျောက်တော့ ဘာမှ ဖော်ပြမှု မရှိဘဲ Content တွေကို တစ်အုပ်စု အုပ်ထားဖို့ သုံးပါတယ်။ `<div>` ထဲမှာ ဘာ HTML tag မဆို ထည့်လို့ရပြီး အဲဒီအုပ်စု တစ်ခုလုံးကို CSS နဲ့ Style လုပ်နိုင်ပါတယ်။ ဒါကြောင့် Section တစ်ခုချင်း ဖွဲ့စည်းပြီး Layout ဆောက်ဖို့ `<div>` က အလွန် အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<div class="product">
+  <h3>Smartphone</h3>
+  <p>Price: 500,000 Ks</p>
+</div>
+<div class="product">
+  <h3>Laptop</h3>
+  <p>Price: 1,500,000 Ks</p>
+</div>
+```
+
+မှတ်ချက် — `<div>` နှစ်ခုက Block ဖြစ်တဲ့အတွက် နှစ်ခုစလုံး စာကြောင်းသစ် တစ်ကြောင်းစီမှာ ပေါ်ပါတယ်။
+
+### Flexbox နဲ့ Centering
+
+Flexbox က Element တွေကို ဘေးချင်းကပ် စီပေးပြီး ပစ္စည်းတွေ ရဲ့ အနေအထားကို လွယ်လွယ်ကူကူ ထိန်းနိုင်ပါတယ်။ `display: flex;` နဲ့စပြီး `justify-content` က အလျားလိုက် (ဘယ်ညာ)၊ `align-items` က ဒေါင်လိုက် (အတက်အဆင်း) ကို ချိန်ညှိပါတယ်။ Horizontal ရော Vertical ပါ အလယ်တည့်တည့် ထားချင်ရင် နှစ်ခုလုံး `center` ထားပေးရပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <style>
+    .center-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      background-color: #eee;
+    }
+    .card {
+      background-color: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="center-box">
+    <div class="card">ဒီ Card က အကွက်ရဲ့ အလယ်မှာ ရှိနေပါတယ်။</div>
+  </div>
+</body>
+</html>
+```
+
+မှတ်ချက် — `justify-content: center;` က အလျားလိုက်၊ `align-items: center;` က ဒေါင်လိုက် အလယ်ချိန်ပေးပြီး နှစ်ခုပေါင်းမှ Card ဟာ အကွက်ထဲရဲ့ အလယ်တည့်တည့်မှာ ရောက်ပါတယ်။
+
+### Grid နဲ့ Layout ဆောက်ခြင်း
+
+CSS Grid က Rows နဲ့ Columns တွေ သတ်မှတ်ပြီး Layout ဆောက်တဲ့ နည်းလမ်းပါ။ `display: grid;` နဲ့စပြီး `grid-template-columns` နဲ့ Column အရေအတွက် နဲ့ အရွယ်အစားကို သတ်မှတ်ပါတယ်။ ဒါဆိုရင် `<div>` တွေက Grid ရဲ့ Grid Cell တွေထဲကို အလိုအလျောက် ဝင်စီးသွားပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      gap: 10px;
+    }
+    .grid div {
+      background-color: lightcoral;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+  </div>
+</body>
+</html>
+```
+
+မှတ်ချက် — Column ၃ ခု သတ်မှတ်ထားတဲ့အတွက် `div` ၆ ခုဟာ Row ၂ ခုမှာ ပြီးပြည့်စုံစွာ စီစဉ်သွားပါတယ်။ `gap` က Cell တွေကြား အကွာအဝေး ဖြစ်ပါတယ်။
+
+### Multiple Div Layout
+
+`<div>` အများကြီးကို ပေါင်းပြီး ဘယ်ဘက် Sidebar ၊ အလယ် Content ဆိုတဲ့ ပုံစံ Layout ဆောက်လို့ ရပါတယ်။ Header ၊ Sidebar ၊ Main ၊ Footer ဆိုပြီး `<div>` တွေနဲ့ အပိုင်းခွဲပြီး Flexbox ဒါမှမဟုတ် Grid နဲ့ ချိန်ညှိနိုင်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <style>
+    .page {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+    }
+    .sidebar {
+      background-color: lightgreen;
+      padding: 10px;
+    }
+    .main {
+      background-color: lightyellow;
+      padding: 10px;
+    }
+    .header, .footer {
+      background-color: lightgray;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Header</div>
+  <div class="page">
+    <div class="sidebar">Sidebar</div>
+    <div class="main">Main Content</div>
+  </div>
+  <div class="footer">Footer</div>
+</body>
+</html>
+```
+
+မှတ်ချက် — Sidebar က Column ၂၀၀px နေရာ ယူပြီး `1fr` ရှိတဲ့ Main က ကျန်တဲ့ နေရာ တစ်ခုလုံးကို ယူပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `<div>` က Content တွေကို အုပ်စုဖွဲ့ပေးတဲ့ Block Container ပါ။
+- Flexbox က ဦးတည်ချက် တစ်ခုနဲ့ စီခွဲဖို့ သင့်ပြီး Grid က Row/Column နှစ်ဘက်စလုံး အတွက် သင့်ပါတယ်။
+- `justify-content` နဲ့ `align-items` တွေက Flexbox ထဲက နေရာချပုံကို ထိန်းပါတယ်။
+- Layout ဆောက်ဖို့ `<div>` တွေကို အသိုက်အမြုံ လုပ်ထားလို့ ရပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Div ရဲ့ အဓိက အလုပ်က ဘာလဲ?", options: ["စာလုံးကြီးအောင် လုပ်တာ", "Content တွေကို Group လုပ်တဲ့ Container", "ပုံထည့်တာ", "Link လုပ်တာ"], correctAnswer: 1, explanation: "Div က Content တွေကို အုပ်စုဖွဲ့ပေးတဲ့ Container ပါ။" },
+  { id: "q2", question: "Element ကို အလျားလိုက် အလယ်ချိန်ဖို့ Flexbox မှာ ဘာ property ကို သုံးလဲ?", options: ["align-items", "justify-content", "text-align", "padding"], correctAnswer: 1, explanation: "justify-content က အလျားလိုက် ချိန်ညှိမှုကို ထိန်းပါတယ်။" },
+  { id: "q3", question: "Column သုံးခုပါတဲ့ Layout ဆောက်ဖို့ ဘာကို သုံးနိုင်လဲ?", options: ["grid-template-columns", "background-color", "border-collapse", "list-style"], correctAnswer: 0, explanation: "grid-template-columns က Grid Columns တွေကို သတ်မှတ်ပေးပါတယ်။" }
+]} />

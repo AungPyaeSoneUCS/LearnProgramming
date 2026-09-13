@@ -1,0 +1,106 @@
+---
+title: "CSS Accessibility — အားလုံးအတွက် သုံးရလွယ်ကူအောင်"
+description: "အရောင်အဆင်းဆန့်ကျင်မှု (Contrast), Focus Style, Motion နဲ့ Semantic Order စတာတွေကနေ Web Page ကို အားလုံး အသုံးပြုနိုင်အောင် ပြုလုပ်နည်း။"
+---
+
+### CSS Accessibility ဆိုတာ ဘာလဲ?
+
+Accessibility (A11y) က Website ကို မသန်စွမ်းသူများ၊ Keyboard သုံးသူများ၊ Screen Reader (ဖတ်ပြစနစ်) သုံးသူများ အပါအဝင် အားလုံး အသုံးပြုနိုင်ဖို့ ဖြစ်ပါတယ်။ CSS ကလည်း အရောင်အဆင်း၊ Motion၊ Focus စတာတွေကနေ ဒီလုပ်ငန်းစဉ်ထဲကို များစွာ ရပ်တည်ပါတယ်။
+
+### Contrast (အရောင် ဆန့်ကျင်မှု)
+
+Text နဲ့ Background ကြားမှာ ကောင်းမွန်တဲ့ Contrast Ratio ရှိဖို့ လိုပါတယ်။ WCAG စံနှုန်းအရ Normal Text အတွက် 4.5:1 ထက် မနည်းဖို့ လိုအပ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+/* Good — Dark Text on Light Background */
+.article {
+  color: #1a1a1a;
+  background: #ffffff;
+}
+
+/* Bad — Light Gray on White (ဖတ်ရခက်) */
+.dim {
+  color: #e0e0e0;
+  background: #ffffff;
+}
+```
+
+မှတ်ချက် — Contrast Ratio ကို Browser Developer Tools ရဲ့ Accessibility ဆိုင်ရာ Checker သို့မဟုတ် Color Contrast Checker Tool တွေနဲ့ စစ်ဆေးပါ။
+
+### Focus Style — Keyboard သုံးသူများအတွက်
+
+Keyboard နဲ့ Navigation လုပ်နေသူတွေ လက်ရှိ ဘယ် Element ကို ရွေးထားလဲ သိရဖို့ Focus Indicator (Outline) ရှိနေဖို့ လိုပါတယ်။ `:focus-visible` က Keyboard Focus မှာသာ Style ပြပြီး Mouse Click မှာ မပြပါဘူး။
+
+**ဥပမာ -**
+```css
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #337ab7;
+  outline-offset: 2px;
+}
+```
+
+မှတ်ချက် — Outline ကို outline: none နဲ့ လုံးဝ မဖျက်ပါနဲ့။ Keyboard အသုံးပြုသူတွေ နေရာသိဖို့ မရှိမဖြစ် လိုအပ်တဲ့ Indicator ဖြစ်ပါတယ်။
+
+### Semantic Order (အဓိပ္ပာယ်ရှိသော အစီအစဉ်)
+
+HTML ကို `header`, `nav`, `main`, `footer` စတဲ့ Semantic Elements တွေနဲ့ Logical Order အတိုင်း ရေးပြီး CSS နဲ့သာ Visual (မြင်ရတဲ့) နေရာချထားခြင်းက Screen Reader သုံးသူတွေအတွက် ပိုကောင်းပါတယ်။
+
+**ဥပမာ -**
+```css
+main {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+nav ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+```
+
+မှတ်ချက် — Visual Order ကို CSS ရဲ့ Flex/Grid order နဲ့ ပြောင်းရင် DOM (HTML) Order မပြောင်းတာမို့ Screen Reader ဖတ်တဲ့အစီအစဉ်နဲ့ မတူဘဲ ရှုပ်ထွေးနိုင်တာ သတိပြုပါ။
+
+### prefers-reduced-motion — Motion လျှော့ချခြင်း
+
+`@media (prefers-reduced-motion: reduce)` က User က Operating System မှာ Motion လျှော့ချဖို့ ရွေးထားရင် Animation နဲ့ Transition တွေကို လျှော့ချ သို့မဟုတ် ဖယ်ရှားပေးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+မှတ်ချက် — ဒီ Media Query က Motion ကို လျှော့ချလိုသူတွေ (Vestibular Disorder စသည်) အတွက် Decorative Animation တွေရဲ့ သက်ရောက်မှုကို ကန့်သတ်ပေးပါတယ်။
+
+### Alt Text နဲ့ Decorative Images
+
+ပုံတွေကို `<img>` Tag နဲ့ ထည့်တဲ့အခါ alt attribute မှာ ပုံအကြောင်း ဖော်ပြချက် ရေးပါ။ CSS background-image က alt မရတဲ့အတွက် Decorative (အလှ) ပုံတွေမှာသာ သုံးသင့်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<img src="logo.png" alt="Takkatho Logo">
+<img src="pattern.png" alt="" aria-hidden="true">
+```
+
+မှတ်ချက် — Informative (အချက်အလက် ပါတဲ့) Image တွေမှာ alt မှာ အဓိပ္ပာယ်ရှိတဲ့ ဖော်ပြချက် ရေးပြီး Decorative Image တွေကိုတော့ alt="" နဲ့ ဖတ်စရာမလိုအောင် ထားနိုင်ပါတယ်။
+
+### အကျဉ်းချုပ်
+
+ကောင်းမွန်တဲ့ Contrast ၊ ရှင်းလင်းတဲ့ Focus Indicator ၊ Logical Semantic Order ၊ Reduced Motion ထောက်ခံမှု နဲ့ Alt Text ရေးခြင်း စတာတွေက Website ကို အားလုံးအတွက် သုံးရလွယ်ကူစေပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Normal Text အတွက် WCAG Contrast Ratio စံနှုန်းက ဘယ်လောက်လဲ?", options: ["4.5:1", "1:1", "2:1", "10:1"], correctAnswer: 0, explanation: "WCAG စံနှုန်းအရ Normal Text အတွက် Contrast Ratio 4.5:1 ရှိဖို့ လိုအပ်ပါတယ်။" },
+    { id: "q2", question: "Keyboard Focus မှာသာ Outline ပြတဲ့ Pseudo-class က ဘာလဲ?", options: [":focus-visible", ":hover", ":visited", ":checked"], correctAnswer: 0, explanation: ":focus-visible က Keyboard Navigation မှာသာ Focus Ring ကို ပြပေးပါတယ်။" },
+    { id: "q3", question: "Motion လျှော့ချလိုသူတွေအတွက် သုံးတဲ့ Media Feature က ဘာလဲ?", options: ["prefers-reduced-motion", "max-width", "prefers-color-scheme", "orientation"], correctAnswer: 0, explanation: "prefers-reduced-motion က User ရဲ့ Motion Setting ကို ဖတ်ပြီး Animation ကို လျှော့ချပေးပါတယ်။" },
+  ]}
+/>

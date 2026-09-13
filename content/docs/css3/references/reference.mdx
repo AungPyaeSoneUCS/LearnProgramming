@@ -1,0 +1,101 @@
+---
+title: "CSS Reference — CSS ကိုးကားချက် အကျဉ်းချုပ်"
+description: "CSS ရဲ့ အသုံးအများဆုံး Property တွေကို ကဏ္ဍအလိုက် စုစည်းထားတဲ့ ကိုးကားစာမျက်နှာ ဖြစ်ပါတယ်။"
+---
+
+### CSS Reference ဆိုတာ ဘာလဲ?
+
+CSS **Reference Page** ဆိုတာ Style Sheet တစ်ခုရေးနေတုန်း လိုအပ်တဲ့အခါ ပြန်ကြည့်ဖို့ အတွက် Property တွေကို စုစည်းထားတဲ့ စတင်ရာနေရာ ဖြစ်ပါတယ်။ Property တစ်ခုစီမှာ ကိုယ့်အလုပ်နဲ့ ကိုယ့် Value သတ်မှတ်ပုံ ရှိပြီး အောက်မှာ Website တမျိုး ဖန်တီးရာမှာ အသုံးလေ့ရှိတဲ့ Property တွေကို အဆင့်လိုက် စဉ်ထားပါတယ်။
+
+ဒီစာမျက်နှာကို အလွတ်ကျက်စရာ မလိုဘဲ Bookmark လုပ်ထားပြီး သင်ခန်းစာတွေ ဖတ်နေစဉ်မှာ ကိုးကားလို့ ရအောင် ရည်ရွယ်ထားပါတယ်။
+
+### အသုံးအများဆုံး CSS Property များ
+
+#### Layout နဲ့ Display
+
+| Property | ဖော်ပြချက် | ဥပမာ |
+| ---- | ---- | ---- |
+| `display` | Element ကို ပြသပုံပုံစံ (block, flex, grid...) | `display: flex;` |
+| `position` | Element နေရာချပုံ နည်းစနစ် | `position: absolute;` |
+| `top` / `right` / `bottom` / `left` | Position ဖြင့် Offset သတ်မှတ်ရန် | `top: 20px;` |
+| `z-index` | Element အထပ်စဉ် ထိန်းချုပ်ရန် | `z-index: 10;` |
+| `float` | Element ကို ဘယ်/ညာ မျောစေရန် | `float: left;` |
+| `width` / `height` | Element ရဲ့ အနံအမြင့် | `width: 100%;` |
+| `max-width` / `min-width` | အနံ အနိမ့်ဆုံး အမြင့်ဆုံး | `max-width: 800px;` |
+| `margin` | Element အပြင် space | `margin: 0 auto;` |
+| `padding` | Element အတွင်း space | `padding: 10px 20px;` |
+| `overflow` | Content လျှံထွက်ချိန် ကိုင်တွယ်ပုံ | `overflow: hidden;` |
+
+#### Text နဲ့ Font
+
+| Property | ဖော်ပြချက် | ဥပမာ |
+| ---- | ---- | ---- |
+| `color` | စာသား အရောင် | `color: #333;` |
+| `font-family` | စာလုံး ပုံစံမိသားစု | `font-family: Arial, sans-serif;` |
+| `font-size` | စာလုံး အရွယ်အစား | `font-size: 1rem;` |
+| `font-weight` | စာလုံး အထူ | `font-weight: bold;` |
+| `text-align` | စာသား စီညှိပုံ | `text-align: center;` |
+| `text-decoration` | စာသား အလှဆင်မှု (line, none...) | `text-decoration: underline;` |
+| `line-height` | စာကြောင်းကြား အကွာအဝေး | `line-height: 1.5;` |
+| `letter-spacing` | စာလုံးကြား အကွာအဝေး | `letter-spacing: 1px;` |
+
+#### Background နဲ့ Border
+
+| Property | ဖော်ပြချက် | ဥပမာ |
+| ---- | ---- | ---- |
+| `background-color` | နောက်ခံ အရောင် | `background-color: #f5f5f5;` |
+| `background-image` | နောက်ခံ ပုံ | `background-image: url("bg.png");` |
+| `background-size` | နောက်ခံပုံ အရွယ် | `background-size: cover;` |
+| `border` | ဘောင်တစ်ချက်တည်း သတ်ရန် | `border: 1px solid #ccc;` |
+| `border-radius` | ဘောင် မျဉ်းကွေး | `border-radius: 8px;` |
+| `outline` | ဘောင် အပြင် outline | `outline: none;` |
+| `box-shadow` | Element ပတ် အရိပ် | `box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);` |
+
+#### Visual Effect များ
+
+| Property | ဖော်ပြချက် | ဥပမာ |
+| ---- | ---- | ---- |
+| `opacity` | အကြည်မှုန့် အား | `opacity: 0.8;` |
+| `transform` | Element ရွှေ့ / လှည့် / ချဲ့ရန် | `transform: translate(10px, 20px);` |
+| `transition` | Style ပြောင်းချိန် Animation အလျင် | `transition: all 0.3s ease;` |
+| `animation` | Keyframe Animation သတ်မှတ်ရန် | `animation: fadeIn 1s;` |
+| `cursor` | Mouse Cursor ပုံစံ | `cursor: pointer;` |
+| `visibility` | ဖော်ပြ / ဖျောက် (နေရာ ထားချန်) | `visibility: hidden;` |
+
+#### Flexbox နဲ့ Grid
+
+| Property | ဖော်ပြချက် | ဥပမာ |
+| ---- | ---- | ---- |
+| `flex-direction` | Flex Item စီးရာ ဦးတည်ချက် | `flex-direction: row;` |
+| `justify-content` | အဓိက ဝင်ရိုးပေါ် စီညှိပုံ | `justify-content: space-between;` |
+| `align-items` | ထောင့်မတ် ဝင်ရိုးပေါ် စီညှိပုံ | `align-items: center;` |
+| `gap` | Item ကြား အကွာအဝေး | `gap: 1rem;` |
+| `grid-template-columns` | Grid Column ပုံစံ | `grid-template-columns: repeat(3, 1fr);` |
+
+### အခြားသော Reference စာမျက်နှာများ
+
+CSS ရဲ့ နောက်ထပ် အသေးစိတ် ကိုးကားချက်တွေကိုလည်း ဆက်လေ့လာနိုင်ပါတယ် —
+
+- **CSS Selectors** — Element ၊ ID ၊ Class ၊ Attribute ၊ Pseudo Selector အားလုံး
+- **CSS Combinators** — Selector ပေါင်းစပ်ပုံနည်းလမ်းများ
+- **CSS Pseudo-classes** — Element State ပေါ် ရွေးချယ်ခြင်းများ
+- **CSS Pseudo-elements** — Element ရဲ့ အစိတ်အပိုင်းကို Style လုပ်ခြင်းများ
+- **CSS At-rules** — `@media` စတဲ့ စည်းမျဉ်းကြေညာချက်များ
+- **CSS Functions** — `calc()` စတဲ့ တွက်ချက် Function များ
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Property အတော်များများက Shorthand (အတိုကောက်) ရှိပါတယ်။ ဥပမာ `border` က `border-width` ၊ `border-style` ၊ `border-color` သုံးခုလုံးကို တစ်ကြောင်းတည်းနဲ့ သတ်နိုင်ပါတယ်။
+- Value တွေက အရောင် (color) ၊ အတိုင်းအတာ (px, %, rem) ၊ Keyword (`center`, `auto`...) စသဖြင့် အမျိုးမျိုး ရှိပါတယ်။
+- Layout အတွက် Modern နည်းလမ်းက `float` ထက် Flexbox နဲ့ Grid ကို ဦးစားပေးပါတယ်။
+- Property ကို Browser မသိတဲ့အခါ အဲဒီ Rule ကိုသာ လျစ်လျူရှုပြီး ကျန်တာတွေ ဆက်အလုပ်လုပ်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Element ကို block, flex, grid စသဖြင့် ပြသပုံ သတ်မှတ်တဲ့ Property က ဘာလဲ?", options: ["display", "position", "float", "overflow"], correctAnswer: 0, explanation: "display property က element ကို ပြသပုံ နည်းစနစ်ကို သတ်မှတ်ပါတယ်။" },
+    { id: "q2", question: "Element အပြင် space ကို ထိန်းချုပ်တဲ့ Property က ဘာလဲ?", options: ["margin", "padding", "gap", "border"], correctAnswer: 0, explanation: "margin က element အပြင်ဘက်က space ကို ထိန်းချုပ်ပြီး padding က အတွင်းဘက် space ပါ။" },
+    { id: "q3", question: "border, margin, padding စတဲ့ Property တွေကို တစ်ကြောင်းတည်း အတိုကောက်ရေးနိုင်တာကို ဘာလို့ ခေါ်ပါသလဲ?", options: ["Shorthand", "Keyword", "Selector", "Value"], correctAnswer: 0, explanation: "ရက်ပေါင်းများစွာ property ကို အတိုကောက်တစ်ကြောင်းနဲ့ ရေးတာကို shorthand လို့ ခေါ်ပါတယ်။" },
+  ]}
+/>

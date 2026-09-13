@@ -1,0 +1,42 @@
+---
+title: "HTML Web APIs — Web API တွေအကြောင်း"
+description: "API ဆိုတာ ဘာလဲ၊ Browser က ပေးထားတဲ့ Web API တွေကို JavaScript နဲ့ ဘယ်လိုသုံးလဲ လေ့လာကြည့်ရအောင်။"
+---
+
+### API ဆိုတာ ဘာလဲ?
+
+API (Application Programming Interface) ဆိုတာ Software တစ်ခုနဲ့ တစ်ခု အပြန်အလှန် ဆက်သွယ်ဖို့ သတ်မှတ်ထားတဲ့ Rules တွေပါ။ Web မှာတော့ Browser က Developer တွေ သုံးနိုင်ဖို့ အဆင်သင့်လုပ်ထားတဲ့ Features တွေကို Web API အနေနဲ့ ပေးထားပါတယ်။ JavaScript နဲ့ ဒီ API တွေကို ခေါ်ပြီး အသုံးပြုနိုင်တာမို့ ဘာမှ အစမှစတင်ရေးစရာ မလိုပါဘူး။
+
+### Browser က ပေးထားတဲ့ Web APIs တွေ
+
+ထင်ရှားတဲ့ Web API တွေထဲမှာ Web Storage (localStorage, sessionStorage), Geolocation, Fetch (Network Request), DOM (Document Object Model) Management, Drag and Drop, Web Workers စတာတွေ ပါဝင်ပါတယ်။ ဒီ API တွေက User ရဲ့ Location ရယူတာ၊ Data သိမ်းတာ၊ Network Request ပို့တာ၊ Page ကို Dynamically ပြောင်းလဲတာ စတဲ့ အလုပ်တွေကို လုပ်ပေးပါတယ်။ API တွေကို အသုံးချလို့ရတာမို့ Web App တစ်ခုလုံးကို သူတို့ပေါ်မှာ တည်ဆောက်နိုင်ပါတယ်။
+
+### JavaScript နဲ့ API ကို ခေါ်သုံးပုံ
+
+Web API တွေကို JavaScript ထဲမှာ `navigator`, `document`, `localStorage` စတဲ့ Objects တွေအနေနဲ့ ဝင်ရောက်လို့ရပါတယ်။ ဥပမာ Geolocation API ကို `navigator.geolocation` နဲ့ခေါ်ပြီး Fetch API ကို `fetch(url)` နဲ့ခေါ်ပါတယ်။ API အများစုက Asynchronous ဖြစ်တာမို့ Callback ဒါမှမဟုတ် Promise နဲ့ တွဲသုံးရတတ်ပါတယ်။
+
+**ဥပမာ -**
+```javascript
+navigator.geolocation.getCurrentPosition(function(position) {
+  console.log("Latitude:", position.coords.latitude);
+  console.log("Longitude:", position.coords.longitude);
+});
+```
+
+မှတ်ချက် — Web API တိုင်းက Browser မှာ Object အနေနဲ့ ထည့်ပေးထားပြီး JavaScript ကနေ တိုက်ရိုက် ခေါ်သုံးလို့ရပါတယ်။
+
+### မှတ်ထားရမယ့် အချက်များ
+
+- API က Software တွေ ချိတ်ဆက်ဖို့ Rules တွေဖြစ်တယ်။
+- Web API တွေက Browser က ကိုယ်တိုင် ထောက်ပံ့ပေးထားတယ်။
+- JavaScript Object တွေကနေ ခေါ်သုံးလို့ရတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "API ဆိုတာ ဘာလဲ?", options: ["Database တစ်ခု", "Software တွေ ချိတ်ဆက်ဖို့ Rules တွေ", "Webpage အလှဆင်ကိရိယာ", "FTP Server"], correctAnswer: 1, explanation: "API က Software တွေကြား ချိတ်ဆက်ဖို့ Rule တွေပါ။" },
+    { id: "q2", question: "Geolocation API ကို JavaScript မှာ ဘယ်လို ခေါ်ပါသလဲ?", options: ["document.geolocation", "navigator.geolocation", "window.location", "localStorage.geolocation"], correctAnswer: 1, explanation: "Geolocation API ကို navigator.geolocation နဲ့ ခေါ်ပါတယ်။" },
+    { id: "q3", question: "Network Request လုပ်ဖို့ သုံးတဲ့ Web API က ဘာလဲ?", options: ["Fetch API", "Storage API", "Geolocation API", "Drag API"], correctAnswer: 0, explanation: "Fetch API က Server ဆီ Network Request ပို့ဖို့ သုံးပါတယ်။" },
+  ]}
+/>

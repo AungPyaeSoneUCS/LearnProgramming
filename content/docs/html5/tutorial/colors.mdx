@@ -1,0 +1,80 @@
+---
+title: "HTML Colors — အရောင်များအကြောင်း"
+description: "Named Color, Hex, RGB, RGBA, HSL စတဲ့ Color သတ်မှတ်နည်းတွေကို လေ့လာကြရအောင်။"
+---
+
+### Named Colors (အရောင်နာမည်များ)
+
+HTML မှာ အရောင်နာမည် (Color Name) အားဖြင့် 140 ကျော် သုံးနိုင်ပါတယ်။ red, blue, green စတဲ့နာမည်တွေက ရိုးရှင်းပြီး စတင်လေ့လာသူတွေအတွက် အလွယ်ကူဆုံးပါ။
+
+**ဥပမာ -**
+```html
+<h1 style="color:orange;">Orange စာသား</h1>
+<p style="background-color:tomato;">Tomato နောက်ခံ</p>
+```
+
+မှတ်ချက် — Color Name က နားလည်ရလွယ်ပေမယ့် ရနိုင်တဲ့အရောင် ကန့်သတ်ချက် ရှိပါတယ်။
+
+### Hex Code (#RRGGBB)
+
+Hex Code က # နောက်မှာ Hex Digit (0-9, A-F) ၆ လုံးနဲ့ အရောင်သတ်မှတ်တာပါ။ ပထမတစ်စုံက အနီ (Red)၊ ဒုတိယတစ်စုံက အစိမ်း (Green)၊ တတိယတစ်စုံက အပြာ (Blue) ကို ကိုယ်စားပြုပါတယ်။
+
+**ဥပမာ -**
+```html
+<h1 style="color:#ff0000;">အနီသန့် (Red)</h1>
+<h1 style="color:#00ff00;">အစိမ်းသန့် (Green)</h1>
+<h1 style="color:#0000ff;">အပြာသန့် (Blue)</h1>
+```
+
+မှတ်ချက် — #ff0000 မှာ ff က အနီအားအပြည့် ၊ 00 နှစ်ခုက အစိမ်းနဲ့ အပြာ လုံးဝမပါတာကို ဆိုလိုပါတယ်။
+
+### RGB နဲ့ RGBA
+
+rgb(r, g, b) ပုံစံမှာ အရောင်တစ်ခုစီကို ဂဏန်း 0 ကနေ 255 အထိ ပေးပါတယ်။ rgba() မှာတော့ နောက်ဆုံးမှာ Alpha (a) ထည့်ပြီး **Transparency** (အကြည်အနက်အား) ကို 0 ကနေ 1 ကြား သတ်မှတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<p style="color:rgb(255, 0, 0);">RGB အနီရောင်</p>
+<p style="background-color:rgba(0, 0, 255, 0.3);">အပြာရောင် အကြည်နည်း</p>
+```
+
+မှတ်ချက် — Alpha က 0 နှင့် 1 ကြားဖြစ်ပြီး 0 ဆိုရင် လုံးဝအကြည် ၊ 1 ဆိုရင် အရောင်ထူပါတယ်။ 0.3 လိုမျိုးငယ်လေ နောက်ခံပေါ်လွင်လေပါ။
+
+### HSL
+
+hsl(hue, saturation, lightness) က Hue ထောင့် 0 ကနေ 360 အထိ ၊ Saturation (အရောင်ပြင်းအား) နဲ့ Lightness (အလင်းအားပမာဏ) ကို ရာခိုင်နှုန်းနဲ့ အရောင်သတ်မှတ်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<p style="color:hsl(0, 100%, 50%);">Hue 0 = အနီရောင်</p>
+<p style="color:hsl(120, 100%, 50%);">Hue 120 = အစိမ်းရောင်</p>
+```
+
+မှတ်ချက် — Hue 0 က အနီ ၊ 120 က အစိမ်း ၊ 240 က အပြာဖြစ်ပြီး hsl() က Web Design မှာ ချိန်ညှိရလွယ်လို့ ကြိုက်နှစ်သက်ကြပါတယ်။
+
+### Color Property ၃ မျိုး
+
+စာသားအရောင် (color) ၊ နောက်ခံအရောင် (background-color) နဲ့ ဘောင်အရောင် (border-color) ဆိုတဲ့ အဓိက Property သုံးမျိုးအတွက် ဒီ Color တွေကို တစ်ပြန်တည်း သုံးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<p style="color:white; background-color:#333; border:2px solid red; padding:10px;">
+  Text သည် အဖြူ ၊ နောက်ခံမှောင်နက် ၊ Border အနီရောင်
+</p>
+```
+
+မှတ်ချက် — border:2px solid red က အထူ 2px ၊ Solid မျဉ်းနဲ့ အနီရောင် Border ကို သတ်မှတ်တာပါ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Named Color → Hex → RGB → HSL ဆိုပြီး Color သတ်မှတ်နည်းလမ်း အမျိုးမျိုး ရှိသည်။
+- Hex က #RRGGBB ပုံစံ ၊ RGB က ဂဏန်းတစ်ခုစီ 0-255 ဖြစ်သည်။
+- RGBA နဲ့ HSLA က Transparency အတွက် Alpha ထည့်နိုင်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Hex Color Code ဟာ ဘာနဲ့ စတင်ပါသလဲ?", options: ["#", "$", "rgb", "@"], correctAnswer: 0, explanation: "Hex Code က # နဲ့စပြီး RRGGBB ခြောက်လုံးပါပါတယ်။" },
+  { id: "q2", question: "rgba() ရဲ့ နောက်ဆုံး a က ဘာကို ကိုယ်စားပြုပါသလဲ?", options: ["Alpha နဲ့ Transparency", "Angle", "Absolute", "Area"], correctAnswer: 0, explanation: "a က Alpha ဖြစ်ပြီး အရောင် အရင့်အကြည်ကို 0 ကနေ 1 ကြား သတ်မှတ်ပါတယ်။" },
+  { id: "q3", question: "နောက်ခံအရောင် သတ်မှတ်ဖို့ ဘယ် Property ကို သုံးပါသလဲ?", options: ["color", "border-color", "background-color", "font-size"], correctAnswer: 2, explanation: "background-color က Element ရဲ့ နောက်ခံအရောင်ကို သတ်မှတ်ပေးပါတယ်။" }
+]} />

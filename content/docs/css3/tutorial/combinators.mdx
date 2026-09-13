@@ -1,0 +1,106 @@
+---
+title: "CSS Combinators — Selector ပေါင်းစပ်နည်းများ"
+description: "Descendant, Child, Adjacent Sibling, General Sibling selectors လေးမျိုးကို သင်္ကေတတွေနဲ့ လေ့လာကြရအောင်။"
+---
+
+### Combinator ဆိုတာဘာလဲ
+
+**Combinator** ဆိုတာ CSS Selector နှစ်ခုကို ဆက်စပ်ပြီး Document Structure ထဲက Element တွေရဲ့ တည်နေရာ ဆက်စပ်မှုကို ရွေးချယ်တဲ့ သင်္ကေတပါ။ HTML Tree ထဲက Element တွေကြားက ဆက်စပ်မှုကို မူတည်ပြီး Style သက်ရောက်စေပါတယ်။
+
+Combinator ခြောက်မျိုး ရှိပြီး ဒီသင်ခန်းစာမှာတော့ အခြေခံ လေးမျိုးကို လေ့လာပါမယ် —
+
+- **Descendant** — `A B` (Space)
+- **Child** — `A > B`
+- **Adjacent Sibling** — `A + B`
+- **General Sibling** — `A ~ B`
+
+လေ့လာရလွယ်အောင် ဒီလို HTML Structure လေးတစ်ခု စိတ်ကူးကြည့်ပါ — `<div class="main">` ထဲမှာ p တစ်ခုနဲ့ `<section>` တစ်ခု ရှိပြီး section ထဲမှာလည်း p တစ်ခု ၊ `.main` ရဲ့ အပြင်မှာလည်း p တစ်ခု ရှိပါတယ်။ ဒီ Structure ကိုပဲ Combinator လေးမျိုးနဲ့ ဘယ်လိုရွေးချယ်လဲဆိုတာ အောက်မှာ ခြေဆစ်မပျက် လေ့လာပါမယ်။
+
+### Descendant Combinator (A ထဲမှာ ရှိတဲ့ B အားလုံး)
+
+**Space (အကွက်)** နဲ့ ခြားထားတဲ့ Descendant Combinator က ဘယ်အဆင့် နက်နက်ပဲ ဖြစ်ဖြစ် ပထမ Element ရဲ့ အတွင်းမှာ ရှိသမျှ ဒုတိယ Element တွေ အားလုံးကို ရွေးပါတယ်။
+
+**ဥပမာ -**
+```css
+.main p {
+  color: #2962ff;
+  margin-bottom: 5px;
+}
+```
+
+မှတ်ချက် — `.main p` က `.main` ထဲမှာ ဖြစ်သမျှ p အားလုံးကို ရွေးလို့ အဆင့် ၁ ရော အဆင့် ၂ ရော အပြာရောင် ဖြစ်သွားပါမယ်။
+
+### Child Combinator (A ရဲ့ တိုက်ရိုက်ကလေး B)
+
+**Greater-than sign (`>`)** ကို သုံးတဲ့ Child Combinator က ပထမ Element ရဲ့ **ကလေးတိုက်ရိုက် (direct child)** ဖြစ်တဲ့ Element တွေကိုသာ ရွေးပါတယ်။ မြေးတွေ၊ အနက်နက် အဆင့်တွေကော မပါဝင်ပါဘူး။
+
+**ဥပမာ -**
+```css
+.main > p {
+  font-weight: bold;
+}
+```
+
+မှတ်ချက် — `.main > p` က section ထဲက p (အဆင့် ၂) ကို မရွေးဘဲ ကလေးတိုက်ရိုက် အဆင့် ၁ ကိုသာ bold လုပ်ပါလိမ့်မယ်။
+
+### Adjacent Sibling Combinator (A ရဲ့ ပထမအနီး B)
+
+**Plus sign (`+`)** ကို သုံးတဲ့ Adjacent Sibling Combinator က ပထမ Element ရဲ့ **နောက်မှာ ချက်ချင်းလိုက်တဲ့** ဒုတိယ Element ကိုသာ ရွေးပါတယ်။ နှစ်ခုက တူညီတဲ့ Parent အောက်မှာ ရှိရပြီး ကြားမှာ တစ်ခုခု မရှိရပါဘူး။
+
+**ဥပမာ -**
+```css
+h2 + p {
+  margin-top: 0;
+  color: #666;
+}
+```
+
+မှတ်ချက် — h2 အပြီး ချက်ချင်းရှိတဲ့ p တစ်ခုတည်းကိုသာ Style သက်ရောက်ပြီး ကြားမှာ div လိုဟာတွေ ရှိနေရင် အလုပ်မလုပ်ပါဘူး။
+
+### General Sibling Combinator (A နောက်မှာ ရှိသမျှ B)
+
+**Tilde sign (`~`)** ကို သုံးတဲ့ General Sibling Combinator က ပထမ Element ရဲ့ **နောက်မှာ ရှိတဲ့** ဒုတိယ Element တွေ အားလုံး (sibling အားလုံး) ကို ရွေးပါတယ်။ Adjacent လိုမဟုတ်ဘဲ ကြားမှာ တစ်ခုခု ရှိလည်း ရပါတယ်။
+
+**ဥပမာ -**
+```css
+h2 ~ p {
+  padding-left: 10px;
+}
+```
+
+မှတ်ချက် — h2 ရဲ့ နောက်မှာ တွေ့ရသမျှ p အားလုံးကို ရွေးပြီး h2 ရဲ့ ရှေ့မှာ ရှိတဲ့ p တွေကိုတော့ ထည့်မတွက်ပါဘူး။
+
+### Combinator တွေ ပေါင်းစပ်အသုံးပြုခြင်း
+
+Combinator တွေကို ဆက်တိုက်ပေါင်းပြီးလည်း သုံးလို့ရပါတယ်။ ရှုပ်ထွေးတဲ့ Structure တွေမှာ Target Element ကို အတိအကျ ညွှန်ပြချင်ရင် အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+ul > li > a {
+  text-decoration: none;
+  color: #333;
+}
+
+ul > li > a:hover {
+  color: #ff5722;
+}
+```
+
+မှတ်ချက် — ဒီလို combination က ul ထဲက li ထဲက a ကိုသာ target လုပ်လို့ Nested Menu (sub-menu ပါတဲ့ menu) တွေမှာ အလွန် ချိန်ညှိရလွယ်ပါတယ်။
+
+#### တိုတိုနဲ့လိုရင်း
+
+- Space က အတွင်းမှာ ရှိသမျှ (descendant) ကို ရွေးသည်။
+- Greater-than sign က direct child ကိုသာ ရွေးသည်။
+- Plus sign က ပထမနောက်လိုက် sibling တစ်ခုတည်း ရွေးသည်။
+- Tilde sign က နောက်မှာရှိသမျှ sibling အားလုံး ရွေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Selector နှစ်ခုကို space ခြားပြီး ရေးရင် ဘယ်လိုရွေးချယ်ပါသလဲ?", options: ["ကလေးတိုက်ရိုက်ကိုသာ", "အတွင်းမှာ ရှိသမျှ အားလုံး", "နောက်မှာရှိတဲ့ ဖြစ်သမျှ", "ပထမနောက်လိုက်တစ်ခုတည်း"], correctAnswer: 1, explanation: "space က descendant combinator ဖြစ်ပြီး အဆင့် မဆို အတွင်းမှာရှိတဲ့ element တွေ အားလုံးကို ရွေးပါတယ်။" },
+    { id: "q2", question: "direct child ကိုသာ ရွေးချင်ရင် ဘယ်သင်္ကေတ သုံးပါသလဲ?", options: ["Space", "Plus sign", "Greater-than sign", "Tilde sign"], correctAnswer: 2, explanation: "child combinator ကို greater-than sign နဲ့ ရေးပြီး direct child တွေကိုသာ ရွေးပါတယ်။" },
+    { id: "q3", question: "general sibling combinator ရဲ့ သင်္ကေတနဲ့ အဓိပ္ပါယ်က ဘာလဲ?", options: ["Plus sign၊ ပထမနောက်လိုက်ကိုသာ", "Tilde sign၊ နောက်မှာရှိသမျှ", "Space၊ အတွင်းအားလုံး", "Greater-than sign၊ direct child"], correctAnswer: 1, explanation: "tilde (အမှတ်) က element နောက်မှာရှိတဲ့ sibling အားလုံးကို ရွေးပါတယ်။" }
+  ]}
+/>

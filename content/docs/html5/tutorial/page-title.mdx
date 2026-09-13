@@ -1,0 +1,81 @@
+---
+title: "HTML Page Title"
+description: "Browser Tab နဲ့ SEO အတွက် အရေးကြီးတဲ့ Title tag ကို ဘယ်လို ရေးရမလဲဆိုတာ လေ့လာကြပါမယ်။"
+---
+
+### `<title>` tag ဆိုတာ ဘာလဲ?
+
+`<title>` tag က HTML document တစ်ခုရဲ့ ခေါင်းစဉ်ကို သတ်မှတ်ပေးတဲ့ tag ပါ။ ဒီ Tag ကို `<head>` ထဲမှာ ထည့်ရပြီး Browser Tab ရဲ့ အနားမှာ ပေါ်တဲ့ စာသားလေးက ဒီ Tag ကရလာတာပါ။ စာမျက်နှာ တစ်ခုကို သူများနဲ့ ခွဲခြားဖို့ အကောင်းဆုံး နည်းလမ်းတစ်ခုလည်း ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <title>My First Website</title>
+</head>
+<body>
+  <h1>Welcome!</h1>
+</body>
+</html>
+```
+
+မှတ်ချက် — `<title>` က `<head>` ထဲမှာသာ ရှိရပါတယ်။ `<body>` ထဲ ထည့်လို့ မရပါဘူး။
+
+### Title က Browser Tab မှာ ဘယ်လို ပေါ်သလဲ?
+
+Browser က Webpage ကို ဖွင့်တဲ့အခါ `<title>` ထဲက စာသားကို Tab ပေါ်မှာ ပြသပါတယ်။ Tab အများကြီး ဖွင့်ထားရင် Title ကို ကြည့်ပြီး တစ်ခုချင်း ခွဲခြား လို့ရပါတယ်။ Bookmarks လုပ်တဲ့အခါမှာလည်း Title ကို ပုံမှန် Default Name အဖြစ် သုံးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<head>
+  <title>Takkatho - HTML Lessons</title>
+</head>
+```
+
+မှတ်ချက် — Browser Tab မှာ "Takkatho - HTML Lessons" ဆိုတဲ့ စာလေးကို မြင်ရမှာပါ။
+
+### SEO အတွက် Title ရဲ့ အရေးပါမှု
+
+Title က Search Engine တွေ (Google လိုမျိုး) က Webpage ရဲ့ အကြောင်းအရာကို နားလည်ဖို့ အသုံးပြုတဲ့ ပထမဆုံး အချက်အလက် တစ်ခုပါ။ Search Result မှာ ပေါ်တဲ့ Link ရဲ့ ခေါင်းစဉ် အနေနဲ့ရော စာမျက်နှာ အဆင့် သတ်မှတ်ရာမှာပါ Title က သက်ရောက်မှု ရှိပါတယ်။ SEO (Search Engine Optimization) ကောင်းဖို့ ဆိုရင် Title ကို စာမျက်နှာထဲက ခေါင်းစဉ်နဲ့ ကိုက်ညီအောင် ရေးသင့်ပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<head>
+  <title>How to Make Mohinga - Myanmar Recipe</title>
+</head>
+```
+
+မှတ်ချက် — ဒီ Title မှာ အဓိက Keyword တွေ ဖြစ်တဲ့ Recipe အကြောင်း ရှင်းလင်းစွာ ပါပြီး User ကလည်း ဘာတွေ့ရမယ်ဆိုတာ ကြိုသိနိုင်ပါတယ်။
+
+### ကောင်းမွန်တဲ့ Title ရေးနည်း အကြံပြုချက်များ
+
+Title တစ်ခု ရေးတဲ့အခါ တို၊ လိုရင်း၊ ရှင်းလင်းအောင် ထားသင့်ပါတယ်။ Title အရှည် ကြီးရင် Browser က အလယ်မှာ ဖြတ်ပြသတတ်ပါတယ်။ စာမျက်နှာ တိုင်းမှာ မတူညီတဲ့ Title ထားဖို့လည်း အရေးကြီးပါတယ်။
+
+**ဥပမာ -**
+
+```html
+<head>
+  <title>HTML Tables Explained - Takkatho</title>
+</head>
+```
+
+မှတ်ချက် — Title က ခန့်မှန်းခြေ စာလုံး 50 မှ 60 လုံး အတွင်း ထားတာ အကောင်းဆုံးပါ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `<title>` ကို `<head>` ထဲမှာသာ ထည့်ရပါတယ်။
+- Browser Tab၊ Bookmarks၊ Search Results တွေမှာ Title ပေါ်ပါတယ်။
+- SEO ကောင်းဖို့ Title ကို ရှင်းလင်း၊ တိုတိုတုတ်တုတ် ရေးပါ။
+- စာမျက်နှာ တစ်ခုချင်းစီမှာ ကိုယ်ပိုင် Title ရှိသင့်ပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Title tag ကို ဘယ်နေရာမှာ ထည့်ရပါသလဲ?", options: ["Body ထဲ", "Head ထဲ", "Footer ထဲ", "Div ထဲ"], correctAnswer: 1, explanation: "Title tag က head ထဲမှာသာ ထည့်ရပါတယ်။" },
+  { id: "q2", question: "Title က ဘယ်နေရာတွေမှာ ပေါ်လေ့ ရှိပါသလဲ?", options: ["Browser Tab မှာသာ", "Search Results မှာသာ", "Tab ၊ Bookmarks နဲ့ Search Results", "တစ်နေရာမှမပေါ်"], correctAnswer: 2, explanation: "Title က Tab ၊ Bookmarks နဲ့ Search Results တွေမှာ ပေါ်ပါတယ်။" },
+  { id: "q3", question: "SEO အတွက် ကောင်းမွန်တဲ့ Title ဆိုတာ ဘယ်လိုပုံစံလဲ?", options: ["ရှည်ပြီး ဝေဝါး", "တို၊ ရှင်းလင်း၊ သက်ဆိုင်တဲ့ Keyword ပါ", "အများကြီး ရေးထားတာ", "Emoji အများကြီး သုံးထားတာ"], correctAnswer: 1, explanation: "Title က တို၊ ရှင်းလင်းပြီး Keyword ပါရင် SEO ကောင်းပါတယ်။" }
+]} />

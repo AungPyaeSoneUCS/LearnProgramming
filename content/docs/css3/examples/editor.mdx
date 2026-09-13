@@ -1,0 +1,115 @@
+---
+title: "CSS Editor — CSS ရေးသားပြီး စမ်းသပ်နည်း"
+description: "CSS ဖိုင်ရေးနည်း၊ HTML နဲ့ ချိတ်ဆက်ပြီး browser မှာ စမ်းသပ်နည်း၊ Browser DevTools နဲ့ Live စမ်းသပ်နည်းတွေ။"
+---
+
+### CSS ရေးသားဖို့ ဘာတွေ လိုသလဲ
+
+CSS က ရိုးရိုး Text File တစ်ခုပဲ ဖြစ်လို့ ဘယ် Text Editor နဲ့မဆို ရေးလို့ရပါတယ်။ ပိုအဆင်ပြေတာက **VS Code** လိုမျိုး Code Editor ဖြစ်ပြီး Syntax အရောင်တွေ ပြပေးတာမို့ စာလုံးပေါင်း မှားနေတာကို လွယ်လွယ် မြင်နိုင်ပါတယ်။ `.css` Extension နဲ့ သိမ်းပြီး HTML နဲ့ ချိတ်ဆက်ရုံပါပဲ။
+
+### Try-It-Yourself Workflow
+
+CSS ကို စမ်းလေ့လာဖို့ အကောင်းဆုံးနည်းက ဖိုင်နှစ်ခု ဆောက်ပြီး Browser မှာ ဖွင့်ကြည့်တာပါ။ အဆင့်တွေက —
+
+1. Desktop ပေါ်မှာ ဖိုဒါအသစ် တစ်ခု ဆောက်ပါ။
+2. အဲဒီထဲမှာ `index.html` နဲ့ `style.css` ဖိုင် နှစ်ခု ဖန်တီးပါ။
+3. HTML ရဲ့ `<head>` ထဲမှာ CSS ဖိုင်ကို `<link>` Tag နဲ့ ချိတ်ပါ။
+4. `index.html` ကို Double-click လုပ်ပြီး Browser မှာ ဖွင့်ပါ။
+5. CSS ကို ပြင်သိမ်းပြီးတိုင်း Browser မှာ Refresh နှိပ်ပြီး ရလဒ် ကြည့်ပါ။
+
+ပထမဆုံး HTML ဖိုင် ရေးကြည့်ရအောင်။
+
+**ဥပမာ -**
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <title>CSS Editor Practice</title>
+</head>
+<body>
+  <h1>CSS စမ်းသပ်ရေးနေရာ</h1>
+  <p>ဒီစာသားကို CSS နဲ့ အလှဆင်ကြည့်ပါ။</p>
+</body>
+</html>
+```
+
+မှတ်ချက် — `href="style.css"` က HTML နဲ့ ဖိုင်ချင်း နာမည် တူပြီး တစ်နေရာတည်း (တူညီတဲ့ ဖိုဒါ) မှာ ရှိနေရပါမယ်။
+
+အခု အဲဒီ Page ကို အလှဆင်ဖို့ `style.css` ဖိုင်ထဲမှာ ရေးကြည့်ရအောင်။
+
+**ဥပမာ -**
+```css
+h1 {
+  color: #e94560;
+  text-align: center;
+}
+
+p {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+}
+```
+
+မှတ်ချက် — သိမ်းပြီး Refresh လုပ်လိုက်တာနဲ့ `h1` က ပန်းရောင်ဖျော့ဖျော့ စင်တာချ ဖြစ်ပြီး စာပိုဒ်က 18px နဲ့ ပေါ်လာမှာပါ။
+
+### Comment နဲ့ စမ်းသပ်ခြင်း
+
+CSS Comment တွေက Browser မှာ ပြသခြင်းမရှိတဲ့ ကိုယ့်အတွက် မှတ်ထားစရာ ဖြစ်ပါတယ်။ စမ်းသပ်ချိန်မှာ Style တစ်ကြောင်းကို `/* ... */` နဲ့ ဖုံးထားပြီး မဖုံးဘဲ နှိုင်းယှဉ် ကြည့်ဖို့ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  color: #333;
+  /* font-size: 18px; — ဒီ Comment ကို ဖျက်လိုက်ရင် Size ပြောင်းသွားပါမယ် */
+  line-height: 1.6;
+}
+```
+
+မှတ်ချက် — Comment ကိုဖျက်ရင် Style သက်ရောက်ပြီး ထပ်ထည့်ရင် ပြန်ပျောက်သွားတဲ့နည်းနဲ့ Property တစ်ခုရဲ့ အကျိုးသက်ရောက်မှုကို တစ်ခါတည်း သေချာ စစ်ဆေးနိုင်ပါတယ်။
+
+### Browser DevTools ဖြင့် Live စမ်းသပ်ခြင်း
+
+Browser ထဲမှာ **F12** (သို့) `Ctrl + Shift + I` နှိပ်ရင် **DevTools** ပွင့်ပါတယ်။ **Elements** Tab မှာ Element တစ်ခုကို ရွေးပြီး ညာဘက် Style Panel ကနေ CSS တန်ဖိုးတွေကို တိုက်ရိုက် ပြင်ကြည့်လို့ရပါတယ်။ Result က ချက်ချင်း မြင်ရပြီး စမ်းသပ်ပြီးသား Style တွေကို ကိုယ့် CSS ဖိုင်ထဲ ပြန်ကူးထည့်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+h2 {
+  color: teal;
+  letter-spacing: 1px;
+}
+```
+
+မှတ်ချက် — DevTools မှာ ပြင်လိုက်တဲ့ Style တွေက Page ပေါ်မှာသာ ခဏတာ သက်ရောက်ပြီး Refresh လုပ်ရင် ပျောက်သွားတာမို့ တကယ်ထည့်ချင်ရင် ဖိုင်ထဲမှာ ပြန်ရေးရပါတယ်။
+
+### Device Toolbar နဲ့ Responsive စစ်ဆေးခြင်း
+
+DevTools ရဲ့ Device Toolbar က Screen ကို Mobile အရွယ်လို ရှိအောင် ပြောင်းသရုပ်ပြပေးလို့ Page က Screen အရွယ်တွေမှာ ဘယ်လို မြင်ရလဲ စမ်းကြည့်နိုင်ပါတယ်။ Media Query တွေလည်း ဒီနေရာမှာ တိုက်ရိုက် စမ်းသပ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+@media (max-width: 600px) {
+  h1 {
+    font-size: 20px;
+  }
+}
+```
+
+မှတ်ချက် — Screen 600px အောက်ကျရင် `h1` က 20px ဖြစ်ပြီး ကျရင် မူလ Size ကို ပြန်သုံးပါတယ် — Mobile စစ်ဆေးဖို့ Device Toolbar က အသင့်တော်ဆုံး ဖြစ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- CSS ကို `.css` ဖိုင် သီးခြား ရေးပြီး `link` Tag နဲ့ HTML ထဲ ချိတ်သည်။
+- ပြင်သိမ်းပြီးတိုင်း Browser မှာ Refresh နှိပ်ပြီး ရလဒ် ကြည့်သည်။
+- DevTools (F12) နဲ့ Live Style စမ်းသပ်နိုင်ပြီး Device Toolbar နဲ့ Responsive စစ်ဆေးသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Try-It-Yourself မှာ CSS ပြောင်းလဲမှုတွေကို Browser မှာ မြင်ရဖို့ ဘာလုပ်ရပါသလဲ?", options: ["Refresh နှိပ်ရန်", "Computer ပိတ်ရန်", "Folder အသစ် လုပ်ရန်", "Internet ဖြုတ်ရန်"], correctAnswer: 0, explanation: "CSS ဖိုင်ကို သိမ်းပြီးတိုင်း Browser မှာ Refresh နှိပ်မှ အသစ် သက်ရောက်ပါတယ်။" },
+    { id: "q2", question: "Browser DevTools ကို ဖွင့်တဲ့ အဓိက Keyboard Shortcut က ဘာလဲ?", options: ["F12", "F1", "Ctrl+P", "Print Screen"], correctAnswer: 0, explanation: "F12 (သို့) Ctrl+Shift+I နဲ့ DevTools ကို အမြန် ဖွင့်နိုင်ပါတယ်။" },
+    { id: "q3", question: "DevTools မှာ ပြင်လိုက်တဲ့ Style တွေက ဘယ်လို သဘောသက်ရောက်ပါသလဲ?", options: ["Live preview သာဖြစ်ပြီး ဖိုင်ထဲ ပြန်ကူးရသည်", "Server ထဲ အမြဲတမ်း သိမ်းသည်", "Database ထဲ သိမ်းသည်", "ဘာမှ သက်ရောက်မှု မရှိ"], correctAnswer: 0, explanation: "DevTools က ချက်ချင်း preview ပေးရုံသာ ဖြစ်ပြီး Refresh လုပ်ရင် ပျောက်သွားပါတယ်။" }
+  ]}
+/>

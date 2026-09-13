@@ -1,0 +1,86 @@
+---
+title: "CSS Outline — Element ပတ်ပတ်လည် မျဉ်းကြောင်း ဆွဲနည်း"
+description: "outline ဆိုတာ border နဲ့ ဘယ်လို ကွာသလဲ၊ outline-style, outline-width, outline-color, outline-offset တွေကို လေ့လာမယ်။"
+---
+
+### Outline ဆိုတာ ဘာလဲ?
+
+**Outline** က element ပတ်ပတ်လည်မှာ မျဉ်းကြောင်းတစ်ခု ဆွဲပေးပါတယ်။ အင်္ဂါရပ်အရ border နဲ့ ဆင်ပေမဲ့ outline က **layout နေရာ မယူပါဘူး** — border လိုမျိုး element ရဲ့ အရွယ်အစားကို မပြောင်းပါဘူး။ Browser တွေက input field ဒါမှမဟုတ် button ကို focus လုပ်တဲ့အခါ outline နဲ့ မီးမောင်းထိုး ပြတတ်ပါတယ်။
+
+### Outline နဲ့ Border ကွာခြားချက်
+
+- Border က element ရဲ့ layout ထဲမှာ နေရာယူပြီး outline က နေရာ မယူပါဘူး။
+- Outline က border ရဲ့ အပြင်ဘက်မှာ ဆွဲပြီး border ကို လုံးဝ မထိခိုက်ပါဘူး။
+- Outline ကို တစ်ဖက်ချင်း သတ်မှတ်လို့ မရဘဲ element တစ်ခုလုံး ပတ်ပတ်လည်မှာပဲ ဖြစ်ပါတယ်။
+
+Border ကို ထပ်ထည့်ရင် element ရဲ့ စုစုပေါင်း အကျယ်က ကြီးသွားပြီး outline ကိုတော့ မပြောင်းပါဘူး။ ဒါကို အောက်က ဥပမာနဲ့ ကြည့်ကြည့်ပါ။
+
+**ဥပမာ -**
+```css
+.border-card {
+  width: 200px;
+  padding: 10px;
+  border: 5px solid black;
+}
+
+.outline-card {
+  width: 200px;
+  padding: 10px;
+  outline: 5px solid red;
+}
+```
+
+မှတ်ချက် — နှစ်ခုလုံး width 200px ဖြစ်ပေမဲ့ border-card က padding ၂၀px နဲ့ border ၁၀px ကြောင့် ပြင်ပအကျယ် 230px ဖြစ်ပြီး outline-card က 220px ပဲ ရှိပါတယ်။
+
+### outline-style, outline-width, outline-color
+
+Outline မှာလည်း border လိုပဲ style, width, color သုံးခု ပါဝင်ပြီး border-style အတိုင်း style က မဖြစ်မနေ လိုအပ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  outline-style: solid;
+  outline-width: 4px;
+  outline-color: red;
+}
+
+.focus-ring {
+  outline-style: dashed;
+  outline-color: #0077ff;
+}
+```
+
+မှတ်ချက် — Outline က space မယူတာမို့ element ရဲ့ ပုံတည်နေရာ တစ်လုံးတစ်ဝေး မရွေ့ဘဲ မျဉ်းကြောင်းကို ထပ်ဆွဲပေးတာပါ။
+
+### Outline Shorthand နဲ့ outline-offset
+
+`outline` shorthand နဲ့ width, style, color ကို တစ်ကြောင်းတည်း ရေးလို့ရပြီး `outline-offset` နဲ့ outline နဲ့ element အစွန်းကြား အကွာအဝေးကို သတ်မှတ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  outline: 3px dashed green;
+  outline-offset: 5px;
+}
+
+button:focus {
+  outline: 2px solid blue;
+  outline-offset: 2px;
+}
+```
+
+မှတ်ချက် — Focus ring တွေကို ဖျောက်စရာ မလိုဘဲ အရောင် ဒါမှမဟုတ် outline-offset နဲ့ ပိုသိသာအောင် လုပ်တာက keyboard user တွေအတွက် ပိုကောင်းပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Outline က layout နေရာ မယူပါဘူး။
+- `outline-style`, `outline-width`, `outline-color` သုံးခုလုံးကို `outline` shorthand နဲ့ ပေါင်းရေးလို့ရပါတယ်။
+- `outline-offset` က outline နဲ့ element အစွန်းကြား အကွာအဝေးကို ပေးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Outline က element ရဲ့ layout ကို ဘယ်လို သက်ရောက်လဲ?", options: ["နေရာယူပါတယ်", "နေရာ မယူပါဘူး", "element ကို ကျယ်စေပါတယ်", "padding လို ဖြစ်သွားပါတယ်"], correctAnswer: 1, explanation: "outline က element ရဲ့ ပြင်ပမှာ ဆွဲပေးပြီး layout နေရာကို မယူပါဘူး။" },
+  { id: "q2", question: "Border နဲ့ outline ရဲ့ ကွာခြားချက် ထဲက တစ်ခုက ဘာလဲ?", options: ["နှစ်ခုလုံး အတူတူပါ", "outline က တစ်ဖက်ချင်း သတ်မှတ်လို့ရတယ်", "border က layout ထဲ နေရာယူတယ်", "outline က element ကို ကျယ်စေတယ်"], correctAnswer: 2, explanation: "border က element ရဲ့ အရွယ်အစား တွက်ချက်မှုထဲ ပါဝင်ပြီး outline ကတော့ နေရာ မယူပါဘူး။" },
+  { id: "q3", question: "outline-offset က ဘာကို သတ်မှတ်ပေးလဲ?", options: ["outline ရဲ့ အထူ", "outline နဲ့ element အစွန်း ကြား အကွာအဝေး", "margin ရဲ့ အရွယ်အစား", "font size"], correctAnswer: 1, explanation: "outline-offset က outline နဲ့ element အစွန်းကြားက အကွာအဝေးကို ပေးပါတယ်။" }
+]} />

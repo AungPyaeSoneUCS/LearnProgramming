@@ -1,0 +1,89 @@
+---
+title: "CSS Image Filters — Filter များအသုံးပြုနည်း"
+description: "filter property ဖြင့် Image များကို blur၊ brightness၊ contrast စသည့် Effect များ ထည့်နည်းကို လေ့လာကြမယ်။"
+---
+
+CSS `filter` Property နဲ့ Image တွေကို မူရင်း File ကို မပြောင်းဘဲ Visual Effect များ ထည့်နိုင်ပါတယ်။ Photo Editor တွေမှာ သုံးသလို Effect တွေကို Browser က တိုက်ရိုက် ဖန်တီးပေးတာပါ။
+
+### blur ၊ brightness
+
+`blur()` Function က ပုံကို မှုန်ဝါးစေပြီး `brightness()` က ပုံရဲ့ တောက်ပမှုကို ထိန်းပါတယ်။ တန်ဖိုးတွေက Percentage (%) နဲ့ပေးလေ့ရှိပါတယ်။
+
+**ဥပမာ -**
+```css
+.blurred {
+  filter: blur(5px);
+}
+
+.bright {
+  filter: brightness(150%);
+}
+```
+
+မှတ်ချက် — `blur(5px)` က 5 Pixel အထိ မှုန်ဝါးစေပြီး `brightness(150%)` က ပုံကို 1.5 ဆ ပိုတောက်ပစေပါတယ်။
+
+### contrast နဲ့ grayscale
+
+`contrast()` က အရောင်တွေရဲ့ အားပျော့ အားကောင်း ခြားနားမှုကို သတ်မှတ်ပြီး `grayscale()` က ပုံကို အရောင်မဲ့ ဖြစ်စေပါတယ်။
+
+**ဥပမာ -**
+```css
+.high-contrast {
+  filter: contrast(180%);
+}
+
+.gray {
+  filter: grayscale(100%);
+}
+```
+
+မှတ်ချက် — `grayscale(100%)` က ပုံတစ်ခုလုံးကို အဖြူအမဲ ဖြစ်စေပြီး `grayscale(50%)` လိုမျိုး တန်ဖိုးတွေက ရာခိုင်နှုန်းအလိုက် အရောင် တစ်စိတ်တစ်ပိုင်း ချန်ထားပါတယ်။
+
+### sepia နဲ့ invert
+
+`sepia()` က ပုံကို ရှေးဟောင်း အညိုရောင် ပုံစံ ဖြစ်စေပြီး `invert()` က အရောင်တွေကို ဇောက်ထိုးပြောင်း (Negative) စေပါတယ်။
+
+**ဥပမာ -**
+```css
+.old-photo {
+  filter: sepia(80%);
+}
+
+.inverted {
+  filter: invert(100%);
+}
+```
+
+မှတ်ချက် — Film Camera ခေတ် ဓာတ်ပုံပုံစံ ရဖို့ sepia ကို သုံးလေ့ရှိပြီး invert ကတော့ Fun Effect တွေအတွက် အသုံးများပါတယ်။
+
+### Filter အများစု ပေါင်းစပ်ခြင်း နဲ့ Hover
+
+Filter တွေကို Space ( ) နဲ့ ခြားပြီး တစ်ပြိုင်နက် ပေါင်းစပ်သုံးနိုင်ပြီး Hover Effect နဲ့လည်း တွဲသုံးနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.photo {
+  filter: brightness(120%) contrast(110%) saturate(140%);
+  transition: filter 0.4s ease;
+}
+
+.photo:hover {
+  filter: none;
+}
+```
+
+မှတ်ချက် — `saturate(140%)` က အရောင်စူးရှမှုကို ဖြည့်ပေးပြီး Hover လုပ်ရင် `filter: none` ဖြင့် မူရင်း ပုံအတိုင်း ပြန်ပြသပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `filter` Property ဖြင့် Image အပြင် Element အမျိုးမျိုးကိုပါ Style လုပ်နိုင်ပါသည်။
+- blur ၊ brightness ၊ contrast ၊ grayscale ၊ sepia ၊ invert စသည့် Function များ ရှိပါသည်။
+- Filter အများစုကို Space နဲ့ ခြားပြီး ပေါင်းစပ်နိုင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "ပုံကို လုံးဝ အဖြူအမဲ ဖြစ်စေဖို့ ဘယ် Value ကို သုံးမလဲ?", options: ["grayscale(100%)", "blur(100%)", "contrast(100%)", "invert(50%)"], correctAnswer: 0, explanation: "grayscale(100%) က ပုံရဲ့ အရောင်အားလုံးကို ဖယ်ပြီး အဖြူအမဲ ဖြစ်စေပါတယ်။" },
+  { id: "q2", question: "blur(5px) ရဲ့ 5px တန်ဖိုးက ဘာကို ဆိုလိုပါသလဲ?", options: ["ပုံရဲ့ Width", "မှုန်ဝါးမှု ပမာဏ", "အရောင် ပမာဏ", "ပုံရဲ့ Height"], correctAnswer: 1, explanation: "blur ရဲ့ တန်ဖိုး Pixel များလေ ပုံက ပိုမှုန်ဝါးလေဖြစ်ပါတယ်။" },
+  { id: "q3", question: "Filter များစွာကို တစ်ပြိုင်နက် သုံးချင်ရင် ဘယ်နဲ့ ခြားရေးပါသလဲ?", options: ["Space", "Comma", "Semicolon", "Colon"], correctAnswer: 0, explanation: "Filter Function တွေကို Space နဲ့ ခြားပြီး တစ်ကြောင်းတည်း ရေးနိုင်ပါတယ်။" }
+]} />

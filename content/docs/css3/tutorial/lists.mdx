@@ -1,0 +1,122 @@
+---
+title: "CSS Lists — List Style မျိုးစုံ"
+description: "list-style-type ၊ list-style-image ၊ list-style-position တွေနဲ့ List Bullet ပုံစံမျိုးစုံ ပြောင်းလဲနည်း။"
+---
+
+### List Style ဆိုတာ
+
+HTML List တွေက Browser ရဲ့ Default Style အတိုင်း Bullet Point ဒါမှမဟုတ် နံပါတ်နဲ့ ပြပါတယ်။ CSS ရဲ့ `list-style` ဆိုတဲ့ Property Group ကို သုံးပြီး Marker (Bullet) ရဲ့ အမျိုးအစား၊ ပုံ၊ နေရာကို လွတ်လပ်စွာ ပြောင်းလဲနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+ul.a {
+  list-style-type: circle;
+}
+
+ul.b {
+  list-style-type: square;
+}
+
+ol.c {
+  list-style-type: upper-roman;
+}
+
+ol.d {
+  list-style-type: lower-alpha;
+}
+```
+
+မှတ်ချက် — `list-style-type` က Marker ရဲ့ ပုံစံကို သတ်မှတ်ပေးပြီး `circle`၊ `square`၊ `upper-roman`၊ `lower-alpha` စသဖြင့် Value တွေ ရှိပါတယ်။
+
+### list-style-image — ပုံနဲ့ Marker
+
+Bullet အစား ကိုယ်ပိုင်ပုံတွေ သုံးချင်ရင် `list-style-image` Property မှာ `url()` နဲ့ ပုံလိပ်စာ ထည့်ပေးရပါတယ်။
+
+**ဥပမာ -**
+```css
+ul {
+  list-style-image: url("star.png");
+}
+```
+
+မှတ်ချက် — ပုံဆိုဒ် (Size) ကို Property နဲ့ တိုက်ရိုက် ချိန်လို့မရတာမို့ သေးငယ်တဲ့ Icon ပုံတွေကို သုံးတာ ပိုသင့်တော်ပါတယ်။
+
+### list-style-position — Marker နေရာ
+
+`list-style-position` က Marker ကို Content ရဲ့ အတွင်း (`inside`) လား အပြင် (`outside`) လား နေရာချပေးပါတယ်။ Default က `outside` ပါ။
+
+**ဥပမာ -**
+```css
+ul.inside {
+  list-style-position: inside;
+}
+
+ul.outside {
+  list-style-position: outside;
+}
+```
+
+မှတ်ချက် — `inside` ဆိုရင် Bullet က Text ရဲ့ မျဉ်းစ နဲ့အတူ ပါလာပြီး `outside` မှာတော့ Text ရဲ့ ဘယ်ဘက် အပြင်ဘက်မှာ ရှိပါတယ်။
+
+### Bullet ဖျက်ချင်ရင်
+
+Bullet Point မလိုတဲ့ List အတွက် `list-style: none;` ကို သုံးပါတယ်။ Navigation Menu စတာတွေမှာ Bullet မပါဘဲ သန့်ရှင်းတဲ့ ပုံစံ သုံးလေ့ရှိပါတယ်။
+
+**ဥပမာ -**
+```css
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+```
+
+မှတ်ချက် — `list-style: none;` တင်မကဘဲ Default Padding နဲ့ Margin တွေကိုပါ ဖယ်ပေးမှသာ Indent မကျန် သန့်ရှင်း သွားပါတယ်။
+
+### Navigation Menu ပုံစံ List
+
+`list-style: none;` နဲ့ Marker ဖယ်ပြီး Link တွေကို အလျားလိုက် (Horizontal) စီနိုင်ပါတယ်။ Navbar ပုံစံ အများစုကို ဒီနည်းနဲ့ ဆောက်ကြပါတယ်။
+
+**ဥပမာ -**
+```html
+<ul class="nav">
+  <li><a href="home.html">Home</a></li>
+  <li><a href="about.html">About</a></li>
+  <li><a href="contact.html">Contact</a></li>
+</ul>
+```
+
+**ဥပမာ -**
+```css
+.nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav li {
+  display: inline-block;
+  margin-right: 16px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #333;
+}
+```
+
+မှတ်ချက် — `display: inline-block;` သုံးလိုက်တာနဲ့ List Item တွေ တစ်ကြောင်းထဲမှာ စီသွားပါတယ်။ Flexbox ကို သုံးရင်လည်း ပိုလွယ်ကူပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `list-style-type` က Marker ပုံစံ၊ `list-style-image` က Marker ပုံ၊ `list-style-position` က Marker နေရာ သတ်မှတ်ပါတယ်။
+- `list-style: none;` နဲ့ Bullet ဖျက်ပြီး Navbar ပုံစံ ဆောက်လို့ရပါတယ်။
+- `inside` က Text မျဉ်းစမှာ၊ `outside` က Text ဘေးမှာ Bullet ရှိပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Bullet Point ပုံစံကို ပြောင်းချင်ရင် ဘယ် Property ကို သုံးပါသလဲ?", options: ["list-style-type", "list-style-image", "list-style-position", "text-decoration"], correctAnswer: 0, explanation: "list-style-type က circle ၊ square စတဲ့ Marker ပုံစံတွေကို ပြောင်းပေးပါတယ်။" },
+  { id: "q2", question: "Bullet ကို ကိုယ်ပိုင်ပုံနဲ့ အစားထိုးချင်ရင် ဘယ် Property ကို သုံးပါသလဲ?", options: ["list-style-position", "list-style-type", "list-style-image", "list-style-color"], correctAnswer: 2, explanation: "list-style-image မှာ url() နဲ့ ပုံလိပ်စာ ထည့်ပေးရပါတယ်။" },
+  { id: "q3", question: "Bullet မပါတဲ့ List လုပ်ချင်ရင် ဘယ် Style ကို သုံးရပါသလဲ?", options: ["list-style: none", "list-style: off", "display: none", "list-style-type: zero"], correctAnswer: 0, explanation: "list-style: none က Marker တွေကို လုံးဝ ဖျက်ပေးပါတယ်။" }
+]} />

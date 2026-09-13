@@ -1,0 +1,60 @@
+---
+title: "HTML Paragraphs — HTML Paragraph တွေအကြောင်း"
+description: "p tag နဲ့ Paragraph ရေးနည်း၊ br, hr, pre tag တွေရဲ့ အသုံးပြုပုံတွေကို လေ့လာမယ်။"
+---
+
+### Paragraph ဆိုတာ — p Tag
+`<p>` Tag က Text (စာသား) အပိုင်းအစတွေကို Paragraph (စာပိုဒ်) အဖြစ် သတ်မှတ်ပေးပါတယ်။ Browser က `<p>` Element တစ်ခုစီရဲ့ ရှေ့နဲ့နောက်မှာ Vertical Space (ဒေါင်လိုက် နေရာလွတ်) ကို အလိုအလျောက် ထည့်ပေးပါတယ်။ ဒါကြောင့် Paragraph တွေကြားမှာ ဖတ်ရ လွယ်ကူအောင် ခြားနေပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>ဒါက ပထမဆုံး Paragraph ပါ။</p>
+<p>ဒါက ဒုတိယ Paragraph ပါ။</p>
+```
+မှတ်ချက် — Browser မှာ စာပိုဒ် နှစ်ခုကြား နေရာလွတ် ရှိနေတာကို မြင်ရပါလိမ့်မယ်။
+
+#### br Tag နဲ့ Line Break
+`<br>` Tag က Paragraph အတွင်းမှာ Line Break (လိုင်း ချိုးခြင်း) ကို ဖြစ်စေပါတယ်။ Paragraph အသစ်တစ်ခု မဖြစ်ချင်ဘဲ လိုင်းတစ်ကြောင်း ဆင်းချင်ရင် `<br>` ကို သုံးပါတယ်။ HTML က Enter နှိပ်ထားတဲ့ Space တွေကို ထည့်သွင်းစဉ်းစား မပေးတာမို့ `<br>` ကို အသုံးပြုရပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>ဒါကတော့<br>လိုင်းနှစ်ကြောင်း ဆင်းထားတဲ့ Paragraph ပါ။</p>
+```
+မှတ်ချက် — `<br>` က Empty Tag ဖြစ်လို့ Closing Tag မလိုပါဘူး။
+
+#### hr Tag နဲ့ Horizontal Rule
+`<hr>` Tag က Horizontal Line (အလျားလိုက် မျဉ်း) တစ်ကြောင်း ဆွဲပေးပြီး အပိုင်းတွေကို ခွဲခြားပြတဲ့အခါ သုံးပါတယ်။ ဒါကို Thematic Break (အကြောင်းအရာ ခွဲခြားမှု) လို့လည်း ခေါ်ပါတယ်။ `<hr>` က Empty Tag ဖြစ်ပြီး Browser တွေက မျဉ်းတစ်ကြောင်းအဖြစ် ပြသပေးပါတယ်။
+
+**ဥပမာ -**
+```html
+<p>အပိုင်း ပထမ</p>
+<hr>
+<p>အပိုင်း ဒုတိယ</p>
+```
+မှတ်ချက် — `<hr>` ကို မြင်ရတာနဲ့ အပိုင်းသစ် စတင်ပြီဆိုတာ စာဖတ်သူတွေ သိလိုက်ပါတယ်။
+
+#### pre Tag နဲ့ Pre-formatted Text
+`<pre>` Tag ထဲက Space တွေနဲ့ Line တွေကို Browser က မူလအတိုင်း ထိန်းသိမ်းပြီး ပြသပေးပါတယ်။ Code, Poem ဒါမှမဟုတ် Tab တပ်ထားတဲ့ Text တွေကို ပြဖို့ သင့်တော်ပါတယ်။ Pre-formatted Text ကို Monospace Font (အက္ခရာ အရွယ်တူ Font) နဲ့ ပြသလေ့ ရှိပါတယ်။
+
+**ဥပမာ -**
+```html
+<pre>
+  ဒါက စာသားရဲ့
+  ပုံစံကို ထိန်းသိမ်း
+  ပြထားတဲ့ Text
+</pre>
+```
+မှတ်ချက် — `<pre>` အတွင်းမှာ ရေးထားတဲ့ Space တွေကို မူလအတိုင်း မြင်ရပါမယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+* `<p>` tag က Paragraph ကို သတ်မှတ်ပြီး ကြားမှာ နေရာလွတ်တွေ ရှိပါတယ်။
+* `<br>` က Line Break အတွက်၊ `<hr>` က Horizontal Line အတွက်ပါ။
+* `<pre>` tag က Space နဲ့ Line ပုံစံကို မူလအတိုင်း ထိန်းထားပါတယ်။
+* Paragraph အသစ်တိုင်းကို `<p>` tag အသစ်နဲ့ ခွဲပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+<Quiz questions={[
+  { id: "q1", question: "Paragraph တစ်ခု ဖန်တီးဖို့ ဘယ် tag ကို သုံးလဲ?", options: ["h1", "p", "br", "img"], correctAnswer: 1, explanation: "p tag က paragraph ကို သတ်မှတ်ပေးပါတယ်။" },
+  { id: "q2", question: "Line break လုပ်ဖို့ ဘယ် tag ကို သုံးလဲ?", options: ["hr", "p", "br", "pre"], correctAnswer: 2, explanation: "br tag က line break ကို ဖြစ်စေပါတယ်။" },
+  { id: "q3", question: "Horizontal line တစ်ကြောင်း ဆွဲဖို့ ဘယ် tag ကို သုံးလဲ?", options: ["hr", "br", "p", "pre"], correctAnswer: 0, explanation: "hr tag က horizontal rule ကို ဆွဲပေးပါတယ်။" }
+]} />

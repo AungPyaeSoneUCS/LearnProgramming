@@ -1,0 +1,58 @@
+---
+title: "Relationships"
+description: "Table များကြားရှိ ဆက်စပ်မှု (Relationships) အကြောင်း ရှင်းလင်းချက်"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import ContentImage from "@/components/Content-image.astro";
+import oneToOne from "@/assets/relational-database/one-to-one.png";
+import oneToMany from "@/assets/relational-database/one-to-many.png";
+import manyToMany from "@/assets/relational-database/many-to-many.png";
+
+<Aside title="💡 ရည်ရွယ်ချက်">
+  Table များကြား တည်ဆောက်ထားသော ဆက်စပ်မှု (Relationships) အမျိုးအစား ၃ ခုဖြစ်သည့် One-to-One, One-to-Many နှင့် Many-to-Many အကြောင်းကို ရှင်းရှင်းလင်းလင်း နားလည်သွားစေဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## Relationships (ဆက်စပ်မှုများ) ဆိုတာ ဘာလဲ?
+
+Relational Database ရဲ့ အဓိက အနှစ်သာရက Data များကို ခေါင်းစဉ် (Subject/Entity) အလိုက် သီးခြား Table လေးများ ခွဲခြား သိုလှောင်ခြင်း ဖြစ်ပါတယ်။ သို့သော် ထိုသို့ ခွဲသိမ်းထားသော Table တွေဟာ တစ်ခုနှင့်တစ်ခု အပြန်အလှန် ချိတ်ဆက်မှုများ ရှိကြပါတယ်။ ထိုသို့ ချိတ်ဆက်ထားသော ဆက်နွယ်မှုများကို **Relationships (ဆက်စပ်မှုများ)** လို့ ခေါ်ဆိုပါတယ်။
+
+Relationships များကို အဓိကအားဖြင့် ၃ မျိုး ခွဲခြားနိုင်ပါတယ်:
+1. One-to-One (1:1)
+2. One-to-Many (1:N)
+3. Many-to-Many (M:N)
+
+### 1. One-to-One (1:1) Relationship
+
+Table (A) ထဲက Record တစ်ခုဟာ Table (B) ထဲက Record **တစ်ခုတည်းနဲ့သာ** တိုက်ရိုက် သက်ဆိုင်နေသော အခြေအနေ ဖြစ်ပါတယ်။
+
+**လက်တွေ့ ဥပမာ:** နိုင်ငံတစ်နိုင်ငံတွင် မြို့တော် တစ်ခုတည်း ရှိသလို၊ မြို့တော် တစ်ခုသည်လည်း နိုင်ငံ တစ်ခုတည်းနှင့်သာ သက်ဆိုင်ပါတယ်။ (One Country -> One Capital City)
+
+ဒီ Relationship မျိုးကို အသုံးနည်းသော်လည်း၊ Security အရ (ဥပမာ - User ရဲ့ သာမန် Data နဲ့ Sensitive Data/Credentials) ကို သီးခြား Table ခွဲသိမ်းလိုသော အခါမျိုးတွင် အသုံးပြုကြပါတယ်။
+
+<ContentImage src={oneToOne} alt="One to One Relationship" />
+
+### 2. One-to-Many (1:N) Relationship
+
+Table (A) ထဲက Record တစ်ခုဟာ Table (B) ထဲက Record **အများကြီးနဲ့** ချိတ်ဆက်နိုင်သော်လည်း၊ ပြောင်းပြန်အားဖြင့် Table (B) ထဲက Record တစ်ခုကတော့ Table (A) ထဲက Record **တစ်ခုတည်းနဲ့ပဲ** သက်ဆိုင်သော အခြေအနေ ဖြစ်ပါတယ်။
+
+ဒါဟာ Relational Database Design တွင် **အများဆုံး တွေ့ရလေ့ရှိသော** Relationship အမျိုးအစား ဖြစ်ပါတယ်။
+
+**လက်တွေ့ ဥပမာ:** Customer တစ်ယောက်သည် Order များစွာ တင်နိုင်ပါတယ်။ သို့သော် Order တစ်ခုချင်းစီသည် Customer တစ်ယောက်တည်းနှင့်သာ သက်ဆိုင်ပါတယ်။ (One Customer -> Many Orders)
+
+<ContentImage src={oneToMany} alt="One to Many Relationship" />
+
+### 3. Many-to-Many (M:N) Relationship
+
+Table (A) ထဲက Record တစ်ခုဟာ Table (B) ထဲက Record **အများကြီးနဲ့** ချိတ်ဆက်နိုင်သလို၊ ပြောင်းပြန်အားဖြင့် Table (B) ထဲက Record တစ်ခုကလည်း Table (A) ထဲက Record **အများကြီးနဲ့** အပြန်အလှန် ချိတ်ဆက်နေသော အခြေအနေ ဖြစ်ပါတယ်။
+
+**လက်တွေ့ ဥပမာ:** ကျောင်းသား (Student) တစ်ယောက်သည် Course ဘာသာရပ်များစွာ တက်ရောက်နိုင်သလို၊ Course ဘာသာရပ်တစ်ခုကိုလည်း ကျောင်းသားများစွာ လာရောက် တက်ရောက်နိုင်ပါတယ်။ (Many Students to Many Courses)
+
+Relational Database များတွင် Many-to-Many Relationship ကို Table နှစ်ခုတည်းဖြင့် တိုက်ရိုက် မတည်ဆောက်နိုင်ပါ။ ထို့ကြောင့် အလယ်တွင် **Junction / Linking Table** (ဥပမာ - `student_courses`) ဆိုသည့် တတိယ Table တစ်ခု ခွဲထုတ်ဖန်တီး၍ One-to-Many Relationship နှစ်ခုအဖြစ် ပြောင်းလဲ ချိတ်ဆက်ရပါတယ်။
+
+<ContentImage src={manyToMany} alt="Many to Many Relationship" />
+
+<Aside title="💡 Junction Table အလုပ်လုပ်ပုံ">
+  Junction Table ထဲတွင် ပါဝင်သော Fields များ (`student_id`, `course_id`) သည် မူလ Table များမှ Foreign Keys များ ဖြစ်ကြပြီး composite primary key အဖြစ် သတ်မှတ်၍ တည်ဆောက်ကြပါတယ်။
+</Aside>
+

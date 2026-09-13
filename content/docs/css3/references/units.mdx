@@ -1,0 +1,92 @@
+---
+title: "CSS Units — အတိုင်းအတာ ယူနစ်များ (Reference)"
+description: "Absolute (px, pt, pc, cm, mm, in) နဲ့ Relative (em, rem, %, vw, vh, vmin, vmax, ch, ex) Unit အားလုံး၏ တိုင်းတာနည်းနဲ့ ဥပမာ သုံးပုံ ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### CSS Unit များ မိတ်ဆက်
+
+CSS မှာ အရွယ်အစား သတ်မှတ်တဲ့ Unit တွေကို **Absolute** (အတိအကျ) နဲ့ **Relative** (နှိုင်းယှဉ်) ဆိုပြီး နှစ်မျိုး ခွဲပါတယ်။ Absolute Unit တွေက ပတ်ဝန်းကျင် မပြောင်းဘဲ တည်မြဲပြီး Relative Unit တွေက Parent Element (သို့) Viewport ကို အခြေခံပြီး ချိန်ညှိပေးပါတယ်။
+
+### Absolute Units ဇယား
+
+Absolute Unit တွေက Physical (သို့) CSS Pixel ကို အခြေခံတဲ့ အတိအကျ ယူနစ်တွေ ဖြစ်ပါတယ်။
+
+| Unit | Name | တိုင်းတာချက် | ဥပမာ သုံးပုံ |
+| ---- | ---- | ---- | ---- |
+| `px` | Pixel | Screen Dot (1/96 inch) | `border: 1px solid #ccc` |
+| `pt` | Point | 1 pt = 1/72 inch | Print အတွက် `font-size` |
+| `pc` | Pica | 1 pc = 12 pt | Print Layout |
+| `cm` | Centimeter | 1 cm = 37.8px | Print Margin |
+| `mm` | Millimeter | 1 mm = 3.78px | Print Paper Size |
+| `in` | Inch | 1 in = 96px | Print Width |
+
+မှတ်ချက် — `px` က Screen အတွက် အသုံးအများဆုံး ဖြစ်ပြီး `pt` ၊ `pc` ၊ `cm` ၊ `mm` ၊ `in` တို့ဟာ Print (ပုံနှိပ်) Style မှာ အဓိက သုံးပါတယ်။
+
+### Relative Units ဇယား
+
+Relative Unit တွေက Font Size ၊ Parent Element (သို့) Viewport ပေါ် မူတည်ပြီး ပြောင်းလဲပါတယ်။
+
+| Unit | အခြေခံ | တိုင်းတာချက် | ဥပမာ သုံးပုံ |
+| ---- | ---- | ---- | ---- |
+| `em` | Parent Font Size | Parent Font ရဲ့ အမြှောက်ကိန်း | `padding: 1.5em` |
+| `rem` | Root Font Size | `<html>` Font ရဲ့ အမြှောက်ကိန်း | `font-size: 2rem` |
+| `%` | Parent Size | Parent ရဲ့ ရာခိုင်နှုန်း | `width: 50%` |
+| `vw` | Viewport Width | Width ရဲ့ 1% | `width: 90vw` |
+| `vh` | Viewport Height | Height ရဲ့ 1% | `height: 100vh` |
+| `vmin` | Viewport အသေးဆုံး | `vw`/`vh` တွင် သေးသူ 1% | `width: 50vmin` |
+| `vmax` | Viewport အကြီးဆုံး | `vw`/`vh` တွင် ကြီးသူ 1% | `width: 50vmax` |
+| `ch` | Character Width | `0` စာလုံး အကျယ် | `max-width: 60ch` |
+| `ex` | X-Height | `x` စာလုံး အမြင့် | Font တိုင်းတာမှု |
+
+မှတ်ချက် — `ch` က စာကြောင်းရှည် ဖတ်ရလွယ်အောင် `max-width` သတ်မှတ်ရာမှာ အသုံးဝင်ပြီး `ex` ကတော့ ရှားပါးစွာ သုံးပါတယ်။
+
+### Unit ရွေးချယ်ရေး လမ်းညွှန်
+
+Relative Unit ကို Base အနေနဲ့ သုံးပြီး အတိအကျ လိုအပ်တဲ့ နေရာမှာသာ Absolute Unit ကို သုံးပါ။
+
+**ဥပမာ -**
+```css
+html {
+  font-size: 16px;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1em;
+}
+
+.hero {
+  height: 100vh;
+  background: #222;
+}
+
+p {
+  max-width: 60ch;
+  line-height: 1.6;
+}
+```
+
+မှတ်ချက် — Font Size နဲ့ Spacing အတွက် `rem` ၊ Layout အကျယ်အတွက် `%` ၊ Full Screen Section အတွက် `vh` ၊ စာကြောင်း အကျယ်အတွက် `ch` ကို ရွေးသုံးပါ။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Absolute Units — `px` ၊ `pt` ၊ `pc` ၊ `cm` ၊ `mm` ၊ `in` ။
+- Relative Units — `em` ၊ `rem` ၊ `%` ၊ `vw` ၊ `vh` ၊ `vmin` ၊ `vmax` ၊ `ch` ၊ `ex` ။
+- `px` က Screen ၊ `pt` ၊ `cm` စတာတွေက Print အတွက် ။
+- Responsive Design မှာ Relative Unit ကို ဦးစားပေးပါ။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "1pc (Pica) က ဘယ်နှစ် pt နဲ့ ညီမျှပါသလဲ?", options: ["12 pt", "6 pt", "24 pt", "72 pt"], correctAnswer: 0, explanation: "1 Pica က 12 pt နဲ့ ညီမျှပါတယ်။" },
+    { id: "q2", question: "Viewport Width ရဲ့ 1% ကို ကိုယ်စားပြုတဲ့ Unit က ဘာလဲ?", options: ["vw", "vh", "ch", "ex"], correctAnswer: 0, explanation: "vw က Viewport Width ရဲ့ 1% ကို ကိုယ်စားပြုပါတယ်။" },
+    { id: "q3", question: "စာလုံး 0 (Zero) ရဲ့ အကျယ်ကို အခြေခံတဲ့ Unit က ဘာလဲ?", options: ["ch", "em", "rem", "ex"], correctAnswer: 0, explanation: "ch က စာလုံး 0 ရဲ့ အကျယ်ကို အခြေခံပြီး စာကြောင်း အရှည် သတ်မှတ်ရာမှာ သုံးပါတယ်။" },
+  ]}
+/>

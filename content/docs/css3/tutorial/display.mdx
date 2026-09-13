@@ -1,0 +1,104 @@
+---
+title: "CSS Display — Element ပြသနည်း"
+description: "block ၊ inline ၊ inline-block ၊ none တို့ရဲ့ ကွာခြားချက်နဲ့ Element တွေ နေရာယူပုံကို လေ့လာကြမယ်။"
+---
+
+### Display Property ဆိုတာ
+
+`display` Property က Element တစ်ခုကို Browser ထဲမှာ ဘယ်လို ပြမလဲ ဆိုတာကို သတ်မှတ်ပေးပါတယ်။ အသုံးများတဲ့ Value တွေက `block` ၊ `inline` ၊ `inline-block` ၊ `none` ၊ `flex` ၊ `grid` စသဖြင့်ပါ။ Element တစ်ခုရဲ့ Default Display ကို လိုသလို ပြောင်းလို့လည်း ရပါတယ်။
+
+**ဥပမာ -**
+```css
+span {
+  display: block;
+}
+```
+
+မှတ်ချက် — Default အတိုင်း Inline ဖြစ်နေတဲ့ `<span>` ကို `display: block;` လုပ်လိုက်ရင် တစ်ခုချင်း မျဉ်းအသစ် စပြီး နေရာယူပါတယ်။
+
+### block — မျဉ်းတစ်ကြောင်းလုံး ယူသူ
+
+`block` Level Element တွေက Container ရဲ့ အနံ (width) ကို အကုန်ယူပြီး အနောက်က Element တွေ မျဉ်းအသစ် မှာ ဆင်းသွားစေပါတယ်။ `<div>` ၊ `<p>` ၊ `<h1>` စတာတွေက Default အတိုင်း `block` ပါ။ Width ၊ Height ၊ Padding ၊ Margin အကုန် သုံးလို့ရပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  display: block;
+  width: 60%;
+  background-color: coral;
+}
+```
+
+မှတ်ချက် — Width ကို 60% ပေးထားရင်တောင် ကျန်တဲ့ 40% နေရာကို block Element က ဆက်ပိုင်ထားပြီး အနောက်က Element က ဒီဘေး မဝင်နိုင်ပါဘူး။
+
+### inline — မျဉ်းအတွင်းမှာ စီနေသူ
+
+`inline` Element တွေက မျဉ်းထဲမှာ တည့်တည့် စပ်ပြီး နေပါတယ်။ `<a>` ၊ `<span>` ၊ `<em>` စတာတွေက Default အတိုင်း `inline` ဖြစ်ပါတယ်။ Inline Element မှာ Width နဲ့ Height ကို Property နဲ့ သတ်မှတ်လို့မရဘဲ Content ရဲ့ အရွယ်အစားအတိုင်းသာ ရှိပါတယ်။
+
+**ဥပမာ -**
+```css
+p {
+  display: inline;
+}
+```
+
+မှတ်ချက် — Inline Element တွေက မျဉ်းအတွင်းမှာ နေတာမို့ Width နဲ့ Height ကို အလုပ်မဖြစ်စေပါဘူး။
+
+### inline-block — နှစ်မျိုးလုံး ပေါင်းစပ်
+
+`inline-block` က Inline လို မျဉ်းတစ်ကြောင်းထဲမှာ စပ်စပ် နေပြီး Block လို Width ၊ Height ၊ Padding ၊ Margin တွေကို သုံးလို့ရပါတယ်။ Button ပုံစံ Card တွေ၊ Navbar Item တွေမှာ အသုံးများပါတယ်။
+
+**ဥပမာ -**
+```css
+.icon-box {
+  display: inline-block;
+  width: 120px;
+  height: 80px;
+  margin: 10px;
+  background-color: lightblue;
+}
+```
+
+မှတ်ချက် — `block` ဆိုရင် ဒီ Box တွေ မျဉ်းတစ်ချောင်းစီ ဆင်းသွားမှာဖြစ်ပြီး `inline-block` ကတော့ ဘေးချင်းကပ် စီနိုင်ပါတယ်။
+
+### none — လုံးဝ မပြ
+
+`display: none;` ဆိုရင် Element က Page ပေါ်ကနေ လုံးဝ ပျောက်သွားပြီး နေရာလွတ်ကိုပါ မသိမ်းတော့ပါဘူး။ Dropdown Menu ပိတ်ထားချိန်၊ Tab Content တွေမှာ သုံးလေ့ရှိပါတယ်။
+
+**ဥပမာ -**
+```css
+.ad {
+  display: none;
+}
+```
+
+မှတ်ချက် — `visibility: hidden;` က Element ကို မမြင်ရအောင် လုပ်ပေးပေမယ့် နေရာကို သိမ်းထားပါတယ်။ နေရာအပါ ဖျက်ချင်ရင်တော့ `display: none;` ပါ။
+
+### flex နဲ့ grid
+
+`display: flex;` နဲ့ `display: grid;` က Layout တွေ ဆောက်ဖို့ ခေတ်မီပြီး အစွမ်းထက်တဲ့ နည်းလမ်းတွေပါ။ Child Element တွေကို လွယ်လွယ်ကူကူ စီစဉ် ချိန်ညှိနိုင်ပြီး ဒါတွေကို သီးခြားသင်ခန်းစာတွေမှာ အသေးစိတ် လေ့လာပါမယ်။
+
+**ဥပမာ -**
+```html
+<div style="display: flex; gap: 10px;">
+  <div>Box 1</div>
+  <div>Box 2</div>
+</div>
+```
+
+မှတ်ချက် — Flexbox က One-Dimensional (မျဉ်းတစ်ပြေးတည်း) Layout ဖြစ်ပြီး Grid ကတော့ Two-Dimensional (Row နဲ့ Column နှစ်ဖက်လုံး) Layout ဖြစ်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `block` က Width အကုန်ယူပြီး မျဉ်းအသစ် ဆင်းသည်။
+- `inline` က Content အရွယ်အတိုင်း မျဉ်းအတွင်း စီသည်။
+- `inline-block` က Inline လို စီပြီး Block လို Width/Height သုံးလို့ရသည်။
+- `none` က Element နဲ့ နေရာလွတ်ကိုပါ ဖျက်သည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Width ၊ Height သုံးလို့ရပြီး မျဉ်းတစ်ကြောင်းထဲမှာ ဘေးချင်းကပ် နေနိုင်တဲ့ Value က ဘာလဲ?", options: ["block", "inline", "inline-block", "none"], correctAnswer: 2, explanation: "inline-block က inline ရဲ့ နေရာယူပုံ နဲ့ block ရဲ့ Size သတ်မှတ်နိုင်မှုကို ပေါင်းထားပါတယ်။" },
+  { id: "q2", question: "Element ကို နေရာအပါ လုံးဝ ဖျက်ချင်ရင် ဘယ် Value ကို သုံးပါသလဲ?", options: ["display: hidden", "display: none", "display: off", "display: remove"], correctAnswer: 1, explanation: "display: none က Element နဲ့ ၎င်းရဲ့ နေရာလွတ်ကိုပါ ဖယ်ရှားပေးပါတယ်။" },
+  { id: "q3", question: "span လို Inline Element မှာ Width နဲ့ Height ဘာကြောင့် အလုပ်မလုပ်ပါသလဲ?", options: ["height property ကို မသုံးလို့", "Content ရဲ့ အရွယ်အစားအတိုင်းသာ နေလို့", "Block ဖြစ်သွားလို့", "CSS မထည့်လို့"], correctAnswer: 1, explanation: "Inline Element က မျဉ်းအတွင်းမှာ Content အရွယ်အတိုင်းသာ နေပြီး Width Height က အလုပ်မလုပ်ပါဘူး။" }
+]} />

@@ -1,0 +1,89 @@
+---
+title: "CSS Pseudo-classes — State ရွေးချယ်မှုများ"
+description: "hover, focus, active, nth-child, not, checked စတဲ့ Pseudo-class တွေရဲ့ အဓိပ္ပာယ်နဲ့ အသုံးပြုပုံကို စုစည်းထားတဲ့ ကိုးကားစာရင်း ဖြစ်ပါတယ်။"
+---
+
+### Pseudo-class ဆိုတာ ဘာလဲ?
+
+Pseudo-class က Element ရဲ့ **အခြေအနေ (state)** ဒါမှမဟုတ် Structure အနေအထားပေါ် မူတည်ပြီး Style သက်ရောက်တဲ့ Selector ဖြစ်ပါတယ်။ Colon တစ်လုံး `:` နဲ့ စတင်ပြီး User က Mouse ပေးနေခြင်း ၊ Form Field ကို Focus လုပ်ထားခြင်း စတဲ့ အခြေအနေတွေမှာ သုံးပါတယ်။
+
+### Interaction State Pseudo-class များ
+
+| Pseudo-class | ဖော်ပြချက် | ဥပမာ |
+| ---- | ---- | ---- |
+| `:hover` | Mouse Cursor က Element ပေါ်မှာ ရှိနေခြင်း | `a:hover` |
+| `:focus` | Element က Keyboard သို့မဟုတ် Click ဖြင့် အာရုံစိုက်ခံထားရခြင်း | `input:focus` |
+| `:active` | Element ကို နှိပ်နေဆဲ (click လုပ်နေတဲ့အချိန်) | `button:active` |
+| `:visited` | Link ကို သွားရောက်ခဲ့ဖူးခြင်း | `a:visited` |
+| `:link` | Link ကို မသွားရောက်ရသေးခြင်း | `a:link` |
+
+### Position ပေါ် အခြေခံသော Pseudo-class များ
+
+| Pseudo-class | ဖော်ပြချက် | ဥပမာ |
+| ---- | ---- | ---- |
+| `:first-child` | Parent ရဲ့ ပထမဆုံး ကလေး | `li:first-child` |
+| `:last-child` | Parent ရဲ့ နောက်ဆုံး ကလေး | `li:last-child` |
+| `:first-of-type` | Sibling များထဲက ပထမဆုံး အမျိုးအစားတူ | `p:first-of-type` |
+| `:nth-child(n)` | နေရာ (Index) အလိုက်ရွေး — `odd` / `even`/ `an + b` formula | `tr:nth-child(even)` |
+| `:nth-of-type(n)` | အမျိုးအစားတွင်းမှ Index အလိုက် ရွေး | `p:nth-of-type(2)` |
+| `:only-child` | Parent ရဲ့ တစ်ဦးတည်းသော ကလေး | `span:only-child` |
+| `:root` | Document ရဲ့ Root Element (`html`) | `:root` |
+
+### Form နဲ့ State ပေါ် အခြေခံသော Pseudo-class များ
+
+| Pseudo-class | ဖော်ပြချက် | ဥပမာ |
+| ---- | ---- | ---- |
+| `:checked` | Checkbox / Radio ရွေးထားခြင်း | `input:checked` |
+| `:disabled` | Form Control ပိတ်ထားခြင်း | `input:disabled` |
+| `:enabled` | Form Control ဖွင့်ထားခြင်း | `input:enabled` |
+| `:required` | Field ကို Required သတ်မှတ်ထားခြင်း | `input:required` |
+| `:valid` / `:invalid` | Field Value မှန်ကန်ခြင်း / မမှန်ကန်ခြင်း | `input:valid` |
+| `:placeholder-shown` | Placeholder ပေါ်နေဆဲ အခြေအနေ | `input:placeholder-shown` |
+
+### အခြားသော Pseudo-class များ
+
+| Pseudo-class | ဖော်ပြချက် | ဥပမာ |
+| ---- | ---- | ---- |
+| `:not(selector)` | သတ်မှတ် Selector နဲ့ ကိုက်ညီတာကို ဖယ်ပြီး ကျန်တာရွေး | `li:not(.active)` |
+| `:target` | Fragment (`#...`) URL ရဲ့ ပစ်မှတ်ဖြစ်နေတဲ့ Element | `:target` |
+| `:is(selector-list)` | စာရင်းထဲက တစ်ခုခုနဲ့ ကိုက်ညီတာရွေး | `:is(h1, h2)` |
+| `:where(selector-list)` | `:is` လို ရွေးသော်လည်း Specificity မတိုးစေဘဲ | `:where(nav, footer)` |
+| `:focus-within` | Element သို့မဟုတ် ၎င်း၏ အတွင်းက Element Focus ဖြစ်ခြင်း | `form:focus-within` |
+
+**ဥပမာ -**
+```css
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+li:not(.active) {
+  color: #999;
+}
+
+input:required {
+  border: 1px solid #888;
+}
+
+:root {
+  --brand-color: #2962ff;
+}
+```
+
+မှတ်ချက် — `:root` က Global CSS Variable တွေကို သတ်မှတ်တဲ့နေရာမှာ အသုံးပြုလေ့ ရှိပြီး `:target` က Accordion သို့မဟုတ် Tab လုပ်တဲ့အခါ JavaScript မလိုဘဲ Style သက်ရောက်ဖို့ သုံးနိုင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Pseudo-class က `:` တစ်လုံးနဲ့ စပြီး Pseudo-element က `::` နှစ်လုံးနဲ့ စပါတယ်။
+- `:nth-child` က Position ကို မူတည်ပြီး `:nth-of-type` က အမျိုးအစားထဲမှာသာ ရေတွက်ပါတယ်။
+- Form Validation State (`:valid` ၊ `:invalid`) တွေက JavaScript မလိုဘဲ Form Style လုပ်ဖို့ အသုံးဝင်ပါတယ်။
+- `:not()` က Negative Selection ပြုလုပ်ပေးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "Mouse Cursor က Element ပေါ်မှာ ရှိနေတဲ့ State ကို ရွေးဖို့ ဘယ် Pseudo-class သုံးပါသလဲ?", options: ["focus", "active", "hover", "link"], correctAnswer: 2, explanation: "hover က Mouse Cursor က Element ပေါ်မှာ ရှိနေတဲ့ State ကို ရွေးချယ်ပါတယ်။" },
+    { id: "q2", question: "Table Row တွေကို Striped လုပ်ဖို့ အသင့်တော်ဆုံး ရွေးချယ်မှု က ဘာလဲ?", options: ["li:nth-of-type(2)", "tr:nth-child(even)", "p:only-child", "input:enabled"], correctAnswer: 1, explanation: "nth-child(even) က စာကြောင်းစုံတွေကို ရွေးလို့ Striped Table ပြုလုပ်နိုင်ပါတယ်။" },
+    { id: "q3", question: "တစ်ချို့ Element တွေကို ဖယ်ပြီး ကျန်တာတွေကို ရွေးချင်ရင် ဘယ် Pseudo-class သုံးပါသလဲ?", options: ["not", "is", "where", "target"], correctAnswer: 0, explanation: "not(selector) က သတ်မှတ်ထားတဲ့ Selector နဲ့ ကိုက်ညီတဲ့ Element တွေကို ဖယ်ပြီး ကျန်တာတွေကို ရွေးပါတယ်။" },
+  ]}
+/>

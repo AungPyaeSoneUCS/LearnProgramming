@@ -1,0 +1,63 @@
+---
+title: "Dropdowns & Options"
+description: "Dropdowns & Options"
+---
+
+import { Aside, Code } from "@astrojs/starlight/components";
+import ContentImage from '@/components/Content-image.astro';
+import selectImage from '@/assets/html/select.png'
+
+<Aside title="ရည်ရွယ်ချက်">
+ဒီအခန်းမှာတော့ Dropdown Menu (`<select>`), Textarea, Button တွေကို ဘယ်လို အသုံးပြုရမလဲဆိုတာရယ်၊ Form တွေမှာ Validation Attribute တွေကို ဘယ်လို ထည့်ရမလဲဆိုတာကို လေ့လာကြပါမယ် ခင်ဗျာ။
+</Aside>
+
+Dropdown menu တွေ ဖန်တီးဖို့အတွက် `<select>` ကို သုံးပြီး၊ အထဲက ရွေးချယ်စရာလေးတွေအတွက် `<option>` ကို သုံးပါတယ် ခင်ဗျာ။
+
+```html
+<label for="country">Country:</label>
+<select id="country" name="country">
+  <option value="hk">Hong Kong</option>
+  <option value="uk">United Kingdom</option>
+  <option value="us">United States</option>
+</select>
+```
+
+### Textareas
+စာကြောင်း အများကြီး ထည့်ဖို့အတွက် (ဥပမာ Message ဒါမှမဟုတ် Comment ရေးဖို့) `<textarea>` ကို သုံးပါတယ်။
+
+```html
+<label for="message">Message:</label><br>
+<textarea id="message" name="message" rows="5" cols="30"></textarea>
+```
+
+<ContentImage src={selectImage} alt="select, input and textarea" height={400}/>
+
+### Buttons
+Form တွေမှာ Data တွေကို Submit လုပ်ဖို့ (ပို့ဖို့) ဒါမှမဟုတ် Reset လုပ်ဖို့ (အစက ပြန်ဖျက်ဖို့) Button တွေ လိုအပ်ပါတယ်-
+
+- `submit`: Form data တွေကို Server ဆီ ပို့ပေးတယ်။
+
+- `reset`: Input field တွေထဲက ဖြည့်ထားတဲ့ Data အားလုံးကို ရှင်းပေးတယ်။
+
+- `button`: JavaScript နဲ့ ချိတ်ဆက်ပြီး သီးသန့် အလုပ်လုပ်ဖို့် ခလုတ်။
+
+```html
+<input type="submit" value="Send">
+<input type="reset" value="Clear">
+```
+
+<Aside type="tip" title="အနှစ်ချုပ်">
+- Form တွေက User data တွေကို စုဆောင်းပြီး Server ဆီကို ပို့ပေးပါတယ်။
+
+- `<form>` tag က `action` နဲ့ `method` attribute တွေနဲ့အတူ အဓိက Container အဖြစ် အလုပ်လုပ်ပါတယ်။
+
+- `<input>` မှာ `text`, `password`, `email` စတဲ့ Field အမျိုးအစား မျိုးစုံ ရှိပါတယ်။
+
+- `<label>` ကို အသုံးပြုခြင်းက Accessibility နဲ့ User Experience ကို အများကြီး ပိုကောင်းစေပါတယ်။
+
+- `<select>` နဲ့ `<textarea>` က Dropdown တွေနဲ့ စာကြောင်း အများကြီး ထည့်တာတွေကို ကိုင်တွယ်ပေးပါတယ်။
+
+- Button တွေ (`submit`, `reset`) က Form submit လုပ်တာနဲ့ Input value ရှင်းတာတွေအတွက် ဖြစ်ပါတယ်။
+
+- ရှင်းလင်းလွယ်ကူမှုနဲ့ အသုံးပြုရ လွယ်အောင် Form field တွေကို Label အမြဲတပ်ပြီး Validation စစ်သင့်ပါတယ် ခင်ဗျာ။
+</Aside>

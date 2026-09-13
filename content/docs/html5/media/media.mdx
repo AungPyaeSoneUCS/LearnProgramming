@@ -1,0 +1,75 @@
+---
+title: "HTML Media — Web Media အကြောင်း"
+description: "Video, Audio, Picture, Iframe တို့လို Web Media Element တွေအကြောင်း နားလည်ကြည့်ရအောင်။"
+---
+
+### Media ဆိုတာ ဘာလဲ?
+
+Web Media ဆိုတာ Video, Audio, နဲ့ Image တို့လို Multimedia Content တွေကို Webpage ထဲမှာ ထည့်သွင်း ပြသနိုင်တဲ့ နည်းလမ်းတွေပါ။ ရှေးခေတ် Web မှာ ဒီလို Media တွေအတွက် Plugin တွေ ထည့်သွင်းရတာမို့ အဆင်မပြေခဲ့ပါဘူး။ HTML5 ရောက်လာတဲ့အခါ Video နဲ့ Audio တို့ကို Browser က ကိုယ်တိုင် ဖွင့်နိုင်လာပြီး ရှုပ်ထွေးမှုတွေ အများကြီး သက်သာသွားပါတယ်။ ဒီသင်ခန်းစာမှာ Video, Audio, Picture, Iframe ဆိုတဲ့ အဓိက Media Element (၄) မျိုးကို လေ့လာကြည့်ရအောင်။
+
+**ဥပမာ -**
+```html
+<video src="movie.mp4" controls></video>
+<audio src="song.mp3" controls></audio>
+```
+
+မှတ်ချက် — Video ဖိုင်ကိုဖွင့်ဖို့ `<video>` ကို၊ Audio ဖိုင်ကိုဖွင့်ဖို့ `<audio>` ကို သုံးပါတယ်။ `controls` Attribute က ဖွင့်ခလုတ်တွေ ပါလာစေတာပါ။
+
+`### <video>` Element
+
+`<video>` Element က Video File (mp4, webm အစရှိသည်) တွေကို Webpage မှာ ပြသဖို့ သုံးပါတယ်။ `controls` Attribute ထည့်လိုက်ရင် Play, Pause, Volume စတဲ့ ထိန်းချုပ်ခလုတ်တွေ အလိုအလျောက် ပါလာပါတယ်။ Browser အမျိုးမျိုးက Format အမျိုးမျိုး ပံ့ပိုးနိုင်လို့ `<source>` Element တွေနဲ့ Format အများကြီး တစ်ပြိုင်နက် ထောက်ပံ့နိုင်ပါတယ်။
+
+`### <audio>` Element
+
+`<audio>` Element က Sound File တွေကို ဖွင့်ဖို့ သုံးပြီး `<video>` နဲ့ တည်ဆောက်ပုံ အလွန်ဆင်တူပါတယ်။ `controls` Attribute မပါရင် User က Play ခလုတ်ကို မမြင်ရနိုင်လို့ အမြဲလိုလို ထည့်ပေးသင့်ပါတယ်။ Auto-play ဖြစ်စေချင်ရင် `autoplay` နဲ့ `muted` ကို အတူတွဲ သုံးရတတ်ပါတယ်။
+
+`### <picture>` Element
+
+`<picture>` Element က Screen အရွယ်အစား ဒါမှမဟုတ် Condition ပေါ် မူတည်ပြီး သင့်တော်တဲ့ Image ကို ရွေးပြဖို့ သုံးပါတယ်။ `<source>` Element တွေထဲက ဘယ်ဟာမှ Condition မမှန်ဘူးဆိုရင် နောက်ဆုံးထည့်ထားတဲ့ `<img>` ကို Fallback အဖြစ် ပြပါတယ်။ Mobile နဲ့ Desktop အတွက် Image မတူချင်တဲ့အခါ ဒီ Element က အရမ်းအသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<picture>
+  <source media="(min-width: 800px)" srcset="large.jpg">
+  <source media="(min-width: 400px)" srcset="medium.jpg">
+  <img src="small.jpg" alt="Fallback image">
+</picture>
+```
+
+မှတ်ချက် — Condition မကိုက်ညီတဲ့ Screen တွေမှာ နောက်ဆုံးက `<img>` ကို ပြသမှာဖြစ်လို့ `<img>` Element ကို အမြဲ ထည့်ပေးထားရပါတယ်။
+
+`### <iframe>` Element
+
+`<iframe>` Element က တခြား Webpage ဒါမှမဟုတ် Content ကို ကိုယ့် Page ထဲမှာ ထည့်ပြဖို့ သုံးပါတယ်။ YouTube Video, Google Map, Facebook Post တွေကို ထည့်တဲ့အခါမှာ အသုံးများပါတယ်။ `src` Attribute မှာ အခြား Site ရဲ့ URL ကိုထည့်ပြီး `width` နဲ့ `height` နဲ့ အရွယ်အစား သတ်မှတ်ပေးပါတယ်။
+
+**ဥပမာ -**
+```html
+<iframe src="https://example.com/map" width="600" height="400"></iframe>
+```
+
+မှတ်ချက် — YouTube လိုနေရာတွေက Player ထည့်ဖို့အတွက် Embed Code (HTML Snippet) ကို ပို့ပေးတာမို့ ကိုယ့်ဘာသာ `<video>` ဖိုင်ထည့်စရာ မလိုပါဘူး။
+
+### File Format တွေအကြောင်း
+
+Video အတွက် **MP4** က Browser အားလုံးနီးပါး ပံ့ပိုးတာမို့ အသုံးအများဆုံး Standard Format ဖြစ်ပါတယ်။ **WebM** ကတော့ Web အတွက် အထူးထုတ်ထားပြီး File Size သေးတာကြောင့် Performance မှာ သာလွန်ပါတယ်။ Audio အတွက်ကတော့ **MP3** က Standard ဖြစ်ပြီး Browser တိုင်းနီးပါး ဖွင့်နိုင်ပါတယ်။ Format မကိုက်ညီတာတွေကြောင့် ဘယ် Format က ဘယ် Browser မှာ အလုပ်လုပ်လဲဆိုတာ သေချာစစ်ဖို့ အရေးကြီးပါတယ်။
+
+### HTML5 နဲ့ Media Support
+
+အရင်တုန်းက Flash, Silverlight လို Plugin တွေ သုံးရပြီး Plugin မရှိဘူးဆိုရင် Media တွေ မဖွင့်နိုင်ခဲ့ပါဘူး။ HTML5 မှာတော့ Browser ကိုယ်တိုင် Media ကို Mobile မှာရော Desktop မှာရော Native အနေနဲ့ ပံ့ပိုးလို့ Plugin တွေ မလိုအပ်တော့ပါဘူး။ ဒါကြောင့် Web Development အတွက် Media ထည့်တာက ပိုလွယ်ကူလာပြီး User အတွက်လည်း ပိုအဆင်ပြေပါတယ်။
+
+### မှတ်ထားရမယ့် အချက်များ
+
+- `<video>` က Video အတွက်၊ `<audio>` က Sound အတွက်။
+- `<picture>` က Screen ပေါ်မူတည်ပြီး Image ရွေးဖို့။
+- `<iframe>` က တခြား Website Content ထည့်ဖို့။
+- MP4, WebM က Video၊ MP3 က Audio အတွက် လူကြိုက်များတဲ့ Format။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "HTML5 မှာ Video ကို ချိတ်ဖို့ ဘယ် Element ကို သုံးပါသလဲ?", options: ["<video>", "<audio>", "<iframe>", "<picture>"], correctAnswer: 0, explanation: "Video ပြသဖို့ <video> Element ကို သုံးပါတယ်။" },
+    { id: "q2", question: "Browser အားလုံးနီးပါး ပံ့ပိုးတဲ့ Video Format ကဘာလဲ?", options: ["WebM", "MP4", "AVI", "MKV"], correctAnswer: 1, explanation: "MP4 က Standard Format ဖြစ်ပြီး Browser တိုင်းနီးပါး ပံ့ပိုးပါတယ်။" },
+    { id: "q3", question: "တခြား Website ရဲ့ Content ကို ကိုယ့်စာမျက်နှာထဲ ထည့်ပြဖို့ ဘယ် Element ကို သုံးပါသလဲ?", options: ["<object>", "<embed>", "<iframe>", "<source>"], correctAnswer: 2, explanation: "Iframe က external content တွေကို ထည့်ပြဖို့ သုံးပါတယ်။" },
+  ]}
+/>

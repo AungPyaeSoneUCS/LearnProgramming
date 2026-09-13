@@ -1,0 +1,76 @@
+---
+title: "CSS Masking — Mask ဖြင့် Element ဖုံးကွယ်ခြင်း"
+description: "mask-image property နှင့် Gradient ၊ SVG Mask တို့ဖြင့် Element ၏ အစိတ်အပိုင်းများကို ဖုံးကွယ်နည်းကို လေ့လာကြမယ်။"
+---
+
+CSS Masking က Element တစ်ခုရဲ့ ဘယ်အပိုင်းကို မြင်ရပြီး ဘယ်အပိုင်းကို ဖျောက်ရမလဲဆိုတာကို ထိန်းချုပ်ပေးတဲ့ နည်းလမ်း ဖြစ်ပါတယ်။ `mask-image` Property ဟာ Mask အဖြစ် အသုံးပြုမယ့် Image ကို သတ်မှတ်ပေးပြီး Image ရဲ့ Alpha Channel (ပွင့်လင်းမှု) ကို ကြည့်ကာ ဘယ်နေရာမှာ ဖျောက်မယ်ဆိုတာ ဆုံးဖြတ်ပါတယ်။
+
+### mask-image နဲ့ Gradient Mask
+
+`mask-image` ကို Gradient နဲ့ အသုံးပြုရင် Element ရဲ့ အနားတစ်ဝိုက်ကို တဖြည်းဖြည်း ဖျောက်ပေးတဲ့ Fade Out ပုံစံကို ဖန်တီးနိုင်ပါတယ်။ Black ကနေ Transparent ကို သွားတဲ့ Gradient က Element ကို အပေါ်ကနေ အောက်အထိ တဖြည်းဖြည်း ဖျောက်ပေးပါတယ်။
+
+**ဥပမာ -**
+```css
+.fade-bottom {
+  mask-image: linear-gradient(to bottom, black, transparent);
+}
+```
+
+မှတ်ချက် — Gradient ထဲက Black ပိုင်းက ပုံကို အပြည့်မြင်ရပြီး Transparent ပိုင်းက ပုံကို လုံးဝ ဖျောက်ပါတယ်။
+
+### mask-size နဲ့ mask-repeat
+
+`mask-size` က Mask Image ရဲ့ အရွယ်အစားကို သတ်မှတ်ပြီး `mask-repeat` က Mask ကို ထပ်ခါထပ်ခါ ပြန်စီရမယ် မစီရမယ်ကို ထိန်းချုပ်ပါတယ်။ `cover` ၊ `contain` ၊ `no-repeat` တို့ကို အသုံးများပါတယ်။
+
+**ဥပမာ -**
+```css
+.banner {
+  mask-image: linear-gradient(black 30%, transparent);
+  mask-size: cover;
+  mask-repeat: no-repeat;
+}
+```
+
+မှတ်ချက် — Browser အဟောင်းတွေမှာ `-webkit-mask-image` လို Vendor Prefix လိုအပ်နိုင်ပါတယ်။
+
+### SVG Mask အသုံးပြုခြင်း
+
+SVG ထဲမှာ Mask Element နဲ့ ပုံသဏ္ဍာန်တစ်ခုကို သတ်မှတ်ပြီး `mask-image: url(#id)` ဖြင့် ရည်ညွှန်းနိုင်ပါတယ်။ White ပုံသဏ္ဍာန်က မြင်ရမယ့် အပိုင်းကို ကိုယ်စားပြုပြီး Black ကတော့ ဖျောက်မယ့် အပိုင်း ဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.profile-pic {
+  mask-image: url(#circle-mask);
+}
+```
+
+မှတ်ချက် — `url()` ထဲမှာ Mask ID ကို ထည့်ပေးမှသာ SVG Mask နဲ့ ချိတ်ဆက်နိုင်ပါတယ်။
+
+သက်ဆိုင်တဲ့ SVG Code ကို အောက်မှာ ကြည့်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```html
+<svg width="0" height="0">
+  <mask id="circle-mask">
+    <circle cx="50" cy="50" r="50" fill="white" />
+  </mask>
+</svg>
+```
+
+မှတ်ချက် — SVG ထဲမှာ Mask ကို Define လုပ်ပြီး CSS ကသာ ရည်ညွှန်းတာမို့ SVG ကို Screen ပေါ်မှာ မပြပါဘူး။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `mask-image` က Mask အဖြစ် သုံးမယ့် Image သို့မဟုတ် Gradient ကို သတ်မှတ်ပါသည်။
+- `mask-size` နဲ့ `mask-repeat` က Mask ရဲ့ အရွယ်အစားနဲ့ ပြန်စီပုံကို ထိန်းချုပ်ပါသည်။
+- SVG Mask Element ကို `url(#id)` ဖြင့် ရည်ညွှန်းနိုင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "mask-image က Mask ရဲ့ ဘာကို ကြည့်ပြီး ဖုံးကွယ်မှုကို ဆုံးဖြတ်ပါသလဲ?", options: ["Alpha Channel", "Color", "Size", "Border"], correctAnswer: 0, explanation: "mask-image က Image ရဲ့ Alpha Channel တန်ဖိုးကို ကြည့်ပြီး မြင်ရမည့် အပိုင်းကို ဆုံးဖြတ်ပါတယ်။" },
+    { id: "q2", question: "Mask ကို ထပ်ခါထပ်ခါ မပြစေဖို့ ဘယ် Property ကို သုံးပါသလဲ?", options: ["mask-repeat: no-repeat", "mask-size: cover", "mask-mode: alpha", "mask-image: none"], correctAnswer: 0, explanation: "mask-repeat: no-repeat က Mask Image ကို တစ်ခါသာ ပြစေပါတယ်။" },
+    { id: "q3", question: "SVG Mask ကို ရည်ညွှန်းဖို့ ဘယ် Function ကို သုံးပါသလဲ?", options: ["url()", "calc()", "rgb()", "linear-gradient()"], correctAnswer: 0, explanation: "mask-image မှာ url() ထဲသို့ Mask ID ကို ထည့်၍ ရည်ညွှန်းပါတယ်။" }
+  ]}
+/>

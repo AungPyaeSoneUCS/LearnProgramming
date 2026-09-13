@@ -1,0 +1,97 @@
+---
+title: "HTML Semantics — Semantic Elements များ"
+description: "Semantic နဲ့ Non-semantic Element ခြားနားချက်၊ HTML5 အဓိပ္ပာယ်ရှိသော Tag များအကြောင်း လေ့လာကြည့်ရအောင်။"
+---
+
+### Semantic နဲ့ Non-semantic Element ဆိုတာ ဘာလဲ?
+
+Element တွေက အမျိုးအစား (၂) မျိုး ရှိပါတယ်။ **Semantic Element** တွေက Tag ရဲ့ အဓိပ္ပာယ်ကိုကို ဖော်ပြတဲ့ အမျိုးအစားဖြစ်ပြီး `<form>`, `<table>`, `<article>` စတာတွေ ပါဝင်ပါတယ်။ သူတို့က ကိုယ့်အကြောင်းအရာ (Content) ရဲ့ အဓိပ္ပာယ်ကို Browser ရော Developer ရော နားလည်စေနိုင်ပါတယ်။
+
+ဆန့်ကျင်ဘက်အနေနဲ့ **Non-semantic Element** တွေက အဓိပ္ပာယ်မရှိဘဲ ကွန်တိန်နာ (Container) တစ်ခုလို ပြုမှုတာပါ။ `<div>` နဲ့ `<span>` က ဥပမာ ဖြစ်ပြီး၊ `<div>` က Block Level Container၊ `<span>` က Inline Container အဖြစ် သုံးပါတယ်။ Browser ကလည်း သူတို့ထဲက အကြောင်းအရာရဲ့ အဓိပ္ပာယ်ကို မသိနိုင်ပါဘူး။
+
+**ဥပမာ -**
+```html
+<div id="navigation">
+  <a href="home.html">Home</a>
+  <a href="about.html">About</a>
+</div>
+
+<span class="price">1000 ကျပ်</span>
+```
+
+မှတ်ချက် — `<div>` နဲ့ `<span>` တို့က ဘာအဓိပ္ပာယ်မှ မဖော်ပြဘဲ သူတို့ထဲက Content ကို ဘာလဲဆိုတာ မသိရပါဘူး။
+
+### HTML5 ရဲ့ Semantic Element အသစ်များ
+
+HTML5 မှာ အဓိပ္ပာယ်ရှိတဲ့ Layout Element အသစ်တွေ ထပ်ပေါင်းထည့်ထားပါတယ်။ ဒါတွေက `<div>` နဲ့ `<span>` တွေလို နာမည်မှည့်ရတာထက် ပိုပြီး ရှင်းလင်းတဲ့ Structure ကို ရစေပါတယ်။
+
+- `<section>` — Topic တစ်ခုအတွက် အပိုင်း (Section) တစ်ခု။
+- `<article>` — သီးခြားရပ် နိုင်တဲ့ အကြောင်းအရာ (ဥပမာ Blog Post)။
+- `<header>` — Page (သို့) Section ရဲ့ ခေါင်းပိုင်း။
+- `<footer>` — Page (သို့) Section ရဲ့ အောက်ခြေ။
+- `<nav>` — Navigation Links တွေ ပါတဲ့ အကန့်။
+- `<aside>` — ဘေးတစ်ဖက်မှာ ရှိတဲ့ Sidebar လိုအကြောင်းအရာ။
+- `<main>` — Page ရဲ့ အဓိက Content နေရာ။
+- `<figure>` — ပုံ ဒါမှမဟုတ် Diagram တစ်ခုနဲ့ သူ့ရဲ့ Caption။
+
+**ဥပမာ -**
+```html
+<body>
+  <header>
+    <h1>Takkatho Website</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="courses.html">Courses</a>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+      <h2>HTML သင်ခန်းစာ</h2>
+      <p>ဒါက HTML အကြောင်း ရေးထားတဲ့ ဆောင်းပါးပါ။</p>
+    </article>
+    <aside>
+      <p>ဆက်စပ်နေတဲ့ သင်ခန်းစာများ</p>
+    </aside>
+  </main>
+
+  <footer>
+    <p>Copyright 2026 Takkatho</p>
+  </footer>
+</body>
+```
+
+မှတ်ချက် — Semantic Element တွေက Page ရဲ့ Layout ကို Developer ကိုယ်တိုင် ဖတ်လို့ လွယ်စေပြီး Browser ရော Search Engine ရော နားလည်လွယ်စေပါတယ်။
+
+### Semantic HTML က ဘာကြောင့် အရေးကြီးပါသလဲ?
+
+အဓိကအကြောင်းရင်း (၂) ခု ရှိပါတယ် — **SEO (Search Engine Optimization)** နဲ့ **Accessibility**။ Semantic Tag တွေက Search Engine တွေကို ဘယ်နေရာက ဘာအကြောင်းအရာလဲဆိုတာ သိစေတဲ့အတွက် Page က Search Result တွေမှာ ပိုကောင်းတဲ့နေရာ ရနိုင်ပါတယ်။
+
+Accessibility (Screen Reader သုံးသူတွေ) အတွက်လည်း အရေးကြီးပါတယ်။ `<nav>`, `<main>`, `<article>` စတဲ့ Tag တွေက Screen Reader တွေကို Page ရဲ့ ဖွဲ့စည်းပုံကို မြင်သာစေပြီး အသုံးပြုသူတွေ သက်တောင့်သက်သာ လည်ပတ်နိုင်စေပါတယ်။
+
+```html
+<!-- Non-semantic နည်း -->
+<div class="main-title"><h1>Hello</h1></div>
+
+<!-- Semantic နည်း -->
+<header><h1>Hello</h1></header>
+```
+
+မှတ်ချက် — Semantic Tag ကို အသုံးပြုရုံနဲ့ Code ရဲ့ အဓိပ္ပာယ်နဲ့ Search Engine Ranking နှစ်ခုလုံးကို တိုးတက်စေနိုင်ပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- `<div>` နဲ့ `<span>` က Non-semantic — အဓိပ္ပာယ်မဖော်ပြ။
+- Semantic Element တွေက Content ရဲ့ အဓိပ္ပာယ်ကို ဖော်ပြပါတယ်။
+- `<section>`, `<article>`, `<header>`, `<footer>`, `<nav>`, `<aside>`, `<main>` တို့က HTML5 အသစ်။
+- Semantic HTML က SEO နဲ့ Accessibility အပေါ် ကောင်းကျိုး ရှိပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "အောက်ပါအထဲက ဘယ်ဟာက Non-semantic Element ပါလဲ?", options: ["<header>", "<article>", "<div>", "<nav>"], correctAnswer: 2, explanation: "<div> က Container တစ်ခုလို ပြုမှုပြီး အဓိပ္ပာယ် မဖော်ပြပါဘူး။" },
+    { id: "q2", question: "Blog Post တစ်ပုဒ်လို သီးခြားရပ်နိုင်တဲ့ Content အတွက် ဘယ် Tag က သင့်လျော်ပါသလဲ?", options: ["<article>", "<span>", "<div>", "<footer>"], correctAnswer: 0, explanation: "<article> က သီးခြားရပ်နိုင်တဲ့ Content တွေအတွက် သုံးပါတယ်။" },
+    { id: "q3", question: "Semantic HTML ရဲ့ ကောင်းကျိုး နှစ်မျိုးက ဘာတွေပါလဲ?", options: ["SEO နဲ့ Accessibility", "Speed နဲ့ Color", "Security နဲ့ Storage", "Database နဲ့ Server"], correctAnswer: 0, explanation: "Semantic HTML က Search Engine ရော Screen Reader ရော နှစ်ခုလုံးအတွက် ကောင်းပါတယ်။" },
+  ]}
+/>

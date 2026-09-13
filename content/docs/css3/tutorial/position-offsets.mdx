@@ -1,0 +1,108 @@
+---
+title: "CSS Position Offsets — top, right, bottom, left"
+description: "top ၊ right ၊ bottom ၊ left Offset တွေနဲ့ Element နေရာချနည်း နဲ့ Centering Trick လေ့လာကြမယ်။"
+---
+
+### Offset Properties ဆိုတာ
+
+`top` ၊ `right` ၊ `bottom` ၊ `left` ဆိုတဲ့ Property လေးခုက Positioned Element (static မဟုတ်တဲ့) တွေရဲ့ နေရာကို သတ်မှတ်ပေးပါတယ်။ Value က Positive (အောက်/ညာ ဆီ) ဖြစ်နိုင်သလို Negative (အပေါ်/ဘယ် ဆီ) လည်း ဖြစ်နိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.element {
+  position: relative;
+  top: -10px;
+  left: 12px;
+}
+```
+
+မှတ်ချက် — `top: -10px;` က Element ကို မူရင်းထက် 10px အပေါ် ဆွဲတင်ပြီး `left: 12px;` က ညာဘက် 12px ရွှေ့ပေးပါတယ်။
+
+### relative နဲ့ Offset
+
+`relative` Element မှာ Offset ထည့်ရင် ကိုယ့် မူရင်း နေရာကနေ ရွေ့ပါတယ်။ Badge ၊ Icon နေရာ မှန်အောင် ချိန်တဲ့အခါ အသုံးဝင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.badge {
+  position: relative;
+  top: -8px;
+  right: -6px;
+}
+```
+
+မှတ်ချက် — Negative Offset က ဆန့်ကျင်ဘက် ဦးတည်ချက်ကို ရွှေ့တာမို့ Layout ချိန်ရာမှာ မကြာခဏ သုံးရပါတယ်။
+
+### absolute နဲ့ Offset
+
+`absolute` Element မှာ Offset သုံးရင် Positioned Ancestor ရဲ့ အစွန်းကနေ တိုင်းပါတယ်။ ဥပမာ `right: 10px;` ဆိုရင် Parent ရဲ့ ညာဘက်အစွန်းကနေ 10px ထဲဝင်တဲ့ နေရာမှာ နေပါတယ်။
+
+**ဥပမာ -**
+```css
+.parent {
+  position: relative;
+}
+
+.corner-tl {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.corner-br {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+```
+
+မှတ်ချက် — `absolute` က Offset တစ်ခုချင်းစီကို သီးခြား တွက်ပြီး Element ကို Parent ရဲ့ ထောင့်တစ်ခုချင်းစီမှာ နေရာချလို့ရပါတယ်။
+
+### Offset ပေါင်းစပ်အသုံး — Stretch
+
+Offset လေးခုလုံး သတ်မှတ်ထားရင် Element က Parent ကို ဘေးဘား အကုန် ဆန့်ပြီး ဖုံးအုပ်ပါတယ်။ Overlay ၊ Modal Background စတာတွေမှာ သုံးပါတယ်။
+
+**ဥပမာ -**
+```css
+.overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+```
+
+မှတ်ချက် — Offset လေးဖက် အကုန် 0 ပေးလိုက်ရင် Element က Parent ရဲ့ အရွယ်အစားကို အတိအကျ ကြီးလာပါတယ်။
+
+### Centering Trick — 50% နဲ့ translate
+
+Element ကို ဘယ်နေရာမှာမဆို အလယ်မှန်မှန် Center လုပ်ဖို့ အသုံးများတဲ့ နည်းလမ်းကတော့ `top: 50%;` နဲ့ `left: 50%;` ပေးပြီး `transform: translate(-50%, -50%);` နဲ့ ကိုယ့်အရွယ် ထက်ဝက်စီ ပြန်ဆွဲပေးတာပါ။
+
+**ဥပမာ -**
+```css
+.center-me {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+```
+
+မှတ်ချက် — `translate(-50%, -50%)` မသုံးရင် Element ရဲ့ ဘယ်အပေါ် အစွန်းကသာ အလယ်မှာ ရောက်နေတတ်လို့ ဒီ Trick ကို တွဲသုံးရပါတယ်။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Offset Property တွေက Positioned Element တွေမှာသာ အလုပ်လုပ်ပါတယ်။
+- Negative Value က ဆန့်ကျင်ဘက် ဦးတည်ချက်ကို ရွှေ့ပါတယ်။
+- `absolute` က Positioned Ancestor ရဲ့ အစွန်းကနေ တိုင်းပါတယ်။
+- Offset လေးဖက်လုံး ပေးရင် Element က Parent ကို ဆန့်ဖုံးပါတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Positioned Element တွေရဲ့ နေရာကို သတ်မှတ်တဲ့ Offset Property တွေက ဘာတွေလဲ?", options: ["top right up down", "top right bottom left", "up down center middle", "north south east west"], correctAnswer: 1, explanation: "top ၊ right ၊ bottom ၊ left ဆိုတဲ့ Property လေးခုက Positioned Element ရဲ့ နေရာကို သတ်မှတ်ပါတယ်။" },
+  { id: "q2", question: "absolute Element ရဲ့ left: 10px က ဘယ်ကနေ တိုင်းတာပါသလဲ?", options: ["Browser ရဲ့ ဘယ်ဘက်အစွန်း", "ကိုယ့် မူရင်း နေရာ", "Positioned Ancestor ရဲ့ ဘယ်အစွန်း", "Margin အစွန်း"], correctAnswer: 2, explanation: "absolute Element ရဲ့ Offset တွေက Positioned Ancestor ရဲ့ အစွန်းကနေ တိုင်းပါတယ်။" },
+  { id: "q3", question: "Element ကို အတိအကျ Center လုပ်တဲ့ Trick မှာ top: 50% နဲ့ left: 50% ပေးပြီးနောက် ဘာကို ပေါင်းထည့်ပါသလဲ?", options: ["transform: translate(-50%, -50%)", "margin: 50px", "padding: 50%", "border-radius: 50%"], correctAnswer: 0, explanation: "translate(-50%, -50%) က Element ကို ကိုယ့်အရွယ် ထက်ဝက်စီ ပြန်ဆွဲပေးလို့ အလယ်မှာ အတိအကျ ရပ်ပါတယ်။" }
+]} />

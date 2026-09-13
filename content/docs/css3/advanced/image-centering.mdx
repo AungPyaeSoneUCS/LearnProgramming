@@ -1,0 +1,103 @@
+---
+title: "CSS Image Centering — Image များကို Center ချရန်"
+description: "text-align၊ margin auto၊ flexbox နှင့် object-fit နည်းလမ်းများဖြင့် Image ကို Center ချနည်းကို လေ့လာကြမယ်။"
+---
+
+Image ကို Center ချနည်းက Element ရဲ့ Display အမျိုးအစားပေါ် မူတည်ပြီး ကွဲပြားပါတယ်။ Inline Element ဆိုရင် `text-align: center` နဲ့ ရပြီး Block Element ဆိုရင် `margin: auto` ကို အသုံးပြုရပါတယ်။
+
+### text-align: center နည်းလမ်း
+
+Image က Default အားဖြင့် Inline Element ဖြစ်လို့ Parent Container မှာ `text-align: center` ပေးလိုက်ရင် အတွင်းက Image က အလယ်ကို ရောက်သွားပါတယ်။
+
+**ဥပမာ -**
+```html
+<div class="image-container">
+  <img src="photo.jpg" alt="ဓာတ်ပုံ">
+</div>
+```
+
+မှတ်ချက် — Image က Inline Element အဖြစ် ရှိနေပါတယ်။
+
+**ဥပမာ -**
+```css
+.image-container {
+  text-align: center;
+}
+```
+
+မှတ်ချက် — `text-align` က Inline Element တွေကိုသာ သက်ရောက်လို့ Block Element အဖြစ်ပြောင်းထားတဲ့ Image ကို ဒီနည်းနဲ့ မချနိုင်ပါဘူး။
+
+### margin: auto နည်းလမ်း
+
+Block Element အဖြစ်ပြောင်းထားတဲ့ Image ကို `margin-right: auto` နဲ့ `margin-left: auto` ပေးခြင်းဖြင့် Center ချနိုင်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.center-img {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+}
+```
+
+မှတ်ချက် — `margin: 0 auto` ဆိုတာ အပေါ်အောက် Margin 0 ဖြစ်ပြီး ဘယ်ညာ Margin ကို Auto ဖြစ်စေလို့ Image က အလယ်မှာ ရပ်တည်ပါတယ်။
+
+### Flexbox နဲ့ Center ချခြင်း
+
+Flexbox က Horizontal ရော Vertical ပါ Center ချခြင်းကို တစ်ပြိုင်နက် လုပ်နိုင်ပါတယ်။ Layout တွေမှာ အသုံးအများဆုံး နည်းလမ်းတစ်ခုဖြစ်ပါတယ်။
+
+**ဥပမာ -**
+```css
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+```
+
+မှတ်ချက် — `justify-content: center` က ဘယ်ညာ (Main Axis) ကို ချိန်ပေးပြီး `align-items: center` က အပေါ်အောက် (Cross Axis) ကို ချိန်ပေးပါတယ်။
+
+### object-fit ဖြင့် Center ချခြင်း
+
+ပုံကြီးကို Box ငယ်ထဲမှာ အလယ်တည့်တည့် ဝင်ဆံ့အောင် ပြသချင်ရင် `object-fit: contain` ကို သုံးပါတယ်။ Image က Box ရဲ့ အလယ်မှာ ရပ်တည်ပြီး Aspect Ratio မပျက်ပါဘူး။
+
+**ဥပမာ -**
+```html
+<div class="box">
+  <img src="large-photo.jpg" alt="နေရာချထားသောပုံ">
+</div>
+```
+
+မှတ်ချက် — `.box` မှာ Width နဲ့ Height သတ်မှတ်ထားပါတယ်။
+
+**ဥပမာ -**
+```css
+.box {
+  width: 300px;
+  height: 300px;
+  background: #eee;
+}
+
+.box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+```
+
+မှတ်ချက် — `object-fit: contain` က Image ကို Box ရဲ့ အလယ်မှာ ဝင်ဆံ့အောင် ချုံ့ပြပြီး Image ရဲ့ မူလအချိုးအစားကို မပြောင်းလဲပါဘူး။
+
+#### မှတ်ထားရမယ့် အချက်များ
+
+- Inline Image များအတွက် `text-align: center` ကို အသုံးပြုပါသည်။
+- Block Image များအတွက် `margin: 0 auto` ကို အသုံးပြုပါသည်။
+- Flexbox ဖြင့် ဘယ်ညာ ရော အပေါ်အောက် ပါ Center ချနိုင်ပါသည်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz questions={[
+  { id: "q1", question: "Inline Image ကို Center ချဖို့ ဘယ်နည်းကို သုံးမလဲ?", options: ["Parent Container မှာ text-align: center", "Image မှာ margin: auto", "Image မှာ float: center", "Body မှာ color: white"], correctAnswer: 0, explanation: "Image က Inline ဖြစ်လို့ Parent မှာ text-align center ပေးရင် Center ရောက်ပါတယ်။" },
+  { id: "q2", question: "Block Image ကို Center ချဖို့ ဘယ်နည်းကို အသုံးပြုမလဲ?", options: ["text-align: center", "margin: 0 auto", "position: absolute", "display: none"], correctAnswer: 1, explanation: "Block Image ကို margin: 0 auto ပေးမှ ဘယ်ညာ တစ်ဖက်စီ ညီညီ Center ဖြစ်ပါတယ်။" },
+  { id: "q3", question: "Flexbox ထဲက align-items: center က ဘယ်အစီအစဉ်ကို ချိန်ပေးပါသလဲ?", options: ["Padding", "Main Axis (ဘယ်ညာ)", "Cross Axis (အပေါ်အောက်)", "Font Size"], correctAnswer: 2, explanation: "align-items က Cross Axis ဖြစ်တဲ့ အပေါ်အောက် အနေအထားကို ချိန်ပေးပါတယ်။" }
+]} />
