@@ -1,0 +1,57 @@
+---
+title: "MySQL CASE — CASE Statement"
+description: "CASE — if-then-else ‌ပုံစံ conditional logic — ‌ဥပမာများ, searched CASE။"
+autoNumbering: true
+---
+
+`CASE` statement သည် SQL ‌ထဲ **condition များဖြင့် ‌တန်ဖိုး ‌ရွေး** ‌လုပ်ပါတယ် — programming ‌ရဲ့ if/else-if/else ‌နဲ့ ‌တူသည်။
+
+## Syntax
+
+```sql
+CASE
+  WHEN condition1 THEN result1
+  WHEN condition2 THEN result2
+  ELSE resultN
+END
+```
+
+## ဥပမာ — Customer status
+
+```sql
+SELECT id,
+  CASE
+    WHEN total > 500000 THEN 'VIP'
+    WHEN total >= 100000 THEN 'Gold'
+    ELSE 'Normal'
+  END AS level
+FROM customers;
+```
+
+total-value ‌အ‌လိုက် ‌အဆင့်သတ်မှတ် — ‌ပထမနှင့် ‌ကိုက်ညီသူ ‌ရွေး။
+
+## ‌ဥပမာ — ORDER BY ထဲ
+
+```sql
+SELECT name, priority FROM tasks
+ORDER BY
+  CASE priority
+    WHEN 'high' THEN 1
+    WHEN 'medium' THEN 2
+    WHEN 'low' THEN 3
+  END;
+```
+
+## ‌ဥပမာ — ‌အုပ် basic
+
+```sql
+SELECT
+  SUM(CASE WHEN status = 'paid' THEN 1 ELSE 0 END) AS paid_count,
+  SUM(CASE WHEN status != 'paid' THEN 1 ELSE 0 END) AS unpaid_count
+FROM orders;
+```
+
+## ‌အဓိက အချက်များ
+- CASE WHEN cond THEN val ... ELSE
+- END ‌ဖြင့် ‌အဆုံးသတ်
+- SELECT, WHERE, ORDER BY ‌နေရာတွင် ‌သုံးနိုင်

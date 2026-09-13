@@ -1,0 +1,69 @@
+---
+title: "MySQL NOT — NOT Operator"
+description: "NOT — condition ‌မမှန်သော rows များကို ရွေးခြင်း — NOT IN, NOT LIKE, NOT NULL။"
+autoNumbering: true
+---
+
+`NOT` operator သည် condition ၏ **ဆန့်ကျင်ဘက်** ‌ဖြစ်သော rows များကို ‌ရွေးပါတယ် — ‌မမှန်သော အရာကို ပြသည်။
+
+## Syntax
+
+```sql
+SELECT column1, column2
+FROM table_name
+WHERE NOT condition;
+```
+
+## ဥပမာ
+
+```sql
+SELECT * FROM customers
+WHERE NOT country = 'Myanmar';
+```
+
+`country = 'Myanmar'` ‌မဟုတ်သော customers အားလုံးကို ပြသည်။
+
+```sql
+SELECT * FROM products WHERE NOT price = 100;
+```
+
+## NOT IN
+
+```sql
+SELECT * FROM customers
+WHERE city NOT IN ('Yangon', 'Mandalay');
+```
+
+## NOT LIKE
+
+```sql
+SELECT * FROM employees WHERE name NOT LIKE 'A%';
+```
+
+'A' နဲ့ ‌မစသော name များ။
+
+## NOT BETWEEN
+
+```sql
+SELECT * FROM orders WHERE amount NOT BETWEEN 1000 AND 3000;
+```
+
+## NOT NULL
+
+```sql
+SELECT * FROM customers WHERE phone IS NOT NULL;
+```
+
+`phone` ‌တန်ဖိုး ‌ရှိသူများ (NULL မဟုတ်)။
+
+## Boolean Logic
+
+| condition | NOT condition |
+| --- | --- |
+| TRUE | FALSE |
+| FALSE | TRUE |
+
+## အဓိက အချက်များ
+- NOT — ‌ဆန့်ကျင်ဘက်
+- NOT IN / NOT LIKE / NOT BETWEEN / IS NOT NULL
+- NULL စစ်ရန် — `IS NULL` ‌သို့ `IS NOT NULL`

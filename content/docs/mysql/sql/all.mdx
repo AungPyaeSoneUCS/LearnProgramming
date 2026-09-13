@@ -1,0 +1,55 @@
+---
+title: "MySQL ALL — ALL Operator"
+description: "ALL — subquery ‌ရလဒ် အားလုံးနှင့် ‌မှန်မှ ‌ဖြစ်ခြင်း — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+`ALL` operator သည် **subquery ‌ရလဒ်၏ အားလုံး** ‌တန်ဖိုးများနှင့် ‌နှိုင်းယှဉ် မှန်မှသာ TRUE ‌ပြန်ပါတယ်။
+
+## Syntax
+
+```sql
+SELECT column
+FROM table
+WHERE column operator ALL (subquery);
+```
+
+## ဥပမာ
+
+```sql
+SELECT name, price
+FROM products
+WHERE price > ALL (
+  SELECT price FROM products WHERE category = 'Accessory'
+);
+```
+
+Accessory ‌တစ်ခုခုထက် မဟုတ် — **Accessory price ‌အားလုံး** ထက် ‌ပိုကြီးသော products သာ ‌ပြ။
+
+## ‌ဥပမာ ‌ဇယား
+
+```
+Products
+id  name     price
+1   Laptop   1000
+2   Mouse    25
+3   Key A    30
+```
+
+`> ALL(25, 30)` → Laptop ‌သာ (1000 > 25 ‌နှင့် 1000 > 30 နှစ်‌ခုလုံး ‌မှန်)။
+
+## ALL ‌နှင့် ‌အမျိုးအစား rules
+
+- `> ALL(...)` — ‌အားလုံးထက် ‌ကြီး = MAX ‌ထက် ‌ကြီး
+- `< ALL(...)` — ‌အားလုံးထက် ‌ငယ် = MIN ‌ထက် ‌ငယ်
+
+```sql
+-- ‌အတူတူ
+WHERE price > ALL (SELECT price FROM ...);
+WHERE price > (SELECT MAX(price) FROM ...);
+```
+
+## ‌အဓိက အချက်များ
+- ALL — ‌အားလုံး ‌ကိုက်ချိန်
+- `> ALL` → ‌အများဆုံးထက် ‌ကြီး
+- ANY — ‌တစ်ခုခု နှင့် ‌ကွာ

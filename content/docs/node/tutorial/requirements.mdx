@@ -1,0 +1,56 @@
+---
+title: "Node.js JS Requirements — JavaScript လိုအပ်ချက်"
+description: "Node.js သင်ယူရန် JavaScript အခြေခံ — variables, functions, objects, ES6+ recap။"
+autoNumbering: true
+---
+
+Node.js မလေ့လာမီ JavaScript **အခြေခံ** များ သိထားသင့်သည် — ပြန်လည် recap လုပ်ကြည့်ပါ။
+
+## Variables
+
+```js
+let name = "Aung";
+const port = 3000;
+```
+
+## Functions
+
+```js
+function add(a, b) {
+  return a + b;
+}
+const mul = (a, b) => a * b;   // arrow function
+```
+
+## Objects & Arrays
+
+```js
+const user = { id: 1, name: "Su" };
+const arr = [1, 2, 3];
+console.log(user.name, arr.length);
+```
+
+## Destructuring & Template strings
+
+```js
+const { id, name } = user;
+const msg = `User ${id}: ${name}`;
+```
+
+## Promises (async အခြေခံ)
+
+```js
+fetch("https://api.example.com/data")
+  .then((res) => res.json())
+  .then((data) => console.log(data));
+```
+
+## အကြံပြုချက်
+- JavaScript မတော်လျှင် အရင် JavaScript course လေ့လာပါ
+- ES6+ feature (arrow, destructuring, modules) အရေးကြီး
+- Node.js တွင် window/document **မရှိ** — global, process စသည်
+
+## အဓိက အချက်များ
+- Variables, functions, objects recap
+- Promises / async ‌အ‌ခြေခံ
+- Node.js — browser API မဟုတ်

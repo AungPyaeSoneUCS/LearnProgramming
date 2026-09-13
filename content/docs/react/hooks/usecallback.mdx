@@ -1,0 +1,68 @@
+---
+title: "React useCallback — useCallback Hook"
+description: "useCallback — function ‌ကို memoize ၍ child re-render ‌လျော့ — dependencies ။"
+autoNumbering: true
+---
+
+`useCallback` ‌က **function ‌တစ်ခုကို memoize (‌မှတ်သား)** ‌လုပ်‌ပေးလို့ ‌ပြန်လည် ‌ဖန်တီး‌နေတာကို ‌တားဆီး ပါတယ် — child component ‌ကို unnecessary re-render ‌လုပ်ခြင်း ‌လျော့ရန်။
+
+## Memoized function
+
+```jsx
+import { useCallback, useState } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  const increment = useCallback(() => {
+    setCount((c) => c + 1);
+  }, []); // dependency array — ‌ပြောင်းမှ recreate
+  ...
+}
+```
+
+`[]` — ‌အခြား ‌ပြောင်းတာဘာမှ ‌မရှိ၍ function ‌က ‌အ‌မြဲ‌တူ ‌ညီ ‌ဖြစ်နေပါတယ်။
+
+## ‌ဘာကြောင့် လိုအပ်လဲ
+
+```jsx
+function App() {
+  const [count, setCount] = useState(0);
+
+  const increment = () => setCount((c) => c + 1);
+
+  return <Counter onIncrement={increment} count={count} />;
+}
+```
+
+- ‌ဒီမှာ `increment` ‌က render တိုင်း **အသစ် function** ‌ဖြစ်
+- `React.memo` wrapped child ‌ဖြစ်ရင် props ‌ပြောင်းသလို ‌မြင်ပြီး re-render ‌ဖြစ်
+
+`useCallback` ‌နဲ့ ‌ဖြေရှင်း:
+
+```jsx
+const increment = useCallback(() => {
+  setCount((c) => c + 1);
+}, []);
+
+return <Counter onIncrement={increment} count={count} />;
+```
+
+`React.memo(Counter)` — props ‌အ‌ဟောင်း ‌တူနေရင် skip render။
+
+## Dependencies ‌သုံးချိန်
+
+```jsx
+const add = useCallback((n) => setTotal((t) => t + n), [total]);
+```
+
+`total` ‌ပြောင်းမှ function ‌အသစ် — ‌မဟုတ်ရင် ဟောင်း reference ‌ကြုံ နိုင်သည်။
+
+## ‌သတိ‌ချက်
+- useCallback ‌ကိုယ်တိုင် overhead — ‌လိုအပ်တဲ့ ‌အခါသာ (memoized child / expensive)
+- ‌အသုံးများ — React.memo + useCallback ‌တွဲ
+
+## ‌အဓိက အချက်များ
+- `useCallback(fn, deps)` — function stable
+- Re-render ‌လျော့ — performance
+- deps ‌အမှန် ‌ပေး

@@ -1,0 +1,66 @@
+---
+title: "React JSX Expressions — JSX ‌ထဲ Expression"
+description: "JSX ‌ထဲ { } ‌နဲ့ JavaScript expression, variable, function call ‌ထည့် ‌ရေးနည်း။"
+autoNumbering: true
+---
+
+JSX ‌ထဲ ‌မှာ curly braces `{}` ‌နဲ့ JavaScript expression တွေ ‌ထည့် ‌ရေးလို့ရပါတယ်။
+
+## Variable ‌ထည့်ခြင်း
+
+```jsx
+const myName = "Aung";
+const myElement = <h1>Hello, {myName}!</h1>;
+```
+
+```jsx
+const age = 25;
+const myElement = <p>I am {age} years old.</p>;
+```
+
+## Expression ‌တွေက ‌အဖြေနဲ့ ‌ပြန်ဖြေပေးခြင်း
+
+```jsx
+const x = 5;
+const y = 10;
+
+const myElement = <p>Total: {x + y}</p>;
+// render: Total: 15
+```
+
+## Function Call ‌ထည့်ခြင်း
+
+```jsx
+function formatName(user) {
+  return user.first + " " + user.last;
+}
+
+const user = { first: "Aung", last: "Win" };
+
+const myElement = (
+  <h1>Hello, {formatName(user)}!</h1>
+);
+```
+
+## JSX ‌ထဲ ‌မှာ Attribute ‌တွေ
+
+```jsx
+const img = <img src="photo.jpg" alt="My Photo" />;
+```
+
+## Object ‌ထည့်ခြင်း — Double Braces
+
+JSX ‌ထဲ object/array ‌ထည့်ရင် `{{ }}` ‌ကို ‌သုံးရတယ် (style ‌အတွက် ‌အသုံးများသည်)။
+
+```jsx
+const myElement = (
+  <p style={{ color: "red", fontSize: "20px" }}>Styled text</p>
+);
+```
+
+အပြင် `{ }` က JavaScript ‌အတွက်၊ ‌အတွင်း `{ }` က object ‌ဖြစ်ပါတယ်။
+
+## အဓိက အချက်များ
+- `{ expression }` ‌နဲ့ JSX ‌ထဲ JavaScript ထည့်လို့ရသည်
+- Variable, arithmetic, function call — အားလုံး ‌လုပ်လို့ရသည်
+- Object ‌ထည့်ရင် `{{ }}` double braces

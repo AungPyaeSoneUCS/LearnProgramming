@@ -1,0 +1,69 @@
+---
+title: "Node.js Error Handling — Errors ကိုင်တွယ်ခြင်း"
+description: "Error handling — throw, try/catch, error-first callback, uncaughtException။"
+autoNumbering: true
+---
+
+Node.js ‌တွင် errors ‌များကို ‌စနစ်တကျ ‌ကိုင်တွယ် — crash မဖြစ်အောင်။
+
+## try/catch — sync error
+
+```js
+try {
+  JSON.parse("invalid{");
+} catch (err) {
+  console.error("Parse error:", err.message);
+}
+```
+
+## Error-first callbacks
+
+```js
+fs.readFile("x.txt", (err, data) => {
+  if (err) return handle(err);  // ‌ပထမ parameter — error
+  use(data);
+});
+```
+
+## Promise / async errors
+
+```js
+async function run() {
+  try {
+    await riskyTask();
+  } catch (err) {
+    logError(err);
+  }
+}
+
+riskyTask().catch(console.error); // or .catch
+```
+
+## Throwing custom errors
+
+```js
+function divide(a, b) {
+  if (b === 0) throw new Error("Division by zero");
+  return a / b;
+}
+```
+
+## Global catches (‌အရေးကြီး)
+
+```js
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught:", err);
+});
+
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled rejection:", reason);
+});
+```
+
+Unhandled promise rejection — app ‌ကို crash ‌စေနိုင် — အမြဲ catch ‌လုပ်။
+
+## အဓိက အချက်များ
+- try/catch — sync
+- Error-first callback
+- async — .catch / await try
+- Global handlers — ‌နောက်‌ဆုံးသက်

@@ -1,0 +1,56 @@
+---
+title: "MySQL LEFT JOIN — LEFT JOIN"
+description: "LEFT JOIN — ‌ဘယ်ဘက်ဇယား ‌အားလုံး + ‌ညာ ‌ကိုက်ညီသူ — NULL ‌ပြခြင်း။"
+autoNumbering: true
+---
+
+`LEFT JOIN` သည် ‌ဘယ်ဘက် (left) ဇယားရဲ့ rows **အားလုံး** ကို ‌ပြန်ပေး ပြီး ‌ညာဘက်ဇယားမှ ‌ကိုက်ညီသော rows များ အ‌ပါ ‌ပြပါတယ်။ ‌ကိုက်ညီမှု ‌မရှိလျှင် ‌ညာ column များ NULL။
+
+## Syntax
+
+```sql
+SELECT columns
+FROM table_left
+LEFT JOIN table_right
+ON table_left.column = table_right.column;
+```
+
+## ‌ဥပမာ
+
+```sql
+SELECT customers.name, orders.amount
+FROM customers
+LEFT JOIN orders ON customers.id = orders.customer_id;
+```
+
+Customers ‌အားလုံး — order ‌မရှိသူသည် `amount = NULL` ‌ဖြင့် ‌ပြသည်။
+
+## ‌ဥပမာ ‌ဇယား
+
+```
+Customers                 Orders
++----+-------+   +----+-------+-------+
+| id | name  |   | id | cust  | amt   |
++----+-------+   +----+-------+-------+
+| 1  | Aung  |   | 1  | 1     | 300   |
+| 2  | Su    |   |    |       |       |
++----+-------+   +----+-------+-------+
+```
+
+‌ရလဒ် — Aung/300 + Su/NULL နှစ်‌ခု‌လုံး။
+
+## LEFT JOIN ‌ဖြင့် ‌မဲ ‌ရှာခြင်း
+
+```sql
+SELECT customers.name
+FROM customers
+LEFT JOIN orders ON customers.id = orders.customer_id
+WHERE orders.id IS NULL;
+```
+
+order ‌တစ်ခုမျှ ‌မရှိသော customers — LEFT JOIN + IS NULL ‌ပုံစံ ‌ဖြစ်သည်။
+
+## ‌အဓိက အချက်များ
+- LEFT JOIN — ‌ဘယ်ဘက် ‌အားလုံး
+- ‌မကိုက်ညီ → NULL
+- "‌မရှိသူ ရှာခြင်း" အတွက် IS NULL ‌နှင့် ‌တွဲ

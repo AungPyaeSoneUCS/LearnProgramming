@@ -1,0 +1,59 @@
+---
+title: "Node.js Agent — Agent class"
+description: "Agent — http agent — connection pooling — ဥပမာ။"
+autoNumbering: true
+---
+
+`node:http` **Agent** — HTTP connections ‌ကို pool — ‌ပြန် ‌သုံး — performance ‌ကောင်း။
+
+## Default agent
+
+```js
+const http = require("node:http");
+
+http.get("http://example.com", (res) => {
+  let body = "";
+  res.on("data", (c) => (body += c));
+  res.on("end", () => console.log(body.length));
+});
+```
+
+## Custom agent
+
+```js
+const http = require("node:http");
+
+const agent = new http.Agent({
+  keepAlive: true,
+  maxSockets: 50,
+});
+
+const req = http.request(
+  {
+    host: "example.com",
+    path: "/",
+    agent,
+  },
+  (res) => {
+    res.resume();
+    res.on("end", () => console.log("done"));
+  }
+);
+req.end();
+```
+
+## Options
+| Option | ‌လုပ် |
+| --- | --- |
+| `keepAlive` | ‌ပြန်သုံး connection |
+| `maxSockets` | ‌အ‌များဆုံး parallel |
+| `maxFreeSockets` | ‌ရှိ idle pool |
+
+## Why pooling
+- TCP handshake ‌ထပ် ‌ချိန်း ‌ချွေတာ
+- Under load — connections ‌များ ‌စီမံ
+
+## ‌အဓိက အချက်များ
+- `http.Agent({ keepAlive })`
+- maxSockets — limit
+- Reuse connections

@@ -1,0 +1,65 @@
+---
+title: "sql-database-create-db"
+description: "CREATE DATABASE — database အသစ်ဆောက်ခြင်း၊ DB အလိုက် syntax၊ USE အသုံးပြုခြင်း။"
+autoNumbering: true
+---
+
+ဒီ Module ကစပြီး Database ကိုယ်တိုင် စီမံခန့်ခွဲခြင်း (DDL — Data Definition Language) ကို သင်ပါမယ်။ ပထမဆုံး — database အသစ်တစ်ခုဖွဲ့ပါမယ်။
+
+## CREATE DATABASE (တစ်မျိုးချင်းစီ)
+```sql
+-- SQL Server
+CREATE DATABASE ShopDB;
+ 
+-- MySQL
+CREATE DATABASE ShopDB;
+ 
+-- PostgreSQL
+CREATE DATABASE shopdb;
+```
+CREATE DATABASE name က database box အသစ်တစ်ခုကို ဖန်တီးပါတယ်။ Database name က unique ဖြစ်ရပြီး table တွေအတွက် သိုလှောင်ရန် box ဖြစ်ပါတယ်။
+
+## Database စစ်ဆေးခြင်း
+```sql
+-- MySQL
+SHOW DATABASES;
+ 
+-- SQL Server
+EXEC sp_databases;
+ 
+-- PostgreSQL
+\l
+```
+Database တွေ ရှိပြီးသားစာရင်း ကြည့်ခြင်း — duplicate name ရှောင်ဖို့ အသုံးဝင်ပါတယ်။
+
+## USE — ရွေးသုံးခြင်း
+```sql
+USE ShopDB;
+```
+Database တစ်ခုကို "open" ပြီး နောက် statement တွေကို အဲဒီ database ထဲမှာ run ဖို့ လုပ်ပါတယ်။
+
+## Encoding / Collation (အဆင့်မြင့်)
+```sql
+-- MySQL — UTF-8 + emoji support
+CREATE DATABASE ShopDB
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+ 
+-- PostgreSQL
+CREATE DATABASE shopdb WITH ENCODING 'UTF8';
+```
+Character set (စာလုံးပုံစံ) နဲ့ Collation (စီခြင်း/sort rule) ကို သတ်မှတ်နိုင်ပြီး Myanmar/Unicode စာသားတွေ သိမ်းတဲ့အခါ utf8mb4 က အရေးကြီးပါတယ်။
+
+## "IF NOT EXISTS"
+```sql
+-- PostgreSQL / MySQL 8
+CREATE DATABASE IF NOT EXISTS ShopDB;
+```
+Database ရှိပြီးသားဆိုရင် error တက်မည့်အစား skip လုပ်ပါတယ် (မရှိမှ create) — idempotent script ရေးဖို့ အသုံးဝင်ပါတယ်။
+
+## အဓိက အချက်များ
+- CREATE DATABASE name — box ဖွင့်
+- SHOW DATABASES / EXEC sp_databases — စစ်
+- USE name — ရွေးသုံး
+- utf8mb4 — Unicode/Myanmar text အတွက်
+- IF NOT EXISTS — idempotent

@@ -1,0 +1,51 @@
+---
+title: "Node.js MySQL Create Table — Create Table"
+description: "Node + MySQL — create table, describe, drop — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Node.js ‌မှ tables ‌ဖန်တီးနည်း။
+
+## Create table
+
+```js
+await db.query(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE,
+    age INT DEFAULT 0
+  )
+`);
+```
+
+## Describe
+
+```js
+const [columns] = await db.query("DESCRIBE users");
+console.log(columns);
+```
+
+## Drop
+
+```js
+await db.query("DROP TABLE IF EXISTS users");
+```
+
+## Foreign key ‌ဥပမာ
+
+```js
+await db.query(`
+  CREATE TABLE IF NOT EXISTS orders (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    amount DECIMAL(10,2),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  )
+`);
+```
+
+## ‌အဓိက အချက်များ
+- CREATE TABLE IF NOT EXISTS
+- DESCRIBE — ‌ပြ
+- FK references — ‌ချိတ်

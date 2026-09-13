@@ -1,0 +1,56 @@
+---
+title: "Node.js Get Started — စတင်ခြင်း"
+description: "Node.js Install လုပ်နည်း — first program, Hello World, version စစ်ခြင်း။"
+autoNumbering: true
+---
+
+Node.js ကို install လုပ်ပြီး ပထမဆုံး program ရေးနည်း။
+
+## Step 1 — Install
+
+[nodejs.org](https://nodejs.org) မှ LTS ဗားရှင်း download → install။
+
+## Step 2 — Version စစ်
+
+Terminal / Command Prompt တွင်:
+
+```bash
+node -v
+npm -v
+```
+
+`v20.x.x` ကဲ့သို့ version ပြန်ထွက်ရမည်။
+
+## Step 3 — First File
+
+`myfirst.js` ဖန်တီး:
+
+```js
+console.log("Hello World!");
+```
+
+## Step 4 — Run
+
+```bash
+node myfirst.js
+```
+
+Output — `Hello World!`။
+
+## First HTTP web server
+
+```js
+const http = require("node:http");
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("Hello from server");
+});
+server.listen(8080);
+```
+
+Browser တွင် `http://localhost:8080` ဖွင့်ပါ။
+
+## အဓိက အချက်များ
+- nodejs.org → install
+- `node -v` စစ်
+- `node file.js` run

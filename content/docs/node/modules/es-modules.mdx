@@ -1,0 +1,64 @@
+---
+title: "Node.js ES Modules — ES Modules"
+description: "ES Modules — import/export — type module — default & named — ဥပမာများ။"
+autoNumbering: true
+---
+
+**ES Modules (ESM)** — standard `import`/`export` syntax — Node.js 16+ မှ stable ။
+
+## Enable
+
+`package.json`:
+
+```json
+{
+  "type": "module"
+}
+```
+
+‌သို့မဟုတ် `.mjs` extension ‌အသုံးပြု — ‌ဖိုင်‌တိုင်း ‌စီ။
+
+## Export / Import
+
+`math.js`:
+
+```js
+export const add = (a, b) => a + b;
+export default function multiply(a, b) {
+  return a * b;
+}
+```
+
+`app.js`:
+
+```js
+import multiply, { add } from "./math.js";
+console.log(add(2, 3), multiply(4, 5));
+```
+
+## Named vs Default
+
+| ‌ပုံစံ | Export | Import |
+| --- | --- | --- |
+| Named | `export { name }` | `import { name }` |
+| Default | `export default fn` | `import fn` |
+
+## Import built-in ESM
+
+```js
+import fs from "node:fs/promises";
+import { EventEmitter } from "node:events";
+```
+
+## CJS နှင့် ESM — interop
+
+CommonJS module ကို ESM တွင် import default ဖြင့် ရသည်:
+
+```js
+import express from "express"; // CJS package
+```
+
+## ‌အဓိက အချက်များ
+- ESM — import/export
+- `"type": "module"` သို့ .mjs
+- Default + named exports

@@ -1,0 +1,67 @@
+---
+title: "MySQL LIKE — LIKE Operator"
+description: "LIKE — pattern ‌ကိုက်ညီမှု ရှာဖွေခြင်း — %, _ wildcards ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+`LIKE` operator သည် column ‌တန်ဖိုးထဲ **pattern ‌ကိုက်ညီ‌သော text** ‌များကို ရှာရန် WHERE ‌တွင် ‌သုံးပါတယ်။
+
+## Syntax
+
+```sql
+SELECT column1
+FROM table_name
+WHERE column LIKE pattern;
+```
+
+## Wildcards
+
+| Wildcard | ‌အဓိပ္ပါယ် |
+| --- | --- |
+| `%` | ‌မည်သည့် characters ‌အ‌ရေအတွက်မဆို |
+| `_` | ‌စာလုံးတစ်လုံးတည်း |
+
+## ‌ဥပမာများ
+
+```sql
+-- 'Cha' နဲ့ စသည်
+SELECT * FROM products WHERE name LIKE 'Cha%';
+
+-- 'phone' နဲ့ ဆုံးသည်
+SELECT * FROM products WHERE name LIKE '%phone';
+
+-- ဘယ်နေရာမှာမဆို 'book'
+SELECT * FROM products WHERE name LIKE '%book%';
+
+-- 4 လုံး + 'at' (e.g. Chat, Boat)
+SELECT * FROM products WHERE name LIKE '_at';
+```
+
+## NOT LIKE
+
+```sql
+SELECT * FROM products WHERE name NOT LIKE 'A%';
+```
+
+## ‌ဥပမာ ‌ဇယား
+
+```
+Name
+Aung
+Aye
+Mya
+Zaw
+```
+
+- `LIKE 'A%'` → Aung, Aye
+- `LIKE '%a'` → Mya
+- `LIKE '_u%'` → Aung, Su စသည်
+
+## Case sensitivity
+MySQL ‌မူလ sorting (collation) အရ — Latin ‌တွင် case ‌အား ‌လျစ်လျူရှုတတ်သည် (ci collation)။
+
+## ‌အဓိက အချက်များ
+- LIKE + % / _
+- `%` — ‌ဘာ characters မဆို
+- `_` — ‌တစ်လုံးတည်း
+- NOT LIKE လည်း ‌ရနိုင်

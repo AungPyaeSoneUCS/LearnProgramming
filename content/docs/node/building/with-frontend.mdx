@@ -1,0 +1,69 @@
+---
+title: "Node.js with Frontend — Frontend နှင့် ချိတ်ဆက်"
+description: "Node backend + frontend — static files, CORS, fetch — ဥပမာများ။"
+autoNumbering: true
+---
+
+Node.js API ကို frontend ‌မှ ‌ခေါ်‌သုံးနည်း — static hosting, CORS, fetch ‌ဥပမာ။
+
+## Static files serve — Express
+
+```js
+const express = require("express");
+const app = express();
+
+app.use(express.static("public")); // /index.html served
+
+app.get("/api/items", (req, res) => res.json([{ id: 1 }]));
+
+app.listen(3000);
+```
+
+## In dev — que proxy (Vite)
+
+```js
+// vite.config.js
+export default {
+  server: {
+    proxy: {
+      "/api": "http://localhost:3000"
+    }
+  }
+};
+```
+
+## CORS (frontend different origin)
+
+```bash
+npm install cors
+```
+
+```js
+const cors = require("cors");
+app.use(cors());
+```
+
+Frontend port (e.g., 5173) → API (3000) — cross-origin ‌ခွင့်ပြု။
+
+## Front — fetch
+
+```js
+const res = await fetch("/api/items");
+const items = await res.json();
+document.body.textContent = JSON.stringify(items);
+```
+
+## ‌အဆင့်မြင့် — Next.js/React server
+
+```js
+// Next.js route handler
+export async function GET() {
+  const res = await fetch("http://localhost:3000/api/items");
+  return Response.json(await res.json());
+}
+```
+
+## ‌အဓိက အချက်များ
+- express.static — serve
+- CORS — different origin
+- fetch — consume API

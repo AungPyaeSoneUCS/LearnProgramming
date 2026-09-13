@@ -1,0 +1,55 @@
+---
+title: "MySQL SELECT DISTINCT — SELECT DISTINCT"
+description: "SELECT DISTINCT — duplicate ‌တန်ဖိုးများကို ဖယ်၍ unique ‌တစ်ခုစီသာ ‌ပြခြင်း။"
+autoNumbering: true
+---
+
+`SELECT DISTINCT` သည် ဇယားထဲမှ **unique** ‌တန်ဖိုးများသာ ‌ပြသပြီး duplicate ‌တန်ဖိုးများကို ဖယ်ရှားပါတယ်။
+
+## Syntax
+
+```sql
+SELECT DISTINCT column1, column2, ...
+FROM table_name;
+```
+
+## ဥပမာ
+
+```sql
+SELECT DISTINCT city FROM customers;
+```
+
+customers မှ city ‌တစ်ခုစီ ကို ‌တစ်ခါသာ ‌ပြသည် — ‌ထပ်နေသော city များကို ‌ဖယ်သည်။
+
+## ဥပမာ — အ‌ခြေ data
+
+```
+customers
++----+--------------+-----------+
+| id | name         | city      |
++----+--------------+-----------+
+| 1  | Aung         | Yangon    |
+| 2  | Su           | Mandalay  |
+| 3  | Mya          | Yangon    |
+| 4  | Hla          | Mandalay  |
++----+--------------+-----------+
+```
+
+Query ‌ရလဒ် — `Yangon, Mandalay` (2 rows သာ)။
+
+## COUNT ‌နှင့် ပေါင်းသုံး
+
+```sql
+SELECT COUNT(DISTINCT city) FROM customers;
+```
+
+unique city စုစုပေါင်း အရေအတွက်ကို ပြသည်။
+
+## သတိထားရန်
+- DISTINCT သည် ရွေးထားသော column ပေါင်းစပ် value အတွက် ဖြစ်သည်
+- Column များစွာ ရွေးလျှင် combination ကို unique စစ်သည်
+
+## အဓိက အချက်များ
+- DISTINCT — duplicate ‌ဖယ်
+- Unique values စာရင်း ‌ရယူရန်
+- COUNT(DISTINCT ...) ပါ ရေးနိုင်

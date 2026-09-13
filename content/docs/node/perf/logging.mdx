@@ -1,0 +1,54 @@
+---
+title: "Node.js Logging — Logging"
+description: "Logging — console, pino/winston, morgan — structured logs — ဥပမာ။"
+autoNumbering: true
+---
+
+Production ‌တွင် ‌မက့်ချက် — ‌အ‌မှား ‌ရှာရန် ‌အရေး‌ကြီး — structured logging။
+
+## console — basics
+
+```js
+console.log("info", data);
+console.warn("warning");
+console.error(new Error("boom"));
+```
+
+## Morgan — request logs (Express)
+
+```bash
+npm install morgan
+```
+
+```js
+const morgan = require("morgan");
+app.use(morgan("combined"));
+```
+
+## Pino — structured, fast
+
+```bash
+npm install pino
+```
+
+```js
+const pino = require("pino");
+const logger = pino();
+
+logger.info({ userId: 42 }, "user logged in");
+logger.error({ err }, "db failed");
+```
+
+Output — JSON — machine-readable → log collectors တွင် parser အတွက် အသုံးဝင်။
+
+## Log levels
+fatal > error > warn > info > debug > trace
+
+```js
+logger.level = process.env.LOG_LEVEL ?? "info";
+```
+
+## ‌အဓိက အချက်များ
+- Structured logs — JSON
+- morgan — HTTP logs
+- pino — fast + levels

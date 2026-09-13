@@ -1,0 +1,60 @@
+---
+title: "ES6 Variables — let နဲ့ const"
+description: "var vs let vs const — block scope, reassign, hoisting ကွာခြားချက်နဲ့ ဘယ်အခါ ဘယ်ဟာ သုံးရမလဲ။"
+autoNumbering: true
+---
+
+ES6 မတိုင်ခင်က variable တွေကို `var` နဲ့ပဲ ကြေညာရပါတယ်။ ES6 မှာ `let` နဲ့ `const` နှစ်ခု ထပ်တိုးလာပါတယ်။
+
+## var vs let vs const
+
+```js
+var x = 5;      // function scope, ပြန်ကြေညာလို့ရတယ်
+let y = 5;      // block scope, ပြန်ကြေညာလို့ မရ
+const z = 5;    // block scope, reassign မလုပ်နိုင်
+```
+
+| Keyword | Scope | Reassign | Redeclare |
+| --- | --- | --- | --- |
+| `var` | function | ရတယ် | ရတယ် |
+| `let` | block `{}` | ရတယ် | မရ |
+| `const` | block `{}` | **မရ** | မရ |
+
+## Block Scope ဥပမာ
+
+```js
+let a = 10;
+
+if (true) {
+  let a = 20;          // ဒါက သီးခြား block scope
+  console.log(a);      // 20
+}
+
+console.log(a);        // 10
+```
+
+`var` ဆိုရင် အပြင်က `a` ပါ ပြောင်းသွားမယ်။
+
+## const Object/Array
+
+`const` က variable ကို မပြောင်းနိုင်ပေမယ့် object/array ရဲ့ **အတွင်းက value တွေကို ပြောင်းလို့ရပါတယ်**။
+
+```js
+const person = { name: "Aung" };
+person.name = "Ko";      // ရတယ်
+person.age = 30;         // ရတယ်
+
+const numbers = [1, 2, 3];
+numbers.push(4);         // ရတယ်
+// numbers = [5];        // error! reassign မရဘူး
+```
+
+## React မှာ ဘယ်ဟာ သုံးမလဲ?
+- value ပြန်ပြောင်းစရာ မလိုတဲ့ variable — `const`
+- loop counter သို့မဟုတ် reassign လုပ်ရမယ့်ဟာ — `let`
+- `var` ကို ရှောင်ပါ
+
+## အဓိက အချက်များ
+- `let` — block scope, reassign ရတယ်
+- `const` — block scope, reassign မရဘူး (object/array အတွင်းကတော့ ပြောင်းလို့ရ)
+- `var` ကိုတော့ ခေတ်မီ code မှာ သုံးစရာ မလိုတော့ဘူး

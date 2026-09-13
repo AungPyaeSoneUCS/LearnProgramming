@@ -1,0 +1,54 @@
+---
+title: "MySQL Auto Increment — AUTO_INCREMENT"
+description: "AUTO_INCREMENT — id ‌အလိုအလျောက် — ‌ဥပမာ, starting value, ‌သတိထားရန်။"
+autoNumbering: true
+---
+
+`AUTO_INCREMENT` သည် column ‌တွင်းသို့ **‌အလိုအလျောက် နံပါတ်** (1, 2, 3 ...) ‌ထည့်‌ပေးပါတယ် — ‌ထည့်‌ချိန် id ‌ရေး‌စရာ ‌မလို။
+
+## Syntax — create table
+
+```sql
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100)
+);
+```
+
+`id` ‌သည် PK + ‌အလိုအလျောက် ‌ကြီးသွား။
+
+## Insert — id ‌ချန်
+
+```sql
+INSERT INTO users (name) VALUES ('Aung');
+INSERT INTO users (name) VALUES ('Su');
+-- id ‌အလိုအလျောက် 1, 2
+```
+
+## Starting value ‌ပြောင်း
+
+```sql
+ALTER TABLE users AUTO_INCREMENT = 1000;
+```
+
+နောက် insert → 1000, 1001...။
+
+## ‌ဥပမာ ‌ရလဒ်
+
+```
+users
+id  name
+1   Aung
+2   Su
+1000 Phyu
+```
+
+## Rules / ‌သတိထားရန်
+- Column ‌သည် index (ပုံမှန် PK) ‌ဖြစ်‌ရမည်
+- Type သည် INT/BIGINT ‌မျိုး
+- Row ‌ဖျက်လျှင် ‌နံပါတ် ‌ပြန်ဂမ် ‌မလှည့် (gap ‌ဖြစ်နိုင်)
+
+## ‌အဓိက အချက်များ
+- AUTO_INCREMENT — id ‌အလိုအလျောက်
+- PK ‌နှင့် ‌တွဲ ‌သုံးများ
+- Start ‌ပြောင်းနိုင်, gaps ‌ပေါ်နိုင်

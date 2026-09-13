@@ -1,0 +1,78 @@
+---
+title: "React First App — ပထမဆုံး React App"
+description: "ပထမဆုံး React app ကို main.jsx, App.jsx ဖိုင်များဖြင့် အဆင့်ဆင့် ရေးသားနည်း။"
+autoNumbering: true
+---
+
+Vite နဲ့ project ဖန်တီးပြီးတာနဲ့ `src/App.jsx` ကို ပြင်ပြီး ကိုယ့် ပထမဆုံး React app ကို ရေးကြည့်ပါမယ်။
+
+## Step 1 — App component ကို ပြင်ဆင်
+
+```jsx
+// src/App.jsx
+function App() {
+  return (
+    <div>
+      <h1>Hello, Takkatho Student!</h1>
+      <p>My first React app.</p>
+    </div>
+  );
+}
+
+export default App;
+```
+
+## Step 2 — Component များလာ ခွဲခြင်း
+
+Header, Content, Footer ဆိုတဲ့ component ၃ ခုကို ခွဲပြီး `App` ထဲမှာ စုပြပါမယ်။
+
+```jsx
+// src/components/Header.jsx
+function Header() {
+  return <h1 style={{ color: "tomato" }}>My Website</h1>;
+}
+
+// src/components/Content.jsx
+function Content() {
+  return <p>ကြိုဆိုပါတယ်။ ဒီ page က React နဲ့ ရေးထားတာပါ။</p>;
+}
+
+// src/components/Footer.jsx
+function Footer() {
+  return <footer>© 2026 Takkatho</footer>;
+}
+```
+
+```jsx
+// src/App.jsx
+import Header from "./components/Header";
+import Content from "./components/Content";
+import Footer from "./components/Footer";
+
+function App() {
+  return (
+    <div>
+      <Header />
+      <Content />
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
+```
+
+`import` နဲ့ component တွေကို သက်ဆိုင်ရာ နေရာမှာ `export default` လုပ်ထားပြီး `App` ထဲ ထည့်သုံးပါတယ်။
+
+## Run လုပ်ကြည့်ခြင်း
+
+```bash
+npm run dev
+```
+
+Browser မှာ User Interface ကို render ဖြစ်နေတာကို မြင်ရပါမယ်။
+
+## အဓိက အချက်များ
+- App က root component ဖြစ်ပြီး ကျန် component တွေကို စုပြသည်
+- Component တစ်ခုစီက သီးခြား ဖိုင်မှာ ရေးလေ့ရှိသည်
+- `style={{ color: "tomato" }}` — inline style သည် object အနေနဲ့ ရေးသည်

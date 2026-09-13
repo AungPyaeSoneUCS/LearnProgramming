@@ -1,0 +1,57 @@
+---
+title: "MySQL Dates — Dates"
+description: "DATE, DATETIME, TIMESTAMP — ‌ရက်စွဲ ‌သိမ်းပုံ — ‌ဥပမာ, NOW(), functions။"
+autoNumbering: true
+---
+
+MySQL ‌တွင် ‌ရက်စွဲ/‌အချိန် types များ — ‌သိမ်းချိန် ‌ဖော်မက်၊ ‌တွက်ချက်ချက်။
+
+## Date/Time Types
+
+| Type | ‌ဖော်ပြချက် | ‌ဥပမာ |
+| --- | --- | --- |
+| `DATE` | ရက်စွဲ | `2026-09-14` |
+| `TIME` | ‌အချိန် | `14:30:00` |
+| `DATETIME` | date + time | `2026-09-14 14:30:00` |
+| `TIMESTAMP` | date + time (range) | ‌အ‌ပေါ် |
+| `YEAR` | ‌ခုနှစ် | `2026` |
+
+## ‌ဥပမာ — create table
+
+```sql
+CREATE TABLE events (
+  id INT PRIMARY KEY,
+  event_date DATE,
+  held_at DATETIME
+);
+```
+
+**‌ဖော်မက်:** YYYY-MM-DD / YYYY-MM-DD HH:MM:SS — ‌အစဉ် ‌ရေးရန်။
+
+## Insert — string literal
+
+```sql
+INSERT INTO events (event_date, held_at)
+VALUES ('2026-09-14', '2026-09-14 09:00:00');
+```
+
+## Functions
+
+```sql
+SELECT NOW();                              -- current datetime
+SELECT CURDATE();                          -- current date
+SELECT DATE_FORMAT(held_at, '%Y-%m-%d') FROM events;  -- ‌ဖော်မက် ‌ပြောင်
+SELECT DATEDIFF(CURDATE(), event_date) AS days FROM events;  -- ‌ကွာဟမှု
+```
+
+## လတ်တလော Data ‌ရှာခြင်း
+
+```sql
+SELECT * FROM events
+WHERE event_date >= '2026-01-01';
+```
+
+## ‌အဓိက အချက်များ
+- DATE / DATETIME / TIMESTAMP
+- ‌ဖော်မက် ‌တာ‌ရှည်ဇယား YYYY-MM-DD
+- NOW(), CURDATE(), DATEDIFF()

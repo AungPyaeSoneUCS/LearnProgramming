@@ -1,0 +1,68 @@
+---
+title: "React Forward Ref — ForwardRef"
+description: "forwardRef ‌ဖြင့် child component ရဲ့ DOM element ‌ကို ဖမ်းယူနည်း — useRef + forwardRef ။"
+autoNumbering: true
+---
+
+`ref` ကို component ‌တစ်ခုမှ ‌နောက်တစ်ခုသို့ ‌ဖြတ်‌ပေးဖို့ **`forwardRef`** ကို ‌သုံးပါတယ် — ‌ဥပမာ child ရဲ့ `<input>` ‌ကို parent ဘက်က ‌တိုက်ရိုက် focus ‌လုပ်ချင် ရင်။
+
+## ‌အခြေခံ — useRef
+
+```jsx
+import { useRef } from "react";
+
+function App() {
+  const inputRef = useRef(null);
+
+  const focusInput = () => {
+    inputRef.current.focus();
+  };
+
+  return (
+    <>
+      <input ref={inputRef} type="text" />
+      <button onClick={focusInput}>Focus Input</button>
+    </>
+  );
+}
+```
+
+## Child ရဲ့ input ကို focus — forwardRef
+
+```jsx
+import { forwardRef } from "react";
+
+const Input = forwardRef((props, ref) => {
+  return <input ref={ref} type="text" {...props} />;
+});
+
+function App() {
+  const inputRef = useRef(null);
+
+  return (
+    <>
+      <Input ref={inputRef} placeholder="Type something" />
+      <button onClick={() => inputRef.current.focus()}>
+        Focus child input
+      </button>
+    </>
+  );
+}
+```
+
+`forwardRef((props, ref) => ...)` — ၂ ခု arguments ‌ရပြီး ref ‌ကို ‌၎င်း ရဲ့ DOM ‌ထဲ လက်ဆင့်ကမ်း ပေးနိုင်ပါတယ်။
+
+## React 19 — props အနေနဲ့ ref
+
+React 19 ‌တွင် `forwardRef` ‌မလိုဘဲ ref ‌ကို props အနေနဲ့ တိုက်ရိုက် ‌ပေးနိုင်ပါပြီ။
+
+```jsx
+function Input({ ref, ...props }) {
+  return <input ref={ref} type="text" {...props} />;
+}
+```
+
+## ‌အဓိက အချက်များ
+- `forwardRef` ‌က parent → child DOM ref ‌လွှဲပေး
+- Child ‌ထဲ `ref` ‌ကို 2nd argument ‌အနေနဲ့ ‌ရယူ
+- React 19 — ref ‌ကို props ‌အနေနဲ့ပါ သုံးလို့ရ

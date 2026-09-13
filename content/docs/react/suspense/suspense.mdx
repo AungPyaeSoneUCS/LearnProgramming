@@ -1,0 +1,73 @@
+---
+title: "React Suspense — Suspense"
+description: "React Suspense ‌ဖြင့် code ‌ခွဲ ချိန်တွင် loading state ‌ပြသ‌နည်း — React.lazy, fallback ။"
+autoNumbering: true
+---
+
+Suspense ‌ဆိုတာ component ‌တစ်ခု **ready မဖြစ်သေး** ‌ချိန်မှာ fallback (loading) UI ‌ပြ‌ပေး‌တဲ့ component ‌ဖြစ်ပါတယ်။ ‌အသုံးများတာက `React.lazy()` ‌နဲ့ code splitting ‌လုပ်တဲ့ ‌အခါ ပါ။
+
+## React.lazy — ‌လိုအပ်မှ ‌တင်
+
+```jsx
+const LazyComponent = React.lazy(() => import("./MyComponent"));
+```
+
+Component ‌ပထမဆုံး ‌လိုအပ်တဲ့ ‌အချိန်မှသာ module ‌ကို ‌ဒေါင်း load ‌လုပ်‌ပြီး bundle ‌သေး ‌စေပါတယ်။
+
+## Suspense ‌နဲ့ ‌တွဲသုံး
+
+```jsx
+import { Suspense, lazy } from "react";
+
+const Car = lazy(() => import("./Car"));
+
+function Garage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Car />
+    </Suspense>
+  );
+}
+```
+
+`fallback` — component load ‌လုပ်‌နေချိန် ‌ပြသ။
+
+## ‌ဥပမာ — App ‌ရဲ့ ‌အ‌ခြေအ‌နေ
+
+```jsx
+// App.jsx
+import { Suspense, lazy } from "react";
+
+const HomePage = lazy(() => import("./HomePage"));
+const AboutPage = lazy(() => import("./AboutPage"));
+
+function App() {
+  const [page, setPage] = useState("home");
+
+  return (
+    <div>
+      <nav>
+        <button onClick={() => setPage("home")}>Home</button>
+        <button onClick={() => setPage("about")}>About</button>
+      </nav>
+
+      <Suspense fallback={<h2>Loading…</h2>}>
+        {page === "home" ? <HomePage /> : <AboutPage />}
+      </Suspense>
+    </div>
+  );
+}
+```
+
+## Named Export ‌ကိုတော့
+
+```jsx
+const Car = lazy(() => import("./Car").then((m) => ({ default: m.Car })));
+```
+
+react lazy က default export ကိုသာ ‌မျှော်‌လင့် — named export ဆို `.then` ‌နဲ့ ‌ပြောင်း ပေးရပါတယ်။
+
+## ‌အဓိက အချက်များ
+- `Suspense fallback={...}` — loading UI
+- `React.lazy(() => import(...))` — code splitting
+- `then` ‌ဖြင့် named export ‌ထုတ်နိုင်

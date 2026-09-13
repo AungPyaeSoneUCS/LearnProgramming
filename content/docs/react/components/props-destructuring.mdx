@@ -1,0 +1,69 @@
+﻿---
+title: "React Props Destructuring — Props ‌ဖြုတ်ယူခြင်း"
+description: "React props ‌ကို destructuring ‌လုပ်ပြီး ‌ရေးနည်း — { brand, model } ‌တိုက်ရိုက် ‌သုံးခြင်း။"
+autoNumbering: true
+---
+
+Props ‌ကို function parameter ‌ထဲ ‌တိုက်ရိုက် destructure ‌လုပ်ပြီး ‌ရေးလို့ရပါတယ် — ‌ရေးရ ‌ပိုတိုပြီး ဖတ်ရ ပိုလွယ်ပါတယ်။
+
+## ‌ရှေးနည်း (props ‌ထဲ ‌ရှာ)
+
+```jsx
+function Car(props) {
+  return <h2>I am a {props.brand}!</h2>;
+}
+```
+
+## Destructuring ‌နည်း
+
+```jsx
+function Car({ brand }) {
+  return <h2>I am a {brand}!</h2>;
+}
+```
+
+`{ brand }` — props ‌ထဲက ‌အပြင် ‌တစ်ခုကို ‌ဖြုတ်ယူလိုက်တာပါ။ `props.` ‌ရေးစရာ ‌မလိုတော့ဘူး။
+
+## ‌အများကြီး ‌ဖြုတ်ခြင်း
+
+```jsx
+function Car({ brand, model, year }) {
+  return (
+    <h2>
+      {brand} {model} ({year})
+    </h2>
+  );
+}
+
+<Car brand="Toyota" model="Camry" year={2024} />
+```
+
+## Default Value ‌သတ်မှတ်ခြင်း
+
+```jsx
+function Car({ brand = "Unknown" }) {
+  return <h2>I am a {brand}!</h2>;
+}
+
+<Car />          // I am a Unknown
+<Car brand="Ford" />  // I am a Ford
+```
+
+Props မ‌ပို့ ထားရင် default value ‌သုံးပါမယ်။
+
+## ‌ပိုပြီး ‌အသုံးဝင်တဲ့ ‌ပံ့ HTML ‌ပုံစံ
+
+```jsx
+function Greeting({ name, age }) {
+  return (
+    <p>
+      မင်္ဂလာပါ <strong>{name}</strong>။ မင်း အသက် {age} နှစ်ပါ။
+    </p>
+  );
+}
+```
+
+## အဓိက အချက်များ
+- `function Car({ brand })` — props ‌ကို ‌ထဲ ‌ဖြုတ်
+- Default value ‌အတွက် `= defaultValue`
+- `props.` ‌ရေးစရာ ‌မလို — ‌တိုတောင်း လှပ

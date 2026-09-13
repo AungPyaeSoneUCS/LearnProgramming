@@ -1,0 +1,76 @@
+---
+title: "React Conditionals — Conditional Rendering"
+description: "if, &&, ternary ‌သုံးပြီး React ‌မှာ ‌အခြေအနေပေါ် ‌မူတည် UI ‌ပြသနည်း — ၄ ‌မျိုး။"
+autoNumbering: true
+---
+
+React ‌မှာ condition ‌ပေါ် ‌မူတည်ပြီး UI ‌ကို ‌ပြောင်း ‌ပြနိုင်ပါတယ်။ ‌အသုံးများတဲ့ ‌နည်း ‌လေးမျိုး ‌ရှိပါတယ်။
+
+## 1. if Statement
+
+```jsx
+function Goal(props) {
+  const isGoal = props.isGoal;
+
+  if (isGoal) {
+    return <MadeGoal />;
+  }
+  return <MissedGoal />;
+}
+
+function MadeGoal() {
+  return <h1>Goal!</h1>;
+}
+
+function MissedGoal() {
+  return <h1>Missed!</h1>;
+}
+```
+
+## 2. Logical && Operator
+
+```jsx
+function Garage(props) {
+  const cars = props.cars;
+
+  return (
+    <>
+      <h1>Garage</h1>
+      {cars.length > 0 && <h2>You have {cars.length} cars.</h2>}
+    </>
+  );
+}
+```
+
+`cars.length > 0` ‌မှန်မှသာ `<h2>` ‌ပြမယ်။
+
+## 3. Ternary Operator
+
+```jsx
+function showIcon(props) {
+  return props.isLoggedIn ? "👤" : "🔒";
+}
+```
+
+```jsx
+{isLoggedIn ? <UserMenu /> : <LoginButton />}
+```
+
+## 4. IIFE / Function ‌ထဲ ‌ရေးနည်း
+
+```jsx
+function App({ isLoggedIn }) {
+  let content;
+  if (isLoggedIn) {
+    content = <p>Welcome!</p>;
+  } else {
+    content = <p>Please log in.</p>;
+  }
+  return <div>{content}</div>;
+}
+```
+
+## အဓိက အချက်များ
+- `if` — function ‌ထဲ ‌သုံး, ‌ဘယ် ‌လိပ်ပြနိုင်မယ်
+- `&&` — ‌မှန်မှသာ ‌ပြ
+- `? :` — ‌မှန်/မှား ‌နှစ် ‌မျိုး

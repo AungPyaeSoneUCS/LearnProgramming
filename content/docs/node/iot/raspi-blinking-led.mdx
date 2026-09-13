@@ -1,0 +1,56 @@
+---
+title: "Raspberry Pi Blinking LED — Blinking LED"
+description: "Raspberry Pi — LED blinking — ‌ဥပမာ code။"
+autoNumbering: true
+---
+
+LED ကို ‌ပိတ်–ဖွင့် ‌လှည့် — Node.js ‌ဥပမာ။
+
+## Wiring
+- LED anode ‌(+) → resistor (~220Ω) → **GPIO17**
+- LED cathode ‌(−) → **GND**
+
+## Blink code
+
+```js
+const Gpio = require("onoff").Gpio;
+
+const led = new Gpio(17, "out");
+
+setInterval(() => {
+  led.writeSync(led.readSync() === 1 ? 0 : 1);
+}, 500);
+
+process.on("SIGINT", () => {
+  led.writeSync(0);
+  led.unexport();
+  process.exit();
+});
+```
+
+## ‌လက် ‌ချပ် ‌လိုက် interval
+
+```js
+function blink(times = 10, delay = 300) {
+  let count = 0;
+  const timer = setInterval(() => {
+    led.writeSync(count % 2);
+    if (++count >= times * 2) {
+      clearInterval(timer);
+      led.writeSync(0);
+    }
+  }, delay);
+}
+
+blink(5, 400);
+```
+
+## Troubleshooting
+- LED ‌မလင်း — ‌ဆန့် ‌ချိတ် / resistor / pin စစ်
+- Permission — `gpio` group
+- `gpio readall` — pin map
+
+## ‌အဓိက အချက်များ
+- GPIO17 ‌မှ LED
+- setInterval toggle
+- Cleanup unexport

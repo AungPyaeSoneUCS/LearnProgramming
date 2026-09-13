@@ -1,0 +1,51 @@
+---
+title: "MySQL UNION ALL — UNION ALL"
+description: "UNION ALL — duplicate ‌မဖယ်ဘဲ ‌ပေါင်းခြင်း — UNION နှင့် နှိုင်းယှဉ်။"
+autoNumbering: true
+---
+
+`UNION ALL` သည် queries နှစ်ခု ရလဒ်များကို ပေါင်း၍ **duplicate rows ‌များကိုလည်း ‌ထားပေးပါတယ်** — UNION နှင့် ‌ကွာခြားချက်မှာ ‌ထပ်ဖယ်ခြင်း ‌မပြုလုပ်ခြင်း ဖြစ်သည်။
+
+## Syntax
+
+```sql
+SELECT column, ... FROM table1
+UNION ALL
+SELECT column, ... FROM table2;
+```
+
+## ဥပမာ
+
+```sql
+SELECT city FROM customers
+UNION ALL
+SELECT city FROM suppliers
+ORDER BY city;
+```
+
+city ၏ ရလဒ်‌တိုင်းကို duplicate မဖယ်ဘဲ ပြသည် — (Yangon နှစ်ခါ ပါလာနိုင်)။
+
+## UNION vs UNION ALL
+
+| လက္ခဏာ | UNION | UNION ALL |
+| --- | --- | --- |
+| Duplicate ‌ဖယ် | ‌ဖယ်သည် | ‌မဖယ် |
+| Performance | ‌နှေးနိုင် (dedupe) | ‌မြန် |
+| ရလဒ် rows | ‌နည်း/‌တူ | ‌အားလုံး |
+
+## ‌ဥပမာ ‌ဇယား
+
+```
+Customers          Suppliers
+city               city
+Yangon             Yangon
+Mandalay           Bago
+```
+
+- `UNION` → Yangon, Mandalay, Bago
+- `UNION ALL` → Yangon, Mandalay, Yangon, Bago
+
+## ‌အဓိက အချက်များ
+- UNION ALL — ‌အားလုံး ‌ပေါင်း, ‌ထပ်ပါသည်
+- ‌ပိုမြန် — dedupe ‌မလိုချိန် သုံး
+- Columns ‌နှင့် types ‌တူရန်

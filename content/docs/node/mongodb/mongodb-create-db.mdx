@@ -1,0 +1,41 @@
+---
+title: "Node.js MongoDB Create DB — Create Database"
+description: "Node + MongoDB — database ‌ဖန်တီး — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+MongoDB ‌တွင် database ‌ကို **explicitly create** ‌လုပ် ‌စရာ ‌မလို — ‌ပထမ collections/insert ‌လုပ်ချိန် auto-create ‌ဖြစ်သည်။
+
+## ‌ပုံစံ
+
+```js
+const db = client.db("shop"); // ‌ရှိရင် ‌ယူ, ‌မရှိရင် ‌ဖန်တီး
+```
+
+`db()` ‌ခေါ်ရုံဖြင့် ‌ဖန်တီး ‌ရခြင်းမဟုတ် — ‌ထဲ data ‌ထည့်မှသာ ‌ဖြစ်လာသည်။
+
+## Drop database
+
+```js
+await client.db("shop").dropDatabase();
+```
+
+## List databases
+
+```js
+const dbs = await client.db().admin().listDatabases();
+console.log(dbs.databases);
+```
+
+## Check existence
+
+```js
+const dbs = await client.db().admin().listDatabases();
+const names = dbs.databases.map((d) => d.name);
+console.log(names.includes("shop"));
+```
+
+## ‌အဓိက အချက်များ
+- db(name) — lazy create
+- dropDatabase() — ‌ဖျက်
+- listDatabases — ‌ပြ

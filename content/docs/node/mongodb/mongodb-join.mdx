@@ -1,0 +1,57 @@
+---
+title: "Node.js MongoDB Join — Join (Lookup)"
+description: "Node + MongoDB — $lookup aggregation — populate — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+MongoDB ‌တွင် join ‌လုပ်‌ရန် **aggregation `$lookup`** — SQL outer join ‌နှင့် ဆင်သည်။
+
+## $lookup
+
+```js
+const pipeline = [
+  {
+    $lookup: {
+      from: "orders",
+      localField: "_id",
+      foreignField: "user_id",
+      as: "orders",
+    },
+  },
+];
+
+const users = await db.collection("users").aggregate(pipeline).toArray();
+console.log(users[0].orders); // array — joined docs
+```
+
+## ‌ဥပမာ — ‌မှား‌နည်း
+
+```js
+// users: { _id, name }
+// orders: { user_id, amount }
+db.collection("users").aggregate([
+  {
+    $lookup: {
+      from: "orders",
+      localField: "_id",
+      foreignField: "user_id",
+      as: "user_orders",
+    },
+  },
+  { $match: { user_orders: { $ne: [] } } },
+]);
+```
+
+## $unwind — flatten
+
+```js
+db.collection("users").aggregate([
+  { $lookup: { from: "orders", localField: "_id", foreignField: "user_id", as: "o" } },
+  { $unwind: "$o" },
+]);
+```
+
+## ‌အဓိက အချက်များ
+- $lookup — from/localField/foreignField/as
+- Aggregate pipeline
+- $unwind — flatten arrays

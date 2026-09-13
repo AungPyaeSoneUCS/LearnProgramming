@@ -1,0 +1,56 @@
+---
+title: "sql-delete"
+description: "DELETE FROM နဲ့ row များကို ဖျက်ခြင်း — WHERE ပါအောင် သတိပြုပါ။"
+autoNumbering: true
+---
+
+ဒေတာ မလိုတော့တဲ့ row တွေကို ဖျက်ဖို့ DELETE သုံးပါတယ် (CRUD ရဲ့ D)။ UPDATE လိုပဲ WHERE ကို အန္တရာယ်များတဲ့နေရာမှာ အမြဲ ပါစေပါ။
+
+## DELETE အခြေခံ
+```sql
+DELETE FROM Customers
+WHERE CustomerID = 1;
+```
+CustomerID 1 ရှိတဲ့ row ၁ ခုကိုသာ ဖျက်ပါတယ်။ Table ကိုယ်တိုင် (structure) မပျက်ပါဘူး — row သာ ဖျက်တာပါ။
+
+## Condition အများကြီးနဲ့ ဖျက်ခြင်း
+```sql
+DELETE FROM Customers
+WHERE Country = 'Thailand' AND Age < 20;
+```
+Thailand ဖြစ်ပြီး age 20 အောက်ရှိတဲ့ row အားလုံးကို ဖျက်ပါတယ်။ AND/OR/LIKE စတဲ့ WHERE လုပ်တာအားလုံးကို သုံးလို့ရပါတယ်။
+
+## Row အားလုံး ဖျက်ခြင်း (သတိထားပါ)
+```sql
+DELETE FROM Customers;
+```
+WHERE မပါရင် table ထဲက row အားလုံး ဖျက်ပါတယ်။ Table structure ကတော့ ကျန်နေပါတယ်။ Row အားလုံး ဖျက်ချင်ရင် TRUNCATE TABLE (Module 2) က ပိုမြန်ပါတယ်။
+
+```sql
+TRUNCATE TABLE Customers;
+```
+TRUNCATE က row အားလုံးကို ဖျက်ပြီး log နည်းတယ်၊ မြန်ပါတယ်။ ဒါပေမဲ့ WHERE လို့ မရတဲ့အပြင် ပြန်ရဖို့ ခဲယဉ်းပါတယ်။
+
+## ဖျက်ခြင်း vs ပယ်ကျော်ခြင်း
+```sql
+-- Foreign key ကြောင့် ချိတ်ဆက်ထားတဲ့ row ဖျက်လို့ မရတာမျိုး အဖြစ်များပါတယ်
+DELETE FROM Customers WHERE CustomerID = 2;
+```
+Orders table ထဲမှာ ဒီ CustomerID နဲ့ ချိတ်ထားတဲ့ row ရှိရင် database က error ပြနိုင်ပါတယ် (FK constraint — Module 2)။ ဒီလိုအခါ အရင် ဆက်data ဖျက် (သို့) ON DELETE CASCADE သုံးပါတယ်။
+
+## Safety Checklist
+1. အရင် SELECT * FROM ... WHERE ... နဲ့ ဖျက်မယ့်အရာကို ကြည့်ပါ
+2. WHERE condition ကို ပြန်စစ်ပါ
+3. Production မှာ transaction ထဲထည့်ပြီး rollback လုပ်လို့ရအောင် လုပ်ပါ
+
+```sql
+BEGIN TRANSACTION;
+DELETE FROM Customers WHERE CustomerID = 3;
+ROLLBACK; -- မှားရင် ပြန်ပြင်ဖို့ rollback
+```
+
+## အဓိက အချက်များ
+- DELETE FROM table WHERE ... — row တွေ ဖျက်တယ်၊ table မဖျက်ဘူး
+- WHERE မပါရင် row အားလုံး ဖျက်သွားမယ်
+- TRUNCATE က row အားလုံး မြန်မြန်ဖျက်ဖို့ (WHERE အလုပ်မလုပ်)
+- Foreign key နဲ့ ချိတ်ထားတဲ့ row တွေကို သတိထားပါ

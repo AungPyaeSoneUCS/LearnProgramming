@@ -1,0 +1,53 @@
+---
+title: "Node.js Manage Dependencies — Dependencies စီမံခြင်း"
+description: "Manage dependencies — install/update/remove — semver — peer/dev dependencies။"
+autoNumbering: true
+---
+
+Project dependencies ‌များကို စီမံခန့်ခွဲနည်း — ‌အသစ် install, ‌ဗားရှင်း ‌မြှင့်, ‌ဖျက်။
+
+## Install
+
+```bash
+npm install express        # prod dependency
+npm install -D nodemon     # dev dependency
+npm install --save-exact   # ‌အ‌တိအကျ version
+npm install -g eslint      # global
+```
+
+## List / outdated
+
+```bash
+npm list --depth=0        # top-level ‌ပြ
+npm outdated              # ‌ဗားရှင်းသစ် ‌ရှိ‌ခြင်း ‌ပြ
+```
+
+## Update
+
+```bash
+npm update                # ranges ‌အ‌လိုက် update
+npm install pkg@latest    # ‌နောက်‌ဆုံး
+npm install pkg@4.3.1     # ‌အ‌တိအကျ
+```
+
+## Version Ranges (semver)
+
+| Range | ‌အဓိပ္ပာယ် |
+| --- | --- |
+| `4.19.0` | ‌အ‌တိအကျ |
+| `^4.19.0` | 4.x ‌အ‌တွင်း (minor) |
+| `~4.19.0` | 4.19.x ‌အ‌တွင်း (patch) |
+
+## ‌ဖျက်
+
+```bash
+npm uninstall express
+npm ci        # lockfile ‌အတိုင်း ‌အ‌သေချာ install (CI)
+```
+
+`npm ci` — CI environment ‌အတွက် ‌အကောင်းဆုံး — package-lock ‌အ‌ရေး clean install။
+
+## ‌အဓိက အချက်များ
+- install / update / uninstall
+- `^` / `~` ranges
+- npm ci — CI clean install

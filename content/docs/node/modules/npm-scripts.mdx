@@ -1,0 +1,62 @@
+---
+title: "Node.js NPM Scripts — NPM Scripts"
+description: "NPM scripts — start/dev/build — pre/post hooks — ဥပမာများ။"
+autoNumbering: true
+---
+
+**NPM scripts** — package.json ထဲ command များကို name ပေး၍ `npm run` ဖြင့် ‌ခေါ်‌သုံးနည်း။
+
+## ‌စနစ်တကျ ‌မျိုး
+
+```json
+"scripts": {
+  "start": "node index.js",
+  "dev": "node --watch index.js",
+  "test": "node --test",
+  "build": "node scripts/build.js"
+}
+```
+
+## Run
+
+```bash
+npm start        # start
+npm run dev      # dev
+npm test         # test
+npm run build    # build
+```
+
+`start` နှင့် `test` — `run` မလို; အခြားအားလုံး `npm run <name>`။
+
+## Chain scripts — ‌ဆက်‌လုပ်
+
+```json
+"scripts": {
+  "lint": "eslint .",
+  "lint:fix": "eslint . --fix",
+  "check": "npm run lint && npm test"
+}
+```
+
+## Pre/post hooks (‌အလိုအလျောက်)
+
+```json
+"scripts": {
+  "prebuild": "rm -rf dist",
+  "build": "webpack",
+  "postbuild": "node scripts/post.js"
+}
+```
+
+`npm run build` → `prebuild` → `build` → `postbuild` ‌အစဉ်‌လိုက်။
+
+## Args — `--`
+
+```bash
+npm run dev -- --port 4000
+```
+
+## ‌အဓိက အချက်များ
+- scripts — name → command
+- npm start / npm test / npm run X
+- pre/post hooks

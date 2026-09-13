@@ -1,0 +1,71 @@
+---
+title: "MySQL Stored Procedures — Stored Procedures"
+description: "Stored Procedure — ‌ထပ်မ‌ခေါ်သုံးနိုင်သော SQL block — CREATE PROCEDURE, CALL, parameters။"
+autoNumbering: true
+---
+
+**Stored Procedure** သည် SQL statements များကို **named block** ‌အဖြစ် ‌သိမ်းထား၍ ‌ထပ်ခါ‌ခေါ်သုံးနိုင်ပါတယ် — ‌ကုဒ် ‌ပြန်သုံးခြင်းနှင့် performance ‌ကောင်း။
+
+## Syntax
+
+```sql
+CREATE PROCEDURE procedure_name
+AS
+BEGIN
+  -- SQL statements
+END;
+```
+
+## ‌ဥပမာ — customer list procedure
+
+```sql
+DELIMITER //
+
+CREATE PROCEDURE GetAllCustomers()
+BEGIN
+  SELECT * FROM customers;
+END //
+
+DELIMITER ;
+```
+
+## CALL — ‌ခေါ်သုံး
+
+```sql
+CALL GetAllCustomers();
+```
+
+## Parameter ပါသော procedure
+
+```sql
+DELIMITER //
+
+CREATE PROCEDURE GetByCity(IN city_name VARCHAR(100))
+BEGIN
+  SELECT * FROM customers WHERE city = city_name;
+END //
+
+DELIMITER ;
+```
+
+```sql
+CALL GetByCity('Yangon');
+```
+
+`IN` — input parameter။
+
+## ‌ဖျက်ခြင်း — DROP
+
+```sql
+DROP PROCEDURE IF EXISTS GetAllCustomers;
+```
+
+## ‌ဘာ‌ကြောင့် ‌သုံးလဲ
+- ‌ရှုပ်ထွေးသော logic ကို ‌ထပ်တလဲလဲ ‌မရေး
+- App ‌က code မဟုတ် — ‌ရဲ DB query ‌ကို ‌ပြင်နိုင်
+- ‌အလုံး‌ခြုံ authorization / caching ‌လွယ်
+
+## ‌အဓိက အချက်များ
+- CREATE PROCEDURE ... CALL
+- IN parameter ‌ပေးနိုင်
+- ‌ထပ်သုံးနိုင်သော query block

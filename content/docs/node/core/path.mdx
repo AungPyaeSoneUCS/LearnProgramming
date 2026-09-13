@@ -1,0 +1,48 @@
+---
+title: "Node.js Path Module — Path Module"
+description: "Path Module — paths ကိုင် — join, resolve, basename, extname — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:path` — file paths ‌များကို ‌ပို platform-independent ‌ဖြင့် ‌ကိုင်တွယ်နိုင်သည်။
+
+## ‌အရေး‌ကြီး Functions
+
+| Function | ‌လုပ် |
+| --- | --- |
+| `path.join()` | segments ‌ပေါင်း (normalized) |
+| `path.resolve()` | ‌အ‌ပေါင်းစုချုပ် absolute |
+| `path.basename()` | file name ‌ယူ |
+  | `path.dirname()` | folder path ယူ |
+| `path.extname()` | extension ‌ယူ |
+
+```js
+const path = require("node:path");
+
+console.log(path.join("a", "b", "c.txt"));   // a/b/c.txt
+console.log(path.resolve("a", "b"));          // C:\...\a\b
+console.log(path.basename("/a/b/c.txt"));     // c.txt
+console.log(path.extname("/a/b/c.txt"));      // .txt
+```
+
+## ‌ပုံမှန် သုံး — ‌ဖိုင် path ‌ဆောက်
+
+```js
+const filePath = path.join(__dirname, "public", "index.html");
+```
+
+__dirname — current module ၏ folder — မှားသော path ရှောင်ရန် အသုံးပြု။
+
+## Windows vs POSIX
+
+- `path.win32` / `path.posix` — ‌ကွာခြားမှု ‌စစ်
+- `sep` — separator (`\` or `/`)
+
+```js
+console.log(path.sep); // \ on Windows
+```
+
+## ‌အဓိက အချက်များ
+- join / resolve / basename / extname
+- __dirname ‌နှင့် path.join — ‌အသုံးများ
+- Cross-platform paths

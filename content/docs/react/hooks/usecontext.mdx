@@ -1,0 +1,67 @@
+---
+title: "React useContext — useContext Hook"
+description: "useContext — prop drilling ‌ရှောင်ရန် global state — createContext, Provider, useContext ။"
+autoNumbering: true
+---
+
+Context ‌ကိုသုံး၍ props ‌အလယ်‌နည်း ‌တွေ (prop drilling) ‌ရှောင်ပြီး **data ‌ကို component tree ‌တစ်လျှောက်** ‌တိုက်ရိုက် ‌မျှဝေနိုင်ပါတယ်။
+
+## 1. Context ‌ဖန်တီး
+
+```jsx
+import { createContext, useContext, useState } from "react";
+
+const ThemeContext = createContext("light");
+```
+
+## 2. Provider နဲ့ ‌ထုပ်
+
+```jsx
+function App() {
+  const [theme, setTheme] = useState("light");
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <Toolbar />
+    </ThemeContext.Provider>
+  );
+}
+```
+
+`value` — ‌မျှဝေစရာ data ‌အားလုံး။
+
+## 3. Child ‌တွင် useContext
+
+```jsx
+function Toolbar() {
+  const { theme, setTheme } = useContext(ThemeContext);
+
+  return (
+    <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+      Current theme: {theme}
+    </button>
+  );
+}
+```
+
+props ‌ဖြတ်စရာမလို — `Toolbar` ‌ထဲက ဟိုး child ‌ကိုလည်း ‌ထဲ ‌ခေါ် ရပါတယ်။
+
+## ‌ဘာ‌ကြောင့် သုံးလဲ
+
+- Theme / language / user info ‌စသည့် global data
+- Prop drilling — A → B → C → D ဖြတ် ‌ပေးရမဲ့အစား ‌တိုက်ရိုက် consumed
+
+## Default value
+
+```jsx
+const ThemeContext = createContext("light");
+
+function Component() {
+  const theme = useContext(ThemeContext); // Provider ‌မရှိရင် "light"
+}
+```
+
+## ‌အဓိက အချက်များ
+- `createContext(default)` → `Provider value=...` → `useContext(Context)`
+- Prop drilling ‌ကို ‌လျော့
+- Often combined with useState for ‌ပြောင်းလဲ state

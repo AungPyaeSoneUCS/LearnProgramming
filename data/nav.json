@@ -415,87 +415,6 @@
     ]
   },
   {
-    "label": "Node.js",
-    "items": [
-      {
-        "label": "Introduction",
-        "items": [
-          {
-            "label": "Welcome",
-            "slug": "nodejs"
-          }
-        ]
-      },
-      {
-        "label": "Module 1: Basics & Modules",
-        "items": [
-          {
-            "label": "Node.js Basics & Modules",
-            "slug": "nodejs/module-1"
-          }
-        ]
-      },
-      {
-        "label": "Module 2: File System",
-        "items": [
-          {
-            "label": "File System & Path",
-            "slug": "nodejs/module-2"
-          }
-        ]
-      },
-      {
-        "label": "Module 3: Async Programming",
-        "items": [
-          {
-            "label": "Asynchronous Programming",
-            "slug": "nodejs/module-3"
-          }
-        ]
-      },
-      {
-        "label": "Module 4: NPM",
-        "items": [
-          {
-            "label": "NPM & Package Management",
-            "slug": "nodejs/module-4"
-          }
-        ]
-      },
-      {
-        "label": "Module 5: Web Server",
-        "items": [
-          {
-            "label": "Building a Web Server",
-            "slug": "nodejs/module-5"
-          }
-        ]
-      },
-      {
-        "label": "Module 6: Express.js",
-        "items": [
-          {
-            "label": "Express.js Basics",
-            "slug": "nodejs/module-6"
-          }
-        ]
-      },
-      {
-        "label": "Module 7: Mini Project",
-        "items": [
-          {
-            "label": "Simple REST API",
-            "slug": "nodejs/module-7"
-          }
-        ]
-      },
-      {
-        "label": "Node.js မိတ်ဆက်",
-        "slug": "nodejs/index"
-      }
-    ]
-  },
-  {
     "label": "TypeScript",
     "items": [
       {
@@ -2691,6 +2610,1689 @@
       {
         "label": "Linux, Cloud VPS & DevOps မိတ်ဆက် (Course Overview)",
         "slug": "linux-devops/index"
+      }
+    ]
+  },
+  {
+    "label": "SQL Tutorial",
+    "items": [
+      {
+        "label": "1. Introduction",
+        "items": [
+          {
+            "label": "သင်တန်းကြိုဆိုခြင်း",
+            "slug": "sql-tutorial/index"
+          },
+          {
+            "label": "sql-home",
+            "slug": "sql-tutorial/tutorial-intro/sql-home"
+          },
+          {
+            "label": "sql-intro",
+            "slug": "sql-tutorial/tutorial-intro/sql-intro"
+          },
+          {
+            "label": "sql-syntax",
+            "slug": "sql-tutorial/tutorial-intro/sql-syntax"
+          }
+        ]
+      },
+      {
+        "label": "2. SELECT & Filter",
+        "items": [
+          {
+            "label": "sql-and",
+            "slug": "sql-tutorial/tutorial-select/sql-and"
+          },
+          {
+            "label": "sql-not",
+            "slug": "sql-tutorial/tutorial-select/sql-not"
+          },
+          {
+            "label": "sql-or",
+            "slug": "sql-tutorial/tutorial-select/sql-or"
+          },
+          {
+            "label": "sql-order-by",
+            "slug": "sql-tutorial/tutorial-select/sql-order-by"
+          },
+          {
+            "label": "sql-select-distinct",
+            "slug": "sql-tutorial/tutorial-select/sql-select-distinct"
+          },
+          {
+            "label": "sql-select",
+            "slug": "sql-tutorial/tutorial-select/sql-select"
+          },
+          {
+            "label": "sql-where",
+            "slug": "sql-tutorial/tutorial-select/sql-where"
+          }
+        ]
+      },
+      {
+        "label": "3. Insert / Update / Delete",
+        "items": [
+          {
+            "label": "sql-delete",
+            "slug": "sql-tutorial/tutorial-crud/sql-delete"
+          },
+          {
+            "label": "sql-insert",
+            "slug": "sql-tutorial/tutorial-crud/sql-insert"
+          },
+          {
+            "label": "sql-null-values",
+            "slug": "sql-tutorial/tutorial-crud/sql-null-values"
+          },
+          {
+            "label": "sql-select-top",
+            "slug": "sql-tutorial/tutorial-crud/sql-select-top"
+          },
+          {
+            "label": "sql-update",
+            "slug": "sql-tutorial/tutorial-crud/sql-update"
+          }
+        ]
+      },
+      {
+        "label": "4. Aggregate Functions",
+        "items": [
+          {
+            "label": "sql-aggregate-functions",
+            "slug": "sql-tutorial/tutorial-aggregate/sql-aggregate-functions"
+          },
+          {
+            "label": "sql-avg",
+            "slug": "sql-tutorial/tutorial-aggregate/sql-avg"
+          },
+          {
+            "label": "sql-count",
+            "slug": "sql-tutorial/tutorial-aggregate/sql-count"
+          },
+          {
+            "label": "sql-max",
+            "slug": "sql-tutorial/tutorial-aggregate/sql-max"
+          },
+          {
+            "label": "sql-min",
+            "slug": "sql-tutorial/tutorial-aggregate/sql-min"
+          },
+          {
+            "label": "sql-sum",
+            "slug": "sql-tutorial/tutorial-aggregate/sql-sum"
+          }
+        ]
+      },
+      {
+        "label": "5. Pattern Matching",
+        "items": [
+          {
+            "label": "sql-aliases",
+            "slug": "sql-tutorial/tutorial-pattern/sql-aliases"
+          },
+          {
+            "label": "sql-between",
+            "slug": "sql-tutorial/tutorial-pattern/sql-between"
+          },
+          {
+            "label": "sql-in",
+            "slug": "sql-tutorial/tutorial-pattern/sql-in"
+          },
+          {
+            "label": "sql-like",
+            "slug": "sql-tutorial/tutorial-pattern/sql-like"
+          },
+          {
+            "label": "sql-wildcards",
+            "slug": "sql-tutorial/tutorial-pattern/sql-wildcards"
+          }
+        ]
+      },
+      {
+        "label": "6. Joins",
+        "items": [
+          {
+            "label": "sql-full-join",
+            "slug": "sql-tutorial/tutorial-joins/sql-full-join"
+          },
+          {
+            "label": "sql-inner-join",
+            "slug": "sql-tutorial/tutorial-joins/sql-inner-join"
+          },
+          {
+            "label": "sql-joins",
+            "slug": "sql-tutorial/tutorial-joins/sql-joins"
+          },
+          {
+            "label": "sql-left-join",
+            "slug": "sql-tutorial/tutorial-joins/sql-left-join"
+          },
+          {
+            "label": "sql-right-join",
+            "slug": "sql-tutorial/tutorial-joins/sql-right-join"
+          },
+          {
+            "label": "sql-self-join",
+            "slug": "sql-tutorial/tutorial-joins/sql-self-join"
+          }
+        ]
+      },
+      {
+        "label": "7. Grouping & Sets",
+        "items": [
+          {
+            "label": "sql-group-by",
+            "slug": "sql-tutorial/tutorial-grouping/sql-group-by"
+          },
+          {
+            "label": "sql-having",
+            "slug": "sql-tutorial/tutorial-grouping/sql-having"
+          },
+          {
+            "label": "sql-union-all",
+            "slug": "sql-tutorial/tutorial-grouping/sql-union-all"
+          },
+          {
+            "label": "sql-union",
+            "slug": "sql-tutorial/tutorial-grouping/sql-union"
+          }
+        ]
+      },
+      {
+        "label": "8. Advanced SQL",
+        "items": [
+          {
+            "label": "sql-all",
+            "slug": "sql-tutorial/tutorial-advanced/sql-all"
+          },
+          {
+            "label": "sql-any",
+            "slug": "sql-tutorial/tutorial-advanced/sql-any"
+          },
+          {
+            "label": "sql-case",
+            "slug": "sql-tutorial/tutorial-advanced/sql-case"
+          },
+          {
+            "label": "sql-comments",
+            "slug": "sql-tutorial/tutorial-advanced/sql-comments"
+          },
+          {
+            "label": "sql-exists",
+            "slug": "sql-tutorial/tutorial-advanced/sql-exists"
+          },
+          {
+            "label": "sql-insert-into-select",
+            "slug": "sql-tutorial/tutorial-advanced/sql-insert-into-select"
+          },
+          {
+            "label": "sql-null-functions",
+            "slug": "sql-tutorial/tutorial-advanced/sql-null-functions"
+          },
+          {
+            "label": "sql-operators",
+            "slug": "sql-tutorial/tutorial-advanced/sql-operators"
+          },
+          {
+            "label": "sql-select-into",
+            "slug": "sql-tutorial/tutorial-advanced/sql-select-into"
+          },
+          {
+            "label": "sql-stored-procedures",
+            "slug": "sql-tutorial/tutorial-advanced/sql-stored-procedures"
+          }
+        ]
+      },
+      {
+        "label": "9. SQL Database",
+        "items": [
+          {
+            "label": "sql-database-alter-table",
+            "slug": "sql-tutorial/database/sql-database-alter-table"
+          },
+          {
+            "label": "sql-database-auto-increment",
+            "slug": "sql-tutorial/database/sql-database-auto-increment"
+          },
+          {
+            "label": "sql-database-backup-db",
+            "slug": "sql-tutorial/database/sql-database-backup-db"
+          },
+          {
+            "label": "sql-database-check",
+            "slug": "sql-tutorial/database/sql-database-check"
+          },
+          {
+            "label": "sql-database-constraints",
+            "slug": "sql-tutorial/database/sql-database-constraints"
+          },
+          {
+            "label": "sql-database-create-db",
+            "slug": "sql-tutorial/database/sql-database-create-db"
+          },
+          {
+            "label": "sql-database-create-index",
+            "slug": "sql-tutorial/database/sql-database-create-index"
+          },
+          {
+            "label": "sql-database-create-table",
+            "slug": "sql-tutorial/database/sql-database-create-table"
+          },
+          {
+            "label": "sql-database-dates",
+            "slug": "sql-tutorial/database/sql-database-dates"
+          },
+          {
+            "label": "sql-database-default",
+            "slug": "sql-tutorial/database/sql-database-default"
+          },
+          {
+            "label": "sql-database-drop-db",
+            "slug": "sql-tutorial/database/sql-database-drop-db"
+          },
+          {
+            "label": "sql-database-drop-table",
+            "slug": "sql-tutorial/database/sql-database-drop-table"
+          },
+          {
+            "label": "sql-database-foreign-key",
+            "slug": "sql-tutorial/database/sql-database-foreign-key"
+          },
+          {
+            "label": "sql-database-hosting",
+            "slug": "sql-tutorial/database/sql-database-hosting"
+          },
+          {
+            "label": "sql-database-injection",
+            "slug": "sql-tutorial/database/sql-database-injection"
+          },
+          {
+            "label": "sql-database-not-null",
+            "slug": "sql-tutorial/database/sql-database-not-null"
+          },
+          {
+            "label": "sql-database-parameters",
+            "slug": "sql-tutorial/database/sql-database-parameters"
+          },
+          {
+            "label": "sql-database-prepared-statements",
+            "slug": "sql-tutorial/database/sql-database-prepared-statements"
+          },
+          {
+            "label": "sql-database-primary-key",
+            "slug": "sql-tutorial/database/sql-database-primary-key"
+          },
+          {
+            "label": "sql-database-unique",
+            "slug": "sql-tutorial/database/sql-database-unique"
+          },
+          {
+            "label": "sql-database-views",
+            "slug": "sql-tutorial/database/sql-database-views"
+          }
+        ]
+      },
+      {
+        "label": "10. SQL References",
+        "items": [
+          {
+            "label": "sql-reference-access-functions",
+            "slug": "sql-tutorial/reference/sql-reference-access-functions"
+          },
+          {
+            "label": "sql-reference-data-types",
+            "slug": "sql-tutorial/reference/sql-reference-data-types"
+          },
+          {
+            "label": "sql-reference-keywords",
+            "slug": "sql-tutorial/reference/sql-reference-keywords"
+          },
+          {
+            "label": "sql-reference-mysql-functions",
+            "slug": "sql-tutorial/reference/sql-reference-mysql-functions"
+          },
+          {
+            "label": "sql-reference-quick-reference",
+            "slug": "sql-tutorial/reference/sql-reference-quick-reference"
+          },
+          {
+            "label": "sql-reference-sqlserver-functions",
+            "slug": "sql-tutorial/reference/sql-reference-sqlserver-functions"
+          }
+        ]
+      },
+      {
+        "label": "11. Examples & Practice",
+        "items": [
+          {
+            "label": "sql-editor",
+            "slug": "sql-tutorial/examples/sql-editor"
+          },
+          {
+            "label": "sql-examples",
+            "slug": "sql-tutorial/examples/sql-examples"
+          },
+          {
+            "label": "sql-exercises",
+            "slug": "sql-tutorial/examples/sql-exercises"
+          },
+          {
+            "label": "sql-quiz",
+            "slug": "sql-tutorial/examples/sql-quiz"
+          },
+          {
+            "label": "sql-server",
+            "slug": "sql-tutorial/examples/sql-server"
+          },
+          {
+            "label": "sql-study-plan",
+            "slug": "sql-tutorial/examples/sql-study-plan"
+          },
+          {
+            "label": "sql-syllabus",
+            "slug": "sql-tutorial/examples/sql-syllabus"
+          },
+          {
+            "label": "sql-training",
+            "slug": "sql-tutorial/examples/sql-training"
+          }
+        ]
+      },
+      {
+        "label": "12. Certification",
+        "items": [
+          {
+            "label": "sql-cert-validation",
+            "slug": "sql-tutorial/cert/sql-cert-validation"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "React",
+    "items": [
+      {
+        "label": "1. React Tutorial",
+        "items": [
+          {
+            "label": "သင်တန်းကြိုဆိုခြင်း",
+            "slug": "react/index"
+          },
+          {
+            "label": "Home",
+            "slug": "react/tutorial/home"
+          },
+          {
+            "label": "React Intro",
+            "slug": "react/tutorial/intro"
+          },
+          {
+            "label": "Get Started",
+            "slug": "react/tutorial/get-started"
+          },
+          {
+            "label": "First App",
+            "slug": "react/tutorial/first-app"
+          },
+          {
+            "label": "Render HTML",
+            "slug": "react/tutorial/render-html"
+          },
+          {
+            "label": "React Upgrade",
+            "slug": "react/tutorial/upgrade"
+          }
+        ]
+      },
+      {
+        "label": "2. ES6 Syntax",
+        "items": [
+          {
+            "label": "ES6 Classes",
+            "slug": "react/es6/classes"
+          },
+          {
+            "label": "ES6 Arrow Functions",
+            "slug": "react/es6/arrow-functions"
+          },
+          {
+            "label": "ES6 Variables",
+            "slug": "react/es6/variables"
+          },
+          {
+            "label": "ES6 Array Methods",
+            "slug": "react/es6/array-map"
+          },
+          {
+            "label": "ES6 Destructuring",
+            "slug": "react/es6/destructuring"
+          },
+          {
+            "label": "ES6 Spread Operator",
+            "slug": "react/es6/spread-operator"
+          },
+          {
+            "label": "ES6 Modules",
+            "slug": "react/es6/modules"
+          },
+          {
+            "label": "ES6 Ternary Operator",
+            "slug": "react/es6/ternary-operator"
+          },
+          {
+            "label": "ES6 Template Strings",
+            "slug": "react/es6/template-strings"
+          }
+        ]
+      },
+      {
+        "label": "3. React JSX",
+        "items": [
+          {
+            "label": "JSX Intro",
+            "slug": "react/jsx/intro"
+          },
+          {
+            "label": "JSX Expressions",
+            "slug": "react/jsx/expressions"
+          },
+          {
+            "label": "JSX Attributes",
+            "slug": "react/jsx/attributes"
+          },
+          {
+            "label": "JSX If Statements",
+            "slug": "react/jsx/if-statements"
+          }
+        ]
+      },
+      {
+        "label": "4. React Components",
+        "items": [
+          {
+            "label": "Class Components",
+            "slug": "react/components/class"
+          },
+          {
+            "label": "Props",
+            "slug": "react/components/props"
+          },
+          {
+            "label": "Props Destructuring",
+            "slug": "react/components/props-destructuring"
+          },
+          {
+            "label": "Props Children",
+            "slug": "react/components/props-children"
+          }
+        ]
+      },
+      {
+        "label": "5. React Events",
+        "items": [
+          {
+            "label": "Events",
+            "slug": "react/events/events"
+          }
+        ]
+      },
+      {
+        "label": "6. React Conditionals",
+        "items": [
+          {
+            "label": "Conditionals",
+            "slug": "react/conditionals/conditionals"
+          }
+        ]
+      },
+      {
+        "label": "7. React Lists",
+        "items": [
+          {
+            "label": "Lists",
+            "slug": "react/lists/lists"
+          }
+        ]
+      },
+      {
+        "label": "8. React Forms",
+        "items": [
+          {
+            "label": "Forms",
+            "slug": "react/forms/forms"
+          },
+          {
+            "label": "Form Submit",
+            "slug": "react/forms/submit"
+          },
+          {
+            "label": "Textarea",
+            "slug": "react/forms/textarea"
+          },
+          {
+            "label": "Select",
+            "slug": "react/forms/select"
+          },
+          {
+            "label": "Multiple Inputs",
+            "slug": "react/forms/multiple-inputs"
+          },
+          {
+            "label": "Checkbox",
+            "slug": "react/forms/checkbox"
+          },
+          {
+            "label": "Radio Button",
+            "slug": "react/forms/radio"
+          }
+        ]
+      },
+      {
+        "label": "9. React Portals",
+        "items": [
+          {
+            "label": "Portals",
+            "slug": "react/portals/portals"
+          }
+        ]
+      },
+      {
+        "label": "10. React Suspense",
+        "items": [
+          {
+            "label": "Suspense",
+            "slug": "react/suspense/suspense"
+          }
+        ]
+      },
+      {
+        "label": "11. React Styling",
+        "items": [
+          {
+            "label": "CSS Styling",
+            "slug": "react/styling/css-styling"
+          },
+          {
+            "label": "CSS Modules",
+            "slug": "react/styling/css-modules"
+          },
+          {
+            "label": "CSS-in-JS",
+            "slug": "react/styling/css-in-js"
+          },
+          {
+            "label": "Sass",
+            "slug": "react/styling/sass"
+          }
+        ]
+      },
+      {
+        "label": "12. Advanced Components",
+        "items": [
+          {
+            "label": "Forward Ref",
+            "slug": "react/advanced/forward-ref"
+          },
+          {
+            "label": "Higher-Order Components",
+            "slug": "react/advanced/hoc"
+          }
+        ]
+      },
+      {
+        "label": "13. Router & Transitions",
+        "items": [
+          {
+            "label": "React Router",
+            "slug": "react/router/router"
+          },
+          {
+            "label": "React Transitions",
+            "slug": "react/router/transitions"
+          }
+        ]
+      },
+      {
+        "label": "14. React Hooks",
+        "items": [
+          {
+            "label": "What is a Hook?",
+            "slug": "react/hooks/hooks"
+          },
+          {
+            "label": "useState",
+            "slug": "react/hooks/usestate"
+          },
+          {
+            "label": "useEffect",
+            "slug": "react/hooks/useeffect"
+          },
+          {
+            "label": "useContext",
+            "slug": "react/hooks/usecontext"
+          },
+          {
+            "label": "useRef",
+            "slug": "react/hooks/useref"
+          },
+          {
+            "label": "useReducer",
+            "slug": "react/hooks/usereducer"
+          },
+          {
+            "label": "useCallback",
+            "slug": "react/hooks/usecallback"
+          },
+          {
+            "label": "useMemo",
+            "slug": "react/hooks/usememo"
+          },
+          {
+            "label": "Custom Hooks",
+            "slug": "react/hooks/custom-hooks"
+          }
+        ]
+      },
+      {
+        "label": "15. React Certification",
+        "items": [
+          {
+            "label": "Certificate",
+            "slug": "react/cert/certificate"
+          }
+        ]
+      },
+      {
+        "label": "16. React Practice & Review",
+        "items": [
+          {
+            "label": "React Compiler",
+            "slug": "react/practice/compiler"
+          },
+          {
+            "label": "React Server",
+            "slug": "react/practice/server"
+          },
+          {
+            "label": "Exercises",
+            "slug": "react/practice/exercises"
+          },
+          {
+            "label": "Quiz",
+            "slug": "react/practice/quiz"
+          },
+          {
+            "label": "Syllabus",
+            "slug": "react/practice/syllabus"
+          },
+          {
+            "label": "Study Plan",
+            "slug": "react/practice/study-plan"
+          },
+          {
+            "label": "Interview Prep",
+            "slug": "react/practice/interview-prep"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "MySQL",
+    "items": [
+      {
+        "label": "1. MySQL Tutorial",
+        "items": [
+          {
+            "label": "သင်တန်းကြိုဆိုခြင်း",
+            "slug": "mysql/index"
+          },
+          {
+            "label": "Home",
+            "slug": "mysql/tutorial/home"
+          },
+          {
+            "label": "Intro",
+            "slug": "mysql/tutorial/intro"
+          },
+          {
+            "label": "RDBMS",
+            "slug": "mysql/tutorial/rdbms"
+          }
+        ]
+      },
+      {
+        "label": "2. MySQL SQL",
+        "items": [
+          {
+            "label": "SQL",
+            "slug": "mysql/sql/sql"
+          },
+          {
+            "label": "SELECT",
+            "slug": "mysql/sql/select"
+          },
+          {
+            "label": "Select Distinct",
+            "slug": "mysql/sql/select-distinct"
+          },
+          {
+            "label": "WHERE",
+            "slug": "mysql/sql/where"
+          },
+          {
+            "label": "Order By",
+            "slug": "mysql/sql/order-by"
+          },
+          {
+            "label": "AND",
+            "slug": "mysql/sql/and"
+          },
+          {
+            "label": "OR",
+            "slug": "mysql/sql/or"
+          },
+          {
+            "label": "NOT",
+            "slug": "mysql/sql/not"
+          },
+          {
+            "label": "INSERT",
+            "slug": "mysql/sql/insert"
+          },
+          {
+            "label": "NULL Values",
+            "slug": "mysql/sql/null-values"
+          },
+          {
+            "label": "UPDATE",
+            "slug": "mysql/sql/update"
+          },
+          {
+            "label": "DELETE",
+            "slug": "mysql/sql/delete"
+          },
+          {
+            "label": "LIMIT",
+            "slug": "mysql/sql/limit"
+          },
+          {
+            "label": "Aggregate Functions",
+            "slug": "mysql/sql/aggregate-functions"
+          },
+          {
+            "label": "MIN",
+            "slug": "mysql/sql/min"
+          },
+          {
+            "label": "MAX",
+            "slug": "mysql/sql/max"
+          },
+          {
+            "label": "COUNT",
+            "slug": "mysql/sql/count"
+          },
+          {
+            "label": "SUM",
+            "slug": "mysql/sql/sum"
+          },
+          {
+            "label": "AVG",
+            "slug": "mysql/sql/avg"
+          },
+          {
+            "label": "LIKE",
+            "slug": "mysql/sql/like"
+          },
+          {
+            "label": "Wildcards",
+            "slug": "mysql/sql/wildcards"
+          },
+          {
+            "label": "IN",
+            "slug": "mysql/sql/in"
+          },
+          {
+            "label": "BETWEEN",
+            "slug": "mysql/sql/between"
+          },
+          {
+            "label": "Aliases",
+            "slug": "mysql/sql/aliases"
+          },
+          {
+            "label": "JOINS",
+            "slug": "mysql/sql/joins"
+          },
+          {
+            "label": "Inner Join",
+            "slug": "mysql/sql/inner-join"
+          },
+          {
+            "label": "LEFT JOIN",
+            "slug": "mysql/sql/left-join"
+          },
+          {
+            "label": "RIGHT JOIN",
+            "slug": "mysql/sql/right-join"
+          },
+          {
+            "label": "CROSS JOIN",
+            "slug": "mysql/sql/cross-join"
+          },
+          {
+            "label": "Self Join",
+            "slug": "mysql/sql/self-join"
+          },
+          {
+            "label": "UNION",
+            "slug": "mysql/sql/union"
+          },
+          {
+            "label": "UNION ALL",
+            "slug": "mysql/sql/union-all"
+          },
+          {
+            "label": "GROUP BY",
+            "slug": "mysql/sql/group-by"
+          },
+          {
+            "label": "HAVING",
+            "slug": "mysql/sql/having"
+          },
+          {
+            "label": "EXISTS",
+            "slug": "mysql/sql/exists"
+          },
+          {
+            "label": "ANY",
+            "slug": "mysql/sql/any"
+          },
+          {
+            "label": "ALL",
+            "slug": "mysql/sql/all"
+          },
+          {
+            "label": "Insert Into Select",
+            "slug": "mysql/sql/insert-select"
+          },
+          {
+            "label": "CASE",
+            "slug": "mysql/sql/case"
+          },
+          {
+            "label": "Null Functions",
+            "slug": "mysql/sql/null-functions"
+          },
+          {
+            "label": "Stored Procedures",
+            "slug": "mysql/sql/stored-procedures"
+          },
+          {
+            "label": "Comments",
+            "slug": "mysql/sql/comments"
+          },
+          {
+            "label": "Operators",
+            "slug": "mysql/sql/operators"
+          }
+        ]
+      },
+      {
+        "label": "3. MySQL Database",
+        "items": [
+          {
+            "label": "Create DB",
+            "slug": "mysql/database/create-db"
+          },
+          {
+            "label": "Drop DB",
+            "slug": "mysql/database/drop-db"
+          },
+          {
+            "label": "Create Table",
+            "slug": "mysql/database/create-table"
+          },
+          {
+            "label": "Drop Table",
+            "slug": "mysql/database/drop-table"
+          },
+          {
+            "label": "Alter Table",
+            "slug": "mysql/database/alter-table"
+          },
+          {
+            "label": "Constraints",
+            "slug": "mysql/database/constraints"
+          },
+          {
+            "label": "NOT NULL",
+            "slug": "mysql/database/not-null"
+          },
+          {
+            "label": "UNIQUE",
+            "slug": "mysql/database/unique"
+          },
+          {
+            "label": "Primary Key",
+            "slug": "mysql/database/primary-key"
+          },
+          {
+            "label": "Foreign Key",
+            "slug": "mysql/database/foreign-key"
+          },
+          {
+            "label": "CHECK",
+            "slug": "mysql/database/check"
+          },
+          {
+            "label": "DEFAULT",
+            "slug": "mysql/database/default"
+          },
+          {
+            "label": "Create Index",
+            "slug": "mysql/database/create-index"
+          },
+          {
+            "label": "Auto Increment",
+            "slug": "mysql/database/auto-increment"
+          },
+          {
+            "label": "Dates",
+            "slug": "mysql/database/dates"
+          },
+          {
+            "label": "Views",
+            "slug": "mysql/database/views"
+          },
+          {
+            "label": "SQL Injection",
+            "slug": "mysql/database/injection"
+          },
+          {
+            "label": "Prepared Statements",
+            "slug": "mysql/database/prepared-statements"
+          }
+        ]
+      },
+      {
+        "label": "4. MySQL Cert",
+        "items": [
+          {
+            "label": "Certificate",
+            "slug": "mysql/cert/certificate"
+          }
+        ]
+      },
+      {
+        "label": "5. MySQL References",
+        "items": [
+          {
+            "label": "Data Types",
+            "slug": "mysql/references/data-types"
+          },
+          {
+            "label": "Functions",
+            "slug": "mysql/references/functions"
+          }
+        ]
+      },
+      {
+        "label": "6. MySQL Examples",
+        "items": [
+          {
+            "label": "Examples",
+            "slug": "mysql/examples/examples"
+          },
+          {
+            "label": "Editor",
+            "slug": "mysql/examples/editor"
+          },
+          {
+            "label": "Quiz",
+            "slug": "mysql/examples/quiz"
+          },
+          {
+            "label": "Exercises",
+            "slug": "mysql/examples/exercises"
+          },
+          {
+            "label": "Syllabus",
+            "slug": "mysql/examples/syllabus"
+          },
+          {
+            "label": "Study Plan",
+            "slug": "mysql/examples/study-plan"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Node.js",
+    "items": [
+      {
+        "label": "1. Node.js Tutorial",
+        "items": [
+          {
+            "label": "သင်တန်းကြိုဆိုခြင်း",
+            "slug": "node/index"
+          },
+          {
+            "label": "Home",
+            "slug": "node/tutorial/home"
+          },
+          {
+            "label": "Introduction",
+            "slug": "node/tutorial/intro"
+          },
+          {
+            "label": "Get Started",
+            "slug": "node/tutorial/get-started"
+          },
+          {
+            "label": "Requirements",
+            "slug": "node/tutorial/requirements"
+          },
+          {
+            "label": "VS Code / Browser",
+            "slug": "node/tutorial/vs-browser"
+          },
+          {
+            "label": "Command Line",
+            "slug": "node/tutorial/cmd-line"
+          },
+          {
+            "label": "V8 Engine",
+            "slug": "node/tutorial/v8-engine"
+          },
+          {
+            "label": "Architecture",
+            "slug": "node/tutorial/architecture"
+          },
+          {
+            "label": "Event Loop",
+            "slug": "node/tutorial/event-loop"
+          }
+        ]
+      },
+      {
+        "label": "2. Asynchronous",
+        "items": [
+          {
+            "label": "Asynchronous",
+            "slug": "node/async/async"
+          },
+          {
+            "label": "Promises",
+            "slug": "node/async/promises"
+          },
+          {
+            "label": "Async/Await",
+            "slug": "node/async/async-await"
+          },
+          {
+            "label": "Handle Errors",
+            "slug": "node/async/handle-errors"
+          }
+        ]
+      },
+      {
+        "label": "3. Module Basics",
+        "items": [
+          {
+            "label": "Modules",
+            "slug": "node/modules/modules"
+          },
+          {
+            "label": "ES Modules",
+            "slug": "node/modules/es-modules"
+          },
+          {
+            "label": "npm",
+            "slug": "node/modules/npm"
+          },
+          {
+            "label": "package.json",
+            "slug": "node/modules/package-json"
+          },
+          {
+            "label": "npm Scripts",
+            "slug": "node/modules/npm-scripts"
+          },
+          {
+            "label": "Manage Dependencies",
+            "slug": "node/modules/manage-deps"
+          },
+          {
+            "label": "Publish Packages",
+            "slug": "node/modules/publish-packages"
+          }
+        ]
+      },
+      {
+        "label": "4. Core Modules",
+        "items": [
+          {
+            "label": "http",
+            "slug": "node/core/http"
+          },
+          {
+            "label": "https",
+            "slug": "node/core/https"
+          },
+          {
+            "label": "File System",
+            "slug": "node/core/file-system"
+          },
+          {
+            "label": "path",
+            "slug": "node/core/path"
+          },
+          {
+            "label": "os",
+            "slug": "node/core/os"
+          },
+          {
+            "label": "url",
+            "slug": "node/core/url"
+          },
+          {
+            "label": "events",
+            "slug": "node/core/events"
+          },
+          {
+            "label": "stream",
+            "slug": "node/core/stream"
+          },
+          {
+            "label": "buffer",
+            "slug": "node/core/buffer"
+          },
+          {
+            "label": "crypto",
+            "slug": "node/core/crypto"
+          },
+          {
+            "label": "timers",
+            "slug": "node/core/timers"
+          },
+          {
+            "label": "dns",
+            "slug": "node/core/dns"
+          },
+          {
+            "label": "assert",
+            "slug": "node/core/assert"
+          },
+          {
+            "label": "util",
+            "slug": "node/core/util"
+          },
+          {
+            "label": "readline",
+            "slug": "node/core/readline"
+          }
+        ]
+      },
+      {
+        "label": "5. JavaScript & TypeScript",
+        "items": [
+          {
+            "label": "ES6+ Features",
+            "slug": "node/js-ts/es6-plus"
+          },
+          {
+            "label": "process Object",
+            "slug": "node/js-ts/process"
+          },
+          {
+            "label": "TypeScript",
+            "slug": "node/js-ts/typescript"
+          },
+          {
+            "label": "Advanced TypeScript",
+            "slug": "node/js-ts/adv-typescript"
+          },
+          {
+            "label": "Lint & Format",
+            "slug": "node/js-ts/lint-formatting"
+          }
+        ]
+      },
+      {
+        "label": "6. Building Applications",
+        "items": [
+          {
+            "label": "Frameworks",
+            "slug": "node/building/frameworks"
+          },
+          {
+            "label": "Express",
+            "slug": "node/building/express"
+          },
+          {
+            "label": "Middleware",
+            "slug": "node/building/middleware"
+          },
+          {
+            "label": "REST API",
+            "slug": "node/building/rest-api"
+          },
+          {
+            "label": "API Auth",
+            "slug": "node/building/api-auth"
+          },
+          {
+            "label": "With Frontend",
+            "slug": "node/building/with-frontend"
+          }
+        ]
+      },
+      {
+        "label": "7. MySQL Database",
+        "items": [
+          {
+            "label": "Get Started",
+            "slug": "node/mysql/mysql-get-started"
+          },
+          {
+            "label": "Create Database",
+            "slug": "node/mysql/mysql-create-database"
+          },
+          {
+            "label": "Create Table",
+            "slug": "node/mysql/mysql-create-table"
+          },
+          {
+            "label": "Insert",
+            "slug": "node/mysql/mysql-insert"
+          },
+          {
+            "label": "Select",
+            "slug": "node/mysql/mysql-select"
+          },
+          {
+            "label": "Where",
+            "slug": "node/mysql/mysql-where"
+          },
+          {
+            "label": "Order By",
+            "slug": "node/mysql/mysql-order-by"
+          },
+          {
+            "label": "Delete",
+            "slug": "node/mysql/mysql-delete"
+          },
+          {
+            "label": "Drop Table",
+            "slug": "node/mysql/mysql-drop-table"
+          },
+          {
+            "label": "Update",
+            "slug": "node/mysql/mysql-update"
+          },
+          {
+            "label": "Limit",
+            "slug": "node/mysql/mysql-limit"
+          },
+          {
+            "label": "Join",
+            "slug": "node/mysql/mysql-join"
+          }
+        ]
+      },
+      {
+        "label": "8. MongoDB Database",
+        "items": [
+          {
+            "label": "Get Started",
+            "slug": "node/mongodb/mongodb-get-started"
+          },
+          {
+            "label": "Create DB",
+            "slug": "node/mongodb/mongodb-create-db"
+          },
+          {
+            "label": "Collection",
+            "slug": "node/mongodb/mongodb-collection"
+          },
+          {
+            "label": "Insert",
+            "slug": "node/mongodb/mongodb-insert"
+          },
+          {
+            "label": "Find",
+            "slug": "node/mongodb/mongodb-find"
+          },
+          {
+            "label": "Query",
+            "slug": "node/mongodb/mongodb-query"
+          },
+          {
+            "label": "Sort",
+            "slug": "node/mongodb/mongodb-sort"
+          },
+          {
+            "label": "Delete",
+            "slug": "node/mongodb/mongodb-delete"
+          },
+          {
+            "label": "Drop Collection",
+            "slug": "node/mongodb/mongodb-drop-collection"
+          },
+          {
+            "label": "Update",
+            "slug": "node/mongodb/mongodb-update"
+          },
+          {
+            "label": "Limit",
+            "slug": "node/mongodb/mongodb-limit"
+          },
+          {
+            "label": "Join (Lookup)",
+            "slug": "node/mongodb/mongodb-join"
+          }
+        ]
+      },
+      {
+        "label": "9. Advanced Communication",
+        "items": [
+          {
+            "label": "GraphQL",
+            "slug": "node/comm/graphql"
+          },
+          {
+            "label": "Socket.IO",
+            "slug": "node/comm/socket-io"
+          },
+          {
+            "label": "WebSockets",
+            "slug": "node/comm/websockets"
+          }
+        ]
+      },
+      {
+        "label": "10. Testing & Debugging",
+        "items": [
+          {
+            "label": "Debugging",
+            "slug": "node/testing/debugging"
+          },
+          {
+            "label": "Testing Apps",
+            "slug": "node/testing/testing-apps"
+          },
+          {
+            "label": "Test Frameworks",
+            "slug": "node/testing/test-frameworks"
+          },
+          {
+            "label": "Test Runner",
+            "slug": "node/testing/test-runner"
+          }
+        ]
+      },
+      {
+        "label": "11. Deployment",
+        "items": [
+          {
+            "label": "Env Variables",
+            "slug": "node/deploy/env-variables"
+          },
+          {
+            "label": "Dev vs Prod",
+            "slug": "node/deploy/dev-vs-prod"
+          },
+          {
+            "label": "CI/CD",
+            "slug": "node/deploy/cicd"
+          },
+          {
+            "label": "Security",
+            "slug": "node/deploy/security"
+          },
+          {
+            "label": "Deployment",
+            "slug": "node/deploy/deployment"
+          }
+        ]
+      },
+      {
+        "label": "12. Performance & Scaling",
+        "items": [
+          {
+            "label": "Logging",
+            "slug": "node/perf/logging"
+          },
+          {
+            "label": "Monitoring",
+            "slug": "node/perf/monitoring"
+          },
+          {
+            "label": "Performance",
+            "slug": "node/perf/performance"
+          },
+          {
+            "label": "Child Process",
+            "slug": "node/perf/child-process"
+          },
+          {
+            "label": "Cluster",
+            "slug": "node/perf/cluster"
+          },
+          {
+            "label": "Worker Threads",
+            "slug": "node/perf/worker-threads"
+          }
+        ]
+      },
+      {
+        "label": "13. Node.js Advanced",
+        "items": [
+          {
+            "label": "Microservices",
+            "slug": "node/advanced/microservices"
+          },
+          {
+            "label": "WebAssembly",
+            "slug": "node/advanced/webassembly"
+          },
+          {
+            "label": "HTTP/2",
+            "slug": "node/advanced/http2"
+          },
+          {
+            "label": "Performance Hooks",
+            "slug": "node/advanced/perf-hooks"
+          },
+          {
+            "label": "VM",
+            "slug": "node/advanced/vm"
+          },
+          {
+            "label": "TLS/SSL",
+            "slug": "node/advanced/tls-ssl"
+          },
+          {
+            "label": "Net",
+            "slug": "node/advanced/net"
+          },
+          {
+            "label": "Zlib",
+            "slug": "node/advanced/zlib"
+          },
+          {
+            "label": "Real World Examples",
+            "slug": "node/advanced/real-world-examples"
+          }
+        ]
+      },
+      {
+        "label": "14. Hardware & IoT",
+        "items": [
+          {
+            "label": "RPi Get Started",
+            "slug": "node/iot/raspi-get-started"
+          },
+          {
+            "label": "GPIO",
+            "slug": "node/iot/raspi-gpio"
+          },
+          {
+            "label": "Blinking LED",
+            "slug": "node/iot/raspi-blinking-led"
+          },
+          {
+            "label": "LED + Pushbutton",
+            "slug": "node/iot/raspi-led-pushbutton"
+          },
+          {
+            "label": "Flowing LEDs",
+            "slug": "node/iot/raspi-flowing-leds"
+          },
+          {
+            "label": "Websocket Control",
+            "slug": "node/iot/raspi-websocket"
+          },
+          {
+            "label": "RGB LED Websocket",
+            "slug": "node/iot/raspi-rgb-led-websocket"
+          },
+          {
+            "label": "Components",
+            "slug": "node/iot/raspi-components"
+          }
+        ]
+      },
+      {
+        "label": "15. Node.js Cert",
+        "items": [
+          {
+            "label": "Certificate",
+            "slug": "node/cert/certificate"
+          }
+        ]
+      },
+      {
+        "label": "16. Node.js Reference",
+        "items": [
+          {
+            "label": "Built-in Modules",
+            "slug": "node/reference/built-in-modules"
+          },
+          {
+            "label": "EventEmitter",
+            "slug": "node/reference/event-emitter"
+          },
+          {
+            "label": "Worker",
+            "slug": "node/reference/worker"
+          },
+          {
+            "label": "Cipher",
+            "slug": "node/reference/cipher"
+          },
+          {
+            "label": "Decipher",
+            "slug": "node/reference/decipher"
+          },
+          {
+            "label": "DiffieHellman",
+            "slug": "node/reference/diffie-hellman"
+          },
+          {
+            "label": "ECDH",
+            "slug": "node/reference/ecdh"
+          },
+          {
+            "label": "Hash",
+            "slug": "node/reference/hash"
+          },
+          {
+            "label": "HMAC",
+            "slug": "node/reference/hmac"
+          },
+          {
+            "label": "Sign",
+            "slug": "node/reference/sign"
+          },
+          {
+            "label": "Verify",
+            "slug": "node/reference/verify"
+          },
+          {
+            "label": "Socket",
+            "slug": "node/reference/socket"
+          },
+          {
+            "label": "Readable Stream",
+            "slug": "node/reference/read-stream"
+          },
+          {
+            "label": "Writable Stream",
+            "slug": "node/reference/write-stream"
+          },
+          {
+            "label": "Server",
+            "slug": "node/reference/server"
+          },
+          {
+            "label": "Agent",
+            "slug": "node/reference/agent"
+          },
+          {
+            "label": "Request",
+            "slug": "node/reference/request"
+          },
+          {
+            "label": "Response",
+            "slug": "node/reference/response"
+          },
+          {
+            "label": "Message",
+            "slug": "node/reference/message"
+          },
+          {
+            "label": "Interface",
+            "slug": "node/reference/interface"
+          }
+        ]
+      },
+      {
+        "label": "17. Resources & Tools",
+        "items": [
+          {
+            "label": "Compiler",
+            "slug": "node/resources/compiler"
+          },
+          {
+            "label": "Server",
+            "slug": "node/resources/server"
+          },
+          {
+            "label": "Quiz",
+            "slug": "node/resources/quiz"
+          },
+          {
+            "label": "Exercises",
+            "slug": "node/resources/exercises"
+          },
+          {
+            "label": "Practice Problems",
+            "slug": "node/resources/practice-problems"
+          },
+          {
+            "label": "Syllabus",
+            "slug": "node/resources/syllabus"
+          },
+          {
+            "label": "Study Plan",
+            "slug": "node/resources/study-plan"
+          }
+        ]
       }
     ]
   },

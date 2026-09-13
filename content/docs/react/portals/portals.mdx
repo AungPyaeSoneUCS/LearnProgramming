@@ -1,0 +1,72 @@
+---
+title: "React Portals — Portal ‌များ"
+description: "ReactDOM.createPortal ဖြင့် component ‌တစ်ခုရဲ့ DOM ‌အပြင် ‌အခြားနေရာတွင် ‌ပြသ‌နည်း — modal ၊ tooltip ။"
+autoNumbering: true
+---
+
+Portal ‌ဆိုတာ component ‌တစ်ခုကို ၎င်း parent ‌ရဲ့ DOM အ‌ပြင် ‌သီးခြား element ‌ထဲ render ‌လုပ်နိုင်‌အောင် ‌ပြုလုပ်ပေးတဲ့ ‌နည်းလမ်း ‌ဖြစ်ပါတယ်။ ဥပမာ — Modal ‌တွေ, Tooltip ‌တွေ ‌အတွက် ‌အသုံး‌ပြုလေ့ရှိပါတယ်။
+
+## Syntax
+
+```jsx
+ReactDOM.createPortal(child, container)
+```
+
+- `child` — React element
+- `container` — DOM node (document.body ‌စသည်)
+
+## Modal ‌ဥပမာ
+
+```jsx
+import ReactDOM from "react-dom/client";
+
+function Modal({ children, onClose }) {
+  return ReactDOM.createPortal(
+    <div className="modal-overlay">
+      <div className="modal">
+        <button onClick={onClose}>×</button>
+        {children}
+      </div>
+    </div>,
+    document.body
+  );
+}
+```
+
+`document.body` ‌ထဲ render ‌လို့ modal ‌က ‌နေရာ ‌မရွေး ‌နေလဲ ‌ထိပ် ‌အပေါ်မှာ ‌ပေါ်နိုင်ပါတယ်။
+
+## Portal ‌ကို ‌သုံးရင်
+
+```jsx
+function App() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="app">
+      <h1>My App</h1>
+      <button onClick={() => setOpen(true)}>Open Modal</button>
+
+      {open && (
+        <Modal onClose={() => setOpen(false)}>
+          <h2>Welcome!</h2>
+          <p>ဒါက portal ‌နဲ့ ‌ထည့်ထားတဲ့ modal ပါ။</p>
+        </Modal>
+      )}
+    </div>
+  );
+}
+```
+
+## ‌ဘာကြောင့် Portal သုံးတာလဲ?
+- Modal ‌တွေက overflow/transform ‌ရှိတဲ့ parent ထဲ မှာ ‌နေရာချ ‌ရခက်တတ်လို့ body ‌ထဲ ‌တိုက်ရိုက် ‌ထည့်တာ
+- Event bubbling က ‌ဆက်လက် ‌အလုပ်လုပ် ‌နေပါတယ် (React tree ‌အတိုင်း)
+- Stacking (z-index) ‌ပြဿနာ ‌ရှောင်နိုင်
+
+## Event Bubbling ‌မှတ်‌ချက်
+
+Portal ‌ထဲ ရှိလဲ React event ‌က ‌ကိုယ့် ‌မိဘ (portal ‌ကနေ ‌မဟုတ်) component ‌ထဲ ‌ပြန်ရောက်တယ်။
+
+## အဓိက အချက်များ
+- `createPortal(jsx, domNode)` — ‌သီးခြား DOM ‌နေရာ
+- Modal / tooltip ‌တို့ ‌အတွက် ‌အသုံးဝင်သည်
+- Event က React tree ‌အတိုင်း ‌ဆက်လုပ်သည်

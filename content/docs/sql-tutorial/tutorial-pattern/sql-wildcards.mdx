@@ -1,0 +1,60 @@
+---
+title: "sql-wildcards"
+description: "SQL LIKE ထဲက wildcard characters % _ [charlist] [^charlist] — database အလိုက်ကွာခြားချက်။"
+autoNumbering: true
+---
+
+Wildcard ဆိုတာ text မသေချာတဲ့ နေရာမှာ "anything" ကိုစားပြီး သုံးတဲ့ သင်္ကေတတွေပါ။ LIKE နဲ့ တွဲသုံးပြီး pattern searching ကို အစွမ်းထက်စေပါတယ်။
+
+## Wildcards တစ်ခုချင်း
+| Wildcard | အလုပ် | ဥပမာ |
+| --- | --- | --- |
+| % | စာလုံး 0 သို့မဟုတ် အများ | '%at%' → "cat","hat","at" |
+| _ | စာလုံးတစ်လုံးစီ | '_at' → "cat","hat" (not "at") |
+| [abc] | ကွင်းထဲက char မည်သည့်တစ်ခု | '[ch]at' → "cat","hat" |
+| [a-c] | range ထဲက | '[b-d]ell' → "bell","cell","dell" |
+| [^abc] / [!abc] | ကွင်းထဲက char မဟုတ် | '[!ck]at' → "hat","bat" |
+
+## % and _ Examples
+```sql
+SELECT * FROM Products WHERE Name LIKE '%phone%';
+SELECT * FROM Products WHERE Name LIKE 'Wireless _';
+```
+- %phone% — name ထဲ "phone" ပါတဲ့ အကုန် ("Smartphone","Earphone")
+- Wireless _ — "Wireless" နဲ့ တစ်လုံးထပ်ဆင့် ("Wireless 5" etc.)
+
+## Character List — SQL Server / MS Access
+```sql
+-- SQL Server / MS Access
+SELECT * FROM Customers
+WHERE City LIKE '[YL]%';
+ 
+SELECT * FROM Customers
+WHERE City LIKE '[a-f]%';
+ 
+SELECT * FROM Customers
+WHERE City LIKE '[!a-f]%';
+```
+- [YL]% — Y သို့မဟုတ် L နဲ့စတဲ့ city (Yangon, London)
+- [a-f]% — a-f နဲ့စတဲ့
+- [!a-f]% — a-f မဟုတ်တဲ့ စတဲ့ city
+
+## MySQL/PostgreSQL — REGEXP (Wildcard မဟုတ်သည့် အစားထိုး)
+```sql
+-- MySQL
+SELECT * FROM Customers WHERE City REGEXP '^[YL]';
+```
+MySQL မှာ [YL] စာရင်း-ပုံစံ မရှိလို့ regular expression (REGEXP) သုံးပါတယ်။ PostgreSQL မှာလည်း ~~/~~* သုံးပါတယ်။ Database အလိုက် syntax ကွာခြားမှုကို သတိထားပါ။
+
+## Escape — '%' စာလုံး အစစ်ရှာခြင်း
+```sql
+SELECT * FROM Products
+WHERE Name LIKE '50\% Off' ESCAPE '\';
+```
+% ကိုယ်တိုင်ပါတဲ့ စာသား ("50% Off") ရှာချင်ရင် ESCAPE နဲ့ wildcard လုပ်မခံအောင် လုပ်ပါတယ်။ DB အလိုက် syntax ကွာနိုင်ပါတယ်။
+
+## အဓိက အချက်များ
+- %နဲ့_ က universal (အားလုံး DB မှာ)
+- [abc]/[^abc] က SQL Server/MS Access
+- ကျန် DB တွေမှာ REGEXP / POSIX regex သုံးပါလိမ့်မယ်
+- % အစစ်ရှာဖို့ ESCAPE သုံးပါ

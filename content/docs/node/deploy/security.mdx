@@ -1,0 +1,62 @@
+---
+title: "Node.js Security — Security"
+description: "Node security — helmet, rate limit, input validation, secrets — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Node apps ‌လုံး‌ခြုံရန် — core practices ‌နှင့် packages။
+
+## Helmet — security headers
+
+```bash
+npm install helmet
+```
+
+```js
+const helmet = require("helmet");
+app.use(helmet());
+```
+
+Sets security headers — X-Frame-Options, CSP စသည်။
+
+## Input validation
+
+```js
+const { z } = require("zod");
+
+const schema = z.object({
+  email: z.string().email(),
+  age: z.number().int().positive(),
+});
+
+const data = schema.parse(req.body); // invalid → throw
+```
+
+## Rate limiting
+
+```bash
+npm install express-rate-limit
+```
+
+```js
+const rateLimit = require("express-rate-limit");
+
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 100,
+  })
+);
+```
+
+Brute force ‌ကာကွယ် — IP per 100 requests/15min။
+
+## Secrets & injections
+  - `?` placeholders — never allow raw string concat SQL
+- bcrypt ‌hash passwords
+- env vars — secrets ‌မရေး hardcode
+
+## ‌အဓိက အချက်များ
+- helmet — headers
+- Validation (zod)
+- Rate limit + prepared statements

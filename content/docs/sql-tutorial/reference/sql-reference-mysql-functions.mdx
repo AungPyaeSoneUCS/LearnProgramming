@@ -1,0 +1,67 @@
+---
+title: "sql-reference-mysql-functions"
+description: "MySQL functions — string, numeric, date, aggregate — အသုံးများ functions reference။"
+autoNumbering: true
+---
+
+MySQL မှာ built-in functions တွေ (multiple categories) ရှိပြီး query logic ကို data level မှာ လုပ်ဖို့ ကူညီပေးပါတယ်။
+
+## String Functions
+| Function | Output |
+| --- | --- |
+| UPPER(col) / LOWER(col) | စာလုံးကြီး / စာလုံးငယ် |
+| LENGTH(col) | စာလုံးရေတွက် |
+| CONCAT(a, b) | ဆက်စပ် |
+| SUBSTRING(col, start, len) | ဖြတ်ထုတ် |
+| TRIM(col) | space ဖယ် |
+| REPLACE(col, from, to) | အစားထိုး |
+
+```sql
+SELECT UPPER(Name), LENGTH(Name), CONCAT(City, ', ', Country)
+FROM Customers;
+```
+
+## Numeric Functions
+```sql
+SELECT ROUND(123.456, 2);   -- 123.46
+SELECT FLOOR(12.7);         -- 12
+SELECT CEIL(12.1);          -- 13
+SELECT ABS(-5);             -- 5
+SELECT MOD(10, 3);          -- 1
+SELECT RAND();              -- random 0..1
+```
+
+## Date/Time Functions
+```sql
+SELECT NOW();                     -- current datetime
+SELECT CURDATE(), CURTIME();
+SELECT YEAR('2025-09-01');        -- 2025
+SELECT MONTH(...), DAY(...), WEEKDAY(...), DAYNAME(...);
+SELECT DATE_ADD('2025-01-01', INTERVAL 1 MONTH);
+SELECT DATE_SUB(NOW(), INTERVAL 30 DAY);
+SELECT DATEDIFF('2025-02-01', '2025-01-01');  -- 31
+SELECT DATE_FORMAT(OrderDate, '%Y-%m') FROM Orders;
+```
+
+## Aggregate Functions
+```sql
+SELECT COUNT(*), COUNT(DISTINCT col)
+SELECT SUM(col), AVG(col), MIN(col), MAX(col)
+SELECT GROUP_CONCAT(Name) FROM Customers;   -- comma-joined string
+```
+GROUP_CONCAT က group ထဲက value တွေကို comma နဲ့ ဆက်ပြီး string ၁ ကြောင်း ပြန်ပါတယ်။
+
+## Conditional Functions
+```sql
+SELECT IF(Price > 100, 'expensive', 'cheap') FROM Products;
+SELECT IFNULL(NULL, 'default');   -- 'default'
+SELECT NULLIF(a, b);              -- a=b ဆို NULL
+SELECT COALESCE(Phone, Email, 'N/A') FROM Customers;
+```
+
+## အဓိက အချက်များ
+- String: UPPER / LENGTH / CONCAT / TRIM
+- Numeric: ROUND / FLOOR / CEIL / MOD
+- Date: NOW() / DATE_ADD / DATEDIFF / DATE_FORMAT
+- Aggregate: COUNT / SUM / AVG / GROUP_CONCAT
+- Conditional: IF / IFNULL / COALESCE

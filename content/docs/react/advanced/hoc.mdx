@@ -1,0 +1,68 @@
+---
+title: "React HOC — Higher-Order Component"
+description: "Higher-Order Component — component ‌လက်ခံပြီး component အသစ် ‌ပြန်ပေး‌သော function — HOC ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Higher-Order Component (HOC) ‌ဆိုတာ **component ‌တစ်ခုကို argument ‌အဖြစ် ‌လက်ခံပြီး, component အသစ် ‌တစ်ခု ‌ပြန်ပေး‌သော function** ‌ဖြစ်ပါတယ်။ Code ‌ပြန်သုံး ‌နှင့် logic ‌မျှဝေဖို့ သုံးပါတယ်။
+
+## HOC ပုံသဏ္ဍာန်
+
+```jsx
+function withExtraInfo(Component) {
+  return function WrappedComponent(props) {
+    return <Component {...props} extra="react" />;
+  };
+}
+
+function App(props) {
+  return <h1>Welcome to {props.extra}</h1>;
+}
+
+const EnhancedApp = withExtraInfo(App);
+
+root.render(<EnhancedApp />);
+```
+
+## ‌ဥပမာ — Loading HOC
+
+```jsx
+function withLoader(Component) {
+  return function WrappedComponent({ isLoading, ...props }) {
+    if (isLoading) {
+      return <p>Loading...</p>;
+    }
+    return <Component {...props} />;
+  };
+}
+
+function UserList({ users }) {
+  return (
+    <ul>
+      {users.map((u) => (
+        <li key={u.id}>{u.name}</li>
+      ))}
+    </ul>
+  );
+}
+
+const UserListWithLoading = withLoader(UserList);
+```
+
+`isLoading` ‌မှန်ရင် loading ‌ပြ, မဟုတ်ရင် component ‌မူရင်း ‌ပြ — ‌ပြန်သုံးလို့ရတဲ့ logic ‌ဖြစ်လာပါတယ်။
+
+## HOC ‌တွေ ‌ပေါင်းစပ်
+
+```jsx
+const Enhanced = withAuth(withLogger(MyComponent));
+```
+
+## ‌သတိ‌ထားရမယ့် အချက်များ
+- HOC ‌တွေက double-less naming — ‌နာမည် ‌ရှင်းလင်းအောင် withXxx() ‌လို
+- Hooks ‌များလာတာနဲ့ ခေတ်သစ်က‌နောက် HOC ‌ထက် custom hooks ကို ‌ပိုသဘောကျ
+- react ecosystem (react-redux connect, react-router withRouter) မှာ ‌အသုံး‌များခဲ့
+
+## အဓိက အချက်များ
+- HOC = function(Component) → Component သစ်
+- Logic ‌မျှဝေ, props ‌ထပ်ဖြည့်
+- ခေတ်သစ် = custom hooks ‌ဦးစား ပေး

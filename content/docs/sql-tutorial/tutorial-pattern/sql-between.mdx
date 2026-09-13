@@ -1,0 +1,57 @@
+---
+title: "sql-between"
+description: "BETWEEN ... AND ... — number, text, date range စစ်ခြင်း (အစ ပါ၊ အဆုံး ပါ)။"
+autoNumbering: true
+---
+
+BETWEEN က တန်ဖိုးက "ကြားကာလ" (range) ထဲ ပါလားဆိုတာ စစ်ပါတယ်။ Lower bound ရော upper bound ပါ ထည့်ပြီး (inclusive) စစ်ပါတယ်။
+
+## Number Range
+```sql
+SELECT * FROM Products
+WHERE Price BETWEEN 20 AND 40;
+```
+Price 20 ကနေ 40 အထိ (၂၀ ရော၊ ၄၀ ရော ပါပါတယ်) ကိုပြပါတယ်။ >= 20 AND `<=` 40 နဲ့ အတူတူပါပဲ။
+
+## Text Range
+```sql
+SELECT * FROM Products
+WHERE Name BETWEEN 'A' AND 'M';
+```
+Name က A ကနေ M အတွင်းနဲ့ စတဲ့ ပစ္စည်းတွေကို ပြပါတယ်။ Text range က alphabetically စစ်ပြီး ကိုယ်မျှော်လင့်ထားတာနဲ့ မတူတတ်လို့ သေချာ testing လုပ်ပါ။
+
+## Date Range
+```sql
+SELECT * FROM Orders
+WHERE OrderDate BETWEEN '2025-01-01' AND '2025-12-31';
+```
+2025 တစ်နှစ်လုံးထဲက order တွေကို ပြပါတယ်။ Date ကိုတော့ quotes နဲ့ ရေးပြီး syntax က DB အလိုက် ကွာနိုင်ပါတယ် (MySQL: 'YYYY-MM-DD')။
+
+## NOT BETWEEN
+```sql
+SELECT * FROM Products
+WHERE Price NOT BETWEEN 20 AND 40;
+```
+20-40 ကြား မဟုတ်တဲ့ ပစ္စည်းတွေကို ပြပါတယ်။
+
+## BETWEEN + IN
+```sql
+SELECT * FROM Orders
+WHERE OrderDate BETWEEN '2025-01-01' AND '2025-12-31'
+  AND CustomerID IN (1, 2, 3);
+```
+Range နဲ့ list ကို ပေါင်းစပ်ပြီး ပိုကျဉ်းအောင် စစ်နည်းပါ။
+
+## Bound နာရီများ သတိ (Date/Time)
+```sql
+-- ၂၀၂၅-၁၂-၃၁ 00:00 မှာ အဆုံးသတ်လို့ 31 နေ့ နေ့လယ် order မပါနိုင်ပါ
+SELECT * FROM Orders
+WHERE OrderDate BETWEEN '2025-01-01' AND '2025-12-31';
+```
+Date-only column ဆိုရင် အန္တရာယ်မရှိပေမဲ့ datetime column မှာဆို upper bound က နေ့လည် 12:00 အထိ ဖြစ်နေလို့ အစား `<= '2025-12-31 23:59:59'` သို့မဟုတ် `< '2026-01-01'` သုံးပြီး စစ်တာ ပိုမှန်ပါတယ်။
+
+## အဓိက အချက်များ
+- BETWEEN a AND b — a, b နှစ်ခုလုံး ပါ (inclusive)
+- number / text / date အားလုံးမှာ အလုပ်လုပ်ပါတယ်
+- datetime မှာ upper bound သတိပြုပါ
+- NOT BETWEEN တွဲဆန့်ကျင်ဖက် စစ်လို့ရတယ်

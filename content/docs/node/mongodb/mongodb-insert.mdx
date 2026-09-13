@@ -1,0 +1,50 @@
+---
+title: "Node.js MongoDB Insert — Insert"
+description: "Node + MongoDB — insertOne, insertMany — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Documents ‌ထည့်နည်း — insertOne / insertMany။
+
+## insertOne
+
+```js
+const result = await users.insertOne({
+  name: "Aung",
+  age: 25,
+  tags: ["admin", "dev"],
+});
+
+console.log(result.insertedId); // ObjectId
+```
+
+## insertMany
+
+```js
+const result = await users.insertMany([
+  { name: "Su", age: 22 },
+  { name: "Mya", age: 30 },
+]);
+
+console.log(result.insertedCount); // 2
+```
+
+## _id field
+
+```js
+const doc = await users.findOne({ name: "Aung" });
+console.log(doc._id); // ObjectId("65f...")
+```
+
+`_id` — unique — ‌မ‌ပေးလျှင် MongoDB ‌က auto ObjectId ‌ဖန်တီး။
+
+## Custom _id
+
+```js
+await users.insertOne({ _id: "user_aung_1", name: "Aung" });
+```
+
+## ‌အဓိက အချက်များ
+- insertOne / insertMany
+- insertedId / insertedCount
+- _id — auto ObjectId

@@ -1,0 +1,58 @@
+---
+title: "sql-database-check"
+description: "CHECK — column value တွေအတွက် ကိုယ်ပိုင် condition (ဥပမာ age ≥ 0)။"
+autoNumbering: true
+---
+
+CHECK constraint က column တစ်ခုရဲ့ value အတွက် ကိုယ်ပိုင် rule သတ်မှတ်ပေးပါတယ်။ Rule မကျေနပ်ရင် row ကို လက်မခံပါဘူး။
+
+## CHECK ဥပမာ
+```sql
+CREATE TABLE Users (
+    UserID INT PRIMARY KEY,
+    Age INT CHECK (Age >= 0)
+);
+```
+Age column မှာ 0 အောက်တန်ဖိုး ထည့်လို့မရပါဘူး — INSERT UPDATE နှစ်ခုလုံးကို database က စစ်ပါတယ်။
+
+## SHOW example
+```sql
+INSERT INTO Users (Age) VALUES (30);    -- OK
+INSERT INTO Users (Age) VALUES (-5);    -- Error: CHECK constraint violated
+```
+
+## Table Level CHECK
+```sql
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    OrderDate DATE,
+    ShipDate DATE,
+    CHECK (ShipDate >= OrderDate)
+);
+```
+Column ၂ခုနဲ့ နှိုင်းယှဉ်တဲ့ rule — ShipDate က OrderDate ထက် နောက်ကျမဖြစ်ရလို့ (row-level) table level CHECK ပါ။
+
+## CHECK နှင့် enum-like listing
+```sql
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    Status VARCHAR(10),
+    CHECK (Status IN ('Active', 'Inactive', 'Discontinued'))
+);
+```
+Status column မှာ စာရင်းထဲက value ၃ ခုပဲ ဝင်နိုင်ပါတယ် — ဒါက Data validation ရဲ့ core pattern ဖြစ်ပြီး ("တရားဝင် values") အမြဲ သုံးဖို့ သင့်ပါတယ်။
+
+## Multiple CHECK
+```sql
+CREATE TABLE Accounts (
+    Balance DECIMAL(12,2) CHECK (Balance >= 0),
+    CHECK (Balance < 1000000)
+);
+```
+Check တွေကို ပေါင်းထားတာ — balance က အနုတ်မဖြစ်ရ၊ limit 1M ထက် မကျော်ရ။ Duplicate check မရေးပါနဲ့။
+
+## အဓိက အချက်များ
+- CHECK — domain validation (value rule)
+- Row-level data ၂ခု နှိုင်းယှဉ်လို့ရ
+- IN (...) — enum allow-list
+- Multiple conditions — check တွေ ပေါင်းထည့်လို့ရ

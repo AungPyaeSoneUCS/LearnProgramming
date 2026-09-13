@@ -1,0 +1,53 @@
+---
+title: "MySQL Aliases — Aliases"
+description: "Aliases — column ‌နှင့် table ‌နာမည် ခဏ ‌ပြောင်းခြင်း — AS, ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+**Aliases** များသည် column ‌သို့ table ‌တစ်ခုကို **ယာယီ ‌နာမည်** ‌ပေးခြင်း — query ‌ထဲ သုံးပြီး ‌ရလဒ် output ကို ‌လွယ်‌အောင်။
+
+## Column Alias
+
+```sql
+SELECT column_name AS alias_name
+FROM table_name;
+```
+
+## ‌ဥပမာ
+
+```sql
+SELECT first_name AS first, last_name AS last
+FROM employees;
+```
+
+Result header — `first`, `last` ‌ဖြစ်‌သွားသည်။
+
+## ‌ပေါင်းစပ် expression ‌အတွက်
+
+```sql
+SELECT CONCAT(first_name, ' ', last_name) AS full_name
+FROM employees;
+```
+
+## Table Alias
+
+```sql
+SELECT c.first_name, o.amount
+FROM customers AS c
+JOIN orders AS o ON c.id = o.customer_id;
+```
+
+`c` `o` — ‌ပိုတို ‌ရေးရန်၊ ‌အထူးသဖြင့် multiple tables ‌ချိတ်ချိန်။
+
+## AS ‌မပါဘဲလည်း ‌ရ
+
+```sql
+SELECT first_name first FROM employees;   -- implicit alias
+```
+
+AS ‌ကို ‌မထည့်လဲ ‌အလုပ်လုပ် — ‌သို့သော် AS ‌ဖြင့် ‌ရေးသားခြင်းက ‌ရှင်းလင်း။
+
+## ‌အဓိက အချက်များ
+- AS — column/table alias
+- Expression output နာမည် ‌ပြောင်း
+- JOIN multi-table ‌တွင် ‌အသုံးများ

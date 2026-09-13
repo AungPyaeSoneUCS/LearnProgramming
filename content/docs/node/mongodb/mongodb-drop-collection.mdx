@@ -1,0 +1,38 @@
+---
+title: "Node.js MongoDB Drop Collection — Drop Collection"
+description: "Node + MongoDB — drop collection — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Collection ကိုယ်၌ ဖျက်နည်း — documents ‌အားလုံး ဖျက်။
+
+## Drop
+
+```js
+await db.collection("users").drop();
+```
+
+## Check if exists
+
+```js
+const cols = await db.listCollections({ name: "users" }).toArray();
+if (cols.length > 0) {
+  await db.collection("users").drop();
+}
+```
+
+## Drop with filter of name
+
+```js
+const list = await db.listCollections().toArray();
+for (const c of list) {
+  if (c.name.startsWith("temp_")) {
+    await db.collection(c.name).drop();
+  }
+}
+```
+
+## ‌အဓိက အချက်များ
+- collection.drop()
+- listCollections — ‌စစ်
+- ‌ဖျက် ‌ကြောင်း ‌မရှိ — backup/verify

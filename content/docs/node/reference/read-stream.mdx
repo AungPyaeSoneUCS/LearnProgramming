@@ -1,0 +1,51 @@
+---
+title: "Node.js Readable Stream — Readable Stream"
+description: "Readable — reading data — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+**Readable** stream — data ‌ကို ‌အပိုင်း‌ပိုင်း ‌ဖတ် — memory ‌သက်သာ (files, HTTP body)။
+
+## From file
+
+```js
+const fs = require("node:fs");
+
+const readable = fs.createReadStream("big.txt");
+
+readable.on("data", (chunk) => {
+  console.log(`got ${chunk.length} bytes`);
+});
+```
+
+## fromIterable — Node 18+
+
+```js
+const { Readable } = require("node:stream");
+
+const readable = Readable.from(["a", "b", "c"]);
+
+for await (const chunk of readable) {
+  console.log(chunk);
+}
+```
+
+## Async iterator
+
+```js
+for await (const chunk of fs.createReadStream("big.txt")) {
+  // process chunk
+}
+```
+
+## ‌မှတ်ချက် events
+| Event | ‌လုပ် |
+| --- | --- |
+| `data` | chunk ‌ရောက် |
+| `end` | ‌ပြီးဆုံး |
+| `error` | ‌အ‌မှား |
+
+## ‌အဓိက အချက်များ
+- on data chunks
+- Readable.from
+- for await

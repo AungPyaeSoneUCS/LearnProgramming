@@ -1,0 +1,50 @@
+---
+title: "Node.js MySQL Create Database — Create Database"
+description: "Node + MySQL — create/drop database — query() — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Node.js ‌မှ database ‌ဖန်တီး / ‌ဖျက်နည်း။
+
+## Create database
+
+```js
+const mysql = require("mysql2/promise");
+const db = await mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "secret",
+});
+
+await db.query("CREATE DATABASE IF NOT EXISTS shop");
+console.log("Database created");
+```
+
+## Drop database
+
+```js
+await db.query("DROP DATABASE IF EXISTS shop");
+```
+
+## Use ‌ပြီး ‌ချိတ်
+
+```js
+const db = await mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "secret",
+  database: "shop",        // ← created DB
+});
+```
+
+## စစ်ဆေး
+
+```js
+const [rows] = await db.query("SHOW DATABASES");
+console.log(rows);
+```
+
+## ‌အဓိက အချက်များ
+- CREATE DATABASE IF NOT EXISTS
+- DROP DATABASE IF EXISTS
+- DB ‌ရွေးချိတ် — database option

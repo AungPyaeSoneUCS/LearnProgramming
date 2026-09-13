@@ -1,0 +1,61 @@
+---
+title: "sql-database-create-index"
+description: "CREATE INDEX — query မြန်အောင် index ဖန်တီးခြင်း (unique / composite / drop)။"
+autoNumbering: true
+---
+
+Index က book ရဲ့ "စာမျက်နှာညွှန်း" နဲ့တူပါတယ် — table ထဲမှာ data ရှာရာမှာ scan တစ်ခုလုံး မလုပ်ဘဲ အမြန်ရှာနိုင်အောင် database က lookup structure သိမ်းထားပါတယ်။ Query speed ကို သိသိသာသာ မြန်စေပါတယ်။
+
+## CREATE INDEX
+```sql
+CREATE INDEX idx_lastname
+ON Customers (LastName);
+```
+LastName ကို query filter လုပ်တာတွေ မြန်စေဖို့ index ထည့်ပါတယ်။
+
+## Index မရှိရင် — Full Scan
+```sql
+SELECT * FROM Customers WHERE LastName = 'Smith';
+```
+Index မရှိရင် database က table ရဲ့ row တစ်ခုချင်းစီ အကုန် ကြည့်ရမယ် (full table scan) — 1 million rows ရှိရင် 1 million လုံး ဖတ်ပါတယ်။ Index ရှိရင် ချက်ချင်းရှာပါတယ် (B-tree/log n)။
+
+## UNIQUE Index
+```sql
+CREATE UNIQUE INDEX idx_email
+ON Users (Email);
+```
+Index + duplicate တားတာ — Email အတွက် fastest unique lookup ပါ။
+
+## Composite Index
+```sql
+CREATE INDEX idx_city_lastname
+ON Customers (City, LastName);
+```
+Column ၂ခုလုံး သုံးတဲ့ query အတွက် — WHERE City = '...' AND LastName = '...' စသဖြင့်။ (Index column order က matter — ပထမဆုံး column ကို query  မှာ ပထမဆုံး filter လုပ်ရင် index သုံးမယ်။)
+
+## Drop Index
+```sql
+DROP INDEX idx_lastname ON Customers;      -- MySQL / SQL Server
+DROP INDEX idx_lastname;                    -- PostgreSQL
+```
+
+## ဘယ်အခါ Index ထည့်မလဲ?
+| Index ထည့်သင့်တာ | Index မထည့်သင့်တာ |
+| --- | --- |
+| WHERE/ORDER BY ထဲ သုံးတဲ့ column | ပြောင်းလဲနေတဲ့ column များ |
+| JOIN column (FK) | Few simple table |
+| High cardinality (value ကွဲများ) | Boolean (2 value ပဲ) |
+| Read-heavy table | Write-heavy table |
+
+## Index ရဲ့ ကုန်ကျစရာ (Trade-off)
+```sql
+-- Index တိုင်းက INSERT/UPDATE/DELETE တိုင်းမှာ update လုပ်ရတယ်
+-- Index ၅ ခုရှိတဲ့ table → write ၅ကြိမ် overhead
+```
+Index က read မြန်စေပေမဲ့ write နှေးစေပါတယ် — balance ထားပါ။
+
+## အဓိက အချက်များ
+- Index = lookup structure (B-tree)
+- Full scan ရှောင်ပြီး query မြန်
+- UNIQUE / composite index ရှိတယ်
+- Write overhead — balance ထား

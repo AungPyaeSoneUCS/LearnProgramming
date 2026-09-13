@@ -1,0 +1,68 @@
+---
+title: "sql-database-views"
+description: "VIEW — query ကို table လိုမျိုး သိမ်းထား၍ အဆင်ပြေ re-use လုပ်ခြင်း။"
+autoNumbering: true
+---
+
+View က stored query ပါ — save ထားတဲ့ SELECT ကို "table လိုမျိုး" SELECT  လုပ်လို့ရပါတယ်။ ရလဒ်ရဲ့ structure ကိုပဲ virtual table အနေနဲ့ ပြပါတယ်။
+
+## VIEW ဖန်တီးခြင်း
+```sql
+CREATE VIEW VipCustomers AS
+SELECT CustomerID, Name, City
+FROM Customers
+WHERE TotalSpent > 10000;
+```
+အဲဒီ query ကိုပဲ VipCustomers ဆိုတဲ့ view အဖြစ် သိမ်းထားပါတယ်။
+
+## View ကို သုံးခြင်း
+```sql
+SELECT * FROM VipCustomers WHERE City = 'Yangon';
+```
+View ကို table လိုပဲ query လုပ်လို့ရပါတယ် — underlying query ပဲ run ဖြစ်ပါတယ်။
+
+## View — Non-materialized (query  ချည်းပဲ)
+```sql
+-- ဒီ View က data မသိုလှောင်ဘူး — query result ပဲ ပြန်ပြပါတယ်
+-- base table ပြောင်းရင် view result ပါ ပြောင်းပါတယ်
+```
+View တွေက materialized (data သိမ်း) မဟုတ်ဘဲ base table ကနေ ဆွဲပြပါတယ်။ ဒါကြောင့် view က data သိုလှောင်တာ မဟုတ်ဘဲ "query wrapper" ပါ။
+
+## UPDATE / INSERT View ကတဆင့်
+```sql
+INSERT INTO VipCustomers (CustomerID, Name, City)
+VALUES (10, 'New', 'Yangon');
+```
+တချို့ view တွေကနေ INSERT/UPDATE လုပ်လို့ရပြီး base table ကိုပြောင်းပါတယ်။ ဒါပေမဲ့ Joins / aggregate ပါတဲ့ view တွေကတော့ မရပါဘူး — view တွေက အများအားဖြင့် read-only အသုံးပဲ ဖြစ်ပါတယ်။
+
+## Drop / Alter View
+```sql
+DROP VIEW VipCustomers;
+ 
+-- MySQL: view replace
+CREATE OR REPLACE VIEW VipCustomers AS
+SELECT * FROM Customers WHERE TotalSpent > 50000;
+```
+
+## View ရဲ့ ကောင်းကျိုး
+| Benefit | Detail |
+| --- | --- |
+| Simplicity | Complex query ကို ၁ ကြိမ်ရေးပြီး ပြန်သုံး |
+| Security | table ၃ခု join query ကို "view" ကနေပဲ ပေး — column တချို့ ဖုံးထားရ |
+| Consistency | Standard "canned" query — report အမြဲအတူတူ |
+
+## Security Column Masking
+```sql
+CREATE VIEW SafeUserView AS
+SELECT UserID, Name, Email
+FROM Users;   -- password column မပါ
+ 
+GRANT SELECT ON SafeUserView TO AppUser;
+```
+Password လိုမျိုး sensitive column တွေကို view ထဲမ ထည့်ဘဲ app ကို view ပဲခွင့်ပြုထားရင် — base table  ကိုတော့ ဖုံးထားပါတယ်။
+
+## အဓိက အချက်များ
+- View = stored query (virtual table)
+- ဖတ်ရလွယ်တဲ့ ထပ်ခါသုံး query
+- Security — column masking
+- Non-materialized — base table ဆီ ပြန်ညွှန်း

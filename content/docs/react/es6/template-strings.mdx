@@ -1,0 +1,66 @@
+---
+title: "ES6 Template Strings — Template Strings"
+description: "backtick ``  နဲ့ စာသားရေးနည်း — ${} interpolation, multiline string, HTML template များ။"
+autoNumbering: true
+---
+
+Template string (template literal) ဆိုတာ backtick `` ` `` နဲ့ ရေးတဲ့ စာသားဖြစ်ပြီး၊ variable ထည့်တာ `"${}"`၊ စာကြောင်းများ ဆက်တာတွေကို လွယ်ကူစေပါတယ်။
+
+## String Interpolation
+
+```js
+const name = "Aung";
+const age = 25;
+
+// ပုံမှန် ပေါင်းနည်း
+const msg = "My name is " + name + " and I am " + age + ".";
+
+// Template string
+const greeting = `My name is ${name} and I am ${age}.`;
+
+console.log(greeting); // My name is Aung and I am 25.
+```
+
+## Multi-line String
+
+```js
+// ဟောင်း (newline escape လိုသည်)
+const text = "Line 1\nLine 2";
+
+// အသစ်
+const text = `Line 1
+Line 2`;
+```
+
+Backtick ‌ထဲမှာ newline ကို တိုက်ရိုက် ရေးလို့ရပါတယ်။
+
+## Expression ထည့်ခြင်း
+
+```js
+const a = 5;
+const b = 10;
+console.log(`Sum: ${a + b}`); // Sum: 15
+```
+
+## Template String ‌ထဲမှာ Quotes
+
+Template string ‌ထဲမှာ single/double quotes ကို escape မလိုဘဲ တိုက်ရိုက် ရေးလို့ရပါတယ်။
+
+```js
+const text = `He said, "Hello" and I said, 'Hi'`;
+console.log(text); // He said, "Hello" and I said, 'Hi'
+```
+
+## HTML Template ‌ရေးတဲ့အခါ
+
+```js
+const title = "My Page";
+const html = `<h1>${title}</h1>`;
+```
+
+React ‌မှာ multi-line JSX နဲ့ string content တွေအတွက် template string ကို အသုံးဝင်ပါတယ်။
+
+## အဓိက အချက်များ
+- Backtick `` ` `` နဲ့ ရေးရသည်
+- `${expression}` ဖြင့် variable/expression ထည့်လို့ရသည်
+- Multi-line ကို သဘာဝကျကျ ရေးလို့ရသည်

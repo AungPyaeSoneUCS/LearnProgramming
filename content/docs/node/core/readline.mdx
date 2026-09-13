@@ -1,0 +1,66 @@
+---
+title: "Node.js Readline Module — Readline Module"
+description: "Readline — CLI input/output — readline.question, createInterface — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:readline` — terminal မှ **input မေး / ‌ပြန် output** ‌ပေး — CLI apps အတွက်။
+
+## Basic prompt
+
+```js
+const readline = require("node:readline");
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+rl.question("What is your name? ", (answer) => {
+  console.log(`Hello, ${answer}!`);
+  rl.close();
+});
+```
+
+## Multiple questions
+
+```js
+function ask(question) {
+  return new Promise((resolve) => rl.question(question, resolve));
+}
+
+const name = await ask("Name: ");
+const city = await ask("City: ");
+rl.close();
+```
+
+## Line events
+
+```js
+rl.on("line", (line) => {
+  console.log("You said:", line);
+  if (line === "quit") rl.close();
+});
+```
+
+## ‌ဆိုင် Union ‌အသုံး — interactive CLI
+
+```js
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+
+rl.setPrompt("node> ");
+rl.prompt();
+rl.on("line", (cmd) => {
+  try {
+    console.log(eval(cmd));   // ‌သတိ — eval ‌အ‌္တရာယ် — demo သာ
+  } catch (err) {
+    console.error(String(err));
+  }
+  rl.prompt();
+});
+```
+
+## ‌အဓိက အချက်များ
+- createInterface — io
+- question / line event
+- CLI tools ‌တည် ‌ဆောက်

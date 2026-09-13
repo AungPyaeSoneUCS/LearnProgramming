@@ -1,0 +1,75 @@
+---
+title: "React Interview Prep — Interview Prep"
+description: "React interview questions — component, state, props, hooks, performance, router — ‌အဖြေများနှင့်။"
+autoNumbering: true
+---
+
+React interview ‌အတွက် ‌အသုံးများသော ‌မေးခွန်းများနှင့် ‌အဖြေများ — ‌သင်ယူ‌ထားမှုကို ‌ပြန်လည် ‌စစ်ဆေး‌ပေးပါသည်။
+
+## Q: Component ‌ဆိုတာ ‌ဘာလဲ
+
+Component — UI ‌အပိုင်း ‌တစ်ပိုင်း ‌ပြန်သုံးနိုင်သော block (function/class)။
+
+```jsx
+function Button({ label }) {
+  return <button>{label}</button>;
+}
+```
+
+## Q: Props vs State
+
+- **Props** — parent → child ‌ဖြတ်‌ပေးသော data — immutable
+- **State** — component အတွင်း ‌ပြောင်းလဲနိုင်သော data
+
+| Props | State |
+| --- | --- |
+| Parent ‌မှ ‌လာသည် | Component ‌အ‌တွင်း |
+| Read-only | `setState` ‌ဖြင့် ‌ပြောင်း |
+
+## Q: ‌ဘယ်လို state update ‌ဖြစ်လဲ
+
+```jsx
+const [count, setCount] = useState(0);
+setCount(count + 1);   // re-render
+```
+
+State update → React ‌မှ ‌ပြန် render (request) — DOM diff ‌လုပ် ပြီး ‌ပြောင်း‌လဲမှု ‌ပြ။
+
+## Q: useEffect ‌က ‌ဘာလဲ
+
+Render ‌ပြီးမှ side effect — fetch, timers, subscriptions။
+
+```jsx
+useEffect(() => {
+  fetchData();
+}, []);   // mount ‌ချိန် once
+```
+
+## Q: ‌ဘယ်လို performance ‌ကောင်း‌အောင် ‌လုပ်လဲ
+
+- `React.memo` — function component memoize
+- `useMemo` / `useCallback` — value/function cache
+- Code splitting — `React.lazy` + Suspense
+
+## Q: Key ‌က ‌ဘာကြောင့် ‌လိုအပ်လဲ
+
+List ‌ထဲ item ‌တိုင်းမှာ unique `key` — ‌ပြောင်း‌လဲမှု ‌သိရန်, reconciliation ‌ကောင်း။
+
+## Q: Controlled vs Uncontrolled input
+
+- Controlled — value ‌က state ‌ကနေ
+- Uncontrolled — DOM ‌ကိုယ်‌တိုင် (useRef ‌ဖြင့်)
+
+```jsx
+// controlled
+<input value={val} onChange={(e) => setVal(e.target.value)} />
+```
+
+## Q: React Router ‌က ‌ဘယ်လို ‌အလုပ်လုပ်လဲ
+
+`BrowserRouter` → `Routes`/`Route` — URL path → component ‌ပြောင်း။ SPA — page refresh ‌မလို။
+
+## ‌အဓိက အချက်များ
+- Component, props/state, hooks ‌မေးများ
+- Performance, lists/key, forms
+- Router, context ‌ကိုလည်း ‌သုံးသပ်ရန်

@@ -1,0 +1,85 @@
+﻿---
+title: "React Sass — Sass နဲ့ ပုံသွင်း"
+description: "React ‌တွင် Sass ‌သုံးနည်း — install sass, .scss ‌ဖိုင်, variables, nesting, mixins ။"
+autoNumbering: true
+---
+
+Sass ‌ဆိုတာ CSS preprocessor ‌ဖြစ်ပြီး **variables, nesting, mixins** စတဲ့ ‌အား‌ဖြည့် ‌အင်္ဂါရပ်တွေ ‌ပေးပါတယ်။ React ‌မှာ ‌သုံးဖို့ `sass` package ကို install ‌လုပ်ရပါတယ်။
+
+## Install
+
+```bash
+npm install sass
+```
+
+## .scss ‌ဖိုင် import
+
+```scss
+/* styles.scss */
+$myColor: green;
+
+h1 {
+  color: $myColor;
+}
+```
+
+```jsx
+import "./styles.scss";
+
+function App() {
+  return <h1>Hello Style!</h1>;
+}
+```
+
+## Variables
+
+```scss
+$primary: #4caf50;
+$padding: 16px;
+
+.button {
+  background-color: $primary;
+  padding: $padding;
+}
+```
+
+## Nesting
+
+```scss
+.nav {
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    display: inline-block;
+  }
+  a {
+    color: $primary;
+    &:hover {
+      color: darken($primary, 10%);
+    }
+  }
+}
+```
+
+`&` — parent selector (‌ဥပမာ `a:hover`)။
+
+## Mixins — ‌ပြန်သုံး style
+
+```scss
+@mixin rounded($radius) {
+  border-radius: $radius;
+}
+
+.card {
+  @include rounded(12px);
+  padding: 20px;
+}
+```
+
+## ‌အဓိက အချက်များ
+- `npm install sass` ‌လိုအပ်
+- `import "./style.scss"` — ‌ဖိုင်အ‌သွင်း
+- Variables (`$x`), nesting, mixins (@mixin/@include)
+- Sass ကို CSS ‌အဖြစ် compile (build)

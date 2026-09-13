@@ -1,0 +1,55 @@
+---
+title: "Node.js MySQL Select From — Select From"
+description: "Node + MySQL — SELECT queries, rows, fields — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Node.js ‌မှ data ‌ဖတ်နည်း။
+
+## Basic select
+
+```js
+const [rows] = await db.query("SELECT id, name FROM users");
+console.log(rows); // array of objects
+```
+
+## With condition
+
+```js
+const [rows] = await db.query("SELECT * FROM users WHERE city = ?", [
+  "Yangon",
+]);
+```
+
+## Count / single row
+
+```js
+const [[row]] = await db.query(
+  "SELECT * FROM users WHERE id = ?",
+  [userId]
+);
+if (!row) console.log("not found");
+```
+
+`[ [row] ]` — single row destructure — ‌မရှိလျှင် undefined။
+
+## ‌အကြောင်းအရာ — structure
+
+```js
+const [rows, fields] = await db.query("SELECT * FROM users LIMIT 2");
+console.log(fields); // column metadata
+```
+
+## Pagination
+
+```js
+const [rows] = await db.query(
+  "SELECT * FROM users ORDER BY id LIMIT ? OFFSET ?",
+  [limit, offset]
+);
+```
+
+## ‌အဓိက အချက်များ
+- [rows] — array of objects
+- WHERE + ?
+- [[row]] — single

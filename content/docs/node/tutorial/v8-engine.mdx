@@ -1,0 +1,40 @@
+---
+title: "Node.js V8 Engine — V8 Engine"
+description: "V8 Engine — JS ကို machine code ပြောင်းခြင်း — JIT, features။"
+autoNumbering: true
+---
+
+**V8** သည် Google ၏ open-source JavaScript engine — Node.js ၏ **အစုအခြေ**။
+
+## ဘာအလုပ်လုပ်လဲ
+JavaScript code ကို **machine code** သို့ ပြောင်း၍ run စေသည်။
+
+```
+JavaScript → (Parser) → AST → (JIT) → Machine Code
+```
+
+## JIT Compilation
+- **Interpreter** — မြန်စွာ စတင် run (Ignition)
+- **Optimizes** — အသုံးများသော code ‌ကို optimize (TurboFan)
+- Cached — ထပ်ခါတလဲလဲ run ‌မြန်စေရန်
+
+## V8 Features
+- Garbage collection — memory ရှင်းလင်း
+- ES2024+ features support
+- Built-in `console`, `Date`, `Math` ‌စသည်
+
+```js
+// V8 — standard JS objects ရှိသည်
+console.log(Math.max(3, 7));       // 7
+console.log(typeof new Date());    // object
+```
+
+## V8 ‌ရဲ့ အားသာချက်
+- Chrome + Node.js ၏ speed
+- ‌ကြီးမားသော community / optimization
+- Cross-platform
+
+## ‌အဓိက အချက်များ
+- V8 — JS engine
+- JIT — interpret → optimize → machine code
+- Node.js ကို fast ‌စေသည်

@@ -1,0 +1,46 @@
+---
+title: "sql-count"
+description: "COUNT(*), COUNT(column), COUNT(DISTINCT column) — အသား ကွဲပြားမှုများနဲ့အတူ။"
+autoNumbering: true
+---
+
+COUNT() က row အရေအတွက်ကို ရေတွက်ပါတယ်။ Simplest aggregate ဖြစ်ပြီး သုံးနည်း အမျိုးမျိုး ရှိပါတယ်။
+
+## COUNT(*) — row အားလုံး
+```sql
+SELECT COUNT(*) FROM Customers;
+```
+Customers ဇယားထဲက row အားလုံးရဲ့ အရေအတွက်ကို ပြပါတယ်။ NULL တန်ဖိုးပါတဲ့ row တွေ ပါပါတယ် — row ရှိတာနဲ့ ရေတွက်ပါတယ်။
+
+## COUNT(column) — column မရှိတာကို ကျော်
+```sql
+SELECT COUNT(Age) FROM Customers;
+```
+Age column မှာ တန်ဖိုးမရှိတဲ့ (NULL) row တွေကို ကျော်ပြီး ရေတွက်ပါတယ်။ "နာမည်ရှိတဲ့ ဖောက်သည် ဘယ်နှယောက်လဲ" လိုမျိုး ဆိုရင် သုံးပါတယ်။
+
+## COUNT(DISTINCT column)
+```sql
+SELECT COUNT(DISTINCT Country) FROM Customers;
+```
+ထူးခြားတဲ့ Country အရေအတွက်ကို ပြပါတယ်။ ဥပမာ "Myanmar", "Thailand", "Singapore" ရှိရင် 3 ပြန်ပါတယ်။
+
+## COUNT + WHERE
+```sql
+SELECT COUNT(*) FROM Orders
+WHERE OrderDate > '2025-01-01';
+```
+2025 ခုနှစ် နောက်ပိုင်း order အရေအတွက်ကို ပြပါတယ်။ "ဘယ်နှခုလဲ" ဆိုတဲ့  မေးခွန်းတွေမှာ ပုံမှန် သုံးပါတယ်။
+
+## COUNT + GROUP BY (အကြိုညွှန်း)
+```sql
+SELECT Country, COUNT(*) AS Total
+FROM Customers
+GROUP BY Country;
+```
+Country တစ်ခုချင်းစီရဲ့ ဖောက်သည် အရေအတွက်ကို row စီအဖြစ် ပြပါတယ်။ ဥပမာ: Myanmar → 3, Thailand → 1။
+
+## အဓိက အချက်များ
+- COUNT(*) — row အားလုံး (NULL ပါထည့်)
+- COUNT(col) — col မှာ value ရှိတဲ့ row သာ
+- COUNT(DISTINCT col) — ထူးခြားတဲ့ တန်ဖိုး အရေအတွက်
+- WHERE/GROUP BY နဲ့ တွဲသုံးလေ့ရှိတယ်

@@ -1,0 +1,45 @@
+---
+title: "Node.js VM Module — VM Module"
+description: "VM — isolated sandbox — runInNewContext — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:vm` — code ကို **isolated context** ‌တွင် run ‌စေ — sandbox ပုံစံ — ‌အ‌န္တရာယ် ‌ရှိသော user code ‌အတွက် ‌သတိ။
+
+## ‌အခြေခံ
+
+```js
+const vm = require("node:vm");
+
+const context = { user: "Aung" };
+vm.createContext(context);
+
+vm.runInContext("user = 'Su'", context);
+console.log(context.user); // Su
+```
+
+## runInNewContext
+
+```js
+const result = vm.runInNewContext(
+  "1 + 2 * 3",
+  {},
+  { timeout: 1000 }
+);
+console.log(result); // 7
+```
+
+## ‌အသုံးပြုမှု
+- Plugins / user scripts
+- Test environment isolation
+- JSON ‌casts sandbox
+
+## ‌သတိထားရန် (‌အရေး‌ကြီး)
+- VM ‌သည် **security boundary ‌မဟုတ်** — ‌ပြင်ပ ‌လွှမ်းမိုး ခဲ့နိုင်
+- ‌အ‌န္တရာယ် ‌ရှိသော untrusted code — real sandbox (container) ‌သုံး
+- `timeout` — infinite loop ‌ကာကွယ်
+
+## ‌အဓိက အချက်များ
+- vm.createContext + runInContext
+- runInNewContext — new sandbox
+- ‌လုံး‌ခြုံ — ‌အပြင်မှာ ‌သုံးရန် ‌မရ

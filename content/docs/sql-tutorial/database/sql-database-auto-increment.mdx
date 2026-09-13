@@ -1,0 +1,75 @@
+---
+title: "sql-database-auto-increment"
+description: "AUTO_INCREMENT / IDENTITY / SERIAL — နောက် ID ကို database က auto ဖန်တီးပေးခြင်း။"
+autoNumbering: true
+---
+
+Primary key ID တွေကိုကိုယ်တိုင် ရေတွက်ရေး ရှောင်ဖို့ database က auto-increment column ပေးပါတယ် — row အသစ်ထည့်တိုင်း ID ကို အလိုအလျောက် တိုးပေးပါတယ်။
+
+## DB engine အလိုက် Syntax
+```sql
+-- MySQL
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100)
+);
+ 
+-- SQL Server
+CREATE TABLE Users (
+    UserID INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(100)
+);
+ 
+-- PostgreSQL
+CREATE TABLE Users (
+    UserID SERIAL PRIMARY KEY,
+    Name VARCHAR(100)
+);
+```
+| DB | Keyword | Start/Increment |
+| --- | --- | --- |
+| MySQL | AUTO_INCREMENT | 1, 1 (default) |
+| SQL Server | IDENTITY(1,1) | seed, increment |
+| PostgreSQL | SERIAL | 1, 1 |
+
+## INSERT မှာ ID ထည့်စရာမလို
+```sql
+INSERT INTO Users (Name) VALUES ('Ko Ko');
+-- UserID → 1
+INSERT INTO Users (Name) VALUES ('Su');
+-- UserID → 2
+```
+ID ကို database က ပေးပြီး INSERT  ထဲမှာ ထည့်စရာမလို။
+
+## ထည့်လိုက်တဲ့ ID ပြန်ယူခြင်း
+```sql
+-- MySQL
+SELECT LAST_INSERT_ID();
+ 
+-- SQL Server
+SELECT SCOPE_IDENTITY();
+ 
+-- PostgreSQL (insert ထဲ return)
+INSERT INTO Users (Name) VALUES ('Mya') RETURNING UserID;
+```
+App ထဲမှာ ထည့်လိုက်တဲ့ record ရဲ့ ID ကို ချက်ချင်း လိုအပ်တဲ့အခါ သုံးပါတယ်။
+
+## Starting Value ပြောင်းခြင်း
+```sql
+-- MySQL
+ALTER TABLE Users AUTO_INCREMENT = 100;
+ 
+-- SQL Server / PostgreSQL — session level
+DBCC CHECKIDENT ('Users', RESEED, 100);
+```
+
+## သတိထားစရာ
+```sql
+-- Delete ID 2 → နောက် insert က ID 3 — 1 ကို ပြန်မသုံးပါ။ ဒါက expected behavior ဖြစ်ပြီး invoice numbers တွေမှာ "gap" ရှိတာ ပုံမှန်ပါ။
+```
+
+## အဓိက အချက်များ
+- AUTO_INCREMENT (MySQL) / IDENTITY (SQL Server) / SERIAL (PostgreSQL)
+- DB engine အလိုက် keyword ကွဲ
+- ID ထည့်စရာမလို — database က auto
+- Deleted ID တွေကို ပြန်မသုံးဘဲ gap ရှိတယ်

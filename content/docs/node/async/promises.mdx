@@ -1,0 +1,55 @@
+---
+title: "Node.js Promises — Promise"
+description: "Promise — resolved/rejected, then/catch, Promise.all — ဥပမာများ။"
+autoNumbering: true
+---
+
+**Promise** ‌သည် async operation ၏ ‌နောက်ဆုံး ‌ရလဒ် (success/error) ကို ‌ကိုယ်စားပြုသည် — callback hell ‌ကို ‌ဖြေ‌ရှင်း။
+
+## States
+| State | ‌ဖော်ပြချက် |
+| --- | --- |
+| pending | ‌လုပ်‌ဆောင်နေဆဲ |
+| fulfilled | resolve ‌ရလဒ် ‌ရပြီ |
+| rejected | error ‌ဖြစ် |
+
+## Create a Promise
+
+```js
+const wait = (ms) =>
+  new Promise((resolve, reject) => {
+    if (ms < 0) return reject(new Error("ms must be >= 0"));
+    setTimeout(() => resolve("Done"), ms);
+  });
+```
+
+## Consume — then/catch
+
+```js
+wait(500)
+  .then((msg) => console.log(msg))
+  .catch((err) => console.error(err));
+```
+
+## Promise.all — ‌အပြိုင်
+
+```js
+const [a, b] = await Promise.all([wait(100), wait(200)]);
+```
+
+Or ‌without await:
+
+```js
+Promise.all([wait(100), wait(200)])
+  .then((results) => console.log(results));
+```
+
+## ‌အသုံးများ APIs
+- `fs.promises.readFile`
+- `fetch(url).then(r => r.json())`
+- Database drivers
+
+## ‌အဓိက အချက်များ
+- 3 states — pending/fulfilled/rejected
+- then/catch/finally
+- Promise.all — ‌အပြိုင် run

@@ -1,0 +1,39 @@
+---
+title: "Node.js DiffieHellman — DiffieHellman"
+description: "DiffieHellman — key exchange — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:crypto` **DiffieHellman (DH)** — ‌ဘေးကင်း key exchange — ‌နှစ်‌လုံး shared secret ‌တွက်။
+
+## Setup
+
+```js
+const crypto = require("node:crypto");
+
+const alice = crypto.createDiffieHellman(2048);
+const aliceKeys = alice.generateKeys();
+
+const bob = crypto.createDiffieHellman(alice.getPrime(), alice.getGenerator());
+const bobKeys = bob.generateKeys();
+```
+
+## Compute shared secret
+
+```js
+const aliceSecret = alice.computeSecret(bobKeys);
+const bobSecret = bob.computeSecret(aliceKeys);
+
+console.log(aliceSecret.equals(bobSecret)); // true
+```
+
+Both ‌တူ same secret — ‌၎င်း‌ပေါ် encrypt ‌လုပ်‌နိုင်။
+
+## ‌မှတ်ချက်
+- Eavesdropper — ‌နှစ်‌ဖက် public keys ‌သာ ‌မြင် — private secret ‌သီး
+- Modern — ECDH (elliptic curve) က ‌ပိုမြန်
+
+## ‌အဓိက အချက်များ
+- createDiffieHellman(bits)
+- generateKeys / computeSecret
+- Same shared secret

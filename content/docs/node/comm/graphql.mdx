@@ -1,0 +1,59 @@
+---
+title: "Node.js GraphQL — GraphQL"
+description: "GraphQL — query language — schema, resolvers, apollo-server — ဥပမာများ။"
+autoNumbering: true
+---
+
+**GraphQL** — clients ‌က ‌လိုအပ်‌သော data ကို ‌ရွေး‌တောင်း — REST over/under-fetching ‌ဖြေ‌ရှင်း။
+
+## Install
+
+```bash
+npm install @apollo/server graphql
+```
+
+## Schema + resolvers
+
+```js
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
+
+const typeDefs = `
+  type User { id: ID, name: String, age: Int }
+  type Query {
+    users: [User]
+    user(id: ID!): User
+  }
+`;
+
+const users = [{ id: "1", name: "Aung", age: 25 }];
+
+const resolvers = {
+  Query: {
+    users: () => users,
+    user: (_, args) => users.find((u) => u.id === args.id),
+  },
+};
+
+const server = new ApolloServer({ typeDefs, resolvers });
+const { url } = await startStandaloneServer(server, { listen: { port: 4000 } });
+console.log(`GraphQL at ${url}`);
+```
+
+## Query example
+
+```graphql
+{
+  user(id: "1") {
+    name
+    age
+  }
+}
+```
+
+Client ‌က ‌လိုသော fields သာ ရ — over-fetch ‌မဖြစ်။
+
+## ‌အဓိက အချက်များ
+- Schema (types) + resolvers
+- ‌ရွေး fields query
+- ApolloServer

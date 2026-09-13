@@ -1,0 +1,50 @@
+---
+title: "Node.js HMAC — HMAC class"
+description: "HMAC — keyed hash — createHmac — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:crypto` **HMAC** — hashed message authentication code — secret key ‌ဖြင့် digest — integrity + authenticity။
+
+## createHmac
+
+```js
+const crypto = require("node:crypto");
+
+const secret = "my-secret";
+const hmac = crypto.createHmac("sha256", secret);
+
+hmac.update("message to sign");
+console.log(hmac.digest("hex"));
+```
+
+## verify
+
+```js
+function sign(data, secret) {
+  return crypto.createHmac("sha256", secret).update(data).digest("hex");
+}
+
+const expected = sign("payload", secret);
+const actual = sign("payload", secret);
+
+console.log(crypto.timingSafeEqual(Buffer.from(expected, "hex"), Buffer.from(actual, "hex")));
+```
+
+`timingSafeEqual` — timing attack ‌ကာကွယ်။
+
+## Use cases
+- API signatures
+- JWT-like tokens
+- Message integrity
+
+## vs plain hash
+| Hash | HMAC |
+| --- | --- |
+| secret ‌မလို | secret ‌လို |
+  | Anyone ဖြင့် verify | Key holder သာ |
+
+## ‌အဓိက အချက်များ
+- createHmac(algo, secret)
+- update + digest
+- timingSafeEqual verify

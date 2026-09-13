@@ -1,0 +1,80 @@
+---
+title: "sql-quiz"
+description: "SQL quiz — SELECT / JOIN / GROUP BY / constraint တွေ အကြောင်း မေးခွန်း ၂၀ ပြန်လည်စစ်ဆေးခြင်း။"
+autoNumbering: true
+---
+
+သင်ခန်းစာတွေ သင်ပြီးပြီ — သင်ယူထားတာကို စစ်ဆေးပါ။ အောက်ပါ မေးခွန်းတွေကို ဖြေကြည့်ပြီး အောက်မှာ အဖြေနဲ့ စစ်ပါ။
+
+## Question 1-5 (SELECT)
+1. SELECT * FROM customers; က ဘယ်လိုရလဒ်မျိုး ပြန်လဲ?
+2. Duplicate rows ဖယ်ဖို့ column  တွေကို ဘယ် keyword နဲ့ SELECT လုပ်မလဲ?
+3. WHERE price > 100 — ဒီ condition က ဘယ် row တွေကို ပါအောင်လား?
+4. ORDER BY name DESC — DESC က ဘာအဓိပ္ပာယ်လဲ?
+5. SELECT * FROM t LIMIT 5 — LIMIT က ဘာလုပ်လဲ?
+
+## Question 6-10 (Joins)
+1. INNER JOIN နဲ့ LEFT JOIN ကွာခြားချက်?
+2. မကိုက်တဲ့ right rows ပါလိုချင်ရင် (left  base) ဘယ် join သုံးလဲ?
+3. FULL OUTER JOIN က result ဘာလဲ?
+4. Self join ဆိုတာ?
+5. Join condition ကို ლ.transition table ၂ခုမှာ key တွေနဲ့ ဘယ်လိုချိတ်လဲ?
+
+## Question 11-15 (Aggregate)
+1. COUNT(*) vs COUNT(col) ကွာခြားချက်?
+2. Rows ကို အုပ်စုခွဲပြီး တွက်ချင်ရင်?
+3. Aggregate filter အတွက် WHERE သို့မဟုတ် HAVING?
+4. GROUP_CONCAT (MySQL) က ဘာလုပ်လဲ?
+5. GROUP BY c1, c2 — အုပ်စုခွဲနည်း?
+
+## Question 16-20 (Constraints & DDL)
+1. Primary key နဲ့ unique  ကွာခြားချက်?
+2. Foreign key က ဘာအကြောင်း?
+3. CHECK (age >= 0) ကို ချိုးဖောက်ရင် ဘာဖြစ်လဲ?
+4. ALTER TABLE နဲ့ DROP TABLE ကွာခြားချက်?
+5. Index က query ကို ဘယ်လို အကူအညီပေးလဲ?
+
+<details>
+<summary>အဖြေများ — ကြည့်ရန်</summary>
+
+Customers table ရဲ့ column  အားလုံး၊ row အားလုံး
+
+SELECT DISTINCT col
+
+price 100 ထက် ကြီးတဲ့ rows
+
+Descending (အကြီးမှ အငယ်)
+
+Result rows အရေအတွက် limit
+
+INNER — နှစ်ဖက် matching ပဲ; LEFT — left rows အားလုံး ထားပေး
+
+LEFT (right မပါလည်း left အကုန်) — ဆန့်ကျင်ဘက်လိုရင် RIGHT
+
+နှစ်ဖက်လုံး အားလုံး — matching ၊ unmatched → NULL
+
+Table ကိုယ်တိုင် join (alias ၂ခုနဲ့)
+
+Foreign key = primary key (child.FK = parent.PK)
+
+COUNT(*) — rows အားလုံး (NULL ပါ); COUNT(col) — non-NULL ပဲ
+
+GROUP BY
+
+HAVING (aggregate က WHERE မှာ မရ)
+
+Group ထဲ value တွေကို comma string ဆက်
+
+နှစ်ခုလုံး တူတဲ့ group ကို အုပ်စုတစ်ခုအဖြစ်
+
+PK — unique + not null, table ၁ခုမှာ ၁ခု; UNIQUE — NULL ခံ, အများကြီး ရနိုင်
+
+Child data  ကော parent  ကို ချိတ်ခြင်း (referential integrity)
+
+INSERT/UPDATE error — row ကို လက်မခံ
+
+ALTER — structure ပြင်တာ; DROP — အကုန်ဖျက်
+
+Lookup မြန်တဲ့ structure — full scan ရှောင်ပေး
+
+</details>

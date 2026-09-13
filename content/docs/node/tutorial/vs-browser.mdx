@@ -1,0 +1,46 @@
+---
+title: "Node.js vs Browser — Browser နှင့် Node.js"
+description: "Node.js vs Browser — environment ကွာခြားချက် — global objects, modules။"
+autoNumbering: true
+---
+
+JavaScript သည် browser နှင့် Node.js နှစ်နေရာတွင် run နိုင်သော်လည်း environment များ **မတူ** ပါ။
+
+## Global Objects
+
+| Browser | Node.js |
+| --- | --- |
+| `window`, `document` | `global`, `process` |
+| `fetch`, `localStorage` | `fs`, `http`, `os` |
+| `navigator` | `__dirname`, `__filename` |
+
+## Modules
+
+- Browser — ES Modules (`import`/`export`)
+- Node.js — CommonJS (`require`/`module.exports`) + ESM
+
+```js
+// Node.js CommonJS
+const fs = require("node:fs");
+
+// ESM
+import fs from "node:fs";
+```
+
+## DOM — No!
+
+Node.js တွင် `document`, `window` **မရှိ** — မရေးပါနဲ့:
+
+```js
+// ❌ document.querySelector — browser သာ
+// ✓ res.end(), fs.readFile() — Node.js
+```
+
+## ‌ကိုယ်စီ အသုံးပြုမှု
+- Browser — UI, DOM manipulation
+- Node.js — server, file, network, system
+
+## အဓိက အချက်များ
+- Global objects မတူ
+- Modules system မတူ
+- DOM — browser သာ

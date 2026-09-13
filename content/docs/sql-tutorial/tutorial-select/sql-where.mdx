@@ -1,0 +1,61 @@
+---
+title: "sql-where"
+description: "WHERE နဲ့ လိုအပ်တဲ့ row တွေကိုပဲ ရွေးထုတ်နည်း — operators တွေနဲ့အတူ။"
+autoNumbering: true
+---
+
+Table ကြီးတစ်ခုလုံးကို ဆွဲကြည့်တာထက်၊ ကိုယ်လိုချင်တဲ့ row တွေကိုပဲ စစ်ထုတ်ချင်တာ သဘာဝပါ။ WHERE က ဒီလို filtering အတွက် အသုံးအများဆုံး clause ပါ။
+
+## WHERE အခြေခံ
+```sql
+SELECT * FROM Customers
+WHERE Country = 'Myanmar';
+```
+ဒီ query က Country ကော်လံမှာ 'Myanmar' ဖြစ်နေတဲ့ row တွေကိုပဲ ပြန်ပေးပါတယ်။ Text တန်ဖိုးကို single quote နဲ့ ရေးဖို့ မမေ့ပါနဲ့။
+
+## Number နဲ့ စစ်ခြင်း
+```sql
+SELECT * FROM Customers
+WHERE CustomerID = 5;
+```
+CustomerID က number type မို့ quote မထည့်ဘဲ 5 လို့ ရေးပါတယ်။ ဒီ query က ID 5 ရှိတဲ့ တစ်ယောက်တည်းကိုပဲ ပြပါတယ်။
+
+## Comparison Operators (နှိုင်းယှဉ် သင်္ကေတများ)
+```sql
+SELECT * FROM Products WHERE Price > 100;
+SELECT * FROM Products WHERE Price >= 100;
+SELECT * FROM Products WHERE Price < 100;
+SELECT * FROM Products WHERE Price <= 100;
+SELECT * FROM Products WHERE Price <> 100;
+```
+- `>` ကြီးသည် (100 ထက်)
+- `>=` ကြီးသည် သို့မဟုတ် တူသည်
+- `<` ငယ်သည်
+- `<=` ငယ်သည် သို့မဟုတ် တူသည်
+- `<>` မတူညီ (တချို့ database မှာ `!=` လဲရတယ်)
+
+ဒီ ၅ ခုက Price ကော်လံနဲ့ 100 ကို နှိုင်းယှဉ်ပြီး ကိုက်ညီတဲ့ row တွေကိုပဲ ပြပါတယ်။
+
+## Text နဲ့ စစ်ခြင်း — မှတ်သားစရာ
+```sql
+SELECT * FROM Customers WHERE City = 'yangon';
+```
+တချို့ database (MySQL default) က case-insensitive မို့ 'yangon' က 'Yangon' ကိုပါ ရှာတွေ့ပါတယ်။ SQL Server/PostgreSQL ကတော့ case-sensitive ဖြစ်တတ်ပါတယ်။
+
+## LIKE, IN, BETWEEN (အကြိုညွှန်း)
+```sql
+SELECT * FROM Customers WHERE City LIKE 'Y%';
+SELECT * FROM Customers WHERE City IN ('Yangon', 'Mandalay');
+SELECT * FROM Customers WHERE Age BETWEEN 20 AND 30;
+```
+- LIKE 'Y%' — Y နဲ့စတဲ့ city (pattern)
+- IN (...) — list ထဲကတစ်ခုခုဖြစ်ရမယ်
+- BETWEEN a AND b — ကြားကာလ
+
+ဒီသုံးခုလုံးကို နောက် lesson တွေမှာ အပြည့်အစုံ လေ့လာပါမယ်။
+
+## အဓိက အချက်များ
+- WHERE က row အဆင့်မှာ စစ်ထုတ်ပါတယ်
+- Text → quotes၊ Number → quotes မပါ
+- `<>`/`!=` က not equal
+- WHERE သုံးတဲ့အခါ compare operator ရွေးချယ်မှု က query ရဲ့ အဓိက ဆုံးဖြတ်ချက်ပါ

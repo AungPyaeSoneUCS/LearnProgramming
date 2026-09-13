@@ -1,0 +1,43 @@
+---
+title: "Node.js Intro — မိတ်ဆက်"
+description: "Node.js မိတ်ဆက် — ဘာကြောင့် သုံးလဲ — server-side JavaScript ၏ သဘောတရား။"
+autoNumbering: true
+---
+
+**Node.js** ကို 2009 ခုနှစ်တွင် Ryan Dahl မှ ဖန်တီးခဲ့သည် — JavaScript ကို **server side** တွင် run ‌စေ‌ရန် ရည်ရွယ်သည်။
+
+## JavaScript ၏ ခရီး
+- Browser အတွက် စတင်ခဲ့
+- Node.js ကြောင့် server side အထိ ကျယ်ပြန့်လာ
+- Frontend + Backend = JavaScript တစ်မျိုးတည်း
+
+## Browser vs Node.js
+| Browser | Node.js |
+| --- | --- |
+| DOM, window access | NO DOM — server |
+| ပိတ်ထားသော environment | File, network access ရ |
+| Legacy modules | CommonJS + ES modules |
+
+## Node.js က ဘာတွေ သုံးလဲ
+- REST / GraphQL APIs
+- CLI tools
+- Microservices
+- Real-time (chat, games)
+- Build tools (Vite, Webpack)
+
+## ‌ပုံစံ ဥပမာ — HTTP server
+
+```js
+const http = require("node:http");
+
+const server = http.createServer((req, res) => {
+  res.end("Hello World");
+});
+
+server.listen(3000, () => console.log("Server on :3000"));
+```
+
+## အဓိက အချက်များ
+- 2009 — Ryan Dahl
+- Browser အပြင်မှာ JS run
+- Server, CLI, Microservices, Real-time

@@ -1,0 +1,41 @@
+---
+title: "React HOME — React စတင်ရန်"
+description: "React Tutorial သင်တန်း စတင် — ဘာတွေ သင်ရမယ်၊ ဘယ်ကစရင်ကောင်းမလဲ၊ ဘယ်လို လေ့ကျင့်မလဲ။"
+autoNumbering: true
+---
+
+React ဆိုတာ Web application ရဲ့ User Interface (UI) ကို တည်ဆောက်ဖို့ အသုံးပြုတဲ့ JavaScript library တစ်ခုပါ။ ဒီသင်တန်းမှာ React ကို **အခြေခံမှ အဆင့်မြင့်အထိ** အဆင့်ဆင့် လေ့လာသွားရမှာ ဖြစ်ပါတယ်။
+
+### ဒီသင်တန်းမှာ ဘာတွေ သင်ရမလဲ?
+
+- **React Tutorial** — JSX, Components, Props, Events, Conditionals, Lists, Forms။
+- **React ES6** — React အတွက် လိုအပ်တဲ့ ခေတ်မီ JavaScript (Classes, Arrow Functions, Destructuring, etc.)။
+- **React Hooks** — useState, useEffect, useContext, useReducer, Custom Hooks စတဲ့ state စီမံနည်းများ။
+- **React Advanced** — Router, Portals, Suspense, Forward Ref, HOC, Transitions။
+- **React Styling** — CSS Styling, CSS Modules, CSS-in-JS, Sass။
+- **လေ့ကျင့်ခန်းနှင့် စာမေးပွဲ** — Exercises, Quiz, Syllabus, Study Plan, Certificate။
+
+### ဥပမာ — ရိုးရှင်းတဲ့ React App
+
+```jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+function Hello() {
+  return <h1>Hello React!</h1>;
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<Hello />);
+```
+
+ဒီ code က `Hello` ဆိုတဲ့ component တစ်ခုကို ဖန်တီးပြီး `root` ထဲမှာ render လုပ်ပါတယ်။ component ဆိုတာ UI အစိတ်အပိုင်း တစ်ခုဖြစ်ပြီး ပြန်ပြန် သုံးလို့ရတယ်။
+
+## 🧠 အသိပညာ စစ်ဆေးမှု (Check Your Understanding)
+
+<Quiz
+  questions={[
+    { id: "q1", question: "React ဆိုတာ ဘာလဲ?", options: ["CSS Framework", "JavaScript UI Library", "Database", "Server"], correctAnswer: 1, explanation: "React သည် UI တည်ဆောက်ရန် JavaScript library ဖြစ်ပါတယ်။" },
+    { id: "q2", question: "React မှာ UI အစိတ်အပိုင်းတွေကို ဘာလို့ခေါ်သလဲ?", options: ["Element", "Module", "Component", "Package"], correctAnswer: 2, explanation: "UI အစိတ်အပိုင်းတွေကို Component လို့ခေါ်ပါတယ်။" },
+  ]}
+/>

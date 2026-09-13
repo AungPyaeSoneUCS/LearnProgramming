@@ -1,0 +1,52 @@
+---
+title: "MySQL ANY — ANY Operator"
+description: "ANY — subquery ‌ရလဒ်ထဲ ‌တစ်ခုခုနှင့် ‌နှိုင်း မှန်လျှင် — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+`ANY` operator သည် **subquery ‌ရလဒ်ထဲ ‌မည်သည့်‌တန်ဖိုး** ‌နှင့် ‌နှိုင်းယှဉ် မှန်လျှင် TRUE ‌ပြန်ပါတယ်။
+
+## Syntax
+
+```sql
+SELECT column
+FROM table
+WHERE column operator ANY (subquery);
+```
+
+operator — `=`, `>`, `<`, `>=`, `<=`, `<>` ‌မဆို။
+
+## ဥပမာ
+
+```sql
+SELECT name, price
+FROM products
+WHERE price > ANY (
+  SELECT price FROM products WHERE category = 'Accessory'
+);
+```
+
+Accessory ‌အ ရဲ့ price ‌တစ်ခုခုထက် ‌ပိုကြီးသော product ‌များ ‌ပြ။
+
+## ‌ဥပမာ ‌ဇယား
+
+company ‌format products:
+
+```
+Products
+id  name    price
+1   Laptop  1000
+2   Mouse   25
+3   Key A   30
+```
+
+`> ANY(25, 30)` → Laptop (1000 > 25 / 30) — ‌အနည်းဆုံး ‌တစ်ခုနဲ့ မှန်ရင် ‌ပြ။
+
+## = ANY ‌နှင့် IN
+
+`= ANY (subquery)` ‌သည် `IN (subquery)` နှင့် ‌အတူတူ ‌ဖြစ်သည်။
+
+## ‌အဓိက အချက်များ
+- ANY — ‌တစ်ခုခုနှင့် ‌မှန်ခြင်း
+- operator + subquery
+- `= ANY` = `IN`

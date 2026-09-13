@@ -1,0 +1,57 @@
+---
+title: "Node.js WebSockets — WebSockets"
+description: "WebSockets — full-duplex over TCP — ws module — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+**WebSocket** — client-server ‌ကြား **persistent, full-duplex** connection — server ‌က client ထံ ‌တက်ကြွစွာ ‌ပို့နိုင်။
+
+## Install
+
+```bash
+npm install ws
+```
+
+## Server
+
+```js
+const { WebSocketServer } = require("ws");
+const wss = new WebSocketServer({ port: 8080 });
+
+wss.on("connection", (ws) => {
+  ws.send("Welcome!");
+
+  ws.on("message", (data) => {
+    console.log("received:", data.toString());
+    ws.send("Echo: " + data);
+  });
+
+  ws.on("close", () => console.log("closing"));
+});
+```
+
+## Client (browser)
+
+```js
+const ws = new WebSocket("ws://localhost:8080");
+
+ws.onopen = () => ws.send("Hello from browser");
+ws.onmessage = (e) => console.log("Server says:", e.data);
+```
+
+## vs HTTP
+| HTTP | WebSocket |
+| --- | --- |
+| Request-response | Persistent |
+| Client ကသာ ‌စတင် | Both ‌ပို့နိုင် |
+| Stateless | Stateful |
+
+## ‌အသုံးပြုမှု
+- Live chat, notifications
+- Stock tickers, games
+- Real-time dashboards
+
+## ‌အဓိက အချက်များ
+- ws module — WebSocketServer
+- ws.send / on message
+- Full-duplex persistent

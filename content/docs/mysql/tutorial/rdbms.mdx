@@ -1,0 +1,67 @@
+---
+title: "MySQL RDBMS — Relational Database"
+description: "RDBMS သဘောတရား — tables, rows, columns, primary key, foreign key, relationships။"
+autoNumbering: true
+---
+
+**RDBMS** (Relational Database Management System) သည် data များကို tables ဖြင့် သိမ်းဆည်းပြီး ဇယားများအကြား ဆက်စပ်မှုများကို keys များဖြင့် တည်ဆောက်ပါတယ်။
+
+## Table — ဇယားဖွဲ့စည်းပုံ
+
+ဇယားတစ်ခုတွင် **columns** (fields) နှင့် **rows** (records) များ ပါဝင်ပါတယ်။
+
+```
+employees
++----+-------+--------+
+| id | name  | dept   |
++----+-------+--------+
+| 1  | Aung  | Sales  |
+| 2  | Hla   | IT     |
++----+-------+--------+
+```
+
+- Column — data ရဲ့ အမျိုးအစားတစ်ခုစီ (id, name, dept)
+- Row — data မှတ်တမ်းတစ်ခုစီ
+
+## Primary Key
+
+ဇယားထဲ row တစ်ခုချင်းစီကို သီးခြားခွဲခြားသတ်မှတ်ပေးသည့် column — value သည် unique ဖြစ်ရမည်။
+
+```sql
+CREATE TABLE employees (
+  id INT PRIMARY KEY,
+  name VARCHAR(100)
+);
+```
+
+## Foreign Key
+
+ဇယားနှစ်ခုကို ချိတ်ဆက်ပေးသည့် key — အခြားဇယား၏ primary key ကို ညွှန်ပြသည်။
+
+```sql
+CREATE TABLE orders (
+  order_id INT PRIMARY KEY,
+  employee_id INT,
+  FOREIGN KEY (employee_id) REFERENCES employees(id)
+);
+```
+
+## Relationship အမျိုးအစားများ
+
+- **One-to-Many** — customer တစ်ယောက်က orders အများအပြား
+- **Many-to-Many** — students နှင့် courses (junction table လိုအပ်)
+- **One-to-One** — user နဲ့ user profile
+
+## Table ဖြင့် ထုတ်ယူခြင်း
+
+```sql
+SELECT employees.name, orders.amount
+FROM employees
+JOIN orders ON employees.id = orders.employee_id;
+```
+
+## အဓိက အချက်များ
+- RDBMS = tables + relationships
+- Primary key — unique row identifier
+- Foreign key — tables အကြား ချိတ်ဆက်
+- JOIN ဖြင့် ဇယားများ ပေါင်းစပ် ထုတ်ယူ

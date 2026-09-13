@@ -1,0 +1,56 @@
+---
+title: "Node.js Process — Process Object"
+description: "Process — process.argv, env, exit, signals — global — ဥပမာများ။"
+autoNumbering: true
+---
+
+`process` — global object — current Node ‌လု‌ပ်‌ဆောင်မှုနှင့် ‌ပတ်‌သက် ‌အ‌ချက်အလက် ‌အားလုံး။
+
+## ‌အရေးကြီး properties
+
+```js
+console.log(process.pid);          // process id
+console.log(process.version);      // node version
+console.log(process.platform);     // win32 / linux
+console.log(process.argv);         // arguments
+console.log(process.cwd());        // current dir
+```
+
+## Environment variables
+
+```js
+const port = process.env.PORT || 3000;
+if (process.env.NODE_ENV === "production") { ... }
+```
+
+## Exit & signals
+
+```js
+process.exit(0);    // success
+process.exit(1);    // failure
+
+process.on("SIGINT", () => {
+  console.log("Ctrl+C pressed");
+  process.exit(0);
+});
+```
+
+## Exit codes (‌အဓိက)
+| Code | ‌အဓိပ္ပာယ် |
+| --- | --- |
+| 0 | success |
+| 1 | generic error |
+| 130 | Ctrl+C (SIGINT) |
+
+## ‌အသုံးပြုမှု — args from CLI
+
+```js
+// node app.js --port=4000
+const flag = process.argv.slice(2).find((a) => a.startsWith("--port="));
+const port = flag ? flag.split("=")[1] : 3000;
+```
+
+## ‌အဓိက အချက်များ
+- process.env / argv / cwd
+- exit codes — 0/1
+- Signal handlers — graceful shutdown

@@ -1,0 +1,77 @@
+---
+title: "Node.js Real World Examples — Real World Examples"
+description: "Real world — full examples — API, queue, upload — ဥပမာများ။"
+autoNumbering: true
+---
+
+Node.js ‌အသုံးများ real-world patterns — ‌ပေါင်းစပ် ‌ဥပမာများ။
+
+## 1. REST API — complete Express
+
+```js
+const express = require("express");
+const app = express();
+app.use(express.json());
+
+let items = [];
+
+app.get("/api/items", (req, res) => res.json(items));
+
+app.post("/api/items", (req, res) => {
+  const item = { id: Date.now(), ...req.body };
+  items.push(item);
+  res.status(201).json(item);
+});
+
+app.delete("/api/items/:id", (req, res) => {
+  items = items.filter((i) => i.id !== Number(req.params.id));
+  res.status(204).end();
+});
+
+app.listen(3000);
+```
+
+## 2. File upload (formidable/multer)
+
+```js
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+
+app.post("/upload", upload.single("file"), (req, res) => {
+  res.json({ file: req.file.filename });
+});
+```
+
+## 3. Background job — queue
+
+```js
+const Queue = require("bull");
+const emailQueue = new Queue("email", "redis://localhost:6379");
+
+emailQueue.process(async (job) => {
+  await sendEmail(job.data.to, job.data.subject);
+});
+
+app.post("/signup", (req, res) => {
+  emailQueue.add({ to: req.body.email, subject: "Welcome" });
+  res.json({ ok: true });
+});
+```
+
+## 4. Cron — schedule
+
+```js
+const cron = require("node-cron");
+cron.schedule("0 3 * * *", () => cleanOldLogs());
+```
+
+## 5. ‌အခြေခံ rules
+- `bcrypt` — passwords
+- `jwt` — auth tokens
+- Structured error handling — try/catch + middleware
+- `.env` secrets
+
+## ‌အဓိက အချက်များ
+- Patterns: REST, upload, queue, cron
+- Middleware ‌ပေါင်း combine
+- Security — bcrypt+jwt

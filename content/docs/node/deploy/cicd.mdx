@@ -1,0 +1,55 @@
+---
+title: "Node.js CI/CD — CI/CD"
+description: "CI/CD — GitHub Actions, workflows — build/test/deploy — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+**CI/CD** — code push → automatic စစ်ဆေး (CI) → automatic ဖြန့် (CD) — automation။
+
+## CI — continuous integration
+  - Code push တိုင်း: lint → test → build
+- ‌ကြိုတင် bug ‌ဖမ်း
+
+## GitHub Actions — workflow
+
+`.github/workflows/ci.yml`:
+
+```yaml
+name: CI
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+```
+
+## CD — deploy
+
+```yaml
+deploy:
+  needs: test
+  if: github.ref == 'refs/heads/main'
+  steps:
+    - run: npm ci
+    - run: npm run build
+    - uses: somehost/deploy@v1
+      with:
+        token: ${{ secrets.DEPLOY_TOKEN }}
+```
+
+## Secrets
+
+GitHub → Settings → Secrets → Actions — `.env` ‌မလို password push ။
+
+## အဓိက အချက်များ
+- CI — lint/test/build auto
+- CD — auto deploy
+- Secrets — GitHub secrets

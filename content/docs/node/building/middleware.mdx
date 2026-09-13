@@ -1,0 +1,59 @@
+---
+title: "Node.js Middleware Concept — Middleware"
+description: "Middleware — req/res ‌အလယ် — logger, auth, error middleware — ဥပမာ။"
+autoNumbering: true
+---
+
+**Middleware** — request ‌ဝင်ပြီး ‌အဖြေ ‌မထွက်မီ ‌လုပ်‌ဆောင်သော functions — ‌ဆံ့ ‌ချိတ်ဆက် ‌လုပ်နိုင်သည်။
+
+## ‌ပုံစံ
+
+```js
+function myMiddleware(req, res, next) {
+  // ‌လုပ်‌ဆောင်ခြင်
+  next(); // → ‌နောက် middleware / route
+}
+```
+
+`next()` — ‌ခေါ် ‌ရန် ‌မမေ့ — ‌မသြား၊ ‌မခေါ်လျှင် request ‌ပိတ်။
+
+## Logger middleware
+
+```js
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+```
+
+## Route-specific
+
+```js
+const auth = (req, res, next) => {
+  if (!req.headers.authorization) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+  next();
+};
+
+app.get("/private", auth, (req, res) => res.json({ secret: true }));
+```
+
+## Error middleware — (err, req, res, next) 4 args
+
+```js
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: err.message });
+});
+```
+
+## ‌အသုံးဝင်သော ‌အလည်က
+- Logging, auth, body parsing
+- CORS, compression, rate limit
+- Validation
+
+## ‌အဓိက အချက်များ
+- (req, res, next) pattern
+- app.use — global
+- next() ‌ခေါ် — ‌အ‌သေချာ

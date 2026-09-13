@@ -1,0 +1,64 @@
+---
+title: "MySQL SUM() — SUM()"
+description: "SUM() — column ‌တန်ဖိုးများ ‌ပေါင်းလဒ် — ‌ဥပမာများ, GROUP BY နှင့်။"
+autoNumbering: true
+---
+
+`SUM()` function သည် numeric column ၏ **စုစုပေါင်း ‌ပေါင်းလဒ်** ကို ‌ပြန်ပေးပါတယ်။
+
+## Syntax
+
+```sql
+SELECT SUM(column_name)
+FROM table_name
+WHERE condition;
+```
+
+## ဥပမာ
+
+```sql
+SELECT SUM(amount) AS total_sales
+FROM orders;
+```
+
+orders ၏ amount အားလုံး ‌ပေါင်း စုစုပေါင်း။
+
+## ‌ဥပမာ — ‌ဇယား
+
+```
+Orders
+id  amount
+1   100
+2   250
+3   150
+```
+
+`SUM(amount)` → `500`။
+
+## NULL rows — ‌ရှောင်
+
+SUM သည် NULL ‌တန်ဖိုးများကို skip ‌လုပ်သည် → ရလဒ် NULL ‌ဖြစ်‌အောင် မလုပ်ပါ။
+
+## GROUP BY ‌နှင့်
+
+```sql
+SELECT customer_id, SUM(amount) AS total
+FROM orders
+GROUP BY customer_id;
+```
+
+customer တစ်ယောက်ချင်းစီ အတွက် ‌ပေါင်းလဒ် ‌ပြ။
+
+## WHERE ‌နှင့်
+
+```sql
+SELECT SUM(amount) FROM orders
+WHERE status = 'paid';
+```
+
+paid ‌များသာ ‌ပေါင်း။
+
+## ‌အဓိက အချက်များ
+- SUM() — ‌စုစုပေါင်း
+- Numeric column သာ
+- NULL ‌ဖယ်ကာ ‌တွက်

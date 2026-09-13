@@ -1,0 +1,91 @@
+---
+title: "React Select — Select / Dropdown"
+description: "React ‌မှာ `<select>` dropdown ‌ထိန်းချုပ်နည်း — value, onChange, multiple selection ။"
+autoNumbering: true
+---
+
+React ‌မှာ dropdown (`<select>`) ‌ကိုလည်း `value` + `onChange` နဲ့ ‌ထိန်းချုပ်ပါတယ်။
+
+## အခြေခံ Select
+
+```jsx
+function MyForm() {
+  const [car, setCar] = useState("Ford");
+
+  const handleChange = (event) => {
+    setCar(event.target.value);
+  };
+
+  return (
+    <form>
+      <select value={car} onChange={handleChange}>
+        <option value="Ford">Ford</option>
+        <option value="BMW">BMW</option>
+        <option value="Audi">Audi</option>
+      </select>
+    </form>
+  );
+}
+```
+
+## Select ‌ထဲ ‌ရွေးထားတာ ‌ပြ
+
+```jsx
+function MyForm() {
+  const [car, setCar] = useState("Ford");
+
+  return (
+    <div>
+      <select value={car} onChange={(e) => setCar(e.target.value)}>
+        <option value="Ford">Ford</option>
+        <option value="BMW">BMW</option>
+      </select>
+      <p>You selected: {car}</p>
+    </div>
+  );
+}
+```
+
+## Multiple Select
+
+`multiple` attribute ‌ထည့် ‌ရင် array state ‌သုံးရပါတယ်။
+
+```jsx
+function MyForm() {
+  const [cars, setCars] = useState([]);
+
+  const handleChange = (e) => {
+    const selected = Array.from(e.target.selectedOptions, (o) => o.value);
+    setCars(selected);
+  };
+
+  return (
+    <select multiple value={cars} onChange={handleChange}>
+      <option value="Ford">Ford</option>
+      <option value="BMW">BMW</option>
+      <option value="Audi">Audi</option>
+    </select>
+  );
+}
+```
+
+`selectedOptions` ‌ကနေ ‌ရွေးထားတဲ့ option ‌တွေကို array ‌အဖြစ် ‌ရယူပါတယ်။
+
+## Select Key‌ ပြဿနာ
+
+‌အများအားဖြင့် option ‌တွေက data ‌ကနေ ‌လာတတ်ပြီး ‌ရှင်းလန်း ‌ထားပါတယ်။
+
+```jsx
+const brands = ["Ford", "BMW", "Audi"];
+
+<select value={car} onChange={(e) => setCar(e.target.value)}>
+  {brands.map((b) => (
+    <option key={b} value={b}>{b}</option>
+  ))}
+</select>
+```
+
+## အဓိက အချက်များ
+- `value` + `onChange` ‌နဲ့ ‌ထိန်းချုပ်
+- `event.target.value` — ‌ရွေးထားတဲ့ ‌တန်ဖိုး
+- `multiple` ဆို array ‌သုံးရသည်

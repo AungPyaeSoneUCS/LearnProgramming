@@ -1,0 +1,87 @@
+---
+title: "sql-database-dates"
+description: "DATETIME — date သိမ်းပုံ၊ နှိုင်းယှဉ်ပုံ၊ format နဲ့ NOW()/GETDATE() အသုံးပြုခြင်း။"
+autoNumbering: true
+---
+
+Date သိုလှောင်ခြင်းက data type နဲ့ စတင်ပါတယ်။ Date data  တွေကို သိမ်း၊ စစ်၊ format လုပ်တဲ့နည်း။
+
+## Date Data Types
+```sql
+-- SQL Server
+DATE       -- 2025-09-01
+DATETIME   -- 2025-09-01 10:30:00
+DATETIME2  -- ပိုတိကျ (fractional seconds)
+ 
+-- MySQL
+DATE
+DATETIME
+TIMESTAMP  -- timezone aware
+```
+
+## Date Insert — Format ဘယ်လိုလဲ?
+```sql
+INSERT INTO Orders (OrderDate) VALUES ('2025-09-01');        -- standard
+INSERT INTO Orders (OrderDate) VALUES (NOW());               -- MySQL
+INSERT INTO Orders (OrderDate) VALUES (GETDATE());           -- SQL Server
+INSERT INTO Orders (OrderDate) VALUES (CURRENT_TIMESTAMP);  -- standard
+```
+Date ကို string format ('YYYY-MM-DD') နဲ့ insert လုပ်လို့ရပါတယ် — database က parse ပြီး သိမ်းပေးပါတယ်။ Locale  format ('01/09/2025') ကို ရှောင်ပါ — ambiguous ဖြစ်နိုင်လို့ ISO format  ကို သုံးပါ။
+
+## Date စစ်ခြင်း
+```sql
+-- 2025-09-01 ရက်စွဲ order အားလုံး
+SELECT * FROM Orders
+WHERE OrderDate = '2025-09-01';
+ 
+-- 2025 အစောပိုင်း ၃လလုံး
+SELECT * FROM Orders
+WHERE OrderDate >= '2025-01-01' AND OrderDate < '2025-04-01';
+```
+
+## Date/Time Functions
+```sql
+-- MySQL
+SELECT NOW(), CURDATE(), CURTIME();
+SELECT YEAR(OrderDate), MONTH(OrderDate), DAY(OrderDate) FROM Orders;
+ 
+-- SQL Server
+SELECT GETDATE(), YEAR(OrderDate), MONTH(OrderDate), DATEPART(day, OrderDate) FROM Orders;
+```
+
+## Date Arithmetic
+```sql
+-- MySQL — 7 ရက်အကြာ
+SELECT OrderDate, DATE_ADD(OrderDate, INTERVAL 7 DAY) FROM Orders;
+ 
+-- SQL Server — 7 ရက်အကြာ
+SELECT OrderDate, DATEADD(day, 7, OrderDate) FROM Orders;
+ 
+-- 30 ရက်အတွင်း order
+SELECT * FROM Orders
+WHERE OrderDate > DATE_SUB(NOW(), INTERVAL 30 DAY);  -- MySQL
+```
+
+## မွေးနေ့ကနေ Age တွက်ခြင်း
+```sql
+-- MySQL
+TIMESTAMPDIFF(YEAR, BirthDate, NOW()) AS Age
+ 
+-- SQL Server
+DATEDIFF(year, BirthDate, GETDATE()) AS Age
+```
+
+## STRING format (ပြသဖို့)
+```sql
+-- MySQL
+SELECT DATE_FORMAT(OrderDate, '%Y-%m') AS MonthYear FROM Orders;
+ 
+-- SQL Server
+SELECT FORMAT(OrderDate, 'yyyy-MM') FROM Orders;
+```
+
+## အဓိက အချက်များ
+- DATE / DATETIME / TIMESTAMP types
+- ISO format 'YYYY-MM-DD' ထည့်ပါ
+- YEAR/MONTH/DAY, NOW(), DATEADD
+- date math — INTERVAL / DATEADD / DATEDIFF

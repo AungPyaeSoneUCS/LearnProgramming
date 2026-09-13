@@ -1,0 +1,55 @@
+---
+title: "sql-syntax"
+description: "SQL statement ရဲ့ ပုံစံ၊ keyword စည်းမျဉ်း၊ semicolon နဲ့ comment ရေးနည်း။"
+autoNumbering: true
+---
+
+SQL က လူ့စကားနဲ့ ဆင်တဲ့အတွက် စာဖတ်ရတာ လွယ်ပါတယ်။ ဒါပေမဲ့ SQL ကိုယ်တိုင်မှာ လိုက်နာရမယ့် စည်းမျဉ်းတချို့ ရှိပါတယ်။
+
+## Statement ဆိုတာ ဘာလဲ?
+SQL မှာ တစ်ကြောင်းစီကို statement လို့ ခေါ်ပြီး၊ Database ကို ခိုင်းတဲ့ instruction တစ်ခုပါ။
+
+```sql
+SELECT * FROM Customers;
+```
+ဒီ statement က Customers ဇယားရဲ့ အတန်းအားလုံး၊ ကော်လံအားလုံးကို ပြန်ပြပါတယ်။ think of * as "အကုန်လုံး" ဖြစ်ပြီး FROM က ဘယ်ဇယားကလဲ ဆိုတာကို သတ်မှတ်တာပါ။
+
+## Keyword တွေရဲ့ စည်းမျဉ်း
+SQL keyword (SELECT, FROM, WHERE စသဖြင့်) တွေက case-insensitive ပါ။ ဒါပေမဲ့ နားလည်ရလွယ်အောင် UPPERCASE နဲ့ ရေးလေ့ရှိပါတယ်။
+
+```sql
+select * from Customers;
+SELECT * FROM Customers;
+```
+အပေါ်နဲ့ အောက် နှစ်ကြောင်းလုံးက Result အတူတူပဲ ထွက်ပါတယ်။ Case-sensitivity က database engine အပေါ်မူတည်ပါတယ်။
+
+## Semicolon (;) မဖြစ်မနေ လိုအပ်လား?
+Database system တစ်ချို့ (ဥပမာ SQL Server) မှာ semicolon မလိုပါဘူး။ တစ်ချို့ (MySQL, PostgreSQL) မှာတော့ statement တစ်ကြောင်းကြေငြာရာမှာ semicolon နဲ့ အဆုံးသတ်ဖို့ လိုပါတယ်။
+
+```sql
+SELECT * FROM Customers;
+SELECT name FROM Customers;
+```
+Statement တွေအများကြီးကို တစ်ပြိုင်နက် run တဲ့အခါ semicolon တစ်ခုစီနဲ့ ခွဲထားတဲ့အတွက် script ထဲမှာ error မဖြစ်အောင် ကူညီပါတယ်။
+
+## Comment ရေးနည်း
+```sql
+-- ဒါက single-line comment
+/* ဒါက
+   multi-line comment */
+SELECT name FROM Customers; -- SQL က line comment ကို လျစ်လျူရှုပါတယ်
+```
+Comment တွေက run တဲ့အခါ လျစ်လျူရှုခံရပြီး လူတွေ ဖတ်လို့ကောင်း၊ မှတ်စုအတွက် သုံးပါတယ်။ -- က line တစ်ကြောင်းအတွက်၊ /* */ က စာကြောင်းများစွာအတွက်ပါ။
+
+## ဒေတာ တန်ဖိုးတွေ (Data / Value)
+```sql
+SELECT * FROM Customers WHERE City = 'Yangon';
+```
+Text/String တွေကို single quote 'Yangon' နဲ့ ရေးရပြီး၊ number ကတော့ quote မထည့်ဘဲ ရေးပါတယ်။ ဒီ query က Yangon မြို့မှာရှိတဲ့ ဖောက်သည်တွေကိုပဲ ပြပါတယ်။
+
+## ရေးနည်း အကောင်းဆုံး လမ်းညွှန်
+1. Keyword တွေကို UPPERCASE သုံးပါ
+2. Column, Table name တွေကို lowercase သုံးပါ
+3. Statement တိုင်းရဲ့ အဆုံးမှာ semicolon ထည့်ပါ
+4. ရှည်တဲ့ statement တွေကို line ခွဲရေးပါ
+5. ရှုပ်တာတွေမှာ comment ထည့်ပါ

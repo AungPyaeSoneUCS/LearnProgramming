@@ -1,0 +1,54 @@
+---
+title: "Node.js Timers Module — Timers Module"
+description: "Timers — setTimeout, setInterval, setImmediate — clear — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:timers` — ‌အချိန်‌ကြာ‌ခြား tasks ‌လုပ် — global ‌အဖြစ်လည်း ‌ရှိ။
+
+## setTimeout
+
+```js
+const timer = setTimeout(() => {
+  console.log("5s passed");
+}, 5000);
+
+clearTimeout(timer); // ‌မစောင့် ‌ဖျက်
+```
+
+## setInterval
+
+```js
+const interval = setInterval(() => {
+  console.log("tick");
+}, 1000);
+
+setTimeout(() => clearInterval(interval), 5000); // 5s ‌ထိ
+```
+
+## setImmediate
+
+```js
+setImmediate(() => console.log("next cycle"));
+```
+
+Event loop ၏ check phase ၌ လုပ် — `process.nextTick` ၏ နောက် (nextTick သည် အစမြန်ဆုံး)။
+
+## Ordering recap
+
+```js
+setTimeout(() => console.log("timer"));
+setImmediate(() => console.log("immediate"));
+```
+
+I/O ‌အ‌ပြင် — timer ‌မသေချာ; I/O ‌ထဲတွင် immediate ‌ရှေ့။
+
+## ‌အသုံးများသော case
+- Retry / polling
+  - Cleanup ပိတ် (idle ရောက်)
+- Timeouts for requests
+
+## ‌အဓိက အချက်များ
+- setTimeout / setInterval
+- clearTimeout / clearInterval
+- setImmediate — check phase

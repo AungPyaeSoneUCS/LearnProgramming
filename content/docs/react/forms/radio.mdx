@@ -1,0 +1,92 @@
+---
+title: "React Radio — Radio Button"
+description: "React ‌မှာ radio button ‌အုပ်စု ‌ထိန်းချုပ်နည်း — name, checked, onChange ။"
+autoNumbering: true
+---
+
+Radio button ‌တွေက ‌ရွေးချယ်စရာ ‌အများကြီးထဲက **တစ်ခုတည်း** ‌ရွေးဖို့ ‌သုံးပါတယ်။ ‌အုပ်စု ‌တစ်ခုကို `name` ‌တူ ‌ပေး ‌ရပါတယ်။
+
+## အခြေခံ Radio
+
+```jsx
+function MyForm() {
+  const [color, setColor] = useState("red");
+
+  return (
+    <div>
+      <label>
+        <input
+          type="radio"
+          name="color"
+          value="red"
+          checked={color === "red"}
+          onChange={(e) => setColor(e.target.value)}
+        />
+        အနီ
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="color"
+          value="blue"
+          checked={color === "blue"}
+          onChange={(e) => setColor(e.target.value)}
+        />
+        အပြာ
+      </label>
+      <p>ရွေးထားတဲ့ ‌အရောင်: {color}</p>
+    </div>
+  );
+}
+```
+
+`name` ‌တူလို့ **တစ်ခုတည်းသာ** ရွေးနိုင်ပါတယ်။
+
+## Nested state ‌နဲ့
+
+```jsx
+function MyForm() {
+  const [gradient, setGradient] = useState({ color: "red", dir: "to-right" });
+
+  const handleColor = (e) => {
+    setGradient((prev) => ({ ...prev, color: e.target.value }));
+  };
+
+  return (
+    <div>
+      <input type="radio" name="gcolor" value="red" checked={gradient.color === "red"} onChange={handleColor} /> အနီ
+      <input type="radio" name="gcolor" value="blue" checked={gradient.color === "blue"} onChange={handleColor} /> အပြာ
+    </div>
+  );
+}
+```
+
+## Label ‌နဲ့ ‌တစ်ခုစီ ‌ဖော်ပြ
+
+```jsx
+const options = [
+  { value: "small", label: "သေးသည်" },
+  { value: "medium", label: "အလယ်" },
+  { value: "large", label: "ကြီးသည်" },
+];
+
+<fieldset>
+  {options.map((o) => (
+    <label key={o.value}>
+      <input
+        type="radio"
+        name="size"
+        value={o.value}
+        checked={size === o.value}
+        onChange={(e) => setSize(e.target.value)}
+      />
+      {o.label}
+    </label>
+  ))}
+</fieldset>
+```
+
+## အဓိက အချက်များ
+- ‌အုပ်စု ‌တစ်ခုကို `name` ‌တူ ‌ပေးရသည်
+- `checked={value === state}` — ‌ရွေးထားမှု ‌ပြ
+- `event.target.value` — ‌ရွေးထားတဲ့ ‌တန်ဖိုး

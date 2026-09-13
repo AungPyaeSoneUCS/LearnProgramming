@@ -1,0 +1,52 @@
+---
+title: "Node.js Socket — Socket class"
+description: "Socket — net socket — data, connect, close — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:net` **Socket** — TCP connection ကို ဖျော်‌ — server/client နှစ်ဖက် အတွက် တူ။
+
+## ‌ဖွဲ့ server side
+
+```js
+const net = require("node:net");
+
+const server = net.createServer((socket) => {
+  console.log("client connected:", socket.remoteAddress);
+
+  socket.on("data", (data) => socket.write("echo: " + data));
+  socket.on("close", () => console.log("closed"));
+});
+
+server.listen(9000);
+```
+
+## Client socket
+
+```js
+const socket = net.connect(9000, "localhost", () => {
+  socket.write("hi");
+});
+
+socket.on("data", (d) => console.log(d.toString()));
+```
+
+## Common events
+| Event | ‌လုပ် |
+| --- | --- |
+| `data` | ‌ဇစ်တောင် data |
+| `connect` | ‌ချိတ် ‌ပြီး |
+| `close` | ‌ပိတ် |
+| `error` | ‌အ‌မှား |
+
+## Write / end
+
+```js
+socket.write("message");
+socket.end();   // FIN — ‌ပိတ် write side
+```
+
+## ‌အဓိက အချက်များ
+- Server — createServer(socket)
+- socket.write / on data
+- close/error events

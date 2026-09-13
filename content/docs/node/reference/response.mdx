@@ -1,0 +1,56 @@
+---
+title: "Node.js Response — Response object"
+description: "Response — http response — writeHead, end — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+HTTP **Response** — `res` object — server ‌က client ထံ ‌ပြန် ‌ပို့။
+
+## Basic
+
+```js
+const http = require("node:http");
+
+http
+  .createServer((req, res) => {
+    res.writeHead(200, { "content-type": "application/json" });
+    res.end(JSON.stringify({ ok: true }));
+  })
+  .listen(3000);
+```
+
+## res properties/methods
+| Method | ‌လုပ် |
+| --- | --- |
+| `res.writeHead(status, headers)` | ‌ပွင့် ‌ဦးခေါင်း |
+| `res.setHeader(name, value)` | ‌ဦးခေါင်း ‌တစ် |
+| `res.write(chunk)` | data ‌ပေး |
+| `res.end()` | ‌အဆုံးသတ် |
+
+## ‌ဦးခေါင်း ‌ပုံစံ
+
+```js
+res.setHeader("Content-Type", "text/plain; charset=utf-8");
+res.setHeader("Cache-Control", "no-store");
+
+res.statusCode = 404;
+res.end("Not found");
+```
+
+## Redirect
+
+```js
+res.writeHead(302, { Location: "/new-page" });
+res.end();
+```
+
+## Streaming ‌ကြီး file
+
+```js
+fs.createReadStream("big.mp4").pipe(res);
+```
+
+## ‌အဓိက အချက်များ
+- writeHead(status, headers)
+- res.end()
+- pipe — stream send

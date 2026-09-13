@@ -1,0 +1,65 @@
+---
+title: "MySQL NULL Values — NULL Values"
+description: "NULL — မသတ်မှတ်ရသေး ‌တန်ဖိုး — IS NULL, IS NOT NULL ‌ဖြင့် စစ်ခြင်း။"
+autoNumbering: true
+---
+
+**NULL** သည် ‌တန်ဖိုး ‌မရှိသေးသော ‌နေရာကို ‌ပြသော special value ဖြစ်ပါတယ် — 0 မဟုတ်၊ empty string မဟုတ်ပါ။
+
+## NULL ‌ဆိုတာ
+
+- NULL — field တွင် ‌တန်ဖိုး ‌မရှိ (unknown)
+- `0` — number ‌တန်ဖိုး ‌ရှိသည်
+- `''` — empty string (text)
+
+## IS NULL — NULL ‌ရှိသူများ စစ်
+
+```sql
+SELECT * FROM customers
+WHERE phone IS NULL;
+```
+
+phone ‌မရှိသော customers များ။
+
+## IS NOT NULL
+
+```sql
+SELECT * FROM customers
+WHERE phone IS NOT NULL;
+```
+
+phone ‌ရှိသော customers များ။
+
+## သတိထားရန်
+- `=` နဲ့ NULL ကို စစ်၍ မရ — `IS NULL` သာ ‌သုံးရန်
+- `WHERE phone = NULL` → ‌မှားယွင်းသော ‌ရလဒ်
+
+## NULL ‌နှင့် arithmetic
+
+```sql
+SELECT price, discount, price - discount AS final_price
+FROM products;
+```
+
+NULL ပါလျှင် result သည် NULL ‌ဖြစ်‌သွားသည် — လိုလျှင် `COALESCE` ‌သုံးပါ။
+
+```sql
+SELECT price, COALESCE(discount, 0) AS disc FROM products;
+```
+
+## ‌ဥပမာ Table
+
+```sql
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(150)
+);
+```
+
+`email` NULL ရနိုင်သည် — name မရ။
+
+## ‌အဓိက အချက်များ
+- NULL = ‌တန်ဖိုး ‌မရှိ
+- `IS NULL` / `IS NOT NULL` ဖြင့် စစ်
+- `=` ‌သုံး၍ မရ

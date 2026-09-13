@@ -1,0 +1,58 @@
+---
+title: "sql-editor"
+description: "SQL editor — online editor တွေနဲ့ query run ၍ learning အတွက် practice space။"
+autoNumbering: true
+---
+
+သင်ယူမှုက "ဖတ်ရုံ" နဲ့ မပြီးဘူး — query တွေကို ကိုယ်တိုင် run ပြီး ရလဒ် ကြည့်ရပါတယ်။ ဒီ lesson မှာ dataset tricks နဲ့ online editor တွေကို လေ့လာပါမယ်။
+
+## Online SQL Editor
+- W3Schools Tryit Editor — ဒီ course ရဲ့ ဥပမာတွေ run လို့ရ
+- SQLite Online — browser ထဲ query run
+- DB-Fiddle / dbfiddle.uk — MySQL/PostgreSQL/SQL Server ရွေးပြီး
+
+## Sample Database
+```sql
+-- Course တစ်လျှောက် သုံးတဲ့ Customers / Orders schema
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    City VARCHAR(100),
+    Country VARCHAR(100)
+);
+ 
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    Total DECIMAL(10,2),
+    OrderDate DATE
+);
+```
+
+## Local — SQLite (အလွယ်ဆုံး)
+```bash
+# SQLite — install လုပ်စရာမလို database
+sqlite3 shop.db
+CREATE TABLE t (id INT, name TEXT);
+INSERT INTO t VALUES (1, 'Ko Ko');
+SELECT * FROM t;
+```
+SQLite က file-based — server မလို၊ script သုံးဖို့ / mobile / prototype အတွက် perfect။
+
+## Local — Docker (MySQL)
+```bash
+docker run --name mysql-tut -e MYSQL_ROOT_PASSWORD=secret -d mysql:8
+docker exec -it mysql-tut mysql -p
+```
+
+## Practice လုပ်နည်း
+1. Lesson တိုင်းရဲ့ query ကို editor ထဲ run
+2. Result မှန်လား စဉ်းစား
+3. WHERE / ORDER BY / LIMIT ပြောင်းကြည့်
+4. အသစ်ဥပမာ — "Top 3 expensive products" လိုမျိုး မေးခွန်းဖြေ
+
+## အဓိက အချက်များ
+- Online editor — try & error အမြန်ဆုံး
+- SQLite — local အတွက် setup အလွယ်
+- Docker MySQL — production-like local
+- Practice — query ပြောင်းပြီး run ပြီး နှိုင်းယှဉ်ပါ

@@ -1,0 +1,63 @@
+---
+title: "Node.js File System — File System (fs)"
+description: "File System — read/write/delete files & folders — sync vs async — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:fs` — files/folders ‌များကို read, write, rename, delete ‌လုပ်နိုင်သည် — ‌အရေ‌ကြီးဆုံး core module ။
+
+## Read file
+
+```js
+const fs = require("node:fs");
+
+fs.readFile("data.txt", "utf8", (err, data) => {
+  if (err) throw err;
+  console.log(data);
+});
+```
+
+## Write file
+
+```js
+fs.writeFile("out.txt", "Hello", (err) => {});
+```
+
+## Append
+
+```js
+fs.appendFile("log.txt", "line\n", (err) => {});
+```
+
+## Synchronous ‌ဗားရှင်း
+
+```js
+const data = fs.readFileSync("data.txt", "utf8");
+fs.writeFileSync("out.txt", data);
+```
+
+Blocking — startup/scripts ‌မျိုးတွင်သာ — server ‌လမ်း ‌ကြောက်။
+
+## Folders
+
+```js
+fs.mkdirSync("uploads", { recursive: true });
+fs.readdir("uploads", (err, files) => console.log(files));
+fs.rmSync("uploads", { recursive: true, force: true });
+```
+
+## Promises API — fs/promises
+
+```js
+const fs = require("node:fs/promises");
+
+async function main() {
+  const data = await fs.readFile("data.txt", "utf8");
+  await fs.writeFile("copy.txt", data);
+}
+```
+
+## ‌အဓိက အချက်များ
+- readFile / writeFile / appendFile
+- Sync — readFileSync (blocking)
+- fs/promises — await ‌ဖြင့်

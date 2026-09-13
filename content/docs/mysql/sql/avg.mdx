@@ -1,0 +1,58 @@
+---
+title: "MySQL AVG() — AVG()"
+description: "AVG() — column ‌တန်ဖိုးများ၏ ‌ပျမ်းမျှ — ‌ဥပမာများ, GROUP BY နှင့်။"
+autoNumbering: true
+---
+
+`AVG()` function သည် numeric column ၏ **average (‌ပျမ်းမျှ)** ကို ‌ပြန်ပေးပါတယ် — sum ÷ count ။
+
+## Syntax
+
+```sql
+SELECT AVG(column_name)
+FROM table_name
+WHERE condition;
+```
+
+## ဥပမာ
+
+```sql
+SELECT AVG(price) AS avg_price
+FROM products;
+```
+
+products ၏ average price။
+
+## ‌ဥပမာ — ‌ဇယား
+
+```
+Products
+price  10
+       20
+       30
+```
+
+`AVG(price)` → `20`။
+
+## ‌ဒသမ — ROUND ‌ဖြင့်
+
+```sql
+SELECT ROUND(AVG(price), 2) FROM products;
+```
+
+2 decimal digit အထိ ဝိုင်း။
+
+## GROUP BY ‌နှင့်
+
+```sql
+SELECT department, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department;
+```
+
+‌ဌာနတစ်ခုချင်း အတွက် ‌ပျမ်းမျှ salary။
+
+## ‌အဓိက အချက်များ
+- AVG() — ‌ပျမ်းမျှ
+- Numeric ‌အမျိုး ‌အစားသာ
+- ROUND ‌ဖြင့် decimal ‌ပြင်နိုင်

@@ -1,0 +1,76 @@
+---
+title: "ES6 Destructuring — Object & Array Destructuring"
+description: "object နဲ့ array ထဲက value တွေကို လွယ်ကူစွာ ဖြုတ်ထုတ်နည်း — props destructuring နဲ့ တွဲပြ။"
+autoNumbering: true
+---
+
+Destructuring ဆိုတာ array သို့မဟုတ် object ထဲက value တွေကို variable အသစ်တွေထဲ **ကြေညာတာနဲ့ ဖြုတ်ယူနိုင်တဲ့** ES6 ရဲ့ syntax ဖြစ်ပါတယ်။
+
+## Array Destructuring
+
+```js
+const vehicles = ["mustang", "f-150", "expedition"];
+
+// ပုံမှန်
+const car = vehicles[0];
+const truck = vehicles[1];
+
+// Destructuring
+const [car, truck, suv] = vehicles;
+
+console.log(car);   // mustang
+console.log(truck); // f-150
+```
+
+## Object Destructuring
+
+```js
+const vehicleOne = {
+  brand: "Ford",
+  model: "Mustang",
+  type: "car",
+};
+
+// ပုံမှန်
+const brand = vehicleOne.brand;
+const model = vehicleOne.model;
+
+// Destructuring
+const { brand, model } = vehicleOne;
+
+console.log(brand); // Ford
+```
+
+## React Props Destructuring
+
+Component ထဲ props ကို ဖြုတ်ယူပြီး တိုက်ရိုက် သုံးနိုင်ပါတယ်။
+
+```jsx
+function Car({ brand, model }) {
+  return (
+    <h2>{brand} — {model}!</h2>
+  );
+}
+
+// အသုံးပြုပုံ
+<Car brand="Ford" model="Mustang" />
+```
+
+`props.brand` လို့ ရေးစရာမလိုဘဲ `{ brand, model }` နဲ့ ဖြုတ်ယူလိုက်တာပါ။
+
+## Nested Object
+
+```js
+const vehicleTwo = {
+  brand: "Ford",
+  detail: { type: "car", year: 2024 },
+};
+
+const { brand, detail: { type, year } } = vehicleTwo;
+console.log(year); // 2024
+```
+
+## အဓိက အချက်များ
+- Array — `const [a, b] = arr` (အစဉ်လိုက်)
+- Object — `const { a, b } = obj` (property အမည်နဲ့)
+- React ‌မှာ props ကို destructure လုပ်လေ့ရှိသည်

@@ -1,0 +1,62 @@
+---
+title: "Node.js Cmd Line — Command Line"
+description: "Node.js command line — node command, flags, REPL, arguments — ဥပမာများ။"
+autoNumbering: true
+---
+
+Node.js ‌ကို command line မှ အမျိုးမျိုး အသုံးပြုနိုင်သည်။
+
+## Run JavaScript file
+
+```bash
+node app.js
+```
+
+## REPL (Interactive)
+
+```bash
+node
+```
+
+→ ‌တိုက်ရိုက် input:
+
+```js
+> 1 + 2
+3
+> .exit
+```
+
+## Flags
+
+```bash
+node --version    # v20.x.x
+node -e "console.log('hi')"   # ‌တိုက်ရိုက် run
+node --watch app.js           # file ပြောင်းလျှင် auto-restart
+```
+
+## Arguments — process.argv
+
+```js
+// app.js
+console.log(process.argv);
+```
+
+```bash
+node app.js hello 123
+# ['node', 'app.js', 'hello', '123']
+```
+
+## Environment variables
+
+```bash
+PORT=4000 node app.js
+```
+
+```js
+console.log(process.env.PORT); // 4000
+```
+
+## အဓိက အချက်များ
+- `node file.js` run
+- REPL — `node` ‌၀င်ရင် interactive
+- process.argv / process.env

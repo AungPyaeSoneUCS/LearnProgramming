@@ -1,0 +1,42 @@
+---
+title: "React Intro — React မိတ်ဆက်"
+description: "React ဆိုတာ ဘာလဲ၊ ဘာကြောင့် လေ့လာသင့်လဲ၊ Component နဲ့ Virtual DOM အကြောင်း မိတ်ဆက်။"
+autoNumbering: true
+---
+
+React ဆိုတာ **JavaScript library** တစ်ခုဖြစ်ပြီး Facebook မှ ၂၀၁၃ ခုနှစ်တွင် တီထွင်ခဲ့ပါတယ်။ ဒီနေ့ ကမ္ဘာ့အကြီးဆုံး website တွေဖြစ်တဲ့ Facebook, Instagram, Netflix, Airbnb တို့က React ကို သုံးကြပါတယ်။
+
+## ဘာကြောင့် React ကို သုံးလဲ?
+- **Component-based** — UI ကို သေးငယ်တဲ့ component တွေနဲ့ ခွဲဆောက်လို့ ပြန်သုံးနိုင်တယ်။
+- **Virtual DOM** — page တစ်ခုလုံး reload လုပ်စရာ မလိုဘဲ ပြောင်းလဲခဲ့တဲ့ အပိုင်းကိုသာ update လုပ်တယ်။
+- **Reusable** — code တစ်ခါရေးထား၊ နေရာများစွာမှာ သုံးနိုင်တယ်။
+- **Backed by Big Companies** — ကြီးမားတဲ့ community နဲ့ ecosystem ရှိတယ်။
+
+## Component ဆိုတာ?
+Component ဆိုတာ UI အစိတ်အပိုင်း တစ်ခုဖြစ်ပြီး **function သို့မဟုတ် class** အနေနဲ့ ရေးနိုင်ပါတယ်။ Component တစ်ခုထဲကို နောက် component တစ်ခုထဲမှာ ထည့်သုံးလို့ရပြီး props နဲ့ data တွေကို ဖြတ်ပေးလို့ရပါတယ်။
+
+```jsx
+function Car() {          // component တစ်ခု
+  return <h2>I am a Car!</h2>;
+}
+
+function Garage() {       // အခြား component
+  return (
+    <>
+      <h1>Who lives in my garage?</h1>
+      <Car />
+    </>
+  );
+}
+```
+
+ဒီဥပမာမှာ `Garage` ထဲမှာ `Car` component ကို ထည့်သုံးထားပါတယ်။ `<>...</>` က fragment ဖြစ်ပြီး element အများကြီးကို wrapper မပါဘဲ စုပေးပါတယ်။
+
+## React DOM vs React Native
+- **React DOM** — browser (web) အတွက်
+- **React Native** — mobile app (Android/iOS) အတွက်
+
+## အဓိက အချက်များ
+- React သည် UI library နဲ့ Virtual DOM ကို သုံးတယ်
+- Component-based architecture ဖြစ်တယ်
+- React element တစ်ခုကို `root.render()` နဲ့ browser ထဲ ထည့်ပြတယ်

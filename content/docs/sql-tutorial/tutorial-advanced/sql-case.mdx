@@ -1,0 +1,85 @@
+---
+title: "sql-case"
+description: "CASE — column တန်ဖိုး အပေါ်မူတည်ပြီး result ပြောင်းပေးခြင်း (simple & searched CASE)။"
+autoNumbering: true
+---
+
+CASE က programming ရဲ့ if/else လိုပါပဲ။ Row တစ်ခုရဲ့ column တန်ဖိုးပေါ်မူတည်ပြီး result column ရဲ့ အတိုင်း ပြောင်းလဲပေးပါတယ်။
+
+## CASE အခြေခံ (Searched CASE)
+```sql
+SELECT Name, Age,
+  CASE
+    WHEN Age < 18 THEN 'Minor'
+    WHEN Age BETWEEN 18 AND 60 THEN 'Adult'
+    ELSE 'Senior'
+  END AS AgeGroup
+FROM Customers;
+```
+Age အပေါ် အခြေခံပြီး 'Minor' / 'Adult' / 'Senior' ဆိုပြီး AgeGroup column အသစ် ဖန်တီးပါတယ်။ WHEN ... THEN ... စနစ် အတိုင်း အကျုံးဝင်တဲ့ ပထမဆုံး branch ကို ယူပါတယ်။
+
+## Simple CASE
+```sql
+SELECT Name, Country,
+  CASE Country
+    WHEN 'Myanmar' THEN 'Local'
+    ELSE 'Foreign'
+  END AS Origin
+FROM Customers;
+```
+CASE Country က Country ရဲ့ တန်ဖိုးအတိအကျ နဲ့ WHEN တွေကို ယှဉ်ပါတယ်။ Simple CASE  က equality သာ စစ်ပြီး Searched CASE က logic (>, BETWEEN, LIKE...) အကုန် သုံးလို့ရပါတယ်။
+
+## CASE ကို Ordering မှာ
+```sql
+SELECT Name, Priority
+FROM Tickets
+ORDER BY
+  CASE Priority
+    WHEN 'High'   THEN 1
+    WHEN 'Medium' THEN 2
+    WHEN 'Low'    THEN 3
+    ELSE 4
+  END;
+```
+Priority ကို ကိုယ့်လိုချင်တဲ့ အစီအစဉ်နဲ့ sort လုပ်ပါတယ် (High → Low)။ ASCII sort ('High','Low','Medium') နဲ့ ကိုယ်လိုတဲ့စဉ် ကွဲရင် ဒီနည်း သုံးပါတယ်။
+
+## CASE နဲ့ Aggregate ပေါင်းခြင်း
+```sql
+SELECT
+  SUM(CASE WHEN Priority = 'High' THEN 1 ELSE 0 END) AS HighCount,
+  SUM(CASE WHEN Priority = 'Low' THEN 1 ELSE 0 END) AS LowCount
+FROM Tickets;
+```
+"Pivot"-like ပုံစံ — condition ပြည့်တိုင်း 1 ထည့်ပြီး SUM နဲ့ ရေတွက်ပါတယ်။ Cross-tab report ဆွဲတဲ့နေရာမှာ အသုံးများပါတယ်။
+
+## CASE + UPDATE
+```sql
+UPDATE Products
+SET Price = CASE
+    WHEN Category = 'Electronics' THEN Price * 0.9
+    ELSE Price
+  END;
+```
+Update ထဲတွင် row အလိုက် logic နဲ့ price ပြောင်းပါတယ်။ Electronics ကို 10% လျှော့၊ ကျန်တာကို မပြောင်းဘူး။
+
+## Nested CASE
+```sql
+CASE
+  WHEN Age < 18 THEN
+    CASE WHEN Country = 'Myanmar' THEN 'Local Minor' ELSE 'Foreign Minor' END
+  ELSE 'Adult'
+END AS Category
+```
+CASE ထဲမှာ CASE ထပ်လို့ရပါတယ်။ ဒါပေမဲ့ လိုအပ်သလောက်ပဲ သုံးပြီး အရမ်းမရှုပ်အောင် ထားပါ။
+
+## CASE Null
+```sql
+CASE WHEN col IS NULL THEN 'N/A' ELSE col END
+```
+NULL value ကို 'N/A' လို display value ပြောင်းဖို့ ဒီ pattern ကို သုံးပါတယ်။
+
+## အဓိက အချက်များ
+- WHEN cond THEN val ... ELSE ... END
+- Searched CASE (logic) vs Simple CASE (equality)
+- Ordering / pivot / update logic မှာ အသုံးဝင်ပါတယ်
+- ELSE မပါရင် မကျေနပ်တဲ့ branch → NULL

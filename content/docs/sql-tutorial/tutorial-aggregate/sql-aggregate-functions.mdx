@@ -1,0 +1,68 @@
+---
+title: "sql-aggregate-functions"
+description: "Aggregate functions (MIN, MAX, COUNT, SUM, AVG) အကြောင်း ခြုံငုံ မိတ်ဆက်။"
+autoNumbering: true
+---
+
+"row တွေထဲက ကိန်းတစ်လုံးတည်းကို တွက်ထုတ်ချင်တယ်" — ဥပမာ စုစုပေါင်း၊ အနည်းဆုံး၊ ပျမ်းမျှ — ဆိုရင် aggregate function တွေကို သုံးပါတယ်။ Row အများကြီးကို ယူပြီး Row ၁ ခုတည်းအဖြစ် ပြောင်းတာပါ။
+
+## Aggregate Functions မိတ်ဆက်
+| Function | အလုပ် | ရလဒ် |
+| --- | --- | --- |
+| COUNT() | row အရေအတွက် | ကိန်းပြည့် |
+| SUM() | စုစုပေါင်း ပေါင်းလဒ် | number |
+| AVG() | ပျမ်းမျှ | number |
+| MIN() | အနိမ့်ဆုံး | minimal value |
+| MAX() | အမြင့်ဆုံး | maximal value |
+
+## ဥပမာ — Products table
+Products ဇယားမှာ ကုန်ပစ္စည်းတွေ ရှိပြီး Price column ပါတယ်ဆိုပါစို့။
+
+| ProductID | Name | Price |
+| --- | --- | --- |
+| 1 | Mouse | 25 |
+| 2 | Keyboard | 45 |
+| 3 | Monitor | 150 |
+| 4 | USB Cable | 10 |
+
+## Aggregate တစ်ခုချင်း သုံးကြည့်ခြင်း
+```sql
+SELECT COUNT(ProductID) FROM Products;   -- 4
+SELECT SUM(Price) FROM Products;         -- 230
+SELECT AVG(Price) FROM Products;         -- 57.5
+SELECT MIN(Price) FROM Products;         -- 10
+SELECT MAX(Price) FROM Products;         -- 150
+```
+- COUNT → ပစ္စည်း ၄ ခု
+- SUM → အကုန် ပေါင်း 230
+- AVG → ပျမ်းမျှ 57.5
+- MIN → အသက်သာဆုံး 10
+- MAX → ဈေးအကြီးဆုံး 150
+
+## Aggregate သုံးရင် Alias ပေးထားပါ
+```sql
+SELECT
+    COUNT(ProductID) AS TotalProducts,
+    AVG(Price) AS AveragePrice
+FROM Products;
+```
+Result ကော်လံတွေကို နာမည်ပေးထားလို့ ဖတ်ရလွယ်ပါတယ်။
+
+## Aggregate + WHERE
+```sql
+SELECT COUNT(*) FROM Products
+WHERE Price > 30;
+```
+Price 30 ထက်များတဲ့ row ရေ ၂ ခု (Keyboard, Monitor) ဆိုတာကို တွက်ပါတယ်။ Aggregate က WHERE အပြီး row တွေပေါ်မှာ အလုပ်လုပ်ပါတယ်။
+
+## NULL  ေျခြင်း (အရေးကြီး)
+```sql
+SELECT AVG(Price) FROM Products;
+```
+Price မှာ NULL အချို့ပါရင် aggregate တွေက NULL ကို ထည့်မတွက်ပါဘူး။ ဒါကြောင့် AVG က NULL ရှိတဲ့ row တွေကို ကျော်ပြီး တွက်ပါတယ်။ (ဒါက တခါတလေ မမျှော်လင့်တဲ့ result ဖြစ်စေနိုင်လို့ သတိထားပါ။)
+
+## အဓိက အချက်များ
+- Aggregate = row အများကြီး → row ၁ ခုတည်း
+- COUNT, SUM, AVG, MIN, MAX — ၅ ခုမှာ အများသုံး
+- WHERE က aggregate မတိုင်ခင် စစ်ပါတယ်
+- Aggregate တွေက NULL ကို ရှောင်ပါတယ်

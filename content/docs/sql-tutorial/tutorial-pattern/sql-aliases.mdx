@@ -1,0 +1,58 @@
+---
+title: "sql-aliases"
+description: "Alias (AS) — column, table နာမည် ပြန်ပေးခြင်း — ဖတ်လို့ကောင်း၊ join လုပ်တဲ့အခါ အရေးကြီး။"
+autoNumbering: true
+---
+
+Result ကော်လံ နာမည်တွေက ကြည့်ရ အဆင်မပြေတတ်ပါဘူး။ AS (alias) နဲ့ ကော်လံ ဒါမှမဟုတ် table ကို နာမည်တိုတိုကောင်းကောင်း ပေးလို့ရပါတယ်။
+
+## Column Alias
+```sql
+SELECT Name AS CustomerName, City AS Address FROM Customers;
+```
+Result မှာ column နှစ်ခုကို "CustomerName" နဲ့ "Address" အဖြစ် ပြပါတယ်။ Original column name ကို မပြောင်းပါဘူး — display အတွက်ပဲ ဖြစ်ပါတယ်။
+
+## Alias မှာ Space ထည့်ခြင်း
+```sql
+SELECT Name AS [Customer Name] FROM Customers;   -- SQL Server
+SELECT Name AS "Customer Name" FROM Customers;    -- MySQL, Oracle
+```
+နာမည်မှာ space ပါချင်ရင် brackets (SQL Server) သို့မဟုတ် double quotes (standard) သုံးပါတယ်။
+
+## Expression Alias
+```sql
+SELECT Price, Price * 1.1 AS PriceWithTax FROM Products;
+```
+Calculated column ကို နာမည်ပေးလို့ ဖတ်ရလွယ်ပါတယ်။
+
+## Aggregate Alias (သတိမမူမဖြစ်)
+```sql
+SELECT AVG(Age) AS AverageAge, COUNT(*) AS Total FROM Customers;
+```
+"AVG(Age)" ဆိုတဲ့ နာမည်မူရင်းထက် "AverageAge" လို ရှင်းတဲ့ နာမည်က ပိုကောင်းပါတယ်။
+
+## Table Alias
+```sql
+SELECT c.Name, c.City
+FROM Customers AS c
+WHERE c.City = 'Yangon';
+```
+AS c က table ကို c လို့ တိုအောင်သုံးပြီး column ကို c.Name လို့ prefix ပြုပါတယ်။ Simple query မှာ မလိုပေမဲ့ join မှာ မဖြစ်မနေ နီးပါး အသုံးဝင်ပါတယ်။
+
+## Join မှာ Table Alias
+```sql
+SELECT o.OrderID, c.Name
+FROM Orders AS o
+JOIN Customers AS c ON o.CustomerID = c.CustomerID;
+```
+Table ၂ ခုစလုံးမှာ CustomerID ရှိလို့ o.OrderID / c.Name လို prefix ဖြင့် ရှင်းလင်းစွာ ပြုပါတယ်။ Prefix မရှိရင် "CustomerID" ambiguous error တက်နိုင်ပါတယ်။
+
+## မှတ်စု
+- Alias က query ရဲ့ lifetime အတွင်း သာ ရှိပါသည် — table ကို မပြောင်းပါဘူး
+- AS ကို ချန်လည်း ရပါတယ် (Name CustomerName)၊ ဒါပေမဲ့ AS ထည့်တာ ပိုရှင်းပါတယ်
+
+## အဓိက အချက်များ
+- SELECT col AS alias — display နာမည်ပြောင်း
+- Space ပါတာ → "..." / [...]
+- Aggregate တွေကို alias မဖြစ်မနေ ပေးပါ
+- Table alias က join မှာ မဖြစ်မနေ လိုအပ်လု ဖြစ်တယ်

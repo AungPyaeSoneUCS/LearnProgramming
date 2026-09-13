@@ -1,0 +1,54 @@
+---
+title: "Node.js Event Loop — Event Loop"
+description: "Event Loop — callback ‌များ မည်သို့ run သည် — phases, microtasks, ‌ဥပမာ။"
+autoNumbering: true
+---
+
+**Event Loop** သည် Node.js ၏ ‌အ‌ခြေခံ — task/callback များကို ‌အစဉ်‌လိုက် ‌ဆောင်ရွက်သည်။
+
+## ‌ပုံစံ Flow
+
+```
+Timers → Pending → Poll → Check → Close
+   └────────── loop ───────────────────┘
+```
+
+## Phases (အ‌ကြမ်း)
+| Phase | ‌လုပ်‌ဆောင် |
+| --- | --- |
+| Timers | setTimeout, setInterval |
+| Poll | I/O callbacks |
+| Check | setImmediate |
+| Close | close events |
+
+## Microtasks ‌ဦးစားပေး
+
+`Promise.then`, `process.nextTick` — phases အ‌ကြားတွင် ‌ရှေ့ပြီး ‌လုပ်:
+
+```js
+setTimeout(() => console.log("timeout"));
+Promise.resolve().then(() => console.log("promise"));
+console.log("sync");
+
+// output: sync → promise → timeout
+```
+
+## Why Event Loop ‌လိုလဲ
+- Single thread ‌ဖြစ်‌ပေမဲ့ **concurrency** ‌ရှိ
+- I/O ‌လုပ်‌နေစဉ် ‌အခြား tasks ‌ဆက်‌လုပ်
+- Apps ‌မြန်
+
+## Blocking ‌ကို ရှောင်ပါ
+
+```js
+// ❌ block — event loop ‌ပိတ်
+const data = fs.readFileSync("big.txt");
+
+// ✓ non-blocking
+fs.readFile("big.txt", (err, data) => {});
+```
+
+## အဓိက အချက်များ
+- Event Loop — 4 phases cycle
+- Microtasks — promise/nextTick ‌ရှေ့
+- Sync I/O — ‌မသုံးသင့်

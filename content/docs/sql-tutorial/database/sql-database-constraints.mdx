@@ -1,0 +1,79 @@
+---
+title: "sql-database-constraints"
+description: "SQL constraints — NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY, CHECK, DEFAULT တို့၏ အသုံးဝင်မှု။"
+autoNumbering: true
+---
+
+Constraints က table ထဲ ထည့်နိုင်တဲ့ data ကို စည်းမျဉ်းချပါတယ်။ မှားတဲ့ data (ဥပမာ phone number မှာ letter) မဝင်အောင် database က ကာကွယ်ပေးပါတယ်။
+
+## အဓိက Constraints ၆ မျိုး
+| Constraint | အလုပ် |
+| --- | --- |
+| NOT NULL | value က empty/null မဟုတ်ဖို့ တောင်းဆိုတယ် |
+| UNIQUE | column ထဲမှာ duplicate တန်ဖိုး မဖြစ်အောင် |
+| PRIMARY KEY | row တစ်ခုကို သတ်မှတ်ဖို့ UNIQUE + NOT NULL |
+| FOREIGN KEY | parent table ကိုချိတ်ဖို့ referential integrity |
+| CHECK | custom condition (စိတ်ကြိုက် စည်းမျဉ်း) |
+| DEFAULT | value မထည့်ရင် default ဖြည့်ပေး |
+
+## CREATE TABLE မှာ Constraints
+```sql
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT NOT NULL,
+    OrderDate DATE DEFAULT CURRENT_DATE,
+    Status VARCHAR(10) CHECK (Status IN ('New','Paid','Shipped','Done')),
+    CONSTRAINT fk_orders_customer
+        FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+```
+- Column level — PRIMARY KEY, NOT NULL, DEFAULT
+- Table level — CONSTRAINT (naming ပြီးရေးတာ)
+
+Column level နဲ့ table level — ဘာကွာလဲ?
+
+```sql
+-- Column level (column တစ်ခုချင်းစီအတွက်)
+CREATE TABLE A (
+    id INT PRIMARY KEY
+);
+ 
+-- Table level (column ၂ခုလုံးနဲ့ဆိုင်တဲ့ rule)
+CREATE TABLE OrderItems (
+    OrderID INT NOT NULL,
+    ProductID INT NOT NULL,
+    PRIMARY KEY (OrderID, ProductID),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);
+```
+Column level — single column rule, Table level — multi-column ဒါမှမဟုတ် named constraint
+
+## ALTER TABLE မှာ Constraints ထည့်
+```sql
+ALTER TABLE Products
+ADD CONSTRAINT uq_product_name UNIQUE (Name);
+ 
+ALTER TABLE Products
+ADD CONSTRAINT chk_price CHECK (Price > 0);
+```
+ဥပမာ: uq_product_name ကို existing table ပေါ်ထည့်ရင် duplicate name ရှိပြီးသာ rows ရှိရင် error တက်ပါမယ်။
+
+## ဒါတွေကို app code မှာ မလုပ်နဲ့ — database မှာ ထားပါ
+| Place | Data မှားချင်ရင် |
+| --- | --- |
+| App code (app layer ပဲ) | လွဲချော်မှု ဖုံးကွယ်နိုင် |
+| Database constraint | နေရာတိုင်းမှာ အကာအကွယ်ရတယ် |
+| UI | User warning — UI bypass လုပ်နိုင် |
+| DB | Single Source of Truth |
+
+## သိထားစရာ
+- Constraint ပျက်ရင် INSERT/UPDATE → error
+- Index ထည့်ရင် UNIQUE/PRIMARY KEY — write နှေးတတ်
+- Constraint name ကို ဥပမာ fk_orders_customer လိုမျိုး convention နဲ့ ပေးသားထားပါ
+- Database engine တိုင်းလိုလိုမှာ ဒါတွေရှိပါတယ်
+
+## အဓိက အချက်များ
+- NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY, CHECK, DEFAULT
+- Column level vs table level
+- Data quality → database constraint က အဓိက
+- Foreign key — referential integrity

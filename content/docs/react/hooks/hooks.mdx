@@ -1,0 +1,72 @@
+---
+title: "React Hooks — Hooks ဆိုတာ ဘာလဲ"
+description: "React Hooks — function component ‌ထဲ state ‌နှင့် lifecycle ‌များ ‌အသုံးပြုရန် — Hook ‌စည်းမျဉ်းများ။"
+autoNumbering: true
+---
+
+Hook ဆိုတာက function component ‌ထဲ **state ‌နှင့် React features** (lifecycle, context, ref…) ‌ကို class ‌ရေးစရာမလို ‌သုံးနိုင်‌အောင် ‌လုပ်ပေးတဲ့ function ‌တွေ ပဲ ‌ဖြစ်ပါတယ်။
+
+## ‌မူလ — class component
+
+```jsx
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { date: new Date() };
+  }
+  render() {
+    return <h1>{this.state.date.toLocaleTimeString()}</h1>;
+  }
+}
+```
+
+## Hook ‌နဲ့ — functional component (recommended)
+
+```jsx
+function Clock() {
+  const [date, setDate] = useState(new Date());
+  return <h1>{date.toLocaleTimeString()}</h1>;
+}
+```
+
+## ‌အသုံးများသော Hooks ‌များ
+- `useState` — state
+- `useEffect` — side effects
+- `useContext` — context ‌ဖတ်
+- `useRef` — ‌ပြောင်းလဲနိုင် reference
+- `useReducer` — complex state logic
+- `useMemo` / `useCallback` — performance
+
+## Hook ‌စည်းမျဉ်း ၂ ခု
+1. **Rules of Hooks** — hook ‌တွေကို top level မှာပဲ ‌ခေါ် — loop / if / nested function ‌ထဲ ‌ခေါ် ‌မရပါ
+2. **Rules of Hooks** — React function component (‌သို့) custom hook ‌ထဲမှာပဲ ‌ခေါ်နိုင်
+
+```jsx
+// မှန်သော ဥပမာ
+function Greeting({ name }) {
+  const [count, setCount] = useState(0);
+  return <h1>Hello {name} — {count}</h1>;
+}
+```
+
+```jsx
+// မှားသော ဥပမာ — condition ‌အတွင်း
+if (someCondition) {
+  const [count, setCount] = useState(0); // ❌
+}
+```
+
+## Custom Hook ‌တွေက ‌အမည် `use` နဲ့ ‌စ‌ရမည်
+
+```jsx
+function useDeviceDetect() {
+  const [isMobile, setIsMobile] = useState(false);
+  // ...
+  return isMobile;
+}
+```
+
+## ‌အဓိက အချက်များ
+- Hook ‌တွေက function component ‌အတွက်
+- Top level ‌ခေါ် — conditional ‌မခေါ်
+- Name `use...` — custom hook

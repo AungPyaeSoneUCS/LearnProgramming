@@ -1,0 +1,50 @@
+---
+title: "sql-not"
+description: "NOT operator — condition မမှန်တဲ့ row တွေကို ပြန်ပြခြင်း။"
+autoNumbering: true
+---
+
+NOT က condition ရဲ့ အတိအကျ ဆန့်ကျင်ဘက်ကို ဖော်ပြပါတယ်။ "ဒါ မဟုတ်တဲ့ဟာတွေ ငါကြည့်ချင်တယ်" ဆိုတာမျိုးအတွက် သုံးပါတယ်။
+
+## NOT အခြေခံ
+```sql
+SELECT * FROM Customers
+WHERE NOT City = 'Yangon';
+```
+ဒီ query က Yangon မဟုတ်တဲ့ ဖောက်သည်တွေကိုသာ ပြပါတယ်။ `WHERE City <> 'Yangon'` နဲ့ အတူတူပါပဲ။
+
+## NOT နဲ့ IS NULL (အကြိုညွှန်း)
+```sql
+SELECT * FROM Customers
+WHERE NOT City IS NULL;
+```
+NULL (အချည်းနှီး၊ တန်ဖိုးမရှိ) မဟုတ်တဲ့ row ကိုသာ ပြပါတယ်။ IS NOT NULL လို့လည်း ရေးနိုင်ပါတယ်။ (Null Values lesson မှာ အပြည့်အစုံ ပါမယ်။)
+
+## NOT နဲ့ IN / BETWEEN / LIKE (အကြိုညွှန်း)
+```sql
+SELECT * FROM Customers
+WHERE City NOT IN ('Yangon', 'Mandalay');
+ 
+SELECT * FROM Customers
+WHERE Age NOT BETWEEN 20 AND 30;
+ 
+SELECT * FROM Customers
+WHERE Name NOT LIKE 'A%';
+```
+- NOT IN — ဒီ list ထဲက မဟုတ်တဲ့
+- NOT BETWEEN — ကြားကာလ မဟုတ်တဲ့
+- NOT LIKE — pattern နဲ့ မကိုက်ညီတဲ့
+
+ထူးခြားချက်မှာ NOT LIKE 'A%' နဲ့ Name အတိုင်း A နဲ့စတဲ့သူတွေ မပါအောင် ဖယ်ပေးပါတယ်။
+
+## NOT + AND/OR ပေါင်းခြင်း
+```sql
+SELECT * FROM Customers
+WHERE NOT (City = 'Yangon' AND Age > 30);
+```
+Parenthesis အတွင်းက ပေါင်းစပ်မှု (Yangon ဖြစ်ပြီး age 30 ကျော်) ရဲ့ ပြောင်းပြန်ကို ပြပါတယ်။ တနည်းအားဖြင့် Yangon မဟုတ်တဲ့သူတွေ + Yangon ဖြစ်ပေမဲ့ age 30 မကျော်သူတွေ ပါပါတယ်။
+
+## အဓိက အချက်များ
+- NOT က condition ရဲ့ ပြောင်းပြန်အတိုင်း စစ်ပါတယ်
+- NOT IN, NOT BETWEEN, NOT LIKE, IS NOT NULL တို့နဲ့ တွဲသုံးလေ့ရှိပါတယ်
+- Complex condition မှာ NOT (...) လို group လုပ်ပြီးမှ ဖယ်ပါ

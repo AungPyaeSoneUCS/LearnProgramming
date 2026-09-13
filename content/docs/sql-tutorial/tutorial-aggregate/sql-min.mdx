@@ -1,0 +1,45 @@
+---
+title: "sql-min"
+description: "MIN() နဲ့ ကော်လံ တစ်ခုရဲ့ အနိမ့်ဆုံး တန်ဖိုး ရှာနည်း — string နဲ့ date မှာပါ။"
+autoNumbering: true
+---
+
+MIN() က column တစ်ခုရဲ့ အနိမ့်ဆုံး (smallest) တန်ဖိုးကို ပြန်ပါတယ်။ Number သာမက string (A-Z) နဲ့ date တွေမှာပါ အလုပ်လုပ်ပါတယ်။
+
+## Number မှာ MIN()
+```sql
+SELECT MIN(Price) AS CheapestPrice FROM Products;
+```
+Products ဇယားရဲ့ အသက်သာဆုံး Price ကို ပြပါတယ်။ Result: 10 (USB Cable)။ NULL ပါတဲ့ row တွေကို ကျော်ပါတယ်။
+
+## String (Text) မှာ MIN()
+```sql
+SELECT MIN(Name) FROM Customers;
+```
+Text မှာ MIN က စာလုံးစဉ် (A-Z) အရ ပထမဆုံး ဖြစ်တဲ့ name ကို ပြပါတယ်။ ဥပမာ "Aung" က "Ko Ko" ထက် အရင်ကျပါတယ်။
+
+## Date မှာ MIN()
+```sql
+SELECT MIN(OrderDate) AS FirstOrder FROM Orders;
+```
+OrderDate ရဲ့ အစောဆုံး (အသက်အကြီးဆုံး) order ကို ပြပါတယ်။ Date/Time တွေမှာလည်း "ငယ်တဲ့" value = keyword "အစောရှိတဲ့" လို့ ယူဆပါတယ်။
+
+## MIN() + WHERE
+```sql
+SELECT MIN(Price) FROM Products
+WHERE Category = 'Accessory';
+```
+Accessory category ထဲမှ အနိမ့်ဆုံး price ကိုပဲ ရှာပါတယ်။ Condition base ရဲ့ MIN က လက်တွေ့မှာ အများဆုံး သုံးတာပါ။
+
+## MIN() နဲ့ GROUP BY (အကြိုညွှန်း)
+```sql
+SELECT Category, MIN(Price) FROM Products
+GROUP BY Category;
+```
+Category တစ်ခုချင်းစီရဲ့ MIN price ကို row တစ်ခုစီအဖြစ် ပြပါတယ်။ (GROUP BY lesson မှာ အပြည့်အစုံ ပါမယ်။)
+
+## အဓိက အချက်များ
+- MIN(col) → smallest value (number, string, date)
+- NULL တွေကို ကျော်ပါတယ်
+- WHERE နဲ့ တွဲပြီး subset ထဲက MIN ရှာလို့ရတယ်
+- GROUP BY နဲ့ ဆို group တစ်ခုစီရဲ့ MIN ရတယ်

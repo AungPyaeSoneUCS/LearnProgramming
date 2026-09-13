@@ -1,0 +1,51 @@
+---
+title: "MySQL UNION — UNION"
+description: "UNION — queries ‌နှစ်ခု ‌ရလဒ်များကို ‌ပေါင်းစပ် — duplicate ‌ဖယ် — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`UNION` operator သည် queries **‌နှစ်ခု ‌ရလဒ်များကို ‌ပေါင်း‌ပြီး duplicate rows ‌ဖယ်၍** ‌တစ်ခုတည်း ‌ပြသပါတယ်။
+
+## Syntax
+
+```sql
+SELECT column1, column2 FROM table1
+UNION
+SELECT column1, column2 FROM table2;
+```
+
+## ‌ဥပမာ
+
+```sql
+SELECT city FROM customers
+UNION
+SELECT city FROM suppliers
+ORDER BY city;
+```
+
+city ‌နှစ်‌ဖက် ‌ပေါင်း — ‌ထပ်‌သော city ‌တစ်ခါသာ (A-Z ‌စီ)။
+
+## ‌ခြားနား၍ important rules
+
+- Column အရေအတွက် ‌တူရမည်
+- Data type ‌တူညီရမည် (compatible)
+- Ordering — ‌နောက်ဆုံး query ‌တွင်သာ ORDER BY
+
+## ‌ဥပမာ ‌ဇယား‌နှစ်ခု
+
+```
+Customers               Suppliers
++--------+              +--------+
+| city   |              | city   |
++--------+              +--------+
+| Yangon |              |Yangon  |
+| Mandalay               |Bago    |
++--------+              +--------+
+```
+
+UNION → Yangon, Mandalay, Bago (Yangon ‌ထပ် ‌ဖယ်)။
+
+## ‌အဓိက အချက်များ
+- UNION — ‌ပေါင်း + dedupe
+- ‌ဇယား‌နှစ်ခု columns ‌လိုက်ဖက်ရန်
+- ‌နောက်ဆုံး ORDER BY သာ

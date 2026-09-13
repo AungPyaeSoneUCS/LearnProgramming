@@ -1,0 +1,67 @@
+---
+title: "React Render HTML — HTML ကို Render လုပ်ခြင်း"
+description: "React က HTML element တွေကို JavaScript နဲ့ render လုပ်ပုံ — ReactDOM.createRoot, root.render(), StrictMode။"
+autoNumbering: true
+---
+
+React ၏ ရည်ရွယ်ချက်မှာ Web page မှာ **HTML ကို render လုပ်ရန်** ဖြစ်ပါတယ်။ React က HTML တွေကို JavaScript ကနေ render လုပ်မှာဖြစ်ပြီး `ReactDOM.createRoot()` နဲ့ စတင်ပါတယ်။
+
+## ReactDOM.createRoot()
+
+`createRoot()` သည် React element ကို render လုပ်မယ့် root ကို သတ်မှတ်ပါတယ်။
+
+```jsx
+ReactDOM.createRoot(document.getElementById("root"));
+```
+
+## Root.render()
+
+```jsx
+const container = document.getElementById("root");
+const root = ReactDOM.createRoot(container);
+root.render(<p>Hello</p>);
+```
+
+ဒီ code က `<p>Hello</p>` ကို HTML ထဲက `#root` နေရာမှာ ထည့်ပြပါတယ်။
+
+## Render လုပ်ထားတဲ့ ရလဒ်
+
+HTML ဖိုင်မှာ `<div id="root"></div>` ရှိပြီး browser မှာ ဒီလို မြင်ရပါတယ်။
+
+```html
+<div id="root">
+  <p>Hello</p>
+</div>
+```
+
+## JSX ကနေ HTML
+
+React component က JSX ကို return ပြန်ပြီး၊ JSX က render လုပ်တဲ့အခါ HTML အဖြစ် ပြောင်းပါတယ်။
+
+```jsx
+function MyButton() {
+  return (
+    <button type="button">Click Me</button>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<MyButton />);
+```
+
+## StrictMode
+
+Development mode မှာ component ရဲ့ မမှန်ကန်တဲ့ code တွေကို ဖမ်းမိဖို့ `<React.StrictMode>` နဲ့ wrap လုပ်လေ့ရှိပါတယ်။
+
+```jsx
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```
+
+## အဓိက အချက်များ
+- React က browser ထဲ HTML render လုပ်ဖို့ `ReactDOM.createRoot()` + `root.render()` ကို သုံးတယ်
+- ရိုးရိုး `document.getElementById("root")` ကို container အဖြစ် သုံးတယ်
+- JSX က HTML နဲ့တူပေမယ့် JavaScript ထဲကို ထည့်ရေးတဲ့ syntax ဖြစ်တယ်

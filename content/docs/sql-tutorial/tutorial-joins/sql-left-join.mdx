@@ -1,0 +1,68 @@
+---
+title: "sql-left-join"
+description: "LEFT JOIN — LEFT table ရဲ့ row အားလုံး + RIGHT က ကိုက်ညီတဲ့ row များ။"
+autoNumbering: true
+---
+
+LEFT JOIN က ဘယ်ဘက် table (FROM ... ) ရဲ့ row အားလုံး ကို ပြပြီး၊ ညာဘက်က ကိုက်ညီတဲ့ဟာတွေရှိရင် ထည့်ပေးပါတယ်။ မကိုက်တဲ့နေရာမှာ right table column တွေက NULL ဖြစ်ပါတယ်။
+
+## INNER vs LEFT ကွာခြားချက်
+Customers (1, 2, 3) နဲ့ Orders (CustomerID 1, 2 ပဲရှိ) ဆိုရင်:
+
+```sql
+SELECT c.Name, o.OrderID
+FROM Customers AS c
+LEFT JOIN Orders AS o ON c.CustomerID = o.CustomerID;
+```
+Result — Nandar (order မရှိ) ပါ ပါလာပြီး OrderID က NULL:
+
+| Name | OrderID |
+| --- | --- |
+| Ko Ko | 101 |
+| Ko Ko | 102 |
+| Su | 103 |
+| Nandar | NULL |
+
+## LEFT JOIN → "မပါတာတွေကို ရှာခြင်း"
+```sql
+SELECT c.Name
+FROM Customers AS c
+LEFT JOIN Orders AS o ON c.CustomerID = o.CustomerID
+WHERE o.OrderID IS NULL;
+```
+o.OrderID IS NULL စစ်လို့ order တစ်ခါမှမလုပ်ဘူးတဲ့ ဖောက်သည်တွေကို ရှာနိုင်ပါတယ်။ "Left table မှာရှိပြီး right မှာမရှိတဲ့ဟာတွေ" ရှာတဲ့ pattern က အသုံးများပါတယ်။
+
+## LEFT JOIN + WHERE
+```sql
+SELECT c.Name, o.OrderID, o.Total
+FROM Customers AS c
+LEFT JOIN Orders AS o ON c.CustomerID = o.CustomerID
+WHERE c.City = 'Yangon';
+```
+First filter (City) က LEFT table မှာဆိုရင် WHERE က အန္တရာယ်မရှိပါဘူး။ Right table column ကို WHERE နဲ့ filter လုပ်ရင် LEFT ရဲ့ အနှစ်သာရ ပျက်သွားနိုင်ပါတယ် (ဘာကြောင့်လဲဆို NULL ဖြစ်တဲ့ rows တွေပါ ဖယ်ခံရလို့):
+
+```sql
+-- သတိ: ဒါဆို Nandar (NULL) ပါ ဖယ်သွားနိုင်
+LEFT JOIN Orders AS o ON c.CustomerID = o.CustomerID
+WHERE o.Total > 100;
+```
+
+## ဘယ်အခါ LEFT JOIN သုံးမလဲ
+- "အားလုံးပြပြီး ဆက်စပ်တဲ့ detail တွေ ရှိရင်ထည့်" — users + profile updates ကြည့်ချင်တဲ့အခါ
+- Order/Child record မရှိတဲ့ "orphan" rows တွေကို ရှာတဲ့အခါ
+- Hangings CSV → database import validation မှာ
+
+## Produce summary example
+```sql
+SELECT c.Name, COUNT(o.OrderID) AS TotalOrders
+FROM Customers AS c
+LEFT JOIN Orders AS o ON c.CustomerID = o.CustomerID
+GROUP BY c.Name;
+```
+Order မရှိတဲ့ ဖောက်သည်တွေပါ "0" နဲ့ ပါပါတယ် (COUNT က NULL row ကို 0 အဖြစ် တွက်လို့)။ INNER သုံးရင် ဒီသူတွေ လုံးဝ မပါတော့ပါဘူး။
+
+## အဓိက အချက်များ
+- LEFT = FROM-table  အားလုံး ထိန်း
+- မကိုက်တဲ့ right column → NULL
+- WHERE right.col IS NULL = "မရှိတဲ့ဟာတွေ" ရှာတဲ့ pattern
+- Right column filter လုပ်တဲ့အခါ WHERE vs AND သတိထားပါ (filter ကို ON/AND ထဲထည့်ပါ)

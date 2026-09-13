@@ -1,0 +1,64 @@
+---
+title: "sql-select-into"
+description: "SELECT INTO — query ရဲ့ ရလဒ်ကို table အသစ်ထဲ ကူးယူခြင်း (backup/archiving)။"
+autoNumbering: true
+---
+
+SELECT INTO က query ရဲ့ ရလဒ်တွေကို table အသစ် ထဲမှာ သိမ်းပါတယ်။ Column types/data အားလုံးကို copy ယူပါတယ်။ Data migration နဲ့ backup အတွက် အသုံးများပါတယ်။
+
+## SELECT INTO အခြေခံ
+```sql
+SELECT * INTO CustomersBackup
+FROM Customers;
+```
+Customers ရဲ့ အကုန်လုံးကို copy ယူပြီး CustomersBackup ဆိုတဲ့ table အသစ် ဖန်တီးပါတယ်။ Table မရှိရင် ဖန်တီးပေးပြီး ရှိပြီးသားဆိုရင် error တက်နိုင်ပါတယ်။
+
+## ကော်လံရွေးပြီး ကူးခြင်း
+```sql
+SELECT Name, City, Age INTO CustomersNY
+FROM Customers
+WHERE City = 'Yangon';
+```
+Yangon မှာရှိတဲ့ ဖောက်သည်တွေရဲ့ Name, City, Age ၃ ကော်လံပဲ copy ယူပြီး CustomersNY table အသစ် ဖန်တီးပါတယ်။
+
+## SQL Server Syntax
+```sql
+-- SQL Server: INTO က FROM ပြီးချက်ချင်း
+SELECT * INTO NewTable FROM OldTable;
+ 
+-- MySQL: SELECT INTO (variable)
+SELECT @var := col FROM table LIMIT 1;
+ 
+-- MySQL: CREATE TABLE ... AS SELECT (substitute)
+CREATE TABLE NewTable AS SELECT * FROM OldTable;
+```
+SELECT INTO syntax က SQL Server / MS Access မှာ အဓိက သုံးပါတယ်။ MySQL မှာ CREATE TABLE AS SELECT နဲ့ အစားထိုးရပါတယ်။ PostgreSQL မှာ CREATE TABLE AS / SELECT ... INTO နှစ်မျိုးလုံးရပါတယ်။
+
+## Column အသစ်တွေ ပေါင်းပြီး
+```sql
+SELECT Name, City, GETDATE() AS BackupDate INTO CustomersArchive
+FROM Customers;
+```
+GETDATE() (SQL Server) / NOW() (MySQL) ကဲ့သို့ function တွေထည့်ပြီး "ဘယ်အခါ backup လုပ်ထားတယ်" ဆိုတဲ့ column ပါထည့်လို့ရပါတယ်။
+
+## Backup & Archiving အတွက်
+```sql
+-- ရှေးပြီးသား table ကို select into table ဖြစ်အောင် လုပ်ချင်ရင်
+IF OBJECT_ID('CustomersBackup', 'U') IS NOT NULL
+    DROP TABLE CustomersBackup;
+ 
+SELECT * INTO CustomersBackup FROM Customers;
+```
+SQL Server မှာ table မရှိမှ insert လုပ်ချင်ရင် IF EXISTS check လုပ်ထားရပါတယ်။
+
+## SELECT INTO နဲ့ IDENTITY (Auto Increment)
+```sql
+SELECT * INTO OrdersBackup FROM Orders;
+```
+Orders ထဲက OrderID column က auto-increment ဖြစ်ရင် CustomersBackup ထဲမှာ backup ထဲက ID တွေပဲ ပါလာပြီး auto-increment state က ပြန်စဖို့ identity seed ကို ပြန်သတ်မှတ်ဖို့ လိုနိုင်ပါတယ်။
+
+## အဓိက အချက်များ
+- SELECT INTO = table အသစ် ဖန်တီးပြီး data ကူး
+- SQL Server/Access မှာ native — MySQL မှာ CREATE TABLE AS SELECT
+- Column types ကို auto ဖန်တီးပေးပါတယ်
+- Index နဲ့ constraint တွေကို copy မလုပ်ပါဘူး (column data ပဲ)

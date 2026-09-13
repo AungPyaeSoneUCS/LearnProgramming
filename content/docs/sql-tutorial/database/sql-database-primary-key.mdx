@@ -1,0 +1,79 @@
+---
+title: "sql-database-primary-key"
+description: "PRIMARY KEY — row တစ်ခုစီကို သီးခြားသတ်မှတ်တဲ့ column (UNIQUE + NOT NULL)။"
+autoNumbering: true
+---
+
+Primary key (PK) က table ထဲက row တစ်ခုချင်းစီကို သီးခြားသတ်မှတ်ပေးတဲ့ column/column-set ပါ။ Row ကို ရှာဖို့ အဓိက သော့ချက်ဖြစ်ပါတယ်။
+
+## PRIMARY KEY ပါတဲ့ Table
+```sql
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL
+);
+```
+CustomerID က row တစ်ခုစီအတွက် unique + NOT NULL — duplicate ID ထည့်လို့မရပါဘူး။
+
+## Column Level vs Table Level
+```sql
+-- Column level
+CustomerID INT PRIMARY KEY
+ 
+-- Table level (secondary composite)
+CREATE TABLE OrderItems (
+    OrderID INT,
+    ProductID INT,
+    PRIMARY KEY (OrderID, ProductID)
+);
+```
+
+## Composite Primary Key
+```sql
+CREATE TABLE OrderItems (
+    OrderID INT NOT NULL,
+    ProductID INT NOT NULL,
+    Quantity INT,
+    PRIMARY KEY (OrderID, ProductID)
+);
+```
+(OrderID, ProductID) ပေါင်းစုံက row တစ်ခုကို သတ်မှတ်ပါတယ် — "Order 1 ထဲမှာ Product 5 ၁ကြိမ်ပဲ ရှိနိုင်တယ်"။
+
+## Row ထည့်တဲ့အခါ
+```sql
+INSERT INTO OrderItems (OrderID, ProductID) VALUES (1, 5);  -- OK
+INSERT INTO OrderItems (OrderID, ProductID) VALUES (1, 5);  -- Error: duplicate PK
+INSERT INTO OrderItems (ProductID, OrderID) VALUES (5, 2);  -- OK (order 2)
+```
+
+## ALTER — PK ထည့်ခြင်း
+```sql
+ALTER TABLE Customers
+ADD PRIMARY KEY (CustomerID);
+```
+Existing table မှာ duplicate ဒါမှမဟုတ် NULL CustomerID ရှိရင် error — data clean ဖို့လိုပါတယ်။
+
+## PRIMARY KEY ကိုဖျက်ခြင်း
+```sql
+-- MySQL
+ALTER TABLE Customers DROP PRIMARY KEY;
+ 
+-- SQL Server
+ALTER TABLE Customers DROP CONSTRAINT PK_Customers;
+```
+Foreign key ကိုင်ဆောင်ထားရင် PK drop လို့မရနိုင်တယ် — constraint cascade ရှိနိုင်ပါတယ်။
+
+## Natural ID vs Surrogate
+|  | Natural key | Surrogate key |
+| --- | --- | --- |
+| ဥပမာ | SSN, Email, national ID | Auto-increment ID |
+| ပြောင်းရင် | business နဲ့လိုက်ပြောင်း | မပြောင်း |
+| သုံးသင့်တယ် | သေးငယ်တဲ့ lookup | အကြီးစား |
+
+Primary key အတွက် auto-increment (surrogate) ID က အသုံးများပါတယ် — Email လိုမျိုး natural key က business rule ပြောင်းရင် ကုန်ကျစရာရှိပါတယ်။
+
+## အဓိက အချက်များ
+- PK = unique + not null
+- Row သတ်မှတ်ဖို့ ID
+- Composite PK — column ၂ခုပေါင်း unique
+- Natural key vs surrogate ID — replacement keys

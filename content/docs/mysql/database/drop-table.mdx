@@ -1,0 +1,47 @@
+---
+title: "MySQL Drop Table — Drop Table"
+description: "DROP TABLE — ဇယား‌ဖျက်ခြင်း — TRUNCATE ကွာခြားမှု, IF EXISTS။"
+autoNumbering: true
+---
+
+`DROP TABLE` သည် **ဇယားကိုယ်၌ + data ‌အားလုံး** ကို ‌ဖျက်ပါတယ် — ‌ပြန်‌ဆောက်ရန် ‌မလွယ်။
+
+## Syntax
+
+```sql
+DROP TABLE table_name;
+```
+
+## ‌ဥပမာ
+
+```sql
+DROP TABLE users;
+```
+
+## IF EXISTS
+
+```sql
+DROP TABLE IF EXISTS users;
+```
+
+## DROP vs TRUNCATE vs DELETE
+
+| ‌လုပ်ဆောင်မှု | ‌ဇယား Structure | Data | WHERE |
+| --- | --- | --- | --- |
+| `DROP TABLE` | ‌ဖျက် | ‌ဖျက် | — |
+| `TRUNCATE` | ‌ထား | ‌ရှင်းလဲး (အ‌အားလုံး) | ‌မရ |
+| `DELETE` | ‌ထား | rows ‌ရွေး‌ဖျက် | ‌ရ |
+
+```sql
+TRUNCATE TABLE logs;          -- data ‌သာ ‌ရှောင်, table ‌ကျန်
+DELETE FROM logs WHERE id < 5; -- ‌ရွေး‌ဖျက်
+```
+
+## သတိထားရန်
+- Foreign keys ‌ချိတ်ထားလျှင် ‌ဖျက်ရန် ‌ခက်နိုင်
+- Backup ‌ပြီးမှ ‌ဖျက်ပါ
+
+## ‌အဓိက အချက်များ
+- DROP TABLE — ‌အခန်းအပြင်
+- TRUNCATE — data ‌ရှင်း
+- DELETE — rows ‌ရွေး

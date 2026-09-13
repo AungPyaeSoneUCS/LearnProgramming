@@ -1,0 +1,58 @@
+---
+title: "sql-examples"
+description: "SQL examples — WHERE, JOIN, GROUP BY, subquery… အလွန် သုံးတဲ့ real-world queries။"
+autoNumbering: true
+---
+
+Course တစ်လျှောက် သင်ခဲ့တဲ့ concept တွေကို real-world ဥပမာတွေနဲ့ ပြန်နွှေးပါမယ်။
+
+## ဖေ့ခေါင်းလှည့် — ဖောက်သည်ဖတ်တာ
+```sql
+-- နောက်ဆုံး order ၅ခု
+SELECT TOP 5 * FROM Orders ORDER BY OrderDate DESC;
+ 
+-- 2025 ရဲ့ order ရေတွက်မှု
+SELECT COUNT(*) FROM Orders
+WHERE OrderDate >= '2025-01-01' AND OrderDate < '2026-01-01';
+```
+
+## ထုတ်ကုန် — Categories စာရင်း
+```sql
+SELECT c.CategoryName, COUNT(p.ProductID) AS Products
+FROM Categories c
+LEFT JOIN Products p ON c.CategoryID = p.CategoryID
+GROUP BY c.CategoryName
+ORDER BY Products DESC;
+```
+
+## ဈေးအမြင့်ဆုံး Products ၃ ခု
+```sql
+SELECT ProductName, Price
+FROM Products
+WHERE Price > (SELECT AVG(Price) FROM Products)
+ORDER BY Price DESC;
+```
+
+## Customer — ကုန်ကျငွေ အများဆုံး
+```sql
+SELECT c.Name, SUM(o.Total) AS Spent
+FROM Customers c
+JOIN Orders o ON c.CustomerID = o.CustomerID
+GROUP BY c.Name
+ORDER BY Spent DESC;
+```
+
+## Inventory — အရစ်ကျ Table
+```sql
+-- stock စစ်ဆေးမှု (LEFT JOIN → order မရှိတဲ့ product ပါပါ)
+SELECT p.ProductName, p.Stock, COALESCE(SUM(oi.Quantity),0) AS Ordered
+FROM Products p
+LEFT JOIN OrderItems oi ON p.ProductID = oi.ProductID
+GROUP BY p.ProductID;
+```
+
+## အဓိက အချက်များ
+- Aggregate + GROUP BY — report core
+- LEFT JOIN — missing data  ပါထည့်
+- Subquery — အလွှာရှိ logic
+- COALESCE — NULL ကိုတွေ့ရင် default

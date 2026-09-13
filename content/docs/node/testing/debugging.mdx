@@ -1,0 +1,59 @@
+---
+title: "Node.js Advanced Debugging — Adv. Debugging"
+description: "Debugging — inspector, --inspect, breakpoints, debugger — ဥပမာ။"
+autoNumbering: true
+---
+
+Node.js code ‌အမှား ‌ရှာဖွေခြင်း — `--inspect` + Chrome DevTools။
+
+## Quick debug — console
+
+```js
+console.log(value);
+console.table(users);      // table ‌ပုံစံ
+console.time("t");         // timer
+console.timeEnd("t");
+```
+
+## --inspect + DevTools
+
+```bash
+node --inspect app.js
+```
+
+Chrome → `chrome://inspect` → Node.js Open dedicated DevTools — breakpoints, step ‌လုပ်‌နိုင်။
+
+## --inspect-brk — ပထမစာကြောင့် ‌ရပ်
+
+```bash
+node --inspect-brk app.js
+```
+
+ပထမ line ‌မှာပင် ‌ရပ်၍ ချိန်သင့်သလို ‌လုပ်‌ကြည့်နိုင်။
+
+## `debugger` statement
+
+```js
+function calc(n) {
+  debugger;      // breakpoint ‌ဖြစ်မည်
+  return n * 2;
+}
+```
+
+## Node inspector in VS Code
+
+`launch.json`:
+
+```json
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Launch",
+  "program": "${workspaceFolder}/app.js"
+}
+```
+
+## ‌အဓိက အချက်များ
+- node --inspect-brk
+- Chrome/VS Code breakpoints
+- debugger statement

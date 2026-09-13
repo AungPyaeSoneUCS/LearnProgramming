@@ -1,0 +1,46 @@
+---
+title: "Node.js MySQL Delete — Delete"
+description: "Node + MySQL — DELETE with WHERE, affectedRows — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Rows ‌ဖျက်နည်း — **WHERE ‌အမြဲ** — ‌မပါလျှင် ‌အားလုံး ‌ဖျက်။
+
+## Delete
+
+```js
+const [result] = await db.query(
+  "DELETE FROM users WHERE id = ?",
+  [userId]
+);
+console.log(result.affectedRows); // 1
+```
+
+## Check result
+
+```js
+if (result.affectedRows === 0) {
+  console.log("User not found");
+}
+```
+
+## With condition
+
+```js
+await db.query(
+  "DELETE FROM orders WHERE status = ? AND dated < ?",
+  ["expired", pastDate]
+);
+```
+
+## Cascade — FK ‌ကြောင့် ‌ဖျက်‌မရမှု
+
+```js
+// ❌ FK references — ‌ခွေးဆာ error
+// ✓ ON DELETE CASCADE — child ‌ပါ ‌ဖျက်
+```
+
+## ‌အဓိက အချက်များ
+- DELETE ... WHERE ?
+- affectedRows — ‌စစ်
+- ‌အမြဲ WHERE — ‌အ‌လုံး ‌ရှောင်

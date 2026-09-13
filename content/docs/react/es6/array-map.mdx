@@ -1,0 +1,62 @@
+---
+title: "ES6 Array map() — Array map Method"
+description: "array.map() ဖြင့် array တစ်ခုကို ပြောင်းထားသော array အသစ် ရယူနည်း — React list render နှင့် တွဲပြပါ။"
+autoNumbering: true
+---
+
+`map()` သည် array တစ်ခုကို တစ်ခုချင်းစီ ဖြတ်ပြီး၊ function ‌ရဲ့ ရလဒ်တွေနဲ့ **array အသစ်တစ်ခု** ပြန်ပေးပါတယ်။ React ‌မှာ list ကို render လုပ်ဖို့ အသုံးအများဆုံး method ဖြစ်ပါတယ်။
+
+## map() အခြေခံ
+
+```js
+const cars = ["Ford", "BMW", "Audi"];
+
+const text = cars.map((car) => car.toUpperCase());
+console.log(text); // ["FORD", "BMW", "AUDI"]
+```
+
+## Return ပြန်ရတဲ့ array အသစ်
+
+`map()` က မူရင်းကို မပြောင်း — array အသစ် ပြန်ပေးတတ်ပါတယ်။
+
+```js
+const numbers = [1, 2, 3, 4];
+const doubled = numbers.map((n) => n * 2);
+console.log(doubled); // [2, 4, 6, 8]
+console.log(numbers); // [1, 2, 3, 4]  (မပြောင်းပါ)
+```
+
+## React List Render
+
+```jsx
+function CarList() {
+  const cars = ["Ford", "BMW", "Audi"];
+
+  return (
+    <ul>
+      {cars.map((car, index) => (
+        <li key={index}>{car}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+`key` prop က React က list item တွေကို ခြေရာခံနိုင်ဖို့ ဖြစ်ပြီး index အစား unique id သုံးတာ ပိုကောင်းပါတယ်။
+
+## Object Array နဲ့
+
+```js
+const users = [
+  { id: 1, name: "Aung" },
+  { id: 2, name: "Ko" },
+];
+
+const names = users.map((user) => user.name);
+console.log(names); // ["Aung", "Ko"]
+```
+
+## အဓိက အချက်များ
+- map က array အသစ် ပြန်ပေးပြီး မူရင်းကို မပြောင်း
+- callback ၂ ခု argument ရနိုင်သည် — (item, index)
+- React list ‌မှာ `key` prop မဖြစ်မနေ သတ်မှတ်ရသည်

@@ -1,0 +1,68 @@
+---
+title: "sql-reference-sqlserver-functions"
+description: "SQL Server functions — CONVERT, DATEDIFF, GETDATE, ISNULL, ROW_NUMBER စသဖြင့်။"
+autoNumbering: true
+---
+
+SQL Server (T-SQL) မှာ function တွေက MySQL နဲ့ နာမည်နဲ့ syntax တချို့ ကွာပါတယ်။
+
+## String Functions
+```sql
+SELECT UPPER(Name), LOWER(Name), LEN(Name)      -- LEN (not LENGTH)
+SELECT CONCAT(a, ', ', b)                        -- or +
+SELECT SUBSTRING('Hello', 1, 2)                  -- 'He'
+SELECT TRIM('  hi  ')                            -- 'hi'
+SELECT REPLACE('a-b', '-', '_')                  -- 'a_b'
+```
+
+## Numeric Functions
+```sql
+SELECT ROUND(123.456, 2);   -- 123.46
+SELECT CEILING(12.1);       -- 13 (CEILING — not CEIL)
+SELECT FLOOR(12.7);         -- 12
+SELECT ABS(-5);             -- 5
+SELECT RAND();              -- 0..1
+```
+
+## Date Functions
+```sql
+SELECT GETDATE();                     -- current datetime
+SELECT GETUTCDATE();                  -- UTC
+SELECT YEAR(GETDATE()), MONTH(...), DAY(...);
+SELECT DATEDIFF(day, '2025-01-01', '2025-02-01');   -- 31
+SELECT DATEDIFF(month, orderdate, getdate());
+SELECT DATEADD(day, 7, GETDATE());
+SELECT FORMAT(GETDATE(), 'yyyy-MM-dd');
+SELECT DATEPART(weekday, GETDATE());
+```
+DATEDIFF ရဲ့ first argument က unit (day/month/year) — MySQL က date order ပြောင်းပြန် ဖြစ်တာ မှတ်ထားပါ။
+
+## ISNULL / COALESCE
+```sql
+SELECT ISNULL(City, 'Unknown') FROM Customers;
+SELECT COALESCE(Phone, Email, 'N/A') FROM Customers;
+```
+
+## Window Functions
+```sql
+SELECT Name, Salary,
+       ROW_NUMBER() OVER (ORDER BY Salary DESC) AS RowNum,
+       RANK() OVER (ORDER BY Salary DESC) AS Rank,
+       DENSE_RANK() OVER (ORDER BY Salary DESC) AS DRank
+FROM Employees;
+```
+ROW_NUMBER — sequential number, RANK — ties နောက်အစဉ် skip, DENSE_RANK — ties နောက် skip မလုပ်။
+
+## Conversion
+```sql
+SELECT CAST(Price AS INT);         -- convert type
+SELECT CONVERT(INT, Price);
+SELECT CONVERT(VARCHAR(10), GETDATE(), 120);   -- '2025-09-01'
+```
+
+## အဓိက အချက်များ
+- LEN (not LENGTH), CEILING (not CEIL)
+- GETDATE() / DATEDIFF(unit, col, target)
+- ISNULL / COALESCE
+- Window: ROW_NUMBER / RANK
+- CAST / CONVERT

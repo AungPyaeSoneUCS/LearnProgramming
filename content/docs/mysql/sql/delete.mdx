@@ -1,0 +1,59 @@
+---
+title: "MySQL DELETE — DELETE"
+description: "DELETE — rows များ ဖျက်ခြင်း — WHERE, ‌အားလုံးဖျက်ခြင်း သတိထားရန်။"
+autoNumbering: true
+---
+
+`DELETE` statement သည် ဇယားထဲမှ **rows များကို ဖျက်** ပါတယ်။
+
+## Syntax
+
+```sql
+DELETE FROM table_name
+WHERE condition;
+```
+
+## ဥပမာ
+
+```sql
+DELETE FROM customers
+WHERE id = 5;
+```
+
+`id = 5` သာဖျက်သည် — ‌အခြား rows များ အ‌ပါ ‌လွတ်နေသည်။
+
+## WHERE ‌မပါလျှင် — ‌အကုန်ဖျက်
+
+```sql
+DELETE FROM customers;
+```
+
+ဇယားထဲ row အားလုံး ဖျက်သွားမည်! (table ကိုယ်တိုင် မပျောက်ပါ)
+
+## ‌အခြား condition များ
+
+```sql
+DELETE FROM orders WHERE status = 'cancelled';
+```
+
+```sql
+DELETE FROM employees WHERE salary < 200000;
+```
+
+## ‌ဖျက်ခြင်း သတိထားရန်
+- ဖျက်ချင်သော row ကို သေချာ WHERE ဖြင့် သတ်မှတ်
+- Test ‌အ‌ပိုင်း — `SELECT` ဖြင့် row စစ်ကြည့် ပြီးမှ delete
+- Truncate vs Delete — `TRUNCATE TABLE` က table structure ‌ကျန်, data ‌အားလုံး ‌ဖျက်
+
+## Transactions ‌ဖြင့် ‌ပြန်ပယ်နိုင်
+
+```sql
+BEGIN;
+DELETE FROM users WHERE id = 99;
+ROLLBACK; -- ‌ပြန် ပယ်နိုင်
+```
+
+## ‌အဓိက အချက်များ
+- DELETE FROM ... WHERE
+- WHERE ‌မပါ → ‌အကုန်ဖျက်
+- Test ‌လုပ်ပြီး ဖျက်ပါ

@@ -1,0 +1,70 @@
+---
+title: "sql-exists"
+description: "EXISTS — subquery က result ပြန်ရင် true ဖြစ်စေခြင်း၊ row ရှိ/မရှိ စစ်နည်း။"
+autoNumbering: true
+---
+
+EXISTS က subquery (ခွဲထုတ်ထားတဲ့ query) ထဲမှာ row တစ်ခုခုမဆို ရှိရင် true ဖြစ်စေပါတယ်။ "subquery ထဲမှာ ဘာများများ ရှိလဲ" ဆိုတာ ကြည့်စရာမလို၊ "ရှိလား/မရှိဘူးလား" ကိုပဲ စစ်ပါတယ်။
+
+## EXISTS အခြေခံ
+```sql
+SELECT c.Name
+FROM Customers AS c
+WHERE EXISTS (
+    SELECT 1 FROM Orders AS o
+    WHERE o.CustomerID = c.CustomerID
+);
+```
+ဒီ query က Customers ထဲက "Order ရှိတဲ့ ဖောက်သည်" တွေကို ပြပါတယ်။ Subquery က row ရှိရင် true ဖြစ်ပြီး outer row ကို ထားပါတယ်။
+
+## NOT EXISTS — "ရှိမနေတဲ့ဟာ" ရှာခြင်း
+```sql
+SELECT c.Name
+FROM Customers AS c
+WHERE NOT EXISTS (
+    SELECT 1 FROM Orders AS o
+    WHERE o.CustomerID = c.CustomerID
+);
+```
+Order တစ်ခါမှမရှိတဲ့ ဖောက်သည်တွေကို ပြပါတယ်။ LEFT JOIN + WHERE NULL နဲ့ ရလဒ်အတူတူဖြစ်ပြီး performance နဲ့ ဖတ်ရလွယ်မှု ကွာခြားပါတယ်။
+
+## EXISTS vs IN
+| Question | Operator |
+| --- | --- |
+| "ဒီ record ရှိလား" စစ်ချင်ရင် | EXISTS |
+| Value list တစ်ခုထဲက ကိုက်လားစစ်ချင်ရင် | IN |
+
+Subquery ထဲမှာ ရလဒ် များရင် EXISTS က performance ပိုကောင်းတတ်ပါတယ် (row ရှိတာနဲ့ ရပ်လို့)။
+
+## EXISTS ထဲမှာ SELECT 1 ဘာလို့လဲ?
+```sql
+WHERE EXISTS (SELECT 1 ...)
+WHERE EXISTS (SELECT * ...)
+```
+SELECT ထဲမှာ ဘာရွေးရွေး ရလဒ်ရှိရုံပဲ အရေးကြီးတာ၊ data ဘာများပြန်လဲ မစဉ်းစားပါနဲ့။ ဒါကြောင့် SELECT 1 သုံးတာ convention ပါ။
+
+## EXISTS + Correlated Subquery (အစွမ်းထက် ပုံစံ)
+```sql
+SELECT c.Name, c.City
+FROM Customers AS c
+WHERE EXISTS (
+    SELECT 1 FROM Orders AS o
+    WHERE o.CustomerID = c.CustomerID
+      AND o.OrderDate >= '2025-01-01'
+);
+```
+Outer query ရဲ့ row တစ်ခုချင်းစီအတွက် subquery ကို ပြန်စစ်ပါတယ်။ "2025 ခုနှစ် နောက်ပိုင်း order ရှိတဲ့ ဖောက်သည်" ဆိုတာမျိုးကို EXISTS နဲ့ ရေးလို့ရပါတယ်။
+
+## EXISTS နဲ့ UPSERT (အကြိုညွှန်း)
+```sql
+-- SQL Server: မရှိရင် insert
+IF NOT EXISTS (SELECT 1 FROM Customers WHERE Name = 'NewUser')
+    INSERT INTO Customers (Name) VALUES ('NewUser');
+```
+"ရှိပြီးသားလား" စစ်ပြီးမှ insert/update လုပ်တဲ့ pattern က သင်ခန်းစာတိုင်းမှာ အသုံးဝင်ပါတယ်။
+
+## အဓိက အချက်များ
+- EXISTS = subquery ထဲမှာ row ရှိရင် true
+- Correlated subquery = outer row တစ်ခုချင်းစီအတွက် subquery run
+- SELECT 1 / SELECT * ရေးလို့ရပြီး result အတူတူပဲ
+- NOT EXISTS = "မရှိတဲ့ဟာတွေ" ရှာဖို့

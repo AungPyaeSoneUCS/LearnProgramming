@@ -1,0 +1,78 @@
+---
+title: "React Forms Submit — Form Submit"
+description: "onSubmit ‌ဖြင့် form ‌ပို့နည်း — event.preventDefault(), FormData, validation ‌စစ်ခြင်း။"
+autoNumbering: true
+---
+
+Form ‌ကို submit ‌လုပ်တဲ့အခါ `onSubmit` handler ‌သုံးပြီး ဒေတာ ‌စုဆောင်း ‌ပို့ ‌ပိုနိုင်ပါတယ်။ page reload ‌မဖြစ်အောင် `event.preventDefault()` ‌လိုပါတယ်။
+
+## onSubmit ‌ရေးနည်း
+
+```jsx
+function MyForm() {
+  const [name, setName] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();   // reload ‌မလုပ်စေရ
+    console.log("Submitted: " + name);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## FormData ‌လဲ ‌သုံးလို့ရ
+
+```jsx
+const handleSubmit = (event) => {
+  event.preventDefault();
+  const data = new FormData(event.target);
+  console.log(data.get("username"));
+};
+
+<form onSubmit={handleSubmit}>
+  <input name="username" type="text" />
+  <button type="submit">Submit</button>
+</form>
+```
+
+## Validation — ‌လိုအပ်တာ ‌စစ်
+
+```jsx
+function MyForm() {
+  const [error, setError] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const name = event.target.elements.name.value;
+    if (name.length < 3) {
+      setError("နာမည် ‌အနည်းဆုံး ၃ ‌လုံး ‌ရှိရမယ်");
+      return;
+    }
+    setError("");
+    console.log("Valid: " + name);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input name="name" type="text" />
+      {error && <p className="text-red-500">{error}</p>}
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## ဘာတွေ run ဖြစ်မလဲ
+- `event.preventDefault()` — refresh ‌မလုပ်အောင် ‌တားသည်
+- ‌စုဆောင်းတဲ့ ဒေတာကို state, FormData, ‌သို့မဟုတ် api ‌ပို့ရန် သုံးနိုင်သည်
+
+## အဓိက အချက်များ
+- `onSubmit={handleSubmit}` — form ‌ပို့ချိန်
+- `event.preventDefault()` ‌က reload ‌ကို ‌တားသည်
+- Validation ‌မှား ‌ရင် error ‌ပြနိုင်သည်

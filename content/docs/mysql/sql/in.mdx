@@ -1,0 +1,55 @@
+---
+title: "MySQL IN — IN Operator"
+description: "IN — value list ထဲ ကိုက်ညီမှု — NOT IN, ‌ဥပမာများ, subquery နှင့်။"
+autoNumbering: true
+---
+
+`IN` operator သည် **value list တစ်ခုထဲ ‌မည်သည့်တန်ဖိုးဖြစ်သည်** ဖြစ်သည် rows များကို ‌ရွေးပါတယ်။
+
+## Syntax
+
+```sql
+SELECT column1
+FROM table_name
+WHERE column IN (value1, value2, ...);
+```
+
+## ‌ဥပမာ
+
+```sql
+SELECT * FROM customers
+WHERE city IN ('Yangon', 'Mandalay', 'Naypyidaw');
+```
+
+city ‌သုံးခုထဲ မှ တစ်ခု ‌ရှိသူများ။
+
+## OR ‌နှင့် နှိုင်းယှဉ် — အတူတူ
+
+```sql
+WHERE city = 'Yangon' OR city = 'Mandalay' OR city = 'Naypyidaw'
+```
+
+`IN` သည် ၄င်းကို ပိုတိုရှင်းလင်း‌အောင် ရေးနိုင် — ‌ဖတ်ရလွယ်။
+
+## NOT IN
+
+```sql
+SELECT * FROM customers
+WHERE city NOT IN ('Yangon', 'Mandalay');
+```
+
+## IN ‌နှင့် subquery
+
+```sql
+SELECT name FROM customers
+WHERE id IN (
+  SELECT customer_id FROM orders WHERE amount > 1000
+);
+```
+
+orders ၌ 1000 ကျော်ဝယ်သူများ၏ name ‌ပြ — subquery ‌ရလဒ် list ‌ဖြင့် IN ‌လုပ်။
+
+## ‌အဓိက အချက်များ
+- IN — list ‌ကိုက်ညီ
+- NOT IN — ‌မကိုက်ညီ
+- Subquery ‌ရလဒ်နှင့်လည်း ‌သုံးနိုင်

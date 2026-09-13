@@ -1,0 +1,57 @@
+---
+title: "Node.js Dev vs Prod — Development vs Production"
+description: "Dev vs Prod — NODE_ENV, differences — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+**Development** နှင့် **Production** — behaviors ‌ကွာခြားမှု ‌အပေါ် ‌စီမံ — `NODE_ENV`။
+
+## NODE_ENV
+
+```js
+const isProd = process.env.NODE_ENV === "production";
+```
+
+Run ‌နည်း:
+
+```bash
+# Linux
+NODE_ENV=production node app.js
+# Windows PowerShell
+$env:NODE_ENV="production"; node app.js
+```
+
+## ‌ကွာခြားမှုများ
+
+| ‌အရာ | Dev | Prod |
+| --- | --- | --- |
+| Errors stack | ‌ပြ | ‌ဖျောက် |
+| Logs | verbose | structured |
+| Auto restart | `--watch` | PM2/systemd |
+| Env vars | ‌အား local | secrets |
+
+## ‌ဥပမာ — error responses
+
+```js
+app.use((err, req, res, next) => {
+  res.status(500).json({
+    error: err.message,
+    stack: isProd ? undefined : err.stack, // prod ‌တွင် hidden
+  });
+});
+```
+
+## Dev features vs Prod
+- Dev — hot reload, verbose logs, dev tools
+- Prod — minified, caching, logging + monitoring
+
+```js
+if (!isProd) {
+  app.use(logger("dev"));
+}
+```
+
+## ‌အဓိက အချက်များ
+- NODE_ENV ‌စစ်
+- Prod — ‌လိုအပ်ချက် ‌လုံး‌ခြုံ
+- Hide stack/verbose in prod

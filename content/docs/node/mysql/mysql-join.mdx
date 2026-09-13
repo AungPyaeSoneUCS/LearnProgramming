@@ -1,0 +1,47 @@
+---
+title: "Node.js MySQL Join — Join"
+description: "Node + MySQL — JOIN queries, aliases — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Tables ‌ချိတ် — JOIN ‌ဖြင့် related data ‌ပေါင်း ‌ဖတ်။
+
+## INNER JOIN
+
+```js
+const [rows] = await db.query(`
+  SELECT users.name, orders.amount
+  FROM users
+  INNER JOIN orders ON orders.user_id = users.id
+`);
+```
+
+## LEFT JOIN — ‌အားလုံး + NULL
+
+```js
+const [rows] = await db.query(`
+  SELECT users.name, COUNT(orders.id) AS cnt
+  FROM users
+  LEFT JOIN orders ON orders.user_id = users.id
+  GROUP BY users.id, users.name
+`);
+```
+
+## Parameterized join
+
+```js
+const [rows] = await db.query(
+  `SELECT u.name, o.amount
+   FROM users u
+   JOIN orders o ON o.user_id = u.id
+   WHERE u.city = ?`,
+  ["Yangon"]
+);
+```
+
+Alias — `u`, `o` — ‌တို ‌ရှင်း။
+
+## ‌အဓိက အချက်များ
+- INNER / LEFT JOIN
+- ON condition
+- Alias — ‌ဖတ်‌လွယ်

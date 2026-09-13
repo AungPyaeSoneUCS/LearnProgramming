@@ -1,0 +1,52 @@
+---
+title: "Node.js DNS Module — DNS Module"
+description: "DNS Module — domain lookup — lookup, resolve4, promises — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:dns` — domain names/DNS ‌နှင့် ‌ပတ်‌သက် lookups ‌လုပ်ရန်။
+
+## Lookup
+
+```js
+const dns = require("node:dns");
+
+dns.lookup("example.com", (err, address, family) => {
+  console.log(address, family);
+});
+```
+
+## resolve (DNS records)
+
+```js
+dns.resolve4("example.com", (err, addresses) => {
+  console.log(addresses); // ['93.184.216.34']
+});
+```
+
+## Promises API
+
+```js
+const dns = require("node:dns").promises;
+
+async function main() {
+  const addrs = await dns.resolve4("example.com");
+  console.log(addrs);
+  const mx = await dns.resolveMx("gmail.com");
+  console.log(mx);
+}
+```
+
+## ‌အသုံးပြုမှု
+- Domain validation
+- Custom resolvers / IP ‌စစ်
+- Network debug tools
+
+## ‌သတိထားရန်
+- `dns.lookup` — OS ‌rule (local) 
+  - `dns.resolve*` — DNS server ကို တိုက်ရိုက် မေးချက်
+
+## ‌အဓိက အချက်များ
+- dns.lookup / resolve4
+- .promises — await
+- resolveMx — mail records

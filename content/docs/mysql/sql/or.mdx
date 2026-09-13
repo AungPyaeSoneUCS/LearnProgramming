@@ -1,0 +1,55 @@
+---
+title: "MySQL OR — OR Operator"
+description: "OR — conditions တစ်ခုခု မှန်လျှင် ရလဒ် — ဥပမာများ။"
+autoNumbering: true
+---
+
+`OR` operator သည် **conditions တစ်ခု‌ပေါင်း မှန်လျှင်** row ကို ‌ရွေးပါတယ်။
+
+## Syntax
+
+```sql
+SELECT column1, column2
+FROM table_name
+WHERE condition1 OR condition2 OR condition3 ...;
+```
+
+## ဥပမာ
+
+```sql
+SELECT * FROM products
+WHERE price = 100 OR price = 250;
+```
+
+price 100 ‌ဖြစ်သည်ဖြစ်စေ 250 ‌ဖြစ်သည်ဖြစ်စေ — ‌မှန်သော products များကို ပြသည်။
+
+```sql
+SELECT * FROM customers
+WHERE city = 'Yangon' OR city = 'Mandalay';
+```
+
+## OR ‌နဲ့ TRUE/FALSE
+
+| ‌အခြေအနေ | ‌ရလဒ် |
+| --- | --- |
+| TRUE OR TRUE | TRUE |
+| TRUE OR FALSE | TRUE |
+| FALSE OR TRUE | TRUE |
+| FALSE OR FALSE | FALSE |
+
+OR သည် ‌အနည်းဆုံး တစ်ခု ‌မှန်ရင် ‌မှန်ပါသည်။
+
+## AND ‌နဲ့ OR ‌ပေါင်းစပ် — parentheses
+
+```sql
+SELECT * FROM products
+WHERE (category = 'Electronics' OR category = 'Books')
+  AND price < 200;
+```
+
+Parentheses `()` ဖြင့် OR ‌အုပ်စု ကို ဦးစားပေး‌လုပ်ပြီး AND နှင့် တွဲသည်။
+
+## အဓိက အချက်များ
+- OR — ‌အနည်းဆုံး တစ်ခုမှန်
+- ‌ရလဒ် — ‌ပိုကျယ်သည်
+- ( ) ဖြင့် logic ‌ရှင်းလင်း

@@ -1,0 +1,78 @@
+---
+title: "sql-inner-join"
+description: "INNER JOIN — table ၂ခုလုံးမှာ key ကိုက်ညီတဲ့ row သာ ပြခြင်း။"
+autoNumbering: true
+---
+
+INNER JOIN က type တစ်ခုချင်း JOIN တွေထဲ အသုံးအများဆုံး ဖြစ်ပြီး၊ table ၂ခုလုံးမှာ key ကိုက်ညီတဲ့ row တွေကိုသာ ပြန်ပါတယ်။ ၂ဖက်မှာ မကိုက်တဲ့ဟာက ချန်ထားခံရပါတယ်။
+
+## ဇယားနှစ်ခု ဥပမာ
+Customers  နဲ့ Orders:
+
+| CustomerID | Name |
+| --- | --- |
+| 1 | Ko Ko |
+| 2 | Su |
+| 3 | Nandar |
+
+| OrderID | CustomerID |
+| --- | --- |
+| 101 | 1 |
+| 102 | 1 |
+| 103 | 2 |
+
+## INNER JOIN ဆွဲခြင်း
+```sql
+SELECT c.Name, o.OrderID
+FROM Customers AS c
+INNER JOIN Orders AS o ON c.CustomerID = o.CustomerID;
+```
+Result — CustomerID 1 နဲ့ 2 ရဲ့ order တွေ ပါပြီး၊ Nandar (order မရှိ) က မပါပါဘူး:
+
+| Name | OrderID |
+| --- | --- |
+| Ko Ko | 101 |
+| Ko Ko | 102 |
+| Su | 103 |
+
+## Column ရွေးချယ်ခြင်း
+```sql
+SELECT o.OrderID, c.Name, c.City
+FROM Orders AS o
+INNER JOIN Customers AS c ON o.CustomerID = c.CustomerID;
+```
+Orders ကနေ OrderID၊ Customers ကနေ Name + City — "join result ထဲက ကော်လံရွေးတာ" ရှင်းပြပါတယ်။
+
+## Alias မသုံးဘဲ (Prefix ရှိရင်တော့)
+```sql
+SELECT Orders.OrderID, Customers.Name
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
+```
+Long format — column နှစ်ခုစလုံးမှာ CustomerID ရှိလို့ table name full prefix လုပ်ထားပါတယ်။ Table alias (c/o) သုံးရင် ပိုစာတိုပါတယ်။
+
+## JOIN သုံးခုအထိ
+```sql
+SELECT o.OrderID, c.Name, p.Name AS Product
+FROM Orders AS o
+INNER JOIN Customers AS c ON o.CustomerID = c.CustomerID
+INNER JOIN OrderItems AS oi ON o.OrderID = oi.OrderID
+INNER JOIN Products AS p ON oi.ProductID = p.ProductID;
+```
+Order → Customer + OrderItems → Product ဆိုပြီး table ၄ ခုကို ချိတ်ထားပါတယ်။ Join တစ်ခုပြီး တစ်ခု chain လုပ်လို့ရပြီး ဒါက လက်တွေ့မှာ အရမ်းအသုံးများပါတယ်။
+
+## INNER vs LEFT — "ဖြစ်တည်မှု" (existence)
+```sql
+-- order ရှိတဲ့ ဖောက်သည်တွေပဲ
+INNER JOIN ...
+ 
+-- order ရှိသလောဆို အားလုံး (order မရှိတဲ့သာ NULL)
+LEFT JOIN ...
+```
+INNER က "နှစ်ဖက်စလုံးမှာ ရှိတဲ့ဟာတွေ" ဖြစ်ပြီး LEFT က "ဘယ်ဘက် အားလုံး" ဖြစ်ပါတယ်။ နောက် lesson မှာ ထပ်ကြည့်ပါမယ်။
+
+## အဓိက အချက်များ
+- INNER = ၂ဖက်လုံး ကိုက်တဲ့ row
+- FROM A INNER JOIN B ON a.key = b.key
+- Table alias သုံးပြီး prefix လုပ်ပါ
+- Join များစွာ chain လို့ရပြီး order သင့်သလို ရေးလို့ရပါတယ်

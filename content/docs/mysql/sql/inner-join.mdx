@@ -1,0 +1,55 @@
+---
+title: "MySQL INNER JOIN — INNER JOIN"
+description: "INNER JOIN — ‌နှစ်‌ဖက်ဇယား ‌ကိုက်ညီသော rows သာ — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`INNER JOIN` သည် ‌ဇယား‌နှစ်‌ဖက်လုံးတွင် **condition ‌ကိုက်ညီသော rows များသာ** ‌ပြန်ပေးပါတယ် — ‌ကိုက်ညီမှု ‌မရှိလျှင် ‌ဖယ်သည်။
+
+## Syntax
+
+```sql
+SELECT columns
+FROM table1
+INNER JOIN table2
+ON table1.column = table2.column;
+```
+
+## ‌ဥပမာ
+
+```sql
+SELECT orders.id, customers.name, orders.amount
+FROM orders
+INNER JOIN customers ON orders.customer_id = customers.id;
+```
+
+Customers ‌နှင့် orders ‌ကိုက်ညီသော မှတ်တမ်းများသာ — ‌စား‌လင်း order ‌ရှိ customer ‌မရှိလျှင် ‌ဖယ်။
+
+## ‌ဥပမာ ‌ဇယား
+
+```
+Customers                 Orders
++----+-------+   +----+-------+-------+
+| id | name  |   | id | cust  | amt   |
++----+-------+   +----+-------+-------+
+| 1  | Aung  |   | 1  | 1     | 300   |
+| 2  | Su    |   | 2  | 1     | 200   |
++----+-------+   +----+-------+-------+
+```
+
+INNER JOIN ‌ရလဒ် — အားလုံး 2 rows (Su ရဲ့ custom ‌ဇယားမှ order ‌မရှိ)။
+
+## ‌ဇယားသုံးခု ‌ချိတ်
+
+```sql
+SELECT customers.name, products.name, order_items.qty
+FROM order_items
+INNER JOIN orders ON order_items.order_id = orders.id
+INNER JOIN customers ON orders.customer_id = customers.id
+INNER JOIN products ON order_items.product_id = products.id;
+```
+
+## ‌အဓိက အချက်များ
+- INNER JOIN — ‌ကိုက်ညီသည့်အရာသာ
+- ON — ‌တွဲ‌ချက် condition
+- Multi-table ‌ဆက်တိုက် ‌ချိတ်နိုင်

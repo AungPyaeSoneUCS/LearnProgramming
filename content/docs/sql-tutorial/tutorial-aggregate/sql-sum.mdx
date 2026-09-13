@@ -1,0 +1,54 @@
+---
+title: "sql-sum"
+description: "SUM() နဲ့ column တစ်ခုရဲ့ တန်ဖိုးအားလုံး ပေါင်းခြင်း။"
+autoNumbering: true
+---
+
+SUM() က numeric column တစ်ခုရဲ့ တန်ဖိုးအားလုံးကို ပေါင်းပါတယ်။ "စုစုပေါင်း" လိုအပ်တဲ့ နေရာတိုင်းမှာ သုံးပါတယ် — ဥပမာ စုစုပေါင်း ရောင်းရငွေ။
+
+## SUM() အခြေခံ
+```sql
+SELECT SUM(Price) AS TotalPrice FROM Products;
+```
+Products ဇယားရဲ့ Price တန်ဖိုးအားလုံး ပေါင်းလဒ်ကို ပြပါတယ်။ Result: 230 (25+45+150+10)။ NULL ပါတဲ့ row ကို ထည့်မတွက်ပါဘူး။
+
+## SUM() + WHERE
+```sql
+SELECT SUM(Price) AS TotalPhoneSales
+FROM Products
+WHERE Category = 'Phone';
+```
+Phone category ပစ္စည်းတွေရဲ့ price တွေကိုပဲ ပေါင်းပါတယ်။
+
+## SUM() + GROUP BY
+```sql
+SELECT Category, SUM(Price) AS Total
+FROM Products
+GROUP BY Category;
+```
+Category တစ်ခုစီအတွက် row စီအဖြစ် ပေါင်းလဒ်ကို ပြပါတယ်။  ဥပမာ:
+
+| Category | Total |
+| --- | --- |
+| Accessory | 35 |
+| Gadget | 195 |
+
+## SUM() က number မဟုတ်ရင်
+```sql
+SELECT SUM(Name) FROM Customers;
+```
+Text column ကို SUM() လုပ်ရင် error တက်ပါတယ် (သို့) convert error ဖြစ်နိုင်ပါတယ်။ SUM က numeric တွေအတွက်ပဲ ဖြစ်ပါတယ်။
+
+## Column များစွာ ပေါင်းခြင်း
+```sql
+SELECT SUM(Quantity) AS TotalQty,
+       SUM(Price * Quantity) AS Revenue
+FROM OrderItems;
+```
+Price * Quantity လို expression ကိုလည်း SUM ထဲမှာ တွက်ခွင့်ပြုပါတယ်။ Revenue (စုစုပေါင်း  ရောင်းရငွေ) တွက်တာက လက်တွေ့သုံးနိုင်တဲ့ ဥပမာပါ။
+
+## အဓိက အချက်များ
+- SUM(col) → numeric column အားလုံး ပေါင်းလဒ်
+- NULL တွေကို ကျော်ပါတယ်
+- WHERE/GROUP BY နဲ့ တွဲသုံးဖို့ အရေးကြီးပါတယ်
+- Expression (SUM(Price * qty)) တွက် လို့ရတယ်

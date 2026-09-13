@@ -1,0 +1,36 @@
+---
+title: "Node.js MySQL Limit — Limit"
+description: "Node + MySQL — LIMIT rows, OFFSET pagination — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+‌ရလဒ် ‌ကန့်သတ် — LIMIT ‌ဖြင့် ‌စာမျက်နှာခွဲ ‌ပြ။
+
+## Limit rows
+
+```js
+const [rows] = await db.query("SELECT * FROM users LIMIT ?", [10]);
+```
+
+## Pagination — LIMIT + OFFSET
+
+```js
+const page = 2;
+const pageSize = 10;
+const [rows] = await db.query(
+  "SELECT * FROM users ORDER BY id LIMIT ? OFFSET ?",
+  [pageSize, (page - 1) * pageSize]
+);
+```
+
+OFFSET — skip ‌ဦး row ‌အရေအတွက် — page 2 → 10–20။
+
+## ‌အသုံးများ
+- Top 5 ‌မြန် — `ORDER BY amount DESC LIMIT 5`
+  - Pagination — recent rows ဖြင့် ပထမ page ဖြည့်
+- Tests — ‌သေးငယ် ‌ရလဒ်
+
+## ‌အဓိက အချက်များ
+- LIMIT n
+- OFFSET (n-1)*size — pagination
+- ORDER BY ‌နှင့် ‌တွဲ ‌သုံး

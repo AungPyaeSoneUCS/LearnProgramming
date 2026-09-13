@@ -1,0 +1,39 @@
+---
+title: "sql-home"
+description: "SQL တစ်ခုလုံးရဲ့ သင်ခန်းစာ အစီအစဉ်၊ sample database ဖန်တီးနည်းနဲ့ အသုံးပြုဖို့ ပြင်ဆင်ခြင်း။"
+autoNumbering: true
+---
+
+ဒီ lesson သည် SQL Tutorial ရဲ့ ပထမဆုံး ခေါင်းစဉ်ပါ။ သင်တန်းတစ်ခုလုံးရဲ့ မြေပုံကို ကြည့်ပြီး၊ နောက် lesson တွေမှာ သုံးမယ့် sample database ကို ပြင်ဆင်ကြည့်ကြပါမယ်။
+
+## SQL က ဘာတွေ လုပ်ပေးနိုင်လဲ?
+SQL တစ်ကြောင်းတည်းနဲ့ လုပ်နိုင်တဲ့ အဓိက အရာတွေက ဒီလိုပါ။
+
+| အလုပ် | SQL Keyword | ဥပမာ |
+| --- | --- | --- |
+| ဒေတာ ကြည့်ဖို့ | SELECT | SELECT name FROM users; |
+| ဒေတာ ထည့်ဖို့ | INSERT INTO | INSERT INTO users (name) VALUES ('Aung'); |
+| ဒေတာ ပြင်ဖို့ | UPDATE | UPDATE users SET name='Ko' WHERE id=1; |
+| ဒေတာ ဖျက်ဖို့ | DELETE FROM | DELETE FROM users WHERE id=1; |
+
+## Sample Table (ဥပမာ ဇယား)
+သင်ခန်းစာတွေမှာ ဆက်တိုက် သုံးသွားမယ့် table ကို အရင်ဆုံး ဖန်တီးပါမယ်။ Customers ဆိုတဲ့ ဖောက်သည်စာရင်း ဇယား ဖြစ်ပါတယ်။
+
+```sql
+CREATE TABLE Customers (
+    CustomerID int,
+    Name varchar(255),
+    City varchar(255),
+    Age int,
+    Country varchar(255)
+);
+```
+ဒီ code က Customers ဇယားတစ်ခုကို ဖန်တီးပြီး၊ ကော်လံတွေဖြစ်တဲ့ CustomerID, Name, City, Age, Country ကို သူတို့ရဲ့ data type နဲ့ သတ်မှတ်ပါတယ်။ int က ကိန်းပြည့်၊ varchar(255) က စာသား ၂၅၅ လုံးအထိ သိမ်းနိုင်တဲ့ စာသား type ပါ။
+
+နောက် lesson တွေမှာ ဒီ table ကို ပြန်ပြန် သုံးသွားမှာမို့ မှတ်သားထားပါ။
+
+## ဘယ်လို လေ့ကျင့်မလဲ?
+- Online editor (Module 4 ရဲ့ sql-examples-editor) မှာ copy ပြီး ချက်ချင်း run လို့ရပါတယ်။
+- ကိုယ့် စက်မှာ MySQL တပ်ဆင်ပြီး run ချင်ရင်လည်း Module 4 ရဲ့ setup lesson ကို ကြည့်ပါ။
+
+အဓိက အချက်: SQL ကို ကျွမ်းကျင်ဖို့ဆို ရေးကြည့်မှ ရပါတယ်။ ဖတ်ရုံနဲ့ မရပါဘူး။

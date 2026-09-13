@@ -1,0 +1,64 @@
+---
+title: "sql-database-prepared-statements"
+description: "Prepared statements — parameterized execution ရဲ့ နောက်ကွယ် mechanism (server-side)။"
+autoNumbering: true
+---
+
+Prepared statements က "query plan ကို ကြိုပြင်ဆင်ပြီး value ကို data အနေနဲ့ဘဲ ထည့်တဲ့" server-side mechanism ပါ။ Parameterized query ရဲ့ နောက်ကွယ်မှာ အလုပ်လုပ်ပါတယ်။
+
+## PREPARE — MySQL
+```sql
+PREPARE stmt FROM 'SELECT * FROM Customers WHERE City = ?';
+SET @city = 'Yangon';
+EXECUTE stmt USING @city;
+DEALLOCATE PREPARE stmt;
+```
+- PREPARE — placeholder နဲ့ query ကို compile
+- EXECUTE USING — value ထည့်
+- DEALLOCATE — free
+
+## Prepared Statement ဘယ်လိုအလုပ်လုပ်လဲ?
+```
+1. SQL server က statement ကို parse/compile (placeholder နဲ့)
+2. Query plan ကို သိမ်းထား — value မရှိပေမဲ့ ပုံစံ ရှိနေ
+3. နောက် EXECUTE တိုင်းမှာ value ပဲ ထည့်
+4. Input  က "statement" ရဲ့ part မဟုတ် — data slot ပဲ
+```
+Injection မဖြစ်ရတဲ့ အကြောင်းရင်း — user value က syntax မကျူးကျော်လို့ ပါ။
+
+## App ထဲက (PS ကို သုံးပါ term)
+```js
+// Node.js (mysql2)
+const stmt = "SELECT * FROM Users WHERE Name = ?";
+conn.execute(stmt, [username]);   // execute → prepared
+ 
+// PHP (PDO)
+$stmt = $pdo->prepare("SELECT * FROM Users WHERE Name = ?");
+$stmt->execute([$username]);
+```
+Driver ရဲ့ execute()/prepare() method တွေက server-side prepared statement  ကို သုံးပါတယ်။
+
+## Prep vs Regular Query
+|  | Regular query | Prepared statement |
+| --- | --- | --- |
+| Parse/plan | ခေါ်တိုင်း | ၁ ကြိမ်တည်း (ပြန်သုံး) |
+| Repeated runs | နှေး | မြန် |
+| Injection-safe | placeholder မသုံးရင် မဟုတ် | Yes |
+| Use case | 1-off | Loop / batch / user input |
+
+## SQL injection ခံနိုင်ရည်
+```sql
+-- ❌ concatenation
+SELECT * FROM Users WHERE Name = 'x'' OR 1=1--';   -- broken
+ 
+-- ✅ prepared
+PREPARE stmt FROM 'SELECT * FROM Users WHERE Name = ?';
+EXECUTE stmt USING @safe;
+```
+Value  ထဲမှာ ' OR 1=1-- ရှိနေရင်တောင် — ဒါက String literal data အဖြစ်ပဲ ထည့်လို့ injection effect  မပြနိုင်ပါဘူး။
+
+## အဓိက အချက်များ
+- PREPARE + EXECUTE — ၂ဆင့်: plan အရင်, value နောက်
+- Value က syntax မဖြစ် — injection-safe
+- Repeated query — plan reuse လို့ Performance မြန်
+- Driver  ရဲ့ execute()/prepare() က server-side PS

@@ -1,0 +1,61 @@
+---
+title: "sql-server"
+description: "SQL Server — LocalDB / Docker / SSMS နဲ့ setup လုပ်နည်း၊ connection ။"
+autoNumbering: true
+---
+
+ဒီ lesson က SQL Server (Microsoft) ကို ကိုယ်တိုင် install/setup လုပ်ပြီး query run နည်း ပါ။
+
+## Options
+| Option | Suitable for |
+| --- | --- |
+| SQL Server Express | Dev / small app (free) |
+| LocalDB | သင်ယူခြင်း/ dev — lightweight |
+| Docker (mssql) | Dev — contained environment |
+| Azure SQL | Production cloud |
+
+## Install — LocalDB (Windows, မြန်ဆုံး)
+```bash
+# SQL Server Express  installer မှာ LocalDB option ရှိ
+# Install done → localdb command
+sqllocaldb create MyDB
+sqllocaldb start MyDB
+```
+
+## Connect — SSMS
+```sql
+-- SSMS (SQL Server Management Studio) — free GUI
+Server: localhost\SQLEXPRESS
+Authentication: Windows Auth
+ 
+CREATE DATABASE ShopDB;
+USE ShopDB;
+CREATE TABLE T (id INT);
+```
+
+## Docker
+```bash
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=YourPass123!"
+  -p 1433:1433 --name sql-dev -d mcr.microsoft.com/mssql/server:2022-latest
+ 
+# Connect
+docker exec -it sql-dev /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourPass123!
+```
+
+## SQLCMD
+```sql
+sqlcmd -S localhost -U sa -P pass
+1> SELECT 1 + 1
+2> GO
+```
+
+## Connection String
+```csharp
+Server=localhost\SQLEXPRESS;Database=ShopDB;Trusted_Connection=True;
+```
+
+## အဓိက အချက်များ
+- LocalDB — dev အတွက် အမြန်ဆုံး
+- Docker — production-like, cross-platform
+- SSMS — GUI tool
+- SA password — local dev မှာလည်း strong password သုံးပါ

@@ -1,0 +1,66 @@
+---
+title: "sql-having"
+description: "HAVING — aggregate ပြီးနောက် group တွေကို filter လုပ်ခြင်း (WHERE vs HAVING ကွာခြားချက်)။"
+autoNumbering: true
+---
+
+WHERE က rows တွေကို aggregate မတိုင်ခင် စစ်ပြီး၊ HAVING က group တွေဖွဲ့ပြီး aggregate တွက်ပြီးတဲ့ result တွေကို စစ်ပါတယ်။ Aggregate result နဲ့ စစ်ချင်ရင် HAVING ကိုပဲ သုံးရပါတယ်။
+
+## WHERE vs HAVING — ကွာခြားချက်
+```sql
+-- WHERE: aggregate မတိုင်ခင် rows စစ်
+-- HAVING: aggregate ပြီးမှ group တွေ စစ်
+SELECT Country, COUNT(*) AS Total
+FROM Customers
+WHERE City <> 'Naypyidaw'   -- row-level filter (group မဖွဲ့ခင် run)
+GROUP BY Country
+HAVING COUNT(*) > 1;        -- group-level filter (group ဖွဲ့ပြီးမှ run)
+```
+WHERE  က Naypyidaw မဟုတ်တဲ့ row တွေကိုပဲ ယူပြီး၊ HAVING က group result ရဲ့ COUNT 1 ထက် များတဲ့စုကိုပဲ ထားပါတယ်။
+
+## HAVING — Aggregate နဲ့ စစ်ခြင်း
+```sql
+SELECT Category, AVG(Price) AS AvgPrice
+FROM Products
+GROUP BY Category
+HAVING AVG(Price) > 30;
+```
+Category တွေထဲကမှ ပျမ်းမျှ price 30 ကျော်တဲ့စုကိုပဲ ပြပါတယ်။ WHERE AVG(...) ရေးလို့ မရပါဘူး — aggregate က WHERE မှာ မူရင်းတွင် မရပါဘူး။
+
+## HAVING + ORDER BY
+```sql
+SELECT Country, COUNT(*) AS Total
+FROM Customers
+GROUP BY Country
+HAVING COUNT(*) >= 2
+ORDER BY Total DESC;
+```
+Total 2 နဲ့အထက် group တွေကို ရေတွက်ပြီး အရေအတွက်အကြီးဆုံးမှ ငယ်ဆုံးအထိ စီပါတယ်။
+
+## HAVING — Multiple Conditions
+```sql
+SELECT Country, COUNT(*) AS Total, AVG(Age) AS AvgAge
+FROM Customers
+GROUP BY Country
+HAVING COUNT(*) > 1 AND AVG(Age) > 25;
+```
+Group ၂ခုစလုံး condition ကျေနပ်တဲ့ country တွေကိုပဲ ပြပါတယ်။ HAVING ထဲမှာ AND/OR/NOT အကုန်သုံးလို့ရပါတယ်။
+
+## Flow — Query စီရင်
+WHERE → GROUP BY → HAVING → ORDER BY → SELECT
+
+```sql
+SELECT Country, COUNT(*) AS Total
+FROM Customers
+WHERE Age > 18        -- 1. filter rows
+GROUP BY Country       -- 2. makeup groups
+HAVING COUNT(*) > 1    -- 3. filter groups (portable expression)
+ORDER BY Total DESC;   -- 4. sort result
+```
+DB အလိုက် HAVING ထဲမှာ alias သုံးခွင့် ကွာခြားပါတယ်။ PostgreSQL က alias သုံးခွင့်ပေးပြီး MySQL/SQL Server က aggregate expression မူရင်းစရေးတာ ပိုစိတ်ချရပါတယ်။
+
+## အဓိက အချက်များ
+- WHERE = row filter (aggregate မတိုင်ခင်)
+- HAVING = group filter (aggregate ပြီးမှ)
+- Aggregate နဲ့ စစ်ချင်ရင် HAVING
+- Logic order: WHERE → GROUP BY → HAVING → ORDER BY

@@ -1,0 +1,41 @@
+---
+title: "sql-select-distinct"
+description: "DISTINCT နဲ့ ထပ်နေတဲ့တန်ဖိုးတွေကို တစ်ကြိမ်တည်းသာ ပြခြင်း။"
+autoNumbering: true
+---
+
+Table ထဲမှာ တန်ဖိုးတွေ ထပ်နေတတ်ပါတယ်။ ဥပမာ ဖောက်သည်တွေက တစ်နိုင်ငံတည်းက လူများရင်းနဲ့ Country ကော်လံထဲမှာ "Myanmar" က အကြိမ်ကြိမ် ပါနေမယ်။ SELECT DISTINCT က အဲဒီလို duplicate ကို ဖယ်ပြီး ထူးခြားတဲ့ တန်ဖိုးတွေကိုပဲ ပြပါတယ်။
+
+## သဘာဝ အတိုင်း SELECT ကို ကြည့်ပါ
+```sql
+SELECT Country FROM Customers;
+```
+Customers မှာ ဖောက်သည် ၄ ယောက်ရှိပြီး ၂ ယောက်က Myanmar ဆိုရင်၊ ဒီ query က Myanmar နှစ်ကြိမ် ပါအောင် row ၄ ခု ပြန်ပြပါတယ်။
+
+## DISTINCT သုံးခြင်း
+```sql
+SELECT DISTINCT Country FROM Customers;
+```
+ဒီ query က ထူးခြားတဲ့ country တွေကိုပဲ ပြပြီး "Myanmar" က ၁ ကြိမ်ပဲ ပါမယ်။ Duplicate တွေကို ဖယ်လို့ output က သန့်ရှင်းပြီး၊ ဒေတာရဲ့ အကျဉ်းချုပ် (summary) ရလာတာကို မြင်ရပါတယ်။
+
+## Column များစွာနဲ့ DISTINCT
+```sql
+SELECT DISTINCT Country, City FROM Customers;
+```
+ဒီနေရာမှာ "Country + City" ပေါင်းစပ်မှု ကို စဉ်းစားပါတယ်။ Row နှစ်ခုက Country ရော City ပါ တူနေမှသာ duplicate လို့ သတ်မှတ်ပါတယ်။ ဥပမာ (Myanmar, Yangon) က (Myanmar, Mandalay) နဲ့ မတူပါဘူး။
+
+## DISTINCT နဲ့ COUNT ပေါင်းခြင်း (အကြိုညွှန်း)
+```sql
+SELECT COUNT(DISTINCT Country) FROM Customers;
+```
+ဒီ query က ထူးခြားတဲ့ country အရေအတွက်ကို ကိန်းတစ်လုံးအဖြစ် ပြန်ပါတယ်။ ဥပမာရလဒ်: 3 (Myanmar, Thailand, Singapore ရှိရင်)။ Aggregate functions တွေကို နောက်နောင် တစ် section လုံး သင်ပါမယ်။
+
+## သတိပြုရန်
+- DISTINCT က selection အတွက် "နောက်ဆုံး ဆုံးဖြတ်ချက်" မဟုတ်ပါ — query ဖတ်လို့ရတာလေးပါ
+- DISTINCT သုံးရင် output order က မှတ်ထားတဲ့ အစီအစဉ်နဲ့ မတိသာတတ်ပါဘူး
+- အရမ်းကြီးတဲ့ table မှာ DISTINCT က performance အပေါ် လွှမ်းမိုးတတ်ပါတယ်
+
+## အဓိက အချက်များ
+- SELECT DISTINCT col က ထပ်နေတဲ့တန်ဖိုးတွေကို ၁ ကြိမ်တည်းပြပါတယ်
+- Column များစွာနဲ့သုံးရင် ပေါင်းစပ်တန်ဖိုး တစ်ခုလုံးကို စစ်ပါတယ်
+- COUNT(DISTINCT col) နဲ့ အရေအတွက်ယူလို့ရတယ်

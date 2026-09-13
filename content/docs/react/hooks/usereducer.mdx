@@ -1,0 +1,77 @@
+---
+title: "React useReducer — useReducer Hook"
+description: "useReducer — complex state logic ‌ကို reducer ‌function ‌ဖြင့် — action ‌များ, dispatch, useState vs useReducer ။"
+autoNumbering: true
+---
+
+`useReducer` ‌က `useState` ရဲ့ ‌ပိုစွမ်းဆောင်ရည် version — **state update lock** များဖြစ်တဲ့ ‌အခါ / actions ‌အ‌ခြေပြု ‌ပြောင်းလဲမှု ‌တွေကို ‌ရှင်းလင်း‌စွာ ‌စီမံ‌ပေးနိုင်ပါတယ်။
+
+## Syntax
+
+```jsx
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+
+- `reducer(state, action)` — ‌ပြောင်းလဲမှု ‌သတ်မှတ်
+- `dispatch(action)` — ‌ပြောင်းဖို့ action ပို့
+
+## ‌ဥပမာ — counter
+
+```jsx
+import { useReducer } from "react";
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "increment":
+      return { count: state.count + 1 };
+    case "decrement":
+      return { count: state.count - 1 };
+    case "reset":
+      return { count: 0 };
+    default:
+      return state;
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+  return (
+    <>
+      <h1>{state.count}</h1>
+      <button onClick={() => dispatch({ type: "increment" })}>+1</button>
+      <button onClick={() => dispatch({ type: "decrement" })}>-1</button>
+      <button onClick={() => dispatch({ type: "reset" })}>Reset</button>
+    </>
+  );
+}
+```
+
+- Action — `{ type: "increment" }` ‌ကဲ့သို့ ဖြစ်ပြီး payload ပါနိုင်
+- Reducer — ‌ရလာတဲ့ action ‌ကို သုံးတဲ့ new state ‌ပြန်
+
+## Action payload
+
+```jsx
+dispatch({ type: "add", payload: 5 });
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "add":
+      return { count: state.count + action.payload };
+    ...
+  }
+}
+```
+
+## useState vs useReducer
+
+| useState | useReducer |
+| --- | --- |
+| ‌ရိုးရှင်းသော state | Complex logic / ‌အများအပြား sub-values |
+| Logic ‌က component inside | Logic ‌က reducer ‌ထဲ — ‌ခွဲ စစ်ဆေး (test) ‌လွယ် |
+
+## ‌အဓိက အချက်များ
+- `useReducer(reducer, initialState)` → [state, dispatch]
+- dispatch(action) — action.type ‌ကို reducer ‌မှာ ‌စစ်
+- Complex state — switch/case ‌ရှင်းလင်း

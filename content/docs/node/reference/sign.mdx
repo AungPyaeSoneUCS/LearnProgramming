@@ -1,0 +1,54 @@
+---
+title: "Node.js Sign — Sign class"
+description: "Sign — ‌အားရှိ digital signature — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:crypto` **Sign** — private key ‌ဖြင့် data ‌ကို sign — ‌စာတမ်း ‌လက်‌မှတ်။
+
+## Sign
+
+```js
+const crypto = require("node:crypto");
+const { generateKeyPairSync } = require("node:crypto");
+
+const { privateKey, publicKey } = generateKeyPairSync("rsa", {
+  modulusLength: 2048,
+});
+
+const signer = crypto.createSign("SHA256");
+signer.update("message to sign");
+signer.end();
+
+const signature = signer.sign(privateKey, "hex");
+console.log(signature);
+```
+
+## Verify with Sign ‌ကို
+
+```js
+const verifier = crypto.createVerify("SHA256");
+verifier.update("message to sign");
+verifier.end();
+
+const ok = verifier.verify(publicKey, signature, "hex");
+console.log(ok); // true
+```
+
+## ‌ပုံစံ flow
+
+```js
+const signer = crypto.createSign("SHA256");
+signer.update(data);
+const sig = signer.sign(privateKey, "base64");
+```
+
+## Use cases
+- Software signing / license ‌စစ်
+- ‌စာတမ်း authenticity
+- Blockchain transactions
+
+## ‌အဓိက အချက်များ
+- createSign + update + sign
+- createVerify + verify
+- Private ‌လက်‌မှတ် — public ‌စစ်

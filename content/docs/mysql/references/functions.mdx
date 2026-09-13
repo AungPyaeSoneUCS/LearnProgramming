@@ -1,0 +1,66 @@
+---
+title: "MySQL Functions — Functions"
+description: "MySQL Functions — ‌အသုံးများသော functions များ — string, numeric, date, aggregate, ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+MySQL functions များသည် ‌ဒေတာကို ‌ပြောင်းလဲ / ‌တွက်ချက်ရန် ‌သုံးပြီး SELECT ‌ထဲ ‌လု‌ပ်‌ဆောင်နိုင်သည်။
+
+## Aggregate Functions
+
+| Function | ‌လုပ်ဆောင်မှု |
+| --- | --- |
+| `COUNT(*)` | ‌အရေအတွက် |
+| `SUM(col)` | ‌စုစု‌ပေါင်း |
+| `AVG(col)` | ‌ပျမ်းမျှ |
+| `MIN(col)` / `MAX(col)` | ‌အနည်းဆုံး / ‌အများဆုံး |
+
+```sql
+SELECT COUNT(*), SUM(amount), AVG(amount) FROM orders;
+```
+
+## String Functions
+
+| Function | ‌လုပ်ဆောင်မှု |
+| --- | --- |
+| `CONCAT(...)` | ‌ပေါင်း‌စပ် |
+| `UPPER` / `LOWER` | ‌အက္ခရာပြောင်း |
+| `LENGTH` | ‌အလျား |
+| `SUBSTRING(col, start, len)` | ‌အပိုင်းယူ |
+| `TRIM` | ‌အစ/‌အဆုံး space ‌ဖျက် |
+
+```sql
+SELECT CONCAT(first_name, ' ', last_name) AS full_name,
+       UPPER(city) FROM users;
+```
+
+## Numeric Functions
+
+| Function | ‌လုပ်ဆောင်မှု |
+| --- | --- |
+| `ROUND(x, d)` | ‌ပတ် ‌ပတ် |
+| `FLOOR` / `CEIL` | ‌အောက် / ‌အပေါ် |
+| `ABS` | ‌အပြုသဘောတန်ဖိုး |
+| `RAND()` | random 0–1 |
+
+```sql
+SELECT ROUND(price, 2), FLOOR(price), CEIL(price) FROM products;
+```
+
+## Date Functions
+
+```sql
+SELECT NOW(), CURDATE(), YEAR(CURDATE()),
+       DATE_ADD(CURDATE(), INTERVAL 7 DAY) AS next_week;
+```
+
+## Null Functions
+
+```sql
+SELECT IFNULL(phone, 'N/A'), COALESCE(a, b, c) FROM users;
+```
+
+## ‌အဓိက အချက်များ
+- Aggregate — COUNT / SUM / AVG
+- String — CONCAT / UPPER / SUBSTRING
+- Date — NOW / YEAR / DATE_ADD

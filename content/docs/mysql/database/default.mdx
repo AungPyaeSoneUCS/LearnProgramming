@@ -1,0 +1,50 @@
+---
+title: "MySQL Default — DEFAULT Constraint"
+description: "DEFAULT — value ‌မပေးလျှင် ‌မူလ ‌တန်ဖိုး — ‌ဥပမာများ, ALTER ပြောင်း။"
+autoNumbering: true
+---
+
+`DEFAULT` constraint သည် ‌ကော်လံတွင် value ‌မပေး‌လျှင် **‌မူလ ‌တန်ဖိုး** ‌ကို ‌အလိုအလျောက် ‌ထည့်‌ပေးပါတယ်။
+
+## ‌ဥပမာ — CREATE TABLE
+
+```sql
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  country VARCHAR(50) DEFAULT 'Myanmar',
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+## Insert ‌လဲက် — value ‌မပေး
+
+```sql
+INSERT INTO users (id) VALUES (1);
+-- country='Myanmar', is_active=1, created_at=now
+```
+
+## ‌အသစ် value ‌ပေးလျှင် ‌မူလ ‌ရှောင်
+
+```sql
+INSERT INTO users (id, country) VALUES (2, 'Thailand');
+```
+
+country ‌သည် 'Thailand' — default ‌မဟုတ်။
+
+## ALTER — default ‌ထည့်/‌ဖျက်
+
+```sql
+ALTER TABLE users ALTER COLUMN country SET DEFAULT 'Myanmar';
+
+ALTER TABLE users ALTER COLUMN country DROP DEFAULT;
+```
+
+## ‌အသုံးဝင်သော defaults
+- `CURRENT_TIMESTAMP` — ‌ဖန်တီးချိန်
+- Numbers (0), booleans, text
+
+## ‌အဓိက အချက်များ
+- DEFAULT — ‌မပေးလျှင် ‌တန်ဖိုး
+- ပေးလျှင် ‌မူလ ‌မသုံး
+- ALTER SET/DROP DEFAULT

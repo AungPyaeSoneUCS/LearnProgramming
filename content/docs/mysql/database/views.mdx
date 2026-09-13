@@ -1,0 +1,55 @@
+---
+title: "MySQL Views — Views"
+description: "Views — virtual table — ‌တည်ဆောက်, CREATE VIEW, updatable views, ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+**View** သည် ‌သိမ်းထားသော SQL query ‌ဖြစ်ပြီး **virtual table** ‌ကဲ့သို့ ‌အသုံးပြုနိုင်ပါတယ် — data ‌မသိမ်း၊ query ‌ရလဒ်ကို ‌ပြန်တင်ပြပါသည်။
+
+## Syntax
+
+```sql
+CREATE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table
+WHERE condition;
+```
+
+## ဥပမာ — active users view
+
+```sql
+CREATE VIEW active_users AS
+SELECT id, name, email
+FROM users
+WHERE status = 'active';
+```
+
+## View ‌အသုံးပြု — regular table ‌ကဲ့သို့
+
+```sql
+SELECT * FROM active_users;
+SELECT * FROM active_users WHERE city = 'Yangon';
+```
+
+## ဘာ‌ကြောင့် ‌သုံးလဲ
+- Complex query ‌ကို ‌အကျဥ်း — ‌တစ်ခါ ‌ရေး, ‌ထပ်သုံး
+- ‌လုံး‌ခြုံ — sensitive columns ‌ဖျောက် (email ‌ဖျက် စသည်)
+- App code ‌ရှင်း
+
+## Updateable view — CREATE OR REPLACE
+
+```sql
+CREATE OR REPLACE VIEW active_users AS
+SELECT id, name FROM users WHERE status = 'active';
+
+DROP VIEW IF EXISTS active_users;
+```
+
+## ‌သတိထားရန်
+- View ‌သည် ‌ဖတ်‌ရန် ‌အသုံးများ (updates ‌အချို့ ‌ခွင့်ပြု ‌သို့ ကန့်သတ်)
+- Underlying table ‌ပြောင်းလျှင် view ‌ရလဒ် ‌ပြောင်း — ‌ဒေတာ ‌မည်
+
+## ‌အဓိက အချက်များ
+- CREATE VIEW — query ‌သိမ်း
+- Virtual table ‌အ‌ပေါ် ‌အသုံးပြု
+- ‌လုံး‌ခြုံ + ‌ပြန်သုံးနိုင်

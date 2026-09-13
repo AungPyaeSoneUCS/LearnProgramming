@@ -1,0 +1,67 @@
+---
+title: "MySQL Operators — Operators"
+description: "Operators — arithmetic, comparison, logical, bitwise — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+MySQL ‌မှာ operator များ အများအပြား — WHERE ‌နှင့် expressions ထဲ ‌အသုံးပြုပါတယ်။
+
+## Arithmetic Operators
+
+| Operator | ‌လုပ်ဆောင်မှု |
+| --- | --- |
+| `+` | ‌ပေါင်း |
+| `-` | နုတ် |
+| `*` | မြှောက် |
+| `/` | ‌စား |
+| `%` | ‌အကြွင်း (remainder) |
+
+```sql
+SELECT price * quantity, price % 100 FROM order_items;
+```
+
+## Comparison Operators
+
+| Operator | ‌လုပ်ဆောင်မှု |
+| --- | --- |
+| `=` , `!=` / `<>` | ‌တူ/‌မတူ |
+| `>` , `<` | ‌ကြီး, ‌ငယ် |
+| `>=` , `<=` | ‌ကြီးခြင်း/ညီ, ‌ငယ်/ညီ |
+| `IS NULL` | NULL ‌စစ် |
+| `BETWEEN`, `LIKE`, `IN` | range, pattern, list |
+
+```sql
+SELECT * FROM products WHERE price >= 500 AND stock LIKE '10%';
+```
+
+## Logical Operators
+
+| Operator | ‌လုပ်ဆောင်မှု |
+| --- | --- |
+| `AND` | ‌အားလုံး ‌မှန် |
+| `OR` | ‌တစ်ခုခု ‌မှန် |
+| `NOT` | ‌ဆန့်ကျင်ဘက် |
+
+## Bitwise Operators
+
+| Operator | ‌လုပ်ဆောင်မှု |
+| --- | --- |
+| `&` | AND bit |
+| `|` | OR bit |
+| `^` | XOR bit |
+| `~` | NOT bit |
+
+## ‌ဥပမာ ‌ပေါင်းစပ်
+
+```sql
+SELECT id, amount,
+  amount + 100 AS bonus_amount,
+  CASE WHEN amount >= 1000 THEN 'big' ELSE 'small' END AS size
+FROM orders
+WHERE amount > 0 AND paid = 1;
+```
+
+## ‌အဓိက အချက်များ
+- Arithmetic — + - * / %
+- Comparison — `=`, `>`, `<`, BETWEEN, LIKE, IN
+- Logical — AND, OR, NOT

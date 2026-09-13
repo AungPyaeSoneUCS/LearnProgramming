@@ -1,0 +1,52 @@
+---
+title: "Raspberry Pi GPIO — GPIO"
+description: "Raspberry Pi — GPIO pins — ‌အခြေခံ ထိန်း — onoff ဥပမာ။"
+autoNumbering: true
+---
+
+GPIO — **General Purpose Input/Output** — RPi ၏ ‌ထိုး pins — ‌အပေါ် ‌လက်‌ချက် ‌စစ်။
+
+## Pin numbering
+
+```js
+const Gpio = require("onoff").Gpio;
+
+const led = new Gpio(17, "out");   // GPIO17 — output
+const btn = new Gpio(4, "in", "both"); // GPIO4 — input
+```
+
+## Write (output)
+
+```js
+led.writeSync(1);  // HIGH — ‌မီး ‌လင်း
+led.writeSync(0);  // LOW — ‌မီး ‌ပိတ်
+```
+
+## Read (input)
+
+```js
+console.log(btn.readSync()); // 1 ‌သို့ 0
+```
+
+## Reading with events
+
+```js
+btn.watch((err, value) => {
+  console.log("Button:", value ? "pressed" : "released");
+});
+```
+
+## Cleanup
+
+```js
+process.on("SIGINT", () => {
+  led.unexport();
+  btn.unexport();
+  process.exit();
+});
+```
+
+## ‌အဓိက အချက်များ
+- new Gpio(pin, "out"/"in")
+- writeSync / readSync
+- watch — ‌ဖြစ်ရပ် ‌ပေး

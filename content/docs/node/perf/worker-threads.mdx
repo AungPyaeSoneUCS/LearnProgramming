@@ -1,0 +1,57 @@
+---
+title: "Node.js Worker Threads — Worker Threads"
+description: "Worker threads — CPU tasks, workerData, postMessage — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+**Worker threads** — CPU-intensive ‌လုပ်‌ဆောင်မှုများကို parallel — event loop ‌မပိတ်ဘဲ။
+
+## Main
+
+```js
+const { Worker } = require("node:worker_threads");
+
+const worker = new Worker("./compute.js", {
+  workerData: { n: 1_000_000_000 },
+});
+
+worker.on("message", (result) => console.log("result:", result));
+worker.on("error", console.error);
+worker.on("exit", (code) => console.log("worker exit", code));
+```
+
+## Worker — compute.js
+
+```js
+const { parentPort, workerData } = require("node:worker_threads");
+
+let sum = 0;
+for (let i = 0; i < workerData.n; i++) sum += i;
+
+parentPort.postMessage(sum);
+```
+
+## Run
+
+```bash
+node main.js
+```
+
+Result — main thread ‌မပိတ်ဘဲ heavy loop ။
+
+## Use cases
+- Image/video processing
+- JSON ‌ကြီး parse
+- Hashing / simulation
+- ‌အাৰworker pool ‌ပုံစံနှင့် CPU ‌အားလုံး
+
+## vs cluster
+| Cluster | Worker threads |
+| --- | --- |
+| Processes (memory separate) | Threads (share memory) |
+| Horizontal scale | CPU ‌လုပ် အ‌တွင်း |
+
+## ‌အဓိက အချက်များ
+- Worker(workerData)
+- postMessage / on message
+- CPU tasks — ‌မပိတ် event loop

@@ -1,0 +1,64 @@
+---
+title: "Raspberry Pi LED Pushbutton — LED + Pushbutton"
+description: "Raspberry Pi — button ‌ဖြင့် LED ‌ထိန်း — ‌ဥပမာ code။"
+autoNumbering: true
+---
+
+Pushbutton ‌နှိပ် → LED ‌လင်း — event-driven ‌ဥပမာ။
+
+## Wiring
+- LED → resistor → **GPIO17** ; LED → GND
+- Button ‌စက် ‌တစ် → **GPIO4** ; ‌အခြား → GND
+
+## Code
+
+```js
+const Gpio = require("onoff").Gpio;
+
+const led = new Gpio(17, "out");
+const button = new Gpio(4, "in", "rising");
+
+button.watch((err) => {
+  led.writeSync(1);
+  setTimeout(() => led.writeSync(0), 300);
+});
+```
+
+## Toggle on press
+
+```js
+let on = false;
+button.watch(() => {
+  on = !on;
+  led.writeSync(on ? 1 : 0);
+});
+```
+
+## Debounce
+
+```js
+let busy = false;
+button.watch(() => {
+  if (busy) return;
+  busy = true;
+  on = !on;
+  led.writeSync(on ? 1 : 0);
+  setTimeout(() => (busy = false), 200);
+});
+```
+
+## Cleanup
+
+```js
+process.on("SIGINT", () => {
+  led.writeSync(0);
+  led.unexport();
+  button.unexport();
+  process.exit();
+});
+```
+
+## ‌အဓိက အချက်များ
+- "rising" trigger — ‌နှိပ် အ‌ပေါ်
+- Toggle + debounce
+- watch callback

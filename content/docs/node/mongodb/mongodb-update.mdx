@@ -1,0 +1,49 @@
+---
+title: "Node.js MongoDB Update — Update"
+description: "Node + MongoDB — updateOne, updateMany, $set, $inc — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Documents ‌ပြန် ‌ပြင်နည်း — update operators ‌ဥပမာ။
+
+## updateOne — $set
+
+```js
+const result = await users.updateOne(
+  { name: "Aung" },
+  { $set: { age: 26, city: "Mandalay" } }
+);
+console.log(result.modifiedCount);
+```
+
+## updateMany
+
+```js
+await users.updateMany(
+  { role: "member" },
+  { $set: { role: "user" } }
+);
+```
+
+## $inc — ‌တိုး/‌ကျ
+
+```js
+await users.updateOne({ name: "Aung" }, { $inc: { score: 5 } });
+```
+
+## Upsert — ‌မရှိက ‌ဖန်တီး
+
+```js
+await users.updateOne(
+  { name: "Phyu" },
+  { $set: { age: 20 } },
+  { upsert: true }
+);
+```
+
+`upsert: true` — doc ‌မရှိလျှင် ‌ဖန်တီးသည်။
+
+## ‌အဓိက အချက်များ
+- updateOne/updateMany filter + update
+- $set / $inc
+- upsert — ‌မရှိက create

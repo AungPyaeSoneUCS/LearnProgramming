@@ -1,0 +1,62 @@
+---
+title: "MySQL MAX() — MAX()"
+description: "MAX() — column ထဲ ‌အကြီးဆုံး ‌တန်ဖိုး — ‌ဥပမာများ, GROUP BY နှင့်။"
+autoNumbering: true
+---
+
+`MAX()` function သည် ရွေးထားသော column ၏ **အကြီးဆုံး ‌တန်ဖိုး** ကို ပြန်ပေးပါတယ်။
+
+## Syntax
+
+```sql
+SELECT MAX(column_name)
+FROM table_name
+WHERE condition;
+```
+
+## ဥပမာ
+
+```sql
+SELECT MAX(price) AS highest_price
+FROM products;
+```
+
+products ၏ price ‌အကြီးဆုံး ‌တန်ဖိုး။
+
+## ‌ဥပမာ — ‌ဇယား
+
+```
+Products
+id  name     price
+1   Laptop   1000
+2   Phone    600
+3   Mouse    25
+```
+
+`MAX(price)` → `1000`။
+
+## Text — alphabetical
+
+```sql
+SELECT MAX(name) FROM products;  -- 'Phone' (Z-‌နီး)
+```
+
+## Order ‌မူ — ‌နောက်ဆုံး created
+
+```sql
+SELECT MAX(created_at) AS latest
+FROM orders;
+```
+
+## GROUP BY ‌နှင့် တွဲ
+
+```sql
+SELECT category, MAX(price) AS max_price
+FROM products
+GROUP BY category;
+```
+
+## ‌အဓိက အချက်များ
+- MAX() — ‌အကြီးဆုံး ‌တန်ဖိုး
+- Number / date / text ‌အလုပ်လုပ်
+- GROUP BY နှင့် ‌တွဲနိုင်

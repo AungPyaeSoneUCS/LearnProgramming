@@ -1,0 +1,44 @@
+---
+title: "MySQL Drop DB — Drop Database"
+description: "DROP DATABASE — database ဖျက်ခြင်း — သတိထားရန်, IF EXISTS။"
+autoNumbering: true
+---
+
+`DROP DATABASE` statement သည် database နှင့် ၎င်းထဲမှ tables/data အားလုံးကို ‌ဖျက်ပါတယ် — **‌ပြန်‌ထူးလို့ မရ**။
+
+## Syntax
+
+```sql
+DROP DATABASE databasename;
+```
+
+## ဥပမာ
+
+```sql
+DROP DATABASE shop;
+```
+
+## ‌အ‌သေ ‌ပြန်ပယ်ရန် — ‌ကျန်ရှိ
+
+```sql
+DROP DATABASE IF EXISTS shop;
+```
+
+`shop` ‌မရှိရင် error ‌မပေး — safe ‌လုပ်ချင်သူ ‌သုံး။
+
+## သတိထားရန်
+
+- **Danger** — data ‌အားလုံး delete ‌ဖြစ်သည်
+- Backup ‌(‌ဥပမာ `mysqldump`) ‌ရှိမှသာ ‌ဖျက်ပါ
+- Test ‌environment တွင်သာ ‌အသုံးများ
+
+## ‌သေချာ ‌စစ်ဆေး
+
+```sql
+SHOW DATABASES;  -- ‌ဖျက်‌ပြီး ‌စာရင်း ‌ပြန်‌ကြည့်
+```
+
+## ‌အဓိက အချက်များ
+- DROP DATABASE name
+- Data ‌ပါ ‌ဖျက် — ‌များ ‌မဆောင်
+- IF EXISTS — ‌ဘေး‌ကင်းဖြင့်

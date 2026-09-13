@@ -1,0 +1,63 @@
+---
+title: "sql-full-join"
+description: "FULL OUTER JOIN — table ၂ခုရဲ့ row အားလုံး၊ မကိုက်တဲ့နေရာ NULL။"
+autoNumbering: true
+---
+
+FULL OUTER JOIN က table ၂ခုစလုံးရဲ့ row အားလုံးကို ပြပါတယ်။ ကိုက်ညီတဲ့ဟာတွေ ချိတ်၊ မကိုက်တဲ့နေရာက ဆန့်ကျင်ဘက် column တွေကို NULL နဲ့ဖြည့်ပါတယ်။ INNER + LEFT + RIGHT result တွေ "ပေါင်း" လို့ မြင်နိုင်ပါတယ်။
+
+## FULL JOIN ဥပမာ
+Customers (1, 2, 3) + Orders (CustomerID 1, 4) ဆိုရင်:
+
+```sql
+SELECT c.Name, o.OrderID
+FROM Customers AS c
+FULL OUTER JOIN Orders AS o ON c.CustomerID = o.CustomerID;
+```
+Result:
+
+| Name | OrderID |
+| --- | --- |
+| Ko Ko | 101 |
+| Su | NULL |
+| Nandar | NULL |
+| NULL | 202 (customer 4 — customers မှာ မရှိ) |
+
+## ကိုက်ညီတာတွေ၊ ဘယ်တစ်ခြမ်းတည်းရှိတာတွေ အားလုံး
+```sql
+FULL OUTER JOIN Orders AS o ON c.CustomerID = o.CustomerID
+WHERE o.OrderID IS NULL OR c.CustomerID IS NULL;
+```
+ဒီ query က ၂ဖက်လုံးမှာတင် "မချိတ်ရသေး" (unmatched) ဖြစ်နေတဲ့ rows တွေကို ရှာပါတယ် — orphan rows report ဆွဲတဲ့နေရာမှာ အသုံးဝင်ပါတယ်။
+
+## SQL Server vs MySQL
+```sql
+-- SQL Server / PostgreSQL / Oracle
+FULL OUTER JOIN ...
+ 
+-- MySQL မှာ FULL OUTER JOIN ကို syntax အကျင့်အားဖြင့် မထောက်ပံ့ပါ
+-- LEFT JOIN + UNION + RIGHT JOIN နဲ့ replication လုပ်ရပါတယ်
+```
+MySQL မှာ FULL JOIN မရှိလို့ အောက်ပါအတိုင်း ရေးနိုင်ပါတယ်:
+
+```sql
+SELECT c.Name, o.OrderID
+FROM Customers c
+LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
+UNION
+SELECT c.Name, o.OrderID
+FROM Customers c
+RIGHT JOIN Orders o ON c.CustomerID = o.CustomerID;
+```
+UNION က duplicate rows တွေကို ဖယ်ပြီး FULL result နဲ့ ဆင်တူစေပါတယ်။ (UNION lesson မှာ ထပ်လေ့လာပါမယ်။)
+
+## ဘယ်အခါ FULL JOIN သုံးမလဲ
+- Data migration — ၂စနစ်ထဲက record တွေ ကွဲလားစစ်တဲ့အခါ (reconciliation)
+- "bottom-up" report — ၂ခြမ်းလုံးရဲ့ အကုန်လိုတဲ့အခါ
+- ဒါပေမဲ့ တခါများစွာ INNER/LEFT နဲ့ ပိုရှင်းတယ်
+
+## အဓိက အချက်များ
+- FULL OUTER JOIN = ၂ဖက်လုံး အားလုံး
+- မကိုက်တဲ့နေရာ → NULL
+- MySQL မှာ မရှိ → LEFT UNION RIGHT
+- Unmatched rows တွေ ရှာဖို့ WHERE IS NULL pattern

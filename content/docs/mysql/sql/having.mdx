@@ -1,0 +1,47 @@
+---
+title: "MySQL HAVING — HAVING Clause"
+description: "HAVING — aggregate ‌အ‌ခြေအ‌နေအလိုက် ‌အုပ်‌စုများ filter လုပ်ခြင်း — WHERE နှင့် နှိုင်းယှဉ်။"
+autoNumbering: true
+---
+
+`HAVING` clause သည် **aggregate functions ၏ ‌ရလဒ်ကို ‌သုံး၍** ‌အုပ်‌စုများကို filter ‌လုပ်ပါတယ် — WHERE က individual rows ကို filter ‌လုပ်သော်လည်း aggregate ‌နှင့် ‌သုံး၍ ‌မရပါ။
+
+## Syntax
+
+```sql
+SELECT column, COUNT(*)
+FROM table
+GROUP BY column
+HAVING COUNT(*) > 5;
+```
+
+## ဥပမာ
+
+```sql
+SELECT city, COUNT(*) AS total
+FROM customers
+GROUP BY city
+HAVING COUNT(*) > 3;
+```
+
+customer 3 ဦး‌ပေါင်း ‌ရှိသော city များသာ ‌ပြ။
+
+## WHERE vs HAVING
+
+| WHERE | HAVING |
+| --- | --- |
+| Group ‌မဖွဲ့မီ ‌row filter | Group ‌ဖွဲ့ပြီး filter |
+| Aggregate ‌သုံး၍ ‌မရ | Aggregate သုံးနိုင် |
+
+```sql
+SELECT city, SUM(amount)
+FROM orders
+WHERE status = 'paid'        -- rows filter
+GROUP BY city
+HAVING SUM(amount) > 10000;  -- group filter
+```
+
+## ‌အဓိက အချက်များ
+- HAVING — aggregate ‌အ prepared group filter
+- GROUP BY ‌ပြီးမှ လိုက်
+- WHERE — rows တန်း filter

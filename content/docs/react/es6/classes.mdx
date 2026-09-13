@@ -1,0 +1,73 @@
+---
+title: "ES6 Classes — Class များ"
+description: "JavaScript ES6 Class — constructor, extends, super, method တွေကို React component နဲ့ ချိတ်ဆက်ရှင်းပြခြင်း။"
+autoNumbering: true
+---
+
+ES6 မှာ JavaScript ကို class-based ရေးနိုင်အောင် `class` keyword ကို မိတ်ဆက်ပေးခဲ့ပါတယ်။ React မှာ class component ရေးတဲ့အခါ ဒါကို အများကြီး သုံးရပါတယ်။
+
+## Class တစ်ခု ဖန်တီးခြင်း
+
+```js
+class Car {
+  constructor(name) {
+    this.brand = name;
+  }
+
+  present() {
+    return "I have a " + this.brand;
+  }
+}
+
+const myCar = new Car("Ford");
+console.log(myCar.present()); // I have a Ford
+```
+
+`constructor()` က object အသစ် တည်တဲ့အခါ အလိုအလျောက် run ပါတယ်။ `this` က class ရဲ့ instance ကို ညွှန်ပါတယ်။
+
+## Inheritance (extends + super)
+
+```js
+class Car {
+  constructor(name) {
+    this.brand = name;
+  }
+
+  present() {
+    return "I have a " + this.brand;
+  }
+}
+
+class Model extends Car {
+  constructor(name, mod) {
+    super(name);
+    this.model = mod;
+  }
+
+  show() {
+    return this.present() + ", it is a " + this.model;
+  }
+}
+
+const myCar = new Model("Ford", "Mustang");
+console.log(myCar.show()); // I have a Ford, it is a Mustang
+```
+
+`extends` က မိဘ class ကို အမွေဆက်ယူပြီး၊ `super()` က မိဘ class ရဲ့ constructor ကို ခေါ်ပါတယ်။
+
+## React Class Component မှာ
+
+```jsx
+class Car extends React.Component {
+  render() {
+    return <h2>I am a {this.props.brand}!</h2>;
+  }
+}
+```
+
+Class component က `render()` method ကို return ပြန်ရပါတယ်။ React 18+ မှာ function component ကို ပိုအကြံပြုပါတယ်။
+
+## အဓိက အချက်များ
+- class က blueprints ဖြစ်ပြီး `new` နဲ့ instance ဆောက်သည်
+- `extends` — inheritance, `super()` — parent constructor ခေါ်သည်
+- React class component တွင် `render()` မဖြစ်မနေ ရှိရသည်

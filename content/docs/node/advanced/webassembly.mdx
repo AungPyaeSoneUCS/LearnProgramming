@@ -1,0 +1,46 @@
+---
+title: "Node.js WebAssembly — WebAssembly"
+description: "WebAssembly — WASM — run compiled code in Node — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+**WebAssembly (WASM)** — browser/Node ‌တွင် ‌မြန်ဆန် native ‌ပုံ code run — C/C++/Rust ‌မှ compile။
+
+## Load WASM
+
+```js
+const fs = require("node:fs");
+
+const wasm = fs.readFileSync("add.wasm");
+const { instance } = await WebAssembly.instantiate(wasm, {});
+console.log(instance.exports.add(2, 3)); // 5
+```
+
+## Why WASM
+- ‌မြန်မြှောက် — near-native speed
+  - Existing code (C/C++) ပြန်သုံး
+- Secure sandbox
+
+## Compile from C
+
+```c
+int add(int a, int b) { return a + b; }
+```
+
+```bash
+emcc add.c -O3 -o add.wasm
+```
+
+## ‌အသုံးဝင်သော libs
+- `@assemblyscript/loader`
+- Rust → `wasm-pack`
+- WASI for system features
+
+## ‌သတိထားရန်
+- Module — ‌လိုအပ် ‌များကisk ‌ကြီး
+- ‌အသုံး data transfer (memory) — complexity
+
+## ‌အဓိက အချက်များ
+- WebAssembly.instantiate
+- Near-native performance
+- C/Rust ‌မှ compile

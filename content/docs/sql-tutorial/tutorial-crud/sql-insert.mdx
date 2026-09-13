@@ -1,0 +1,48 @@
+---
+title: "sql-insert"
+description: "INSERT INTO နဲ့ table ထဲ row အသစ်များ ထည့်နည်း — column သတ်မှတ်ပြီး / မသတ်မှတ်ဘဲ။"
+autoNumbering: true
+---
+
+SELECT က ကြည့်တာဆိုရင် INSERT INTO က ဒေတာ အသစ်ထည့်တဲ့အလုပ်ပါ။ "Create" C လို့ ပြောနိုင်တယ် (CRUD ရဲ့ C)။
+
+## Column သတ်မှတ်ပြီး ထည့်ခြင်း (Recommended)
+```sql
+INSERT INTO Customers (Name, City, Age, Country)
+VALUES ('Ko Ko', 'Yangon', 28, 'Myanmar');
+```
+Column နာမတွေ စာရင်းလိုက် သတ်မှတ်ပြီး VALUES မှာ အစဉ်လိုက် တန်ဖိုးတွေ ထည့်ပါတယ်။ CustomerID ကို မထည့်ထားလို့ NULL ဖြစ်ခဲ့တယ်ဆိုရင် auto-increment ရှိရင် အလိုအလျောက် ရပါမယ်။
+
+## Column မသတ်မှတ်ဘဲ ထည့်ခြင်း
+```sql
+INSERT INTO Customers
+VALUES (6, 'Nandar', 'Mandalay', 24, 'Myanmar'),
+       (7, 'Su', 'Yangon', 31, 'Myanmar');
+```
+Column ကို မဖော်ပြရင် table ရဲ့ column နာမည်နဲ့ အရေအတွက် အတိအကျ လိုက်ထည့်ရပါတယ်။ ဒီဥပမာမှာ Multiple rows ကို comma ခွဲပြီး တစ်ခါတည်း ၂ ကြောင်း ထည့်ထားပါတယ်။
+
+## Column တချို့ပဲ ထည့်ခြင်း
+```sql
+INSERT INTO Customers (Name, Country)
+VALUES ('Htet', 'Thailand');
+```
+ကျန်တဲ့ column တွေ (City, Age) က NULL ဖြစ်သွားပါတယ်။ NOT NULL constraint ရှိတဲ့ column ဆိုရင် ဒီလို ချန်လို့မရပါဘူး (Module 2)။
+
+## String vs Number
+```sql
+INSERT INTO Products (Name, Price, InStock)
+VALUES ('Wireless Mouse', 25, true);
+```
+Text ကို '...' quotes၊ number က မလို၊ boolean က true/false (သို့မဟုတ် 1/0 — database အလိုက်) ဖြစ်ပါတယ်။
+
+## ထည့်ပြီးရင် စစ်ကြည့်ခြင်း
+```sql
+SELECT * FROM Customers;
+```
+INSERT ပြီးတဲ့အခါ SELECT နဲ့ ပြန်ပြပြီး row အသစ်တွေ ရောက်လားဆိုတာ စစ်ပါမယ်။
+
+## အဓိက အချက်များ
+- INSERT INTO table (cols) VALUES (...) — ဒါက standard နဲ့ အကောင်းဆုံး
+- Row အများကြီး = comma နဲ့ ချိတ်လို့ရတယ်
+- Column တချို့ မထည့်ရင် NULL (သို့ default) ရပါတယ်
+- Text → quotes၊ Number → မလို

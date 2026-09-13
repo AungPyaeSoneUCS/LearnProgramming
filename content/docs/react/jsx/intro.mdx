@@ -1,0 +1,53 @@
+---
+title: "React JSX — JSX မိတ်ဆက်"
+description: "JSX ဆိုတာ ဘာလဲ၊ JavaScript ထဲ HTML ရေးနည်း — JSX vs JS ကွာခြားချက်နဲ့ React ‌မှာ ဘာကြောင့် သုံးလဲ။"
+autoNumbering: true
+---
+
+JSX ဆိုတာ **JavaScript XML** ဖြစ်ပြီး JavaScript ထဲမှာ HTML ‌လိုမျိုး ရေးနိုင်တဲ့ syntax extension ပါ။ React ‌မှာ UI syntax ‌ရေးဖို့ JSX ကို အသုံးပြုပါတယ်။ JSX က JavaScript ‌ထဲကို HTML tags တွေ ရောဖတ်လို့ ရအောင် ပြုလုပ်ပေးပါတယ်။
+
+## JSX ဥပမာ
+
+```jsx
+const myElement = <h1>I Love React!</h1>;
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(myElement);
+```
+
+ဒီ code က `myElement` ဆိုတဲ့ JSX variable တစ်ခုကို ဖန်တီးပြီး root မှာ render လုပ်တာပါ။
+
+## JSX vs JavaScript
+
+| JavaScript | JSX |
+| --- | --- |
+| `document.createElement("h1")` | `<h1>…</h1>` |
+| ‌တိုတောင် ‌လို့ ‌ရေးရခက် | HTML ‌နဲ့ ‌တူညီ ဖတ်လွယ် |
+| string concatenation | direct syntax |
+
+## JSX ကို Expression ‌အနေနဲ့
+
+JSX ‌မှာ HTML ‌ရဲ့ စည်းကမ်း အတော်များများ ‌လိုတယ် — element ‌တစ်ခု ‌ထဲမှာ tag ‌အများကြီး ‌ရှိရင် () ‌နဲ့ wrap ‌လုပ်ပြီး return ‌လုပ်ရတယ်။
+
+```jsx
+const myElement = (
+  <div>
+    <h1>I am a Header.</h1>
+    <p>I am a paragraph.</p>
+  </div>
+);
+```
+
+## JSX ‌ရဲ့ စည်းကမ်းများ
+- Tags ‌အားလုံး **close** ‌ရမယ် — self-closing `<br />` ‌လိုမျိုး
+- ‌တစ်ခုထက်ပို element ‌ရှိရင် parent ‌နဲ့ wrap ‌ရမယ်
+- `class` ‌အစား `className` ‌သုံးရမယ်
+
+```jsx
+<h1 className="title">Hello JSX!</h1>
+```
+
+## အဓိက အချက်များ
+- JSX = JavaScript ‌ထဲ HTML syntax ‌ရေးနိုင်တဲ့ extension
+- Browser ‌မှာ ‌အလုပ်လုပ်ဖို့ Babel/compiler ‌လိုသည်
+- element ‌တစ်ခုတည်း ‌ပြန်မလား, tags close ‌လုပ်ထား

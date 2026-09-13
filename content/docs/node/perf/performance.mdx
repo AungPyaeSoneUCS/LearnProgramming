@@ -1,0 +1,62 @@
+---
+title: "Node.js Performance — Performance"
+description: "Performance — blocking avoid, benchmarks, optimizations — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Node apps မြန်စေရန် — အခြေခံ techniques။
+
+## Avoid blocking the event loop
+
+```js
+// ❌ sync on server
+const data = await fs.readFileSync("big.txt");
+
+// ✓ async
+const data = await fs.promises.readFile("big.txt");
+```
+
+## CPU-heavy → delegate
+
+```js
+// ‌ကြီးသော computation — worker thread ‌သို့
+const { Worker } = require("node:worker_threads");
+```
+
+## Buffer / stream ‌ကြီး files
+
+```js
+fs.createReadStream("big.mp4").pipe(res); // ‌အပိုင်း memory
+```
+
+## Caching
+
+```js
+const cache = new Map();
+
+function getExpensive(id) {
+  if (cache.has(id)) return cache.get(id);
+  const value = compute(id);
+  cache.set(id, value);
+  return value;
+}
+```
+
+## ‌အချက်အလက် — benchmark
+
+```js
+console.time("query");
+await runQuery();
+console.timeEnd("query");
+```
+
+## Common wins
+- Indexes in DB
+- Compression (gzip)
+- Connection pooling
+- Increase NODE_OPTIONS heap if needed
+
+## ‌အဓိက အချက်များ
+- Non-blocking I/O
+- Stream large data
+- Cache + indexes

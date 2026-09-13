@@ -1,0 +1,61 @@
+---
+title: "Node.js EventEmitter — EventEmitter"
+description: "EventEmitter — ‌ဖြစ်ရပ် pattern — on/emit/once — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:events` EventEmitter — ‌အခြေခံ event-driven pattern — Node ၏ ‌စိတ်‌ချင်း။
+
+## Basic
+
+```js
+const { EventEmitter } = require("node:events");
+
+const bus = new EventEmitter();
+
+bus.on("order", (item) => console.log("ordered", item));
+bus.emit("order", "pizza");
+```
+
+## on / once
+
+```js
+bus.once("boot", () => console.log("first boot only"));
+```
+
+`once` — ‌တစ္ ‌ခါသာ ‌ဖြစ်။
+
+## ‌လက်‌ချက် events
+
+```js
+const emitter = new EventEmitter();
+emitter.on("error", (err) => console.error(err));
+
+emitter.emit("error", new Error("boom"));
+```
+
+`error` event — ‌အ‌မှား handle ‌မရလျှင် throw ။
+
+## Class extends
+
+```js
+class Store extends EventEmitter {
+  add(item) {
+    this.items.push(item);
+    this.emit("added", item);
+  }
+}
+```
+
+## Listener info
+
+```js
+emitter.on("x", handler);
+console.log(emitter.listenerCount("x"));
+emitter.removeListener("x", handler);
+```
+
+## ‌အဓိက အချက်များ
+- on/emit
+- once — ‌တစ္ ‌ခါ
+- error events

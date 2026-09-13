@@ -1,0 +1,68 @@
+---
+title: "React Transitions — Transition"
+description: "useTransition ဖြင့် heavy update ‌ကို background ‌ပြေး‌စေ‌ခြင်း — loading ‌ပမာဏ ‌ချောမွေ့ ‌စေခြင်း (React 19)။"
+autoNumbering: true
+---
+
+React 19 ‌မှာ `useTransition` ‌နှင့် `startTransition` ‌ကို ‌သုံး၍ state update ‌ကြီးတွေကို **background** ‌တွင် ‌ဆင်း‌ပေး‌နိုင်ပြီး UI ‌က ‌ချောချောမွေ့မွေ့ ‌ဖြစ်‌နေ‌မှာပါ။
+
+## ‌ဘာ‌ကြောင့် ‌လိုလဲ
+
+Input ‌ရိုက်ခိုက်‌တိုင်း ‌ကြီးမားတဲ့ list ‌ကို filter ‌လုပ်တဲ့ ‌ကိစ္စမျိုးမှာ ‌နှေးခဲစေပါတယ် — Transition ‌နဲ့ urgent ‌update (input) နဲ့ ‌မလိုအပ်တဲ့ update (list) ကို ‌ခွဲ‌ပေးပါတယ်။
+
+## useTransition ‌အသုံးပြုပုံ
+
+```jsx
+import { useState, useTransition } from "react";
+
+function SearchList({ items }) {
+  const [query, setQuery] = useState("");
+  const [isPending, startTransition] = useTransition();
+
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+
+    // ‌ကြီးမားတဲ့ filter ကို background ‌မှာ လုပ်
+    startTransition(() => {
+      setFiltered(items.filter((it) => it.includes(e.target.value)));
+    });
+  };
+
+  return (
+    <div>
+      <input value={query} onChange={handleChange} />
+      {isPending && <p>Updating list…</p>}
+      <ul>
+        {filtered.map((f) => (
+          <li key={f}>{f}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+- `isPending` — transition ပြေး‌နေမှု အခြေအနေ
+- `startTransition(() => setState(...))` — urgent ‌မဟုတ်တဲ့ update
+
+## useDeferredValue — ‌အခြားနည်း
+
+```jsx
+import { useDeferredValue } from "react";
+
+const deferredQuery = useDeferredValue(query);
+const filtered = useMemo(
+  () => items.filter((it) => it.includes(deferredQuery)),
+  [deferredQuery, items]
+);
+```
+
+## မှတ်သားရမယ့် အချက်
+- Input/typing တို့ ‌လို urgent update ကို ‌မြန်‌လုပ်မယ်
+- Heavy filter/fetch ကို background ‌ပြေးစေ
+- Transition ‌ကို every keystroke ‌တိုင်း ‌မသုံး — ‌အမှန်တကယ် heavy ဆို သုံး
+
+## အဓိက အချက်များ
+- `useTransition` — isPending + startTransition
+- `startTransition(() => ...)` — background update
+- `useDeferredValue` — value နှောင့်နှေးစေပြီး filter

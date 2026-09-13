@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ChevronRight, Home } from "lucide-react";
 
 import { mdxComponents } from "@/components/mdx";
+import { CopyCode } from "@/components/site/CopyCode";
 import { LessonDrawer } from "@/components/courses/LessonDrawer";
 import { ReadingProgress } from "@/components/site/ReadingProgress";
 import { TableOfContents } from "@/components/site/TableOfContents";
@@ -98,6 +99,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
 
           <article className="lesson-content">
             <lesson.MDXContent components={mdxComponents} />
+            <CopyCode />
           </article>
 
           <nav className="mt-12 grid grid-cols-2 gap-4 border-t border-border pt-6" aria-label="Pagination">

@@ -1,0 +1,77 @@
+---
+title: "MySQL Quiz — MySQL Quiz"
+description: "MySQL Quiz — သင်ယူမှု စမ်းသပ်မှု — မေးခွန်း 10 ခု ဖြေဆို၍ အဆင့် စစ်။"
+autoNumbering: true
+---
+
+ဤ Quiz တွင် MySQL မေးခွန်း (၁၀) ခု ပါဝင်သည် — တစ်ခုလျှင် အဖြေတစ်ခုသာ။ အဆုံးတွင် score ပြမည်။
+
+<Quiz
+  questions={[
+    {
+      id: "q1",
+      question: "MySQL မှာ SELECT က ဘာကို လုပ်ဆောင်လဲ?",
+      options: ["Data ထည့်", "Data ရှာ/ပြ", "Data ဖျက်", "Table ဖျက်"],
+      correctAnswer: "Data ရှာ/ပြ",
+      explanation: "SELECT — data ကို ရွေး ပြန်ပြ"
+    },
+    {
+      id: "q2",
+      question: "WHERE clause က ဘာကို filter လုပ်လဲ?",
+      options: ["Rows", "Groups", "Order", "Tables"],
+      correctAnswer: "Rows",
+      explanation: "WHERE — individual rows"
+    },
+    {
+      id: "q3",
+      question: "GROUP BY ပြီးမှ aggregate ကို filter — ဘယ် clause?",
+      options: ["WHERE", "HAVING", "LIMIT", "ORDER BY"],
+      correctAnswer: "HAVING",
+      explanation: "HAVING — groups ကို စစ်"
+    },
+    {
+      id: "q4",
+      question: "INNER JOIN က ဘယ် rows ကို ပြန်ပေးလဲ?",
+      options: ["ကိုက်ညီသူသာ", "ဘယ်ဘက် အားလုံး", "ညာဘက် အားလုံး", "အားလုံး"],
+      correctAnswer: "ကိုက်ညီသူသာ",
+      explanation: "INNER JOIN — matching rows သာ"
+    },
+    {
+      id: "q5",
+      question: "NULL စစ်ရန် ဘယ်ခုသုံးလဲ?",
+      options: ["IS NULL", "= NULL", "NULL()", "!NULL"],
+      correctAnswer: "IS NULL"
+    },
+    {
+      id: "q6",
+      question: "PRIMARY KEY ၏ လက္ခဏာ?",
+      options: ["Duplicate ရ", "Unique + NOT NULL", "Default value", "Text only"],
+      correctAnswer: "Unique + NOT NULL"
+    },
+    {
+      id: "q7",
+      question: "ဘယ်ခုက duplicate ဖယ်၍ ပေါင်းလဲ?",
+      options: ["UNION", "UNION ALL", "JOIN", "GROUP"],
+      correctAnswer: "UNION",
+      explanation: "UNION — dedupe လုပ်"
+    },
+    {
+      id: "q8",
+      question: "SQL Injection ကာကွယ်ရန် အကောင်းဆုံးနည်း?",
+      options: ["Prepared statements", "CONCAT", "JOIN", "ORDER BY"],
+      correctAnswer: "Prepared statements"
+    },
+    {
+      id: "q9",
+      question: "AUTO_INCREMENT က ဘာ ပေးလဲ?",
+      options: ["Random string", "အလိုအလျောက် နံပါတ်", "Date", "Boolean"],
+      correctAnswer: "အလိုအလျောက် နံပါတ်"
+    },
+    {
+      id: "q10",
+      question: "Money သိမ်းရန် အကောင်းဆုံး type?",
+      options: ["DECIMAL(10,2)", "FLOAT", "INT", "TEXT"],
+      correctAnswer: "DECIMAL(10,2)"
+    }
+  ]}
+/>

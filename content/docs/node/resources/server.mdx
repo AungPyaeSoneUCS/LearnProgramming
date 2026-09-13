@@ -1,0 +1,42 @@
+---
+title: "Node.js Server — Server"
+description: "Server — Node app run ရန် နည်းလမ်း — ဥပမာ။"
+autoNumbering: true
+---
+
+Node.js ‌အတွက် **server** — code ‌ရေးရန် environment ‌ရရှိ ပုံ — ‌ဥပမာ။
+
+## Local ‌စတင်
+
+```bash
+node app.js
+```
+
+## Express quick
+
+```bash
+npm init -y
+npm install express
+
+node -e "const e=require('express');const a=e();a.get('/',(q,r)=>r.send('OK'));a.listen(3000)"
+```
+
+## Serverless — ‌အပေါ် platforms
+- Vercel — Node functions
+- Netlify functions
+- AWS Lambda — `exports.handler`
+- Railway / Render — full app
+
+## Localhost
+
+```js
+const http = require("node:http");
+http
+  .createServer((req, res) => res.end("running"))
+  .listen(3000, () => console.log("http://localhost:3000"));
+```
+
+## ‌အဓိက အချက်များ
+- node app.js local
+- Serverless platforms
+  - localhost server ဥပမာ

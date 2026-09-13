@@ -1,0 +1,57 @@
+---
+title: "MySQL COUNT() — COUNT()"
+description: "COUNT() — rows အရေအတွက် — COUNT(*), COUNT(column), COUNT(DISTINCT) ။"
+autoNumbering: true
+---
+
+`COUNT()` function သည် **rows အရေအတွက်** ကို ‌ပြန်ပေးပါတယ်။
+
+## Syntax
+
+```sql
+SELECT COUNT(column_name)
+FROM table_name
+WHERE condition;
+```
+
+## COUNT(*)
+
+```sql
+SELECT COUNT(*) AS total FROM customers;
+```
+
+row အားလုံး အရေအတွက် — NULL ‌ပါ ရေတွက်သည်။
+
+## COUNT(column)
+
+```sql
+SELECT COUNT(email) FROM customers;
+```
+
+`email` ‌တန်ဖိုး ‌ရှိသော rows များကိုသာ — NULL fields မပါ။
+
+## COUNT(column) vs COUNT(*)
+
+| ‌အရာ | NULL ‌ရေတွက်လား |
+| --- | --- |
+| `COUNT(*)` | ‌ရေတွက် |
+| `COUNT(column)` | ‌မရေတွက် (NULL ‌ဖယ်) |
+
+## COUNT(DISTINCT)
+
+```sql
+SELECT COUNT(DISTINCT city) AS cities FROM customers;
+```
+
+unique city အရေအတွက်။
+
+## WHERE ‌နှင့်
+
+```sql
+SELECT COUNT(*) FROM orders WHERE status = 'paid';
+```
+
+## ‌အဓိက အချက်များ
+- COUNT(*) — ‌အားလုံး rows
+- COUNT(col) — ‌မဟုတ် NULL
+- COUNT(DISTINCT col) — unique

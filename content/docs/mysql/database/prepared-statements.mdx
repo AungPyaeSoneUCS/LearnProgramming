@@ -1,0 +1,49 @@
+---
+title: "MySQL Prepared Statements — Prepared Statements"
+description: "Prepared Statements — parameterized queries — ‌ဘေးကင်းခြင်း + performance — PREPARE/EXECUTE။"
+autoNumbering: true
+---
+
+**Prepared statements** သည် SQL ‌ပုံ‌စံကို ‌တစ်ခါ ‌ပြင်ဆင်၍ parameter ‌များကို ‌အခြား ‌တန်ဖိုးများဖြင့် ‌ထပ်ခါ‌ခေါ်‌သုံးခြင်း — **SQL injection ‌ကို ‌ကာကွယ်** ပြီး performance ‌ကောင်း။
+
+## ‌ပုံ‌စံ — PREPARE / EXECUTE
+
+```sql
+PREPARE stmt FROM 'SELECT * FROM users WHERE name = ?';
+SET @name = 'Aung';
+EXECUTE stmt USING @name;
+DEALLOCATE PREPARE stmt;
+```
+
+`?` — placeholder — ‌တန်ဖိုး ‌နောက် ‌ပေး။
+
+## ဥပမာ — user input ‌အသုံးပြု
+
+```sql
+SET @name = 'a'' OR ''1''=''1';   -- ‌အန္တရာယ်ရှိသော input
+PREPARE stmt FROM 'SELECT * FROM users WHERE name = ?';
+EXECUTE stmt USING @name;
+DEALLOCATE PREPARE stmt;
+```
+
+`@name` ‌ကို text ‌အဖြစ်သာ ‌ယူ — injection ‌မအ‌ခြေရင်း — safe။
+
+## ‌ဘာ‌ကြောင့် ‌လုံး‌ခြုံလဲ
+- Query ‌မက်ပုံစံ ‌နှင့် ‌တန်ဖိုး ‌ခွဲထား
+- ‌တန်ဖိုး ‌သည် data — code ‌အဖြစ် ‌မကင်း
+- Client/driver ‌က automatically ‌သင့် escaping
+
+## ‌အသုံးများဆုံး — App code (portable)
+
+```js
+// Node.js mysql2
+const [rows] = await db.execute(
+  'SELECT * FROM users WHERE name = ?',
+  [userInput]
+);
+```
+
+## ‌အဓိက အချက်များ
+- PREPARE ... EXECUTE ... USING
+- `?` placeholder
+- ‌တန်ဖိုး data ‌အဖြစ်သာ — injection-proof

@@ -1,0 +1,57 @@
+---
+title: "MySQL MIN() — MIN()"
+description: "MIN() — column ထဲ ‌အငယ်ဆုံး ‌တန်ဖိုး — ‌ဥပမာများ, GROUP BY နှင့်။"
+autoNumbering: true
+---
+
+`MIN()` function သည် ရွေးထားသော column ၏ **အငယ်ဆုံး ‌တန်ဖိုး** ‌ကို ‌ပြန်ပေးပါတယ်။
+
+## Syntax
+
+```sql
+SELECT MIN(column_name)
+FROM table_name
+WHERE condition;
+```
+
+## ဥပမာ
+
+```sql
+SELECT MIN(price) AS lowest_price
+FROM products;
+```
+
+products ၏ price ‌အငယ်ဆုံး ‌တန်ဖိုး။
+
+## ‌ရလဒ် ‌ဥပမာ
+
+```
+Products
+id  name     price
+1   Laptop   1000
+2   Phone    600
+3   Mouse    25
+```
+
+`MIN(price)` → `25`။
+
+## Text ‌အလယ် — alphabetical
+
+```sql
+SELECT MIN(name) FROM products;  -- 'Laptop' (A-Z ‌အစ)
+```
+
+## GROUP BY ‌နှင့်
+
+```sql
+SELECT category, MIN(price) AS min_price
+FROM products
+GROUP BY category;
+```
+
+‌အုပ် category အ‌လိုက် ‌အငယ်ဆုံး price ‌ပြ။
+
+## ‌အဓိက အချက်များ
+- MIN() — ‌အငယ်ဆုံး ‌တန်ဖိုး
+- Number / text နှစ်‌မျိုး ‌အလုပ်လုပ်
+- Group ‌လိုလျှင် GROUP BY ‌နှင့် တွဲ

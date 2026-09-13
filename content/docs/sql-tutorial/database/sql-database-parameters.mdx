@@ -1,0 +1,64 @@
+---
+title: "sql-database-parameters"
+description: "Parameters — value  တွေကို safe ဖြစ်စွာ ဖြတ်သန်းခြင်း (stored proc / prepared statements)။"
+autoNumbering: true
+---
+
+Parameters က user input တွေကို SQL code မဟုတ်ဘဲ data အဖြစ်ပဲ database ဆီ ပို့ပေးပါတယ်။ SQL injection ရှောင်နိုင်ဖို့ အရေးကြီးပါတယ်။
+
+## Parameter — ဘာလဲ?
+```sql
+-- SQL Server: @name
+WHERE Name = @name
+ 
+-- MySQL: ?
+WHERE Name = ?
+ 
+-- PostgreSQL: $1
+WHERE Name = $1
+```
+Syntax က DB အလိုက်ကွဲပေမဲ့ concept တူပါတယ် — "placeholder တစ်ခု" ကို app ကနေ value ပေးလိုက်ပါပြီး database က value အဖြစ်ပဲ ဆက်ဆံပါတယ်။
+
+## Stored Procedure + Parameter
+```sql
+CREATE PROCEDURE GetCustomers
+    @City NVARCHAR(50)
+AS
+BEGIN
+    SELECT * FROM Customers WHERE City = @City;
+END;
+```
+
+## Execute — Parameters ပေးခြင်း
+```sql
+EXEC GetCustomers @City = 'Yangon';
+EXEC GetCustomers @City = 'Mandalay';
+```
+Value ပြောင်းပေး၍ ထပ်ခေါ်လို့ရပြီး @City  က data ဖြစ်လို့ SQL injection ရနိုင်ခြေ မရှိပါဘူး — query string ထဲ  concatenate  လုပ်တာနဲ့ မတူပါ။
+
+## App ကနေ Parameter Passing
+```js
+// Node.js
+db.query("SELECT * FROM Users WHERE Name = ?", [username]);
+ 
+// Python
+cursor.execute("SELECT * FROM Users WHERE Name = %s", (username,))
+ 
+// .NET
+cmd.Parameters.AddWithValue("@name", username);
+```
+Driver/language အလိုက် "parameter binding" သုံးပြီး user input ကို value အဖြစ်ပို့ပါတယ်။ ဒါက web app တွေမှာ standard safe practice ပါ။
+
+## Parameterized Query — ဘယ်လိုအလုပ်လုပ်လဲ?
+```
+Query plan ကို placeholder နဲ့ ပထမပြင်ဆင်
+ → ပြီးမှာ user value ကို data slot အဖြစ် ထည့်
+ → input  က "SQL command" အဖြစ် ဘယ်ခါမှ မမြင်ရ
+```
+String concatenation နဲ့ ဆန့်ကျင်ဘက် — ဒါက injection-safe ဖြစ်စေတဲ့ အဓိက ခြားနားချက်ပါ။
+
+## အဓိက အချက်များ
+- @name / ? / $1 — placeholders
+- Value  တွေကို parameter အဖြစ်ပို့ပါ
+- SQL injection ရှောင် — concatenation မလုပ်နဲ့
+- Stored proc + parameter = safe

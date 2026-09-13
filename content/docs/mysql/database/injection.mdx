@@ -1,0 +1,61 @@
+---
+title: "MySQL SQL Injection — SQL Injection"
+description: "SQL Injection — ‌အ‌န္တရာယ်, ‌ပုံစံ attack, ‌ဥပမာ — ‌ကာကွယ်နည်း (prepared statements, escaping)။"
+autoNumbering: true
+---
+
+**SQL Injection** သည် attacker ‌က user input ‌မှ **SQL code ထိုးသွင်း** ကာ database ‌ကို ‌ပျက်စီး ‌ခိုးယူ ‌နိုင်သော ‌အ‌န္တရာယ် ‌ဖြစ်ပါတယ်။
+
+## ‌ဥပမာ Login — vulnerable
+
+```js
+const query = "SELECT * FROM users WHERE name = '" + userInput + "'";
+```
+
+## Attack ‌ပုံစံ ‌ဥပမာ
+
+User က input `‌ရိုက်`:
+
+```
+a' OR '1'='1
+```
+
+Query ‌ဖြစ်လာတာ:
+
+```sql
+SELECT * FROM users WHERE name = 'a' OR '1'='1'
+```
+
+`'1'='1'` ‌အမြဲ ‌မှန် → attackers ‌data ‌အားလုံး ‌မြင် — row ‌အားလုံး ‌ပြန်သည်။
+
+## ‌ပိုပြင်းထန်သော attack များ
+
+```sql
+-- Drop table
+' ; DROP TABLE users; --
+
+-- Bypass password check
+admin' --
+```
+
+## ‌ကာကွယ်နည်း — ‌အရေးကြီး
+
+**1. Prepared statements (parameterized queries)** — ‌ပထမ ဦး‌စား:
+
+```js
+const sql = "SELECT * FROM users WHERE name = ?";
+db.query(sql, [userInput]);
+```
+
+User input ‌သည် data ‌သာ — code ‌အဖြစ် ‌မယူဆ။
+
+**2. Validation** — input ‌ကို ‌စစ် (types, length, pattern)။
+
+**3. Escaping** — manually ‌ဖြစ်ရင် `mysql_real_escape_string` စသည် (‌နောက်ဆုံးနည်း)။
+
+**4. Principle of least privilege** — DB user က ‌လိုအပ်‌သော permission သာ။
+
+## ‌အဓိက အချက်များ
+- Never ‌Join user input ‌တိုက်‌ရိုက်
+- Prepared statements ‌သုံး
+- Input ‌အမြဲ ‌စစ် / validate

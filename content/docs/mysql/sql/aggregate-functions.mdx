@@ -1,0 +1,70 @@
+---
+title: "MySQL Aggregate Functions — Aggregate Functions"
+description: "Aggregate Functions — MIN, MAX, COUNT, SUM, AVG — ‌အုပ်စုဖွဲ့ထားသော ‌တန်ဖိုးများအလိုက် calculation။"
+autoNumbering: true
+---
+
+Aggregate functions သည် column တစ်ခုထဲ ‌ရှိ ‌တန်ဖိုးများအပေါ် calculation လုပ်ပြီး **single value** ‌ပြန်ပေးပါတယ်။
+
+## အသုံးများ Aggregate Functions
+
+| Function | ‌လုပ်ဆောင်မှု |
+| --- | --- |
+| `MIN()` | ‌အငယ်ဆုံး |
+| `MAX()` | ‌အကြီးဆုံး |
+| `COUNT()` | rows အရေအတွက် |
+| `SUM()` | ‌စုစုပေါင်း ‌ပေါင်းလဒ် |
+| `AVG()` | ‌ပျမ်းမျှ |
+
+## ‌ဥပမာ Table
+
+```sql
+CREATE TABLE products (
+  id INT PRIMARY KEY,
+  name VARCHAR(50),
+  price DECIMAL(10,2)
+);
+```
+
+```
+id name      price
+1  Laptop    1000.00
+2  Phone     600.00
+3  Mouse      25.00
+```
+
+## COUNT
+
+```sql
+SELECT COUNT(*) FROM products;   -- 3
+SELECT COUNT(price) FROM products; -- rows ဆန့် 3
+```
+
+## SUM ‌နှင့် AVG
+
+```sql
+SELECT SUM(price) AS total FROM products;   -- 1625.00
+SELECT AVG(price) AS avg_price FROM products; -- 541.67
+```
+
+## MIN ‌နှင့် MAX
+
+```sql
+SELECT MIN(price) AS cheapest, MAX(price) AS most_expensive
+FROM products;
+```
+
+## ‌အုပ်စုအလိုက် — GROUP BY ‌နှင့်
+
+```sql
+SELECT category, COUNT(*) 
+FROM products
+GROUP BY category;
+```
+
+Aggregate ‌ကို ‌အုပ် group တစ်ခုချင်းစီအတွက် ‌တွက်သည်။
+
+## အဓိက အချက်များ
+- Aggregate → single value
+- MIN/MAX/COUNT/SUM/AVG
+- GROUP BY ‌နှင့် တွဲ ‌သုံးနိုင်

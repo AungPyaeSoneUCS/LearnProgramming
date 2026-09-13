@@ -1,0 +1,56 @@
+---
+title: "sql-all"
+description: "ALL — subquery ထဲက တန်ဖိုးတွေအားလုံးထက် (သို့မဟုတ်တူ) ဖြစ်မှသာ true။"
+autoNumbering: true
+---
+
+ALL က subquery ထဲက တန်ဖိုးတွေ အားလုံးထက်များ/ငယ် မှသာ true ဖြစ်စေပါတယ်။ ANY ရဲ့ ဆန့်ကျင်ဘက် ဖြစ်ပါတယ်။
+
+## ALL အခြေခံ
+```sql
+SELECT Name FROM Products
+WHERE Price > ALL (SELECT Price FROM Products WHERE Category = 'Accessory');
+```
+Subquery ထဲက Accessories တွေရဲ့ price အားလုံးထက် များရမယ်။ Accessories က 10, 25 — 25 ထက်ကြီးရမယ်။
+
+## ALL = NOT EXISTS AND NOT IN
+```sql
+WHERE Price > ALL (SELECT Price FROM ...)
+-- အတိုချုပ်
+WHERE NOT EXISTS (SELECT 1 FROM ... WHERE Price >= outer.Price)
+  AND Price NOT IN (SELECT Price FROM ... WHERE Price >= outer.Price)
+```
+ALL က "list ထဲက ဘယ်တစ်ခုနဲ့မဆို" ချိတ်ပြီး AND logic နဲ့ စစ်ပါတယ်။
+
+## ALL + Subquery
+```sql
+SELECT Name FROM Customers
+WHERE CustomerID > ALL (
+    SELECT CustomerID FROM Customers WHERE City = 'Yangon'
+);
+```
+Yangon မှာရှိတဲ့ CustomerID တွေ အားလုံးထက်ကြီးတဲ့ CustomerID ရှိတဲ့ ဖောက်သည်တွေကို ပြပါတယ်။
+
+## ALL vs ANY — နှိုင်းယှဉ်ချက်
+| Expression | အဓိပ္ပာယ် |
+| --- | --- |
+| `> ALL (...)` | list ထဲက အကြီးဆုံးထက် ကြီးရမယ် |
+| `> ANY (...)` | list ထဲက အသေးဆုံးထက် ကြီးရင် ရပြီ |
+| `< ALL (...)` | list ထဲက အသေးဆုံးထက် ငယ်ရမယ် |
+| `< ANY (...)` | list ထဲက အကြီးဆုံးထက် ငယ်ရင် ရပြီ |
+
+## သတိထားရန်
+```sql
+WHERE Name <> ALL (SELECT Name FROM ...)  -- Name list ထဲက ဘယ်တစ်ခုနဲ့မဆို မတူ
+WHERE Name IN (SELECT Name FROM ...)       -- Name list ထဲက တစ်ခုခုတူ
+WHERE Name NOT IN (SELECT Name FROM ...)   -- Name list ထဲက ဘယ်တစ်ခုနဲ့မဆို မတူ
+```
+- `<> ALL` = NOT IN
+- `= ANY` = IN
+- Query planning အတွက် ဒီ alias ပုံစံကို မှတ်ထားပါ။
+
+## အဓိက အချက်များ
+- ALL (...) = list ထဲက အကြီးဆုံးထက် ကြီးရမယ်
+- = ANY = IN နဲ့အတူတူ
+- `<> ALL` = NOT IN နဲ့အတူတူ
+- ALL = AND flavor (အားလုံးကျေနပ်ရမယ်)

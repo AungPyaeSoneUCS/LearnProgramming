@@ -1,0 +1,85 @@
+﻿---
+title: "React Lists — List ‌ရေးနည်း"
+description: "React ‌မှာ list ‌ရောင်းချနည်း — map() ‌သုံးပြီး ‌ရောင်းခြင်း, key ‌ရဲ့ ‌အရေးပါမှု, index key ‌ပြဿနာ။"
+autoNumbering: true
+---
+
+React ‌မှာ list ‌ကို `map()` ‌နဲ့ render လုပ်ပြီး, item ‌တစ်ခုစီကို element အဖြစ် ‌ပြောင်း ‌ရေးလေ့ရှိပါတယ်။
+
+## Array ‌ကို List ‌ရောင်း
+
+```jsx
+function CarList() {
+  const cars = ["Ford", "BMW", "Audi"];
+
+  return (
+    <>
+      <h1>Who lives in my garage?</h1>
+      <ul>
+        {cars.map((car) => (
+          <li>{car}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
+```
+
+## Key Prop ‌ထည့်
+
+```jsx
+{cars.map((car) => (
+  <li key={car}>{car}</li>
+))}
+```
+
+**`key` က ‌အရေးကြီးပါတယ်** — React ‌က list item ‌တွေကို ‌ခြေရာခံ ‌ပြီး ‌ပြောင်းလဲ ‌နေတဲ့ ‌အပိုင်းကိုသာ update ‌လုပ်ဖို့ သုံးပါတယ်။
+
+## Key က unique ‌မဖြစ်ရ
+
+List item ‌နှစ်ခု ‌တည်ရှိ ‌နေလို့ key ‌တူ ‌နေရင် error ‌ဖြစ်နိုင်ပါတယ်။ Unique id ‌သုံးပါ။
+
+```jsx
+const cars = [
+  { id: 1, brand: "Ford" },
+  { id: 2, brand: "BMW" },
+];
+
+{cars.map((car) => (
+  <li key={car.id}>{car.brand}</li>
+))}
+```
+
+## Index ‌ကို key ‌အနေနဲ့ (‌သတိထားရန်)
+
+```jsx
+{cars.map((car, index) => (
+  <li key={index}>{car}</li>
+))}
+```
+
+List က ‌မပြောင်းတဲ့ static ဖြစ်ရင် index ok — ‌ဒါပေမဲ့ item ‌ဖျက်/‌ထည့် ‌လုပ်နေရင် id ‌သုံးတာ ပိုကောင်းပါတယ်။
+
+## Component ‌ထဲ ‌ဖြတ်
+
+```jsx
+function CarItem({ brand }) {
+  return <li>I am a {brand}</li>;
+}
+
+function CarList() {
+  const cars = ["Ford", "BMW", "Audi"];
+  return (
+    <ul>
+      {cars.map((car) => (
+        <CarItem key={car} brand={car} />
+      ))}
+    </ul>
+  );
+}
+```
+
+## အဓိက အချက်များ
+- List render လုပ်ဖို့ `map()` ‌သုံးသည်
+- `key` ‌မဖြစ်မနေ — unique id ‌သုံးပါ
+- Item ‌ကို component ‌အနေနဲ့ ‌ခွဲ ‌ရေးပြီး props ‌နဲ့ ‌ဖြတ်‌ပေးနိုင်သည်

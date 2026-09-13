@@ -1,0 +1,74 @@
+---
+title: "React Props Children — Children Prop"
+description: "props.children ‌ဖြင့် component ‌ထဲ ‌လှဲ ‌ရေးထားသော content ‌ကို ‌ပြသနည်း — wrapper/layout component ‌တွေ ‌ဆောက်ခြင်း။"
+autoNumbering: true
+---
+
+`children` ဆိုတာ special prop ‌ဖြစ်ပြီး component tag ‌ထဲမှာ ဖမ်း ‌ထည့်ထားတဲ့ content ‌တွေကို ‌ပေးပါတယ်။ Wrapper / layout component ‌တွေ ‌ဆောက်ဖို့ ‌အသုံးဝင်ပါတယ်။
+
+## Children ‌ဆိုတာ?
+
+```jsx
+function Container(props) {
+  return <div>{props.children}</div>;
+}
+
+// အသုံးပြုပုံ
+<Container>
+  <h1>Title</h1>
+  <p>Content inside.</p>
+</Container>
+```
+
+`<Container>` tag ‌ထဲ ဖမ်း ‌ထည့်ထားတဲ့ အရာတွေက `props.children` ‌အဖြစ် ‌ရောက်လာပါတယ်။
+
+## Destructuring ‌နဲ့
+
+```jsx
+function Container({ children }) {
+  return <div className="container">{children}</div>;
+}
+```
+
+## Layout ‌ဥပမာ
+
+```jsx
+function Layout({ header, children, footer }) {
+  return (
+    <div>
+      <header>{header}</header>
+      <main>{children}</main>
+      <footer>{footer}</footer>
+    </div>
+  );
+}
+
+<Layout header={<h1>Site Name</h1>} footer={<p>© 2026</p>}>
+  <p>Welcome to the site.</p>
+</Layout>
+```
+
+Children ကို component ‌များစွာနဲ့ ‌ရောနှော ‌လဲ ‌သုံးလို့ရပါတယ်။
+
+## Children ထဲ ဘာမဆို ရောက်တတ်
+
+```jsx
+function Card({ title, children }) {
+  return (
+    <div className="card">
+      <h2>{title}</h2>
+      <div>{children}</div>
+    </div>
+  );
+}
+
+<Card title="သတင်း">
+  <p>ဒီကတ်ထဲ ဘာ content မဆို ‌ရောက်လို့ရတယ်။</p>
+  <button>Read more</button>
+</Card>
+```
+
+## အဓိက အချက်များ
+- `children` က component ‌ထဲ ‌ရေးထားတဲ့ JSX ‌တွေကို ‌ပြန်ပေးသည်
+- Wrapper / layout component ‌တွေ ‌ဆောက်ဖို့ ‌အသုံးဝင်သည်
+- Component ‌တစ်ခုထဲ HTML element အများစွာ ထည့်နိုင်သည်

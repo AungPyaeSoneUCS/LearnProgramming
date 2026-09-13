@@ -1,0 +1,38 @@
+---
+title: "Node.js ECDH — ECDH class"
+description: "ECDH — elliptic curve DH — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:crypto` **ECDH** — Diffie-Hellman on elliptic curve — ‌ပိုမြန် ‌ပေါ့ — keys ‌တို။
+
+## Generate keys
+
+```js
+const crypto = require("node:crypto");
+
+const alice = crypto.createECDH("prime256v1");
+const alicePub = alice.generateKeys();
+
+const bob = crypto.createECDH("prime256v1");
+const bobPub = bob.generateKeys();
+```
+
+## Shared secret
+
+```js
+const aliceSecret = alice.computeSecret(bobPub);
+const bobSecret = bob.computeSecret(alicePub);
+
+console.log(aliceSecret.equals(bobSecret)); // true
+```
+
+## Curves
+- `prime256v1` (P-256) — ‌အသုံးများ
+- `secp384r1`, `secp521r1` — ‌ပိုကြီး
+- ‌ပိုမြန် + ‌လုံး‌ခြုံ ‌ညီ — ‌ချောချော ‌သုံး DH ‌ထက်
+
+## ‌အဓိက အချက်များ
+- createECDH(curve)
+- generateKeys / computeSecret
+- Smaller keys — ‌မြန်

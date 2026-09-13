@@ -1,0 +1,51 @@
+---
+title: "Node.js Modules — Modules"
+description: "Modules — built-in, custom, third-party — require/exports — ဥပမာများ။"
+autoNumbering: true
+---
+
+**Module** — Node.js ရဲ့ ‌ကုဒ်အပိုင်းအစ ‌အသင့် — built-in ‌များ, ‌ကိုယ်‌ရေး modules, npm packages ‌ဟူ၍ 3 မျိုး။
+
+## Built-in Modules
+
+```js
+const http = require("node:http");
+const fs = require("node:fs");
+const path = require("node:path");
+```
+
+## Custom — ‌ကိုယ်‌ပိုင် module
+
+`greet.js`:
+
+```js
+const greet = (name) => `Hello, ${name}!`;
+module.exports = { greet };
+```
+
+`app.js`:
+
+```js
+const { greet } = require("./greet");
+console.log(greet("Aung")); // Hello, Aung!
+```
+
+## Built-in modules စာရင်း (အရေးကြီး)
+| Module | ‌လုပ် |
+| --- | --- |
+| `http` / `https` | server / client |
+| `fs` | files |
+| `path` | paths |
+| `events` | event emitter |
+| `stream` | streaming data |
+| `os` | system info |
+
+## Module types
+- CommonJS — `require` (default)
+- ES Modules — `import` (package.json `"type": "module"`)
+- Node core — `node:` prefix ‌ဖြင့် ‌ခေါ်
+
+## ‌အဓိက အချက်များ
+- Built-in / custom / npm
+- module.exports → require
+- `node:fs` — core prefix

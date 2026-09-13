@@ -1,0 +1,73 @@
+---
+title: "MySQL Create Table — Create Table"
+description: "CREATE TABLE — ဇယားသစ် ‌ဖန်တီးခြင်း — columns, data types, PRIMARY KEY။"
+autoNumbering: true
+---
+
+`CREATE TABLE` statement ‌ဖြင့် database တွင် ဇယားသစ် ‌ဖန်တီးပါတယ်။
+
+## Syntax
+
+```sql
+CREATE TABLE table_name (
+  column1 datatype constraint,
+  column2 datatype constraint,
+  ...
+);
+```
+
+## ဥပမာ
+
+```sql
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(150) UNIQUE,
+  age INT
+);
+```
+
+## ‌အသုံးများ Data Types
+
+| Type | ‌ဖော်ပြချက် |
+| --- | --- |
+| `INT` | ‌ကိန်းပြည့် |
+| `VARCHAR(n)` | ‌အလျား text |
+| `DECIMAL(p,s)` | ဒသမသင်္ချာ |
+| `DATE` / `DATETIME` | ရက်စွဲ / ‌အချိန် |
+| `BOOLEAN` (TINYINT) | ‌မှန်/‌မှား |
+| `TEXT` | ‌ရှည် text |
+
+## ‌ဇယား ‌ရှိ‌နေ ‌ကာကွယ် — IF NOT EXISTS
+
+```sql
+CREATE TABLE IF NOT EXISTS users (
+  id INT PRIMARY KEY,
+  name VARCHAR(100)
+);
+```
+
+## ‌အ‌သေချာဆုံး Constraint ‌များ
+- `PRIMARY KEY` — unique row id
+- `NOT NULL` — ‌အလွတ် ‌မရ
+- `UNIQUE` — ‌ထပ် ‌မရ
+- `DEFAULT` — ‌မူလ ‌တန်ဖိုး
+
+```sql
+CREATE TABLE orders (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  status VARCHAR(20) DEFAULT 'pending',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+## ‌ဇယား ‌အ‌ကြောင်း ‌ကြည့်
+
+```sql
+DESCRIBE users;
+```
+
+## ‌အဓိက အချက်များ
+- CREATE TABLE (columns ‌သတ်မှတ်)
+- Column ‌တိုင်း — type + constraint
+- IF NOT EXISTS, DESCRIBE

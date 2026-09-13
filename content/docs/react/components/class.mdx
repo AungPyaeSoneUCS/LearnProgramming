@@ -1,0 +1,110 @@
+---
+title: "React Class Component — Class Component"
+description: "Class component ‌ရေးနည်း — render(), state, lifecycle — function component နဲ့ ‌ကွာခြားချက်။"
+autoNumbering: true
+---
+
+Class component ဆိုတာ React component ‌ရေးဖို့ ‌ခေတ်ဟောင်း (traditional) ‌နည်းလမ်း ‌ဖြစ်ပြီး `React.Component` ကို extend ‌လုပ်ရပါတယ်။ ‌နောက်ပိုင်းမှာ function component ကို ‌ပိုသဘောကျကြ ‌ပေမဲ့ class component ‌တွေကို ‌နေရာ ‌အတော်များများမှာ ‌တွေ့ ‌နေရဆဲပါ။
+
+## Class Component ‌ရေးနည်း
+
+```jsx
+class Car extends React.Component {
+  render() {
+    return <h2>I am a Car!</h2>;
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<Car />);
+```
+
+`render()` method က output JSX ကို ‌ပြန်ပေးပါတယ်။
+
+## ‌ကိုယ်ပိုင် constructor
+
+```jsx
+class Car extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { brand: "Ford" };
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>My Car</h1>
+        <p>Brand: {this.state.brand}</p>
+      </div>
+    );
+  }
+}
+```
+
+- `constructor()` — state ‌သတ်မှတ်ဖို့
+- `super(props)` — parent ‌ရဲ့ constructor ‌ကို ‌ခေါ်
+- `this.state` — component ‌ရဲ့ local state
+
+## Component ‌တစ်ခုကို ‌နောက်တစ်ခုထဲ ‌ထည့်
+
+```jsx
+class Car extends React.Component {
+  render() {
+    return <h2>I am a {this.props.brand}!</h2>;
+  }
+}
+
+class Garage extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>My Garage</h1>
+        <Car brand="Ford" />
+      </div>
+    );
+  }
+}
+```
+
+## Lifecycle Method ‌တစ်ခု
+
+```jsx
+class Timer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { time: new Date().toLocaleTimeString() };
+  }
+
+  componentDidMount() {
+    this.timerID = setInterval(() => {
+      this.setState({ time: new Date().toLocaleTimeString() });
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  render() {
+    return <h1>{this.state.time}</h1>;
+  }
+}
+```
+
+- `componentDidMount` — mount ‌ပြီးနောက် run
+- `componentWillUnmount` — unmount ‌မတိုင်မီ cleanup
+
+## Function Component ‌နဲ့ ယှဉ်ကြည့်
+
+```jsx
+function Car(props) {
+  return <h2>I am a {props.brand}!</h2>;
+}
+```
+
+Function component က ‌ပိုတိုပြီး Hooks (useState ‌စသည်) ‌သုံးလို့ရတာမို့ ခေတ်သစ် React ‌မှာ function component ကို ‌အကြံပြုပါတယ်။
+
+## အဓိက အချက်များ
+- Class component = `extends React.Component` + `render()`
+- `this.state` ‌နဲ့ state, `setState()` ‌နဲ့ update
+- ‌ခေတ်သစ် React ‌မှာ function component + Hooks ကပိုသာသည်

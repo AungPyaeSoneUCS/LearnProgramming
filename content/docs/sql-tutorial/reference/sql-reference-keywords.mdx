@@ -1,0 +1,64 @@
+---
+title: "sql-reference-keywords"
+description: "SQL keywords — SELECT, FROM, WHERE, INSERT, UPDATE, DELETE စသဖြင့် အတိုချုံး reference ။"
+autoNumbering: true
+---
+
+SQL keywords က database မှာ command တွေလို့ သန်းခေါင်လို့ရတဲ့ reserved words ပါ။ အသုံးအများဆုံးတွေကို ၁ page တည်းမှာ အတိုချုံး ပြပါမယ်။
+
+## Query Keywords
+| Keyword | Syntax |
+| --- | --- |
+| SELECT | SELECT col1, col2 FROM table |
+| DISTINCT | SELECT DISTINCT col |
+| FROM | data source |
+| WHERE | row filter |
+| GROUP BY | group rows |
+| HAVING | group filter |
+| ORDER BY | sort |
+| LIMIT / TOP | rows ရေတွက် limit |
+
+## DML — Data Manipulation
+```sql
+INSERT INTO tables (cols) VALUES (...);
+UPDATE tables SET col = val WHERE ...;
+DELETE FROM tables WHERE ...;
+```
+
+## DDL — Definition
+```sql
+CREATE DATABASE / TABLE / INDEX / VIEW ...;
+ALTER TABLE ... ;
+DROP TABLE ... ;
+TRUNCATE TABLE ... ;
+```
+
+## Join / Set
+```sql
+INNER JOIN / LEFT JOIN / RIGHT JOIN / FULL OUTER JOIN
+UNION / UNION ALL
+CROSS JOIN / SELF JOIN
+```
+
+## Condition / Operator
+```sql
+=  <>  >  <  >=  <=
+AND  OR  NOT  IN  BETWEEN  LIKE  IS NULL  EXISTS
+```
+
+## ဘယ်နေရာမှာ သုံးလဲ — အကျဉ်းဇယား
+```sql
+SELECT ... FROM ... 
+WHERE ...
+GROUP BY ...
+HAVING ...
+ORDER BY ...
+LIMIT ...;
+```
+Logic order: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT
+
+## အဓိက အချက်များ
+- DDL — structure (CREATE/ALTER/DROP)
+- DML — data (INSERT/UPDATE/DELETE)
+- DQL — SELECT (အခြေခံအကျဆုံး)
+- Logic order — FROM → WHERE → GROUP → HAVING → SELECT → ORDER → LIMIT

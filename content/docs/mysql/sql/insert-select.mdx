@@ -1,0 +1,53 @@
+---
+title: "MySQL INSERT SELECT — INSERT INTO SELECT"
+description: "INSERT INTO SELECT — ‌ဇယား‌တစ်ခုမှ data ‌ရွေး၍ ‌အခြားဇယားသို့ ထည့်ခြင်း — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+`INSERT INTO SELECT` သည် ‌ဇယား‌တစ်ခုမှ rows များကို ‌ရွေး၍ **‌အခြားဇယားထဲသို့ ‌တစ်ခါတည်း ‌ထည့်** နိုင်ပါတယ် — cross-table copy ‌ဖြစ်သည်။
+
+## Syntax
+
+```sql
+INSERT INTO table2 (column1, column2, ...)
+SELECT column1, column2, ...
+FROM table1
+WHERE condition;
+```
+
+## ဥပမာ — ‌အားလုံး copy
+
+```sql
+INSERT INTO vip_customers (id, name, city)
+SELECT id, name, city
+FROM customers
+WHERE total_spent > 500000;
+```
+
+`total_spent` 500,000 ကျော်သူများကို `vip_customers` သို့ ‌ထည့်။
+
+## ‌ဇယားသုံးခုကနေ ‌ရွေး၍ ‌ထည့်
+
+```sql
+INSERT INTO audit_log (user_id, action, created_at)
+SELECT id, 'register', NOW()
+FROM users;
+```
+
+## ‌သတိထားရန်
+- Columns ‌အရေအတွက် ‌နှင့် data types ‌ရိုးတူ ‌ရမည်
+- SELECT ‌ရလဒ်သည် INSERT column ‌အစဉ်အတိုင်း ‌ကိုက်ညီ ‌ရမည်
+
+## ‌အပြန်အလှန် — SELECT INTO (‌ဇယားသစ်)
+
+MySQL: `CREATE TABLE new AS SELECT ...` ‌ဖြင့် ‌ဇယားသစ် ‌ဖန်တီးနိုင်။
+
+```sql
+CREATE TABLE backup_customers AS
+SELECT * FROM customers WHERE city = 'Yangon';
+```
+
+## ‌အဓိက အချက်များ
+- INSERT INTO ... SELECT
+- ‌ဇယားတစ်ခုမှ ‌အခြားသို့ copy
+- CREATE TABLE AS — ‌ဇယားအသစ် ‌ဆောက်

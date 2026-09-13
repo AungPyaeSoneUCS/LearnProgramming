@@ -1,0 +1,59 @@
+---
+title: "sql-comments"
+description: "SQL comment — -- single line, /* */ multi line — ဖတ်ရလွယ်ပြီး debug လုပ်နည်း။"
+autoNumbering: true
+---
+
+Comment ဆိုတာ run မလုပ်တဲ့၊ လူတွေ ဖတ်ဖို့ပဲ သုံးတဲ့ စာသားပါ။ SQL code ရဲ့ purpose ကို ရှင်းပြနိုင်ဖို့ပါ။
+
+## Single-Line Comment
+```sql
+-- ဒါက comment
+SELECT * FROM Customers;
+```
+-- နဲ့စတဲ့ စာသားက မျဉ်းကြောင်း အဆုံးအထိ လျစ်လျူရှုခံရပါတယ်။
+
+```sql
+SELECT * FROM Customers -- ဖောက်သည် အားလုံးကြည့်
+WHERE City = 'Yangon';
+```
+SQL နဲ့တွဲပြီး comment ထည့်လည်း ရပါတယ် — run ဖို့ statement ကသာ အရေးကြီးပါတယ်။
+
+## Multi-Line Comment
+```sql
+/*
+   ဒီ query က
+   ဖောက်သည် စာရင်း တစ်ခုလုံးကို ပြပါတယ်
+*/
+SELECT * FROM Customers;
+```
+/* */ က မျဉ်းကြောင်း များစွာ comment  လုပ်လို့ရပါတယ်။
+
+## Debug အတွက် Comment
+```sql
+-- SELECT * FROM Customers;  -- debug: မလိုတော့ရင် ပိတ်ထား
+SELECT * FROM Products;
+```
+အလုပ်မလိုတဲ့ query ကို comment လုပ်ပြီး ခေတ္တ ပိတ်ထားလို့ရပါတယ်။
+
+## MySQL — User comment
+```sql
+SELECT 1 /*!50100 +1 */;
+```
+MySQL မှာ version-specific multiple-line comment (/*! ... */) လည်း ရှိပါတယ်။ ဒီ feature ကို database အများစုမှာ မသုံးပါဘူး။
+
+## Comment ကောင်းခြင်း
+```sql
+-- Calculate total revenue for active customers only
+SELECT SUM(o.Total)
+FROM Orders AS o
+JOIN Customers AS c ON o.CustomerID = c.CustomerID
+WHERE c.Status = 'Active';
+```
+Comment က "ဘာလုပ်တယ်" ထက်ကို "ဘာလို့ ဒီလိုလဲ" ရှင်းပြတာပါ။ Clear query ထဲမှာ မလိုတဲ့ comment မထည့်နဲ့။
+
+## အဓိက အချက်များ
+- -- single line
+- /* */ multi line
+- Debug မှာ query ပိတ်ချင်ရင်
+- "why" ကို ရှင်းပြတဲ့ comment က အဖိုးတန်ပါတယ်

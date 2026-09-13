@@ -1,0 +1,72 @@
+---
+title: "React useRef — useRef Hook"
+description: "useRef — mutable value, DOM element ‌ရည်ညွှန်း — re-render ‌မလုပ်ဘဲ ‌တန်ဖိုး ‌ထိန်း။"
+autoNumbering: true
+---
+
+`useRef` ‌က render ‌ပြန်လုပ်တာကြောင့် ‌ပြောင်းလဲခြင်း ‌မရှိတဲ့ **mutable value** ‌ကို ‌ဖန်တီးဖို့ သုံးပါတယ်။ ‌အသုံးများတာက **DOM element ‌ရည်ညွှန်း** ‌လုပ်ဖို့ပါ — input focus, scroll, animation စသည်။
+
+## DOM element ကိုင်တွယ်
+
+```jsx
+import { useRef } from "react";
+
+function App() {
+  const inputRef = useRef(null);
+
+  const focusInput = () => {
+    inputRef.current.focus();
+  };
+
+  return (
+    <>
+      <input ref={inputRef} type="text" />
+      <button onClick={focusInput}>Focus</button>
+    </>
+  );
+}
+```
+
+`inputRef.current` — ‌တကယ့် `<input>` DOM node။
+
+## Mutable value — re-render ‌မလုပ်သော
+
+```jsx
+function Counter() {
+  const countRef = useRef(0);
+
+  const increment = () => {
+    countRef.current += 1;
+    console.log(countRef.current); // ‌ပြောင်းလဲ‌သေး ပါ
+    // ‌သတိ: re-render ‌မဖြစ်ရဘူး!
+  };
+
+  return <button onClick={increment}>Increment</button>;
+}
+```
+
+- `state` ပြောင်း → re-render
+- `ref.current` ‌ပြောင်း → re-render မယ် — UI မြင်‌ချင်ရင် state ‌တွဲသုံး
+
+## Timer id ထိန်းဖို့
+
+```jsx
+const intervalRef = useRef();
+
+useEffect(() => {
+  intervalRef.current = setInterval(() => setTime(new Date()), 1000);
+  return () => clearInterval(intervalRef.current);
+}, []);
+```
+
+## useState vs useRef
+
+| useState | useRef |
+| --- | --- |
+| Re-render ဖြစ် | Re-render မဖြစ် |
+| UI ‌မှီခို | DOM/‌လက်‌တွက်များ |
+
+## ‌အဓိက အချက်များ
+- `useRef(initial)` → `{ current: ... }`
+- DOM focus ‌စသည် ‌ကိုင်တွယ်
+- Mutable ‌တန်ဖိုး — render ‌မလို

@@ -1,0 +1,64 @@
+---
+title: "MySQL SQL — SQL ဘာသာစကား"
+description: "SQL မိတ်ဆက် — query အမျိုးအစားများ — DDL, DML, DQL — syntax အခြေခံ။"
+autoNumbering: true
+---
+
+**SQL** (Structured Query Language) သည် relational database နှင့် ပြောဆိုရန် standard ဘာသာစကားဖြစ်ပါတယ်။ MySQL သည် SQL ကို အသုံးပြုသည့် RDBMS တစ်ခုပဲ ဖြစ်သည်။
+
+## SQL command အမျိုးအစားများ
+
+| Type | လုပ်ဆောင်မှု | ဥပမာ |
+| --- | --- | --- |
+| DDL | Schema ပြင်ဆင် | CREATE, ALTER, DROP |
+| DML | Data ပြင်ဆင် | INSERT, UPDATE, DELETE |
+| DQL | Data ထုတ်ယူ | SELECT |
+| DCL | ခွင့်ပြုချက် | GRANT, REVOKE |
+
+## SELECT — data ထုတ်ယူ
+
+```sql
+SELECT first_name, last_name FROM employees;
+```
+
+columns နှစ်ခုကို `employees` ဇယားမှ ထုတ်ယူသည်။
+
+## CREATE TABLE
+
+```sql
+CREATE TABLE students (
+  id INT NOT NULL,
+  name VARCHAR(100),
+  age INT
+);
+```
+
+## INSERT — data ထည့်
+
+```sql
+INSERT INTO students (id, name, age)
+VALUES (1, 'Aung', 20);
+```
+
+## UPDATE — data ပြင်ဆင်
+
+```sql
+UPDATE students SET age = 21 WHERE id = 1;
+```
+
+## DELETE — data ဖျက်
+
+```sql
+DELETE FROM students WHERE id = 1;
+```
+
+## Key syntax များ
+- Statement များကို semicolon `;` ဖြင့် အဆုံးသတ်
+- Table/column ‌အမည်များအပေါ် မူတည်၍ backtick သုံးနိုင်
+- Strings — single quotes `'text'`
+- Comment — `--` single line, `/* */` multi line
+
+## အဓိက အချက်များ
+- SQL — database query ‌ဘာသာစကား
+- DDL/DML/DQL ခွဲခြားမှတ်သား
+- SELECT ‌သည် ‌အသုံးအများဆုံး

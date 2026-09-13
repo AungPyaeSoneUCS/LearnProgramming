@@ -1,0 +1,56 @@
+---
+title: "Node.js MongoDB Get Started — MongoDB Get Started"
+description: "Node + MongoDB — mongodb driver, connect, collections — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Node.js မှ MongoDB (document DB) ‌ချိတ်ဆက် ‌သုံးနည်း — official driver။
+
+## Install
+
+```bash
+npm install mongodb
+```
+
+## Connect
+
+```js
+const { MongoClient } = require("mongodb");
+
+const client = new MongoClient("mongodb://localhost:27017");
+await client.connect();
+
+const db = client.db("shop");
+const users = db.collection("users");
+```
+
+## First usage
+
+```js
+await users.insertOne({ name: "Aung", age: 25 });
+const found = await users.findOne({ name: "Aung" });
+console.log(found);
+```
+
+## ‌ပုံစံ — async function
+
+```js
+const { MongoClient } = require("mongodb");
+
+async function main() {
+  const client = new MongoClient("mongodb://localhost:27017");
+  try {
+    await client.connect();
+    const db = client.db("shop");
+    // ... operations
+  } finally {
+    await client.close();
+  }
+}
+main().catch(console.error);
+```
+
+## ‌အဓိက အချက်များ
+- mongodb driver
+- MongoClient → db → collection
+- insertOne / findOne

@@ -1,0 +1,66 @@
+---
+title: "MySQL UPDATE — UPDATE"
+description: "UPDATE — ‌တည်ရှိပြီးသား rows များကို ပြင်ဆင်ခြင်း — SET, WHERE သတိထားရန်။"
+autoNumbering: true
+---
+
+`UPDATE` statement သည် ‌တည်ရှိပြီးသား rows များ၏ data ကို ပြင်ဆင်ရန် သုံးပါတယ်။
+
+## Syntax
+
+```sql
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+```
+
+## ဥပမာ
+
+```sql
+UPDATE customers
+SET last_name = 'Moe'
+WHERE id = 1;
+```
+
+`id = 1` ရှိသော customer ၏ last_name ကိုသာ ပြောင်းသည်။
+
+## Column များစွာ
+
+```sql
+UPDATE products
+SET price = 899.99, stock = 50
+WHERE id = 101;
+```
+
+## ‌အရေးကြီးသတိထားရန် — WHERE ‌မပါလျှင်
+
+```sql
+UPDATE products SET price = 0;
+```
+
+WHERE ‌မပါလျှင် **အားလုံး rows** ပြောင်းသွားသည်!
+
+## WHERE ‌နှင့် တွဲ သုံးပုံ များ
+
+```sql
+UPDATE orders
+SET status = 'shipped'
+WHERE id = 55;
+```
+
+```sql
+UPDATE employees
+SET salary = salary + 50000
+WHERE department = 'IT';
+```
+
+## ‌ပြောင်းလဲ‌ပြီး စစ်ကြည့်
+
+```sql
+SELECT * FROM customers WHERE id = 1;
+```
+
+## ‌အဓိက အချက်များ
+- UPDATE ... SET ... WHERE
+- WHERE ‌မပါ → ‌အားလုံး ‌ပြောင်း (danger)
+- Row ‌ရွေး‌ပြီး စစ်ဆေး သာကြည့်

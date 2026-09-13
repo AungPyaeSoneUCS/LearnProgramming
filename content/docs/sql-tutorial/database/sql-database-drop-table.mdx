@@ -1,0 +1,49 @@
+---
+title: "sql-database-drop-table"
+description: "DROP TABLE — table structure + data အားလုံး ဖျက်ခြင်း။"
+autoNumbering: true
+---
+
+DROP TABLE က table တစ်ခုလုံး — structure, data, index, constraint အားလုံးကို ဖျက်ပါတယ်။
+
+## DROP TABLE
+```sql
+DROP TABLE Products;
+```
+Products table ကို လုံးဝဖျက်ပါတယ်။ Data ပါအကုန်ပျောက်ပြီး ပြန်ရှာလို့မရပါဘူး။
+
+## IF EXISTS — လုံခြုံစွာ
+```sql
+DROP TABLE IF EXISTS Products;
+```
+Table မရှိရင် error တက်မည့်အစား skip — script တွေမှာ အမြဲသုံးပါ။
+
+## DROP TABLE မတိုင်ခင် — Foreign Key စစ်ခြင်း
+```sql
+-- Table တစ်ခုကို တခြား table ကိုင်ထားရင် မဖျက်ရ
+DROP TABLE IF EXISTS OrderItems;
+DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS Products;
+```
+Foreign key ရှိရင် ဖျက်ဖို့ permission မရတဲ့အတွက် child table တွေကို အရင်ဖျက်ပြီးမှ parent ကို ဖျက်ရပါတယ်။ (foreign key ON DELETE CASCADE ဆို အလိုအလျောက် ပါသွားပါတယ် — နောက် lesson မှာ ပါမယ်။)
+
+## TRUNCATE vs DROP
+```sql
+TRUNCATE TABLE Products;  -- Data ဖျက်၊ structure ထား
+DROP TABLE Products;      -- အကုန်ဖျက်
+```
+|  | TRUNCATE | DROP |
+| --- | --- | --- |
+| Data | ဖျက် | ဖျက် |
+| Structure | ထား | ဖျက် |
+| Auto-increment | Reset | N/A |
+| Faster | ✅ | ✅ |
+| Transaction-safe | တချို့ DB | တချို့ DB |
+
+Table structure ထားချင်ရင် TRUNCATE၊ ဖျက်ချင်ရင် DROP။
+
+## အဓိက အချက်များ
+- DROP TABLE name — အကုန်ဖျက်
+- IF EXISTS — error ရှောင်
+- Child table တွေကို အရင်ဖျက်
+- TRUNCATE က structure ထားပေး

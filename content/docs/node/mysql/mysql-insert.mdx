@@ -1,0 +1,50 @@
+---
+title: "Node.js MySQL Insert Into — Insert Into"
+description: "Node + MySQL — INSERT with placeholders — values — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Node.js ‌မှ rows ‌ထည့်နည်း — **prepared statements** ‌ဖြင့် SQL injection ‌ရှောင်။
+
+## Single insert — placeholder `?`
+
+```js
+const name = "Aung";
+await db.query("INSERT INTO users (name, email) VALUES (?, ?)", [
+  name,
+  "aung@example.com",
+]);
+```
+
+User input ‌ကို `?` placeholder — driver ‌က escape ‌လုပ် — safe။
+
+## Multiple rows
+
+```js
+const rows = [
+  ["Su", "su@example.com"],
+  ["Mya", "mya@example.com"],
+];
+await db.query("INSERT INTO users (name, email) VALUES ?", [rows]);
+```
+
+**VALUES `?`** — ‌ပုံစံ — nested array ‌ဖြင့် batch insert။
+
+## Get inserted id
+
+```js
+const [result] = await db.query(
+  "INSERT INTO users (name) VALUES (?)",
+  ["Phyu"]
+);
+console.log(result.insertId); // new id
+```
+
+## ‌သတိထားရန်
+- String interpolation `‌ရေးနေ ‌မလုပ်` — `${name}` SQL ‌ထဲ ‌နောက် injection risk
+- `?` ‌အမြဲ ‌သုံး
+
+## ‌အဓိက အချက်များ
+- VALUES (?, ?) — escaped
+- `VALUES ?` — batch
+- result.insertId

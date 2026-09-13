@@ -1,0 +1,66 @@
+---
+title: "sql-database-backup-db"
+description: "BACKUP DATABASE — database အပြည့်အစုံ ဖိုင်ထဲ သိမ်းခြင်း (SQL Server, MySQL, PostgreSQL)။"
+autoNumbering: true
+---
+
+Production database တွေမှာ backup က မရှိမဖြစ်ပါ။ ဒေတာဆုံးရုံးမှုက လုပ်ငန်းရဲ့ အသက်ပဲဖြစ်လို့ backup plan ရှိဖို့ လိုပါတယ်။
+
+## SQL Server — BACKUP TO FILE
+```sql
+BACKUP DATABASE ShopDB
+TO DISK = 'D:\backups\ShopDB_20250901.bak'
+WITH FORMAT,
+     NAME = 'Full backup of ShopDB';
+```
+TO DISK က file path ပေးရပြီး WITH FORMAT က backup file ကို အသစ်ဖန်တီးပါတယ်။ .bak file ကို SQL Server Management Studio (SSMS) ကနေ ပြန် restore လုပ်လို့ရပါတယ်။
+
+## MySQL — mysqldump
+```bash
+# command line
+mysqldump -u root -p ShopDB > ShopDB_backup.sql
+```
+mysqldump က SQL statement တွေပြည့်စုံတဲ့ .sql text file ထုတ်ပေးပါတယ်။ ဒီ file ကို text editor နဲ့ ကြည့်လို့ရပြီး MySQL ကိုပဲ ဖြစ်ဖြစ် PostgreSQL မှာပဲဖြစ်ဖြစ် ပြန်import လို့ရပါတယ်။
+
+## MySQL — BACKUP အလိုအလျောက်
+```sql
+-- MySQL 8 — dump + backup script (scheduled task / cron)
+mysqldump --single-transaction --routines --triggers ShopDB > backup.sql
+```
+--single-transaction — InnoDB table တွေအတွက် backup လုပ်နေတဲ့ကြားထဲမှာ data ပြောင်းလဲမှုတွေကို မထိခိုက်အောင် transaction ထဲထည့်ထားပါတယ်။
+
+## PostgreSQL
+```bash
+# Command line
+pg_dump -U postgres ShopDB > ShopDB_backup.sql
+ 
+# All databases
+pg_dumpall -U postgres > all_databases.sql
+```
+
+## Restore
+```sql
+-- SQL Server
+RESTORE DATABASE ShopDB
+FROM DISK = 'D:\backups\ShopDB_20250901.bak'
+WITH REPLACE;
+```
+```bash
+# MySQL
+mysql -u root -p ShopDB < ShopDB_backup.sql
+```
+
+## Backup Frequency
+| Frequency | ဥပမာ |
+| --- | --- |
+| Daily full | ညတိုင်း ၁ ခါ |
+| Incremental | နေ့တိုင်း change ပဲ backup |
+| Transaction log | SQL Server — log backup |
+
+Plan ကို လုပ်ငန်းရဲ့ လိုအပ်ချက်ပေါ်မူတည်ပြီး ရွေးပါ — database သေးဆို full daily ပဲ လုံလောက်ပါတယ်။
+
+## အဓိက အချက်များ
+- SQL Server → BACKUP DATABASE TO DISK
+- MySQL → mysqldump (command line)
+- PostgreSQL → pg_dump (command line)
+- Schedule ပြီး automation လုပ်ပါ

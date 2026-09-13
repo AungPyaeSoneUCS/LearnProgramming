@@ -1,0 +1,60 @@
+---
+title: "Node.js Test Frameworks — Test Frameworks"
+description: "Frameworks — Jest, Vitest, Mocha, supertest — ဥပမာများ။"
+autoNumbering: true
+---
+
+Node ‌အ‌တွက် ‌အသုံးများ test frameworks — ‌ရွေးချယ်ပုံ။
+
+## Jest — ‌အသုံးများ
+
+```bash
+npm install -D jest supertest
+```
+
+```js
+const request = require("supertest");
+const { app } = require("./app");
+
+test("GET /api/users returns list", async () => {
+  const res = await request(app).get("/api/users");
+  expect(res.status).toBe(200);
+  expect(res.body).toEqual([]);
+});
+```
+
+## Vitest — fast, ESM-first
+
+```js
+import { describe, it, expect } from "vitest";
+
+describe("math", () => {
+  it("adds", () => {
+    expect(1 + 1).toBe(2);
+  });
+});
+```
+
+## Mocha + Chai
+
+```js
+const { expect } = require("chai");
+
+describe("sum", () => {
+  it("works", () => {
+    expect(sum(1, 2)).to.equal(3);
+  });
+});
+```
+
+## ‌ရွေးချယ်ပုံ
+| Framework | ‌ပုံစံ |
+| --- | --- |
+| Jest | batteries included, ‌အသုံးများ |
+| Vitest | fast, ESM/Vite |
+| Mocha | flexible, minimal |
+
+## ‌အဓိက အချက်များ
+- Jest + supertest — API tests
+- Vitest — modern fast
+- Mocha/Chai — ‌ပေ့ါ

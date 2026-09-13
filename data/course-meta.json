@@ -160,5 +160,23 @@
     "description": "CSS ကို အခြေခံမှ အဆင့်မြင့်အထိ — Tutorial, Advanced, Flexbox, Grid, Responsive, SASS, Examples, References အပြည့်အစုံ ပါဝင်တဲ့ ပြည့်စုံသော သင်တန်း။",
     "icon": "💅",
     "color": "#06b6d4"
+  },
+  {
+    "label": "SQL Tutorial",
+    "description": "SQL ကို လုံးဝ အသစ်စသူကစပြီး Advanced Techniques, Database Management, Security အထိ သင်ယူမယ့် ပြည့်စုံသင်ရိုး — SELECT, JOIN, GROUP BY, Constraints, Indexes, Stored Procedures စသည်။",
+    "icon": "🗄️",
+    "color": "#3b82f6"
+  },
+  {
+    "label": "React",
+    "description": "React ၏ Core များ — Components, JSX, Props, State, Hooks မှ React Server Components, Suspense, Router အထိ လက်တွေ့ သင်ယူမယ့် ပြည့်စုံသင်ရိုး။",
+    "icon": "⚛️",
+    "color": "#61dafb"
+  },
+  {
+    "label": "MySQL",
+    "description": "MySQL ကို အစကစပြီး SQL Queries, JOINs, Aggregates, Database Design, Constraints, Stored Procedures, Security အထိ လက်တွေ့ သင်ယူမယ့် ပြည့်စုံသင်ရိုး။",
+    "icon": "🐬",
+    "color": "#00758f"
   }
 ]

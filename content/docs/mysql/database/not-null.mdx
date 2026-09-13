@@ -1,0 +1,45 @@
+---
+title: "MySQL Not Null — NOT NULL"
+description: "NOT NULL — column ‌တွင်းသို့ NULL ‌မထည့်သွင်း — CREATE ‌နှင့် ALTER ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`NOT NULL` constraint သည် column တွင် **‌တန်ဖိုး ‌မပါဘဲ NULL ထည့်‌၍ မရ‌စေ** — ‌ဇယားထဲ ‌တန်ဖိုး‌ရှိရမည်။
+
+## ‌ဥပမာ — CREATE TABLE
+
+```sql
+CREATE TABLE users (
+  id INT NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(150)
+);
+```
+
+`id` နှင့် `name` ‌သည် မဖြစ်မနေလိုအပ် — `email` NULL ‌ရနိုင်။
+
+## NULL ‌ထည့်ကြည့် — error
+
+```sql
+INSERT INTO users (id, name) VALUES (1, 'Aung');      -- OK
+INSERT INTO users (id) VALUES (2);                    -- error: name missing
+```
+
+## ALTER ‌ဖြင့် ‌နောက်မှ ပြောင်း
+
+```sql
+ALTER TABLE users
+MODIFY email VARCHAR(150) NOT NULL;
+```
+
+Note — ‌ရှိပြီးသား NULL rows ရှိရင် ‌ပြဿနာ ‌ဖြစ်နိုင် — ‌ပထမ data ‌သန့်ရန်။
+
+## ‌ဘာ‌ကြောင့် ‌လို
+- Column ‌လိုအပ်မှု ‌သေချာ
+- App ‌က NULL ‌ကိုင်နိုင် ‌နည်းလျှင်
+- Data quality ‌ကောင်း
+
+## ‌အဓိက အချက်များ
+- NOT NULL — NULL ‌တားဆီး
+- Create ‌နေရာတွင် column level ‌ရေး
+- ALTER MODIFY ‌ဖြင့် ‌ပြင်နိုင်

@@ -1,0 +1,83 @@
+---
+title: "sql-reference-quick-reference"
+description: "SQL quick reference — SELECT ကစပြီး JOIN, GROUP BY, constraint, alter ၁ page အတိုချုံး။"
+autoNumbering: true
+---
+
+Course တစ်ခုလုံးရဲ့ အဓိက syntax တွေကို "cheat-sheet" အဖြစ် ၁ နေရာတည်းမှာ စုထားပါတယ်။ လိုအပ်တဲ့အခါ ပြန်ကြည့်ပါ။
+
+## SELECT
+```sql
+SELECT col1, col2
+FROM table
+WHERE condition
+GROUP BY col
+HAVING condition
+ORDER BY col ASC|DESC
+LIMIT n;
+```
+
+## INSERT / UPDATE / DELETE
+```sql
+INSERT INTO t (a, b) VALUES (1, 'x');
+UPDATE t SET a = 2 WHERE b = 'x';
+DELETE FROM t WHERE b = 'x';
+```
+
+## JOINs
+```sql
+INNER JOIN  -- matching rows only
+LEFT JOIN   -- all left + matched right
+RIGHT JOIN  -- all right + matched left
+FULL OUTER JOIN -- all from both
+```
+```sql
+SELECT c.Name, o.OrderID
+FROM Customers c
+LEFT JOIN Orders o ON c.CustomerID = o.CustomerID;
+```
+
+## Aggregate + Group
+```sql
+SELECT Country, COUNT(*), SUM(Price), AVG(Price), MIN(Price), MAX(Price)
+FROM Products
+GROUP BY Country
+HAVING COUNT(*) > 1;
+```
+
+## DDL — Table
+```sql
+CREATE TABLE t (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    price DECIMAL(10,2) DEFAULT 0,
+    status VARCHAR(10) CHECK (status IN ('A','B'))
+);
+ 
+ALTER TABLE t ADD col INT;
+ALTER TABLE t DROP COLUMN col;
+DROP TABLE t;
+```
+
+## Constraints
+```sql
+NOT NULL    -- value က empty မဖြစ်ရ
+UNIQUE      -- duplicate မရ
+PRIMARY KEY -- unique + not null
+FOREIGN KEY -- references other table
+CHECK       -- custom rule
+DEFAULT     -- fallback value
+```
+
+## String / Date / Num
+```sql
+UPPER(x), LOWER(x), LENGTH(x), CONCAT(a,b), SUBSTRING(x,1,3)
+ROUND(x,2), FLOOR(x), CEIL(x), ABS(x), MOD(a,b)
+NOW(), CURDATE(), DATEADD(), DATEDIFF()
+```
+
+## Query Logic Order
+```
+SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY → LIMIT
+```
+ကော်လံ name / reserved word — ရှုပ်ထွေးတဲ့ syntax တွေမှာ backtick (MySQL) သို့မဟုတ် brackets (SQL Server) သုံးလို့ရပါတယ်။

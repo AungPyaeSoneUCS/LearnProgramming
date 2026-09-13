@@ -1,0 +1,51 @@
+---
+title: "MySQL Create DB — Create Database"
+description: "CREATE DATABASE — database အသစ် ‌ဖန်တီးခြင်း — SHOW DATABASES, USE။"
+autoNumbering: true
+---
+
+Database ‌ဖန်တီး‌ရန် `CREATE DATABASE` statement ‌သုံးပါတယ်။
+
+## Syntax
+
+```sql
+CREATE DATABASE databasename;
+```
+
+## ‌ဥပမာ
+
+```sql
+CREATE DATABASE shop;
+```
+
+## ‌တည်ရှိပြီးသား ‌ဖြစ်‌ကာကွယ်
+
+```sql
+CREATE DATABASE IF NOT EXISTS shop;
+```
+
+`shop` ‌ရှိနေလျှင် error ‌မပေးဘဲ skip ‌လုပ်သည်။
+
+## ‌အားလုံး ‌ပြ
+
+```sql
+SHOW DATABASES;
+```
+
+## Database ‌ရွေး — USE
+
+```sql
+USE shop;
+```
+
+‌ဤ ‌နောက် query ‌များက `shop` database ‌ထဲ ‌လုပ်‌ဆောင်သည်။
+
+## ‌အချက်များ
+- Database ‌ယူ namespace — tables ‌များထဲ ‌သိမ်း
+- IF NOT EXISTS — ‌ဘေး‌ကင်း
+- USE — active database ‌သတ်မှတ်
+
+## ‌အဓိက အချက်များ
+- CREATE DATABASE name
+- SHOW DATABASES / USE
+- IF NOT EXISTS ‌ကောင်း

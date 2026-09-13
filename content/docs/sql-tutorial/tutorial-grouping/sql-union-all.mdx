@@ -1,0 +1,57 @@
+---
+title: "sql-union-all"
+description: "UNION ALL — duplicate rows တွေကို ဖယ်မထားဘဲ အကုန်ပေါင်းခြင်း (UNION vs UNION ALL ကွာခြားချက်)။"
+autoNumbering: true
+---
+
+UNION ALL က query ၂ခုရဲ့ rows အားလုံးကို ပေါင်းပြီး duplicate တွေကိုပါ ထည့် ပါတယ်။ UNION က ဖယ်တာနဲ့ ဒီနေရာမှာပဲ ကွာပါတယ်။
+
+## UNION vs UNION ALL
+```sql
+-- Duplicate ဖယ်
+SELECT City FROM Customers
+UNION
+SELECT City FROM Suppliers;
+ 
+-- Duplicate ထား
+SELECT City FROM Customers
+UNION ALL
+SELECT City FROM Suppliers;
+```
+Customers မှာ Yangon ၂ ကြိမ်၊ Suppliers မှာ Yangon ၁ ကြိမ်ရှိရင် — UNION က Yangon ၁ ကြိမ်ပဲ၊ UNION ALL က Yangon ၃ ကြိမ် ပါပါတယ်။
+
+## Performance — UNION ALL က မြန်တယ်
+```sql
+SELECT City FROM Customers
+UNION ALL
+SELECT City FROM Suppliers;
+```
+UNION က duplicate ဖယ်ဖို့ sort ဒါမှမဟုတ် hashing လုပ်ရလို့ နှေးပါတယ်။ UNION ALL က နှိုင်းယှဉ်စရာမလို၊ "append" လုပ်ရုံသာ ဖြစ်လို့ မြန်ပါတယ်။ Report မှာ duplicate က ပြဿနာမရှိရင် UNION ALL ကို အသားပေးသုံးပါတယ်။
+
+## ဘယ်အခါ UNION ALL သုံးမလဲ
+- Log / audit data တွေ append — နေ့စဉ် table ၂ခုပေါင်း
+- Pagination / partitioning (WHERE ID BETWEEN ...) — section တစ်ခုစီကို ပေါင်း
+- Duplicate မဖြစ် "နိုင်တဲ့" (disjoint) query ၂ခု ပေါင်းတဲ့အခါ
+
+```sql
+SELECT OrderID FROM Orders WHERE OrderDate < '2025-06-01'
+UNION ALL
+SELECT OrderID FROM Orders WHERE OrderDate >= '2025-06-01';
+```
+ဒီပုံစံက date range ၂ခု ခွဲထားလို့ overlap မရှိတဲ့အတွက် UNION ALL ကို သုံးလို့ရပါတယ် (UNION နဲ့ result အတူတူ)။
+
+## တချိန်တည်း နှစ်မျိုးလုံး
+```sql
+SELECT City FROM Customers
+UNION
+SELECT City FROM Suppliers
+UNION ALL
+SELECT City FROM Staff;
+```
+UNION နဲ့ UNION ALL ကို တစ် query ထဲတွင် ရောသုံးလို့ရပါတယ်။ ဒီမှာ Customers+Suppliers  (duplicate ဖယ်) ကို Staff (စစ်စရာမရှိ) နဲ့ ထပ်ပေါင်းပါတယ်။
+
+## အဓိက အချက်များ
+- UNION ALL = duplicate ထည့်၊ မြန်
+- UNION = duplicate ဖယ်၊ နှေး (sort/hash)
+- Disjoint result တွေ ပေါင်းရင် UNION ALL ကို သုံး
+- Column ရေတွက်ရည်ညီမှု စည်းကမ်း အတူတူပဲ

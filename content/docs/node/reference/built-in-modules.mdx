@@ -1,0 +1,55 @@
+---
+title: "Node.js Built-in Modules — Built-in Modules"
+description: "Node.js built-in modules — ‌အ‌ခြေခံ ‌ကျောင်း reference — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Node.js ‌၏ built-in modules — install ‌မလို — `require("node:...")` ‌ဖြင့် ‌သုံး။
+
+## Core modules
+| Module | ‌လုပ် |
+| --- | --- |
+| `http` / `https` | web server |
+| `fs` | files |
+| `path` | paths |
+| `os` | OS info |
+| `url` | URLs |
+| `events` | event emitter |
+| `stream` | streaming data |
+| `crypto` | hashing/encryption |
+| `child_process` | ‌အခြား programs |
+| `worker_threads` | CPU threads |
+| `net` / `tls` | sockets |
+| `dgram` | UDP |
+| `assert` | testing ‌စစ် |
+| `util` | helper functions |
+| `readline` | input |
+| `buffer` | binary data |
+| `zlib` | compression |
+| `timers` | scheduling |
+| `dns` | DNS lookup |
+| `vm` | isolated code |
+| `perf_hooks` | performance |
+| `test` | test runner |
+
+## Example
+
+```js
+const fs = require("node:fs");
+const path = require("node:path");
+
+console.log(path.join("a", "b", "c.txt"));
+```
+
+## node: prefix
+
+```js
+const http = require("node:http"); // ‌ပွင့် module ‌နှင့် ‌မရောင်
+```
+
+`node:` ‌ရှေ့ဆက် — built-in ‌ဖြစ် ‌ရှင်း — ‌အသုံးပြုရန် ‌အကြံပြု။
+
+## ‌အဓိက အချက်များ
+- Built-in — ‌ထည့် ‌မလို
+- node: prefix — clear source
+- ‌အ‌ခြေခံ — http, fs, path, events

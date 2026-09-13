@@ -1,0 +1,47 @@
+---
+title: "Node.js Message — Message"
+description: "Message — IncomingMessage — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:http` **Message** နှစ်‌မျိုး — `IncomingMessage` (req) နှင့️ `ServerResponse` (res) — ‌ဆက်စပ် ‌ဖြစ်။
+
+## IncomingMessage (req)
+
+```js
+const http = require("node:http");
+
+http
+  .createServer((req, res) => {
+    // req is IncomingMessage
+    console.log(req.httpVersion);
+    console.log(req.method, req.url);
+
+    req.on("data", () => {});
+    req.on("end", () => res.end("done"));
+  })
+  .listen(3000);
+```
+
+## Client side message (res)
+
+```js
+http.get("http://example.com", (res) => {
+  console.log("status", res.statusCode);
+  res.on("data", () => {});
+  res.on("end", () => console.log("done"));
+});
+```
+
+## ‌အဓိက properties
+| Property | ‌လုပ် |
+| --- | --- |
+| `headers` | headers object |
+| `statusCode` | response only |
+| `url` / `method` | request only |
+| `socket` | ‌ချိတ် socket |
+
+## ‌အဓိက အချက်များ
+- IncomingMessage — ‌တောင်း
+- ServerResponse — ‌ဖြေ
+- ‌အားလုံး ‌ဆက်စပ် stream

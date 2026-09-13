@@ -1,0 +1,54 @@
+---
+title: "Node.js Testing Apps — Testing Apps"
+description: "Testing — unit, integration, e2e — principles — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+1. test types ဆက်စပ်
+
+## ‌အမျိုး‌စားများ
+| ‌အမျိုး | ‌စစ်ဆေး |
+| --- | --- |
+| Unit | ‌တစ်‌ယောက် function |
+| Integration | modules ‌ပေါင်း (DB, API) |
+| E2E | ‌အ‌ပေါင်း flow |
+
+## Unit test ‌ဥပမာ
+
+```js
+const { calculateTotal } = require("./cart");
+
+test("adds items", () => {
+  expect(calculateTotal([{ price: 10 }, { price: 20 }])).toBe(30);
+});
+```
+
+## Integration — DB ချိတ်
+
+```js
+test("inserts user", async () => {
+  await db.query("INSERT INTO users (name) VALUES (?)", ["A"]);
+  const [rows] = await db.query("SELECT * FROM users");
+  expect(rows).toHaveLength(1);
+});
+```
+
+## Structure — arrange/act/assert
+```js
+// arrange — setup
+const input = [1, 2];
+// act — ‌လု‌ပ်‌ဆောင်
+const result = sum(input);
+// assert — ‌စစ်
+expect(result).toBe(3);
+```
+
+## ‌အခြေခံ practices
+- Tests — fast, isolated, deterministic
+- Mock ‌ပြင်ပ ‌အရာ (network, time)
+- CI ‌တွင် auto-run
+
+## ‌အဓိက အချက်များ
+- Unit / integration / E2E
+- arrange-act-assert
+- Isolated + deterministic

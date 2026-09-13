@@ -1,0 +1,43 @@
+---
+title: "Node.js MongoDB Delete — Delete"
+description: "Node + MongoDB — deleteOne, deleteMany — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Documents ‌ဖျက်နည်း။
+
+## Delete one
+
+```js
+const result = await users.deleteOne({ name: "Aung" });
+console.log(result.deletedCount); // 1 ‌သို့ 0
+```
+
+## Delete many
+
+```js
+const result = await users.deleteMany({ age: { $lt: 18 } });
+console.log(result.deletedCount);
+```
+
+## Delete everything (သတိ)
+
+```js
+const result = await users.deleteMany({});
+```
+
+## Check before delete
+
+```js
+const found = await users.findOne({ _id: new ObjectId(id) });
+if (found) {
+  await users.deleteOne({ _id: found._id });
+} else {
+  console.log("not found");
+}
+```
+
+## ‌အဓိက အချက်များ
+- deleteOne / deleteMany(filter)
+- deletedCount
+- `{}` — ‌အားလုံး (သတိ)

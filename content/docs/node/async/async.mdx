@@ -1,0 +1,49 @@
+---
+title: "Node.js Async — Asynchronous မိတ်ဆက်"
+description: "Asynchronous — callback, non-blocking — fs, http ဥပမာများ။"
+autoNumbering: true
+---
+
+Node.js ၏ ‌အဓိက ‌အားသာချက် — **asynchronous** I/O — ‌လုပ်‌ဆောင်မှု‌များကို ‌မစောင့်ဘဲ ‌ဆက်‌လုပ်။
+
+## Callback Pattern
+
+```js
+const fs = require("node:fs");
+
+fs.readFile("data.txt", "utf8", (err, data) => {
+  if (err) {
+    console.error("Error:", err);
+    return;
+  }
+  console.log(data);
+});
+console.log("Reading..."); // ‌ရှေ့ပြီး ‌ထွက်
+```
+
+Result — `Reading...` ‌ပထမ, ‌နောက် file content — callback ‌အ‌ချိန်‌မရွေး ‌ခေါ်။
+
+## Callback Hell — ‌သတိထား
+
+```js
+fs.readdir("a", () => {
+  fs.readFile("a/b", () => {
+    // nested callbacks — ‌ဆိုးရွား
+  });
+});
+```
+
+→ ‌နောက် သင်ခန်းစာ: Promises / Async-Await ‌ဖြင့် ‌ဖြေ‌ရှင်း။
+
+## Sync version ‌နှင့် ‌ကွာခြား
+
+```js
+const data = fs.readFileSync("data.txt", "utf8"); // block
+```
+
+Blocking — event loop ‌တစ်ခုလုံး ‌စောင့်ရ — server ‌မူ ‌သုံး ‌ရှောင်။
+
+## အဓိက အချက်များ
+- Callback — async result
+- Non-blocking I/O
+- Callback hell → Promises ‌ဆီ ရွှေ့

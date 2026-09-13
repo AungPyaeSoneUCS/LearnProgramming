@@ -1,0 +1,61 @@
+---
+title: "ES6 Ternary Operator — Ternary (? :)"
+description: "condition ? true : false — if/else ကို ပိုတိုအောင် ရေးနည်း — React render ‌မှာ conditional ပြခြင်း။"
+autoNumbering: true
+---
+
+Ternary operator သည် if/else ကို **တစ်ကြောင်းတည်း** ရေးတဲ့ နည်းလမ်းဖြစ်ပါတယ်။
+
+## Syntax
+
+```js
+condition ? တန်ဖိုး(မှန်) : တန်ဖိုး(မှား)
+```
+
+```js
+const age = 18;
+const canVote = age >= 18 ? "Yes" : "No";
+console.log(canVote); // Yes
+```
+
+## if/else နဲ့ ယှဉ်ကြည့်ခြင်း
+
+```js
+// if/else
+let result;
+if (age >= 18) {
+  result = "Yes";
+} else {
+  result = "No";
+}
+
+// Ternary
+const result = age >= 18 ? "Yes" : "No";
+```
+
+## React Conditional Render
+
+```jsx
+function Welcome({ isLoggedIn }) {
+  return (
+    <div>
+      {isLoggedIn ? <h1>Welcome back!</h1> : <h1>Please sign in</h1>}
+    </div>
+  );
+}
+```
+
+`isLoggedIn` မှန်ရင် အပေါ်, မှားရင် အောက် — render လုပ်ပါတယ်။
+
+## Multiple Condition
+
+```js
+const status = score >= 80 ? "Pass" : score >= 50 ? "Retake" : "Fail";
+```
+
+နက်နက်နှင့် သုံးရင် ဖတ်ရခက်နိုင်လို့ အများကြီးဆို function ‌ခွဲရေးတာ ပိုကောင်းပါတယ်။
+
+## အဓိက အချက်များ
+- `cond ? a : b` — true ဆို a, false ဆို b
+- JSX ‌ထဲမှာလည်း `{cond ? <A/> : <B/>}` အနေနဲ့ သုံးလို့ရတယ်
+- အလွန်ရှုပ်ထွေးရင် if/else သို့မဟုတ် function ခွဲရေးပါ

@@ -1,0 +1,67 @@
+---
+title: "Node.js Lint & Formatting — Linting နှင့် Formatting"
+description: "ESLint + Prettier — install, config, scripts — ဥပမာများ။"
+autoNumbering: true
+---
+
+Code ‌သန့်ရှင်းစေရန် — **ESLint** (rules) + **Prettier** (format) — Node/JS project ‌အ‌တွက် ‌အဓိက။
+
+## Install
+
+```bash
+npm install -D eslint prettier eslint-config-prettier
+npx eslint --init
+```
+
+## ESLint config — `eslint.config.js`
+
+```js
+export default [
+  {
+    files: ["**/*.{js,mjs,ts}"],
+    ignores: ["node_modules", "dist"],
+    rules: {
+      "no-unused-vars": "warn",
+      "eqeqeq": "error",
+      "no-console": "off"
+    }
+  }
+];
+```
+
+## Prettier — `.prettierrc`
+
+```json
+{
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 100
+}
+```
+
+## Scripts — package.json
+
+```json
+"scripts": {
+  "lint": "eslint .",
+  "lint:fix": "eslint . --fix",
+  "format": "prettier --write .",
+  "check": "eslint . && prettier --check ."
+}
+```
+
+## editorconfig — ‌အရင်းခံ
+
+```ini
+root = true
+[*]
+charset = utf-8
+indent_size = 2
+end_of_line = lf
+```
+
+## ‌အဓိက အချက်များ
+- ESLint — rules/quality
+- Prettier — style/format
+  - lint:fix + format — auto fix

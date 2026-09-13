@@ -1,0 +1,59 @@
+---
+title: "MySQL BETWEEN — BETWEEN Operator"
+description: "BETWEEN — range (အ‌ကြားအ‌တွင်း) ‌စစ်ခြင်း — numbers, dates, NOT BETWEEN ။"
+autoNumbering: true
+---
+
+`BETWEEN` operator သည် **‌တန်ဖိုးအ‌ကြား (range) အ‌တွင်း** ဖြစ်သော rows များကို ‌ရွေးပါတယ် — ‌အ‌ပိုင်း ‌အစွန်း ‌တန်ဖိုး ‌နှစ်ခု‌လုံး ‌ပါဝင်သည် (inclusive)။
+
+## Syntax
+
+```sql
+SELECT column1
+FROM table_name
+WHERE column BETWEEN value1 AND value2;
+```
+
+## ဥပမာ — numbers
+
+```sql
+SELECT * FROM products
+WHERE price BETWEEN 100 AND 500;
+```
+
+price 100–500 (‌အစွန်း‌ပါ) ‌အတွင်း။
+
+## NOT BETWEEN
+
+```sql
+SELECT * FROM products
+WHERE price NOT BETWEEN 100 AND 500;
+```
+
+## Dates
+
+```sql
+SELECT * FROM orders
+WHERE order_date BETWEEN '2025-01-01' AND '2025-12-31';
+```
+
+## Text (alphabetical range)
+
+```sql
+SELECT * FROM employees
+WHERE name BETWEEN 'A' AND 'C';
+```
+
+A–C အ‌ကြား A,B,C ‌စာလုံး‌စစ် — C ‌စသူ ‌ပါ (range ‌အစွန်း inclusive)။
+
+## BETWEEN ‌နှင့် IN ‌ကွာခြားမှု
+
+| Operator | ‌ယူသည် |
+| --- | --- |
+| BETWEEN | Range (inclusive) |
+| IN | List values |
+
+## ‌အဓိက အချက်များ
+- BETWEEN x AND y — ‌အ‌ပါအဝင် range
+- Number / date / text ‌သုံးနိုင်
+- NOT BETWEEN — ‌ဆန့်ကျင်ဘက်

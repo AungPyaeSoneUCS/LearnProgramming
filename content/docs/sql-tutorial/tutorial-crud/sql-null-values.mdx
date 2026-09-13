@@ -1,0 +1,48 @@
+---
+title: "sql-null-values"
+description: "NULL ဆိုတာဘာလဲ၊ IS NULL / IS NOT NULL နဲ့ စစ်နည်း။ NULL ≠ 0၊ NULL ≠ နေရာလွတ်။"
+autoNumbering: true
+---
+
+Database မှာ "တန်ဖိုး မရှိဘူး" ဆိုတဲ့ အခြေအနေကို NULL နဲ့ ဖော်ပြပါတယ်။ NULL က 0 လည်း မဟုတ်၊ နေရာလွတ်စာသား ('') လည်း မဟုတ်ပါဘူး။ "မသိ၊ မရှိ" ဆိုတဲ့ အခြေအနေကို ကိုယ်စားပြုပါတယ်။
+
+## NULL ဆိုတာ ဘာလဲ?
+| Value | အဓိပ္ပာယ် |
+| --- | --- |
+| 0 | ကိန်းသုည — တန်ဖိုးရှိတယ် |
+| '' | စာသားလွတ် — တန်ဖိုးရှိတယ် |
+| NULL | တန်ဖိုး မရှိ / မသိရသေးဘူး |
+
+NULL ကို comparison (`=`, `<>`) နဲ့ စစ်လို့ မရပါဘူး။ သီးခြား `IS NULL` သုံးရပါတယ်။
+
+## IS NULL စစ်ခြင်း
+```sql
+SELECT * FROM Customers
+WHERE Age IS NULL;
+```
+ဒီ query က Age မသိရသေးတဲ့ (NULL) ဖောက်သည်တွေကို ပြပါတယ်။ WHERE Age = NULL ဆိုရင် result ဘယ်တော့မှ ထွက်မှာ မဟုတ်လို့ ဒီနည်းကိုပဲ သုံးပါ။
+
+## IS NOT NULL
+```sql
+SELECT * FROM Customers
+WHERE Age IS NOT NULL;
+```
+Age ရှိတဲ့ ဖောက်သည်တွေကို ပြပါတယ်။ NULL အတွက် != သုံးရင် error မဖြစ်ပေမဲ့ logic မှားပါတယ်။
+
+## NULL ကို သတိထားရမယ့် နေရာ — တွက်ချက်မှု
+```sql
+SELECT Name, Age * 2 AS DoubleAge FROM Customers;
+```
+Age NULL ရှိတဲ့ row မှာ Age * 2 က NULL ပဲ ရပါတယ် (0 မဟုတ်)။ NULL ပါတဲ့ ဘယ် arithmetic မဆို NULL ဖြစ်သွားပါတယ်။ (Null Functions lesson မှာ ကိုင်တွယ်နည်း ပါမယ်။)
+
+## NULL တွေ ထပ်ခြင်း (Aggregate)
+```sql
+SELECT AVG(Age) FROM Customers;
+```
+Aggregate functions တွေက NULL ကို ရှောင်ပြီး ကျန်တဲ့ တန်ဖိုးတွေကိုပဲ တွက်ပါတယ်။ (Aggregates lesson မှာ ထပ်လေ့လာပါမယ်။)
+
+## အဓိက အချက်များ
+- NULL = "တန်ဖိုးမရှိ"၊ 0 မဟုတ်၊ '' မဟုတ်
+- NULL ကို IS NULL / IS NOT NULL နဲ့သာ စစ်ပါ
+- NULL ပါတဲ့ တွက်ချက်မှု အားလုံး → NULL
+- Aggregates က NULL တွေကို ကျော်သွားပါတယ်

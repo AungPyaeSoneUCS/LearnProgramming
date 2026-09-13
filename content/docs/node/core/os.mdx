@@ -1,0 +1,46 @@
+---
+title: "Node.js OS Module — OS Module"
+description: "OS Module — system info — platform, cpus, memory — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:os` — ‌ကွန်ပြူတာ (operating system) ၏ ‌အချက်အလက်များ ‌ရယူရန်။
+
+## ‌အသုံးများ Methods
+
+| Method | ‌လုပ် |
+| --- | --- |
+| `os.platform()` | platform (`win32`, `linux`) |
+| `os.arch()` | architecture (`x64`) |
+| `os.cpus()` | CPU ‌အချက်အလက် |
+| `os.totalmem()` | total RAM |
+| `os.freemem()` | free RAM |
+| `os.hostname()` | computer name |
+| `os.homedir()` | home folder |
+| `os.userInfo()` | user info |
+
+## ဥပမာ
+
+```js
+const os = require("node:os");
+
+console.log("Platform:", os.platform());
+console.log("Arch:", os.arch());
+console.log("CPUs:", os.cpus().length);
+console.log("Free RAM (GB):", (os.freemem() / 1024 ** 3).toFixed(2));
+```
+
+## ‌အသုံးပြုမှု
+- System monitoring tools
+- Cross-platform ‌လိုအပ်ချက် ‌စစ်
+- Resource usage ‌ပြ
+
+```js
+const load = os.cpus().map((c) => c.times);
+console.log(load[0]); // { user, nice, sys, idle, irq }
+```
+
+## ‌အဓိက အချက်များ
+- os.platform / arch / cpus
+- totalmem / freemem
+- ‌စောင့်ကြည့်ရေး apps ‌တွင် ‌သုံး

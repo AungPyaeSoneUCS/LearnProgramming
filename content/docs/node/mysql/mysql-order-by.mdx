@@ -1,0 +1,47 @@
+---
+title: "Node.js MySQL Order By — Order By"
+description: "Node + MySQL — ORDER BY, ASC/DESC, LIMIT — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Sort ရလဒ် — ORDER BY col ASC/DESC။
+
+## Sort ascending
+
+```js
+const [rows] = await db.query(
+  "SELECT * FROM users ORDER BY name ASC"
+);
+```
+
+## Descending
+
+```js
+const [rows] = await db.query(
+  "SELECT * FROM users ORDER BY created_at DESC"
+);
+```
+
+## Multiple columns
+
+```js
+const [rows] = await db.query(
+  "SELECT * FROM users ORDER BY city ASC, name DESC"
+);
+```
+
+## With LIMIT — top N
+
+```js
+const [rows] = await db.query(
+  "SELECT * FROM orders ORDER BY amount DESC LIMIT ?",
+  [5]
+);
+```
+
+တန်ဖိုး မြန်စေရန် → order column တွင် index — ဇယား ကြီးလျှင် အသုံးဝင်။
+
+## ‌အဓိက အချက်များ
+- ORDER BY col ASC/DESC
+- Multi-column ‌မီ ဖြစ်နိုင်
+- LIMIT — top rows

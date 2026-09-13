@@ -1,0 +1,54 @@
+---
+title: "sql-intro"
+description: "SQL ဆိုတာ ဘာလဲ၊ Database, RDBMS, Table ဆိုတာ ဘာလဲ အခြေခံ သဘောတရားများ။"
+autoNumbering: true
+---
+
+နည်းပညာ လောကမှာ "Data" က အရည်တစ်မျိုးလိုပါပဲ။ Website, App, Bank, Hospital — အားလုံးက Data ကို သိမ်း၊ ဆွဲ၊ ပြင်နေကြပါတယ်။ အဲဒီ Data တွေကို ဘယ်လို စနစ်ကျကျ သိမ်းပြီး ခိုင်းတယ်ဆိုတာ ဒီ lesson မှာ ကြည့်ကြပါမယ်။
+
+## Database ဆိုတာ ဘာလဲ?
+Database က Data တွေကို စနစ်တကျ သိမ်းဆည်းတဲ့ နေရာပါ။ Excel sheet တစ်ခုနဲ့ ဆင်ပါတယ်။ ဒါပေမဲ့ Database က ပိုပြီး မြန်တယ်၊ လုံခြုံတယ်၊ တစ်ပြိုင်နက် လူဘယ်နှစ်ယောက်ဖြစ်ဖြစ် ဝင်သုံးလို့ရတယ်။
+
+## RDBMS ဆိုတာ ဘာလဲ?
+RDBMS = Relational Database Management System
+
+ဒါက Table တွေနဲ့ သိမ်းပြီး၊ Table တစ်ခုနဲ့တစ်ခု "ဆက်စပ်" (relationship) ထားနိုင်တဲ့ Database အမျိုးအစား ဖြစ်ပါတယ်။
+
+ဥပမာ — Customers ဇယားနဲ့ Orders ဇယားကို ကြည့်ရအောင်။
+
+```sql
+-- Customers ဇယား
+SELECT * FROM Customers;
+ 
+-- Orders ဇယား
+SELECT * FROM Orders;
+```
+ပထမ query က Customers ဇယားအတွင်း အားလုံးကို ပြပါတယ်။ ဒုတိယ query က Orders ဇယား အားလုံးကို ပြပါတယ်။ SELECT * က "ကော်လံအားလုံးကို ရွေးပါ" လို့ အဓိပ္ပာယ်ရပါတယ်။
+
+အဲဒီဆက်စပ်ချက်ကို "Primary Key" နဲ့ "Foreign Key" နဲ့ ဆောက်တယ်။ (Module 2 မှာ အပြည့်အစုံ ပါမယ်)။
+
+## Table ဆိုတာ ဘာလဲ?
+Table  ယာ = Rows (အတန်း) + Columns (ကော်လံ) ပေါင်းထားတဲ့ grid ဖြစ်ပါတယ်။
+
+| CustomerID | Name | City |
+| --- | --- | --- |
+| 1 | Aung | Yangon |
+| 2 | Su | Mandalay |
+
+- Row တစ်ခု = ဖောက်သည် တစ်ယောက် (record)
+- Column တစ်ခု = ဒေတာရဲ့ သတ်မှတ်ချက် (attribute)
+
+## SQL နှင့် နာမည်ကြီး Database တွေ
+| Database | ထူးခြားချက် |
+| --- | --- |
+| MySQL | Open source၊ နာမည်အကြီးဆုံး |
+| PostgreSQL | Open source၊ advanced features များ |
+| SQL Server | Microsoft ရဲ့ enterprise solution |
+| Oracle | ကြီးမားတဲ့စနစ်များအတွက် |
+
+အားလုံးက အတူတူနီးပါး SQL ကို သုံးပါတယ်။ ဒါပေမဲ့ ပြောင်းလဲချက်အနည်းငယ် (ဥပမာ LIMIT ရဲ့ syntax) ရှိတတ်ပါတယ်။
+
+## အဓိက အချက်များ
+- SQL က Data တွေကို ကြည့်/ထည့်/ပြင်/ဖျက်ဖို့ သုံးတဲ့ ဘာသာစကား
+- RDBMS တွေက Table ပုံစံနဲ့ Data သိမ်းပြီး ဆက်စပ်စီမံတယ်
+- SELECT က မကြာခဏ သုံးရဆုံး statement

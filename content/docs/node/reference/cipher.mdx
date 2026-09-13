@@ -1,0 +1,48 @@
+---
+title: "Node.js Cipher — Cipher class"
+description: "Cipher — crypto ‌ကို encrypt — createCipheriv — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:crypto` **Cipher** — data encryption (symmetric stream)။
+
+## createCipheriv
+
+```js
+const crypto = require("node:crypto");
+
+const algorithm = "aes-256-gcm";
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(12);
+
+const cipher = crypto.createCipheriv(algorithm, key, iv);
+
+const msg = "secret text";
+let encrypted = cipher.update(msg, "utf8", "hex");
+encrypted += cipher.final("hex");
+
+console.log(encrypted);
+```
+
+## ‌ပုံစံ
+
+```js
+const cipher = crypto.createCipheriv(algorithm, key, iv);
+let out = cipher.update(data, "utf8", "base64");
+out += cipher.final("base64");
+```
+
+`update` — ‌ရှေ့ဆောင်း chunk data; `final` — ‌အဆုံးသတ် ‌ပေါင်း။
+
+## GCM auth tag
+
+```js
+const tag = cipher.getAuthTag();
+```
+
+Decrypt ‌ရန် ‌tag ‌လို — integrity ‌စစ်။
+
+## ‌အဓိက အချက်များ
+- createCipheriv(algorithm, key, iv)
+- update + final
+- Key/iv — random, keep secret

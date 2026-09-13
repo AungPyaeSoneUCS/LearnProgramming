@@ -1,0 +1,58 @@
+---
+title: "sql-database-drop-db"
+description: "DROP DATABASE — database တစ်ခုလုံး ဖျက်ခြင်း (သတိထားစရာ၊ backup မလိုပါ)။"
+autoNumbering: true
+---
+
+DROP DATABASE က database တစ်ခုလုံးကို — table တွေ၊ data တွေ၊ အကုန် — ဖျက်ပါတယ်။ ပြန်ရှာလို့မရတဲ့အတွက် အလွန် သတိထားရပါတယ်။
+
+## DROP DATABASE
+```sql
+-- SQL Server / MySQL
+DROP DATABASE ShopDB;
+ 
+-- MySQL — မရှိရင် မဖျက်ဘဲ skip
+DROP DATABASE IF EXISTS ShopDB;
+```
+DB မရှိရင် error ကြုံလည်း IF EXISTS က safe ဖြစ်စေပါတယ်။ ဖျက်ပြီးရင် database က လုံးဝ ပျောက်ပါတယ်။
+
+## ဘာတွေ အရှုံးဖြစ်လဲ?
+DROP DATABASE က ဖျက်တာ:
+
+- Table တွေ + data
+- Stored procedures, views
+- Indexes, trigger, permissions
+
+Backup မရှိရင် — ဒေတာတွေ ဆုံးပါတယ်။
+
+## Production မှာ သတိထား
+```sql
+-- Safe habit: drop မလုပ်ခင် backup
+BACKUP DATABASE ShopDB TO DISK = 'D:\backups\ShopDB.bak';
+DROP DATABASE ShopDB;
+```
+အမြဲ backup အရင်လုပ်ပြီးမှ drop ပါ။ (Backup lesson မှာ အပြည့်အစုံ ပါမယ်။)
+
+## CLI Tools ဖြင့် Drop
+```sql
+-- MySQL CLI
+mysqladmin -u root -p drop ShopDB;
+ 
+-- PostgreSQL
+dropdb shopdb;
+```
+CLI tool တွေနဲ့လည်း drop လို့ရပါတယ် — ဒါပေမဲ့ interactive password တပ်ဆင်ထားရပါတယ်။
+
+## Rollback ရလဲရချင်လား?
+```sql
+BEGIN TRANSACTION;
+DROP DATABASE ShopDB;  -- SQL Server မှာ rollback ရနိုင်ပေမဲ့
+ROLLBACK;              -- MySQL မှာ DDL auto-commit ဖြစ်လို့ rollback မရပါ
+```
+Database DDL statement တွေ (DROP/CREATE) က transaction-safe မဟုတ်တဲ့ DB တွေ ရှိပါတယ်။ Backup ကသာ အစားထိုးမရတဲ့ အာမခံပါ။
+
+## အဓိက အချက်များ
+- DROP DATABASE name — အကုန်ဖျက်
+- IF EXISTS — safe scripting
+- Backup အရင်လုပ်ပါ
+- DDL က auto-commit ဖြစ်တတ်လို့ rollback သေချာမရဘူး

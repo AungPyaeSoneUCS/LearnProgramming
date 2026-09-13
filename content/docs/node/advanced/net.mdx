@@ -1,0 +1,62 @@
+---
+title: "Node.js Net Module — Net Module"
+description: "Net — raw TCP sockets — server/client — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:net` — **raw TCP** sockets — custom protocols, low-level networking။
+
+## TCP server
+
+```js
+const net = require("node:net");
+
+const server = net.createServer((socket) => {
+  socket.write("Welcome!\n");
+
+  socket.on("data", (data) => {
+    console.log("received:", data.toString());
+    socket.write("echo: " + data);
+  });
+
+  socket.on("end", () => socket.end());
+});
+
+server.listen(9000, () => console.log("TCP server on 9000"));
+```
+
+## Client
+
+```js
+const net = require("node:net");
+
+const socket = net.connect(
+  { port: 9000, host: "localhost" },
+  () => {
+    socket.write("hello");
+  }
+);
+
+socket.on("data", (data) => console.log(data.toString()));
+```
+
+## UDP? — dgram
+
+```js
+const dgram = require("node:dgram");
+const client = dgram.createSocket("udp4");
+
+client.send(Buffer.from("ping"), 41234, "localhost");
+```
+
+TCP — connection; UDP — datagram ခွဲ၍ ပို့ (fast, အာမခံ မဟုတ်)။
+
+## ‌အသုံးပြုမှု
+- Custom protocols (grep custom server)
+- Chat / game servers
+- Tunneling, load balancer
+
+## ‌အဓိက အချက်များ
+- net.createServer(socket)
+- socket.on data/end
+- UDP — dgram client

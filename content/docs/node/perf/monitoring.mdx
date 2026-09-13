@@ -1,0 +1,64 @@
+---
+title: "Node.js Monitoring — Monitoring"
+description: "Monitoring — metrics, health checks, Prometheus — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+App ၏ ‌အခြေ‌အ‌နေ — ‌ကစ် limits, response ‌မြန် — monitoring tools။
+
+## Health check
+
+```js
+app.get("/healthz", (req, res) => {
+  res.json({ status: "ok", uptime: process.uptime() });
+});
+```
+
+## Metrics — os + process
+
+```js
+const os = require("node:os");
+
+app.get("/metrics", (req, res) => {
+  res.json({
+    memory: process.memoryUsage(),
+    load: os.loadavg(),
+    uptime: process.uptime(),
+  });
+});
+```
+
+## Prometheus client
+
+```bash
+npm install prom-client
+```
+
+```js
+const client = require("prom-client");
+
+const httpCounter = new client.Counter({
+  name: "http_requests_total",
+  help: "request count",
+});
+
+app.use((req, res, next) => {
+  httpCounter.inc();
+  next();
+});
+
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", client.register.contentType);
+  res.end(await client.register.metrics());
+});
+```
+
+## Alert setup
+- Heartbeat — ‌Madrql period ‌စစ်
+- 5xx rate / latency threshold
+- Notifications — email, Slack
+
+## ‌အဓိက အချက်များ
+- /healthz check
+- Metrics (prom-client)
+- Alerts — thresholds

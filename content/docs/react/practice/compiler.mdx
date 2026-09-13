@@ -1,0 +1,51 @@
+---
+title: "React Compiler — React Compiler"
+description: "React Compiler — build ‌ချိန် memoization ‌အလိုအလျောက် ‌လုပ်ခြင်း — Babel/SWC ‌သုံး compile ။"
+autoNumbering: true
+---
+
+React ‌၏ source code ‌သည် JSX‑ပုံစံများ ‌ဖြစ်၍ browser က browser ‌နားမလည်ပါ — ထို‌ကြောင့် **compiler** (Babel/SWC) ဖြင့် browser ‌အသုံးပြုနိုင်သော JS သို့ ‌ပြောင်းရပါသည်။
+
+## ‌ဘာကြောင့် Compile ‌လိုအပ်လဲ
+
+JSX ‌သည် browser က ‌ဖတ်၍ မရပါ — ထို‌ကြောင့် ‌ပြောင်းမှုလိုအပ်ပါသည်။
+
+```jsx
+// ‌မူရင်း JSX
+const element = <h1>Hello World</h1>;
+```
+
+```js
+// compile ‌ပြီးသော JS
+const element = React.createElement("h1", null, "Hello World");
+```
+
+## React Compiler (automatic memoization)
+
+React 19 ‌မှ စ၍ ‌မိတ်ဆက် — developer က `useMemo`/`useCallback` ‌ရေးစရာမလို၊ compiler ‌မှ memoization ‌အလိုအလျောက် ‌လုပ်ပေးပါသည်။
+
+```bash
+npm install babel-plugin-react-compiler
+```
+
+Or with Vite:
+
+```bash
+npm install vite-plugin-react
+```
+
+## ‌ဘယ်အချိန် compile ဖြစ်လဲ
+
+- Development — dev server (‌ဥပမာ Next.js dev) မှာ on‑the‑fly
+- Production build — `npm run build` ‌အချိန် optimized bundle
+
+## စမ်းကြည့် — code ‌ရလဒ်
+
+```bash
+npx babel --plugins @babel/plugin-react-transform src/App.jsx
+```
+
+## ‌အဓိက အချက်များ
+- JSX → JS ‌ပြောင်းရန် compiler လိုအပ်
+- Babel / SWC — ‌အသုံးများ
+- React Compiler — memoization ‌ကို ‌အလိုအလျောက်

@@ -1,0 +1,88 @@
+﻿---
+title: "React Checkbox — Checkbox"
+description: "React ‌မှာ checkbox ‌ထိန်းချုပ်နည်း — checked, onChange, group checkbox ‌များစွာ။"
+autoNumbering: true
+---
+
+React ‌မှာ checkbox ‌ကို `checked` (value ‌မဟုတ်) ‌နဲ့ ထိန်းချုပ်ပြီး, `event.target.checked` ‌နဲ့ ‌အခြေအနေ ‌ရယူပါတယ်။
+
+## ‌ရိုးရိုး Checkbox
+
+```jsx
+function MyForm() {
+  const [isChecked, setIsChecked] = useState(false);
+
+  return (
+    <div>
+      <input
+        type="checkbox"
+        checked={isChecked}
+        onChange={(e) => setIsChecked(e.target.checked)}
+      />
+      <label>သတ်မှတ်ချက် ‌စာသား (Terms)</label>
+      <p>
+        {isChecked ? "✓ ‌လက်ခံ ထားပြီး" : "✗ ‌လက်မခံရသေး"}
+      </p>
+    </div>
+  );
+}
+```
+
+## `checked` vs `value`
+
+- `value` — checkbox ‌ရဲ့ ‌တန်ဖိုး (submit မှာ ‌ထည့်သွင်း)
+- `checked` — checkbox ရဲ့ ‌အခြေအနေ (selected or not)
+
+```jsx
+<input
+  type="checkbox"
+  value="newsletter"
+  checked={agreed}
+  onChange={(e) => setAgreed(e.target.checked)}
+/>
+```
+
+## Checkbox အများအပြား
+
+```jsx
+function MyForm() {
+  const [selected, setSelected] = useState([]);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSelected((prev) =>
+      prev.includes(value)
+        ? prev.filter((v) => v !== value)
+        : [...prev, value]
+    );
+  };
+
+  const toppings = ["Cheese", "Tomato", "Onion"];
+
+  return (
+    <div>
+      {toppings.map((t) => (
+        <label key={t}>
+          <input
+            type="checkbox"
+            value={t}
+            checked={selected.includes(t)}
+            onChange={handleChange}
+          />
+          {t}
+        </label>
+      ))}
+      <p>ရွေးထားတာ: {selected.join(", ") || "—"}</p>
+    </div>
+  );
+}
+```
+
+- နှိပ်ပြီးပြီးသား ဆို `filter` နဲ့ ‌ဖယ်
+- မရွေးရသေးဆို `spread` နဲ့ ‌ထည့်
+- `checked={selected.includes(t)}` — ‌ပြန်ပြီး ‌သေချာ ‌အမှတ်
+
+## အဓိက အချက်များ
+- Checkbox state = boolean (`isChecked`)
+- `event.target.checked` — ‌အခြေအနေ
+- Group checkbox — array state + includes/filter

@@ -1,0 +1,71 @@
+---
+title: "sql-database-hosting"
+description: "Database hosting — local, cloud (AWS/Azure/GCP), managed services ရွေးချယ်ခြင်း။"
+autoNumbering: true
+---
+
+Database "ဘယ်နေရာမှာ နေမလဲ" ဆိုတာ hosting choice က ဆုံးဖြတ်ပေးပါတယ်။ Database host ရှိနေရင် web app က မရှိလို့ — hosting plan တွေက database tier ကိုလည်း ပါအောင် ထည့်ပြီး package လုပ်ပေးပါတယ်။
+
+## Localhost
+```bash
+# ကိုယ့် PC ပေါ်မှာ dev database
+mysql -u root -p
+```
+- Dev/testing — အလွန်အဆင်ပြေ
+- Production အကြီးစား — NO (scalability/backup)
+- ဘာမှ ပေးချေစရာမလို
+
+## Shared Hosting
+```sql
+-- cPanel / phpMyAdmin ကနေ DB create
+CREATE DATABASE shopdb;
+```
+- Website hosting package နဲ့ပါလာတတ်
+- DB ၁ ခု / ၂ ခု — small app
+- CPU/RAM share — ဆိုင်ရာ limitation
+
+## Cloud Database
+| Service | Made by |
+| --- | --- |
+| AWS RDS / Aurora | Amazon |
+| Azure SQL Database | Microsoft |
+| Cloud SQL | Google |
+| Rackspace Cloud DB | Rackspace |
+
+- Managed — backup, patch, scaling က provider ပဲ လုပ်ပေး
+- High availability — replica
+- Pay-as-you-go
+
+## Managed vs Self-Managed
+|  | Managed (RDS etc.) | Self-managed (EC2 + install) |
+| --- | --- | --- |
+| Setup | ၁၀ မိနစ် | နာရီပေါင်းများစွာ |
+| Backup | Auto | ကိုယ်တိုင် |
+| Scaling | Easy | Manual |
+| Control | နည်း | Full |
+| Cost | ပိုမြင့် (labor မ ရှိ) | ပိုနည်း (labor များ) |
+
+## DB တစ်ခုရွေးတဲ့အခါ စဉ်းစားစရာ
+1. Workload — read-heavy? write-heavy? (index, replica)
+2. Traffic scale — concurrent users
+3. Data volume
+4. Geography — region (latency)
+5. Budget — storage/egress cost
+
+## Cloud ကို code ချိတ်ခြင်း
+```js
+const mysql = require('mysql');
+const conn = mysql.createConnection({
+  host: process.env.DB_HOST,      // e.g. mydb-cluster.region.rds.amazonaws.com
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME
+});
+```
+Credentials ကို code  ထဲ မ ထည့်ဘဲ environment variables / secrets manager မှာ ထားပါ။
+
+## အဓိက အချက်များ
+- Local — dev, Cloud — production
+- Managed DB (RDS/Azure SQL) — backup + scaling auto
+- Region — latency
+- Secrets — env vars / secret manager

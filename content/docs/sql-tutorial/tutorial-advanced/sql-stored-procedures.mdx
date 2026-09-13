@@ -1,0 +1,78 @@
+---
+title: "sql-stored-procedures"
+description: "Stored Procedure — SQL statements တွေကို function လို သိမ်းပြီး parameters နဲ့ ပြန်ခေါ်ခြင်း။"
+autoNumbering: true
+---
+
+"ဒီအစုအဝေး SQL တွေကို ထပ်ခါထပ်ခါ ရေးနေရတယ်" ဆိုရင် Stored Procedure ကို သုံးပါတယ်။ SQL statements တွေကို name ပေးပြီး သိမ်းထား၊ parameter တွေနဲ့ ပြန်ခေါ်ပါတယ်။
+
+## Stored Procedure ဖန်တီးခြင်း (SQL Server)
+```sql
+CREATE PROCEDURE GetCustomersByCity
+    @City NVARCHAR(255)
+AS
+BEGIN
+    SELECT * FROM Customers WHERE City = @City;
+END;
+```
+GetCustomersByCity ဆိုတဲ့ procedure ကို ဖန်တီးပြီး @City က parameter ပါ။ Run ရင် ဘယ်မြို့ပဲ ပေးပေး ဒီ query ကို ပြန်ပြေးပါမယ်။
+
+## ခေါ်ယူခြင်း (Execute)
+```sql
+-- SQL Server
+EXEC GetCustomersByCity @City = 'Yangon';
+ 
+-- MySQL
+CALL GetCustomersByCity('Yangon');
+```
+Parameter ပြောင်းပြီး ထပ်ခေါ်လို့ရပါတယ် — procedure က query ရဲ့ reusable "နမူနာပုံစံ" ပါ။
+
+## MySQL Syntax
+```sql
+DELIMITER $$
+ 
+CREATE PROCEDURE GetCustomersByCity(IN pCity VARCHAR(255))
+BEGIN
+    SELECT * FROM Customers WHERE City = pCity;
+END$$
+ 
+DELIMITER ;
+```
+MySQL မှာ DELIMITER အသုံးပြုပြီး body ထဲက semicolon တွေ ပြတ်မသွားအောင် လုပ်ပါတယ်။ @City နဲ့ တူပေမဲ့ syntax က အနည်းငယ် ကွဲပါတယ်။
+
+## Parameter ၂ ခု
+```sql
+CREATE PROCEDURE UnderPrice
+    @MaxPrice DECIMAL(10,2)
+AS
+BEGIN
+    SELECT * FROM Products WHERE Price < @MaxPrice;
+END;
+ 
+EXEC UnderPrice @MaxPrice = 100;
+```
+Price 100 ်အောက် products တွေကို ပြပါတယ်။ Procedure တွေက Filter နဲ့ ပေါင်းစပ်ပြီး အထူးပြုလုပ်ပါတယ်။
+
+## Procedure ဖျက်ခြင်း & ပြောင်းခြင်း
+```sql
+DROP PROCEDURE UnderPrice;
+ 
+-- ရှိပြီးသားကိုက်အောင်မပြောင်းရင်
+CREATE OR ALTER PROCEDURE UnderPrice
+    @MaxPrice DECIMAL(10,2)
+AS
+SELECT * FROM Products WHERE Price < @MaxPrice;
+```
+DROP PROC က ဖျက်၊ CREATE OR ALTER (SQL Server 2016+) က update လုပ်ပါတယ်။
+
+## ဘာလို့ Stored Procedure သုံးလဲ?
+- Reuse — ရေးထားတဲ့ logic ကို ပြန် run
+- Security — direct table access မပေးဘဲ procedure ကနေသာ
+- Performance — plan ကို database က သိမ်းထားလို့ ပြန်တွက်စရာမလို
+- Maintainability — logic တစ်နေရာတည်းမှာ ပြင်လို့ရ
+
+## အဓိက အချက်များ
+- CREATE PROCEDURE → သိမ်း၊ EXEC/CALL → ခေါ်
+- Parameter တွေနဲ့ flexible
+- Syntax က DB အလိုက်ကွဲ (SQL Server @, MySQL IN)
+- Reuse / security / performance အတွက်

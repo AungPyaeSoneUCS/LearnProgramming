@@ -1,0 +1,49 @@
+---
+title: "Node.js Worker — Worker"
+description: "Worker — worker_threads — workerData, postMessage — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:worker_threads` Worker — CPU work ‌ကို ‌ခြားသော thread ‌သို့ ‌ပေး။
+
+## Create
+
+```js
+const { Worker } = require("node:worker_threads");
+
+const worker = new Worker("./heavy.js", { workerData: { n: 200 } });
+
+worker.on("message", (msg) => console.log(msg));
+worker.on("error", console.error);
+worker.on("exit", (code) => console.log("exit", code));
+```
+
+## Worker file
+
+```js
+const { parentPort, workerData } = require("node:worker_threads");
+
+let out = 0;
+for (let i = 0; i < workerData.n; i++) out += i;
+
+parentPort.postMessage(out);
+```
+
+## Messaging
+
+```js
+// main → worker
+worker.postMessage("ping");
+
+// worker side
+parentPort.on("message", (m) => parentPort.postMessage(m + " pong"));
+```
+
+## Options
+- `workerData` — initial data
+- `resourceLimits` — memory ‌အကန့်သတ်
+
+## ‌အဓိက အချက်များ
+- `Worker(file, { workerData })`
+- postMessage / on message
+- exit/error handlers

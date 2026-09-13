@@ -1,0 +1,51 @@
+---
+title: "sql-avg"
+description: "AVG() နဲ့ numeric column ရဲ့ ပျမ်းမျှ တန်ဖိုး။"
+autoNumbering: true
+---
+
+AVG() က column တစ်ခုရဲ့ တန်ဖိုးတွေရဲ့ arithmetic mean ကို တွက်ပါတယ်။ Sum ကို Count နဲ့ စားတာနဲ့ အတူတူပါပဲ။
+
+## AVG() အခြေခံ
+```sql
+SELECT AVG(Price) AS AveragePrice FROM Products;
+```
+Products ရဲ့ ပျမ်းမျှ Price ကို ပြပါတယ်။ (25+45+150+10)/4 = 57.5။ NULL ပါတဲ့ row ကို ထည့်မတွက်ပါဘူး။
+
+## AVG() + WHERE
+```sql
+SELECT AVG(Price) FROM Products
+WHERE Category = 'Phone';
+```
+Phone category ထဲမှ ပျမ်းမျှ price ကိုပဲ တွက်ပါတယ်။
+
+## AVG() + GROUP BY
+```sql
+SELECT Category, AVG(Price) AS AvgPrice
+FROM Products
+GROUP BY Category;
+```
+Category တစ်ခုစီရဲ့ ပျမ်းမျှ price ကို row စီအဖြစ် ပြပါတယ်။
+
+## ပျမ်းမျှ အကြောင်း သတိ
+```sql
+SELECT AVG(Age) FROM Customers;
+```
+ဥပမာ Ages: 20, 25, NULL, 30 → ဒီ query က (20+25+30)/3 = 25 ပြန်ပါတယ်။ NULL row ကို ရှောင်လိုက်လို့ denominator က 4 မဟုတ်ဘဲ 3 ဖြစ်ပါတယ်။ ဒါက မမျှော်လင့်တဲ့ result ဖြစ်စေနိုင်လို့ NULL တွေ ရှိလား သတိထားပါ။
+
+## AVG() က Decimal Return
+```sql
+SELECT AVG(Price) FROM Products;
+```
+ကျန် စားခြင်း ဖြစ်လို့ AVG က decimal ဖြစ်နိုင်ပါတယ်။ ROUND() နဲ့ ဝိုင်းလို့ရတယ်:
+
+```sql
+SELECT ROUND(AVG(Price), 2) AS AvgPrice FROM Products;
+```
+ROUND(x, 2) က ဒသမနှစ်နေရာအထိ ဝိုင်းပြီး 57.50 လို ပြပါတယ်။ (Module 3 function reference မှာ ကြည့်ပါ။)
+
+## အဓိက အချက်များ
+- AVG(col) → mean (sum/count)
+- NULL တွေကို ကျော်လို့ denominator လျော့နိုင်ပါတယ်
+- Decimal return — ROUND နဲ့ ဝိုင်းလို့ရတယ်
+- GROUP BY နဲ့ group အလိုက် avg ရတယ်

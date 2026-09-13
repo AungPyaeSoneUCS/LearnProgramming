@@ -1,0 +1,58 @@
+---
+title: "MySQL Check — CHECK Constraint"
+description: "CHECK — ‌တန်ဖိုး condition မှန်မှသာ ‌ထည့်‌ခွင့် — range, list ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`CHECK` constraint သည် column ‌တွင်းသို့ **condition ကိုက်ညီသော ‌တန်ဖိုးများသာ** ‌ထည့်‌ခွင့် — condition ‌မမှန်လျှင် error။
+
+## ‌ဥပမာ — CREATE TABLE
+
+```sql
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  age INT,
+  CHECK (age >= 18)
+);
+```
+
+`age` 18 အောက် ‌ထည့်လျှင် ‌လက်‌ခံ‌မရ — error။
+
+## ‌ဥပမာ ‌လဲက်
+
+```sql
+INSERT INTO users (id, age) VALUES (1, 20);  -- OK
+INSERT INTO users (id, age) VALUES (2, 15);  -- error
+```
+
+## Inline CHECK — column ‌အမှာ
+
+```sql
+CREATE TABLE products (
+  id INT PRIMARY KEY,
+  price DECIMAL(10,2) CHECK (price >= 0)
+);
+```
+
+## Named CHECK + list ‌စစ်
+
+```sql
+CREATE TABLE orders (
+  id INT PRIMARY KEY,
+  status VARCHAR(20),
+  CONSTRAINT chk_status CHECK (status IN ('pending','paid','shipped','done'))
+);
+```
+
+status က ‌သတ်မှတ် list ‌ထဲသာ — ‌အခြားရေးချက် error။
+
+## ALTER ‌နောက်မှ
+
+```sql
+ALTER TABLE users ADD CONSTRAINT chk_age CHECK (age BETWEEN 18 AND 60);
+```
+
+## ‌အဓိက အချက်များ
+- CHECK (condition)
+- Range / list / expression
+- ALTER ADD CONSTRAINT ‌ဖြင့် ‌နောက်မှ ‌ထည့်

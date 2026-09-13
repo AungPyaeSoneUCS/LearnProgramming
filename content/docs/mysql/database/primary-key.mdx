@@ -1,0 +1,56 @@
+---
+title: "MySQL Primary Key — PRIMARY KEY"
+description: "Primary Key — rows ‌အ‌တွက် unique identifier — CREATE, ALTER ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+**PRIMARY KEY** သည် ‌ဇယားထဲ **row တစ်ခုချင်းစီကို ‌ခွဲခြား** ‌ပေးသော column (‌သို့) columns ‌ပေါင်း — ‌တန်ဖိုး ‌တူ ‌မရ+ NULL ‌မရ။
+
+## ‌ဥပမာ — CREATE TABLE
+
+```sql
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  name VARCHAR(100)
+);
+```
+
+`id` ‌သည် unique — `WHERE id = 5` ‌ဖြင့် row ‌တစ်ခုကို ‌သေချာခွဲ။
+
+## Composite primary key — columns ‌ပေါင်း
+
+```sql
+CREATE TABLE order_items (
+  order_id INT,
+  product_id INT,
+  qty INT,
+  PRIMARY KEY (order_id, product_id)
+);
+```
+
+## ‌တန်ဖိုး rules
+- NULL ‌မဖြစ်ရ
+- Duplicate ‌မဖြစ်ရ
+- ‌ဇယားတစ်ခုတွင် primary key ‌တစ်ခုသာ
+
+## AUTO_INCREMENT — ‌အလိုအလျောက်
+
+```sql
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100)
+);
+```
+
+Insert ‌လုပ်ချိန် id ‌ဝင်း ‌နေလို့ ‌ရ — အလိုအလျောက် 1,2,3...။
+
+## ALTER — နောက်မှ သတ်မှတ်
+
+```sql
+ALTER TABLE users ADD PRIMARY KEY (id);
+```
+
+## ‌အဓိက အချက်များ
+- PRIMARY KEY — unique + not-null
+- Row ‌ခွဲခြားမှု ‌အ‌ခြေ
+- Composite / AUTO_INCREMENT ‌ရနိုင်

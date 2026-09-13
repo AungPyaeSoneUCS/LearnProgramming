@@ -1,0 +1,79 @@
+---
+title: "sql-database-foreign-key"
+description: "FOREIGN KEY — parent/child table ချိတ်ဆက်ပြီး referential integrity ထိန်းခြင်း။"
+autoNumbering: true
+---
+
+Foreign key (FK) က table ၂ခုကို ချိတ်ဆက်ပေးပါတယ် — child table ရဲ့ column က parent table ရဲ့ primary key ညွှန်းပါတယ်။ "referential integrity" အတွက် အရေးကြီးပါတယ်။
+
+## FK နားလည်အောင်
+```sql
+-- Parent (PK: CustomerID)
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    Name VARCHAR(100)
+);
+ 
+-- Child (FK → Customers.CustomerID)
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+```
+Orders.CustomerID က Customers.CustomerID ကို ညွှန်းပါတယ် — "Order တစ်ခုက ဖောက်သည် တစ်ယောက်ကို ဆိုင်ပြီး၊ အဲဒီဖောက်သည် ရှိရမယ်"။
+
+## FK က ဘာတွေတားဆီးပေးလဲ?
+```sql
+-- Customer 99 က မရှိ → Error: FK violation
+INSERT INTO Orders (CustomerID) VALUES (99);
+ 
+-- Customer 1 ကို ဖျက်ချင်ရင် order 1 ရှိနေလို့ → Error (default)
+DELETE FROM Customers WHERE CustomerID = 1;
+```
+FK က (1) မရှိတဲ့ parent ကိုညွှန်းတဲ့ child မထည့်အောင်၊ (2) child reference ရှိနေတဲ့ parent ကိုဖျက်မရအောင် ကာကွယ်ပေးပါတယ်။
+
+## ON DELETE — ဘာလုပ်မလဲ
+```sql
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+        ON DELETE CASCADE   -- ဖောက်သည် ဖျက်ရင် order ပါဖျက်
+        ON UPDATE CASCADE
+);
+```
+| Action | Meaning |
+| --- | --- |
+| CASCADE | Parent ဖျက်ရင် child ကိုပါ ဖျက် |
+| SET NULL | Child FK ကိုပဲ NULL ထား |
+| SET DEFAULT | Child FK ကို default ထား |
+| RESTRICT / NO ACTION | Parent ဖျက်တာ တားမြစ် (default) |
+
+ဘယ်ဟာ ရွေးမလဲ — လုပ်ငန်း rule ပေါ်မူတည်ပြီး၊ "order history မပျောက်ချင်ဘူး" ဆို SET NULL / RESTRICT ကို ရွေး ("deleted customer" record ကိုလည်း ထားနိုင်ပါတယ်)။
+
+## Multiple FK — Self-referencing
+```sql
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    ManagerID INT,
+    FOREIGN KEY (ManagerID) REFERENCES Employees(EmployeeID)
+);
+```
+Employee ကိုယ်တိုင် ကိုယ့် table ကို ချိတ်တာ — hierarchical structure (boss → team)  အတွက်။
+
+## Drop / Disable
+```sql
+-- Drop FK
+ALTER TABLE Orders DROP CONSTRAINT FK_Orders_Customers;
+ 
+-- Disable (SQL Server) — migration ကာလအတွင်း
+ALTER TABLE Orders NOCHECK CONSTRAINT FK_Orders_Customers;
+```
+
+## အဓိက အချက်များ
+- FK — child က parent ကိုညွှန်း (referential integrity)
+- ON DELETE: CASCADE / SET NULL / RESTRICT
+- Self-referencing — hierarchy
+- FK violation error — app layer မှာ handle လုပ်ထားပါ

@@ -1,0 +1,61 @@
+---
+title: "sql-like"
+description: "LIKE operator နဲ့ text pattern ('A%', '%a', '%an%') ကိုက်ညီမှု ရှာနည်း။"
+autoNumbering: true
+---
+
+Column တန်ဖိုး အတိအကျ မသိဘဲ "အစစ A နဲ့ စတယ်" လိုမျိုး pattern နဲ့ ရှာချင်တဲ့အခါ LIKE သုံးပါတယ်။ Wildcard နဲ့ တွဲပြီး flexible search လုပ်ပေးပါတယ်။
+
+## LIKE အခြေခံ — နာမည်အစ A
+```sql
+SELECT * FROM Customers
+WHERE Name LIKE 'A%';
+```
+'A%' — A နဲ့စပြီး နောက်က ဘာဖြစ်ဖြစ် (% = any စာလုံးတွေ)။ "Aung", "Audrey" စသဖြင့် ရှာတွေ့ပါတယ်။
+
+## နာမည်အဆုံး 'a'
+```sql
+SELECT * FROM Customers
+WHERE Name LIKE '%a';
+```
+'%a' — a နဲ့ အဆုံးသတ်တဲ့ နာမည်။ "Lina", "Anna" စတာတွေ ပါပါတယ်။
+
+## ဘယ်နေရာမှာမဆို ပါတဲ့ pattern
+```sql
+SELECT * FROM Customers
+WHERE Name LIKE '%an%';
+```
+'%an%' — name ထဲ ဘယ်နေရာမှာမဆို "an" ပါတဲ့သူတွေ ("Nandar", "Andy", "Manual" စသဖြင့်)။
+
+## စာလုံးတစ်လုံးစီ wildcard
+```sql
+SELECT * FROM Customers
+WHERE Name LIKE '_o%';
+```
+_ က စာလုံးတစ်လုံးစီပဲ ကိုယ်စားပြုပါတယ်။ _o% = ဒုတိယစာလုံးက 'o' ဖြစ်တဲ့ name ("Ko Ko", "Momoko")။ % က အရေအတွက်မကန့်သတ်ပေမဲ့ _ က တစ်လုံးတည်း။
+
+## NOT LIKE
+```sql
+SELECT * FROM Customers
+WHERE Name NOT LIKE 'A%';
+```
+A နဲ့ မစတဲ့ နာမည် တွေကိုသာ ပြပါတယ်။
+
+## Combined Patterns
+```sql
+SELECT * FROM Customers
+WHERE Name LIKE 'A%' OR Name LIKE 'K%';
+```
+A သို့မဟုတ် K နဲ့ စတဲ့ နာမည်တွေ။ Pattern များစွာကို AND/OR နဲ့ ပေါင်းလို့ရပါတယ်။
+
+## Case Sensitivity သတိ
+```sql
+SELECT * FROM Customers WHERE Name LIKE 'a%';
+```
+MySQL default က case-insensitive မို့ 'a%' က 'A%' လိုပညာ ဖြစ်တတ်ပါတယ်။ PostgreSQL/SQL Server က case-sensitive ဖြစ်တတ်လို့ "A%"/"a%" ခွဲပြီး စဉ်းစားပါ။
+
+## အဓိက အချက်များ
+- % — 0 သို့မဟုတ် ထိုထက်များတဲ့ စာလုံးတွေ
+- _ — စာလုံးတစ်လုံးတည်း
+- LIKE 'A%', LIKE '%a', LIKE '%an%' — အသုံးများ
+- NOT LIKE နဲ့ ဆန့်ကျင်ဖက် ရှာလို့ရတယ်

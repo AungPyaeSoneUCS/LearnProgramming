@@ -1,0 +1,58 @@
+---
+title: "MySQL Self Join — Self Join"
+description: "Self Join — ‌ဇယားကိုယ်၌ နှင့် ချိတ်ခြင်း — employee/manager ‌ဥပမာ။"
+autoNumbering: true
+---
+
+**Self Join** သည် ‌ဇယား‌တစ်ခုကို **ကိုယ်၌** နှင့် join ‌လုပ်ခြင်း — ‌ဇယားထဲ ‌ရှိ rows များကို ‌အခြား rows များ ‌နှင့် ‌နှိုင်းယှဉ် ‌ရန်။ Normal join ‌ကဲ့သို့ပဲ ‌သို့သော် alias ‌နှစ်ခုသုံးရပါတယ်။
+
+## Syntax
+
+```sql
+SELECT A.column, B.column
+FROM table AS A, table AS B
+WHERE A.column = B.column;
+```
+
+‌သို့မဟုတ် join ‌စာလုံးဖြင့်:
+
+```sql
+SELECT A.column, B.column
+FROM table A
+JOIN table B ON A.column = B.column;
+```
+
+## ‌ဥပမာ — employee ၏ ‌ဌာန‌ချုပ်
+
+```sql
+SELECT e1.name AS employee, e2.name AS manager
+FROM employees e1
+LEFT JOIN employees e2 ON e1.manager_id = e2.id;
+```
+
+`e1` — employee rows, `e2` — manager rows — same table ‌ဖြစ်ပြီး `manager_id` နဲ့ ‌ချိတ်။
+
+## ‌ဥပမာ ‌ဇယား
+
+```
+employees
++----+-------+-----------+
+| id | name  | manager_id|
++----+-------+-----------+
+| 1  | Aung  | NULL      |
+| 2  | Su    | 1         |
+| 3  | Mya   | 1         |
++----+-------+-----------+
+```
+
+‌ရလဒ် — Su → Aung, Mya → Aung (Aung ‌အ‌ခြေသည် manager NULL)။
+
+## ‌အသုံးပြုမှု များ
+- Hierarchical data — organization chart
+- Duplicate ‌ရှာခြင်း — same city customers
+- ‌တန်ဖိုး ‌နှိုင်းယှဉ် — rows ‌အ‌ချင်းချင်း
+
+## ‌အဓိက အချက်များ
+- Self join — table ‌ကိုယ်၌
+- Alias ‌နှစ်ခု (e1, e2) ‌လို
+- Hierarchy အတွက် ‌အသုံးဝင်

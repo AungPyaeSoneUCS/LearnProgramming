@@ -1,0 +1,66 @@
+﻿---
+title: "React JSX If Statements — JSX ‌ထဲ If Statement"
+description: "JSX ‌ထဲ ‌မှာ if/else, ternary, && ‌အော်ပရေတာ ‌သုံးပြီး condition ‌ပေါ် ‌မူတည် render ‌လုပ်နည်း။"
+autoNumbering: true
+---
+
+JSX ‌ထဲ ‌မှာ JavaScript condition ‌တွေကို ‌လှလှပပ ‌ရေးလို့ရပါတယ် — `if` ‌ထည့်ဖို့ ‌ခက်ခဲတာကြောင့် **ternary** နဲ့ **`&&`** သုံး ‌လေ့ရှိပါတယ်။
+
+## If Statement — Function ‌ထဲ ‌ရေးနည်း
+
+```jsx
+function App(props) {
+  if (props.isLoggedIn) {
+    return <h1>Welcome back!</h1>;
+  } else {
+    return <h1>Please sign in</h1>;
+  }
+}
+```
+
+`if` က JSX ‌ထဲ ‌မဟုတ်ဘဲ function ‌ထဲ ‌ရေးပြီး return ‌ရပါတယ်။
+
+## Ternary Operator
+
+```jsx
+function App({ isLoggedIn }) {
+  return (
+    <>
+      <h1>
+        {isLoggedIn ? "Welcome back!" : "Please sign in"}
+      </h1>
+    </>
+  );
+}
+```
+
+```jsx
+function App({ isLoggedIn }) {
+  return (
+    <>
+      <h1>My App</h1>
+      {isLoggedIn ? <p>User menu</p> : <p>Login button</p>}
+    </>
+  );
+}
+```
+
+## Logical && — ‌မှန်မှသာ ပြပါ
+
+```jsx
+function App({ isLoggedIn }) {
+  return (
+    <>
+      <h1>My App</h1>
+      {isLoggedIn && <p>Account settings</p>}
+    </>
+  );
+}
+```
+
+`isLoggedIn` ‌မှန်ရင် `<p>` ‌ပြမယ်။ ‌မှားရင် ‌ဘာမှ ‌ပြမှာ ‌မဟုတ်ဘူး (false ‌ရဲ့ နောက်ကို ‌ဆက်မသွားတော့)။
+
+## အဓိက အချက်များ
+- `if/else` — function ‌ထဲ ‌ရေးပြီး return ‌လုပ်နိုင်သည်
+- `? :` ternary — JSX inline ‌မှာ ‌အသုံးများသည်
+- `&&` — ‌မှန်မှသာ ‌အပိုင် ‌ပြရန် သင့်တော်သည်

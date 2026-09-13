@@ -1,0 +1,83 @@
+---
+title: "React Textarea — Textarea"
+description: "React ‌မှာ `<textarea>` ‌ထိန်းချုပ်နည်း — value, onChange, rows/cols, placeholder ‌ထည့်ခြင်း။"
+autoNumbering: true
+---
+
+HTML ‌မှာ `<textarea>` ‌ရဲ့ content ‌ကို ‌ကလေးများ (children) ‌အနေနဲ့ ‌ရေး ရပြီး React ‌မှာတော့ `value` prop ‌သုံးပါတယ်။
+
+## React ‌မှာ Textarea
+
+```jsx
+function MyForm() {
+  const [text, setText] = useState("");
+
+  return (
+    <textarea
+      value={text}
+      onChange={(e) => setText(e.target.value)}
+    />
+  );
+}
+```
+
+## rows / cols
+
+```jsx
+<textarea
+  rows={4}
+  cols={50}
+  value={text}
+  onChange={(e) => setText(e.target.value)}
+/>
+```
+
+## Placeholder ‌နဲ့ Label
+
+```jsx
+<label htmlFor="about">
+  အကြောင်းအရာ:
+</label>
+<textarea
+  id="about"
+  placeholder="အကြောင်းအရာ ‌ရေးပါ..."
+  value={text}
+  onChange={(e) => setText(e.target.value)}
+/>
+```
+
+## Default Value
+
+```jsx
+function MyForm() {
+  const [text, setText] = useState("မူလ စာသား‌လေး");
+  return (
+    <textarea value={text} onChange={(e) => setText(e.target.value)} />
+  );
+}
+```
+
+## ‌လိုက်ဖတ်ပြသခြင်း
+
+```jsx
+function App() {
+  const [note, setNote] = useState("");
+
+  return (
+    <div>
+      <textarea
+        rows={4}
+        value={note}
+        onChange={(e) => setNote(e.target.value)}
+        placeholder="မှတ်စု ‌ရေးပါ"
+      />
+      <p>မင်း ‌ရေးထားတာ: {note}</p>
+    </div>
+  );
+}
+```
+
+## အဓိက အချက်များ
+- Value ‌ကို `value` prop နဲ့ ‌ထိန်းချုပ်သည်
+- `onChange` ‌နဲ့ state update
+- Multi-line ‌စာသား ‌ရေးတဲ့ input ‌ဖြစ်သည်

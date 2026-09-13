@@ -1,0 +1,52 @@
+---
+title: "Raspberry Pi with Node.js — Get Started"
+description: "Raspberry Pi — Node.js — ‌အစပြု setup — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+**Raspberry Pi (RPi)** — small computer — Node.js ‌ဖြင့် GPIO pins ‌ထိန်း hardware projects ‌လုပ်‌နိုင်။
+
+## Setup
+
+1. Install OS — Raspberry Pi OS (Lite ‌ဖြစ် GUI ‌မလို)
+2. Enable I2C/GPIO:
+
+```bash
+sudo raspi-config
+# Interface Options → enable GPIO, I2C, SPI
+```
+
+3. Install Node.js:
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -
+sudo apt install -y nodejs
+```
+
+4. User permission:
+
+```bash
+sudo usermod -aG gpio $USER
+```
+
+## Install onoff
+
+```bash
+npm install onoff
+```
+
+## Test
+
+```js
+const Gpio = require("onoff").Gpio;
+console.log("Node OK, gpio ready");
+```
+
+## ‌အသုံးများ setup
+- ‌သင် os pins ‌မှန်ကြောင်း ‌စစ် — `gpio readall`
+- ‌ဘက် board (breadboard) digits ‌ဖြင့် hookup
+
+## ‌အဓိက အချက်များ
+- Raspberry Pi OS + Node.js install
+- Enable GPIO interface
+- onoff package

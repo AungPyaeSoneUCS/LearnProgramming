@@ -1,0 +1,57 @@
+---
+title: "ES6 Arrow Functions — Arrow Function များ"
+description: "() => {} syntax ဖြင့် function ရေးနည်း — shorthand, implicit return, this binding ကွာခြားချက်။"
+autoNumbering: true
+---
+
+Arrow function ဆိုတာ function ရေးဖို့ ပိုတိုတောင်းတဲ့ syntax ဖြစ်ပြီး **`this` keyword ကိုလည်း ပြန်အဓိပ္ပာယ် သတ်မှတ်ပေးပါတယ်**။ React ‌အတွက် အရမ်းအသုံးဝင်ပါတယ်။
+
+## ရိုးရာ function vs Arrow function
+
+```js
+// ရိုးရာနည်း
+function greet(name) {
+  return "Hello " + name;
+}
+
+// Arrow function
+const greet = (name) => "Hello " + name;
+
+console.log(greet("Aung")); // Hello Aung
+```
+
+## ပိုတိုတဲ့ ပုံစံများ
+
+```js
+// parameter ၁ ခုသာ ဆို ( ) ဖြုတ်လို့ရတယ်
+const double = x => x * 2;
+
+// statement များရှိရင် { } နဲ့ return သုံးရသည်
+const add = (a, b) => {
+  const sum = a + b;
+  return sum;
+};
+```
+
+## `this` ကွာခြားချက်
+
+ပုံမှန် function တွင် `this` က ခေါ်သူပေါ်မူတည် — arrow function တွင် `this` က ကိုယ်ပိုင် binding မရှိဘဲ ပတ်ဝန်းကျင် scope ကို ရည်ညွှန်းတယ်။
+
+```jsx
+// Counter component မှာ
+function Counter() {
+  const [count, setCount] = React.useState(0);
+
+  // arrow ဖြစ်လို့ this ‌ပြဿနာ မရှိ
+  const handleClick = () => setCount(count + 1);
+
+  return <button onClick={handleClick}>Count: {count}</button>;
+}
+```
+
+Event handler ကိုတော့ arrow function နဲ့ ရေးတာ မသင့်ပါ (re-render တိုင်း ပြန်ဆောက်တယ်) — ဒီမှာတော့ ရိုးရိုး state update ဥပမာပါ။
+
+## အဓိက အချက်များ
+- Arrow function က ပိုတိုပြီး `this` binding မလုပ်ဘဲ အသုံးဝင်တယ်
+- expression တစ်ခုတည်းဆို `return` မလို
+- object literal ကို return ပြန်ရင် `({ ... })` နဲ့ wrap လုပ်ရသည်

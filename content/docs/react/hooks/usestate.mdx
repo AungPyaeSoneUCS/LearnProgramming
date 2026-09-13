@@ -1,0 +1,72 @@
+---
+title: "React useState — useState Hook"
+description: "useState ‌ဖြင့် state ‌စီမံခြင်း — initial state, updater, object/array state, functional update ။"
+autoNumbering: true
+---
+
+`useState` ‌က React ‌မှာ ‌အသုံးများဆုံး Hook — component ‌ရဲ့ **state variable** ‌ကို ‌ဖန်တီး‌ပေးပြီး ‌ပြောင်းလဲ‌ခြင်းဖြင့် component ‌ပြန်ဖွင့် (re-render) ‌လုပ်ပါတယ်။
+
+## သုံးပုံ: value + setter
+
+```jsx
+import { useState } from "react";
+
+function FavoriteColor() {
+  const [color, setColor] = useState("red");
+  return (
+    <>
+      <h1>My favorite color is {color}!</h1>
+      <button onClick={() => setColor("blue")}>Blue</button>
+    </>
+  );
+}
+```
+
+- `color` — ‌လက်ရှိ ‌တန်ဖိုး
+- `setColor` — ‌ပြောင်းရန် function
+- `useState("red")` — ‌စတင် ‌တန်ဖိုး = "red"
+
+## Functional update — old value
+
+```jsx
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <h1>{count}</h1>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+      <button onClick={() => setCount((c) => c - 1)}>-1</button>
+    </>
+  );
+}
+```
+
+`setCount((c) => c - 1)` — ‌လက်ရှိ value ‌ကို ‌အခြေခံပြီး ‌ပြောင်း၊ multiple update ‌လုပ်ချိန် ‌ပိုလုံ‌ခြုံ။
+
+## Object state
+
+```jsx
+const [car, setCar] = useState({ brand: "Ford", model: "Mustang" });
+
+const updateBrand = () => {
+  setCar((prev) => ({ ...prev, brand: "BMW" }));
+};
+```
+
+State object ‌ကို **copy spread** ‌လုပ် ‌ပြီးမှ ‌ပြောင်းရ — ‌တိုက်ရိုက် mutate လုပ်စရာ ‌မဟုတ်။
+
+## Array state
+
+```jsx
+const [items, setItems] = useState([]);
+
+const addItem = () => {
+  setItems((prev) => [...prev, { id: Date.now(), text: "new" }]);
+};
+```
+
+## ‌အဓိက အချက်များ
+- `useState(initial)` → [value, setter]
+- setter ‌ခေါ် ‌လို့ re-render
+- Object/array — spread copy နဲ့ update (immutable)

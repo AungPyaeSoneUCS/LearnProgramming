@@ -1,0 +1,46 @@
+---
+title: "sql-select"
+description: "SELECT နဲ့ ကော်လံရွေး၊ အားလုံးကြည့်၊ expression တွက်နည်း။"
+autoNumbering: true
+---
+
+Database ထဲက ဒေတာ ကြည့်ဖို့ဆို SELECT က မရှိမဖြစ် ဖြစ်ပါတယ်။ Query ရဲ့ အခြေခံဆုံး အုတ်မြစ်ကို ဒီ lesson မှာ လေ့လာပါမယ်။
+
+## ကော်လံအားလုံး ကြည့်ခြင်း
+```sql
+SELECT * FROM Customers;
+```
+- (asterisk) ဆိုတာ "all columns" လို့ အတိုကောက်ပါ။ ဒီ query က Customers ဇယားက ရိုးတန်း (row) အားလုံးရဲ့ ကော်လံအားလုံးကို ပြပါတယ်။ Data များတဲ့ table တွေမှာ * က နှေးတတ်လို့ လိုအပ်တဲ့ column တွေပဲ ရွေးတာ ပိုကောင်းပါတယ်။
+
+## ကော်လံအလိုက် ရွေးခြင်း
+```sql
+SELECT Name, City FROM Customers;
+```
+ဒီ query က Name နဲ့ City နှစ်ကော်လံပဲ ပြပါတယ်။ ဒေတာ နည်းပြီး ရှင်းလင်း; output ပေါ့ပါးတယ်။
+
+## ထပ်နေတဲ့ ကော်လံတန်ဖိုး တွေကိုပါချင်ရင် (DISTINCT အကြိုညွှန်း)
+```sql
+SELECT DISTINCT Country FROM Customers;
+```
+DISTINCT က duplicate (ထပ်နေတဲ့) country တွေကို တစ်ခုတည်းပဲ ပြပါတယ်။ ဥပမာ "Myanmar" က ၃ ခါရှိရင် ၁ ခါပဲ ပြမယ်။
+
+## Expression (တွက်ချက်မှု) တွေတောင် သုံးလို့ ရပါတယ်
+```sql
+SELECT Name, Age, Age + 1 AS NextYearAge FROM Customers;
+```
+Age + 1 က နှစ်ကြီးအတွက် ခန့်မှန်း age ကို တွက်ပြီး AS က ရလဒ်ကော်လံကို NextYearAge လို့ နာမည်ပေးပါတယ်။ (Aliases lesson မှာ သေချာ လေ့လာပါမယ်။)
+
+## WHERE နဲ့ ပေါင်းသုံးခြင်း (အကြိုညွှန်း)
+```sql
+SELECT Name FROM Customers WHERE Age > 30;
+```
+ဒီ query က age 30 ထက်များတဲ့ ဖောက်သည်တွေရဲ့ နာမည်ပဲ ပြပါတယ်။ WHERE ကိုတော့ နောက် lesson မှာ အပြည့်အစုံ ပါပါတယ်။
+
+## မှားတတ်တဲ့ နေရာများ
+- SELECT နဲ့ column နာမရေးရာမှာ space တွေ ဘေးမှာ မလိုအပ်ဘဲ ရေးနေတာ — ကော်လံနာမည် မှားတာ
+- Table/Column နာမည်က actual database နဲ့ မတူတာ — error တက်တယ်
+
+## အဓိက အချက်များ
+- SELECT * = အားလုံးကြည့်၊ SELECT col1, col2 = အချို့ကြည့်
+- DISTINCT = duplicate ဖယ်
+- Column တွေကို alias နဲ့ ပြန်နာမည်ပေးလို့ရတယ်

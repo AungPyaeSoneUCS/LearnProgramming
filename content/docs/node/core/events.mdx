@@ -1,0 +1,69 @@
+---
+title: "Node.js Events Module — Events Module"
+description: "Events Module — EventEmitter — on/emit/once — custom events — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:events` — **EventEmitter** — ‌အချိန်အခါ အ‌ပေါ် custom events ‌ပို့ဆက် ‌လုပ်ဆောင် — Node.js ၏ ‌အ‌ခြေခံ principle ။
+
+## Basic
+
+```js
+const { EventEmitter } = require("node:events");
+
+const emitter = new EventEmitter();
+
+emitter.on("greet", (name) => {
+  console.log("Hello,", name);
+});
+
+emitter.emit("greet", "Aung");
+```
+
+`emit` — event ‌ခေါ်; `on` — listener ‌မှတ်ပုံတင်။
+
+## once — ‌တစ်ခါသာ
+
+```js
+emitter.once("setup", () => console.log("First only"));
+emitter.emit("setup");
+emitter.emit("setup"); // ‌ဘာ ‌မျှ ‌မလုပ်
+```
+
+## With args / error
+
+```js
+emitter.on("error", (err) => console.error("Error event:", err));
+emitter.emit("error", new Error("something"));
+```
+
+`error` event ‌မှက် ‌မရှိလျှင် throw → crash — အမြဲ handle ‌လုပ်။
+
+## remove
+
+```js
+const handler = () => {};
+emitter.on("x", handler);
+emitter.removeListener("x", handler);
+```
+
+## ‌အသုံးပြုမှု — ‌ကိုယ်ပိုင် class
+
+```js
+const { EventEmitter } = require("node:events");
+
+class Logger extends EventEmitter {
+  log(msg) {
+    this.emit("logged", msg);
+  }
+}
+
+const logger = new Logger();
+logger.on("logged", (m) => console.log("LOG:", m));
+logger.log("started");
+```
+
+## ‌အဓိက အချက်များ
+- on / emit / once / removeListener
+- error event handle ‌လုပ်
+  - Class extends EventEmitter-ဖြင့် custom

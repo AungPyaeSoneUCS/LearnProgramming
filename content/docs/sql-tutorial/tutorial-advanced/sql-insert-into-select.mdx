@@ -1,0 +1,57 @@
+---
+title: "sql-insert-into-select"
+description: "INSERT INTO SELECT — query ရဲ့ ရလဒ်တွေကို table ရှိပြီးသားထဲ ထည့်ခြင်း။"
+autoNumbering: true
+---
+
+INSERT INTO SELECT က query တစ်ခုရဲ့ ရလဒ်တွေကို table ရှိပြီးသားထဲမှာ ထည့်ပါတယ်။ Table အသစ် မဖန်တီးဘဲ data migration / merge လုပ်တဲ့အခါ သုံးပါတယ်။
+
+## INSERT INTO SELECT အခြေခံ
+```sql
+INSERT INTO CustomersBackup (Name, City, Age)
+SELECT Name, City, Age
+FROM Customers
+WHERE Country = 'Myanmar';
+```
+Customers ထဲက Myanmar ဖောက်သည်တွေကို CustomersBackup ထဲ ထည့်ပါတယ်။ Column ရေတွက်ရည်ညီဖို့ SELECT ထဲက column list က INSERT column list နဲ့ ညီရပါမယ်။
+
+## WHERE မပါဘဲ — အားလုံးထည့်ခြင်း
+```sql
+INSERT INTO CustomersArchive
+SELECT * FROM Customers;
+```
+WHERE မပါရင် table ထဲက row အားလုံးကို ထည့်ပါတယ်။ Column ရေတွက်ရည်ညီဖို့ archive table ကို backup table လိုမျိုး structure တူအောင် ဖန်တီးထားဖို့ လိုပါတယ်။
+
+## SQL Server Syntax
+```sql
+-- SQL Server
+INSERT INTO TargetTable (Col1, Col2)
+SELECT Col1, Col2 FROM SourceTable;
+ 
+-- MySQL: INSERT INTO SELECT ရပါတယ်
+INSERT INTO TargetTable (Col1, Col2)
+SELECT Col1, Col2 FROM SourceTable;
+```
+
+## Multiple Tables (PostgreSQL/MySQL)
+```sql
+-- MySQL / PostgreSQL: INSERT INTO table (cols)
+INSERT INTO Logs (UserName, Action)
+SELECT c.Name, 'Login' FROM Customers AS c WHERE c.CustomerID = 1;
+```
+
+## INSERT INTO SELECT နဲ့ Aggregate
+```sql
+INSERT INTO SalesSummary (Country, TotalOrders, TotalSales)
+SELECT c.Country, COUNT(o.OrderID), SUM(o.Total)
+FROM Customers AS c
+JOIN Orders AS o ON c.CustomerID = o.CustomerID
+GROUP BY c.Country;
+```
+Report table ထဲ aggregate data ကို တစ်ခါတည်း ထည့်လို့ရပါတယ်။
+
+## အဓိက အချက်များ
+- INSERT INTO SELECT = query result → existing table
+- Column ရေတွက် + type ညီရမယ်
+- WHERE ထည့်ပြီး subset ထည့်လို့ရတယ်
+- Table အသစ် မဖန်တီးဘဲ data copy လုပ်တာ

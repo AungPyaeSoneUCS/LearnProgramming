@@ -1,0 +1,58 @@
+---
+title: "Node.js Deployment — Deployment"
+description: "Deployment — PM2, Docker, platforms — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+App ကို production သို့ ‌တင်၍ ‌လုပ်‌ဆောင် ‌ပေးနည်း။
+
+## PM2 — process manager
+
+```bash
+npm install -g pm2
+
+pm2 start app.js --name my-api
+pm2 logs my-api
+pm2 restart my-api
+pm2 save
+pm2 startup
+```
+
+PM2 — auto-restart, cluster mode, logs ‌စီမံ။
+
+## Docker — portable
+
+`Dockerfile`:
+
+```dockerfile
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY . .
+EXPOSE 3000
+CMD ["node", "app.js"]
+```
+
+```bash
+docker build -t my-api .
+docker run -p 3000:3000 my-api
+```
+
+## Cloud platforms
+| Platform | ‌ပုံစံ |
+| --- | --- |
+| Vercel / Netlify | serverless (functions) |
+| Railway / Render | ‌ရိုး service |
+| AWS / GCP / Azure | ‌ကြီး scale |
+
+## ‌အခြေခံ ‌လမ်းညွှန်
+- `NODE_ENV=production`
+- Health check endpoint — `/healthz`
+- Reverse proxy — Nginx ‌ရှေ့
+- Logs → monitoring
+
+## ‌အဓိက အချက်များ
+- PM2 — manage/restart
+- Docker — container
+- Platforms — serverless/VM

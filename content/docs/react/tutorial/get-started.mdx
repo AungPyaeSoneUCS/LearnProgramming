@@ -1,0 +1,71 @@
+---
+title: "React Get Started — စတင် ပြင်ဆင်ခြင်း"
+description: "React ကို script နဲ့လည်း သုံးနိုင်၊ create-react-app / Vite နဲ့လည်း setup လုပ်နိုင် — ၂ နည်းစလုံးကို ဥပမာနဲ့ပါ။"
+autoNumbering: true
+---
+
+React ကို စမ်းဖို့ နည်းလမ်း ၂ မျိုး ရှိပါတယ် — (၁) CDN script နဲ့ လွယ်ကူစွာ စမ်းတာ၊ (၂) build tool (Vite / create-react-app) နဲ့ စနစ်တကျ project တည်ဆောက်တာ။
+
+## နည်းလမ်း ၁ — HTML + CDN
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@19/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@19/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    function Hello() {
+      return <h1>Hello from React!</h1>;
+    }
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<Hello />);
+  </script>
+</body>
+</html>
+```
+
+`#root` ဆိုတဲ့ div ထဲမှာ React က UI ကို render လုပ်ပါတယ်။ `type="text/babel"` က JSX ကို browser မှာ compile လုပ်စေပါတယ်။
+
+## နည်းလမ်း ၂ — Vite Project (အကြံပြုသည်)
+
+Terminal ထဲမှာ အောက်ပါ command များကို run ပါ။
+
+```bash
+npm create vite@latest my-react-app -- --template react
+cd my-react-app
+npm install
+npm run dev
+```
+
+ပြီးရင် browser မှာ `http://localhost:5173` ကို ဖွင့်ကြည့်ပါ။
+
+## Project ရဲ့ အဓိက ဖိုင်တွေ
+
+| ဖိုင် | အခန်းကဏ္ဍ |
+| --- | --- |
+| `src/main.jsx` | app ကို entry point — root မှာ render လုပ်သည် |
+| `src/App.jsx` | main component |
+| `index.html` | HTML shell — `#root` ပါဝင်သည် |
+| `package.json` | dependencies နဲ့ scripts |
+
+```jsx
+// main.jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```
+
+`React.StrictMode` က development မှာ bug ဖြစ်နိုင်တဲ့ နေရာတွေကို ကူညီသတိပေးပါတယ်။
+
+## အဓိက အချက်များ
+- CDN နဲ့ လွယ်လွယ် စမ်းလို့ရတယ်။ ဖော်မတယ် project အတွက် Vite သုံးပါ
+- build tool သုံးရင် JSX/import ကို developer experience ပိုကောင်းမယ်

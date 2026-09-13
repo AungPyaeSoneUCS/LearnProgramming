@@ -1,0 +1,50 @@
+---
+title: "Node.js ES6+ — Node ရှိ ES6+ Features"
+description: "Node.js ထဲ ES6+ — let/const, arrow, destructuring, spread, modules — ဥပမာ။"
+autoNumbering: true
+---
+
+Node.js — modern JavaScript (ES6+) ‌အ‌ပြည့် ‌ထောက်ခံ — versions ‌သစ် ‌များတွင် features အသစ် ‌ပါလာသည်။
+
+## Variables & arrow
+
+```js
+const port = 3000;
+let count = 0;
+const double = (n) => n * 2;
+```
+
+## Destructuring & spread
+
+```js
+const [a, b] = [1, 2];
+const obj = { user: { name: "Su" } };
+const { name } = obj.user;
+const merged = { id: 1, ...obj };
+```
+
+## Template & optional chaining
+
+```js
+const msg = `Port: ${port}`;
+const city = obj.user?.address?.city ?? "Unknown";
+```
+
+## Maps / Sets / Array helpers
+
+```js
+const m = new Map([["a", 1]]);
+const s = new Set([1, 2, 2]);
+[3, 1, 2].sort((x, y) => x - y);
+```
+
+## ES6+ Features — version ကြည့်
+
+```bash
+node -p "process.version"
+```
+
+## ‌အဓိက အချက်များ
+- Full ES6+ support
+- Optional chaining, nullish
+- ‌ခေတ်မီ syntax — ‌တိုက်‌ရိုက် ‌သုံးနိုင်

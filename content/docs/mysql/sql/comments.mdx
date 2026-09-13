@@ -1,0 +1,50 @@
+---
+title: "MySQL Comments — Comments"
+description: "Comments — SQL ‌ထဲ ‌မှတ်ချက်များ ‌ရေးခြင်း — -- single line, /* */ multi line။"
+autoNumbering: true
+---
+
+SQL ‌တွင် comments များကို ‌သုံး၍ ‌ကုဒ်ထဲ ‌ရှင်းလင်းချက် ‌ရေးနိုင်ပါတယ် — execute ‌မလုပ်ပါ။
+
+## Single line comment — `--`
+
+```sql
+-- ‌ရဲ‌ဆုံးသော customers ကို ‌ပြ
+SELECT * FROM customers
+WHERE total > 500000;
+```
+
+`--` ၏ ‌ဘယ်ဘက် text ‌အားလုံး comment ‌ဖြစ်သည်။
+
+## ‌နောက် ‌ရှိ comment
+
+```sql
+SELECT * FROM customers -- ‌ဒါက comment
+WHERE city = 'Yangon';
+```
+
+## Multi line comment — `/* */`
+
+```sql
+/*
+  ဒီ query က လစဉ် ရောင်းအား စာရင်း ပြန်ထုတ်သည်။
+  ပထမ quarter အတွက် ဖြစ်သည်။
+*/
+SELECT month, SUM(sales) FROM monthly_sales
+WHERE quarter = 1
+GROUP BY month;
+```
+
+## ‌အသုံးပြုပုံ ‌များ
+- Query ၏ ‌ရည်‌ရွယ်ချက် ‌ရှင်းလင်း
+- Debug — ‌ယာယီ ‌ပိတ်ချင်သော line
+- Team ‌နှင့် အ‌လုပ်‌ဆောင်ရန်
+
+## ‌သတိထားရန်
+- `--` ‌နောက် space ‌ရှိခြင်း ‌ကောင်း (MySQL)
+- Comment ‌ထဲ string literal ‌မှား ‌မည် — quote အတွင်း comment မဖြစ်
+
+## ‌အဓိက အချက်များ
+- `--` — single line
+- `/* */` — multi line
+- Execution ‌တွင် skip ‌ဖြစ်သည်

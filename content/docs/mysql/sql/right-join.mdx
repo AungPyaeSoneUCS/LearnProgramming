@@ -1,0 +1,49 @@
+---
+title: "MySQL RIGHT JOIN — RIGHT JOIN"
+description: "RIGHT JOIN — ‌ညာဘက်ဇယား ‌အားလုံး + ‌ဘယ် ‌ကိုက်ညီသူ — NULL ‌ပြခြင်း။"
+autoNumbering: true
+---
+
+`RIGHT JOIN` သည် ‌ညာဘက် (right) ဇယားရဲ့ rows **အားလုံး** ကို ‌ပြန်ပေးပြီး ‌ဘယ်ဘက် ‌ဇယားမှ ‌ကိုက်ညီသော rows များ အ‌ပါ ‌ပြပါတယ်။
+
+## Syntax
+
+```sql
+SELECT columns
+FROM table_left
+RIGHT JOIN table_right
+ON table_left.column = table_right.column;
+```
+
+## ‌ဥပမာ
+
+```sql
+SELECT customers.name, orders.amount
+FROM customers
+RIGHT JOIN orders ON customers.id = orders.customer_id;
+```
+
+Orders ‌အားလုံး — customer ‌မတွေ့လျှင် name NULL။
+
+## ‌ဥပမာ ‌ဇယား
+
+```
+Customers                 Orders
++----+-------+   +----+-------+-------+
+| id | name  |   | id | cust  | amt   |
++----+-------+   +----+-------+-------+
+| 1  | Aung  |   | 1  | 1     | 300   |
+| 2  | Su    |   | 2  | 3     | 200   |
++----+-------+   +----+-------+-------+
+```
+
+`cust=3` ‌ရှိ customer ‌မရှိ → name NULL ‌ဖြင့် ‌ရလဒ်။
+
+## ‌သတိထားရန်
+- RIGHT JOIN ‌အား ‌အသုံးနည်း — table order ‌ပြောင်း၍ LEFT JOIN ‌ဖြင့် ‌ရေးနိုင် (‌ပိုဖတ်ရလွယ်)
+- MySQL တွင် ‌ထောက်ခံ သော်လည်း LEFT ‌ဦးစားပေး
+
+## ‌အဓိက အချက်များ
+- RIGHT JOIN — ‌ညာဘက် ‌အားလုံး
+- ‌မကိုက်ညီ → NULL
+- LEFT JOIN ‌လို ‌ပြန်ရေးနိုင်

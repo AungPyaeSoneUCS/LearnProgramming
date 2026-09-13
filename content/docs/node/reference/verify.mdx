@@ -1,0 +1,49 @@
+---
+title: "Node.js Verify — Verify class"
+description: "Verify — signature ‌စစ် — createVerify — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:crypto` **Verify** — Sign ‌၏ ‌ရလဒ် signature ‌ပြန် ‌စစ် — public key ‌ဖြင့်။
+
+## Full example
+
+```js
+const crypto = require("node:crypto");
+const { generateKeyPairSync } = require("node:crypto");
+
+const { privateKey, publicKey } = generateKeyPairSync("rsa", {
+  modulusLength: 2048,
+});
+
+const data = "important message";
+
+const signer = crypto.createSign("SHA256");
+signer.update(data);
+const signature = signer.sign(privateKey, "hex");
+
+const verifier = crypto.createVerify("SHA256");
+verifier.update(data);
+
+const valid = verifier.verify(publicKey, signature, "hex");
+console.log(valid); // true
+```
+
+## Tampered ‌စစ်
+
+```js
+const bad = crypto.createVerify("SHA256");
+bad.update("important message TAMPERED");
+
+console.log(bad.verify(publicKey, signature, "hex")); // false
+```
+
+## How it works
+- Signer — private key → signature
+- Verifier — public key + data → boolean
+- Tamper ‌လျှင် mismatch
+
+## ‌အဓိက အချက်များ
+- createVerify(algo) + update
+- verify(publicKey, signature, enc)
+- True/false result

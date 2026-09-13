@@ -1,0 +1,59 @@
+---
+title: "React JSX Attributes — Attribute ‌များ"
+description: "JSX ‌မှာ attribute ‌ရေးနည်း — className, ‌တိုတောင်း ‌ရေးနည်း, attribute ‌တွင် variable/ ‌ထည့်ခြင်း, double quotes vs braces။"
+autoNumbering: true
+---
+
+HTML ‌အတွက် attribute ‌တွေက JSX ‌မှာလည်း ‌ရေးလို့ရပါတယ် — ‌သို့ပေမဲ့ ‌ချို့ ‌နည်းများ ကွာပါတယ်။
+
+## attribute ‌ရေးနည်း
+
+```jsx
+const myElement = (
+  <img src="img_girl.jpg" alt="Girl in a jacket" />
+);
+```
+
+HTML ‌နဲ့ ‌တူညီ — attribute ‌တွေက ‌များသောအားဖြင့် ‌တစ်ခုနဲ့ ‌တစ်ခု space ခြားပြီး ‌ရေးပါတယ်။
+
+## className — ‌သတိထားရမယ့် အချက်
+
+JSX ‌မှာ HTML ‌ရဲ့ `class` ‌အစား **`className`** ‌ရေးရပါတယ်။
+
+```jsx
+// ‌အမှား
+<h1 class="title">Hello</h1>
+
+// ‌မှန်
+<h1 className="title">Hello</h1>
+```
+
+## `id` — ‌တိုတောင်း
+
+```jsx
+const myElement = <input type="text" id="name" />;
+```
+
+## Attribute ‌ထဲ pointer ‌တွေ
+
+JavaScript ‌ထဲက variable ‌ကို attribute ‌အဖြစ် ‌ထည့်ချင် ‌ရင် `{ }` ‌နဲ့ ‌ထည့်ပါတယ်။
+
+```jsx
+const myUrl = "https://example.com";
+const myElement = <a href={myUrl}>Go to site</a>;
+```
+
+## Double Quotes vs Braces
+
+```jsx
+// ‌နံပါတ် 1. ‌မပြောင်းလဲတဲ့ string ‌တွေအတွက် quotes
+const myElement = <h1 className="title">Hello</h1>;
+
+// ‌နံပါတ် 2. variable / expression ‌အတွက် braces
+const myElement = <h1 className={myClass}>Hello</h1>;
+```
+
+## အဓိက အချက်များ
+- class ‌အစား `className` ‌ရေးရသည်
+- ပုံသေ value ‌အတွက် quotes, dynamic ‌အတွက် braces
+- HTML attribute ‌အများစု (src, ‌alt, id, href) က JSX ‌မှာလည်း ‌အတူတူ ‌ရေးရသည်

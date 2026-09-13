@@ -1,0 +1,42 @@
+---
+title: "Node.js Architecture — Architecture"
+description: "Node.js architecture — single-threaded, event-driven, non-blocking I/O — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Node.js ၏ architecture — **single-threaded event loop** + **non-blocking I/O**။
+
+## Core Pieces
+1. **V8 Engine** — JavaScript run
+2. **libuv** — async I/O (files, network, timers)
+3. **Event Loop** — task များ ‌စီမံခန့်ခွဲခြင်း
+4. **Modules** — built-in, third-party
+
+## Single Threaded — ဆိုလိုသည်မှာ
+
+JS code တစ်ကြောင်းချင်း run — ‌သို့သော် I/O များကို **background** ‌တွင် ‌လုပ်သည်:
+
+```js
+const start = Date.now();
+setTimeout(() => console.log("done"), 5000); // 5s ‌နောက်
+console.log("sync");                          // ချက်ချင်း
+```
+
+`sync` သည် ချက်ချင်း ‌ပြ — setTimeout ကို ‌မစောင့် — **non-blocking**။
+
+## Traditional vs Node ‌မော်ဒယ်
+
+| မော်ဒယ် | Threads | I/O |
+| --- | --- | --- |
+| Traditional | Thread/request | Blocking |
+| Node.js | 1 main thread | Non-blocking (libuv) |
+
+## ‌ဘာ‌ကြောင့် ‌ကောင်းလဲ
+- I/O-heavy apps (APIs, file, DB) — memory အနည်း
+- ‌တစ်ပြိုင်‌နက်များစွာ connections
+- CPU-heavy ‌ကိစ္စတွင် worker threads ‌ထပ်သုံး
+
+## ‌အဓိက အချက်များ
+- Single-thread + Event Loop
+- libuv — async I/O
+- Non-blocking — ‌မစောင့်

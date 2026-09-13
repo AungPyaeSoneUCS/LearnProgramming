@@ -1,0 +1,52 @@
+---
+title: "Node.js Hash — Hash class"
+description: "Hash — crypto hashing — sha256 — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:crypto` **Hash** — one-way digest — sha256 ‌ဥပမာ။
+
+## Simple hash
+
+```js
+const crypto = require("node:crypto");
+
+const hash = crypto.createHash("sha256");
+hash.update("hello");
+console.log(hash.digest("hex"));
+```
+
+## Chaining
+
+```js
+const digest = crypto
+  .createHash("sha256")
+  .update("hello world")
+  .digest("base64");
+
+console.log(digest);
+```
+
+## ‌ဥပမာ — password ‌သို့ (‌သတိ)
+Password ‌အတွက် — **bcrypt** — hashing ‌တိုးမှု ‌တိုး (hash ‌သုံး ‌မလိုဘဲ)။
+
+```js
+// ‌ဥပမာ simply ‌သူ့ hash
+const pw = crypto.createHash("sha256").update(password).digest("hex");
+```
+
+**Note:** breaking — ‌အသုံးပြုသူ ‌သို့ ‌မသုံး — ‌လုံး‌ခြုံ ‌ရန် salted bcrypt/argon2။
+
+## Repeated update (stream)
+
+```js
+const h = crypto.createHash("sha256");
+h.update("part1 ");
+h.update("part2");
+console.log(h.digest("hex"));
+```
+
+## ‌အဓိက အချက်များ
+- createHash(algorithm)
+- update → digest(encoding)
+- sha256 — ‌အသုံးများ

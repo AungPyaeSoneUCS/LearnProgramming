@@ -1,0 +1,51 @@
+---
+title: "MySQL AND — AND Operator"
+description: "AND — conditions များစွာ အားလုံး မှန်မှ ရလဒ် — ဥပမာများ။"
+autoNumbering: true
+---
+
+`AND` operator သည် **conditions အားလုံး ‌မှန်မှသာ** row ကို ‌ရွေးပါတယ်။
+
+## Syntax
+
+```sql
+SELECT column1, column2
+FROM table_name
+WHERE condition1 AND condition2 AND condition3 ...;
+```
+
+## ဥပမာ
+
+```sql
+SELECT * FROM products
+WHERE price > 100 AND price < 500;
+```
+
+price သည် 100 ထက်‌ကြီးပြီး 500 ထက်ငယ်သော products များကို ပြသည်။
+
+```sql
+SELECT * FROM customers
+WHERE city = 'Yangon' AND country = 'Myanmar';
+```
+
+## AND ‌နဲ့ TRUE/FALSE
+
+| ‌အခြေအနေ | ‌ရလဒ် |
+| --- | --- |
+| TRUE AND TRUE | TRUE |
+| TRUE AND FALSE | FALSE |
+| FALSE AND TRUE | FALSE |
+| FALSE AND FALSE | FALSE |
+
+AND သည် အားလုံးမှန်မှ မှန်ပါသည် — SQL boolean logic အတိုင်း။
+
+## စောစော ‌ပိတ် (short-circuit)
+
+```sql
+SELECT * FROM students WHERE grade >= 80 AND grade <= 90;
+```
+
+## အဓိက အချက်များ
+- AND — ‌အားလုံး condition ‌မှန်ရန်
+- ‌ရလဒ် — ‌ပိုကျဉ်းသည်
+- Comparison ‌နှင့် တွဲ ‌သုံးသည်

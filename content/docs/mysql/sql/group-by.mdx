@@ -1,0 +1,55 @@
+---
+title: "MySQL GROUP BY — GROUP BY"
+description: "GROUP BY — rows အုပ်‌စုများ ‌ဖွဲ့၍ aggregate ‌တွက်ခြင်း — COUNT, SUM ‌နှင့် ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+`GROUP BY` statement သည် rows များကို **‌အုပ်‌စုများအဖြစ် ‌ဖွဲ့** ပြီး ‌အုပ်‌စု‌ချင်း aggregate functions (COUNT, SUM, AVG...) ‌တွက်‌ဖို့ ‌သုံးပါတယ်။
+
+## Syntax
+
+```sql
+SELECT column, COUNT(*)
+FROM table_name
+WHERE condition
+GROUP BY column;
+```
+
+## ‌ဥပမာ
+
+```sql
+SELECT city, COUNT(*) AS customers
+FROM customers
+GROUP BY city;
+```
+
+ဇယားထဲ city ‌တစ်ခုချင်းစီအလိုက် customer အရေအတွက် ‌ပြ။
+
+## ‌ဥပမာ ‌ဇယား
+
+```
+Customers
+city
+Yangon
+Yangon
+Mandalay
+```
+
+‌ရလဒ် — Yangon 2, Mandalay 1။
+
+## SUM ‌နှင့်
+
+```sql
+SELECT customer_id, SUM(amount) AS total
+FROM orders
+GROUP BY customer_id;
+```
+
+## ‌တွဲ ‌သုံးရမည့် rule
+- SELECT ‌ရှိ ‌‌column ‌တိုင်းသည် GROUP BY ‌ရှိ ‌သို့ aggregate ‌အတွင်း ‌ရှိရမည်
+- WHERE ကို GROUP BY ‌မတိုင်မီ ‌ရေး (filter ‌အရင်း)
+
+## ‌အဓိက အချက်များ
+- GROUP BY — ‌အုပ်‌စု ‌ဖွဲ့
+- Aggregate ‌ကို ‌အုပ်‌စုအလိုက်
+- Columns ‌စည်းမျဉ်း ‌လိုက်နာ

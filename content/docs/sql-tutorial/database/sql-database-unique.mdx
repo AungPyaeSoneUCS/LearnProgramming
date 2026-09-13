@@ -1,0 +1,46 @@
+---
+title: "sql-database-unique"
+description: "UNIQUE — column ထဲမှာ value အတုအထွေ (duplicate) မဖြစ်အောင် တားခြင်း။"
+autoNumbering: true
+---
+
+UNIQUE constraint က column တစ်ခုရဲ့ value တွေ တစ်ခုနဲ့တစ်ခု ထပ်မဖြစ်အောင် သေချာလုပ်ပါတယ်။
+
+## UNIQUE example
+```sql
+CREATE TABLE Users (
+    UserID INT,
+    Email VARCHAR(100) UNIQUE
+);
+```
+Email column မှာ '[a@example.com](mailto:a@example.com)' နဲ့ ထပ်ရေးလို့မရပါ — duplicate email ထည့်ရင် error။
+
+## Multiple Columns UNIQUE
+```sql
+CREATE TABLE StudentCourses (
+    StudentID INT,
+    CourseID INT,
+    UNIQUE (StudentID, CourseID)
+);
+```
+ဒါက "StudentID + CourseID ပေါင်းစုံ duplicate မဖြစ်ရဘူး" ဆိုတဲ့ rule — ကျောင်းသားတစ်ဦး Course တစ်ခုကို ၁ ခါပဲ တက်ရပါတယ်။
+
+## ALTER TABLE — UNIQUE ထည့်
+```sql
+ALTER TABLE Users
+ADD CONSTRAINT uq_user_email UNIQUE (Email);
+```
+ဒါက index ထည့်ခြင်းလည်း ဖြစ်လို့ User table မှာ duplicate email ရှိပြီးသားဆို error တက်ပါတယ်။
+
+## PRIMARY KEY vs UNIQUE
+|  | UNIQUE | PRIMARY KEY |
+| --- | --- | --- |
+| NULL ခံသလား | ခံတယ် (MySQL မှာ ၁ခု) | မခံဘူး |
+| Table ၁ခုမှာ ? | အများကြီး ရှိနိုင် | ၁ ခုပဲ |
+| Purpose | unique value (Email) | row သတ်မှတ်ချက် |
+
+## အဓိက အချက်များ
+- UNIQUE — column value duplicate မဖြစ်အောင်
+- Multiple column — combination unique
+- ALTER မှာ — existing data duplicate check ပါ
+- Primary key က မဖြစ်မနေ unique + not null

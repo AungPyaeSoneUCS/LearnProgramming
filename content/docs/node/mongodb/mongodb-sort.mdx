@@ -1,0 +1,44 @@
+---
+title: "Node.js MongoDB Sort — Sort"
+description: "Node + MongoDB — sort, limit, skip — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+‌ရလဒ် ‌စီရန် — sort ‌နှင့် limit/skip — pagination။
+
+## Sort ascending / descending
+
+```js
+const asc = await users.find({}).sort({ name: 1 }).toArray();   // A-Z
+const desc = await users.find({}).sort({ age: -1 }).toArray();  // ‌ကြီး→ငယ်
+```
+
+`1` ascending, `-1` descending။
+
+## Multiple fields
+
+```js
+const rows = await users
+  .find({})
+  .sort({ city: 1, age: -1 })
+  .toArray();
+```
+
+## Limit & skip — pagination
+
+```js
+const page = 2;
+const pageSize = 10;
+
+const rows = await users
+  .find({})
+  .sort({ _id: 1 })
+  .skip((page - 1) * pageSize)
+  .limit(pageSize)
+  .toArray();
+```
+
+## ‌အဓိက အချက်များ
+- `sort({ field: 1 | -1 })`
+- skip + limit — pagination
+- Chaining — find().sort().skip().limit()

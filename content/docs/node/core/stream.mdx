@@ -1,0 +1,63 @@
+---
+title: "Node.js Stream Module — Stream Module"
+description: "Stream — data ကို အပိုင်းလိုက် စီးဆင်း — readable, writable, pipeline — ဥပမာ။"
+autoNumbering: true
+---
+
+**Stream** — data ‌ကို ‌အပိုင်း‌လိုက် (chunks) processing — ‌ကြီးသော files ‌တွင် memory သက်‌သာရန်။
+
+## ‌ဆိုဖိုင့် ဖတ်ဖို့
+
+```js
+const fs = require("node:fs");
+
+const readStream = fs.createReadStream("big-file.txt", "utf8");
+
+readStream.on("data", (chunk) => {
+  console.log("Chunk length:", chunk.length);
+});
+readStream.on("end", () => console.log("Done"));
+```
+
+data ‌အားလုံး ‌တစ်ခါ memory ‌ထဲ ‌မတင်ဘဲ chunks ‌အလိုက် ‌ရောက်လာသည်။
+
+## Write stream
+
+```js
+const out = fs.createWriteStream("copy.txt");
+readStream.pipe(out);
+```
+
+`pipe` — read → write ‌တိုက်‌ရိုက် ‌ချိတ်။
+
+## `stream/promises` — pipeline
+
+```js
+const { pipeline } = require("node:stream/promises");
+
+await pipeline(readStream, out);
+console.log("copied");
+```
+
+pipeline — error handling ‌အ‌လုံး‌ခြုံ — ‌အကြံပြုထား auto cleanup။
+
+## ‌အမျိုး‌စားများ
+| ‌အမျိုး | ‌ဥပမာ |
+| --- | --- |
+| Readable | fs.createReadStream |
+| Writable | fs.createWriteStream |
+| Duplex | net.socket |
+| Transform | zlib.createGzip() |
+
+## ‌ဥပမာ — http stream
+
+```js
+const server = http.createServer((req, res) => {
+  fs.createReadStream("index.html").pipe(res);
+});
+```
+
+## ‌အဓိက အချက်များ
+- Stream — chunks ‌ဖြင့် data
+- pipe / pipeline
+- Memory ‌သက်‌သာ — ‌ကြီးသော media/files

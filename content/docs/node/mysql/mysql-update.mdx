@@ -1,0 +1,41 @@
+---
+title: "Node.js MySQL Update — Update"
+description: "Node + MySQL — UPDATE with WHERE, affectedRows — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Existing rows ‌ပြန် ‌ပြင်နည်း — WHERE မပါရင် ‌အားလုံး ‌ပြောင်း။
+
+## Update
+
+```js
+const [result] = await db.query(
+  "UPDATE users SET name = ?, city = ? WHERE id = ?",
+  ["Phyu", "Yangon", userId]
+);
+```
+
+## affectedRows
+
+```js
+console.log(result.affectedRows); // ‌ပြောင်း ‌ရသော rows
+```
+
+## Multiple sets
+
+```js
+await db.query(
+  "UPDATE orders SET status = ?, paid_at = NOW() WHERE id = ?",
+  ["paid", orderId]
+);
+```
+
+## ‌သတိထားရန်
+- **WHERE ‌အမြဲ** — ‌မမေ့
+- `changedRows` — ‌တင်‌တန်ဖိုး ‌ပြောင်း‌ခဲ့လျှင်သာ
+- ‌အရင် SELECT ‌ပြန် ‌စစ် ‌နိုင်
+
+## ‌အဓိက အချက်များ
+- UPDATE SET ... WHERE ?
+- affectedRows ‌စစ်
+- ‌အမြဲ WHERE

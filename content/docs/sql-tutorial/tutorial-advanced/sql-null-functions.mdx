@@ -1,0 +1,62 @@
+---
+title: "sql-null-functions"
+description: "NULL နေရာမှာ default တန်ဖိုးထားပေးတဲ့ functions (database အလိုက်)။"
+autoNumbering: true
+---
+
+NULL ကိုကိုင်တွယ်ဖို့ database engine တစ်ခုချင်းစီမှာ function တွေရှိပါတယ်။ အားလုံးရဲ့ အလုပ်က အတူတူပါ — NULL ဖြစ်ရင် ကိုယ်ပေးထားတဲ့ default ကို ပြန်ပေးပါတယ်။
+
+## Function ၄ မျိုး
+| Function | Database |
+| --- | --- |
+| ISNULL(expr, default) | SQL Server |
+| IFNULL(expr, default) | MySQL |
+| COALESCE(v1, v2, ...) | SQL Standard (အကုန်လုံးမှာ) |
+| NVL(expr, default) | Oracle |
+
+## တစ်မျိုးချင်းစီ
+```sql
+-- SQL Server
+SELECT Name, ISNULL(City, 'Unknown') AS City FROM Customers;
+ 
+-- MySQL
+SELECT Name, IFNULL(City, 'Unknown') AS City FROM Customers;
+ 
+-- PostgreSQL / Standard
+SELECT Name, COALESCE(City, 'Unknown') AS City FROM Customers;
+ 
+-- Oracle
+SELECT Name, NVL(City, 'Unknown') AS City FROM Customers;
+```
+City NULL ဖြစ်တဲ့ row တွေမှာ 'Unknown' ဆိုပြီး display လုပ်ပါတယ်။ ဒါမှ SELECT result က NULL ထက် ဖတ်ရလွယ်ပါတယ်။
+
+## COALESCE — ပိုပြီး flexible
+```sql
+SELECT Phone, Email, COALESCE(Phone, Email, 'N/A') AS Contact
+FROM Customers;
+```
+COALESCE က arguments များစွာကို ယူပြီး ပထမဆုံး non-NULL ကို ပြန်ပါတယ်။ Phone NULL ဆိုရင် Email ကို ကြည့်၊ နှစ်ခုလုံး NULL ဆိုရင် 'N/A' ပြန်ပါတယ်။
+
+## NULL Functions vs CASE
+```sql
+-- ISNULL နဲ့
+ISNULL(City, 'Unknown')
+ 
+-- CASE နဲ့
+CASE WHEN City IS NULL THEN 'Unknown' ELSE City END
+```
+NULL function က စာတို၊ CASE က flow control ဖြစ်ပြီး complex logic အတွက် အားသာပါတယ်။
+
+## Arithmetic မှာ NULL
+```sql
+-- NULL ဖြစ်နေတဲ့ discount ကို 0 အနေနဲ့ တွက်တယ်
+SELECT Price, Discount, Price - COALESCE(Discount, 0) AS FinalPrice
+FROM Products;
+```
+Discount NULL ဖြစ်ရင် 0 လို့ ယူဆပြီး FinalPrice ကို မှန်မှန် တွက်ပါတယ်။
+
+## အဓိက အချက်များ
+- NULL တန်ဖိုး ကိုင်တွယ်ရန် → COALESCE / ISNULL / IFNULL / NVL
+- COALESCE က portable ဖြစ်ပြီး argument ၂ခုထက်မက
+- Display/calculation တွေမှာ default value ထည့်ဖို့ အသုံးဝင်
+- CASE vs function — ရှုပ်ရင် CASE

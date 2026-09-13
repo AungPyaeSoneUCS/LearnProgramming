@@ -1,0 +1,92 @@
+---
+title: "React Forms — Form ‌အခြေခံ"
+description: "React ‌မှာ controlled form ‌ရေးနည်း — value + onChange ‌နဲ့ state ‌ထဲ sync ‌ထား။"
+autoNumbering: true
+---
+
+React ‌မှာ form ‌ဒေတာကို **state** ‌ထဲ သိမ်းပြီး `value` + `onChange` နဲ့ ‌ထိန်းချုပ် (controlled) ‌လုပ်နိုင်ပါတယ်။
+
+## ‌ရိုးရိုး Form ‌ရေးနည်း
+
+```jsx
+function MyForm() {
+  const [name, setName] = useState("");
+
+  const handleChange = (event) => {
+    setName(event.target.value);
+  };
+
+  return (
+    <form>
+      <input
+        type="text"
+        value={name}
+        onChange={handleChange}
+        placeholder="Enter name"
+      />
+      <p>နာမည်: {name}</p>
+    </form>
+  );
+}
+```
+
+`value={name}` ‌နဲ့ `onChange` ‌ပေါင်းထားလို့ input ‌ထဲ ‌ရိုက်တိုင်း state ‌နဲ့ sync ‌ဖြစ်ပါတယ်။
+
+## Textarea (‌ကွက်လပ် စာသား)
+
+```jsx
+function MyForm() {
+  const [description, setDescription] = useState("");
+
+  return (
+    <textarea
+      value={description}
+      onChange={(e) => setDescription(e.target.value)}
+    />
+  );
+}
+```
+
+## Select (Dropdown)
+
+```jsx
+function MyForm() {
+  const [car, setCar] = useState("Ford");
+
+  return (
+    <select value={car} onChange={(e) => setCar(e.target.value)}>
+      <option value="Ford">Ford</option>
+      <option value="BMW">BMW</option>
+      <option value="Audi">Audi</option>
+    </select>
+  );
+}
+```
+
+## ‌ပေါင်းစပ် — ‌အမျိုးမျိုးသော input
+
+```jsx
+function MyForm() {
+  const [inputs, setInputs] = useState({});
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
+  return (
+    <form>
+      <input type="text" name="username" value={inputs.username || ""} onChange={handleChange} />
+      <input type="number" name="age" value={inputs.age || ""} onChange={handleChange} />
+    </form>
+  );
+}
+```
+
+`[name]` — computed property ‌နဲ့ object ‌ထဲ key ‌လွတ်လပ်စွာ ‌ထည့်ပါတယ်။
+
+## အဓိက အချက်များ
+- Controlled component — value + onChange
+- `event.target.value` ‌က ‌အသစ် value
+- Object state ‌တင်းကျပ် ‌လဲ spread ‌လုပ်ပြီး update

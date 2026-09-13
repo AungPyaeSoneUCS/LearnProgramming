@@ -1,0 +1,61 @@
+---
+title: "Node.js HTTP/2 Module — HTTP2 Module"
+description: "HTTP/2 — multiplexing — node:http2 server — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:http2` — HTTP/2 protocol — ‌မြေအ‌မြေး requests multiplexing, ‌ပိုမြန်။
+
+## Server (TLS)
+
+```js
+const http2 = require("node:http2");
+const fs = require("node:fs");
+
+const server = http2.createSecureServer({
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem"),
+});
+
+server.on("stream", (stream, headers) => {
+  stream.respond({
+    "content-type": "text/plain",
+    ":status": 200,
+  });
+  stream.end("Hello HTTP/2");
+});
+
+server.listen(8443);
+```
+
+## Client
+
+```js
+const http2 = require("node:http2");
+
+const client = http2.connect("https://localhost:8443");
+const req = client.request({ ":path": "/" });
+
+req.on("response", (headers) => console.log(headers));
+req.setEncoding("utf8");
+req.on("data", (chunk) => process.stdout.write(chunk));
+req.end();
+```
+
+## Benefits (HTTP/1.1 vs 2)
+| HTTP/1.1 | HTTP/2 |
+| --- | --- |
+| ‌ဆံ့ ‌ချိတ် new connection | Multiplexing — ‌တစ်‌ကြောင်း |
+| Head-of-line blocking | Streams ‌အ‌လိုက် |
+| Header ‌ထပ် send | HPACK compress |
+
+## ‌အသုံးပြုချက်
+- ‌ဂမ်း ‌များ hidden — ‌ပုံမှန် HTTPS ‌နှင့် HTTP/2 (ALPN) ‌က auto
+- Server push ‌အ‌သုံး
+
+## ‌အဓိက အချက်များ
+- createSecureServer + stream events
+- Multiplexing — parallel
+- Node/HTTP/2 ‌က TLS ‌လို
+
+Note — HTTP/2 ‌အ‌ပေါ် `:status`, `:path` ‌ကဲ့‌သို့ pseudo-headers။

@@ -1,0 +1,63 @@
+---
+title: "MySQL Foreign Key — FOREIGN KEY"
+description: "Foreign Key — ‌ဇယား‌ချင်း ‌ချိတ်ဆက် — REFERENCES, ON DELETE, ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+**FOREIGN KEY** သည် ‌ဇယား‌တစ်ခု၏ column ‌ကို ‌အခြားဇယား၏ **PRIMARY KEY ‌သို့ ‌ချိတ်** — relationship (referential integrity) ‌ကို ‌အာမခံပါတယ်။
+
+## ‌ဥပမာ — CREATE TABLE
+
+```sql
+CREATE TABLE orders (
+  id INT PRIMARY KEY,
+  user_id INT,
+  amount DECIMAL(10,2),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+```
+
+`orders.user_id` — `users.id` ကို ‌ညွှန် — ‌ဂဏန်း user ‌မရှိသော order ‌ထည့်‌၍ ‌မရ။
+
+## ‌ဥပမာ ‌ဇယား‌နှစ်ခု
+
+```
+users              orders
++----+-------+    +----+---------+-------+
+| id | name  |    | id | user_id | amount|
++----+-------+    +----+---------+-------+
+| 1  | Aung  |    | 1  | 1       | 300   |
+| 2  | Su    |    | 2  | 2       | 200   |
++----+-------+    +----+---------+-------+
+```
+
+## Write ‌အပြုအမူ rules
+
+```sql
+-- Referenced user ‌မရှိ → error
+INSERT INTO orders (id, user_id) VALUES (3, 99);  -- fails
+```
+
+## ON DELETE — ‌ချိတ် ‌ဖျက်ချိန်
+
+```sql
+FOREIGN KEY (user_id) REFERENCES users(id)
+ON DELETE CASCADE
+```
+
+User ‌ဖျက်လျှင် ၎င်း orders ‌ပါ ‌ဖျက် (CASCADE)။
+
+| ‌Option | ‌လုပ်ဆောင်မှု |
+| --- | --- |
+| `CASCADE` | child ပါ ‌ဖျက် |
+| `SET NULL` | child FK → NULL |
+| `RESTRICT` | ‌ဖျက်ခွင့် ‌မပေး |
+
+## Composite FK ‌များ လဲ
+
+ဇယားသုံးခု — orders → order_items ‌ပုံစံ ‌ချိတ်နိုင်။
+
+## ‌အဓိက အချက်များ
+- FOREIGN KEY — ‌ချိတ် integrity
+- REFERENCES — target PK
+- ON DELETE — ‌ဖျက်ချိန် ‌အပြုအမူ

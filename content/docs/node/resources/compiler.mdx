@@ -1,0 +1,50 @@
+---
+title: "Node.js Compiler — Compiler"
+description: "Compiler — ‌ကိုယ်‌ပိုင် Node/runtime console — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Node.js ‌code ‌ကို ‌ရေး ‌မေး ‌လုပ် ‌ပြေးရန် — REPL/terminal ‌အ‌ကြောင်း။
+
+## REPL — node ‌ရိုက်
+
+```bash
+node
+```
+
+```js
+> 1 + 2
+3
+> const x = 5
+undefined
+> x * 2
+10
+```
+
+## --eval — ‌တစ် ‌လိုင်း
+
+```bash
+node -e "console.log('hi')"
+```
+
+## Compile ‌ချက်
+
+Node.js သည် JIT ဖြင့် run — V8 က JavaScript ကို machine code ချ ပေး — အတွက် compile step မလို။
+
+## Watch — ‌အလို ‌တလို
+
+```bash
+node --watch app.js
+```
+
+File save ‌တိုင်း restart ။
+
+## ‌ဥပမာ sandbox ‌လိုအပ်
+
+Try ရေး ချင်း အတွက် — Node official playground / local terminal သုံး။
+
+## ‌အဓိက အချက်များ
+- node REPL
+- node -e
+- JIT — V8 compile
+- --watch

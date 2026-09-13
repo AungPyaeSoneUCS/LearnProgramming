@@ -1,0 +1,63 @@
+---
+title: "sql-database-alter-table"
+description: "ALTER TABLE — column ထည့်/ဖျက်/ပြောင်း/ rename လုပ်ခြင်း။"
+autoNumbering: true
+---
+
+Table ဖန်တီးပြီးတဲ့နောက် requirements ပြောင်းရင် ALTER TABLE နဲ့ ပြင်ပါတယ်။
+
+## Column ထည့်ခြင်း
+```sql
+-- SQL Server
+ALTER TABLE Products ADD Discount DECIMAL(5,2) DEFAULT 0;
+ 
+-- MySQL
+ALTER TABLE Products ADD COLUMN Discount DECIMAL(5,2) DEFAULT 0;
+```
+Column အသစ်တစ်ခုကို table ထဲ ထည့်ပါတယ်။ Row တွေအားလုံးမှာ default value နဲ့ ထည့်ပေးပါတယ်။
+
+## Column ဖျက်ခြင်း
+```sql
+ALTER TABLE Products DROP COLUMN Discount;
+```
+Column တစ်ခုကို ဖျက်ပါတယ်။ Data ပါပါကျန်ပါတယ်။
+
+## Column Type ပြောင်းခြင်း
+```sql
+-- SQL Server
+ALTER TABLE Products ALTER COLUMN Name VARCHAR(200) NOT NULL;
+ 
+-- MySQL
+ALTER TABLE Products MODIFY COLUMN Name VARCHAR(200) NOT NULL;
+ 
+-- PostgreSQL
+ALTER TABLE Products ALTER COLUMN Name TYPE VARCHAR(200);
+```
+MySQL/MariaDB မှာ MODIFY ၊ SQL Server မှာ ALTER COLUMN ၊ PostgreSQL မှာ ALTER COLUMN ... TYPE — syntax ကွာခြားပါတယ်။
+
+## Column Rename
+```sql
+-- SQL Server
+EXEC sp_rename 'Products.Name', 'ProductName', 'COLUMN';
+ 
+-- MySQL
+ALTER TABLE Products CHANGE Name ProductName VARCHAR(100);
+ 
+-- PostgreSQL
+ALTER TABLE Products RENAME COLUMN Name TO ProductName;
+```
+
+## Multiple Columns တပြိုင်နက်
+```sql
+-- SQL Server (2016+)
+ALTER TABLE Products
+    ADD Discount DECIMAL(5,2),
+    DROP COLUMN OldField,
+    ALTER COLUMN Name VARCHAR(200);
+```
+
+## အဓိက အချက်များ
+- ADD / DROP / ALTER COLUMN
+- Syntax က DB engine အလိုက်ကွဲ
+- MODIFY (MySQL) vs ALTER COLUMN (SQL Server) vs ALTER COLUMN TYPE (PostgreSQL)
+- Rename — sp_rename / CHANGE / RENAME COLUMN

@@ -1,0 +1,52 @@
+---
+title: "Node.js URL Module — URL Module"
+description: "URL Module — URL parse/format — new URL() — query params — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:url` — URLs ‌များကို parse, ‌အပိုင်းယူ, ‌ပြန်‌တည် ‌ဆောက်ရန်။
+
+## new URL()
+
+```js
+const { URL } = require("node:url");
+
+const u = new URL("https://user:pass@example.com:8080/path?q=node#top");
+
+console.log(u.protocol);   // https:
+console.log(u.hostname);   // example.com
+console.log(u.port);       // 8080
+console.log(u.pathname);   // /path
+console.log(u.searchParams.get("q")); // node
+console.log(u.hash);       // #top
+```
+
+## Query params ‌ကိုင်တွယ်
+
+```js
+const params = new URLSearchParams("a=1&b=2");
+params.append("c", "3");
+console.log(params.toString()); // a=1&b=2&c=3
+console.log(params.get("a"));   // 1
+```
+
+## url.parse (legacy)
+
+```js
+const url = require("node:url");
+const parts = url.parse("http://x.com/a?b=1");
+```
+
+`new URL()` — modern ‌ပုံစံ ‌ဦးစားပေး — WHATWG standard။
+
+## ‌အသုံးဝင်သော case — Express ‌တွင် query
+
+```js
+const u = new URL(req.url, "http://localhost:3000");
+const page = u.searchParams.get("page");
+```
+
+## ‌အဓိက အချက်များ
+- new URL() — parse
+- searchParams — query
+- WHATWG format — modern

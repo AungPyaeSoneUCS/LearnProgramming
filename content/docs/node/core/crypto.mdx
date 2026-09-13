@@ -1,0 +1,60 @@
+---
+title: "Node.js Crypto Module — Crypto Module"
+description: "Crypto — hash, HMAC, cipher — sha256, createHash, randomBytes — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:crypto` — hashing, encryption, random values ‌လုပ်နိုင်သည် — security ‌အတွက် ‌အသုံးဝင်။
+
+## Hash (SHA-256)
+
+```js
+const crypto = require("node:crypto");
+
+const hash = crypto.createHash("sha256").update("password123").digest("hex");
+console.log(hash); // ‌အ‌ပေါ်တူ hash string
+```
+
+Same input → same hash — ‌သိမ်း‌ဖို့ ‌မဟုတ် (password ‌အတွက် bcrypt ‌သုံးသင့်)။
+
+## randomBytes
+
+```js
+const token = crypto.randomBytes(16).toString("hex");
+console.log(token); // 32 chars random
+```
+
+Session tokens / ids ‌အတွက်။
+
+## HMAC (signed)
+
+```js
+const hmac = crypto
+  .createHmac("sha256", "secret-key")
+  .update("message")
+  .digest("hex");
+```
+
+Mcity message ‌မှန်သလား verify ‌လုပ် — integrity check။
+
+## Encrypt / decrypt (AES)
+
+```js
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
+
+const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
+let enc = cipher.update("secret", "utf8", "hex");
+enc += cipher.final("hex");
+console.log("encrypted:", enc);
+
+const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
+let dec = decipher.update(enc, "hex", "utf8");
+dec += decipher.final("utf8");
+console.log("decrypted:", dec);
+```
+
+## ‌အဓိက အချက်များ
+- createHash — one-way hash
+- randomBytes — random
+- createCipheriv/Decipheriv — AES

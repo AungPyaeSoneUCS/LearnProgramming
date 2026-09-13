@@ -1,0 +1,59 @@
+---
+title: "sql-database-not-null"
+description: "NOT NULL — column ထဲ value မရှိဘဲ row ထည့်လို့ မရအောင် တားခြင်း။"
+autoNumbering: true
+---
+
+Column မှာ created တန်ဖိုး မရှိဘဲ NULL ဖြစ်နေတာကို မကြိုက်ရင် NOT NULL constraint ထည့်ပါတယ်။ Row ထည့်တဲ့အခါ value မရှိရင် row ကို လက်မခံပါဘူး။
+
+## NULL ဆိုတာဘာလဲ?
+```sql
+INSERT INTO Customers (Name, Phone) VALUES ('Ko Ko', NULL);
+```
+NULL = "value မရှိ"။ သင်္ချာတွက်စက် 0 (zero) နဲ့ မတူဘူး — NULL က "မရှိ"။ space string ('') နဲ့လည်း မတူဘူး — အဲဒါ value ရှိနေတာ။
+
+## NOT NULL Constraint
+```sql
+CREATE TABLE Customers (
+    CustomerID INT NOT NULL,
+    Name VARCHAR(100) NOT NULL,
+    Phone VARCHAR(20),
+    Email VARCHAR(100)
+);
+```
+CustomerID နဲ့ Name က မဖြစ်မနေ — Phone/Email က NULL ရတယ် (မဖြစ်မနေ မဟုတ်ဘူး)။
+
+## INSERT မှာ value မထည့်ရင်
+```sql
+INSERT INTO Customers (Name) VALUES ('Su');
+-- CustomerID မထည့်လို့ error: does not satisfy NOT NULL constraint
+```
+Table ရဲ့ NOT NULL column မှာ value မရှိရင် INSERT က fail ဖြစ်ပါတယ်။
+
+## ALTER TABLE မှာ ထည့်ခြင်း
+```sql
+ALTER TABLE Customers
+MODIFY COLUMN Email VARCHAR(100) NOT NULL;
+```
+ဒီ command က email column ထဲမှာ NULL rows တွေ ရှိရင် error — NULL values တွေကို အရင်ပြင်ပြီးမှ run ပါ။
+
+## NOT NULL အတွက် DEFAULT နဲ့တွဲဖို့
+```sql
+ALTER TABLE Customers
+ADD COLUMN JoinedDate DATE NOT NULL DEFAULT '2025-01-01';
+```
+Existing rows တွေမှာ '2025-01-01' ဖြည့်ပေးလို့ NOT NULL ပြည့်စုံပါတယ်။
+
+## UNIQUE နဲ့ကွာခြားမှု
+|  | NOT NULL | UNIQUE |
+| --- | --- | --- |
+| NULL ခံသလား | မခံဘူး | ခံတယ် (mostly) |
+| Duplicate ခံသလား | ခံတယ် | မခံဘူး |
+
+NOT NULL — အားလုံး row တွေမှာ "value ရှိရမယ်" (ဒါပေမဲ့ အတူတူလည်း ရတယ်လေ)၊ UNIQUE — "duplicate မဖြစ်ရဘူး"။
+
+## အဓိက အချက်များ
+- NOT NULL — mandatory column
+- Column ဖွဲ့စဉ်ကတည်းက ထည့်ပါ
+- ALTER — existing NULL rows စစ်ထားပါ
+- DEFAULT နဲ့တွဲပြီး ALTER ADD က ပိုလွယ်

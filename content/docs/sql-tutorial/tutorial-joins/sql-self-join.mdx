@@ -1,0 +1,65 @@
+---
+title: "sql-self-join"
+description: "Self JOIN — same table ကို alias ၂ခုနဲ့ ချိတ်ပြီး row များစွာ နှိုင်းယှဉ်ခြင်း။"
+autoNumbering: true
+---
+
+Self JOIN က table တစ်ခုကို ကိုယ့်နဲ့ကိုယ် ချိတ်ပါတယ်။ Table တစ်ခုတည်းနဲ့ row တွေကို နှိုင်းယှဉ်ဖို့အတွက် alias ၂ခု ခွဲသုံးပါတယ်။
+
+## ကျောင်းသား ဥပမာ
+Students  ဇယားမှာ ကျောင်းသားတိုင်းက CoordinatorID (နောက်ကျောင်းသား) ကိုညွှန်ပါတယ်:
+
+| StudentID | Name | CoordinatorID |
+| --- | --- | --- |
+| 1 | Aung | 2 |
+| 2 | Su | NULL |
+| 3 | Nandar | 2 |
+
+## Self JOIN ဆွဲခြင်း
+```sql
+SELECT s.Name AS Student, c.Name AS Coordinator
+FROM Students AS s
+LEFT JOIN Students AS c ON s.CoordinatorID = c.StudentID;
+```
+Same table ကို alias s (student) နဲ့ c (coordinator) ခွဲပြီး ချိတ်ပါတယ်။ Result:
+
+| Student | Coordinator |
+| --- | --- |
+| Aung | Su |
+| Su | NULL |
+| Nandar | Su |
+
+## တူညီတဲ့မြို့မှာ နေတဲ့ Customer အတွဲများ ရှာခြင်း
+```sql
+SELECT a.Name AS Customer1, b.Name AS Customer2, a.City
+FROM Customers AS a
+INNER JOIN Customers AS b
+  ON a.City = b.City
+  AND a.Name <> b.Name;
+```
+City အတိုင်း group ဖြစ်နေတဲ့ customer pair တွေကို ရှာတာက self join ရဲ့ ဂန္ထဝင် ဥပမာပါ။
+
+## နှစ်ဆ ဖြစ်နေတဲ့ record ရှာခြင်း
+```sql
+SELECT a.OrderID
+FROM Orders AS a
+INNER JOIN Orders AS b
+  ON a.CustomerID = b.CustomerID
+  AND a.OrderID <> b.OrderID;
+```
+Same customer ရဲ့ order ၂ ခုကို နှိုင်းယှဉ်ပြီး "customer တစ်ယောက်မှာ order များစွာ" ဆိုတာကို ရှာပါတယ်။
+
+## Self Join သတိ
+```sql
+SELECT ... FROM Students AS s
+JOIN Students AS c ON s.CoordinatorID = c.StudentID;
+```
+- Alias ၂ခု မဖြစ်မနေ လို (မဟုတ်ရင် ambiguous error)
+- Self JOIN က key/value ဆက်စပ်မှု (employee-manager, category-parent) ရှိတဲ့ table တွေမှာ အသုံးများပါတယ်
+- Recursive pattern ကို hierarchy နဲ့ CTE နောက်ပိုင်း သင်ပါမယ်
+
+## အဓိက အချက်များ
+- Self JOIN = table တစ်ခုကို alias ၂ခုနဲ့ ချိတ်
+- row တွေကို နှိုင်းယှဉ် (pair) လုပ်တဲ့နေရာမှာ သုံး
+- Hierarchy (employee-manager) ပုံစံ
+- Alias မဖြစ်မနေ သုံးပါ

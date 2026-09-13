@@ -1,0 +1,56 @@
+---
+title: "sql-in"
+description: "IN operator — တန်ဖိုးစာရင်း (list) ထဲက တစ်ခုခုနဲ့ ကိုက်တဲ့ row ရှာခြင်း။ OR အစား ပိုလှပါတယ်။"
+autoNumbering: true
+---
+
+IN က column တန်ဖိုး တစ်ခုကို စာရင်းထဲက တစ်ခုခုနဲ့ comparison လုပ်ပါတယ်။ OR ရဲ့ တိုတောင်းလှပြီး ဖတ်လို့ကောင်းတဲ့ အစားထိုး ဖြစ်ပါတယ်။
+
+## IN အခြေခံ
+```sql
+SELECT * FROM Customers
+WHERE City IN ('Yangon', 'Mandalay', 'Naypyidaw');
+```
+City က သုံးမြို့ထဲကမှ တစ်မြို့မြို့ ဖြစ်တဲ့ ဖောက်သည်တွေကို ပြပါတယ်။ ဒါက OR ၃ ခု ရေးတာနဲ့ အတူတူပါပဲ:
+
+```sql
+WHERE City = 'Yangon' OR City = 'Mandalay' OR City = 'Naypyidaw';
+```
+
+## NOT IN
+```sql
+SELECT * FROM Customers
+WHERE City NOT IN ('Yangon', 'Mandalay');
+```
+Yangon/Mandalay မဟုတ်တဲ့ မြို့တွေမှာနေတဲ့ ဖောက်သည်တွေကို ပြပါတယ်။
+
+## Number List
+```sql
+SELECT * FROM Products
+WHERE ProductID IN (1, 3, 5);
+```
+Number list မှာ quote မလိုပါဘူး။ ProductID 1, 3, 5 ရှိတဲ့ products တွေကို ပြပါတယ်။
+
+## IN + Subquery (အစွမ်းထက် ပုံစံ)
+```sql
+SELECT Name FROM Customers
+WHERE CustomerID IN (
+    SELECT CustomerID FROM Orders
+    WHERE OrderDate > '2025-06-01'
+);
+```
+List ကို ကိုယ်တိုင်ရေးစရာမလိုဘဲ နောက် subquery က ထုတ်ပေးနိုင်ပါတယ်။ ဒီ query က June 2025 နောက်ပိုင်း order လုပ်ခဲ့တဲ့ ဖောက်သည်တွေရဲ့ name ကို ပြပါတယ်။
+
+## IN vs BETWEEN vs LIKE — ဘယ်အခါ ဘာသုံးမလဲ
+| မေးခွန်း | Operator |
+| --- | --- |
+| တန်ဖိုး 3-5 ခု အတိအကျ | IN |
+| ကြားကာလ (range) | BETWEEN |
+| pattern (အစ "A") | LIKE |
+
+## အဓိက အချက်များ
+- IN (v1, v2, ...) — list comparison၊ OR ကို ရှင်းပေးတယ်
+- NOT IN — ဆန့်ကျင်ဖက်
+- Number list → quotes မလို
+- Subquery ကနေ list ထုတ်ပြီး သုံးလို့ရတယ်
+- Long list မှာ index performance သတိထားပါ

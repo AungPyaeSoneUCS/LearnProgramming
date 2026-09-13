@@ -1,0 +1,62 @@
+---
+title: "MySQL Intro — MySQL မိတ်ဆက်"
+description: "What is MySQL — DBMS အမျိုးအစားများ, MySQL ၏ လက္ခဏာများ — relational database ။"
+autoNumbering: true
+---
+
+## MySQL ဆိုတာ ဘာလဲ
+
+MySQL သည် **relational database management system (RDBMS)** တစ်ခုဖြစ်ပြီး data များကို ဇယားများဖြင့် သိမ်းဆည်းပါတယ်။ ဇယားတစ်ခုတွင် **rows** (အတန်း) နှင့် **columns** (ကော်လံ) များ ပါဝင်ပါတယ်။
+
+## Relational Database ဆိုတာ
+
+Relational database တွင် data များကို ဇယားများအဖြစ် ခွဲထားပြီး ဇယားများအကြား **relationship** များ ရှိပါတယ်။
+
+```sql
+customers
++----+------+----------+
+| id | name | city     |
++----+------+----------+
+| 1  | Aung | Yangon   |
+| 2  | Su   | Mandalay |
++----+------+----------+
+```
+
+## DBMS အမျိုးအစားများ
+
+- **Relational** — MySQL, PostgreSQL, Oracle, SQLite (tables + relationships)
+- **NoSQL** — MongoDB, Redis, Cassandra (document / key-value)
+- **MySQL သည် relational** အမျိုးအစား ဖြစ်သည်
+
+## MySQL ၏ လက္ခဏာများ
+
+- Client-server model — server ပေါ်တွင် run ၍ client များက ချိတ်ဆက်
+- SQL ဘာသာစကား ဖြင့် ပြောဆို
+- ACID သတ်မှတ်ချက်များ — transactions များကို စိတ်ချစွာ လုပ်ဆောင်
+- Multi-user ဖြစ်၍ concurrency ကောင်း
+
+## ဘယ်သူတွေ MySQL သုံးလဲ
+
+- Web developers — LAMP/WAMP stack ၏ M သည် MySQL
+- E-commerce — product, order, user data
+- Analytics — reporting နှင့် data aggregation
+
+<Quiz
+  questions={[
+    {
+      id: "intro1",
+      question: "MySQL ကို အမျိုးအစားအားဖြင့် ဘာလို့ ခေါ်လဲ?",
+      options: ["NoSQL Database", "RDBMS", "Filesystem", "Cache"],
+      correctAnswer: "RDBMS",
+      explanation: "MySQL သည် relational database management system ဖြစ်သည်",
+    },
+  ]}
+/>
+
+## အဓိက အချက်များ
+- MySQL — relational (RDBMS)
+- Data = tables (rows + columns)
+- Client-server + SQL based
+
+## နောက်တစ်ခန်း
+RDBMS သဘောတရား အသေးစိတ်ကို ဆက်လေ့လာပါ။

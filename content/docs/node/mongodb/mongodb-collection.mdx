@@ -1,0 +1,43 @@
+---
+title: "Node.js MongoDB Collection — Collection"
+description: "Node + MongoDB — createCollection, drop, list — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Collections — SQL ‌၏ tables — documents ‌သိမ်း။
+
+## Create / get
+
+```js
+await db.createCollection("users");           // explicit
+  const users = db.collection("users");          // reference ယူ
+const orders = db.collection("orders");
+```
+
+Explicit create ‌မလို — insert ‌လုပ်ချိန် auto-create။
+
+## Drop
+
+```js
+await db.collection("users").drop();
+```
+
+## List collections
+
+```js
+const collections = await db.listCollections().toArray();
+console.log(collections.map((c) => c.name));
+```
+
+## Schema-less — what it means
+
+```js
+  // documents မတူညီ ဖြစ်နိုင်ခဲ့ (no fixed schema)
+await users.insertOne({ name: "Aung", age: 25 });
+await users.insertOne({ name: "Su", email: "su@x.com" });
+```
+
+## ‌အဓိက အချက်များ
+- db.collection(name)
+- createCollection / drop
+- Schema-less documents

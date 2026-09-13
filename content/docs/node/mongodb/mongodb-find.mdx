@@ -1,0 +1,47 @@
+---
+title: "Node.js MongoDB Find — Find"
+description: "Node + MongoDB — findOne, find, toArray, projection — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Documents ‌ဖတ်နည်း — findOne / find။
+
+## Find one
+
+```js
+const user = await users.findOne({ name: "Aung" });
+console.log(user);
+```
+
+## Find many — toArray
+
+```js
+const all = await users.find({}).toArray();
+const adults = await users.find({ age: { $gte: 18 } }).toArray();
+```
+
+Cursor → `toArray()` ဖြင့် array ‌ပြောင်း။
+
+## Projection — ‌ရွေးပြ
+
+```js
+const names = await users
+  .find({})
+  .project({ name: 1, _id: 0 })
+  .toArray();
+```
+
+`1` include, `0` exclude — ‌ပေါ့ ‌ရလဒ်။
+
+## Using ObjectId
+
+```js
+const { ObjectId } = require("mongodb");
+
+const user = await users.findOne({ _id: new ObjectId(id) });
+```
+
+## ‌အဓိက အချက်များ
+- findOne(filter)
+- find(filter).toArray()
+- $gte operators, projection

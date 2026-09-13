@@ -1,0 +1,59 @@
+---
+title: "MySQL Alter Table — ALTER TABLE"
+description: "ALTER TABLE — ဇယားတည်ဆောက်ပုံ ပြင်ဆင်ခြင်း — ADD, DROP, MODIFY column။"
+autoNumbering: true
+---
+
+`ALTER TABLE` statement သည် ‌ဇယားတည်ဆောက်ပုံ (schema) ကို ‌ဖန်တီး‌ပြီးမှ ‌ပြင်ဆင်‌ရန် ‌သုံးပါတယ် — column ‌ထည့်, ‌ဖျက်, ‌ပြန်‌သတ်မှတ်။
+
+## ‌လုပ်ဆောင်မှုများ
+
+| ‌လုပ်ဆောင်မှု | Syntax |
+| --- | --- |
+| Column ADD | `ALTER TABLE t ADD col type;` |
+| Column DROP | `ALTER TABLE t DROP COLUMN col;` |
+| Column MODIFY | `ALTER TABLE t MODIFY col type;` |
+| Rename | `ALTER TABLE t RENAME COLUMN a TO b;` |
+| Rename table | `RENAME TABLE a TO b;` |
+
+## ADD Column
+
+```sql
+ALTER TABLE users
+ADD phone VARCHAR(20);
+```
+
+## DROP Column
+
+```sql
+ALTER TABLE users
+DROP COLUMN phone;
+```
+
+## MODIFY — type ‌ပြောင်း
+
+```sql
+ALTER TABLE users
+MODIFY age INT NOT NULL;
+```
+
+`age` ‌ကို NOT NULL ‌ပြောင်း — ‌တည်ရှိသော rows ‌စစ်ဆေး။
+
+## ADD Constraint — ‌ဥပမာ UNIQUE
+
+```sql
+ALTER TABLE users
+ADD UNIQUE (email);
+```
+
+## RENAME COLUMN
+
+```sql
+ALTER TABLE users
+RENAME COLUMN name TO full_name;
+```
+
+## ‌အဓိက အချက်များ
+- ALTER TABLE — schema ‌ပြန် ‌ပြင်ဆင်
+- ADD / DROP / MODIFY column
+- Constraints ‌ထပ်ဖြည့်နိုင်

@@ -1,0 +1,55 @@
+---
+title: "Node.js MySQL Get Started — MySQL Get Started"
+description: "Node + MySQL — mysql2 install, connection, query — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Node.js ‌မှ MySQL database ‌ချိတ်ဆက် ‌သုံး‌ရန် — `mysql2` driver ‌အသုံးပြု။
+
+## Install
+
+```bash
+npm install mysql2
+```
+
+## Connection
+
+```js
+const mysql = require("mysql2/promise");
+
+const db = await mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "secret",
+  database: "shop",
+});
+```
+
+## First query
+
+```js
+const [rows] = await db.query("SELECT 1 + 1 AS result");
+console.log(rows[0].result); // 2
+```
+
+## ‌အကြံပြုချက် — pool
+
+```js
+const pool = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: "secret",
+  database: "shop",
+  waitForConnections: true,
+  connectionLimit: 10,
+});
+
+const [users] = await pool.query("SELECT * FROM users");
+```
+
+Pool — connections ‌အသင့် ‌ပြန်‌သုံး — ‌ကြီးမားအသုံးအတွက် ‌ကောင်း။
+
+## ‌အဓိက အချက်များ
+- mysql2/promise — async
+- createConnection / createPool
+- query — [rows] destructure

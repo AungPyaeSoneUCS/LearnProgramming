@@ -1,0 +1,64 @@
+---
+title: "MySQL WHERE — WHERE Clause"
+description: "WHERE — rows များကို filter လုပ်ခြင်း — operators (=, >, <, LIKE, IN)။"
+autoNumbering: true
+---
+
+`WHERE` clause သည် query ‌ရလဒ်ထဲ မှ **condition နဲ့ ကိုက်ညီ‌သော rows** ‌ကိုသာ ‌ရွေးပါတယ်။
+
+## Syntax
+
+```sql
+SELECT column1, column2
+FROM table_name
+WHERE condition;
+```
+
+## ‌ဥပမာများ
+
+```sql
+SELECT * FROM customers WHERE country = 'Myanmar';
+```
+
+```sql
+SELECT * FROM products WHERE price > 100;
+```
+
+```sql
+SELECT * FROM products WHERE price < 50;
+```
+
+```sql
+SELECT * FROM employees WHERE age >= 18;
+```
+
+## Text vs Number
+- Text ‌တန်ဖိုး — single quotes: `WHERE city = 'Yangon'`
+- Number — quotes ‌မပါ: `WHERE price > 100`
+
+## Operators များ
+
+| Operator | ‌ရှင်းလင်း |
+| --- | --- |
+| `=` | ‌တူညီ |
+| `>` , `<` | ‌ကြီး, ငယ် |
+| `>=` , `<=` | ‌ကြီးခြင်း/ညီ, ငယ်/ညီ |
+| `!=` ‌သို့ `<>` | ‌မတူ |
+| `LIKE` | pattern ကိုက်ညီ |
+| `IN` | list ထဲမှ ဖြစ်ခြင်း |
+| `BETWEEN` | range ထဲ ဖြစ်ခြင်း |
+
+```sql
+SELECT * FROM orders WHERE status != 'cancelled';
+
+SELECT * FROM products WHERE name LIKE 'Cha%';
+
+SELECT * FROM customers WHERE city IN ('Yangon', 'Mandalay');
+
+SELECT * FROM orders WHERE amount BETWEEN 1000 AND 5000;
+```
+
+## အဓိက အချက်များ
+- WHERE — filter ‌လုပ်ရန်
+- Text ‌ကို quotes ‌ဖြင့်
+- Operators — =, comparison, LIKE, IN, BETWEEN

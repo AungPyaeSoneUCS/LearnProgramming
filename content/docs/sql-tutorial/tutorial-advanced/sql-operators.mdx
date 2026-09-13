@@ -1,0 +1,90 @@
+---
+title: "sql-operators"
+description: "Arithmetic, Comparison, Logical, Bitwise, Compound — SQL operators reference ။"
+autoNumbering: true
+---
+
+Operators က values တွေကို တွက်ချက်၊ နှိုင်းယှဉ်၊ ပေါင်းစပ်ဖို့ သုံးတဲ့ သင်္ကေတတွေပါ။ WHERE clause, SELECT, JOIN, REGEX အားလုံးမှာ တွေ့ရပါမယ်။
+
+## Arithmetic Operators
+| Operator | လုပ်ဆောင်ချက် |
+| --- | --- |
+| + | ပေါင်း |
+| - | နုတ် |
+| * | မြှောက် |
+| / | စား |
+| % | ကိန်းလုံးကျန် (modulo) |
+
+```sql
+SELECT Price, Price * 1.1 AS WithTax, Price % 3 AS Remainder FROM Products;
+```
+Price * 1.1 က 10% tax ထည့်ပြီး Price % 3 က 3 နဲ့စားရင် ကျန်တဲ့ကိန်းကို ပြပါတယ်။
+
+## Comparison Operators
+| Operator | အဓိပ္ပာယ် |
+| --- | --- |
+| = | တူသည် |
+| `<>` / `!=` | မတူညီ |
+| `>` / `<` | ကြီးသည် / ငယ်သည် |
+| `>=` / `<=` | ကြီးသည် သို့မဟုတ် တူ / ငယ်သည် သို့မဟုတ် တူ |
+| BETWEEN, LIKE, IN | range / pattern / list |
+
+```sql
+SELECT * FROM Products
+WHERE Price BETWEEN 20 AND 100 AND Name LIKE 'Wireless%';
+```
+
+## Logical Operators
+| Operator | အဓိပ္ပာယ် |
+| --- | --- |
+| AND | condition အားလုံး |
+| OR | condition တစ်ခုခု |
+| NOT | ပြောင်းပြန် |
+| IN | list ထဲတစ်ခုခု |
+| ANY / ALL | list ထဲတစ်ခုခု / အားလုံး |
+| EXISTS | row ရှိရင် true |
+| LIKE, BETWEEN, IS NULL | pattern / range / null |
+
+## Bitwise Operators
+```sql
+-- SQL Server
+SELECT 5 & 3 AS AndResult,   -- 0101 & 0011 = 0001 → 1
+       5 | 3 AS OrResult,    -- 0101 | 0011 = 0111 → 7
+       5 ^ 3 AS XorResult;   -- 0101 ^ 0011 = 0110 → 6
+```
+& (AND), | (OR), ^ (XOR) — bit အလိုက် သီးခြားလုပ်ဆောင်ပါတယ်။ Flags / permissions သိမ်းတဲ့နေရာမှာ သုံးပါတယ်။
+
+## Compound Operators
+```sql
+-- SQL Server
+SET @x = 5;  SET @x += 3;  -- @x → 8
+SET @x -= 2;  -- 6
+SET @x *= 4;  -- 24
+SET @x /= 3;  -- 8
+SET @x %= 5;  -- 3
+```
++=, -=, *=, /=, %= — "x = x op value" ရဲ့ အတိုကောက်ပါ။ Assignment အတွင်းမှာ သုံးပြီး WHERE မှာ မသုံးပါဘူး။
+
+## NULL Operator
+```sql
+SELECT * FROM Customers WHERE Address IS NULL;
+SELECT * FROM Customers WHERE City IS NOT NULL;
+```
+IS NULL / IS NOT NULL — (NULL ကို = နဲ့ မနှိုင်းယှဉ်နိုင်လို့) NULL စစ်ဖို့ပဲ ရှိတဲ့ operator ပါ။
+
+## Operator Precedence
+```
+()  →  arithmetic (* / %)  →  arithmetic (+ -)
+→  comparison (= < >)  →  NOT  →  AND  →  OR
+```
+```sql
+WHERE a = 1 OR b = 2 AND c = 3
+-- (b=2 AND c=3) က ဦးစားပေး run လို့ a=1 ဖြစ်ဖြစ်, (b=2 နဲ့ c=3 နှစ်ခု) ဖြစ်ရမယ်
+```
+Parenthesis သုံးပြီး ကိုယ်လိုတဲ့ grouping ကို အတိအကျ ရှင်းထားပါ။
+
+## အဓိက အချက်များ
+- Arithmetic: + - * / %
+- Comparison: `=` `<>` `>` `=` `<=`
+- Logical: AND OR NOT IN IS NULL BETWEEN LIKE
+- Precedence: () → * / % → + - → comparison → NOT → AND → OR

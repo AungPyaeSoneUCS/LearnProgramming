@@ -1,0 +1,65 @@
+---
+title: "React CSS Modules — CSS Modules"
+description: "CSS Modules — ‌ဖိုင်တမျိုး (.module.css) ဖြင့် class name ‌တိုက်မှု ကင်း‌အောင် ‌ပြုလုပ်နည်း — styles.propName ။"
+autoNumbering: true
+---
+
+CSS Modules ‌ကို `.module.css` ‌ဖိုင်ဖြင့် ‌ဖန်တီးပြီး class name ‌တွေကို ‌အလိုအလျောက် unique ‌ဖြစ်‌စေပါတယ် — component ၂ခု မှာ class name တူနေရင် မပျက်စီး ပါ။
+
+## ‌ဖိုင် ‌ဖွဲ့စည်းပုံ
+
+```
+src/
+  App.jsx
+  App.module.css     ← module css
+```
+
+```css
+/* App.module.css */
+.title {
+  color: blue;
+  font-size: 24px;
+}
+
+.body {
+  color: gray;
+}
+```
+
+## Import ‌လိုပြီး ‌သုံးရန်
+
+```jsx
+import styles from "./App.module.css";
+
+function App() {
+  return (
+    <>
+      <h1 className={styles.title}>Hello Style!</h1>
+      <p className={styles.body}>Add a little style!</p>
+    </>
+  );
+}
+```
+
+`styles.title` — build ‌ချိန် ‌မှာ ‌နာမည် ‌ပြောင်း (‌ဥပမာ `_title_1abc`) ‌ဖြစ်‌သွားလို့ ‌တိုက်မှု ‌မရှိပါ။
+
+## ‌ခြားနားချက် — regular css vs module
+
+| Regular CSS | CSS Module |
+| --- | --- |
+| `import "./App.css"` | `import styles from "./App.module.css"` |
+| `className="title"` | `className={styles.title}` |
+| ‌နာမည် ‌တိုက် (collision) ‌ဖြစ်နိုင် | unique ‌ဖြစ်‌နေလို့ ‌မဖြစ် |
+
+## ‌အခြေအ‌ပေါ် ‌မူတည် — conditional class
+
+```jsx
+<div className={isActive ? styles.active : styles.inactive}>
+  Status
+</div>
+```
+
+## ‌အဓိက အချက်များ
+- ‌ဖိုင် extension — `.module.css`
+- `import styles from "..."` — `styles.className`
+- Build ‌ချိန် ‌လျှို့ဝှက် unique နာမည် ‌ပြောင်း

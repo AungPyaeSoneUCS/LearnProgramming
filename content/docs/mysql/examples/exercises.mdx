@@ -1,0 +1,62 @@
+---
+title: "MySQL Exercises — Exercises"
+description: "MySQL Exercises — ‌လက်တွေ့ ‌လေ့‌ကျင့်ခန်းများ — ‌သင့်ကိုယ်ပိုင် query ‌ရေး ‌လေ့ကျင့်။"
+autoNumbering: true
+---
+
+ဤ ‌လေ့‌ကျင့်ခန်းများကို editor တွင် ‌ရေး၍ ‌လုပ်ပါ — ‌အဖြေ ‌များကို ‌အောက်တွင် ‌ပြထားပါတယ်။
+
+## Level 1 — အ‌ခြေခံ
+
+1. `customers` table ‌ဖန်တီး — id, name, city
+2. rows 3 ခု ‌ထည့်
+3. `SELECT * FROM customers` ‌ဖြင့် ‌ပြ
+4. city = 'Yangon' filter
+
+```sql
+CREATE TABLE customers (id INT PRIMARY KEY, name VARCHAR(100), city VARCHAR(50));
+INSERT INTO customers VALUES (1,'Aung','Yangon'), (2,'Su','Mandalay'), (3,'Mya','Yangon');
+SELECT * FROM customers WHERE city = 'Yangon';
+```
+
+## Level 2 — Aggregates
+
+1. orders table ‌ဆောက်
+2. total sales ‌တွက် — SUM(amount)
+
+```sql
+CREATE TABLE orders (id INT PRIMARY KEY, amount DECIMAL(10,2), city VARCHAR(50));
+INSERT INTO orders VALUES (1, 1000, 'Yangon'), (2, 2000, 'Mandalay'), (3, 500, 'Yangon');
+SELECT city, SUM(amount) AS total FROM orders GROUP BY city;
+```
+
+## Level 3 — JOIN
+
+1. customers + orders ချိတ်
+2. customer name နှင့် sum ‌ပြ
+
+```sql
+SELECT c.name, SUM(o.amount) AS total
+FROM customers c
+JOIN orders o ON o.customer_id = c.id
+GROUP BY c.name;
+```
+
+## Level 4 — Challenging
+
+- customer ဖျက်ချိန် orders ‌ပါ ဖျက်ရန် table ‌ပြန်တည် (ON DELETE CASCADE)
+- ‌အဆင့်အလိုက် count — CASE + GROUP BY
+
+```sql
+CREATE TABLE orders2 (
+  id INT PRIMARY KEY,
+  customer_id INT,
+  amount DECIMAL(10,2),
+  FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
+);
+```
+
+## ‌အဓိက အချက်များ
+- Level 1–4 ‌လိုက်‌လုပ်
+- Editor ‌တွင် ‌စမ်း
+- ‌ကိုယ်‌ပိုင် ‌အချိန် ‌ပေး

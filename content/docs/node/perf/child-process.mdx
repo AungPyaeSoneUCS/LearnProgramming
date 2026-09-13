@@ -1,0 +1,58 @@
+---
+title: "Node.js Child Process Module — Child Process Module"
+description: "Child process — spawn, exec, fork — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:child_process` — ‌အခြား programs/processes ‌ခေါ်ဆောင်ရန်။
+
+## exec — shell command (capture)
+
+```js
+const { exec } = require("node:child_process");
+
+exec("ls -la", (err, stdout, stderr) => {
+  if (err) return console.error(err);
+  console.log(stdout);
+});
+```
+
+## spawn — streaming ‌ပုံစံ
+
+```js
+const { spawn } = require("node:child_process");
+
+const child = spawn("node", ["worker.js"]);
+
+child.stdout.on("data", (data) => console.log(data.toString()));
+child.on("exit", (code) => console.log("exit", code));
+```
+
+## fork — run JS module
+
+```js
+const { fork } = require("node:child_process");
+
+const child = fork("worker.js");
+child.send({ task: "img-1" });
+child.on("message", (msg) => console.log("from worker:", msg));
+```
+
+Worker ‌ထဲ:
+
+```js
+process.on("message", (msg) => {
+  process.send({ result: msg.task + "-done" });
+});
+```
+
+## exec vs spawn
+| exec | spawn |
+| --- | --- |
+| Buffer ‌အ‌ပြည့် ‌ရှုး | Stream ‌အလိုက် |
+| ‌ပေါ့ command | ‌ကြီး output |
+
+## ‌အဓိက အချက်များ
+- exec — capture
+- spawn — stream output
+- fork — messaging

@@ -1,0 +1,52 @@
+---
+title: "Node.js MongoDB Limit — Limit"
+description: "Node + MongoDB — limit, skip, pagination — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+‌ရလဒ် ‌ကန့်သတ် — limit — pagination ‌အဆင့်။
+
+## Limit
+
+```js
+const rows = await users.find({}).limit(5).toArray();
+```
+
+N records သာ ‌ပြန်။
+
+## Skip + limit
+
+```js
+const rows = await users
+  .find({})
+  .skip(10)
+  .limit(10)
+  .toArray();
+```
+
+skip 10 → 11–20 rows (page 2)။
+
+## ‌အသုံးပြုမှု — page form
+
+```js
+function paginate(page, pageSize = 10) {
+  return users
+    .find({})
+    .sort({ _id: 1 })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .toArray();
+}
+```
+
+## Count total
+
+```js
+const total = await users.countDocuments({});
+const pages = Math.ceil(total / pageSize);
+```
+
+## ‌အဓိက အချက်များ
+- limit(n)
+- skip + limit — pages
+- countDocuments — total

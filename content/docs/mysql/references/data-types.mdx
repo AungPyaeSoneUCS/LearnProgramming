@@ -1,0 +1,53 @@
+---
+title: "MySQL Data Types — Data Types"
+description: "MySQL Data Types — numeric, string, date/time ‌ခွဲခြားမှု — ‌ဥပမာ, ‌ဘယ် type ‌ရွေးရမလဲ။"
+autoNumbering: true
+---
+
+MySQL ‌မှာ column ‌များ ‌ဖန်တီးချိန် data type ‌ရွေး‌ပေးရသည် — ‌အဓိက ‌အမျိုး 3 မျိုး (numeric, string, date/time)။
+
+## Numeric Types
+
+| Type | ‌အရွယ်အစား | ‌ဖော်ပြချက် |
+| --- | --- | --- |
+| `TINYINT` | 1 byte | -128–127 |
+| `INT` | 4 bytes | ‌ကိန်းပြည့် |
+| `BIGINT` | 8 bytes | ‌ကြီးသော ‌ကိန်း |
+| `DECIMAL(p,s)` | — | ဒသမသင်္ချာ (money) |
+| `FLOAT` / `DOUBLE` | 4/8 | ‌ဒသမကိန်း |
+| `BOOL` / `BOOLEAN` | — | ‌မှန်/‌မှား (1/0) |
+
+## String Types
+
+| Type | ‌ဖော်ပြချက် |
+| --- | --- |
+| `CHAR(n)` | Fixed length — padding |
+| `VARCHAR(n)` | Variable length — ‌အသုံးများ |
+| `TEXT` | ‌ကြီးသော text |
+| `ENUM(...)` | ‌ရွေး‌ချယ်စာရင်း |
+| `BLOB` | Binary data |
+
+```sql
+VARCHAR(255), TEXT, ENUM('pending','paid','done')
+```
+
+## Date/Time Types
+
+| Type | ‌ဖော်ပြချက် |
+| --- | --- |
+| `DATE` | YYYY-MM-DD |
+| `DATETIME` | ‌ရက်စွဲ + ‌အချိန် |
+| `TIMESTAMP` | ‌ရက်စွဲ + ‌အချိန် (auto) |
+| `TIME` | ‌အချိန် |
+
+## ‌ဘယ် type ရွေးရမလဲ
+- IDs — `INT` / `BIGINT` AUTO_INCREMENT
+- Names, emails — `VARCHAR(100-255)`
+- Prices — `DECIMAL(10,2)` (FLOAT ‌မသုံး — ‌အ‌မှား)
+- Descriptions — `TEXT`
+- ‌ရက်စွဲ — `DATE` / `DATETIME`
+
+## ‌အဓိက အချက်များ
+- Numeric / String / Date-time
+- VARCHAR for text, DECIMAL for money
+- INT for ids

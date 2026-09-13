@@ -1,0 +1,51 @@
+---
+title: "Node.js Microservices — Microservices"
+description: "Microservices — ‌ကိုယ်‌ပိုင် services — ‌ချိတ်ဆက်, communication — ဥပမာ။"
+autoNumbering: true
+---
+
+**Microservices** — app ကို ‌သီး‌ခြား services အများ — ‌ကိုယ်စီ ‌ကိုယ်‌ပိုင် port/DB။
+
+## Monolith vs micro
+
+| Monolith | Microservices |
+| --- | --- |
+| ‌တစ်‌ခုတည်း deploy | ‌ကိုယ်စီ deploy |
+| Team scale ‌ခက် | Team per service |
+| ‌အစ ‌ရှိ ‌ချင်း manageable | ‌ရှုပ်ထွေး (network) |
+
+## ‌ဥပမာ — two services
+
+`users-service` (port 4001):
+
+```js
+app.get("/users/:id", async (req, res) => {
+  const user = await db.findUser(req.params.id);
+  res.json(user);
+});
+```
+
+`orders-service` (port 4002) — ‌ခေါ် users-service:
+
+```js
+app.get("/orders/:userId", async (req, res) => {
+  const userRes = await fetch(`http://users-service:4001/users/${req.params.userId}`);
+  const user = await userRes.json();
+  res.json({ user, orders: await db.findOrders(user.id) });
+});
+```
+
+## Communication ‌ပုံစံ
+- HTTP/REST — sync
+- Message queue (RabbitMQ, Redis) — async events
+- gRPC — ‌ပိုမြန် binary
+
+## ‌အလေ‌ရး practices
+- Service discovery
+- Resilience — retry, circuit breaker, timeout
+- Observability — logs/metrics ‌အားလုံး
+
+## ‌အဓိက အချက်များ
+- Small independent services
+- ‌ကိုယ်စီ DB/port
+- Retry + observability

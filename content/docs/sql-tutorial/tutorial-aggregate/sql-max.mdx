@@ -1,0 +1,49 @@
+---
+title: "sql-max"
+description: "MAX() နဲ့ column တစ်ခုရဲ့ အမြင့်ဆုံး တန်ဖိုး ရှာနည်း။"
+autoNumbering: true
+---
+
+MAX() က column တစ်ခုရဲ့ အကြီးဆုံး (largest) တန်ဖိုးကို ပြန်ပါတယ်။ MIN() ရဲ့ ဆန့်ကျင်ဘက် ဖြစ်ပြီး သုံးနည်းက တူညီပါတယ်။
+
+## Number မှာ MAX()
+```sql
+SELECT MAX(Price) AS ExpensivePrice FROM Products;
+```
+Products ဇယားရဲ့ ဈေးအကြီးဆုံး Price ကို ပြပါတယ်။ Result: 150 (Monitor)။ NULL ပါတဲ့ row တွေကို ကျော်ပါတယ်။
+
+## String နဲ့ Date မှာ MAX()
+```sql
+SELECT MAX(Name) FROM Customers;
+ 
+SELECT MAX(OrderDate) AS LatestOrder FROM Orders;
+```
+- MAX(Name) → A-Z sequence အရ နောက်ဆုံး name (ဥပမာ "Su")
+- MAX(OrderDate) → နောက်ဆုံး (မကြာသေးတဲ့) order date
+
+## MAX() + WHERE
+```sql
+SELECT MAX(Price) FROM Products
+WHERE Category = 'Phone';
+```
+Phone category ထဲမှ အမြင့်ဆုံး price ကိုပဲ ရှာပါတယ်။ "ဘယ်အမျိုးအစားထဲမှာ ဘာက အမြင့်ဆုံးလဲ" ဆိုတာ လက်တွေ့ပြုစားရောက်တဲ့ မေးခွန်းပါ။
+
+## MAX() နဲ့ ဘယ် product လဲ ရှာချင်ရင် (Subquery)
+```sql
+SELECT Name FROM Products
+WHERE Price = (SELECT MAX(Price) FROM Products);
+```
+ပထမဆုံး subquery က MAX price (150) ကို ရှာပြီး၊ အပြင်မေးနှုန်းက Price=150 ဖြစ်တဲ့ product name ကို ပြန်ပါတယ်။ Result: "Monitor"။ (Subquery ကို Module 3 မှာ ပါလာပါမယ်။)
+
+## MAX() + GROUP BY
+```sql
+SELECT Category, MAX(Price) FROM Products
+GROUP BY Category;
+```
+Category တစ်ခုစီရဲ့ အမြင့်ဆုံး price ကို row တစ်ခုစီအဖြစ် ပြပါတယ်။ (GROUP BY lesson မှာ အပြည့်အစုံ ပါမယ်။)
+
+## အဓိက အချက်များ
+- MAX(col) → largest value (number, string, date)
+- NULL တွေကို ကျော်ပါတယ်
+- Subquery နဲ့ ပေါင်းပြီး "အမြင့်ဆုံးရှိတဲ့ row" တစ်ခုလုံး ရှာလို့ရတယ်
+- GROUP BY + MAX = group အလိုက် max

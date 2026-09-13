@@ -1,0 +1,57 @@
+---
+title: "Node.js Interface — Interface"
+description: "Interface — readline — prompt/questions — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:readline` **Interface** — terminal input/output — ‌ဥပမာ — prompts, Q&A။
+
+## Basic
+
+```js
+const readline = require("node:readline");
+const { stdin: input, stdout: output } = require("node:process");
+
+const rl = readline.createInterface({ input, output });
+
+rl.question("Your name? ", (answer) => {
+  console.log("Hello", answer);
+  rl.close();
+});
+```
+
+## Multi-step
+
+```js
+const rl = readline.createInterface({ input, output });
+
+function ask(q) {
+  return new Promise((resolve) => rl.question(q, resolve));
+}
+
+async function main() {
+  const name = await ask("Name? ");
+  const age = await ask("Age? ");
+  console.log(`${name}, age ${age}`);
+  rl.close();
+}
+main();
+```
+
+## Line events
+
+```js
+rl.on("line", (line) => {
+  console.log("got:", line);
+});
+```
+
+## ‌အသုံးများ
+- CLI tools
+- Interactive dialogs
+- Configuration prompts
+
+## ‌အဓိက အချက်များ
+- `createInterface({ input, output })`
+- rl.question(cb)
+- rl.close()

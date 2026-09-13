@@ -1,0 +1,55 @@
+---
+title: "MySQL Create Index — CREATE INDEX"
+description: "CREATE INDEX — query ‌မြန်‌စေ — UNIQUE index, ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+**Index** သည် column data ‌ကို ‌အစီအစဉ် ‌ပြင်‌ထား၍ query ‌ရှာဖွေမှုကို **‌ပိုမြန်** ‌စေပါတယ် — ‌ကြီးသော ‌ဇယားများအ‌တွက် ‌အသုံးဝင်။
+
+## Syntax
+
+```sql
+CREATE INDEX index_name
+ON table_name (column1, column2, ...);
+```
+
+## ဥပမာ
+
+```sql
+CREATE INDEX idx_city
+ON customers (city);
+```
+
+`WHERE city = ...` ‌လိုမျိုး query ‌တွေက ‌မြန်။
+
+## UNIQUE INDEX
+
+```sql
+CREATE UNIQUE INDEX idx_email
+ON users (email);
+```
+
+‌ထပ် email ‌မရ + lookup ‌မြန်သည်။
+
+## Composite index — columns ‌ပေါင်း
+
+```sql
+CREATE INDEX idx_city_status
+ON customers (city, status);
+```
+
+## ‌ဖျက်ခြင်း — DROP
+
+```sql
+DROP INDEX idx_city ON customers;
+```
+
+## ‌ဘယ်အချိန် ‌သုံးသင့်လဲ
+- WHERE / JOIN / ORDER BY column ‌များ
+- ‌ဇယား ‌ကြီးပြီး ‌ဖတ်များသောအခါ
+- Writes (`INSERT/UPDATE`) ကို ‌နှေး‌စေနိုင် — ‌အလွန် ‌အကျိုးသက်ရောက်မှု
+
+## ‌အဓိက အချက်များ
+- CREATE INDEX — ‌ရှာမြန်
+- UNIQUE — ‌ထပ် ‌တားဆီး
+- Index ‌များလွန်း → writes ‌နှေး

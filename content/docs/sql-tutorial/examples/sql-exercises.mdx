@@ -1,0 +1,55 @@
+---
+title: "sql-exercises"
+description: "SQL exercises — query သေးသေးလေးတွေ ရေးလေ့ကျင့်ပြီး code block နဲ့ practice။"
+autoNumbering: true
+---
+
+Practice လုပ်လေ ကျွမ်းလေ! အောက်ပါ exercise တွေကို editor ထဲ run ပြီး ကိုယ့်ကိုယ်ကိုယ် စစ်ပါ။
+
+## Exercise 1 — SELECT
+သင့်မှာ Customers table — CustomerID, Name, City, Country ရှိပါတယ်။
+
+```sql
+-- 1) Name column ပဲ ကြည့်
+-- 2) Unique countries စာရင်း
+-- 3) Yangon city ဖောက်သည်များ
+-- 4) Name A ကစတဲ့သူတွေ
+```
+
+## Exercise 2 — Joins
+```sql
+-- 1) Order + customer name (inner join)
+-- 2) Total 100 ကျော် orders (join + where)
+-- 3) customer + order count ပြခြင်း (left join + group by)
+-- 4) No-order customer တွေ
+```
+
+## Exercise 3 — Aggregates
+```sql
+-- 1) Order စုစုပေါင်း count
+-- 2) Average order total
+-- 3) ဈေးအမြင့်ဆုံး product
+-- 4) နိုင်ငံအလိုက် customer ရေတွက် (group by)
+```
+
+## အကောင်းဆုံးအဖြေတချို့
+```sql
+-- Exercise 2-3
+SELECT c.Name, COUNT(o.OrderID) AS Orders
+FROM Customers c
+LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
+GROUP BY c.Name
+HAVING COUNT(o.OrderID) = 0;
+```
+```sql
+-- Exercise 3-4
+SELECT Country, COUNT(*) FROM Customers GROUP BY Country;
+```
+
+## ဘာကြောင့် result မှန်လဲ — ရှင်းပြပါ
+"Cart"  တွေမှာလိုမျိုး — လေ့ကျင့်ခန်းက result ရှိရင် run ပြီး စစ်ဆေးပါ။ SQL  ကို ရေးရုံသာမက "ဘာလို့ အဲလို ရတယ်" ဆိုတာ ရှင်းပြနိုင်မှ ကျွမ်းကျင်ပါတယ်။
+
+## အဓိက အချက်များ
+- SELECT / JOIN / aggregate — ပြန်လေ့ကျင့်
+- EXERCISES — run ပြီး ထွက်တဲ့ result  ကို တွေးဆစစ်ဆေး
+- Best-practice solutions တွေကို အခြေခံထား

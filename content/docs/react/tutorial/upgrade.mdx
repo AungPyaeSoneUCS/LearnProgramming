@@ -1,0 +1,60 @@
+---
+title: "React Upgrade — Version အသစ်သို့ အဆင့်မြှင့်ခြင်း"
+description: "React 16/17/18 မှ 19 အဆင့်မြှင့်ရန် — important changes, new features, upgrade လုပ်နည်း။"
+autoNumbering: true
+---
+
+React ဗားရှင်းအသစ်တွေ ထွက်လာတိုင်း component တွေ မပျက်စီးစေဘဲ ဘယ်လို upgrade လုပ်မလဲကို သိထားဖို့ အရေးကြီးပါတယ်။
+
+## React 19 အသစ်တွေ (Highlights)
+
+| အကြောင်းအရာ | React 18 → 19 |
+| --- | --- |
+| Actions | Form action ကို `action={fn}` နဲ့ တိုက်ရိုက် သတ်မှတ်နိုင်သည် |
+| useOptimistic | async action လုပ်နေစဉ် optimistic UI ပြစေနိုင်သည် |
+| useTransition | background update ကို ချောမွေ့စွာ စီမံနိုင်သည် |
+| ref as props | `forwardRef` မလိုဘဲ ref ကို props အနေနဲ့ ပေးနိုင်သည် |
+
+## Upgrade လုပ်ခြင်း — npm
+
+```bash
+npm install react@latest react-dom@latest
+```
+
+ပြီးရင် node_modules နဲ့ lock file ကို သန့်ရှင်းအောင် ပြန် run ပါ။
+
+```bash
+npm install
+```
+
+## Breaking Change တစ်ခုခု ရှိလား?
+
+React 19 တွင် component API အများစုသည် နောက်ကြောင်း လိုက်ဖက်ညီ (backward compatible) ရှိပါသေးတယ်။ တချို့ နေရာများမှာ သတိပြုရပါတယ်။
+
+- `forwardRef` အစား **ref ကို props အနေနဲ့** ပို့လို့ရသွားပြီ
+- string `ref` ‌လုပ်နည်းဟောင်း တွေကို ဖယ်ရှားသွားပြီ
+- `ReactDOM.render` (React 17 နည်း) ကို `createRoot().render()` နဲ့ အစားထိုးထားပြီး ဖြစ်သည်
+
+## Upgrade မပြုလုပ်မီ Checklist
+- ကိုယ့် component တွေမှာ deprecated API သုံးနေသလား စစ်ပါ
+- Dependencies (react-dom, @types/react) ကိုလည်း အတူ upgrade လုပ်ပါ
+- အရင်ဆုံး dev မှာ စစ်ပြီးမှ production ကို ပို့ပါ
+- `npm test` / build ကို run ပြီး error မရှိကြောင်း သေချာပါစေ
+
+## Upgrade ဥပမာ — React 17 → 19
+
+**React 17 နည်း (ဟောင်း):**
+```jsx
+ReactDOM.render(<App />, document.getElementById("root"));
+```
+
+**React 19 နည်း (အသစ်):**
+```jsx
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+```
+
+## အဓိက အချက်များ
+- Upgrade က များသောအားဖြင့် နောက်ကြောင်းလိုက်ဖက်ညီသည်
+- render API ‌ပြောင်းနည်းနဲ့ deprecated API တွေကိုတော့ သတိထားရသည်
+- upgrade မပြုလုပ်မီ test လုပ်ပြီးမှ ရှေ့ဆက်ပါ

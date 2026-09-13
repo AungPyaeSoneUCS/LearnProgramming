@@ -1,0 +1,52 @@
+---
+title: "sql-order-by"
+description: "ORDER BY နဲ့ ASC/DESC, column များစွာအလိုက် စီခြင်း။"
+autoNumbering: true
+---
+
+Table တွေရဲ့ row တွေက ဘယ်အစီအစဉ်နဲ့ သိမ်းထားလဲ သေချာမရပါဘူး။ ကိုယ်ကြည့်ချင်တဲ့ အစီအစဉ်နဲ့ ပြချင်ရင် ORDER BY ကို သုံးပါတယ်။
+
+## အခြေခံ စီခြင်း (ASC မြင့်တက်စဉ်)
+```sql
+SELECT * FROM Customers
+ORDER BY Name;
+```
+ဒီ query က row တွေကို Name အတိုင်း A-Z စီပြပါတယ်။ ORDER BY col က default အနေနဲ့ ascending (အသေးဆုံးမှ အကြီးဆုံး၊ A-Z) ဖြစ်ပါတယ်။
+
+## Descending (ဆင်းစဉ်)
+```sql
+SELECT * FROM Customers
+ORDER BY Age DESC;
+```
+DESC က largest → smallest စီပြီး၊ age အကြီးဆုံးက အပေါ်ဆုံးမှာ ပြပါတယ်။ (Ascending အတွက် ASC လို့ ထည့်လည်း ရပါတယ်။)
+
+## Column များစွာ စီခြင်း
+```sql
+SELECT * FROM Customers
+ORDER BY Country, Name;
+```
+အရင်ဆုံး Country အတိုင်း စီပြီး၊ Country တူတဲ့ row တွေကြားမှာ Name အတိုင်း ထပ်စီပါတယ်။
+
+```sql
+SELECT * FROM Customers
+ORDER BY Country ASC, Name DESC;
+```
+Country က A-Z၊ Name က Z-A ရောစပ်ထားပါတယ်။ Column တစ်ခုစီမှာ ကိုယ့်စီး direction ကို သီးခြားသတ်မှတ်လို့ ရပါတယ်။
+
+## Number Column ပါ စီခြင်း
+```sql
+SELECT CustomerID, Age FROM Customers
+ORDER BY Age DESC;
+```
+Number ကို numeric order အတိုင်း စီပါတယ်။ 2, 10, 100 ရှိရင် ascending မှာ 2, 10, 100 အစဉ်အတိုင်းပါ (text လိုတော့ 10, 100, 2 လို မဖြစ်ဘူး)။
+
+## သတိပြုရန်
+- ORDER BY က "display order" ကိုပဲ သတ်မှတ်တာ၊ row တွေ သိမ်းတဲ့ နေရာကို မပြောင်းပါဘူး
+- SELECT DISTINCT နဲ့ တွဲရင် output order က database-specific ဖြစ်နိုင်ပါတယ်
+- Large table မှာ ORDER BY က index မရှိရင် နှေးနိုင်ပါတယ် (Module 2 index lesson ကြည့်ပါ)
+
+## အဓိက အချက်များ
+- ORDER BY col — ascending default
+- ORDER BY col DESC — descending
+- Column များစွာကို priority အလိုက် စီလို့ရတယ်
+- Direction တစ်ခုစီ သီးခြားသတ်မှတ်လို့ရတယ်

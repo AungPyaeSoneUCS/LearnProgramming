@@ -1,0 +1,45 @@
+---
+title: "sql-and"
+description: "AND operator နဲ့ condition များစွာကို ပေါင်းစပ်စစ်ခြင်း။"
+autoNumbering: true
+---
+
+WHERE ထဲမှာ condition တစ်ခုက မလုံလောက်တော့တဲ့ အခါမျိုးမှာ AND က condition တွေကို ချိတ်ဆက်ဖို့ သုံးပါတယ်။ Condition အားလုံး မှန်မှသာ row က ပါဝင်နိုင်ပါတယ်။
+
+## AND အခြေခံ
+```sql
+SELECT * FROM Customers
+WHERE Country = 'Myanmar' AND Age > 25;
+```
+ကိုယ့် "ဆုံးဖြတ်ချက်" က: နိုင်ငံ Myanmar ဖြစ်ဖို့ ရော age 25 ထက်များဖို့ ပါ ဖြစ်ရမယ်။ တစ်ခုခု မကျေနပ်ရင် row က မပါပါဘူး။
+
+## Condition တွေ အများကြီး ချိတ်ခြင်း
+```sql
+SELECT * FROM Customers
+WHERE Country = 'Myanmar'
+  AND City = 'Yangon'
+  AND Age BETWEEN 20 AND 35;
+```
+Condition ဘယ်နှစ်ခုဖြစ်ဖြစ် AND နဲ့ ချိတ်လို့ရပါတယ်။ အားလုံး True မှသာ ပါပါတယ်။ Line ခွဲရေးတာကို formatting လွယ်စေပါတယ် (row ခွဲရင် INDENT ထားတတ်ပါတယ်)။
+
+## AND နဲ့ OR ပေါင်းခြင်း (အကြိုညွှန်း)
+```sql
+SELECT * FROM Customers
+WHERE Country = 'Myanmar'
+  AND (City = 'Yangon' OR City = 'Mandalay');
+```
+( ) ကို သုံးပြီး "group" လုပ်နိုင်ပါတယ်။ ဒီ query က Myanmar ဖြစ်ပြီး Yangon သို့မဟုတ် Mandalay မှာရှိတဲ့ ဖောက်သည်တွေကို ပြပါတယ်။ parenthesis မပါရင် AND က OR ထက် အရင်အလုပ်လုပ်ပြီး result ပြောင်းသွားပါတယ်။
+
+## မှားတတ်တဲ့ အချက်
+```sql
+-- မှား: 'Myanmar' OR 'Thailand' က မှားတဲ့ syntax မဟုတ်ပေမဲ့
+-- တကယ်တမ်း City='Yangon' AND Country='Myanmar' OR Country='Thailand' လို အနက် ပြောင်းသွားနိုင်
+SELECT * FROM Customers
+WHERE City = 'Yangon' OR 'Thailand';
+```
+Text condition တစ်ခုချင်းစီမှာ ဘယ် column ကို စစ်လဲ ပြောဖို့ လိုပါတယ်။ ဒီလိုဆို City='Yangon' OR Country='Thailand' လို့ ရေးရပါမယ်။
+
+## အဓိက အချက်များ
+- AND: condition အားလုံး True ဖြစ်ရမယ် (∩ logic)
+- Condition များများ ချိတ်လို့ရတယ်
+- Complex logic မှာ () နဲ့ ရှင်းရှင်းထားပါ

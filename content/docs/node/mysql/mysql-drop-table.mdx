@@ -1,0 +1,44 @@
+---
+title: "Node.js MySQL Drop Table — Drop Table"
+description: "Node + MySQL — DROP TABLE IF EXISTS — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Table ကိုယ်၌ ‌ဖျက်နည်း — data ပါ အ‌လုံး ဖျက်။
+
+## Drop
+
+```js
+await db.query("DROP TABLE IF EXISTS users");
+```
+
+## ‌ဖျက် ‌မတိုင်မီ — ‌စဉ်းစား
+
+```js
+const [rows] = await db.query("SHOW TABLES");
+console.log(rows); // ‌ဖျက် ‌သွားမည့် ‌အထိ
+await db.query("DROP TABLE IF EXISTS users");
+```
+
+## Truncate — data သာ
+
+```js
+await db.query("TRUNCATE TABLE logs");
+```
+
+`DROP` — structure + data; `TRUNCATE` — data သာ (auto-increment reset)။
+
+## Error handling
+
+```js
+try {
+  await db.query("DROP TABLE IF EXISTS users");
+} catch (err) {
+  console.error("Failed:", err.message);
+}
+```
+
+## ‌အဓိက အချက်များ
+- DROP TABLE IF EXISTS
+- TRUNCATE — data ‌သာ
+- ‌ဖျက်ရန် backup first

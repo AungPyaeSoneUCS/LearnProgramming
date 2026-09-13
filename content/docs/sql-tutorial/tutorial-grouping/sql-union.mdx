@@ -1,0 +1,67 @@
+---
+title: "sql-union"
+description: "UNION — query ၂ခုရဲ့ rows ကို duplicate ဖယ်ပြီး ပေါင်းခြင်း။"
+autoNumbering: true
+---
+
+JOIN က table ၂ခုရဲ့ row တွေကို ဘေးတိုက် (side-by-side) ချိတ်တာဆိုရင်၊ UNION က query ၂ခုရဲ့ result တွေကို အပေါ်အောက် (stack) ပေါင်းပြီး row အားလုံးကို တစ်စုတည်း ဖြစ်စေပါတယ်။
+
+## UNION အခြေခံ
+```sql
+SELECT City FROM Customers
+UNION
+SELECT City FROM Suppliers;
+```
+Customers ထဲက City တွေနဲ့ Suppliers ထဲက City တွေကို ပေါင်းပြီး ထပ်တူများကို ဖယ်၍ တစ်စာရင်းလုံးအဖြစ် ပြပါတယ်။ Both table မှာ Yangon ရှိရင် ၁ ခါပဲ ပါပါတယ်။
+
+## စည်းကမ်း — Column အရေအတွက် တူရမယ်
+```sql
+-- မှား: column အရေအတွက် မတူ
+SELECT City FROM Customers
+UNION
+SELECT City, Country FROM Suppliers;
+```
+UNION အတွက် 2 ခုလုံးရဲ့ query က column အရေအတွက် နဲ့ data type / order အတူတူ ဖြစ်ရပါမယ်။ မဟုတ်ရင် error တက်ပါတယ်။
+
+## Column Names — ပထမ query ရဲ့ဟာ ဖြစ်မယ်
+```sql
+SELECT City FROM Customers
+UNION
+SELECT City FROM Suppliers
+ORDER BY City;
+```
+Result column နာမည်က ပထမ SELECT ရဲ့ဟာ ဖြစ်ပါတယ်။ ORDER BY က result တစ်ခုလုံးမှာ သုံးလို့ရပါတယ် (နောက် query မှာတော့ မဟုတ်ဘူး)။
+
+## ဘယ်နှခုလုံး UNION — အလုပ်ပြည်တယ်
+```sql
+SELECT City FROM Customers
+UNION
+SELECT City FROM Suppliers
+UNION
+SELECT City FROM Staff;
+```
+သုံးခုနဲ့ ထပ်ဆင့် chain လုပ်လို့ရပြီး duplicate အားလုံးကို ဖယ်ပါတယ်။
+
+## Subquery / Aggregates နဲ့
+```sql
+SELECT 'Customers' AS Type, COUNT(DISTINCT City) AS Cities
+FROM Customers
+UNION
+SELECT 'Suppliers', COUNT(DISTINCT City)
+FROM Suppliers;
+```
+Label column ('Customers'/'Suppliers') ထည့်ပြီး query တစ်ခုစီရဲ့ aggregate ရလဒ်ကို ပေါင်းပြပါတယ်။ Report ဆွဲတဲ့နေရာမှာ အသုံးများပါတယ်။
+
+## UNION vs JOIN — ဘယ်အခါ ဘာလဲ
+| Question | သုံးစရာ |
+| --- | --- |
+| Rows တွေကို "အပေါ်အောက်" ပေါင်းမလား | UNION |
+| Column တွေကို "ဘေးတိုက်" ချိတ်မလား | JOIN |
+| Duplicate ဖယ်မယ် | UNION |
+| Duplicate ထားမယ် | UNION ALL |
+
+## အဓိက အချက်များ
+- UNION = rows ပေါင်း၊ duplicate ဖယ်
+- Column ရေတွက်ရည်နဲ့ order ညီရမယ်
+- Column name = ပထမ query ရဲ့ဟာ
+- ORDER BY က result တစ်ခုလုံးမှာ

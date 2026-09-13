@@ -1,0 +1,80 @@
+﻿---
+title: "React Events — Event ‌များ"
+description: "onClick, onChange, onSubmit — React ‌မှာ event handler ‌ရေးနည်း၊ ‌တိုတောင်း ‌ရေးနည်း၊ event object။"
+autoNumbering: true
+---
+
+React ‌မှာ event ‌တွေက HTML ‌နဲ့ ‌တူညီ ‌ပေမဲ့ **camelCase** ‌နဲ့ ‌ရေးပါတယ် — `onclick` ‌အစား `onClick` ‌။
+
+## Event Handler ‌ရေးနည်း
+
+```jsx
+const shoot = () => {
+  alert("Great Shot!");
+};
+
+<button onClick={shoot}>Take the Shot!</button>
+```
+
+`onClick={shoot}` — function ‌ရဲ့ ‌နာမည် ‌ကိုသာ ‌ပေးရပြီး `shoot()` ‌လိုမျိုး ‌ခေါ် ‌ရေး ‌မရေးရပါဘူး။
+
+## Event Handler ‌ကို ‌တိုက်ရိုက် ‌ရေး
+
+```jsx
+<button onClick={() => alert("Great Shot!")}>
+  Take the Shot!
+</button>
+```
+
+Inline arrow function ‌နဲ့ ‌ပိုတိုအောင် ‌ရေးလို့ရပါတယ်။
+
+## Argument ‌ဖြတ်‌ပေးခြင်း
+
+```jsx
+const shoot = (goalName, event) => {
+  alert(goalName + " goal!");
+};
+
+<button onClick={(event) => shoot("ဝင်း", event)}>
+  Shoot!
+</button>
+```
+
+## Event Object
+
+Event ‌ကြောင့် function ‌ထဲ event object ‌ရောက်လာပါတယ် — value, preventDefault ‌စသည်တို့ ‌ရည်ရွယ် ‌သုံးနိုင်သည်။
+
+```jsx
+const handleChange = (event) => {
+  console.log(event.target.value); // input ‌ရဲ့ value
+};
+
+<input type="text" onChange={handleChange} />
+```
+
+## Common Events
+
+| Event | HTML | React |
+| --- | --- | --- |
+| Click | `onclick` | `onClick` |
+| Change | `onchange` | `onChange` |
+| Submit | `onsubmit` | `onSubmit` |
+| Mouse over | `onmouseover` | `onMouseOver` |
+
+## Form submit ‌ဥပမာ
+
+```jsx
+const handleSubmit = (event) => {
+  event.preventDefault(); // page reload ‌မလုပ်အောင်
+  console.log("Submitted!");
+};
+
+<form onSubmit={handleSubmit}>
+  <button type="submit">Submit</button>
+</form>
+```
+
+## အဓိက အချက်များ
+- React events ‌တွေက camelCase — `onClick`
+- Handler ‌ကို function ‌နာမည် ‌အနေနဲ့ ဖြတ် (‌မခေါ်)
+- `event.preventDefault()` — default ‌အပြုအမူ ‌တားဖို့

@@ -1,0 +1,47 @@
+---
+title: "Node.js HTTPS Module — HTTPS Module"
+description: "HTTPS Module — secure (TLS) server — certificate, key — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:https` — HTTP ၏ secure (TLS) version — client နှင့် server အကြား data ကို encrypt လုပ်သည်။
+
+## Server — certificate/key လို
+
+```js
+const https = require("node:https");
+const fs = require("node:fs");
+
+const options = {
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem"),
+};
+
+https
+  .createServer(options, (req, res) => {
+    res.end("Secure connection!");
+  })
+  .listen(443);
+```
+
+## Client — request လုပ်
+
+```js
+https
+  .get("https://api.example.com/data", (res) => {
+    let data = "";
+    res.on("data", (chunk) => (data += chunk));
+    res.on("end", () => console.log(data));
+  })
+  .on("error", (err) => console.error(err));
+```
+
+## သတိထားရန်
+- Production — certificate ကို CA (Let's Encrypt စသည်) မှ ရယူပါ
+- Default port 443
+- Encrypted → data ကို တစ်ပတ်ရိုက်စောင့်ရပ်သူ ဖတ်မရ
+
+## အဓိက အချက်များ
+- https.createServer(options, cb)
+- key + cert required
+- https.get() — client

@@ -1,0 +1,68 @@
+---
+title: "Node.js API Authentication — API Authentication"
+description: "Authentication — JWT, bcrypt, middleware — login/register — ဥပမာ။"
+autoNumbering: true
+---
+
+API ‌ကို ‌လုံး‌ခြုံ — **JWT** tokens ‌ဖြင့် ‌အချက်အလက် ‌ကာကွယ်။
+
+## Install
+
+```bash
+npm install jsonwebtoken bcryptjs
+```
+
+## Password hashing — bcrypt
+
+```js
+const bcrypt = require("bcryptjs");
+
+const hash = await bcrypt.hash("mypassword", 10);
+const ok = await bcrypt.compare("mypassword", hash);
+```
+
+Hashing — raw password ‌သိမ်း ‌ကျမ် select ‌ရှောင် — ‌ပြန်မလှည့် ‌ဟာ။
+
+## JWT ‌ထုတ် (login)
+
+```js
+const jwt = require("jsonwebtoken");
+
+app.post("/login", async (req, res) => {
+  const user = await db.findByEmail(req.body.email);
+  const valid = await bcrypt.compare(req.body.password, user.password);
+  if (!valid) return res.status(401).json({ error: "Invalid" });
+
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
+  res.json({ token });
+});
+```
+
+## Verify middleware
+
+```js
+function auth(req, res, next) {
+  const header = req.headers.authorization;
+  if (!header?.startsWith("Bearer "))
+    return res.status(401).json({ error: "No token" });
+
+  try {
+    req.user = jwt.verify(header.slice(7), process.env.JWT_SECRET);
+    next();
+  } catch {
+    return res.status(401).json({ error: "Invalid token" });
+  }
+}
+
+app.get("/me", auth, (req, res) => res.json({ user: req.user }));
+```
+
+## JWT ဖွဲ့စည်းပုံ
+`header.payload.signature` — signature ‌ပြောင်း‌လို့ မရ — secret မသိလျှင်။
+
+## ‌အဓိက အချက်များ
+- bcrypt hash — passwords
+- jsonwebtoken — sign/verify
+- Authorization: Bearer TOKEN

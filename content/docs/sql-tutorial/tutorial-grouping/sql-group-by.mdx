@@ -1,0 +1,75 @@
+---
+title: "sql-group-by"
+description: "GROUP BY — column အလိုက် row တွေကို group ဖွဲ့ပြီး aggregate တွက်ခြင်း။"
+autoNumbering: true
+---
+
+Aggregate functions တွေက table တစ်ခုလုံးအတွက် row ၁ ခုတည်း ပြန်တယ်။ GROUP BY က "group တစ်ခုချင်းစီအတွက်" aggregate ရဖို့ သုံးပါတယ်။
+
+## GROUP BY အခြေခံ
+```sql
+SELECT Country, COUNT(*) AS Total
+FROM Customers
+GROUP BY Country;
+```
+Country တစ်ခုစီ (Myanmar, Thailand...) ကို group ဖွဲ့ပြီး group တစ်ခုစီရဲ့ ဖောက်သည် အရေအတွက်ကို ပြပါတယ်။ Result:
+
+| Country | Total |
+| --- | --- |
+| Myanmar | 3 |
+| Thailand | 1 |
+
+## GROUP BY + SUM
+```sql
+SELECT Category, SUM(Price) AS TotalPrice
+FROM Products
+GROUP BY Category;
+```
+Category တစ်ခုစီရဲ့ price ပေါင်းလဒ်ကို ပြပါတယ်။
+
+## GROUP BY + AVG / MAX / MIN
+```sql
+SELECT Category,
+       AVG(Price) AS AvgPrice,
+       MAX(Price) AS MaxPrice
+FROM Products
+GROUP BY Category;
+```
+Group တစ်ခုစီအတွက် aggregate အများကြီး တစ်ပြိုင်နက် ယူလို့ရပါတယ်။
+
+## GROUP BY + JOIN
+```sql
+SELECT c.Country, COUNT(o.OrderID) AS Orders
+FROM Customers AS c
+LEFT JOIN Orders AS o ON c.CustomerID = o.CustomerID
+GROUP BY c.Country;
+```
+Table ၂ခု join လုပ်ပြီး group တစ်ခုစီရဲ့ order ရေတွက်ပါတယ်။ LEFT JOIN နဲ့ဆို order မရှိတဲ့ country တွေပါ "0" နဲ့ ပါပါတယ်။
+
+## GROUP BY + Multiple Columns
+```sql
+SELECT Country, City, COUNT(*) AS Total
+FROM Customers
+GROUP BY Country, City;
+```
+Country + City ၂ခုလုံး တူတဲ့စုကို group ဖွဲ့ပါတယ်။ ဥပမာ (Myanmar, Yangon) က (Myanmar, Mandalay) နဲ့ သီးခြား group ဖြစ်ပါတယ်။
+
+## GROUP BY စည်းကမ်း
+```sql
+-- မှား: SELECT ထဲက column က group မှာ မပါ
+SELECT Country, City, COUNT(*)
+FROM Customers
+GROUP BY Country;
+ 
+-- မှန်: aggregate မဟုတ်တဲ့ column တိုင်းကို GROUP BY မှာ ထည့်ပါ
+SELECT Country, City, COUNT(*)
+FROM Customers
+GROUP BY Country, City;
+```
+စည်းကမ်း: SELECT မှာ ရှိတဲ့ non-aggregated column တိုင်း က GROUP BY မှာ ပါရပါမယ်။ SQL Server က strict ဖြစ်ပြီး MySQL က lenient ဖြစ်လို့ hidden bug ရှိနိုင်ပါတယ်။
+
+## အဓိက အချက်များ
+- GROUP BY = rows တွေကို group ဖွဲ့ပြီး aggregate
+- Group field + aggregate function တွဲပါ
+- GROUP BY 1+ columns
+- SELECT ထဲက non-aggregate column အားလုံး GROUP BY မှာ ထည့်ပါ

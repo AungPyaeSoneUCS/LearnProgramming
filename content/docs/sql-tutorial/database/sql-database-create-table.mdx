@@ -1,0 +1,69 @@
+---
+title: "sql-database-create-table"
+description: "CREATE TABLE — ကော်လံတွေ၊ data typeတွေ၊ constraintတွေနဲ့ table structure ဖန်တီးနည်း။"
+autoNumbering: true
+---
+
+Table ဖန်တီးခြင်းက database design ရဲ့ အခြေခံပါ။ column တွေ၊ data type တွေ၊ rules တွေကို ဒီ lesson မှာ လေ့လာပါမယ်။
+
+## CREATE TABLE အခြေခံ
+```sql
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Price DECIMAL(10,2),
+    Stock INT DEFAULT 0,
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
+```
+- ProductID INT PRIMARY KEY — ID column (primary key)
+- Name VARCHAR(100) NOT NULL — စာသား၊ 100 လုံးအထိ၊ NULL မခံ
+- Price DECIMAL(10,2) — ဒသမ(10 ဒီဂရီ၊ 2 ဒသမနေရာ) — ငွေကြေး
+- Stock INT DEFAULT 0 — stock ရှိမရှိ၊ default 0
+- CreatedAt DATETIME DEFAULT GETDATE() — auto date/time
+
+## VARCHAR vs CHAR vs TEXT
+```sql
+Name VARCHAR(100)   -- လိုသလောက်ပဲ စာလုံးထား (1-100)
+Code CHAR(5)        -- အမြဲတမ်း 5 လုံးရှိ (space ဖြည့်)
+Description TEXT    -- စာပိုဒ်ရှည် (limit ကြီး)
+```
+- VARCHAR — ပုံမှန် အသုံးများဆုံး
+- CHAR — fixed length (ဥပမာ ISO code: "MM", "US")
+- TEXT — MySQL/PostgreSQL မှာ (SQL Server: VARCHAR(MAX))
+
+## Integer Types
+```sql
+Age INT           -- -2.1B to 2.1B (4 bytes)
+Stock SMALLINT    -- -32K to 32K (2 bytes)
+OrderID BIGINT    -- ကြီးမားတဲ့ ID (8 bytes)
+Flag BIT          -- 0 or 1
+```
+Number ရဲ့ ကြီးငယ်ပေါ် မူတည်ပြီး type ကိုရွေးပါ။ BIGINT က auto-increment ကြီးတွေအတွက်။
+
+## Composite Primary Key
+```sql
+CREATE TABLE OrderItems (
+    OrderID INT,
+    ProductID INT,
+    Quantity INT,
+    PRIMARY KEY (OrderID, ProductID)
+);
+```
+Column ၂ ခုစလုံး ပေါင်းပြီး primary key ဖွဲ့တာ — "OrderID + ProductID နှစ်ခုလုံး unique" ဖြစ်ရမယ်။
+
+## IF NOT EXISTS
+```sql
+CREATE TABLE IF NOT EXISTS Products (
+    ProductID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL
+);
+```
+Table ရှိပြီးသားဆို skip — script ထပ်ခါထပ်ခါ run တဲ့အခါ သတိထားဖို့။
+
+## အဓိက အချက်များ
+- Column + type + constraint ပေါင်းဖွဲ့
+- VARCHAR က အသုံးများဆုံး string type
+- PRIMARY KEY — table ID
+- DEFAULT — မထည့်ရင် ထည့်မယ့် value
+- IF NOT EXISTS — idempotent

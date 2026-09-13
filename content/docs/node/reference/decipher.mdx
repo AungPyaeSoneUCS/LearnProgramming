@@ -1,0 +1,50 @@
+---
+title: "Node.js Decipher — Decipher class"
+description: "Decipher — crypto decrypt — createDecipheriv — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:crypto` **Decipher** — Cipher ‌နှင့် ‌ပြန် decrypt ‌လုပ် — ‌အားလုံး same key/iv။
+
+## Basic
+
+```js
+const crypto = require("node:crypto");
+
+const algorithm = "aes-256-gcm";
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(12);
+
+// encrypt
+const cipher = crypto.createCipheriv(algorithm, key, iv);
+let encrypted = cipher.update("secret text", "utf8", "hex");
+encrypted += cipher.final("hex");
+const authTag = cipher.getAuthTag();
+
+// decrypt
+const decipher = crypto.createDecipheriv(algorithm, key, iv);
+decipher.setAuthTag(authTag);
+
+let decrypted = decipher.update(encrypted, "hex", "utf8");
+decrypted += decipher.final("utf8");
+
+console.log(decrypted); // secret text
+```
+
+## ‌အမှား handling — wrong key
+
+```js
+try {
+  const bad = crypto.createDecipheriv(algorithm, crypto.randomBytes(32), iv);
+  bad.setAuthTag(authTag);
+  bad.update(encrypted, "hex", "utf8");
+  bad.final(); // throws — auth failed
+} catch (err) {
+  console.error("decrypt failed:", err.message);
+}
+```
+
+## ‌အဓိက အချက်များ
+- createDecipheriv(algorithm, key, iv)
+- setAuthTag — GCM
+- update + final

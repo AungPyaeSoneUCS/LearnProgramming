@@ -1,0 +1,52 @@
+---
+title: "Node.js NPM — NPM Package Manager"
+description: "NPM — package install/remove — npm init, npm install, CLI commands။"
+autoNumbering: true
+---
+
+**NPM (Node Package Manager)** — Node.js packages ‌တင် / install / ‌ဖျက် ‌လုပ်ရန် — Node.js ‌နှင့် ‌အတူ ‌ပါလာသည်။
+
+## ‌ပုံစံ Commands
+
+```bash
+npm init        # package.json ဖန်တီး
+npm init -y     # ‌မမေးဘဲ ‌ဖန်တီး
+npm install express       # install + ‌သိမ်း
+npm i express             # shortcut
+npm install -D nodemon    # dev dependency
+npm uninstall express     # ‌ဖျက်
+npm list                  # installed ‌ပြ
+npm update                # update
+```
+
+## ‌အသုံးပြုပုံ
+
+```bash
+npm install express
+```
+
+`node_modules/` + `package.json` dependencies ‌၌ `express` ‌ပါ‌လာ:
+
+```json
+"dependencies": {
+  "express": "^4.19.0"
+}
+```
+
+## Dev vs regular dependencies
+
+```bash
+npm install -D nodemon    # dev — ‌development အတွက်သာ
+npm install express       # prod — app မှာ လို
+```
+
+## npx — run ‌ရေး install ‌မလို
+
+```bash
+npx create-react-app my-app
+```
+
+## ‌အဓိက အချက်များ
+- npm init → package.json
+- npm install `<pkg>`
+- -D — dev, npx — ‌တိုက်ရိုက် run

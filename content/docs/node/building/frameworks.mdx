@@ -1,0 +1,62 @@
+---
+title: "Node.js Frameworks — Frameworks"
+description: "Node.js frameworks — Express, Fastify, NestJS — ‌ရွေးချယ်မှု — ဥပမာ။"
+autoNumbering: true
+---
+
+Server-side JS ‌တွင် ‌ပိုလွယ် ‌ကျတာများ — **frameworks** ‌ပေါ်တွင် ‌တည် ‌ဆောက်သည်။
+
+## ‌အသုံးများ Frameworks
+
+| Framework | ‌ပုံစံ | ‌အသုံး |
+| --- | --- | --- |
+| **Express** | ‌ပေ့ါ / minimal | API, ‌အသုံးများ |
+| **Fastify** | fast + typed | API, performance |
+| **NestJS** | opinionated, OOP | ‌ကြီး enterprise |
+| **Koa** | next-gen Express | middleware |
+
+## Express — ‌အသုံးများ
+
+```bash
+npm install express
+```
+
+```js
+const express = require("express");
+const app = express();
+
+app.get("/", (req, res) => res.json({ msg: "ok" }));
+
+app.listen(3000);
+```
+
+## Fastify
+
+```js
+const fastify = require("fastify")();
+
+fastify.get("/", async () => ({ msg: "ok" }));
+fastify.listen({ port: 3000 });
+```
+
+## NestJS — structured
+
+```ts
+@Controller("users")
+class UsersController {
+  @Get()
+  findAll() {
+    return [{ id: 1 }];
+  }
+}
+```
+
+## ‌ရွေးချယ်ပုံ
+- ‌သေးငယ်/အမြန် → Express/Fastify
+- Enterprise/structured → NestJS
+- Real-time → Socket.IO ‌ပေါင်းထည့်
+
+## ‌အဓိက အချက်များ
+- Express — ‌အသုံးများ
+- Fastify — performance
+- NestJS — structure/enterprise

@@ -1,0 +1,69 @@
+---
+title: "sql-reference-data-types"
+description: "SQL data types — numeric, string, date/time — database engine အလိုက် ဆင်တူချင်း/ခြားနားချက်။"
+autoNumbering: true
+---
+
+Data type က column ထဲ သိမ်းလို့ရတဲ့ value အမျိုးအစားကို သတ်မှတ်ပါတယ်။ Type မှန်ရင် storage သက်သာပြီး query မှန်ပါတယ်။
+
+## Numeric Data Types
+| Type | ရှင်းလင်းချက် | သုံးနေရာ |
+| --- | --- | --- |
+| BIT | 0 or 1 | flag |
+| TINYINT | -128 to 127 (1 byte) | ငယ်တဲ့ number |
+| SMALLINT | ±32,767 (2 bytes) | small |
+| INT | ±2.1B (4 bytes) | ID / count |
+| BIGINT | ±9.2 quintillion (8 bytes) | large ID |
+| DECIMAL(p,s) | Exact decimal | money |
+| FLOAT | Approximate | measurement |
+
+```sql
+Price DECIMAL(10,2)   -- 10 digits, 2 decimal → 12345678.99
+Temp  FLOAT           -- approximate — math မှာ precision မလို
+```
+Money က DECIMAL — float က rounding error ရှိနိုင် (0.1+0.2 ≠ 0.3)။
+
+## String Data Types
+| Type | Detail | Use |
+| --- | --- | --- |
+| CHAR(n) | Fixed length | Code (MM, US) |
+| VARCHAR(n) | Variable | Name, address |
+| TEXT | Large text | Article body |
+| NCHAR/NVARCHAR | Unicode (2-byte) | Unicode/Myanmar |
+
+```sql
+Name VARCHAR(100)   -- 100 အထိ, လိုသလောက်ပဲ သုံး
+Body TEXT           -- ရှည်တဲ့ article text
+```
+Myanmar text သိမ်းမယ်ဆို NVARCHAR သို့မဟုတ် utf8mb4 collation ကို ရွေးပါ (database settings)။
+
+## Date & Time
+| Type | Detail |
+| --- | --- |
+| DATE | yyyy-MM-dd |
+| DATETIME | date + time |
+| TIMESTAMP | 1970-based, timezone |
+| TIME | HH:MM:SS |
+| YEAR | 4-digit year |
+
+## Binary & Other
+```sql
+BLOB       -- up to 65K binary (image)
+LONGBLOB   -- large binary
+JSON       -- JSON document (MySQL 5.7+/PG 9.4+)
+XML        -- XML document
+```
+
+## Database engine အလိုက် ကွာခြားမှု
+| Concept | MySQL | SQL Server | PostgreSQL |
+| --- | --- | --- | --- |
+| Auto-inc | AUTO_INCREMENT | IDENTITY | SERIAL |
+| Bool | TINYINT(1) | BIT | BOOLEAN |
+| Large text | LONGTEXT | VARCHAR(MAX) | TEXT |
+| Unicode | utf8mb4 char set | NVARCHAR | TEXT (any encoding) |
+
+## အဓိက အချက်များ
+- Money → DECIMAL
+- Fixed text → CHAR, variable → VARCHAR
+- Unicode → NVARCHAR / utf8mb4
+- Auto-inc — အင်ဂျင်အလိုက် keyword ကွဲ

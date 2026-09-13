@@ -1,0 +1,86 @@
+---
+title: "React Custom Hooks — Custom Hook"
+description: "Custom hook ‌ရေးနည်း — ‌ပြန်သုံး logic ‌ကို use... function ‌အဖြစ် — ‌ဥပမာများ နှင့် ‌စည်းမျဉ်း။"
+autoNumbering: true
+---
+
+Custom Hook ဆိုတာ **ပြန်သုံးလို့ရတဲ့ logic** ‌ကို `use` ‌နဲ့ ‌စတဲ့ function ‌အဖြစ် ထုတ်ပြီး — component ‌အ‌ပေါင်းများစွာ ‌ထဲ ‌မျှဝေ‌အသုံးပြုနိုင်တဲ့ ‌နည်းလမ်း။
+
+## Custom Hook ‌ရေးနည်း
+
+```jsx
+// useFetch.js
+import { useState, useEffect } from "react";
+
+function useFetch(url) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((json) => {
+        setData(json);
+        setLoading(false);
+      });
+  }, [url]);
+
+  return { data, loading };
+}
+```
+
+- Function name — `use` ‌ဖြင့် ‌စရမည်
+- ‌အ‌တွင်း React hooks ‌သုံး‌နိုင်သည်
+- Return — ‌လိုတဲ့ ‌တန်ဖိုး/object/array
+
+## ‌အသုံးပြု
+
+```jsx
+function Profile() {
+  const { data, loading } = useFetch("/api/user");
+
+  if (loading) return <p>Loading...</p>;
+  return <h1>{data.name}</h1>;
+}
+
+function Posts() {
+  const { data, loading } = useFetch("/api/posts");
+  return <p>{loading ? "..." : data.length} posts</p>;
+}
+```
+
+Logic ‌ပြန်သုံး — component ‌တစ်ခုချင်း code ‌ထပ်ရေးစရာ မလို။
+
+## LocalStorage hook ‌ဥပမာ
+
+```jsx
+function useLocalStorage(key, initialValue) {
+  const [value, setValue] = useState(() => {
+    const saved = localStorage.getItem(key);
+    return saved !== null ? JSON.parse(saved) : initialValue;
+  });
+
+  const setStored = (next) => {
+    setValue(next);
+    localStorage.setItem(key, JSON.stringify(next));
+  };
+
+  return [value, setStored];
+}
+
+function App() {
+  const [name, setName] = useLocalStorage("name", "");
+  return (
+    <input value={name} onChange={(e) => setName(e.target.value)} />
+  );
+}
+```
+
+## ‌စည်းမျဉ်းများ
+- ‌နာမည် `use` ‌ဖြင့် ‌စရမည် — hooks ‌ကို အသုံးပြု‌ကြောင်း React ‌အား ‌အသိပေး
+- Hooks ည်းမျဉ် —း —— custom hook ‌အ‌တွင်းမှာ top level ‌ခေါ်
+
+## ‌အဓိက အချက်များ
+- Reusable logic ‌မျှဝေ — useXxx() naming
+- ‌အ‌တွင်း hooks သုံး၍ component ‌မှ ‌ဖမ်းယူ
+- ‌စည်းမျဉ်းများ လိုက်နာ — top level

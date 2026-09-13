@@ -1,0 +1,53 @@
+---
+title: "Node.js Perf Hooks Module — Perf Hooks Module"
+description: "Perf hooks — performance timing, PerformanceObserver — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:perf_hooks` — high-resolution performance တိုင်းတာမှု — ဥပမာများ။
+
+## Timing
+
+```js
+const { performance } = require("node:perf_hooks");
+
+const t0 = performance.now();
+doWork();
+const t1 = performance.now();
+console.log(`took ${(t1 - t0).toFixed(2)} ms`);
+```
+
+## Mark/Measure
+
+```js
+performance.mark("A");
+heavy();
+performance.mark("B");
+performance.measure("my-op", "A", "B");
+```
+
+## PerformanceObserver
+
+```js
+const { performance, PerformanceObserver } = require("node:perf_hooks");
+
+const obs = new PerformanceObserver((list) => {
+  console.log(list.getEntries().map((e) => [e.name, e.duration]));
+});
+obs.observe({ entryTypes: ["measure"] });
+
+performance.mark("s");
+wait();
+performance.mark("e");
+performance.measure("op", "s", "e");
+```
+
+## ‌အသုံးဝင်သည့် helpers
+- `performance.now()` — high-res ms
+- `performance.getEntries()` — ‌အားလုံး
+  - event loop lag — ကြည့် performance/event-loop
+
+## ‌အဓိက အချက်များ
+- performance.now()
+- mark/measure
+  - PerformanceObserver — ကြည့်ရှုရန်

@@ -1,0 +1,66 @@
+---
+title: "MySQL SELECT — SELECT"
+description: "SELECT — column ‌ထုတ်ယူ‌ခြင်း — SELECT * , column များ, expressions, aliases ။"
+autoNumbering: true
+---
+
+`SELECT` statement သည် ဇယားထဲက data များကို ထုတ်ယူရန် အသုံးပြုပါတယ်။
+
+## Syntax
+
+```sql
+SELECT column1, column2, ...
+FROM table_name;
+```
+
+## All columns — SELECT *
+
+```sql
+SELECT * FROM customers;
+```
+
+`*` သည် column အားလုံးကို ဆိုလိုသည်။
+
+## Column ရွေးထုတ်ယူ
+
+```sql
+SELECT first_name, last_name FROM employees;
+```
+
+## Expression — calculated column
+
+```sql
+SELECT product_name, price * quantity AS total_price
+FROM order_items;
+```
+
+`price * quantity` ကို `total_price` အမည်ဖြင့် ပြသည် (AS alias)။
+
+## Concatenate
+
+```sql
+SELECT CONCAT(first_name, ' ', last_name) AS full_name
+FROM employees;
+```
+
+## မှတ်သားရန် အချက်များ
+- `SELECT *` — အားလုံး (သို့သော်) column များကိုခွဲရွေးသည် ပိုကောင်း
+- `AS` — output column နာမည်ပြောင်းရန်
+- Query ကို semicolon ဖြင့်အဆုံးသတ်
+
+<Quiz
+  questions={[
+    {
+      id: "select1",
+      question: "ဇယားထဲက column များအားလုံးကို ထုတ်ချင်ရင် ဘယ်လိုရေးမလဲ?",
+      options: ["SELECT all FROM ...", "SELECT * FROM ...", "GET * FROM ...", "RETURN * FROM ..."],
+      correctAnswer: "SELECT * FROM ...",
+      explanation: "* သည် column အားလုံးကို ပြသည်",
+    },
+  ]}
+/>
+
+## အဓိက အချက်များ
+- SELECT — column (s) ထုတ်ယူရန်
+- `*` — အားလုံး
+- Expression + AS alias သုံးနိုင်

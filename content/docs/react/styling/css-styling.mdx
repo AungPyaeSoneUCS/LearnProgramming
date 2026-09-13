@@ -1,0 +1,100 @@
+---
+title: "React CSS Styling — CSS ‌ပုံ‌သွင်း (Basic)"
+description: "React ‌တွင် CSS ‌ပုံ‌သွင်း‌နည်း ၄ ‌မျိုး — Inline, Internal, External, Modules ။"
+autoNumbering: true
+---
+
+React ‌မှာ component ‌တွေကို ‌ပုံ‌သွင်း‌ရန် ‌နည်း‌လမ်း ‌များစွာ ရှိပါတယ် — Inline styles, CSS files, CSS Modules, CSS-in-JS (styled-components)။
+
+## 1. Inline Styling
+
+```jsx
+function Header() {
+  return (
+    <>
+      <h1
+        style={{
+          color: "white",
+          backgroundColor: "tomato",
+          padding: "10px",
+          fontFamily: "sans-serif",
+        }}
+      >
+        Hello Style!
+      </h1>
+    </>
+  );
+}
+```
+
+- style ‌က **object** ‌ဖြစ်ပြီး camelCase (`backgroundColor`)
+- ဖိုင်ကြီးရင် variable ‌ထဲ ‌ထုတ်/`` `` လဲရတယ်
+
+```jsx
+const myStyle = {
+  color: "white",
+  backgroundColor: "DodgerBlue",
+  padding: "10px",
+  fontFamily: "Arial",
+};
+
+function Header() {
+  return (
+    <>
+      <h1 style={myStyle}>Hello Style!</h1>
+      <p>Add a little style!</p>
+    </>
+  );
+}
+```
+
+## 2. Internal Styles — `<style>` tag
+
+```jsx
+function Header() {
+  return (
+    <>
+      <style>{`
+        h1 { color: green; }
+      `}</style>
+      <h1>Hello Style!</h1>
+    </>
+  );
+}
+```
+
+## 3. External CSS — import ‌လုပ်ခြင်း
+
+```jsx
+import "./App.css";
+
+function App() {
+  return (
+    <>
+      <h1 className="title">Hello Style!</h1>
+      <p className="body">Add a little style!</p>
+    </>
+  );
+}
+```
+
+App.css ‌ထဲ:
+
+```css
+.title { color: blue; }
+.body { color: gray; }
+```
+
+## 4. CSS Modules (နောက် lesson ‌တွင်)
+
+```jsx
+import styles from "./App.module.css";
+
+<h1 className={styles.title}>Hello Style!</h1>
+```
+
+## အဓိက အချက်များ
+- Inline — `style={{ property: value }}` camelCase
+- External — `import "./file.css"` + `className`
+- CSS Modules — `import styles from "./x.module.css"`
+- ‌ပိုမိုကြီးမားတဲ့ ‌အရာတွေအတွက် CSS-in-JS (styled-components) ရှိသည်

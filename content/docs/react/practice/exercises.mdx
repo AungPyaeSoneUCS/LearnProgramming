@@ -1,0 +1,94 @@
+---
+title: "React Exercises — ‌လေ့ကျင့်ခန်းများ"
+description: "React ‌လေ့ကျင့်ခန်း — ‌အဖြေများနှင့် coding practice — ‌အဆင့်ဆင့် လေ့ကျင့်။"
+autoNumbering: true
+---
+
+‌ဒီကဏ္ဍမှာ React ‌အ‌ခြေခံ topic များကို ‌ဖြေ‌ဆိုခြင်းဖြင့် ‌သင်ယူ‌နေတဲ့ ‌အရာများကို ‌ပြန်‌သုံးသပ်ပါမယ်။ ‌အောက်ပါ ‌လေ့ကျင့်ခန်းများ ‌ဖြေဆိုပါသည်။
+
+## ‌လေ့ကျင့်ခန်း 1 — Component
+
+```jsx
+function App() {
+  return <h1>???</h1>;
+}
+```
+
+<Quiz
+  questions={[
+    {
+      id: "ex1",
+      question: "React component ‌တစ်ခုက ‌ဘာကို ‌ပြန်‌ပေးရမလဲ?",
+      options: ["Array", "JSX", "String", "Object"],
+      correctAnswer: "JSX",
+      explanation: "React component က JSX ‌ကို ‌ပြန်‌ပေးသည်",
+    },
+  ]}
+/>
+
+## ‌လေ့ကျင့်ခန်း 2 — State
+
+```jsx
+const [count, setCount] = useState(0);
+
+<button onClick={() => ???}>
+  Increase
+</button>
+```
+
+<Quiz
+  questions={[
+    {
+      id: "ex2",
+      question: "count ‌ကို 1 တိုးဖို့ ‌ဘာရေးရမလဲ?",
+      options: ["setCount(1)", "setCount(count++)", "setCount(count + 1)", "count++"],
+      correctAnswer: "setCount(count + 1)",
+      explanation: "State ‌ကို ‌တိုက်ရိုက် mutate ‌မလုပ်ဘဲ setter ‌ဖြင့် update လုပ်ရသည်",
+    },
+  ]}
+/>
+
+## ‌လေ့ကျင့်ခန်း 3 — Lists
+
+```jsx
+const fruits = ["Apple", "Banana", "Cherry"];
+
+<ul>
+  {fruits.map((fruit) => (
+    <li key={fruit}>{fruit}</li>
+  ))}
+</ul>
+```
+
+- `map` — array ‌ကို JSX list ‌ပြောင်း
+- `key` — ‌စ‌နစ်‌ကျ‌စေရန် unique value
+
+## ‌လေ့ကျင့်ခန်း 4 — Events
+
+```jsx
+function Square({ value }) {
+  return (
+    <button className="square" onClick={???}>
+      {value}
+    </button>
+  );
+}
+```
+
+<Quiz
+  questions={[
+    {
+      id: "ex4",
+      question: "click event handler ‌ကို ‌ဘယ်လို ‌ပေး‌ရမလဲ?",
+      options: ["onclick", "onClick", "handleClick", "click"],
+      correctAnswer: "onClick",
+      explanation: "React ‌မှာ onClick camelCase ‌ဖြစ်သည်",
+    },
+  ]}
+/>
+
+## ‌အဓိက အချက်များ
+- Component → JSX
+- State → setter ‌ဖြင့်သာ update
+- List → map + key
+- Events → onClick camelCase

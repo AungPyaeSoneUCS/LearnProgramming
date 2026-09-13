@@ -1,0 +1,41 @@
+---
+title: "sql-or"
+description: "OR operator နဲ့ condition တစ်ခုထက်မက လွတ်လပ်စွာ စစ်ခြင်း။"
+autoNumbering: true
+---
+
+OR က condition တွေထဲက တစ်ခုခု မှန်ရင် လုံလောက်တဲ့ ဆက်စပ်မှုပါ။ AND က အားလုံးလိုအပ်သလို၊ OR က မည်သည့်တစ်ခုကိုမဆို လက်ခံပါတယ်။
+
+## OR အခြေခံ
+```sql
+SELECT * FROM Customers
+WHERE City = 'Yangon' OR City = 'Mandalay';
+```
+ဒီ query က Yangon ဖြစ်ဖြစ် Mandalay ဖြစ်ဖြစ် နေတဲ့ ဖောက်သည်တွေကို ပြပါတယ်။ Condition နှစ်ခုလုံး မှန်လည်း ပါဝင်မှာ သေချာပါတယ် (duplicate ဖြစ်မသွားဘူး)။
+
+## OR ကိုယ်တွေးထားတဲ့အတိုင်း သုံးခြင်း
+```sql
+SELECT * FROM Customers
+WHERE Country = 'Myanmar' OR Age < 18;
+```
+ဒီ query က နိုင်ငံ Myanmar ဖြစ်တဲ့သူတွေ နဲ့ age 18 အောက် ရှိသူတွေ — အုပ်စုနှစ်ခုလုံးကို ပြပါတယ်။
+
+## OR + AND ရော တွဲခြင်း
+```sql
+SELECT * FROM Customers
+WHERE (Country = 'Myanmar' OR Country = 'Thailand')
+  AND Age > 20;
+```
+Parenthesis က ဦးစားပေးအစီအစဉ်ကို ရှင်းပေးပါတယ်။ ဒီ query က Myanmar သို့မဟုတ် Thailand ဖြစ်ပြီး age 20 ကျော်တဲ့သူတွေကိုပဲ ပြပါတယ်။ Parenthesis မရှိရင် AND က အရင်လုပ်လို့ "Myanmar (or Thailand AND age>20)" လို့ အနက်က မတူတော့ဘူး။
+
+## OR ကိုသုံးတဲ့နေရာ
+| အနေ | Query |
+| --- | --- |
+| City ၂ ခုစစ် | WHERE City = 'A' OR City = 'B' |
+| Category များစွာ | WHERE Category = 'Phone' OR Category = 'Tablet' |
+| Fallback logic | WHERE Email = '[a@b.com](mailto:a@b.com)' OR Phone = '09...' |
+
+## အဓိက အချက်များ
+- OR: condition တစ်ခုခု True ဆိုရင် ပါဝင် (∪ logic)
+- AND နဲ့ OR တွဲတဲ့အခါ () ကို ဦးစားပေးအဖြစ် သုံးပါ
+- OR သုံးတိုင်း ဖတ်လို့ရအောင် line ခွဲပြီး INDENT ထားပါ

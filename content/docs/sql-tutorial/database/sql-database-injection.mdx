@@ -1,0 +1,85 @@
+---
+title: "sql-database-injection"
+description: "SQL Injection — user input က SQL လိုမျိုး ပြောင်းသွားလို့ attack ဖြစ်ခြင်း၊ ကာကွယ်နည်း။"
+autoNumbering: true
+---
+
+SQL Injection က web app တွေရဲ့ အကြီးမားဆုံး လုံခြုံရေး အန္တရာယ်တစ်ခုပါ။ User input ကို မှားယွင်းစွာ SQL ထဲ concatenate လုပ်ရင် attacker က database ကို ထိန်းချုပ်နိုင်ပါတယ်။
+
+## ပြဿနာ — Unsafe Query
+```js
+// ဒါက insecure — dangerous
+let query = "SELECT * FROM Users WHERE Name = '" + userName + "'";
+```
+User က userName အဖြစ် ' OR '1'='1 ရိုက်ထည့်ရင်:
+
+```sql
+SELECT * FROM Users WHERE Name = '' OR '1'='1';
+-- '1'='1' က အမြဲ true → Users အားလုံး ပြန်
+```
+ဒါကြောင့် login bypass (authentication ရှောင်ခြင်း) ဖြစ်ပါတယ်။
+
+## ပိုဆိုးတဲ့အမှု
+```js
+let query = "SELECT * FROM Users WHERE Name = '" + userName + "'";
+```
+User က '; DROP TABLE Users; -- ရိုက်ထည့်ရင်:
+
+```sql
+SELECT * FROM Users WHERE Name = ''; DROP TABLE Users; --';
+```
+— Users table တစ်ခုလုံး ဖျက်ခံရပါတယ်။ Data loss၊ database takeover — ဖြစ်နိုင်ခြေ ရှိပါတယ်။
+
+## Example — HTML form
+```html
+<form>
+  <input type="text" name="username">
+  <input type="text" name="password">
+</form>
+```
+```js
+// Node.js + mysql ဥပမာ
+const sql = `SELECT * FROM Users WHERE User='${username}' AND Pass='${password}'`;
+```
+Input  field တွေထဲမှာ ' OR 1=1-- ထည့်လိုက်ရင် SQL ကို မတရားပြုပြင် နိုင်ပါတယ်။
+
+## ကာကွယ်နည်း #1 — Parameterized Queries (မဖြစ်မနေ)
+```sql
+-- MySQL (?) placeholders
+SELECT * FROM Users WHERE Name = ? AND Pass = ?;
+```
+```js
+const sql = "SELECT * FROM Users WHERE Name = ? AND Pass = ?";
+db.query(sql, [username, password]);   // ဒါက safe
+```
+Parameterized query မှာ user input က data အဖြစ်ပဲ ဆက်ဆံပြီး SQL code အဖြစ် မမြင်ရပါ။
+
+## ကာကွယ်နည်း #2 — Stored Procedures
+```sql
+CREATE PROCEDURE GetUser (@username NVARCHAR(50), @password NVARCHAR(50))
+AS
+BEGIN
+    SELECT * FROM Users WHERE Name = @username AND Pass = @password;
+END;
+```
+Stored procedure မှာ parameter တွေက data အဖြစ်သာ — attacker input  က SQL ဖြစ်မလာနိုင်။
+
+## ကာကွယ်နည်း #3 — Escape User Input
+```sql
+-- ကိုယ်တိုင် escaping (dynamic SQL  မလွှဲမသွေလိုအပ်မှ)
+-- mysql_real_escape_string() / driver ရဲ့ escape ပါ
+```
+escaping က "last resort" — parameterized query ကို အမြဲ အသုံးပြုသင့်တယ် (escaping လုပ်တဲ့နေရာက ကွယ်ခဲ့ရင် injection ဖြစ်နိုင်)။
+
+## ကာကွယ်နည်း #4 — နောက်ဆုံး (Defense in Depth)
+- Least privilege — app user က restricted DB user
+- Validate  type/structure (input check)
+- Hidden column မပါတဲ့ — view သာ သုံးပါ
+- WAF — web application firewall
+
+## အဓိက အချက်များ
+- User input ကို SQL string ထဲ မရောသော — concatenation မလုပ်နဲ့
+- Parameterized query — မဖြစ်မနေ
+- Stored procedure မှာ parameter
+- Escape — dynamic SQL ကို မလွှဲမသွေ လိုအပ်မှသာ
+- Least privilege — restricted DB role

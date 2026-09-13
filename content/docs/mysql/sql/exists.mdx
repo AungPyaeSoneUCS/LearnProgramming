@@ -1,0 +1,53 @@
+---
+title: "MySQL EXISTS — EXISTS Operator"
+description: "EXISTS — subquery ‌ရလဒ် ‌ရှိ/မရှိ စစ်ခြင်း — ‌ဥပမာများ, NOT EXISTS။"
+autoNumbering: true
+---
+
+`EXISTS` operator သည် **subquery မှ rows ‌မှန်‌ကန် ‌ရှိမရှိ** ကို ‌စစ်ပြီး TRUE/FALSE ‌ပြန်ပေးပါတယ်။
+
+## Syntax
+
+```sql
+SELECT column
+FROM table1
+WHERE EXISTS (SELECT column FROM table2 WHERE condition);
+```
+
+## ဥပမာ — order ‌ရှိသော customers
+
+```sql
+SELECT name
+FROM customers
+WHERE EXISTS (
+  SELECT 1 FROM orders
+  WHERE orders.customer_id = customers.id
+);
+```
+
+Order ‌တစ်ခုခု ‌ရှိသော customer များ — subquery rows ‌ပြန်‌လာလျှင် TRUE။
+
+## NOT EXISTS
+
+```sql
+SELECT name
+FROM customers
+WHERE NOT EXISTS (
+  SELECT 1 FROM orders
+  WHERE orders.customer_id = customers.id
+);
+```
+
+Order ‌တစ်ခုမျှ ‌မရှိသော customers။
+
+## ‌တစ်ခုမှတ်ချက်
+Subquery SELECT ‌က value ‌မဟုတ် — ‌ရှိမရှိသာ ‌စစ်သည် — `SELECT 1` ‌ရေး၍ ရသည် (performance အတွက် အကောင်းဆုံး)။
+
+## IN နှင့် ‌ကွာခြားမှု
+- `IN` — values စာရင်းနဲ့ ‌တိုက်
+- `EXISTS` — rows ‌ရှိမရှိ (‌ပိုမြန်နိုင် — ‌ပထမ match ‌တွေ့ပြီး ‌ရပ်)
+
+## ‌အဓိက အချက်များ
+- EXISTS — subquery row ‌ရှိ/မရှိ
+- NOT EXISTS — ‌မရှိခြင်း
+- Correlated subquery ‌ပုံစံ ‌အသုံးများ

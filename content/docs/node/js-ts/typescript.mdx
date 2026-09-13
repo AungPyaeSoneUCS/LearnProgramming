@@ -1,0 +1,66 @@
+---
+title: "Node.js TypeScript — Node နှင့် TypeScript"
+description: "TypeScript in Node — types, tsconfig, run — ဥပမာများ။"
+autoNumbering: true
+---
+
+**TypeScript** — JavaScript ‌ပေါ်မှ types ‌ထည့် — Node.js 22.6+ က type-stripping ‌ဖြင့် ‌တိုက်‌ရိုက် run နိုင်သည်။
+
+## ‌ဘာ‌ကြောင့် ‌သုံးလဲ
+- Compile-time error ‌ဖမ်း
+- Autocomplete / refactor ‌ကောင်း
+- ‌ကြီးမားသော project ‌အတွက်
+
+## Install TypeScript
+
+```bash
+npm install -D typescript @types/node
+npx tsc --init
+```
+
+## tsconfig.json — ‌အခြေခံ
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "outDir": "dist"
+  },
+  "include": ["src"]
+}
+```
+
+## ‌ဥပမာ
+
+```ts
+import { createServer } from "node:http";
+
+interface User {
+  id: number;
+  name: string;
+}
+
+function greet(u: User): string {
+  return `Hi ${u.name}`;
+}
+
+createServer((req, res) => res.end(greet({ id: 1, name: "Aung" }))).listen(3000);
+```
+
+## Run ‌နည်း
+
+```bash
+# build
+npx tsc && node dist/app.js
+
+# Node 22.6+ direct (type stripping, no compile)
+node --experimental-strip-types app.ts
+```
+
+## ‌အဓိက အချက်များ
+- typescript + @types/node
+- strict mode ‌ဖွင့်
+- tsc → dist, ‌သို့ node run

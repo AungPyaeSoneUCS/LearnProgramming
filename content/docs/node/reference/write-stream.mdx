@@ -1,0 +1,47 @@
+---
+title: "Node.js Writeable Stream — Writeable Stream"
+description: "Writable — writing data — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+**Writable** stream — data ‌ရေး — chunks ‌ရေး → destination (file/HTTP)။
+
+## From file
+
+```js
+const fs = require("node:fs");
+
+const writable = fs.createWriteStream("out.txt");
+
+writable.write("line 1\n");
+writable.write("line 2\n");
+writable.end("done\n");
+```
+
+## ‌ဖြစ်ရပ်များ
+| Event | ‌လုပ် |
+| --- | --- |
+| `finish` | ‌အားလုံး ‌ပြီး |
+| `error` | ‌အ‌မှား |
+| `drain` | ‌ထပ် ‌ရေး‌နိုင် (backpressure) |
+
+## Backpressure ‌အကျဉ်း
+
+```js
+if (!writable.write(chunk)) {
+  writable.once("drain", () => writable.write(nextChunk()));
+}
+```
+
+Buffer ‌ပြည့် → ‌ထပ် ‌ရေး ‌မလို — ‌အပေါ် memory ‌မကြီး။
+
+## end()
+
+```js
+writable.end();  // ‌အဆုံးသတ် — finish event
+```
+
+## ‌အဓိက အချက်များ
+- .write(chunk)
+- .end() — finish
+- drain — backpressure

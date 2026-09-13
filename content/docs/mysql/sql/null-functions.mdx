@@ -1,0 +1,59 @@
+---
+title: "MySQL Null Functions — NULL Functions"
+description: "IFNULL, COALESCE, ISNULL — NULL ‌တန်ဖိုးများကို ‌ကိုင်တွယ်ခြင်း — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+NULL ‌တန်ဖိုးများသည် query ‌ရလဒ်ထဲ ‌ပြဿနာ ‌ဖြစ်‌စေနိုင်သည် — NULL ‌ကို ‌နောက် ‌တန်ဖိုး ‌ပြောင်း‌ပေးရန် function ‌များ ‌ရှိပါတယ်။
+
+## IFNULL(expr, fallback)
+
+```sql
+SELECT id,
+  IFNULL(phone, 'No phone') AS phone
+FROM customers;
+```
+
+`phone` NULL ဆို 'No phone' ‌ပြ။
+
+## COALESCE(value1, value2, ...)
+
+‌ပထမဆုံး ‌မဟုတ် NULL ‌တန်ဖိုးကို ‌ပြန်ပေးသည်:
+
+```sql
+SELECT name,
+  COALESCE(preferred_phone, phone, 'None') AS contact
+FROM customers;
+```
+
+preferred_phone NULL ‌က phone, phone လဲ NULL ‌က 'None'။
+
+## ISNULL() — MySQL 1/0
+
+MySQL ရဲ့ `ISNULL(expr)` သည် expr NULL ‌ဖြစ်လျှင် 1, မဟုတ်လျှင် 0 ‌ပြန်သည်:
+
+```sql
+SELECT name, ISNULL(phone) AS has_no_phone
+FROM customers;
+```
+
+## NULLIF(a, b)
+
+`a = b` ဆိုလျှင် NULL ‌ပြန်, ‌မဟုတ်လျှင် a ‌ပြန်:
+
+```sql
+SELECT NULLIF(amount, 0) FROM payments;  -- 0 → NULL
+```
+
+## ‌ဥပမာ ပေါင်းစပ်
+
+```sql
+SELECT
+  IFNULL(display_name, email) AS name_label
+FROM users;
+```
+
+## ‌အဓိက အချက်များ
+- IFNULL(x, fallback) — NULL → ‌တန်ဖိုး
+- COALESCE(...) — ‌ပထမ non-null
+- ISNULL — 1/0, NULLIF — ‌တူလျှင် NULL

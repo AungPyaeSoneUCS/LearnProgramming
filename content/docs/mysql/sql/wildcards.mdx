@@ -1,0 +1,53 @@
+---
+title: "MySQL Wildcards — Wildcards"
+description: "Wildcards — % , _ များကို ပိုစနစ်တကျ ‌သုံးခြင်း — ‌ဥပမာများစွာ။"
+autoNumbering: true
+---
+
+Wildcards သည် `LIKE` operator ‌အတွက် **pattern အပိုင်းအစ** ‌ဖြစ်ပြီး ‌မသေချာသော characters များကို ‌ကိုယ်စားပြုပါတယ်။
+
+## အသုံးဝင်သော Wildcard Patterns
+
+| Pattern | ‌ရလဒ် |
+| --- | --- |
+| `LIKE 'a%'` | 'a' နဲ့ ‌စသည် |
+| `LIKE '%a'` | 'a' နဲ့ ဆုံးသည် |
+| `LIKE '%or%'` | ‌အလယ် 'or' ‌ပါ |
+| `LIKE '_r%'` | ‌ဒုတိယ letter r |
+| `LIKE 'a__%'` | 'a' ‌စ + ‌အနည်းဆုံး 2 လုံး |
+| `LIKE '_a%'` | ‌ဒုတိယ letter a |
+| `LIKE '_a_'` | 3 လုံး, ‌အလယ် a |
+
+## ‌ဥပမာများ
+
+```sql
+-- 'a' စသည့် names
+SELECT * FROM employees WHERE name LIKE 'a%';
+
+-- 't' ‌ဆုံးသော names
+SELECT * FROM employees WHERE name LIKE '%t';
+
+-- ‌အလယ် 'an' ပါသော
+SELECT * FROM employees WHERE name LIKE '%an%';
+
+-- 5 စာလုံး ‌ပြည့်သော names
+SELECT * FROM employees WHERE name LIKE '_____';
+```
+
+## Escape — wildcard ကိုယ်တိုင် ‌ရှာလျှင်
+
+'%' ‌ကိုယ်တိုင် ‌ပါသော text ရှာရန် escape ‌သုံး:
+
+```sql
+SELECT * FROM comments
+WHERE body LIKE '50\% off' ESCAPE '\\';
+```
+
+## Wildcard ‌နှင့် INDEX
+
+Wildcard ‌ခေါင်းဆုံးမှာ `%` ‌ရှိလျှင် index ‌မှာ ‌သုံး‌မရချေ — performance ‌နှေးနိုင်။
+
+## ‌အဓိက အချက်များ
+- `%` — ‌အလွတ်အပိုင်း
+- `_` — ‌တစ်လုံးတည်း
+- Escape ‌ဖြင့် literal % ‌ရှာ

@@ -1,0 +1,62 @@
+---
+title: "Node.js Express.js — Express.js"
+description: "Express — routes, params, json, CRUD API — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+**Express.js** — Node.js ၏ ‌အသုံးများဆုံး web framework — routing, middleware ‌ရိုးရှင်း။
+
+## ‌အ‌ခြေခံ server
+
+```js
+const express = require("express");
+const app = express();
+
+app.use(express.json());          // JSON body parse
+
+app.get("/", (req, res) => {
+  res.send("Hello Express");
+});
+
+app.listen(3000, () => console.log("Running"));
+```
+
+## Route params & query
+
+```js
+app.get("/users/:id", (req, res) => {
+  res.json({ id: req.params.id, query: req.query });
+});
+```
+
+`/users/5?page=1` → `{ id: "5", query: { page: "1" } }`။
+
+## CRUD ‌ဥပမာ
+
+```js
+let items = [{ id: 1, name: "A" }];
+
+app.get("/items", (req, res) => res.json(items));
+app.post("/items", (req, res) => {
+  const item = { id: items.length + 1, ...req.body };
+  items.push(item);
+  res.status(201).json(item);
+});
+app.delete("/items/:id", (req, res) => {
+  items = items.filter((i) => i.id != req.params.id);
+  res.sendStatus(204);
+});
+```
+
+## ‌ခေါ် — curl
+
+```bash
+curl -X POST http://localhost:3000/items \
+  -H "Content-Type: application/json" \
+  -d '{"name":"B"}'
+```
+
+## ‌အဓိက အချက်များ
+- app.get/post/put/delete
+- req.params / query / body
+- express.json() — JSON parse

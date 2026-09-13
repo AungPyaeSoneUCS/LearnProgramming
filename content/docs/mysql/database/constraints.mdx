@@ -1,0 +1,61 @@
+---
+title: "MySQL Constraints — Constraints"
+description: "Constraints — column ‌တန်ဖိုး ‌စည်းမျဉ်း — NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY, CHECK, DEFAULT။"
+autoNumbering: true
+---
+
+**Constraints** များသည် column ‌တွင်းသို့ ‌ထည့်‌တဲ့ data များ **rule များကိုသက်သေ** — database ‌အဆင့်တွင် ‌ကာကွယ်ပါတယ်။
+
+## Syntax
+
+```sql
+CREATE TABLE table_name (
+  column1 datatype CONSTRAINT,
+  ...
+);
+```
+
+## Constraint ‌အမျိုးမျိုး
+
+| Constraint | ‌လုပ်ဆောင်မှု |
+| --- | --- |
+| `NOT NULL` | NULL ‌မရပါ |
+| `UNIQUE` | ‌တန်ဖိုး ‌တူ ‌မရ |
+| `PRIMARY KEY` | unique + ‌မဟုတ် NULL (rows ‌ခွဲ) |
+| `FOREIGN KEY` | ‌အခြားဇယား ‌ချိတ် |
+| `CHECK` | condition ‌မှန်မှသာ |
+| `DEFAULT` | ‌မသတ်မှတ်လျှင် ‌မူလ ‌တန်ဖိုး |
+
+## ‌ဥပမာ
+
+```sql
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  email VARCHAR(150) UNIQUE NOT NULL,
+  age INT CHECK (age >= 18),
+  role VARCHAR(20) DEFAULT 'member',
+  is_active BOOLEAN DEFAULT TRUE
+);
+```
+
+## Table level — ‌အမည် + constraint
+
+```sql
+CREATE TABLE orders (
+  id INT,
+  user_id INT,
+  CONSTRAINT pk_orders PRIMARY KEY (id),
+  CONSTRAINT fk_orders_user FOREIGN KEY (user_id)
+    REFERENCES users(id)
+);
+```
+
+## ‌ဘာ‌ကြောင့် ‌သုံးလဲ
+- Data integrity — ‌အမှား data ‌မဝင်း
+- App code ထဲ ‌စစ်စရာ ‌လျော့
+- ‌ဆက်စပ်မှု ‌ခိုင်မာ
+
+## ‌အဓိက အချက်များ
+- Constraints = column rules
+- Keys + CHECK + DEFAULT
+- ‌အ‌လုံး integrity ‌ကို ‌ထောက်ပံ့

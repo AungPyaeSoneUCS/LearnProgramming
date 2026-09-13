@@ -1,0 +1,69 @@
+---
+title: "React Props — Props ‌ဖြတ်‌ပေးခြင်း"
+description: "Props (properties) — component ‌တစ်ခုမှ ‌နောက်တစ်ခုသို့ data ‌ဖြတ်‌ပေးနည်း၊ props ‌ရဲ့ ‌မပြောင်းလဲ ‌တဲ့ သဘော။"
+autoNumbering: true
+---
+
+Props (properties) ဆိုတာ component ‌တစ်ခုမှ ‌နောက် component ‌တစ်ခုသို့ **argument ‌အနေနဲ့ data ‌ဖြတ်‌ပေးတာ** ‌ဖြစ်ပါတယ်။ Props ‌တွေက **read-only** — component ‌ဘက်က ‌ပြောင်းလို့ ‌မရပါဘူး။
+
+## Props ‌ဖြတ်‌ပေးခြင်း
+
+```jsx
+function Car(props) {
+  return <h2>I am a {props.brand}!</h2>;
+}
+
+function Garage() {
+  return (
+    <>
+      <h1>Who lives in my garage?</h1>
+      <Car brand="Ford" />
+    </>
+  );
+}
+```
+
+`Garage` ‌ထဲမှာ `<Car brand="Ford" />` ‌ရေးပြီး `brand` ‌ဆိုတဲ့ prop ကို ‌ဖြတ်‌ပေးပါတယ်။ `Car` ‌ထဲ `props.brand` ‌အနေနဲ့ ‌ရယူပါတယ်။
+
+## Variable ‌ကို props ‌အနေနဲ့
+
+```jsx
+function Car(props) {
+  return <h2>I am a {props.brand}!</h2>;
+}
+
+function Garage() {
+  const carName = "BMW";
+  return (
+    <>
+      <h1>My garage</h1>
+      <Car brand={carName} />
+    </>
+  );
+}
+```
+
+Variable ‌ကို ‌ဖြတ်‌ပေးရင် braces `{}` ‌နဲ့ ‌သုံးပါတယ်။
+
+## ‌တစ်ခုထက်ပို Props
+
+```jsx
+function Car(props) {
+  return (
+    <h2>
+      I am a {props.brand}! Model: {props.model}
+    </h2>
+  );
+}
+
+<Car brand="Toyota" model="Camry" />
+```
+
+## Props ‌တန်ဖိုး ‌မပြောင်း (immutable)
+
+Component ‌ထဲ props ‌ကို ‌ပြောင်းဖို့ ‌ကြိုးစား ‌ရင် ‌အလုပ်မလုပ်ပါ — props က read-only ‌ဖြစ်တယ်။ ‌ပြောင်းချင် ‌ရင် state ‌သုံးရပါတယ်။
+
+## အဓိက အချက်များ
+- Props = component ‌အင် ‌ထဲ data ‌ဖြတ်‌ပေး
+- `props.brand` ‌လိုမျိုး ‌လှမ်း ‌ရယူ
+- Read-only — component ‌က ‌ပြောင်းလို့ ‌မရဘူး

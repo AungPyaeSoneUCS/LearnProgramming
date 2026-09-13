@@ -1,0 +1,46 @@
+---
+title: "Raspberry Pi Robot Components — Components"
+description: "Pi robotics — ‌အသုံးများ components, wiring, motor — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+RPi ‌ဖြင့် robotics — ‌အသုံးများ hardware components ‌အကြောင်း။
+
+## Components
+| Component | ‌လုပ် |
+| --- | --- |
+| Motor (DC, servo, stepper) | movement |
+| Motor driver (L298N, TB6612) | ‌များ motor ‌ထိန်း |
+| Ultrasonic sensor (HC-SR04) | distance |
+| Camera (Pi Camera) | vision |
+| IMU (MPU6050) | orientation |
+
+## Motor control ‌အကျဉ်း
+
+```js
+const Gpio = require("onoff").Gpio;
+
+const in1 = new Gpio(17, "out");
+const in2 = new Gpio(18, "out");
+const ena = new Gpio(27, "out");
+
+// forward
+in1.writeSync(1);
+in2.writeSync(0);
+ena.writeSync(1); // enable
+```
+
+## DC motor control via L298N
+- in1/in2 — direction
+- ENA — speed (PWM)
+- 12V power — separate supply (‌သတိ — RPi ‌မှား)
+
+## Hardware best practices
+- Separate power — motors vs logic
+- Diode/inductance protection
+- ‌လုံး‌ခြုံ ‌ချိတ် ‌စစ် — voltage limits
+
+## ‌အဓိက အချက်များ
+- Motor driver required
+- Direction + enable pins
+- Power isolation

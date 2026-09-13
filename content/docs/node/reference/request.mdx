@@ -1,0 +1,55 @@
+---
+title: "Node.js Request — Request object"
+description: "Request — http request — ‌လယ် method, url, headers — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+HTTP **Request** — `req` object — client မှ လာ — metadata နှင့် body stream။
+
+## ‌အခြေခံ info
+
+```js
+const http = require("node:http");
+
+http
+  .createServer((req, res) => {
+    console.log("method:", req.method);
+    console.log("url:", req.url);
+    console.log("headers:", req.headers);
+
+    res.end("ok");
+  })
+  .listen(3000);
+```
+
+## ‌အဓိက properties
+| Property | ‌လုပ် |
+| --- | --- |
+| `req.method` | GET/POST… |
+| `req.url` | path + query |
+| `req.headers` | headers object |
+| `req.httpVersion` | HTTP version |
+
+## Query parsing
+
+```js
+const url = require("node:url");
+
+const { searchParams } = new URL(req.url, "http://localhost");
+console.log(searchParams.get("page"));
+```
+
+## Body (POST)
+
+```js
+let body = "";
+req.on("data", (chunk) => (body += chunk));
+req.on("end", () => {
+  console.log(JSON.parse(body));
+});
+```
+
+## ‌အဓိက အချက်များ
+- req.method / url / headers
+- URL searchParams
+- body — data + end events

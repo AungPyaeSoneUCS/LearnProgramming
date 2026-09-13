@@ -1,0 +1,61 @@
+---
+title: "MySQL INSERT INTO — INSERT INTO"
+description: "INSERT INTO — ဇယားထဲ row အသစ် ထည့်ခြင်း — column များ ရွေးထည့်ခြင်း။"
+autoNumbering: true
+---
+
+`INSERT INTO` statement သည် ဇယားထဲ **row အသစ်** ထည့်ရန် ‌သုံးပါတယ်။
+
+## Syntax — column အားလုံး
+
+```sql
+INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3, ...);
+```
+
+## ဥပမာ
+
+```sql
+INSERT INTO customers (id, first_name, last_name, city)
+VALUES (1, 'Aung', 'Kyaw', 'Yangon');
+```
+
+## Column ‌မပါ — ‌အားလုံးဖြည့်လျှင်
+
+```sql
+INSERT INTO customers
+VALUES (2, 'Su', 'Myat', 'Mandalay');
+```
+
+ဤနည်းတွင် ‌တန်ဖိုးအစဉ်သည် ‌ဇယားရဲ့ column ‌အစဉ် အတိုင်း ဖြစ်ရမည်။
+
+## Row များစွာ တစ်ခါတည်း
+
+```sql
+INSERT INTO customers (id, first_name, last_name)
+VALUES
+  (3, 'Mya', 'Win'),
+  (4, 'Hla', 'Min'),
+  (5, 'Zaw', 'Tun');
+```
+
+## ‌လိုအပ်ချက်များ
+- Column ‌အမည်နှင့် ‌တန်ဖိုး အရေအတွက် ‌တူရမည်
+- Text — single quotes
+- Number — quotes ‌မပါ
+
+```sql
+INSERT INTO products (id, name, price)
+VALUES (101, 'Laptop', 799.99);
+```
+
+## ‌ရလဒ် စစ်ကြည့်
+
+```sql
+SELECT * FROM customers;
+```
+
+## ‌အဓိက အချက်များ
+- INSERT INTO ... VALUES
+- Column ‌ရွေးလျှင် ‌တန်ဖိုး ‌အစဉ် ‌လိုက်ဖက်
+- Row အများအပြား comma ဖြင့် ထည့်နိုင်

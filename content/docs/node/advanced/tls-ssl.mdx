@@ -1,0 +1,61 @@
+---
+title: "Node.js TLS/SSL Module — TLS/SSL Module"
+description: "TLS/SSL — secure sockets — tls.createServer — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:tls` — TLS/SSL — encrypted ‌ချိတ်ဆက် — https ၏ ‌အခြေခံ layer။
+
+## TLS server
+
+```js
+const tls = require("node:tls");
+const fs = require("node:fs");
+
+const options = {
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem"),
+};
+
+const server = tls.createServer(options, (socket) => {
+  socket.write("Secure!\n");
+  socket.end();
+});
+
+server.listen(8443);
+```
+
+## Client
+
+```js
+const tls = require("node:tls");
+const fs = require("node:fs");
+
+const socket = tls.connect(
+  {
+    port: 8443,
+    host: "localhost",
+    ca: [fs.readFileSync("cert.pem")],
+  },
+  () => {
+    socket.on("data", (d) => process.stdout.write(d));
+  }
+);
+```
+
+## TLS functions
+| Function | ‌လုပ် |
+| --- | --- |
+| `tls.connect()` | client |
+| `createSecureContext` | options prebuild |
+| Certificates | checkServerIdentity |
+
+## ‌သတိထားရန်
+- Production — CA ‌ကို certificate
+- SNI — ‌မျိုးစုံ domain TLS
+- Custom TLS ‌ရှားရှားသုံး — `https`/`net` ‌အ‌ပေါ် layer ‌သုံး
+
+## ‌အဓိက အချက်များ
+- tls.createServer(options, cb)
+- Encrypted socket
+- HTTPS ‌၏ အခြေ

@@ -1,0 +1,46 @@
+---
+title: "sql-right-join"
+description: "RIGHT JOIN — RIGHT table ရဲ့ row အားလုံး + LEFT က ကိုက်ညီတဲ့ row များ။"
+autoNumbering: true
+---
+
+RIGHT JOIN က LEFT JOIN ရဲ့ အပြုအမူ ဆန့်ကျင်ဘက်ပါ — ညာဘက် table (JOINed table) ရဲ့ row အားလုံး ကို ပြပြီး၊ ဘယ်ဘက်က ကိုက်ညီသရွေ့ ပါလာပါတယ်။
+
+## RIGHT JOIN ဥပမာ
+```sql
+SELECT c.Name, o.OrderID
+FROM Customers AS c
+RIGHT JOIN Orders AS o ON c.CustomerID = o.CustomerID;
+```
+Orders (right table) ရဲ့ row အားလုံး ပါပြီး Orders ထဲမှာ CustomerID မရှိတဲ့သူဆိုရင် c.Name က NULL ဖြစ်ပါတယ်။ ဒီဥပမာမှာတော့ အားလုံး customers နဲ့ ချိတ်လို့ result က INNER နဲ့ ဆင်ပါတယ်။
+
+## မကိုက်ညီတဲ့ row ရှိရင် ဘယ်လိုဖြစ်မလဲ
+```sql
+SELECT c.Name, o.OrderID
+FROM Customers AS c
+RIGHT JOIN Orders AS o ON c.CustomerID = o.CustomerID
+WHERE c.CustomerID IS NULL;
+```
+Orders (right) မှာရှိပြီး Customers (left) မှာ key မရှိတဲ့ order တွေ ("orphan orders") ကို ရှာပါတယ်။
+
+## RIGHT vs LEFT — ဘယ်ဟာသုံးမလဲ
+| အလို | Query |
+| --- | --- |
+| Customers အားလုံး | FROM Customers LEFT JOIN Orders |
+| Orders အားလုံး | FROM Customers RIGHT JOIN Orders |
+
+တကယ်တော့ RIGHT ဒါထက် နည်းပြီး LEFT ကို ပိုသုံးပါတယ် — table order ပြောင်းလိုက်ရုံနဲ့ RIGHT → LEFT အဖြစ် ပြောင်းလို့ရလို့ပါ:
+
+```sql
+-- RIGHT JOIN version
+FROM Customers AS c RIGHT JOIN Orders AS o ...
+ 
+-- LEFT JOIN နဲ့ အတူတူ
+FROM Orders AS o LEFT JOIN Customers AS c ...
+```
+
+## အဓိက အချက်များ
+- RIGHT = JOINed (right) table အားလုံး ထိန်း
+- ဘယ်က မကိုက်တဲ့ column → NULL
+- RIGHT ကို LEFT နဲ့ ပြောင်းလို့ရတဲ့အတွက် တချို့ DB (MySQL) မှာတော့ FULL JOIN ကို မသုံးချင်ရင် LEFT+UNION နဲ့ ဖြေရှင်းကြပါတယ်
+- ရှုပ်ထွေးမှု ရှောင်ဖို့ table order ပြောင်းပြီး LEFT JOIN ကို အသားပေး သုံးကြပါတယ်

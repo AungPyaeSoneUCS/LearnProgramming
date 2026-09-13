@@ -1,0 +1,54 @@
+---
+title: "Node.js package.json — package.json"
+description: "package.json — project metadata — scripts, dependencies, fields — ဥပမာ။"
+autoNumbering: true
+---
+
+**package.json** — project ၏ metadata + configuration — modules ‌တိုင်း ‌ရှိရန် ‌လို။
+
+## ‌ကိုယ်‌ထည့် ‌မရှင်း
+
+```json
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "description": "A sample app",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
+```
+
+## ‌အရေး‌ကြီး Fields
+| Field | ‌အဓိပ္ပာယ် |
+| --- | --- |
+| `name` / `version` | required |
+| `main` | entry file |
+| `type` | `commonjs`/`module` |
+| `scripts` | npm run commands |
+| `dependencies` | prod packages |
+| `devDependencies` | dev-only |
+
+## Scripts.Run
+
+```bash
+npm start
+npm run dev
+```
+
+## package-lock.json
+Dependencies ၏ **‌အ‌တိအကျ version** — ‌သိမ်း — အ‌တူ install ‌ရန် — commit ‌လုပ် ထားပါ။
+
+## ‌အဓိက အချက်များ
+- Metadata + scripts
+- dependencies vs devDependencies
+- Lockfile — ‌အ‌တိအကျ versions

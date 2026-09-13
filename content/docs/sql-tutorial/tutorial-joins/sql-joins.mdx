@@ -1,0 +1,50 @@
+---
+title: "sql-joins"
+description: "JOIN ဆိုတာဘာလဲ၊ INNER/LEFT/RIGHT/FULL — ခြုံငုံ မိတ်ဆက်။"
+autoNumbering: true
+---
+
+Data တွေက table တစ်ခုတည်းထဲ အကုန်ရှိပြီးသား မဟုတ်ပါဘူး။ Order တစ်ခုရဲ့ ဖောက်သည်နာမကြည့်ချင်ရင် Orders table နဲ့ Customers table ကို ချိတ်ရပါတယ်။ အဲဒါကို JOIN နဲ့ လုပ်ပါတယ်။
+
+## ဘာလို့ JOIN လိုအပ်လဲ?
+Database ကို စနစ်တကျ ရအောင် table တွေကို ခွဲထားပါတယ် (normalization)။ ပေါင်းစပ် ကြည့်ချင်တဲ့အခါ JOIN က အခန်းကဏ္ဍ ဝင်လာပါတယ်။
+
+```sql
+SELECT OrderID, Name
+FROM Orders, Customers;
+```
+ဒါက မှားပါတယ် — table နှစ်ခုကို ဘယ်လိုချိတ်လဲ ဆိုတာမရှိဘဲ ဆွဲထားလို့ rows တွေ အလုံး မြောက်နိုင်တဲ့ (cartesian) result ထွက်ပါတယ်။
+
+## JOIN Type တွေ
+| Type | အဓိပ္ပာယ် |
+| --- | --- |
+| INNER JOIN | ၂ဖက်လုံးမှာ ကိုက်ညီတဲ့ row သာ |
+| LEFT JOIN | ဘယ်ဇယား အားလုံး + ညာက ကိုက်ညီတာ |
+| RIGHT JOIN | ညာဇယား အားလုံး + ဘယ်က ကိုက်ညီတာ |
+| FULL JOIN | ၂ဖက်စလုံး အားလုံး |
+| SELF JOIN | ဇယားတစ်ခုကို ကိုယ့်နဲ့ကိုယ် ချိတ် |
+
+## JOIN ရဲ့ အခြေခံဖွဲ့စည်းပုံ
+```sql
+SELECT columns
+FROM TableA
+INNER JOIN TableB ON TableA.key = TableB.key;
+```
+ON က ချိတ်ဖို့ "key" (အများအားဖြင့် Primary Key ↔ Foreign Key) ကို သတ်မှတ်ပါတယ်။
+
+## ON vs WHERE ကွာခြားချက်
+```sql
+-- ON: JOIN လုပ်တုန်း filter
+LEFT JOIN Orders ON c.CustomerID = o.CustomerID
+WHERE o.OrderDate > '2025-01-01';
+```
+- ON — rows တွေ ဘယ်လို ချိတ်မလဲ
+- WHERE — ချိတ်ပြီးသား result ကို စစ်ထုတ်
+
+LEFT JOIN မှာ WHERE က ညာဘက် row NULL ဖြစ်တာတွေကို ဖယ်နိုင်လို့ ကွာခြားမှု သတိထားပါ။ နောက် lesson တွေမှာ type တစ်ခုချင်းစီကို အပြည့်အစုံ သင်ပါမယ်။
+
+## အဓိက အချက်များ
+- Join က key (PK/FK) နဲ့ table ချိတ်တယ်
+- Type ၅ ခု — အသုံးအများဆုံးက INNER နဲ့ LEFT
+- ON နဲ့ WHERE က အခန်းကဏ္ဍ ကွဲပါတယ်
+- Unqualified join (WHERE, comma) ကို မသုံးပါနဲ့

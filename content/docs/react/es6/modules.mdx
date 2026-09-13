@@ -1,0 +1,72 @@
+---
+title: "ES6 Modules — Module (import/export)"
+description: "export နဲ့ import ဖြင့် code ကို module တွေခွဲခြင်း — named vs default export၊ React component ခွဲခြင်း။"
+autoNumbering: true
+---
+
+Module ဆိုတာ code တစ်စိတ်တစ်ပိုင်းကို အခြားဖိုင် ‌ထဲက သုံးနိုင်အောင် export လုပ်ထားတာ ဖြစ်ပါတယ်။ ES6 မှာ module ကို စံနည်းလမ်းနဲ့ ထောက်ပံ့ပေးခဲ့ပါတယ်။
+
+## Named Export
+
+```js
+// person.js
+export const name = "Aung";
+export const age = 25;
+```
+
+```js
+// main.js
+import { name, age } from "./person.js";
+console.log(name, age); // Aung 25
+```
+
+## Default Export
+
+```js
+// message.js
+const message = () => "Hello!";
+export default message;
+```
+
+```js
+// main.js
+import message from "./message.js";
+console.log(message()); // Hello!
+```
+
+## ကွာခြားချက်
+
+| Export အမျိုးအစား | အရေအတွက် | Import နာမည် |
+| --- | --- | --- |
+| `export` (named) | မျိုးစုံ | `{ name }` နဲ့ အတိအကျ |
+| `export default` | တစ်ခုသာ | နာမည် လွတ်လပ်စွာ |
+
+## React Component Module
+
+```jsx
+// components/Car.jsx
+export default function Car({ brand }) {
+  return <h2>I am a {brand}</h2>;
+}
+
+// App.jsx
+import Car from "./components/Car";
+
+function App() {
+  return <Car brand="Ford" />;
+}
+export default App;
+```
+
+React ‌မှာ component တစ်ခုကို ဖိုင်တစ်ခုမှာ ရေးပြီး `export default` လုပ်လေ့ရှိပါတယ်။
+
+## Rename Import
+
+```js
+import { name as userName } from "./person.js";
+```
+
+## အဓိက အချက်များ
+- module ကို `export` + `import` ဖြင့် မေးမြန်းသည်
+- default export က တစ်ခုသာ import နာမည် လွတ်လပ်သည်
+- React မှာ component တစ်ခု = module တစ်ခု ရေးလေ့ရှိသည်

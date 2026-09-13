@@ -1,0 +1,66 @@
+---
+title: "MySQL ORDER BY — ORDER BY"
+description: "ORDER BY — rows များကို sort လုပ်ခြင်း — ASC, DESC, multiple columns။"
+autoNumbering: true
+---
+
+`ORDER BY` keyword သည် query ‌ရလဒ်ကို **စီစဉ် (sort)** ‌လုပ်ပါတယ် — ascending (‌အ‌ပေါ်သို့) ‌သို့မဟုတ် descending (‌အောက်သို့)။
+
+## Syntax
+
+```sql
+SELECT column1, column2
+FROM table_name
+ORDER BY column1 [ASC | DESC];
+```
+
+## ‌ဥပမာ — ascending
+
+```sql
+SELECT * FROM products ORDER BY price;
+```
+
+‌မူလ default သည် ASC (‌ငယ် → ကြီး) ဖြစ်သည်။
+
+## Descending
+
+```sql
+SELECT * FROM products ORDER BY price DESC;
+```
+
+## Multiple columns
+
+```sql
+SELECT name, age FROM employees
+ORDER BY age DESC, name ASC;
+```
+
+‌ပထမက `age` ‌ချပြီး `age` ‌တူသူများ‌ကြား `name` (A-Z) ‌ဖြင့် စီသည်။
+
+## WHERE ‌နှင့် တွဲသုံး
+
+```sql
+SELECT * FROM orders
+WHERE status = 'paid'
+ORDER BY created_at DESC;
+```
+
+## ‌အ‌ခြေ data မှ ဥပမာ
+
+```
+Products
++----+--------------+-------+
+| id | name         | price |
++----+--------------+-------+
+| 1  | Laptop       | 1000  |
+| 2  | Phone        | 600   |
+| 3  | Mouse        | 25    |
++----+--------------+-------+
+```
+
+`ORDER BY price DESC` → Laptop, Phone, Mouse။
+
+## ‌အဓိက အချက်များ
+- ORDER BY column [ASC|DESC]
+- Default ASC
+- Column များစွာ စီနိုင်

@@ -1,0 +1,58 @@
+---
+title: "sql-select-top"
+description: "SELECT TOP, LIMIT, FETCH FIRST — row အရေအတွက် ကန့်သတ်ပြီး ကြည့်ခြင်း (database အလိုက်ကွာခြားချက်)။"
+autoNumbering: true
+---
+
+Table ထဲမှာ row သိန်းချီ ရှိရင် အကုန်ဆွဲကြည့်တာ မလွယ်ပါဘူး။ အရင်ဆုံး နမူနာ row အနည်းငယ်ပဲ ကြည့်ချင်တဲ့အခါ SELECT TOP / LIMIT တွေကို သုံးပါတယ်။
+
+## SQL Server / MS Access
+```sql
+SELECT TOP 5 * FROM Customers;
+```
+ပထမဆုံး row ၅ ခုကိုပဲ ပြပါတယ်။ TOP n က SQL Server နဲ့ MS Access မှာ သုံးလို့ရတဲ့ syntax ပါ။
+
+## MySQL / MariaDB / PostgreSQL / SQLite
+```sql
+SELECT * FROM Customers
+LIMIT 5;
+```
+LIMIT 5 က ပထမ ၅ row ကိုပဲ ပြပါတယ်။ MySQL မိသားစုနဲ့ SQLite မှာတော့ LIMIT ကို သုံးပါတယ်။
+
+## LIMIT နဲ့ Offset (စာမျက်နှာလိုက် ကြည့်ခြင်း)
+```sql
+SELECT * FROM Customers
+LIMIT 5 OFFSET 5;
+```
+OFFSET 5 — ပထမ ၅ row ကို ကျော်ပြီး နောက် ၅ row ကို ပြပါတယ်။ Pagination (page 1, page 2) အတွက် ၅ခုစီ ခွဲကြည့်ချင်ရင် ဒီနည်းကို သုံးပါတယ်။
+
+## TOP နဲ့ ORDER BY ပေါင်းခြင်း
+```sql
+SELECT TOP 3 * FROM Customers
+ORDER BY Age DESC;
+ 
+SELECT * FROM Customers
+ORDER BY Age DESC
+LIMIT 3;
+```
+Age အကြီးဆုံး ထိပ်ဆုံး ၃ ယောက်ကို ပြပါတယ်။ SQL Server က TOP 3 ကို column list မှာ၊ MySQL က LIMIT ကို query အဆုံးမှာ ရေးပါတယ် — result ကတော့ အတူတူပါပဲ။
+
+## "Top ရာခိုင်နှုန်း" (SQL Server)
+```sql
+SELECT TOP 50 PERCENT * FROM Customers;
+```
+row တွေရဲ့ ၅၀% ကိုပဲ ပြပါတယ်။ TOP n PERCENT ဆိုပြီး SQL Server မှာ ရာခိုင်နှုန်း သတ်မှတ်လို့ရပါတယ်။
+
+## Database အလိုက် syntax အကျဉ်း
+| Database | Syntax |
+| --- | --- |
+| SQL Server | SELECT TOP n ... |
+| MySQL | ... LIMIT n |
+| PostgreSQL / SQLite | ... LIMIT n / ... LIMIT n OFFSET k |
+| Oracle | ... FETCH FIRST n ROWS ONLY |
+
+## အဓိက အချက်များ
+- SQL Server → TOP n ၊ MySQL/PostgreSQL/SQLite → LIMIT n
+- LIMIT n OFFSET k — pagination အခြေခံ
+- ORDER BY နဲ့ တွဲသုံးမှ အဓိပ္ပာယ်ရှိတဲ့ "top" ရပါတယ်
+- သင်သုံးတဲ့ database ရဲ့ syntax ကိုကြည့်ပြီး ရွေးပါ

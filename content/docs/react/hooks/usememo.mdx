@@ -1,0 +1,74 @@
+---
+title: "React useMemo — useMemo Hook"
+description: "useMemo — expensive calculation ‌ကို memoize ၍ render ‌မြန်ဆန် — dependencies, useCallback နဲ့ နှိုင်းယှဉ်။"
+autoNumbering: true
+---
+
+`useMemo` ‌က **တွက်ချက်မှု ရလဒ် (value)** ‌ကို memoize ‌လုပ်ပေးလို့ ‌ဈေးကြီးတဲ့ calculation ကို render တိုင်း ပြန်လဲ မလုပ်တော့ပါ။
+
+## Syntax
+
+```jsx
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+```
+
+- ‌ပထမ — calculation function
+- ‌ဒုတိယ — dependencies array — ‌ပြောင်းမှ ပြန်တွက်
+
+## ‌ဥပမာ — expensive filter
+
+```jsx
+import { useMemo, useState } from "react";
+
+function BigList({ items, filterText }) {
+  const filtered = useMemo(() => {
+    return items.filter((item) =>
+      item.name.toLowerCase().includes(filterText.toLowerCase())
+    );
+  }, [items, filterText]);
+
+  return (
+    <ul>
+      {filtered.map((item) => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+`items` ‌နှင့် `filterText` ‌မပြောင်းသမျှ — filter ‌ကို reuse ‌ပြီး render ‌မြန်ပါတယ်။
+
+## ‌ဘာကြောင့် ‌လိုအပ်လဲ
+
+Expensive loop ‌ဥပမာ:
+
+```jsx
+const [count, setCount] = useState(0);
+
+const expensive = useMemo(() => {
+  let sum = 0;
+  for (let i = 0; i < 1_000_000; i++) {
+    sum += i;
+  }
+  return sum;
+}, []);
+```
+
+စာကြည့် `count` ‌ပြောင်းတိုင်း million loop ‌ပြန်တွက်မယ် — useMemo ‌ဖြင့် တစ်ခါသာ။
+
+## useMemo vs useCallback
+
+| useMemo | useCallback |
+| --- | --- |
+| ‌တန်ဖိုး (value) memoize | function memoize |
+| `useMemo(() => fn())` | `useCallback(fn, deps)` |
+
+## ‌သတိ‌ချက်
+- UseMemo ‌ကိုယ်တိုင် overhead — ‌တကယ်ဈေးကြီးတဲ့ ‌တွက်မှ သုံး
+- Dependency ‌ချန် ‌ရင် stale ‌တန်ဖိုး
+
+## ‌အဓိက အချက်များ
+- `useMemo` — expensive value caching
+- deps ‌ပြောင်းမှ recalc
+- Performance optimization ‌အတွက်

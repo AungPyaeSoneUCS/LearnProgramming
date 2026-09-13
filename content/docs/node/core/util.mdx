@@ -1,0 +1,55 @@
+---
+title: "Node.js Util Module — Util Module"
+description: "Util Module — util.promisify, inherits, format — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:util` — ‌အသေးစား helper ‌များ — promisify, format ‌စသည်။
+
+## util.promisify
+
+Callback-based function → Promise ‌ပြောင်း:
+
+```js
+const util = require("node:util");
+const fs = require("node:fs");
+
+const readFile = util.promisify(fs.readFile);
+
+async function main() {
+  const data = await readFile("data.txt", "utf8");
+  console.log(data);
+}
+```
+
+## util.format
+
+```js
+const util = require("node:util");
+
+console.log(util.format("%s:%d", "port", 3000));   // port:3000
+console.log(util.format(123));                      // "123"
+```
+
+`%s` string, `%d` number — printf ‌ပုံစံ။
+
+## util.inspect
+
+Object ကို ‌ဖတ်ရလွယ် ‌ပြ:
+
+```js
+console.log(util.inspect({ a: { b: [1, 2] } }, { depth: 5 }));
+```
+
+## util.inherits (legacy)
+
+```js
+util.inherits(MyClass, BaseClass);
+```
+
+Modern — `class extends` ‌သုံးသင့် — legacy API ။
+
+## ‌အဓိက အချက်များ
+- promisify — callback → Promise
+- format / inspect
+- inherits — legacy

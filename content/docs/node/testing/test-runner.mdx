@@ -1,0 +1,65 @@
+---
+title: "Node.js Test Runner — Node Test Runner"
+description: "node:test — built-in test runner — describe/it, mock, coverage — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Node.js built-in test runner — `node:test` — ‌အပြင် framework ‌မလို။
+
+## Basic test
+
+```js
+const { test } = require("node:test");
+const assert = require("node:assert/strict");
+
+test("addition", () => {
+  assert.equal(1 + 1, 2);
+});
+```
+
+## Run
+
+```bash
+node --test
+node --test test/*.test.js
+```
+
+## describe/it
+
+```js
+const { describe, it } = require("node:test");
+
+describe("cart", () => {
+  it("calculates total", () => {
+    assert.equal(calculateTotal([10, 20]), 30);
+  });
+});
+```
+
+## Async tests
+
+```js
+it("loads user", async () => {
+  const user = await getUser(1);
+  assert.equal(user.id, 1);
+});
+```
+
+## Coverage
+
+```bash
+node --test --experimental-test-coverage
+```
+
+## Mocking
+
+```js
+const { mock } = require("node:test");
+
+mock.method(console, "log", () => {});
+```
+
+## ‌အဓိက အချက်များ
+- node:test — built-in
+- `node --test` run
+- Coverage/mock ‌ပါ

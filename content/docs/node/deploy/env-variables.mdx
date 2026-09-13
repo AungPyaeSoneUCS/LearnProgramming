@@ -1,0 +1,56 @@
+---
+title: "Node.js Environment Variables — Env Variables"
+description: "Env variables — dotenv, .env file, process.env — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Secrets/config ‌ကို code ‌ထဲ ‌မရေး — environment variables ‌ဖြင့် ‌သိမ်း။
+
+## .env file + dotenv
+
+```bash
+npm install dotenv
+```
+
+`.env`:
+
+```
+PORT=3000
+DB_URL=mongodb://localhost:27017/shop
+JWT_SECRET=very-secret
+```
+
+## Load
+
+```js
+require("dotenv").config();
+
+const port = process.env.PORT || 3000;
+console.log(process.env.JWT_SECRET);
+```
+
+## ‌အသုံးပြုမှု
+
+```js
+const { Pool } = require("pg");
+
+const pool = new Pool({
+  connectionString: process.env.DB_URL,
+});
+```
+
+## Rules
+- `.env` — **commit ‌မလုပ်** (gitignore ‌ထဲ)
+- `.env.example` — ‌အ‌ခြေခံ ‌ဖိုင်စံ ‌သိမ်း commit
+  - `NODE_ENV` — prod/dev ခွဲ
+
+## .gitignore
+
+```
+.env
+```
+
+## ‌အဓိက အချက်များ
+- dotenv — .env ‌ဖတ်
+- process.env — access
+- Secrets — never commit

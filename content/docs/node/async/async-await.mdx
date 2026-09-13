@@ -1,0 +1,61 @@
+---
+title: "Node.js Async/Await — Async and Await"
+description: "Async/Await — promise ‌ကို sync ‌ကဲ့သို့ ရေး — try/catch — ဥပမာများ။"
+autoNumbering: true
+---
+
+`async/await` — Promises ကို sync code ကဲ့သို့ **ရှည်‌ဖတ်လွယ်** ‌ရေးနိုင်ရန်။
+
+## Basic
+
+```js
+function fetchData() {
+  return new Promise((resolve) => setTimeout(() => resolve("data"), 300));
+}
+
+async function main() {
+  const result = await fetchData();
+  console.log(result); // data
+}
+
+main();
+```
+
+`async function` — ၎င်းသည် Promise ‌ပြန်သည်; `await` — promise ‌ပြီးထိ ‌စောင့်။
+
+## Error handling — try/catch
+
+```js
+async function load() {
+  try {
+    const data = await fetch("https://api.example.com/user");
+    const json = await data.json();
+    console.log(json);
+  } catch (err) {
+    console.error("Failed:", err.message);
+  }
+}
+```
+
+## Sequential vs Parallel
+
+```js
+// Sequential — ‌အစဉ်လိုက် (1s + 1s)
+await taskA();
+await taskB();
+
+// Parallel — ‌အပြိုင် (≈1s)
+const [a, b] = await Promise.all([taskA(), taskB()]);
+```
+
+## Top-level await (ESM)
+
+```js
+// package.json: "type": "module"
+const data = await fetch("...");
+```
+
+## ‌အဓိက အချက်များ
+- await — promise ‌စောင့်
+- try/catch — error ‌ကိုင်တွယ်
+- Promise.all — parallel

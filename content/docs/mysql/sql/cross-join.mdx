@@ -1,0 +1,57 @@
+---
+title: "MySQL CROSS JOIN — CROSS JOIN"
+description: "CROSS JOIN — rows ‌အားလုံး ‌ပေါင်းစပ် (cartesian product) — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`CROSS JOIN` သည် ‌ဇယား ‌နှစ်ခုမှ rows များ၏ **‌ပေါင်းစပ်မှု‌တိုင်း (cartesian product)** ကို ‌ပြန်ပေးပါတယ် — ON condition ‌မလို။
+
+## Syntax
+
+```sql
+SELECT columns
+FROM table1
+CROSS JOIN table2;
+```
+
+## ‌ဥပမာ
+
+```sql
+SELECT colors.name, sizes.name
+FROM colors
+CROSS JOIN sizes;
+```
+
+## ‌ဥပမာ ‌ဇယား
+
+```
+colors             sizes
++----+-------+    +----+-------+
+| id | name  |    | id | name  |
++----+-------+    +----+-------+
+| 1  | Red   |    | 1  | S     |
+| 2  | Blue  |    | 2  | M     |
++----+-------+    +----+-------+
+```
+
+‌ရလဒ် 4 rows — Red/S, Red/M, Blue/S, Blue/M (2×2)။
+
+## ‌အသုံးဝင်သော case
+
+Combination အားလုံး ဥပမာ — အရောင်နှင့် အရွယ်အစား ပေါင်းစပ် ထုတ်ကုန်‌များ ဖန်တီးရန်။
+
+```sql
+INSERT INTO products (name, color, size)
+SELECT CONCAT(color.name, ' ', size.name), color.name, size.name
+FROM colors
+CROSS JOIN sizes;
+```
+
+## ‌သတိထားရန်
+- Rows ပေါင်းများလျှင် ‌ရလဒ် ‌ကြီးနိုင် (N×M)
+- INNER JOIN ‌တွင် condition ‌မပါလျှင်လည်း cross product ‌ဖြစ်သည်
+
+## ‌အဓိက အချက်များ
+- CROSS JOIN — ‌ပေါင်းစပ်မှု‌တိုင်း
+- ON ‌မလို
+- Combination ‌ဖန်တီးရန် ‌သုံး

@@ -1,0 +1,64 @@
+---
+title: "sql-reference-access-functions"
+description: "MS Access functions — strings, numeric, date — Access (VBA) အသုံးပြုပုံ။"
+autoNumbering: true
+---
+
+Microsoft Access က Office suite ရဲ့ database component ဖြစ်ပြီး Jet/Access SQL (ANSI-92) ကို သုံးပါတယ်။ Function တွေက SQL Server/MySQL နဲ့ နာမည်တလုံးချင်းစီ ကွဲတတ်ပါတယ်။
+
+## Access မှာသုံးတဲ့နာနာမည် Functions
+| Access | SQL Server / MySQL |
+| --- | --- |
+| Len() | LEN() / LENGTH() |
+| UCase() | UPPER() |
+| LCase() | LOWER() |
+| Mid() | SUBSTRING() |
+| InStr() | CHARINDEX() / LOCATE() |
+| Now() | GETDATE() / NOW() |
+| Date() | CURRENT_DATE |
+| DateAdd() | DATEADD() |
+| DateDiff() | DATEDIFF() |
+| IsNull() | ISNULL() / IFNULL() |
+
+## String Example
+```sql
+SELECT UCase(FirstName) AS UpperName, Len(FirstName) AS NameLen
+FROM Employees;
+```
+
+## Date Example
+```sql
+SELECT Now() AS CurrentDateTime, Date() AS Today;
+SELECT DateAdd('d', 30, OrderDate) FROM Orders;   -- 30 ရက်
+SELECT DateDiff('d', OrderDate, Date()) FROM Orders;  -- နေ့ရက်ကွာခြင်း
+```
+Unit code တွေ — 'd' day, 'm' month, 'yyyy' year, 'h' hour, 'n' minute (not 'mm' — 'n' က minute)။
+
+## Helper — DLookup (Access only)
+```sql
+DLookup("Price", "Products", "ProductID = 1")
+```
+DLookup က lookup table ထဲက single value ကို fetch လုပ်ပါတယ် — Access forms/reports မှာ အသုံးများပါတယ်။
+
+## MS Access Query Designer
+```
+- Design view — tables/joins/criteria တွေကို GUI နဲ့
+- SQL view — SQL အပြည့်အစုံ ရေးနိုင်
+- Criteria က WHERE ကိုဖြစ်စေတယ်
+```
+
+## ဥပမာ — Sales Report
+```sql
+SELECT Products.ProductName,
+       Sum(OrderDetails.Quantity) AS TotalQty,
+       Avg(OrderDetails.UnitPrice) AS AvgPrice
+FROM Products
+INNER JOIN OrderDetails ON Products.ProductID = OrderDetails.ProductID
+GROUP BY Products.ProductName;
+```
+
+## အဓိက အချက်များ
+- UCase / LCase / Mid / Len — နာမည်ကွဲပေမဲ့ concept က module ၁ ကနေ အတူတူပဲ
+- Now() / DateAdd / DateDiff — date unit code
+- DLookup — Access-specific
+- Join + Group By — report ရေးနည်း အတူတူပဲ

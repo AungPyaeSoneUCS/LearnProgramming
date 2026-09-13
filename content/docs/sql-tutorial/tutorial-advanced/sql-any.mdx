@@ -1,0 +1,44 @@
+---
+title: "sql-any"
+description: "ANY (SOME) — subquery ထဲက တန်ဖိုးတွေထဲက တစ်ခုခုဖြစ်ရင် true။"
+autoNumbering: true
+---
+
+ANY (တချို့ DB မှာ SOME) က subquery ထဲက တန်ဖိုး တစ်ခုခုပဲ ကိုက်ရင် condition ကို true ဖြစ်စေပါတယ်။
+
+## ANY အခြေခံ
+```sql
+SELECT Name FROM Products
+WHERE Price > ANY (SELECT Price FROM Products WHERE Category = 'Accessory');
+```
+Subquery ထဲက Accessories တွေရဲ့ Price တွေထဲက တစ်ခုခုထက်များ ရင် ကိုက်ပါတယ်။ ဥပမာ Accessories price: 10, 25 — ANY > 25 ဆိုရင် 26+ ဖြစ်ရုံပဲ (10 > 10 is false, 10 > 25 false, but 45 > 10 is true → "true ရှိရင် ဖြစ်")။
+
+## ANY vs ALL
+| Question | ANY | ALL |
+| --- | --- | --- |
+| "ထိုထက်များ" ဆိုရင် | တစ်ခုခုထက်များရင် | အားလုံးထက်များရင် |
+| List [10,20,30] ≥ 15 | true (15 ≥ 10) | false (15 ≥ 20) |
+
+## ANY = OR နဲ့ ဆင်တူ
+```sql
+WHERE Price > ANY (SELECT Price FROM ...)
+-- အတိုချုပ်
+WHERE Price > 10 OR Price > 20 OR Price > 30
+```
+Subquery ထဲက တန်ဖိုးတိုင်းနဲ့ OR ချိတ်ထားတာနဲ့ ဆင်တူပါတယ်။
+
+## ANY + JOIN
+```sql
+SELECT o.OrderID, o.Total
+FROM Orders AS o
+WHERE o.Total > ANY (
+    SELECT AVG(Total) FROM Orders
+    WHERE CustomerID = 1
+);
+```
+Customer 1 ရဲ့ order တွေရဲ့ AVG ထက် များတဲ့ order တွေကို ရှာပါတယ်။
+
+## အဓိက အချက်များ
+- ANY (list) = list ထဲက တစ်ခုခုထက်များ ရင် true
+- = ANY (list) = list ထဲက တစ်ခုခုတူ ရင် true (= IN)
+- ANY = OR flavor, ALL = AND flavor

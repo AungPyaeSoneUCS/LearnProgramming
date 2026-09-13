@@ -1,0 +1,48 @@
+---
+title: "Node.js Cluster Module — Cluster Module"
+description: "Cluster — multi-process, load balance, cluster module — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+**Cluster** — များစွာသော CPU cores ‌ကို ‌သုံး — processes ‌အများ ‌ချိတ် load balance။
+
+## ‌အခြေခံ
+
+```js
+const cluster = require("node:cluster");
+const http = require("node:http");
+const os = require("node:os");
+
+if (cluster.isPrimary) {
+  const cpus = os.cpus().length;
+  for (let i = 0; i < cpus; i++) cluster.fork();
+
+  cluster.on("exit", (worker) => console.log("restart", worker.process.pid));
+} else {
+  http
+    .createServer((req, res) => res.end(`pid: ${process.pid}`))
+    .listen(3000);
+}
+```
+
+Primary က workers ဖန်တီး — အားလုံး port ရှင် share — OS က round-robin။
+
+## Why cluster
+- Node — single thread — 1 core သာ
+- Multi-core server ‌တွင် capabilities multiplier
+- Zero downtime ‌ပို restart (workers တစ်‌ခြား)
+
+## PM2 cluster ‌ပုံစံ (အရေးမလို)
+
+```bash
+pm2 start app.js -i max
+```
+
+## ‌သတိထားရန်
+- ‌အားလုံး workers — ‌အ‌ရေး state ‌များ memory ‌ရှစ် (Redis ‌သုံး)
+- Graceful shutdown — worker signals ‌handle
+
+## ‌အဓိက အချက်များ
+- cluster.isPrimary / fork
+- Multi-core utilization
+- PM2 -i max — easy

@@ -1,0 +1,56 @@
+---
+title: "Node.js Zlib Module — Zlib Module"
+description: "Zlib — compression — gzip/deflate — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:zlib` — data ‌ချုံ့ (gzip, deflate) — ‌ပို့ ‌အရွယ် ‌ပေါ့ချက် — HTTP responses, files။
+
+## gzip a file
+
+```js
+const zlib = require("node:zlib");
+const fs = require("node:fs");
+
+const read = fs.createReadStream("big.txt");
+const write = fs.createWriteStream("big.txt.gz");
+
+read.pipe(zlib.createGzip()).pipe(write);
+```
+
+## Unzip
+
+```js
+fs.createReadStream("big.txt.gz")
+  .pipe(zlib.createGunzip())
+  .pipe(fs.createWriteStream("big2.txt"));
+```
+
+## Sync compress
+
+```js
+const data = fs.readFileSync("big.txt");
+const gz = zlib.gzipSync(data);
+console.log(`before ${data.length} → after ${gz.length}`);
+```
+
+## Express compression
+
+```bash
+npm install compression
+```
+
+```js
+const compression = require("compression");
+app.use(compression());
+```
+
+## ‌အမျိုး‌စားများ
+- gzip — general
+- deflate — legacy
+- brotli — ‌ပိုကောင်း (modern)
+
+## ‌အဓိက အချက်များ
+- zlib.createGzip/Gunzip — streams
+- gzipSync — sync
+- compression middleware

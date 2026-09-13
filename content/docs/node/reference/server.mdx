@@ -1,0 +1,56 @@
+---
+title: "Node.js Server — Server class"
+description: "Server — http server — listen, request events — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`node:http` **Server** — incoming requests ‌ကို listen — ‌ဖြေ။
+
+## Create
+
+```js
+const http = require("node:http");
+
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { "content-type": "text/plain" });
+  res.end("Hello");
+});
+
+server.listen(3000, () => console.log("listening on 3000"));
+```
+
+## Events
+| Event | ‌လုပ် |
+| --- | --- |
+| `request` | ‌ရောက် request |
+| `connection` | TCP ‌ချိတ် |
+| `close` | ‌ပိတ် |
+| `error` | ‌အ‌မှား (port busy) |
+
+## listen options
+
+```js
+server.listen({ port: 3000, host: "0.0.0.0" });
+```
+
+`0.0.0.0` — ‌အ‌ပြင်မှ access ရ။
+
+## close
+
+```js
+server.close(() => console.log("all connections closed"));
+```
+
+## ‌စစ် example — header
+
+```js
+const server = http.createServer((req, res) => {
+  console.log(req.method, req.url, req.headers["user-agent"]);
+  res.end("ok");
+});
+```
+
+## ‌အဓိက အချက်များ
+- createServer(cb)
+- listen(port)
+- request/close events

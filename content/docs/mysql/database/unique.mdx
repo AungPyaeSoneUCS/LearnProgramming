@@ -1,0 +1,59 @@
+---
+title: "MySQL Unique — UNIQUE Constraint"
+description: "UNIQUE — column ‌တွင်း duplicate value ‌တားဆီး — ‌ဥပမာ, ALTER ADD UNIQUE။"
+autoNumbering: true
+---
+
+`UNIQUE` constraint သည် column ‌တွင်း **တန်ဖိုး‌တူ ‌ထပ်‌ခြင်းကို ‌ကာကွယ်** ပါတယ် — value ‌တစ်ခုလျှင် ‌တစ်ခါသာ။
+
+## ‌ဥပမာ — CREATE TABLE
+
+```sql
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  email VARCHAR(150) UNIQUE
+);
+```
+
+`email` — ‌ထပ်‌နေသော email ‌ထည့်‌လျှင် error။
+
+## ‌ဥပမာ ‌လဲက်
+
+```sql
+INSERT INTO users (id, email) VALUES (1, 'a@b.com');   -- OK
+INSERT INTO users (id, email) VALUES (2, 'a@b.com');   -- error (duplicate)
+```
+
+## Column level vs Table level
+
+```sql
+-- Table level — ‌အမည် ‌ပေးပြီး
+CREATE TABLE users (
+  id INT,
+  email VARCHAR(150),
+  CONSTRAINT uq_email UNIQUE (email)
+);
+```
+
+## Multiple columns unique — combination
+
+```sql
+CREATE TABLE subscriptions (
+  user_id INT,
+  plan VARCHAR(20),
+  UNIQUE (user_id, plan)
+);
+```
+
+user_id + plan ‌အတူ ‌ထပ် ‌မရ — ‌ပေါင်း combination ‌စစ်။
+
+## ALTER — ‌နောက်မှ ‌ထည့်
+
+```sql
+ALTER TABLE users ADD UNIQUE (email);
+```
+
+## ‌အဓိက အချက်များ
+- UNIQUE — duplicate ‌တားဆီး
+- Multiple columns ‌ပေါင်း ‌စစ်နိုင်
+- ALTER ADD UNIQUE

@@ -1,0 +1,52 @@
+---
+title: "Node.js Assert Module — Assert Module"
+description: "Assert — ‌စစ်ဆေးမှုများ — assert.equal, strict, throws — ဥပမာများ။"
+autoNumbering: true
+---
+
+`node:assert` — ‌အခြေ‌အ‌နေများကို ‌စစ်ဆေး — ‌မမှန်လျှင် error — tests အတွက် ‌အ‌ခြေခံ။
+
+## Basic
+
+```js
+const assert = require("node:assert/strict");
+
+assert.equal(2 + 2, 4);
+assert.notEqual(1, 2);
+```
+
+`node:assert/strict` — strict equality (`===`) — ‌အကြံပြု။
+
+## ‌အရာ object
+
+```js
+assert.deepStrictEqual({ a: 1 }, { a: 1 });
+assert.strictEqual(typeof "hi", "string");
+```
+
+## Throws — error ‌စစ်
+
+```js
+assert.throws(() => {
+  JSON.parse("{");
+}, SyntaxError);
+```
+
+## ‌အသုံးပြုမှု — unit tests
+
+```js
+const sum = (a, b) => a + b;
+
+assert.equal(sum(1, 2), 3);
+assert.throws(() => sum(), TypeError);
+```
+
+## ‌သတိထားရန်
+- Assert fail → AssertionError throw
+- Production ‌ထဲ ‌မသုံးသင့် — tests/dev အတွက်သာ
+- Node test runner ‌ဖြင့် ‌ပေါင်း ‌သုံး
+
+## ‌အဓိက အချက်များ
+- assert.equal / deepStrictEqual
+- assert.throws
+- Test ‌အ‌ခြေခံ tool

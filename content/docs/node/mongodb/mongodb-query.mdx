@@ -1,0 +1,43 @@
+---
+title: "Node.js MongoDB Query — Query"
+description: "Node + MongoDB — comparison, logical, regex queries — ‌ဥပမာများ။"
+autoNumbering: true
+---
+
+Filter ‌အမျိုးမျိုး — query operators ‌ဥပမာ။
+
+## Comparison operators
+
+```js
+await users.find({ age: { $gt: 20 } }).toArray();       // >
+await users.find({ age: { $gte: 18 } }).toArray();      // >=
+await users.find({ age: { $lt: 30 } }).toArray();       // <
+await users.find({ age: { $in: [18, 25] } }).toArray(); // in list
+await users.find({ age: { $ne: 25 } }).toArray();       // !=
+```
+
+## Logical
+
+```js
+await users.find({ $and: [{ age: { $gt: 18 } }, { city: "Yangon" }] });
+await users.find({ $or: [{ role: "admin" }, { role: "mod" }] });
+await users.find({ age: { $not: { $gt: 60 } } });
+```
+
+## Regex / text
+
+```js
+await users.find({ name: { $regex: "^A", $options: "i" } }).toArray();
+```
+
+## Exists / null
+
+```js
+await users.find({ email: { $exists: false } }).toArray();
+await users.find({ deletedAt: null }).toArray();
+```
+
+## ‌အဓိက အချက်များ
+- $gt/$gte/$lt/$in/$ne
+- $and/$or
+- $regex, $exists

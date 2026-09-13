@@ -1,0 +1,57 @@
+---
+title: "Raspberry Pi Websocket Control — Websocket Control"
+description: "Pi + websocket — browser မှ LED ထိန်း — ဥပမာများ။"
+autoNumbering: true
+---
+
+Browser ‌မှ websocket ‌ဖြင့် RPi LED ‌ထိန်း — ‌ပေါင်း hardware + web။
+
+## Server
+
+```js
+const http = require("node:http");
+const { WebSocketServer } = require("ws");
+const Gpio = require("onoff").Gpio;
+
+const led = new Gpio(17, "out");
+
+const wss = new WebSocketServer({ port: 8080, host: "0.0.0.0" });
+
+wss.on("connection", (ws) => {
+  ws.send("connected");
+
+  ws.on("message", (msg) => {
+    const text = msg.toString();
+    if (text === "on") {
+      led.writeSync(1);
+      ws.send("led:on");
+    } else if (text === "off") {
+      led.writeSync(0);
+      ws.send("led:off");
+    }
+  });
+});
+
+console.log("ws on 8080");
+```
+
+## Client (HTML)
+
+```js
+const ws = new WebSocket("ws://<pi-ip>:8080");
+ws.onopen = () => ws.send("on");
+```
+
+## ‌အသုံးပြုမှု
+- Phone/PC ‌မှ ‌ထိန်း hardware
+- Home automation dashboard
+- Real-time sensor ‌ပေါ် ‌ပို့
+
+## ‌သတိထားရန်
+- `0.0.0.0` — ‌အ‌ပြင်မှ access
+- ‌လုံး‌ခြုံ — auth token ‌ထည့်
+
+## ‌အဓိက အချက်များ
+- ws server on Pi
+- Browser ↔ GPIO
+- ‌ထုတ် ‌ထိန်း message

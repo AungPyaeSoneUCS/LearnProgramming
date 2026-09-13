@@ -1,0 +1,53 @@
+---
+title: "sql-update"
+description: "UPDATE နဲ့ row တွေရဲ့ တန်ဖိုးများကို ပြောင်းလဲခြင်း — WHERE မဖြစ်မနေ သတိဖြင့်သုံးပါ။"
+autoNumbering: true
+---
+
+ဒေတာ မှားထည့်မိလို့ ဖြစ်ဖြစ်၊ ပြောင်းလဲလို့ ဖြစ်ဖြစ် — row တစ်ခုရဲ့ column တန်ဖိုးတွေကို ပြင်ချင်တဲ့အခါ UPDATE သုံးပါတယ် (CRUD ရဲ့ U)။
+
+## UPDATE အခြေခံ
+```sql
+UPDATE Customers
+SET City = 'Naypyidaw'
+WHERE CustomerID = 1;
+```
+CustomerID 1 ရှိတဲ့ ဖောက်သည်ရဲ့ City ကို Naypyidaw အဖြစ် ပြောင်းပါတယ်။ SET က ပြောင်းမယ့် column နဲ့ တန်ဖိုး၊ WHERE က ဘယ် row တွေကိုလဲ အတိအကျ ပါ။
+
+## Column အများကြီး တစ်ပြိုင်နက် ပြောင်းခြင်း
+```sql
+UPDATE Customers
+SET City = 'Naypyidaw', Age = 30
+WHERE CustomerID = 5;
+```
+SET ထဲမှာ comma နဲ့ column အများကြီးကို ပြောင်းလို့ရပြီး အားလုံးက row ၅ ခုလုံးကို တစ်ခါတည်း သက်ရောက်ပါတယ်။
+
+## WHERE မပါရင် — အန္တရာယ် ဆိုတဲ့ အကြောင်း
+```sql
+-- အန္တရာယ်: ဒါက table ရဲ့ row အားလုံးရဲ့ City ကို ပြောင်းပါလိမ့်မယ်!
+UPDATE Customers
+SET City = 'Naypyidaw';
+ 
+-- WHERE နဲ့: CustomerID 1 ရှိတဲ့ တစ်ခုပဲ ပြောင်းတယ်
+UPDATE Customers
+SET City = 'Naypyidaw'
+WHERE CustomerID = 1;
+```
+UPDATE မှာ WHERE ချန်ရင် row အားလုံးကို ပြောင်းပါတယ်။ Production မှာ WHERE မပဲ update လုပ်တာက ဒေတာ ပျက်စီးစေနိုင်လို့ အရမ်း သတိထားရပါတယ်။
+
+## Operation ပြီးမြောက်ကြောင်း စစ်ခြင်း
+```sql
+SELECT * FROM Customers WHERE CustomerID = 1;
+```
+UPDATE ပြီးနောက် SELECT နဲ့ ပြန်စစ်ပြီး result ကို confirm လုပ်ပါ။ Transaction (BEGIN...) သုံးတာက ပိုလုံခြုံပါတယ်။
+
+## သတိပြုရန်
+- WHERE ပါအောင် အမြဲ စစ်ဆေးပါ — အရင် SELECT နဲ့ ဘယ်လို row တွေ ကိုက်လဲ ကြည့်ပြီးမှ UPDATE လုပ်ပါ
+- Commercial environment မှာ UPDATE/DELETE မလုပ်ခင် transaction/backup ထားပါ
+- SET order က အရေးမကြီးပါဘူး
+
+## အဓိက အချက်များ
+- UPDATE table SET col = value WHERE ... — စံပုံစံ
+- WHERE မပါရင် table အင်္ကျီ (row အားလုံး) ပြောင်းသွားမယ်
+- Column အများကြီးကို SET ထဲမှာ comma ခွဲပြီး ပြောင်းလို့ရတယ်
+- UPDATE မလုပ်ခင် အရင် SELECT နဲ့ စစ်ကြည့်ပါ

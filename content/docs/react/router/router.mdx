@@ -1,0 +1,90 @@
+---
+title: "React Router — Router"
+description: "react-router-dom ‌ဖြင့် multi-page navigation — BrowserRouter, Routes, Route, Link, useNavigate ။"
+autoNumbering: true
+---
+
+React Router ‌ဆိုတာ Single-Page App (SPA) ထဲမှာ page navigation ‌လုပ်ဖို့ ‌အသုံးဝင်တဲ့ library ‌ဖြစ်ပါတယ် — page reload ‌မလိုဘဲ URL ပြောင်းပြီး view ‌ပြောင်းနိုင်ပါတယ်။
+
+## Install
+
+```bash
+npm install react-router-dom
+```
+
+## အခြေခံ Setup
+
+```jsx
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
+function Home() { return <h1>Home</h1>; }
+function About() { return <h1>About</h1>; }
+
+function App() {
+  return (
+    <BrowserRouter>
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+```
+
+- `BrowserRouter` — router context
+- `Routes`/`Route` — path → component ‌သတ်မှတ်
+- `Link` — `<a>` ကို client-side navigation နဲ့
+
+## URL Parameters
+
+```jsx
+import { useParams, Link, Routes, Route } from "react-router-dom";
+
+function Item() {
+  const { id } = useParams();
+  return <h1>Item #{id}</h1>;
+}
+
+<Routes>
+  <Route path="/item/:id" element={<Item />} />
+</Routes>
+
+<Link to="/item/5">Item 5</Link>
+```
+
+## useNavigate — programmatic navigation
+
+```jsx
+import { useNavigate } from "react-router-dom";
+
+function Login() {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    // login logic...
+    navigate("/dashboard");
+  };
+
+  return <button onClick={handleLogin}>Go to Dashboard</button>;
+}
+```
+
+## Nested Routes
+
+```jsx
+<Route path="/shop" element={<ShopLayout />}>
+  <Route path="shoes" element={<Shoes />} />
+  <Route path="bags" element={<Bags />} />
+</Route>
+```
+
+## ‌အဓိက အချက်များ
+- `BrowserRouter` → `Routes` → `Route` → `Link`
+- `useParams()` — URL ‌ပါ data
+- `useNavigate()` — code က programmatic ‌ပြောင်း

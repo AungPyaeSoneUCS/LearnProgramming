@@ -1,0 +1,65 @@
+---
+title: "sql-database-default"
+description: "DEFAULT — column မထည့်ဘူးဆိုရင် ဖြည့်ပေးမယ့် value။"
+autoNumbering: true
+---
+
+DEFAULT constraint က column မှာ value မထည့်ရင် database က ပေးသွားမယ့် value ကို သတ်မှတ်ပေးပါတယ်။
+
+## DEFAULT ဥပမာ
+```sql
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Stock INT DEFAULT 0,
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+INSERT  ထဲမှာ Stock/CreatedAt မထည့်ရင် — Stock → 0၊ CreatedAt → current timestamp ဖြည့်ပါတယ်။
+
+## INSERT မှာ  behavior
+```sql
+INSERT INTO Products (Name) VALUES ('Keyboard');
+-- Stock → 0 (default)
+-- CreatedAt → now (default)
+ 
+INSERT INTO Products (Name, Stock) VALUES ('Mouse', 5);
+-- Stock → 5 (ပေးထားတဲ့ value)
+-- CreatedAt → now (default)
+```
+
+## ALTER TABLE — Default ထည့်/ဖျက်
+```sql
+-- MySQL
+ALTER TABLE Products ALTER COLUMN Stock SET DEFAULT 5;
+ 
+-- SQL Server
+ALTER TABLE Products ADD CONSTRAINT df_stock DEFAULT 5 FOR Stock;
+ 
+-- Drop
+ALTER TABLE Products ALTER COLUMN Stock DROP DEFAULT;
+```
+
+## DEFAULT NULL vs မထည့်
+```sql
+INSERT INTO Orders (CustomerID) VALUES (100);          -- status → default
+INSERT INTO Orders (CustomerID, Status) VALUES (101, NULL); -- NULL ဖြစ်နေ
+```
+NULL ပေးရင်တော့ default မဖြည့်တော့ဘူး — DEFAULT က "value မရှိရင်"ပဲ အလုပ်လုပ်ပါတယ်။
+
+## Function Default
+```sql
+-- Integer / string သာမက
+CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+Status VARCHAR(10) DEFAULT 'New'
+SessionID INT DEFAULT RAND()
+```
+```sql
+-- ဒါပေမဲ့ RAND() ကဲ့သို့ function က default မဟုတ်လို့ — database engine ပေါ်မူတည်ပြီး ပံ့ပိုးမှု ကွာခြားပါတယ်
+```
+
+## အဓိက အချက်များ
+- DEFAULT — value insert မရှိရင် fallback
+- CURRENT_TIMESTAMP / static value တွေ
+- NULL ပေးရင် default မဟုတ်ဘူး
+- NOT NULL + DEFAULT — mandatory column က default  နဲ့ insert

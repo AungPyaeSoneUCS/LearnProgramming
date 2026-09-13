@@ -1,0 +1,79 @@
+---
+title: "React Server — React Server Components"
+description: "React Server Components (RSC) — server ‌မှ render ‌လုပ်ခြင်း, client components, 'use client' directive ။"
+autoNumbering: true
+---
+
+React Server Components (RSC) — component ‌ကို **server** ပေါ်တွင် render ‌လုပ်ပြီး client သို့ ‌ပို့ပေးခြင်း ‌ဖြစ်ပါသည် — bundle သေး၍ data fetch ‌မြန်။
+
+## Server vs Client Component
+
+| Server Component | Client Component |
+| --- | --- |
+| Server ‌မှာ render | Browser ‌မှာ render |
+| Data fetch ိုက်ရိုက် | Hooks ‌သုံး‌နိုင် |
+| Hooks ‌မသုံးရ | State/effect ‌လို |
+
+## 'use client' directive
+
+```jsx
+// Button.jsx
+"use client";
+
+import { useState } from "react";
+
+export function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Clicked {count}
+    </button>
+  );
+}
+```
+
+- ‌အ‌ပေါ်ဆုံး `"use client"` — browser side ‌လိုအပ်သည့် component
+- Server component ‌ထဲက client component ‌ကို import ‌လုပ်နိုင်
+
+## Server Component ‌ဥပမာ
+
+```jsx
+// PostList.jsx — server component (default)
+async function PostList() {
+  const posts = await db.query("SELECT * FROM posts");
+  return (
+    <ul>
+      {posts.map((p) => (
+        <li key={p.id}>{p.title}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+Server component ‌တွင် `async`/`await` ‌သုံး၍ DB ‌တိုက်ရိုက် ‌ဆက်သွယ်နိုင်။
+
+## ‌ဥပမာ ပေါင်းစပ်
+
+```jsx
+import PostList from "./PostList";        // server
+import Counter from "./Counter";          // client
+
+export default function Page() {
+  return (
+    <main>
+      <PostList />   {/* server */}
+      <Counter />    {/* client */}
+    </main>
+  );
+}
+```
+
+## Next.js ‌တွေမှာ default
+
+Next.js App Router — ‌မပြောဘဲ ‌အားလုံး server component ‌ဖြစ်ပြီး client လိုအပ်မှ `"use client"`။
+
+## ‌အဓိက အချက်များ
+- Server components — server render
+- `"use client"` — client ‌လိုအပ်သော component
+- RSC — SEO, performance, data fetching ‌ကောင်း
