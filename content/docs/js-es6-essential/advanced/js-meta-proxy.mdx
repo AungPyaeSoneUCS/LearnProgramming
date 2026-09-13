@@ -1,0 +1,98 @@
+---
+title: "JS Meta & Proxy"
+description: "Meta Programming — Proxy ၊ Reflect နှင့် Object တို့ကို စောင့်ကြည့်ခြင်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Meta Programming ဆိုတာ ဘာလဲ
+
+Meta Programming ဆိုတာ **Program က program ကိုယ်ကို ထိန်းချုပ်တာ** ပါ။ ဥပမာ — Object တွေရဲ့ လုပ်ဆောင်ချက်တွေကို "ကြားဖြတ် (Intercept)" လုပ်တာ၊ စောင့်ကြည့်တာပါ။
+
+## Proxy — Object အပေါ် စောင့်ကြည့်ခြင်း
+
+**Proxy** က Object ပေါ်မှာ "Guard" တစ်ယောက်လို — Property ဝင်ရောက်မှု၊ Method ခေါ်မှုတွေကို ကြားဖြတ်ကြည့်ပါတယ်။
+
+```javascript
+const target = { name: "Aung", age: 25 };
+
+const handler = {
+  get(obj, prop) {
+    console.log(`Property '${prop}' ကို ဖတ်နေတယ်`);
+    return obj[prop];
+  },
+  set(obj, prop, value) {
+    console.log(`Property '${prop}' ကို ပြောင်းနေတယ် → ${value}`);
+    obj[prop] = value;
+    return true;
+  }
+};
+
+const proxy = new Proxy(target, handler);
+console.log(proxy.name); // Property 'name' ကို ဖတ်နေတယ် → Aung
+proxy.age = 30;          // Property 'age' ကို ပြောင်းနေတယ် → 30
+```
+
+## Validation လုပ်တာ
+
+```javascript
+const safeUser = new Proxy({}, {
+  set(obj, prop, value) {
+    if (prop === "age" && (typeof value !== "number" || value < 0)) {
+      throw new TypeError("အသက်က negative/string မဖြစ်ရဘူး");
+    }
+    obj[prop] = value;
+    return true;
+  }
+});
+
+safeUser.age = 25;      // ✓
+safeUser.age = -5;      // ❌ TypeError
+```
+
+## Reflect — Proxy နဲ့ တွဲသုံး
+
+**Reflect** က Object operations တွေကို Function အနေနဲ့ ပေးပါတယ် — Proxy traps တွေထဲမှာ Default ပြန်လုပ်ဖို့ သုံးပါတယ်။
+
+```javascript
+const person = { name: "Su", age: 22 };
+const guard = new Proxy(person, {
+  get(target, prop, receiver) {
+    // Default behavior ကို Reflect နဲ့ ပြန်
+    return Reflect.get(target, prop, receiver);
+  }
+});
+
+console.log(guard.name); // Su
+```
+
+## Real-World အသုံးချမှုများ
+
+```javascript
+// 1. Access Logging
+const logger = new Proxy({}, {
+  get(target, prop) {
+    if (!(prop in target)) return "မရှိဘူး";
+    return target[prop];
+  }
+});
+console.log(logger.anyKey); // "မရှိဘူး" (Error မဟုတ်ဘူး)
+
+// 2. Derived State (Reactive)
+let count = 0;
+const state = new Proxy({ count }, {
+  get(target, prop, receiver) {
+    if (prop === "double") return count * 2;
+    return Reflect.get(target, prop, receiver);
+  }
+});
+state.count = 5;
+console.log(state.double); // 10
+```
+
+<Aside type="note" title="Vue/React မှာ Proxy">
+Vue 3 က **Proxy** ကို သုံးပြီး Reactive Data ကို ဖန်တီးပါတယ်။ Meta Programming ရဲ့ လက်တွေ့ အသုံးခွင်း ဥပမာပဲ ဖြစ်ပါတယ်။
+</Aside>
+
+<LessonCompletion />

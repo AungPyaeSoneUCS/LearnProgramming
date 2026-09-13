@@ -1,0 +1,95 @@
+---
+title: "JS Functions (Advanced)"
+description: "Function အဆင့်မြင့် — this binding, bind/call/apply, IIFE, Higher-Order Functions"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Function ရဲ့ အဆင့်မြင့် သဘောတရားများ
+
+Function တွေက JavaScript မှာ **"First-class Citizens"** — variable မှာ ထည့်လို့ရ၊ argument အဖြစ် ပေးလို့ရ၊ return လုပ်လို့ရပါတယ်။
+
+## Function ကို Data လိုထည့်
+
+```javascript
+const sayHello = () => console.log("Hello!");
+
+// Function ကို Function ထဲ ပေး (Higher-Order)
+const withLogging = (fn) => {
+  return (...args) => {
+    console.log("Calling:", fn.name);
+    return fn(...args);
+  };
+};
+
+const add = (a, b) => a + b;
+const loggedAdd = withLogging(add);
+console.log(loggedAdd(2, 3)); // Calling: add → 5
+```
+
+## `this` ရဲ့ အဓိပ္ပာယ်
+
+`this` ရဲ့ တန်ဖိုးက **Function ကို ဘယ်လို ခေါ်လဲ** ပေါ်မူတည်ပါတယ်။
+
+```javascript
+const user = {
+  name: "Aung",
+  regular() {
+    console.log(this); // user object
+  },
+  arrow: () => {
+    console.log(this); // outer scope (user မဟုတ်ဘူး!)
+  }
+};
+
+user.regular(); // → user
+user.arrow();   // → window/undefined
+```
+
+<Aside type="caution" title="Arrow vs Regular — this">
+Arrow Function မှာ ကိုယ်ပိုင် `this` **မရှိဘူး** — ကိုယ်ရေးထားတဲ့ Scope ရဲ့ `this` ကို ယူသုံးပါတယ်။ Method ထဲမှာ `this` လိုရင် Regular Function သုံးပါ။
+</Aside>
+
+## `bind`, `call`, `apply`
+
+```javascript
+function introduce(city) {
+  console.log(`ကျွန်တော်က ${this.name}, ${city} မှာ`);
+}
+
+const person = { name: "Mg Mg" };
+
+introduce.call(person, "Yangon");    // arguments တစ်ခုချင်း
+introduce.apply(person, ["Bago"]);   // arguments array
+const bound = introduce.bind(person); // function အသစ်
+bound("Bago");
+```
+
+## IIFE — (Immediately Invoked Function Expression)
+
+```javascript
+(function () {
+  console.log("ဒီသင်ခန်းစာပြီးတာနဲ့ ချက်ချင်း run တယ်");
+})();
+
+// Arrow version
+(() => {
+  console.log("Arrow IIFE");
+})();
+```
+
+## Callback — အခြားသူလုပ်ပြီးမှ လုပ်မယ့်အပိုင်း
+
+```javascript
+function processData(data, onDone) {
+  console.log("Processing:", data);
+  onDone(data.toUpperCase());
+}
+
+processData("hello", (result) => {
+  console.log("Result:", result); // HELLO
+});
+```
+
+<LessonCompletion />

@@ -1,0 +1,77 @@
+---
+title: "JS JSONP"
+description: "JSONP — Cross-Origin Data ရယူခဲ့ဖူးသော နည်းစနစ်ဟောင်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## JSONP ဆိုတာ ဘာလဲ
+
+**JSONP (JSON with Padding)** ဆိုတာ Cross-origin (နောက်တစ်နေရာ) Server မှ Data ယူဖို့ သုံးခဲ့တဲ့ **နည်းစနစ်ဟောင်း** ပါ။ `<script>` tag က CORS မလိုဘူးဆိုတဲ့ အချက်ကို အားကိုးပါတယ်။
+
+## ဘယ်လို အလုပ်လုပ်လဲ
+
+1. `<script src="api.example.com/data?callback=myFunc">` ထည့်
+2. Server က `myFunc({ ...data })` အနေနဲ့ JavaScript ပြန်ပေး
+3. Browser က Function ကို Execute
+
+```html
+<script>
+  function handleData(data) {
+    console.log("ရလာတဲ့ Data:", data);
+  }
+</script>
+
+<script src="https://api.example.com/data?callback=handleData"></script>
+```
+
+```javascript
+// Server ဘက်က ဒီလို ပြန်လွှတ်တယ်
+// handleData({"id":1,"name":"Aung"});
+```
+
+## Script Injection နည်း (Client)
+
+```javascript
+function jsonp(url, callbackName, callback) {
+  window[callbackName] = (data) => {
+    callback(data);
+    delete window[callbackName];
+    script.remove();
+  };
+
+  const script = document.createElement("script");
+  script.src = `${url}?callback=${callbackName}`;
+  document.body.appendChild(script);
+}
+
+jsonp("https://api.example.com/data", "myCallback", (data) => {
+  console.log(data);
+});
+```
+
+<Aside type="caution" title="JSONP ရဲ့ အန္တရာယ်">
+JSONP က **Security issues** များပါတယ် — Server ကို ယုံကြည်ရပြီး **Any JS code** ပို့နိုင်လို့ပါ။ Production မှာ မသုံးပါနဲ့။
+</Aside>
+
+## ခေတ်မီအစားထိုး — CORS + Fetch
+
+```javascript
+// Server က CORS header ထောက်ပံ့ရင်
+const data = await fetch("https://api.example.com/data")
+  .then((res) => res.json());
+
+console.log(data);
+```
+
+## ဘာကြောင့် JSONP မသုံးတော့လဲ
+
+| | JSONP | Fetch + CORS |
+|---|---|---|
+| Method | GET သာ | အားလုံး |
+| Security | အားနည်း | ကာကွယ်နိုင် |
+| Error handling | မရှိ | ရှိ |
+| ခေတ်မှီ | အဟောင်း | ခေတ်မီ |
+
+<LessonCompletion />

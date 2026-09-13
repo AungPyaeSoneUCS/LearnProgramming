@@ -1,0 +1,81 @@
+---
+title: "Binary Search"
+description: "Searching sorted data by halving the range each step."
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## Binary Search
+
+မင်း ထူထဲတဲ့ အဘိဓာန်တစ်အုပ် ထဲမှာ "Myanmar" ဆိုတဲ့ စာလုံးကို ရှာနေတယ် ဆိုပါစို့။ စာမျက်နှာ ၁ ကနေ ၁၀၀၀ အထိ တစ်မျက်နှာချင်း မွှေနေမှာလား? မဟုတ်ပါဘူး။ အလယ်ကနေ ဖွင့်ကြည့်ပြီး "ဒီထက် နောက်ကျော်လား၊ ရှေ့ထပ်လား" ဆိုပြီး အပိုင်းတစ်ဝက်ကို ဖျောက်ပစ်ပါတယ်။ ဒါ **Binary Search** ရဲ့ နည်းပဲဖြစ်ပါတယ်။
+
+**အရေးကြီး:** Binary Search သုံးဖို့ Data က **အရင်စီထားပြီးသား (Sorted)** ဖြစ်ရပါတယ်။
+
+### Step-by-Step လမ်းလျှောက်ကြည့်မယ်
+
+ဒီ Array ထဲက `28` ကို ရှာကြည့်ပါမယ် — `[3, 7, 10, 14, 19, 22, 28, 35]`
+
+1. **အစွန်းနှစ်ခု မှတ်မယ်:** `lo = 0`, `hi = 7`
+2. **အလယ်:** `mid = (0 + 7) / 2 = 3` → `arr[3] = 14` — `14 < 28` မို့ `28` က ညာဘက်အခြမ်းမှာ ရှိမယ်။ **ဘယ်ဘက်ကို ဖျောက်:** `lo = 4`
+3. **အလယ်သစ်:** `mid = (4 + 7) / 2 = 5` → `arr[5] = 22` — `22 < 28` မို့ `lo = 6`
+4. **အလယ်သစ်:** `mid = (6 + 7) / 2 = 6` → `arr[6] = 28` — **တွေ့ပြီ! Index 6**
+
+| Step | lo | hi | mid | arr[mid] | လုပ်ဆောင်ချက် |
+|------|----|----|----|----------|----------------|
+| 1 | 0 | 7 | 3 | 14 | 14 < 28 → lo = 4 |
+| 2 | 4 | 7 | 5 | 22 | 22 < 28 → lo = 6 |
+| 3 | 6 | 7 | 6 | 28 | ✅ တွေ့ပြီ |
+
+တစ်ခုချင်းရှာ (Linear Search) ဆိုရင် အဆင့် ၆ ခု လိုပြီး၊ Binary Search က အဆင့် ၃ ခုနဲ့ ပြီးပါတယ်။
+
+### Code: Loop နဲ့ ရေးတဲ့ နည်း
+
+```javascript
+function binarySearch(arr, target) {
+  let lo = 0;
+  let hi = arr.length - 1;
+
+  while (lo <= hi) {
+    const mid = lo + Math.floor((hi - lo) / 2); // Overflow မဖြစ်အောင် ဒီလိုရေး
+    if (arr[mid] === target) return mid;        // တွေ့ပြီ
+    if (arr[mid] < target) lo = mid + 1;        // ညာဘက် ဆက်ရှာ
+    else hi = mid - 1;                          // ဘယ်ဘက် ဆက်ရှာ
+  }
+  return -1; // မတွေ့ဘူး
+}
+
+console.log(binarySearch([3, 7, 10, 14, 19, 22, 28, 35], 28)); // 6
+console.log(binarySearch([3, 7, 10, 14, 19, 22, 28, 35], 5));  // -1
+```
+
+### Code: Recursive နဲ့ ရေးတဲ့ နည်း
+
+```javascript
+function binarySearchRec(arr, target, lo, hi) {
+  if (lo > hi) return -1; // Base Case: ရှာစရာ မကျန်တော့
+
+  const mid = lo + Math.floor((hi - lo) / 2);
+  if (arr[mid] === target) return mid;
+  if (arr[mid] < target) return binarySearchRec(arr, target, mid + 1, hi);
+  return binarySearchRec(arr, target, lo, mid - 1);
+}
+```
+
+### ဘာလို့ $O(\log n)$ လဲ?
+
+တစ်ဆင့်စီ လျှောက်တိုင်း Data တစ်ဝက် လျော့သွားပါတယ်။ `n = 1,000,000` ဆိုရင်တောင် အဆင့် ၂၀ လောက်နဲ့ ပြီးပါတယ်။
+
+| 100 | 50 | 25 | 12 | 6 | 3 | 1 |
+|-----|----|----|----|---|---|---|
+| 0   | 1  | 2  | 3  | 4 | 5 | 6 |
+
+### ကိုယ်တိုင် စဉ်းစားကြည့်
+
+1. `[1, 3, 5]` ထဲ `4` ကို ထည့်ရမယ်ဆိုရင် ဘယ်နေရာ (Index) ဝင်သင့်လဲ?
+2. Array က Sorted မဟုတ်ရင် Binary Search သုံးလို့ ရလား? ဘာလို့ `[1, 3, 2]` ထဲ 1 ကို ရှာကြည့်ပြီး စဉ်းစားကြည့်။
+
+<Aside title="ထုံးစံ မှတ်စု">
+1. Data က Sorted မဟုတ်ရင် Binary Search မသုံးပါနဲ့ — အရင်နည်းနဲ့ Sort လုပ်ရပါတယ်။
+2. **Binary Search Tree (BST)** ရှာဖွေမှုကလည်း ဒီအဆင့်တွေကိုပဲ Recursion နဲ့ လုပ်ပါတယ်။
+3. "အနီးဆုံး နေရာ" (Upper/Lower Bound) ရှာတဲ့ Problems တွေမှာလည်း ဒီနည်းကိုပဲ သုံးပါတယ်။
+</Aside>

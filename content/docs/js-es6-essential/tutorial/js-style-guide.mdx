@@ -1,0 +1,83 @@
+---
+title: "JS Style Guide"
+description: "Style Guide — သန့်ရှင်းသော JavaScript ရေးသားနည်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Style Guide ဆိုတာ ဘာလဲ
+
+Style Guide ဆိုတာ **Code ရေးတဲ့အခါ လိုက်နာရမယ့် စံသတ်မှတ်ချက်** တွေပါ။ တစ်အဖွဲ့တစ်နည်း အမြဲတသမတ်ရေးတဲ့အခါ Code ဖတ်ရလွယ်ပြီး Bug နည်းပါတယ်။
+
+## Variable Naming
+
+```javascript
+// ✅ ကောင်း — camelCase, အဓိပ္ပာယ်ရှိ
+const userName = "Mg Mg";
+const orderTotal = 5000;
+const isLoggedIn = true;
+
+// ❌ မကောင်း
+const x = "Mg Mg";
+const T = 5000;
+```
+
+## Constant Naming — UPPER_SNAKE
+
+```javascript
+const MAX_RETRY = 3;
+const API_URL = "https://api.example.com";
+```
+
+## Spacing & Semicolons
+
+```javascript
+// ✅ ကောင်း
+const a = 10;
+const b = 20;
+setTimeout(() => console.log(a + b), 1000);
+
+// ❌ မကောင်း — လေဖိအားဖတ်ရခက်
+const a=10,b=20;setTimeout(()=>console.log(a+b),1000)
+```
+
+## Comment ရေးနည်း
+
+```javascript
+// ၊ ဒီ function က အကြွင်းတိုးပြီး ပြန်ပေးတယ်
+function addTax(price, taxRate = 0.05) {
+  return price * (1 + taxRate);
+}
+```
+
+<Aside type="tip" title="Comment ဘယ်လောက် ရေးမလဲ">
+ဘာလုပ်တယ် (*what*) ထက် **ဘာကြောင့် (*why*)** လုပ်တယ်ဆိုတာကို Comment ရေးပါ။ ကောင်းတဲ့ Code ကိုယ်တိုင် → "what" ကို ပြနိုင်ပါတယ်။
+</Aside>
+
+## နောက်ထပ် Best Practices
+
+1. **`var` အစား `const` / `let`** သုံးပါ
+2. **Strict Equality** — `==` အစား `===` သုံးပါ
+3. **Magic Number** တွေကို Constant နဲ့ သတ်မှတ်ပါ
+4. **Arrow Function** ကို ဦးစားပေး သုံးပါ
+5. **Switch / If nesting** အဝေးကြီး မလုပ်ပါနဲ့ — စောစောထွက် early return
+
+## Default Parameter — ပိုလှပသော Code
+
+```javascript
+// ❌ မကောင်း
+function greet(name) {
+  if (!name) name = "Guest";
+  return `Hello, ${name}`;
+}
+
+// ✅ ကောင်း
+const greet = (name = "Guest") => `Hello, ${name}`;
+```
+
+<Aside type="note" title="ကိရိယာများ">
+**ESLint** နဲ့ **Prettier** လို Tools တွေက Style Guide ကို ကိုယ်တိုင်လိုက်လျောမှုကို အလိုအလျောက် စစ်ပေးပါတယ်။
+</Aside>
+
+<LessonCompletion />

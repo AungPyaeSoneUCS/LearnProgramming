@@ -1,0 +1,90 @@
+---
+title: "JS DOM Navigation"
+description: "DOM Navigation — Element များအကြား ရွေ့လျားခြင်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## DOM Tree ထဲမှာ ရွေ့လျားခြင်း
+
+HTML Element တွေက **Tree Structure** အဖြစ် စီစဉ်ထားပြီး JavaScript နဲ့ **ထိစပ်မှုတွေ (Relations) ကနေ** အခြား Element တွေကို ရှာလို့ရပါတယ်။
+
+```html
+<div id="container">
+  <p class="first">တစ်</p>
+  <p>နှစ်</p>
+  <p>သုံး</p>
+</div>
+```
+
+## Parent / Children / Sibling
+
+```javascript
+const first = document.querySelector(".first");
+
+// Parent
+console.log(first.parentElement);   // div#container
+
+// Siblings
+console.log(first.nextElementSibling);    // နှစ်
+console.log(first.nextElementSibling.nextElementSibling); // သုံး
+
+// Children
+const container = document.getElementById("container");
+console.log(container.children);    // HTMLCollection (3 items)
+console.log(container.firstElementChild); // တစ်
+console.log(container.lastElementChild);  // သုံး
+```
+
+## Node vs Element
+
+- **Node** — အရာအားလုံး (text, comment, element)
+- **Element** — HTML tag ပဲ
+
+```javascript
+const container = document.getElementById("container");
+
+console.log(container.childNodes);            // text node အပါအဝင် (Nodes)
+console.log(container.children);              // Element များသာ
+console.log(container.firstChild);            // text (space)
+console.log(container.firstElementChild);     // p.first
+```
+
+<Aside type="tip" title="Element... နည်းလမ်းသုံးပါ">
+Space (whitespace) တွေက text node ဖြစ်လို့ **`firstChild` အစား `firstElementChild`**၊ **`childNodes` အစား `children`** ကို အသုံးပြုပါ — ပိုစိတ်ချရပါတယ်။
+</Aside>
+
+## closest() / matches() — ရှာရ လွယ်ကူ
+
+```javascript
+const btn = document.querySelector("button");
+
+// Button ရဲ့ နီးစပ်ဆုံး အဖိုး parent
+const form = btn.closest("form");
+
+// Element က CSS selector နဲ့ ကိုက်မကိုက် စစ်
+if (btn.matches(".primary")) {
+  console.log("Primary button ပါ");
+}
+```
+
+## Traversal ဥပမာ — List တစ်ခုလုံး
+
+```javascript
+const list = document.querySelector("ul");
+
+const items = [...list.children].map((li) => li.textContent);
+console.log(items);
+
+// ForEach နဲ့
+for (const sibling of list.children) {
+  console.log(sibling.textContent);
+}
+```
+
+<Aside type="note" title="မှတ်ချက်">
+DOM Navigation သုံးတာထက် **`querySelector` / `closest`** လို Method တွေက ပိုတိကျ၊ ပိုဖတ်ရလွယ်ပါတယ်။ Navigation ကိုတော့ လိုအပ်တဲ့အခါပဲ သုံးပါ။
+</Aside>
+
+<LessonCompletion />

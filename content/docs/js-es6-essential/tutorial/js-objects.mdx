@@ -1,0 +1,67 @@
+---
+title: "JS Objects"
+description: "Object များ — Create, Access, Destructuring, Spread, Methods"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Object ဆိုတာ ဘာလဲ
+
+Object ဆိုတာ **Property (ဂုဏ်သတ္တိ) တွေကို `{ key: value }` ပုံစံနဲ့ စုထားတဲ့ Container** တစ်ခုပါ။ လူတစ်ယောက်၊ ကုန်ပစ္စည်းတစ်ခု စတာတွေကို ကိုယ်စားပြုဖို့ သုံးပါတယ်။
+
+## Object ဖန်တီးခြင်းနဲ့ ဝင်ရောက်ခြင်း
+
+```javascript
+const car = {
+  brand: "Toyota",
+  model: "Camry",
+  year: 2024,
+  start() {
+    return `${this.brand} စက်နှိုးတယ်!`;
+  }
+};
+
+console.log(car.brand);        // Toyota (Dot notation)
+console.log(car["model"]);     // Camry  (Bracket notation)
+console.log(car.start());      // Toyota စက်နှိုးတယ်!
+```
+
+## Property ပြောင်းခြင်း / ထပ်ထည့်ခြင်း
+
+```javascript
+car.year = 2025;       // ပြောင်း
+car.color = "White";   // အသစ်ထပ်ထည့်
+delete car.color;      // ဖျက်
+```
+
+## Object Destructuring (ES6)
+
+```javascript
+const user = { id: 1, name: "Nyi Nyi", city: "Yangon" };
+
+const { name, city } = user;
+console.log(name); // Nyi Nyi
+console.log(city); // Yangon
+```
+
+## Spread Operator (တစ်စုမိတ္တူ)
+
+```javascript
+const user2 = { ...user, age: 24 };
+console.log(user2);
+// { id: 1, name: "Nyi Nyi", city: "Yangon", age: 24 }
+```
+
+## `Object.keys()` / `Object.values()`
+
+```javascript
+console.log(Object.keys(user));   // ["id", "name", "city"]
+console.log(Object.values(user)); // [1, "Nyi Nyi", "Yangon"]
+```
+
+<Aside type="tip" title="မှတ်သားရန်">
+`this` ဆိုတာ **Object ကိုယ်တိုင်** ကို ရည်ညွှန်းပြီး Method (Object ရဲ့ function) ထဲမှာ သုံးပါတယ်။ Arrow Function မှာတော့ `this` က Object ကို မညွှန်ပါဘူး — ဒါက နောက်ပိုင်း Advanced သင်ခန်းစာမှာ အသေးစိတ် ရှင်းပြပါမယ်။
+</Aside>
+
+<LessonCompletion />

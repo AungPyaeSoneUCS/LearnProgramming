@@ -1,0 +1,67 @@
+---
+title: "JS Timers"
+description: "setTimeout, setInterval, clearTimeout, clearInterval — အချိန်တိုင်းနောက် လုပ်ဆောင်ခြင်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Timer ဆိုတာ ဘာလဲ
+
+Timer တွေက **ခဏစောင့်ပြီးမှ လုပ်ဆောင်ချက်တွေ** လုပ်ဖို့ (သို့) **အချိန်ပိုင်းအလိုက် ထပ်ခါထပ်ခါ** လုပ်ဖို့ သုံးပါတယ်။
+
+## `setTimeout` — ၁ ကြိမ်ပဲ စောင့်ပြီး လုပ်မယ်
+
+```javascript
+console.log("စလိုက်တယ်");
+
+setTimeout(() => {
+  console.log("စက္ကန့် ၂ ကြိမ် ကြာပြီးမှ ဒီစာကို ပြပါမယ်");
+}, 2000);
+```
+
+## `setInterval` — အချိန်ပိုင်း ထပ်ပြီး လုပ်မယ်
+
+```javascript
+let count = 0;
+
+const timer = setInterval(() => {
+  count++;
+  console.log(`အကြိမ်ရေ: ${count}`);
+
+  if (count === 5) {
+    clearInterval(timer); // 5 ကြိမ်ရောက်ရင် ရပ်လိုက်
+  }
+}, 1000);
+```
+
+## Timer တွေကို ရပ်ခြင်း
+
+```javascript
+// ID ကို မှတ်ထားပြီး clear လုပ်ပါ
+const timeoutId = setTimeout(() => {
+  console.log("ဒါ run မှာ မဟုတ်ပါ");
+}, 5000);
+
+clearTimeout(timeoutId); // ပြီးခင် ဖျက်လိုက်လို့ မပြေးတော့ဘူး
+```
+
+## Timer Timeout ရဲ့ သဘောသဘာဝ
+
+Timeout က **တိကျတဲ့ အချိန်အတိအကျ** မဟုတ်ပါဘူး — အခြားအလုပ်တွေ လုပ်နေရရင် နောက်ကျနိုင်ပါတယ်။
+
+```javascript
+console.log("အစ");
+
+setTimeout(() => console.log("Timeout!"), 0);
+
+console.log("အဆုံး");
+
+// Output: အစ → အဆုံး → Timeout!
+```
+
+<Aside type="caution" title="သတိထားရန်">
+`setInterval` ကို သုံးတဲ့အခါ မလိုအပ်တော့တာနဲ့ `clearInterval` လုပ်ဖို့ မမေ့ပါနဲ့။ မလုပ်ရင် Browser က Memory စား ပြီး Performance ကျစေပါတယ်။
+</Aside>
+
+<LessonCompletion />

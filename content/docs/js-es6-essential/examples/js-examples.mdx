@@ -1,0 +1,118 @@
+---
+title: "JS Examples"
+description: "အသုံးဝင်သော JavaScript ဥပမာများ ဆင့်ထွက်ခြင်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## လက်တွေ့ ဥပမာများ
+
+ဒီသင်ခန်းစာမှာ နေ့စဉ်အသုံးပြုတဲ့ Code ဥပမာတွေကို စုစည်းဖော်ပြထားပါတယ်။
+
+## 1. FizzBuzz (Interview အသုံးများ)
+
+```javascript
+for (let i = 1; i <= 20; i++) {
+  if (i % 15 === 0) console.log("FizzBuzz");
+  else if (i % 3 === 0) console.log("Fizz");
+  else if (i % 5 === 0) console.log("Buzz");
+  else console.log(i);
+}
+```
+
+## 2. Palindrome — နောက်ပြန်တူတဲ့စာလုံး
+
+```javascript
+const isPalindrome = (str) => {
+  const clean = str.toLowerCase().replace(/[^a-z0-9]/g, "");
+  return clean === [...clean].reverse().join("");
+};
+
+console.log(isPalindrome("level"));  // true
+console.log(isPalindrome("hello"));  // false
+```
+
+## 3. Array မှ Duplicate ဖယ်ရှား
+
+```javascript
+const numbers = [1, 2, 2, 3, 3, 4];
+const unique = [...new Set(numbers)];
+console.log(unique); // [1, 2, 3, 4]
+```
+
+## 4. Array မှ အကြီးဆုံး/အသေးဆုံး
+
+```javascript
+const scores = [45, 78, 92, 60, 71];
+console.log(Math.max(...scores)); // 92
+console.log(Math.min(...scores)); // 45
+```
+
+## 5. String ကို Reverse
+
+```javascript
+const reverse = (str) => [...str].reverse().join("");
+console.log(reverse("Myanmar")); // "ranmayM"
+```
+
+## 6. Object Grouping
+
+```javascript
+const people = [
+  { name: "A", age: 25, city: "Yangon" },
+  { name: "B", age: 30, city: "Mandalay" },
+  { name: "C", age: 22, city: "Yangon" }
+];
+
+const groupByCity = people.reduce((acc, person) => {
+  acc[person.city] = acc[person.city] || [];
+  acc[person.city].push(person.name);
+  return acc;
+}, {});
+
+console.log(groupByCity);
+// { Yangon: ["A", "C"], Mandalay: ["B"] }
+```
+
+## 7. Debounce (Input ရရှိမှု စောင့်)
+
+```javascript
+function debounce(fn, delay = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
+
+const onSearch = debounce((text) => {
+  console.log("Searching:", text);
+}, 500);
+```
+
+<Aside type="tip" title="JS Exercises လေ့ကျင့်ရန်">
+**Codewars**, **LeetCode**, **Exercism** စတဲ့ နေရာများမှာ ဥပမာ / Challenge တွေ ရာပေါင်းများစွာ ရှိပါတယ်။ နေ့စဉ် ၁ ခုလောက် လေ့ကျင့်ပါ။
+</Aside>
+
+## 8. Random Color Generator
+
+```javascript
+const randomColor = () =>
+  `#${Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0")}`;
+
+console.log(randomColor());
+```
+
+## 9. Countdown Timer
+
+```javascript
+let seconds = 10;
+const timer = setInterval(() => {
+  console.log(seconds);
+  seconds--;
+  if (seconds < 0) clearInterval(timer);
+}, 1000);
+```
+
+<LessonCompletion />

@@ -1,0 +1,58 @@
+---
+title: "JS Strings"
+description: "String များ — Template Literals, Methods, Properties"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## String ဆိုတာ ဘာလဲ
+
+String ဆိုတာ **စာသား (Text)** ဒေတာတွေကို သိမ်းတဲ့ Data Type ပါ။ Single Quote `'...'`, Double Quote `"..."` (သို့) Backtick `` `...` `` နဲ့ ရေးလို့ရပါတယ်။
+
+```javascript
+const greeting = "မင်္ဂလာပါ";
+const course = 'JavaScript';
+```
+
+## Template Literals (ES6)
+
+Backtick `` ` `` နဲ့ `${}` သုံးပြီး String နဲ့ variable ကို လွယ်လွယ်ကူကူ ပေါင်းစပ်လို့ရပါတယ်။
+
+```javascript
+const name = "Mg Mg";
+const age = 25;
+
+// နည်းဟောင်း
+console.log("နာမည်: " + name + ", အသက်: " + age);
+
+// Template Literal (ပိုရှင်း, ပိုမြန်)
+console.log(`နာမည်: ${name}, အသက်: ${age}`);
+
+// Multi-line လည်း ရ
+const lines = `
+Line 1
+Line 2
+`;
+```
+
+## အသုံးများတဲ့ String Methods
+
+```javascript
+const text = "Hello Myanmar";
+
+console.log(text.length);          // 13 (အက္ခရာရေတွက်)
+console.log(text.toUpperCase());   // HELLO MYANMAR
+console.log(text.toLowerCase());   // hello myanmar
+console.log(text.indexOf("M"));    // 6 (နေရာ)
+console.log(text.slice(0, 5));     // Hello
+console.log(text.split(" "));      // ["Hello", "Myanmar"]
+console.log(text.includes("Myan"));// true
+console.log(text.trim());          // အနားလပ်နေရာများ ဖယ်ခြင်း
+```
+
+<Aside type="tip" title="String Methods မှန်အောင်">
+`"123"` ဆိုတဲ့ String ကို Number အဖြစ်ပြောင်းဖို့ `Number("123")` သုံးပါ။ `+` operator က String နဲ့တွေ့ရင် **Concat (ပေါင်းစပ်)** လုပ်တတ်ပါတယ်။ ဥပမာ `"5" + 3` → `"53"` ဖြစ်သွားပါတယ်။
+</Aside>
+
+<LessonCompletion />

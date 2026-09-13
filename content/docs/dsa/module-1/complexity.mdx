@@ -1,0 +1,80 @@
+---
+title: "Complexity Analysis (Big O Cheat Sheet)"
+description: "Best/worst case, growth orders, and how to measure any algorithm."
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## Complexity Analysis
+
+တစ်ခါတစ်လေ Algorithm နှစ်ခုလုံး အလုပ်ဖြစ်ပါတယ်။ ဒါပေမဲ့ Data အရေအတွက် များလာတာနဲ့အမျှ တစ်ခုက တွားသွားပြီး၊ နောက်တစ်ခုက ခပ်မြန်မြန် ပြေးနေပါလိမ့်မယ်။ ဒီနေရာမှာ "ဒီ Algorithm က ဘယ်လောက် မြန်လဲ?" ဆိုတာကို သိဖို့ **Complexity Analysis** က ကူညီပေးပါတယ်။
+
+### နည်းလမ်း သုံးမျိုး: Best, Average, Worst
+
+Algorithm တစ်ခုရဲ့ အချိန်ကို ပြောတဲ့အခါ အခြေအနေ သုံးမျိုး ရှိပါတယ် -
+
+| Case | အဓိပ္ပါယ် | ဥပမာ (Linear Search) |
+|------|-----------|----------------------|
+| **Best Case** | အခွင့်အလမ်းအရ အကောင်းဆုံး ဖြစ်ရပ် | ရှာတဲ့ Element က Index 0 မှာ ရှိနေတာ — $O(1)$ |
+| **Average Case** | ပုံမှန် ဖြစ်နိုင်ခြေအများဆုံး ဖြစ်ရပ် | Element က အလယ်လောက်မှာ ရှိနေတာ — $O(n)$ |
+| **Worst Case** | အဆိုးဆုံး ဖြစ်ရပ် | Element က အဆုံးမှာ (သို့) မရှိဘူး — $O(n)$ |
+
+လက်တွေ့မှာ **Worst Case** ကို အများဆုံး ပြောကြပါတယ်။ ဘာလို့လဲဆိုတော့ အာမခံချက် (Guarantee) ပေးလို့ရတာမို့ပါ။ "ဘယ်လောက်ကြာရင် ပြီးမယ်" ဆိုတာကို အဆိုးဆုံး အခြေအနေနဲ့ တိုင်းထားရင် ဘယ်အခြေအနေမှာမဆို ပိုကြာမှာ မဟုတ်ပါဘူး။
+
+### Growth Order: Data များလာတာနဲ့ ဘယ်လောက် ကြီးထွားလဲ?
+
+Data အရေအတွက်ကို `n` လို့ မှတ်မယ်ဆိုရင် -
+
+| Big O | နာမည် | Data နှစ်ဆဖို့ ကြာချိန် | ဥပမာ နေရာ |
+|-------|--------|----------------------|------------|
+| $O(1)$ | Constant (ပုံသေ) | မပြောင်းဘူး | Hash Map တစ်ခု Query, Array အစွန်း Access |
+| $O(\log n)$ | Logarithmic | အနည်းငယ်သာ တိုး | Binary Search, BST ရှာဖွေမှု |
+| $O(n)$ | Linear (တန်းဂဏန်း) | နှစ်ဆ | Array ကို တစ်ခုချင်း ရှာ |
+| $O(n \log n)$ | Linearithmic | နှစ်ဆ ပိုတိုး | Merge Sort, Quick Sort (အကောင်းဆုံး) |
+| $O(n^2)$ | Quadratic | လေးဆ | Nested Loops, Bubble Sort |
+| $O(2^n)$ | Exponential | အဆလွန်ကြီး | Fibonacci ဆိုးဆိုး Recursion |
+
+![Runtime Comparison Chart](../../..//media/dsa/runtime-comparison-chart.svg)
+
+### ဘယ်လို ခွဲခြမ်းစိတ်ဖြာမလဲ? (နည်းစနစ်)
+
+**1. Constants တွေကို ဖျောက်လိုက်ပါ**
+
+`3n + 10` ဆိုရင် `n` ကြီးလာတာနဲ့အမျှ `3` နဲ့ `10` က အရေးမပါတော့ပါဘူး။ ဒါကြောင့် **$O(n)$** ပါပဲ။
+
+**2. Term ကြီးတစ်ခုတည်းကို ယူပါ**
+
+`n^2 + n` မှာ `n` ကြီးလာရင် `n^2` က ကြီးစိုးသွားတယ်၊ ဒါကြောင့် **$O(n^2)$** ပါပဲ။
+
+**3. Loop ထပ်နေရင် မြှောက်၊ Loop ဆက်နေရင် ပေါင်း**
+
+```javascript
+// Loop နှစ်ခု ဆက်တန်း (Sequential) -> n + n -> O(n)
+for (let i = 0; i < n; i++) console.log(i);
+for (let j = 0; j < n; j++) console.log(j);
+
+// Loop နှစ်ခု အသိုက်အဝန်း (Nested) -> n * n -> O(n^2)
+for (let i = 0; i < n; i++) {
+  for (let j = 0; j < n; j++) {
+    console.log(i, j);
+  }
+}
+```
+
+### Space Complexity: Memory လည်း ထည့်တွက်ပါ
+
+Algorithm အသစ်တစ်ခု ဆောက်တိုင်း နောက်ထပ် Memory ဘယ်လောက် စားလဲ ဆိုတာလည်း အရေးကြီးပါတယ်။
+
+- Array တစ်ခု ကူးယူပြီး သိမ်းတယ်ဆိုရင် — **$O(n)$** Space
+- Variable အနည်းငယ်ပဲ သုံးတယ်ဆိုရင် — **$O(1)$** Space
+- Recursion ဆိုရင် Call Stack ပါ ထည့်တွက်ရပါတယ်။
+
+### အနှစ်ချုပ်
+
+Algorithm မရွေးချယ်ခင် ဒီမေးခွန်း ၂ ခု မေးပါ -
+1. Data ဘယ်လောက် ရှိနိုင်လဲ? (အရမ်းကြီးလား?)
+2. Time လား Space လား ဘယ်ဟာ ပိုအရေးကြီးလဲ?
+
+<Aside title="မေ့သွားမှာ စိုးရင်">
+Big O ဆိုတာ "အတိအကျ စက္ကန့်ရေ" ကို ပြောတာမဟုတ်ပါဘူး။ **Data များလာတာနဲ့အမျှ ဘယ်လို ကြီးထွားလဲ** ဆိုတဲ့ သဘောထားကိုပဲ ပြောတာပါ။
+</Aside>

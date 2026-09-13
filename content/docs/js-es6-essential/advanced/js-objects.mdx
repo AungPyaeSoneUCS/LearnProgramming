@@ -1,0 +1,99 @@
+---
+title: "JS Objects (Advanced)"
+description: "Object အဆင့်မြင့် — Prototype, Object.create, Object.freeze, Getters/Setters"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Prototype — Object တွေရဲ့ "မိဘ"
+
+JavaScript Object တိုင်းမှာ **Prototype** (မိဘ Object) ရှိပြီး အဲ့ဒီကနေ Property/Method ကို ဆက်ခံပါတယ်။
+
+```javascript
+const animal = {
+  speak() {
+    return `${this.name} အော်သံ...`;
+  }
+};
+
+const dog = Object.create(animal);
+dog.name = "Lucky";
+
+console.log(dog.speak()); // Lucky အော်သံ...
+console.log(Object.getPrototypeOf(dog) === animal); // true
+```
+
+## Getters & Setters — ထိန်းချုပ်ထားတဲ့ Property
+
+```javascript
+const user = {
+  firstName: "Nyi",
+  lastName: "Nyi",
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+  set fullName(value) {
+    [this.firstName, this.lastName] = value.split(" ");
+  }
+};
+
+console.log(user.fullName); // Nyi Nyi
+user.fullName = "Su Su";
+console.log(user.firstName); // Su
+```
+
+## Object တွေကို ကာကွယ်ခြင်း
+
+```javascript
+const config = { theme: "dark" };
+Object.freeze(config);        // ဘာမှ ပြောင်းလို့မရတော့ဘူး
+config.theme = "light";       // (strict mode မှာ Error)
+console.log(config.theme);    // dark
+
+const settings = { volume: 5 };
+Object.seal(settings);        // အသစ် မထည့်လို့ရ ပြောင်းလို့ရ
+settings.volume = 8;          // ✓
+delete settings.volume;       // ✗
+```
+
+## Object Property Descriptors
+
+```javascript
+const user = { account: 1234 };
+
+Object.defineProperty(user, "account", {
+  value: 1234,
+  writable: false,   // ပြောင်းလို့မရ
+  enumerable: true,  // loop မှာ ပါမယ်
+  configurable: false // ဖျက်လို့မရ
+});
+
+console.log(user.account); // 1234
+```
+
+## `Object.freeze` vs `Object.seal` vs `PreventExtensions`
+
+<Aside type="note" title="အနှစ်ချုပ်">
+- `Object.freeze()` — add / delete / modify မလို့မရ
+- `Object.seal()` — add မရ, modify ရ
+- `Object.preventExtensions()` — add မရ, delete/modify ရ
+</Aside>
+
+## Copy နည်းလမ်းများ
+
+```javascript
+const original = { a: 1, nested: { b: 2 } };
+
+// Shallow copy
+const shallow = { ...original };
+shallow.nested.b = 99;          // original ပါ ပြောင်း!
+console.log(original.nested.b); // 99
+
+// Deep copy
+const deep = structuredClone(original); // (ခေတ်မီနည်း)
+deep.nested.b = 55;
+console.log(original.nested.b); // 99
+```
+
+<LessonCompletion />

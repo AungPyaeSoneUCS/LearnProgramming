@@ -1,0 +1,89 @@
+---
+title: "Dijkstra's Shortest Path"
+description: "Finding the cheapest route in a weighted graph."
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## Dijkstra's Shortest Path
+
+GPS / Maps က လမ်းကြောင်း ဘယ်လို တွက်ပေးလဲ ဆိုတာ သိချင်ဖူးလား? Edges တွေမှာ တန်ဖိုး (Weight) မရှိတဲ့ Graph မှာ BFS က အတိုဆုံး လမ်း ရှာလို့ရတယ်။ ဒါပေမဲ့ **Weight (ကုန်ကျစရိတ်) တွေ ရှိနေရင် BFS မရတော့ပါဘူး** — ဒါကိုမှ **Dijkstra's Algorithm** က အဖြေပေးပါတယ်။
+
+ဒီပုံစံ Graph လေးကို ကြည့်ပါ — A ကနေ E ကို အကုန်အသက်သာဆုံး (Cost အနည်းဆုံး) လမ်းက ဘယ်ဟာလဲ?
+
+- A → C = 2, A → B = 4
+- C → B = 1, C → D = 8, C → E = 10
+- B → D = 5, D → E = 2
+
+![Map Route Graph](../../..//media/dsa/map-route-graph.svg)
+
+### Algorithm: Greedy နည်း
+
+Dijkstra က Greedy ပါ — **အမြဲတမ်း "အသေးဆုံး Distance ရှိတဲ့ Unvisited Node" ကို ရွေးပြီး** သူ့အနီးနား (Neighbor) တွေကို Relax (ပိုတိုအောင် Update) ပေးပါတယ်။
+
+**စက်တဲ့အဆင့်တွေ:**
+1. Start ကို Distance `0`၊ ကျန်အကုန် `∞` ထားမယ်။
+2. Unvisited ထဲကနေ Distance အငယ်ဆုံး Node ရွေးမယ်။
+3. သူ့ Neighbor တွေကို `newDist = nodeDist + edgeWeight` ဆိုပြီး တွက်၊ `newDist` က အရင် ထက်ငယ်ရင် Update မယ်။
+4. Target ရောက်တဲ့အထိ လုပ်သွားမယ်။
+
+### Step-by-Step လမ်းကြည့်မယ်
+
+| Step | Node ရွေး | Distance ဇယား (A,B,C,D,E) |
+|------|-----------|------------------------------|
+| 0 | — | 0, ∞, ∞, ∞, ∞ |
+| 1 | **A** | 0, **4**, **2**, ∞, ∞ |
+| 2 | **C** (2) | 0, **3**, 2, **10**, **12** |
+| 3 | **B** (3) | 0, 3, 2, **8**, 12 |
+| 4 | **D** (8) | 0, 3, 2, 8, **10** |
+| 5 | **E** (10) 🎯 | အဖြေ: **A → C → B → D → E = 2 + 1 + 5 + 2 = 10** |
+
+`B` ကို `A→B` (4) အစား `A→C→B` (3) က ပိုတိုလို့ Update ဖြစ်သွားတာ သတိထားကြည့်ပါ — ဒါက Relax ပါပဲ။
+
+### Code ကြည့်မယ်
+
+```javascript
+function dijkstra(graph, start, end) {
+  const dist = {};
+  const visited = new Set();
+  for (const node in graph) dist[node] = Infinity;
+  dist[start] = 0;
+
+  while (visited.size < Object.keys(graph).length) {
+    // 1. Unvisited ထဲက Distance အငယ်ဆုံး Node ရွေး
+    let cur = null;
+    for (const node in graph) {
+      if (!visited.has(node) && (cur === null || dist[node] < dist[cur])) cur = node;
+    }
+    if (cur === end) break; // ရောက်ပြီ
+
+    // 2. Neighbor တွေ Relax လုပ်ခြင်း
+    for (const [next, weight] of Object.entries(graph[cur])) {
+      const nd = dist[cur] + weight;
+      if (nd < dist[next]) dist[next] = nd;
+    }
+    visited.add(cur);
+  }
+  return dist[end];
+}
+
+const graph = {
+  A: { B: 4, C: 2 },
+  B: { A: 4, C: 1, D: 5 },
+  C: { A: 2, B: 1, D: 8, E: 10 },
+  D: { B: 5, C: 8, E: 2 },
+  E: { C: 10, D: 2 },
+};
+console.log(dijkstra(graph, "A", "E")); // 10
+```
+
+### Complexity နဲ့ သတိစရာ
+
+- **Complexity:** Priority Queue (Min-Heap) သုံးရင် **$O((V + E) \log V)$** — V = Nodes, E = Edges။
+- **အလုပ်ဖြစ်တဲ့ အခါ:** Edge Weight တွေ **အနုတ် (Negative) မရှိရင်**။
+- **အနုတ်ရှိရင်:** **Bellman-Ford** လိုမျိုး နည်းပညာ သုံးရပါတယ်။
+- **BFS နဲ့ မတူတာက:** BFS က Step အရေအတွက် အနည်းဆုံး၊ Dijkstra က **စုစုပေါင်း Cost အနည်းဆုံး** ကို အဖြေပေးပါတယ်။
+
+<Aside title="လက်တွေ့သုံးတဲ့နေရာ">
+Google Maps ၊ Airline Routing ၊ အမြန်ဆုံး အင်တာနက် လမ်းကြောင်း (Network Routing, OSPF) ၊ Game Map Path Finding — အားလုံးက Dijkstra နဲ့ ဆင်တူ နည်းလမ်းတွေကို အသုံးပြုပါတယ်။
+</Aside>

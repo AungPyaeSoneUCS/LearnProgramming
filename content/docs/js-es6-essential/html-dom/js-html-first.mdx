@@ -1,0 +1,77 @@
+---
+title: "JS HTML First"
+description: "ပထမဆုံး JavaScript Program — HTML နဲ့ တွဲဖက်အသုံးပြုခြင်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## ပထမဆုံး Interactive Program
+
+HTML ထဲက Element တစ်ခုကို JavaScript နဲ့ ပြောင်းကြည့်ရအောင်။
+
+```html
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <title>My First JS</title>
+</head>
+<body>
+  <h1 id="title">ကြိုဆိုပါတယ်</h1>
+  <button id="btn">Text ပြောင်းမယ်</button>
+
+  <script>
+    const title = document.getElementById("title");
+    const btn = document.getElementById("btn");
+
+    btn.addEventListener("click", () => {
+      title.textContent = "JavaScript ကနေ ပြောင်းလိုက်ပါပြီ! 🎉";
+    });
+  </script>
+</body>
+</html>
+```
+
+နှိပ်တိုင်း `<h1>` ရဲ့ စာသားက ပြောင်းသွားပါမယ်။
+
+## document.getElementById()
+
+HTML Element ကို ရှာဖို့ အသုံးပြုတဲ့ အခြေခံ နည်းလမ်း ပါ။
+
+```javascript
+const el = document.getElementById("app");     // id နဲ့
+const list = document.querySelectorAll(".item"); // class အားလုံး
+const first = document.querySelector(".item");   // ပထမဆုံး
+```
+
+## InnerHTML vs textContent
+
+```javascript
+const box = document.getElementById("box");
+
+box.textContent = "<b>ဒီစာတွေ ကြမ်းပြမှာ</b>";      // စာသားအတိုင်း
+box.innerHTML = "<b>ဒါကတော့ Bold</b>";            // HTML fate
+```
+
+<Aside type="caution" title="InnerHTML သတိထားရန်">
+`innerHTML` ထဲ User Input ကို တိုက်ရိုက်ထည့်ရင် **XSS (Security)** အန္တရာယ် ရှိနိုင်ပါတယ်။ User ဒေတာကိုတော့ `textContent` သုံးပါ။
+</Aside>
+
+## လေ့ကျင့်ခန်း — Counter
+
+```html
+<p id="count">0</p>
+<button id="plus">+1</button>
+```
+
+```javascript
+let count = 0;
+const display = document.getElementById("count");
+
+document.getElementById("plus").addEventListener("click", () => {
+  count++;
+  display.textContent = count;
+});
+```
+
+<LessonCompletion />

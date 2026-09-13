@@ -1,0 +1,52 @@
+---
+title: "JS Output"
+description: "JavaScript ရဲ့ Output တွေ ပြသနည်း နည်းလမ်းများ"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## JavaScript Output ပြသနည်း (၄) မျိုး
+
+### ၁။ `console.log()` — အသုံးအများဆုံး
+
+Developer အတွက် Browser Console မှာ ပြသဖို့ အသုံးပြုပါတယ်။
+
+```javascript
+console.log("Hello Myanmar!");
+console.log(50 + 30); // 80
+```
+
+### ၂။ `document.getElementById().innerHTML`
+
+HTML Element ထဲကို စာသား ထည့်သွင်းဖို့ သုံးပါတယ်။
+
+```javascript
+document.getElementById("app").innerHTML = "မင်္ဂလာပါ!";
+```
+
+### ၃။ `alert()` — Popup Box
+
+```javascript
+alert("သတိပေးချက်!");
+```
+
+### ၄။ `document.write()` — (သတိထားရမယ်)
+
+ဒါကို Test အတွက်သာ သုံးပါ။ Page Load ပြီးမှ သုံးရင် **တစ်ပြက် မြင်ကွင်းတစ်ခုလုံး ဖျက်ပစ်ပါလိမ့်မယ်**။
+
+```javascript
+document.write("Hello");
+```
+
+<Aside type="danger" title="သတိထားရန်">
+`document.write()` ကို Production ​​Code မှာ မသုံးပါနဲ့။ Load ပြီးသား Page ကို ပျက်စီးစေနိုင်လို့ပါ။
+</Aside>
+
+## ဘယ်ဟာကို ဘယ်အချိန်မှာ သုံးမလဲ
+
+- Debug / စစ်ဆေးရန် → `console.log()`
+- Page ပေါ်မှာ Display လုပ်ရန် → `innerHTML`
+- User ကို အကြောင်းကြားရန် → `alert()`
+
+<LessonCompletion />

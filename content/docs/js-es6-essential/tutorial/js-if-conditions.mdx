@@ -1,0 +1,79 @@
+---
+title: "JS If Conditions"
+description: "If, Else If, Else, Switch — အခြေအနေပေါ် မူတည်၍ ဆုံးဖြတ်ခြင်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Condition ဆိုတာ ဘာလဲ
+
+Condition ဆိုတာ **"မှန်ရင် ဒါလုပ်၊ မမှန်ရင် ဒါလုပ်"** ဆိုပြီး အခြေအနေပေါ်မူတည်ပြီး ထိန်းချုပ်တဲ့ နည်းလမ်းပါ။
+
+## `if` — တစ်ကိုင်းတည်း
+
+```javascript
+const age = 20;
+
+if (age >= 18) {
+  console.log("အရွယ်ရောက်ပါပြီ");
+}
+```
+
+## `if...else` — နှစ်ကိုင်း
+
+```javascript
+const score = 70;
+
+if (score >= 40) {
+  console.log("အောင်ပါတယ်");
+} else {
+  console.log("စာကျပါတယ်");
+}
+```
+
+## `if...else if...else` — ကိုင်းစုံ
+
+```javascript
+const score = 85;
+
+if (score >= 80) {
+  console.log("ဂုဏ်ထူး");
+} else if (score >= 60) {
+  console.log("ထူးချွန်");
+} else if (score >= 40) {
+  console.log("အောင်");
+} else {
+  console.log("ကျ");
+}
+```
+
+<Aside type="tip" title="အခြေအနေတန်ဖိုး">
+Condition ထဲမှာ Number/String လို တန်ဖိုးတွေ ရှိနိုင်ပါတယ်။ **Falsy** တန်ဖိုးများ (`0`, `""`, `null`, `undefined`, `false`, `NaN`) ကိုတော့ "မမှန်" အဖြစ် ယူပါတယ်။
+</Aside>
+
+## `switch` — တန်ဖိုးများစွာ ယှဉ်ရန်
+
+```javascript
+const day = "Monday";
+let message;
+
+switch (day) {
+  case "Monday":
+    message = "တစ်ပတ်ရဲ့ အစ 💪";
+    break;
+  case "Friday":
+    message = "သောကြာ 🎉";
+    break;
+  default:
+    message = "ပုံမှန်နေ့";
+}
+
+console.log(message);
+```
+
+<Aside type="note" title="Switch မှတ်ချက်">
+`case` တစ်ခုစီမှာ `break` ထည့်မေ့ရင် နောက် case ထဲ **ဆက်ဝင်သွား**ပါလိမ့်မယ်။
+</Aside>
+
+<LessonCompletion />

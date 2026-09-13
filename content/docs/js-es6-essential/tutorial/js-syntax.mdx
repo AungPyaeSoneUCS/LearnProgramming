@@ -1,0 +1,48 @@
+---
+title: "JS Syntax"
+description: "JavaScript ၏ Syntax (ရေးသားနည်း စည်းမျဉ်း) အခြေခံများ"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Syntax ဆိုတာ ဘာလဲ
+
+Syntax ဆိုတာ Computer Program တစ်ခုရေးရာမှာ လိုက်နာရမယ့် **စည်းမျဉ်း** ပါ။ JavaScript ကို Statement (ကြားချက်) တွေနဲ့ ရေးပါတယ်။
+
+```javascript
+let x = 5;
+let y = 6;
+let z = x + y;
+console.log(z); // 11
+```
+
+## အခြေခံ Syntax စည်းမျဉ်း (၄) ခု
+
+1. **Statement တစ်ခုစီကို Semicolon `;`** နဲ့ အဆုံးသတ်ပါ
+2. **Case-Sensitive** — `name` နဲ့ `Name` က သီးခြားပါ
+3. **Comment** — `//` (line) နဲ့ `/* ... */` (block)
+4. **Variable** — ဒေတာသိမ်းဖို့ `let` / `const` သုံးပါ
+
+```javascript
+let price = 100; // variable
+const tax = 5;   // constant
+
+// တွက်ချက်ပြီး output
+console.log(price + tax); // 105
+```
+
+<Aside type="tip" title="အခေါ်အဝေါ်">
+- **Statement** — Program မှာ လုပ်ဆောင်ချက် တစ်ခု
+- **Expression** — တန်ဖိုးတစ်ခု ပြန်ပေးတဲ့ Statement (ဥပမာ `x + y`)
+- **Keyword** — `let`, `const`, `if`, `for` စသဖြင့် သတ်မှတ်ထားတဲ့ စကားလုံးများ
+</Aside>
+
+## နာမည်မှည့်ခြင်း (Naming) စည်းမျဉ်းများ
+
+- နာမည်က စာလုံး၊ `_` သို့မဟုတ် `$` နဲ့ စရမယ်
+- Number နဲ့ စလို့ မရဘူး
+- Reserved Keyword တွေ (`if`, `const` ...) ကို နာမည်အနေနဲ့ မသုံးရဘူး
+- ခေတ်မီနည်းစနစ်မှာ **camelCase** သုံးပါ — ဥပမာ `myVariableName`
+
+<LessonCompletion />

@@ -1,0 +1,61 @@
+---
+title: "Quick Sort: Partitioning"
+description: "Pivot, partition, and recursive conquer in place."
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## Quick Sort: Partition & Conquer
+
+Quick Sort လည်း Divide & Conquer ပါပဲ။ ဒါပေမဲ့ Merge Sort လိုက အသစ် Array ဆောက်မပြီး၊ **အဝင်းအတွင်းမှာပဲ (In-place)** Partition လုပ်ပါတယ်။
+
+**အဆင့်များ:**
+1. **Pivot ရွေး** — တစ်ခုခု (များသောအားဖြင့် နောက်ဆုံး Element)။
+2. **Partition** — Pivot ထက် ငယ်တွေ ဘယ်ဘက်၊ ကြီးတွေ ညာဘက် စုပါတယ်။ Pivot က အလယ်မှာ နေရာရပါတယ်။
+3. **Recursion** — ဘယ်ညာ အပိုင်း နှစ်ခုကို ဒီလိုပဲ ထပ်လုပ်ပါတယ်။
+
+### Partition လမ်းလျှောက်ကြည့်မယ် — `[10, 80, 30, 90, 40, 50, 70]`, Pivot = 70
+
+1. `10 < 70` → ဘယ်ဘက် ထား
+2. `80 > 70` → ညာဘက် (နေရာပေးစောင့်)
+3. `30 < 70` → ဘယ်ဘက်
+4. `90 > 70`, `50 < 70` → `50` ကို `90` နဲ့ လဲ
+5. အဆုံးမှာ `70` ကို အလယ် နေရာရ → **`[10, 30, 50, 70, 90, 80, 40]`**
+
+အခု `70` ရဲ့ ဘယ်ဘက်က အကုန် ငယ်၊ ညာဘက်က အကုန် ကြီးနေပြီ။ ဘယ်ညာ နှစ်ခြမ်းကို Recursion နဲ့ ထပ် Partition လုပ်သွားမှာပါ။
+
+### Code ကြည့်မယ်
+
+```javascript
+function quickSort(arr, lo = 0, hi = arr.length - 1) {
+  if (lo >= hi) return;
+
+  const pivot = arr[hi];
+  let i = lo; // pivot ထက် ငယ်တဲ့ နေရာ (ဘောင်း)
+
+  for (let j = lo; j < hi; j++) {
+    if (arr[j] <= pivot) {
+      [arr[i], arr[j]] = [arr[j], arr[i]]; // ငယ်တွေကို ဘယ်ဘက် ယူလာ
+      i++;
+    }
+  }
+  [arr[i], arr[hi]] = [arr[hi], arr[i]]; // pivot နေရာတကျ
+
+  quickSort(arr, lo, i - 1); // ဘယ်ခြမ်း
+  quickSort(arr, i + 1, hi); // ညာခြမ်း
+  return arr;
+}
+
+console.log(quickSort([10, 80, 30, 90, 40, 50, 70])); // [10, 30, 40, 50, 70, 80, 90]
+```
+
+### Complexity ကြည့်မယ်
+
+- **Average:** $O(n \log n)$ — Partition က Level တိုင်း $n$ ပြီး Level က $\log n$။
+- **Worst Case: $O(n^2)$** — Array က အ‌ကြို Sort ထားပြီးသား (သို့) Pivot က အစွန်းဆုံး ဖြစ်နေရင် Partition က မျှမသွားဘူး။ ဒါကို Random Pivot ရွေးခြင်းဖြင့် ရှောင်တတ်ပါတယ်။
+
+<Aside type="caution" title="Merge vs Quick">
+- **Merge Sort:** $O(n \log n)$ အမြဲ၊ Stable၊ ဒါပေမဲ့ Extra Space $O(n)$ လို။
+- **Quick Sort:** Average $O(n \log n)$၊ In-place (Space $O(\log n)$)၊ ဒါပေမဲ့ Worst $O(n^2)$ ၊ Stable မဟုတ်။
+- Built-in `sort()` အများစုက နှစ်ခု ပေါင်းစပ်ထားတဲ့ **Timsort** လို Hybrid တွေကို သုံးပါတယ်။
+</Aside>

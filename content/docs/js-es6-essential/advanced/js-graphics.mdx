@@ -1,0 +1,97 @@
+---
+title: "JS Graphics"
+description: "Graphics — Canvas နှင့် SVG အသုံးပြုခြင်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Web Graphics နည်းလမ်းများ
+
+Browser မှာ Graphics ဆွဲဖို့ အဓိက နည်းလမ်း (၂) မျိုး ရှိပါတယ်:
+- **Canvas** — Pixel ပေါ်တွင် Pixel-level ထိန်းချုပ်မှု
+- **SVG** — Vector ပုံများ (XML-based)
+
+## Canvas — စတင်သုံးနည်း
+
+```html
+<canvas id="myCanvas" width="300" height="200"></canvas>
+```
+
+```javascript
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d"); // drawing context
+
+// Rectangle
+ctx.fillStyle = "#f59e0b";
+ctx.fillRect(50, 50, 150, 80);  // x, y, w, h
+
+// Circle
+ctx.beginPath();
+ctx.arc(200, 100, 40, 0, Math.PI * 2); // x, y, radius, start, end
+ctx.fillStyle = "#3b82f6";
+ctx.fill();
+
+// Text
+ctx.font = "20px sans-serif";
+ctx.fillStyle = "#111";
+ctx.fillText("Myanmar", 60, 40);
+```
+
+## Canvas Line & Stroke
+
+```javascript
+ctx.strokeStyle = "#ef4444";
+ctx.lineWidth = 3;
+ctx.beginPath();
+ctx.moveTo(10, 10);    // စတင်
+ctx.lineTo(100, 100);  // ဆုံး
+ctx.stroke();
+```
+
+## SVG — ပိုမိုလွယ်ကူ (HTML နဲ့)
+
+```html
+<svg width="100" height="100">
+  <circle cx="50" cy="50" r="40" fill="teal" />
+  <rect x="10" y="10" width="80" height="80" fill="none" stroke="black" />
+</svg>
+```
+
+```javascript
+// SVG ကိုလည်း DOM လို manipulate လုပ်လို့ရ
+const circle = document.querySelector("svg circle");
+circle.setAttribute("fill", "orange");
+```
+
+## Animation — rAF (requestAnimationFrame)
+
+```javascript
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+let x = 0;
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#f59e0b";
+  ctx.beginPath();
+  ctx.arc(x, 100, 20, 0, Math.PI * 2);
+  ctx.fill();
+
+  x += 2;
+  requestAnimationFrame(draw); // 60fps loop
+}
+
+draw();
+```
+
+<Aside type="tip" title="Canvas vs SVG">
+- **Canvas** — ပုံအများကြီး animate; pixel ထိန်းချုပ်ချင်ရင် → ဂိမ်း
+- **SVG** — UI Icons, Charts, Vector ပုံ; DOM လို ထိန်းချုပ်ရလွယ် → Data Viz
+</Aside>
+
+<Aside type="caution" title="Canvas Coordinates">
+Canvas ရဲ့ (0,0) က **ဘယ်ဘက်အပေါ်ဆုံး** ပါ။ y က အောက်ကို တိုးပါတယ် — ညှိနှိုင်းရာမှာ သတိထားပါ။
+</Aside>
+
+<LessonCompletion />

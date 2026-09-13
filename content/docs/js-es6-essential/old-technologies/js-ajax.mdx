@@ -1,0 +1,76 @@
+---
+title: "JS AJAX"
+description: "AJAX — နောက်ခံမှာ Server နှင့် Dataset ဖလှယ်ခြင်း (နည်းပညာဟောင်း)"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## AJAX ဆိုတာ ဘာလဲ
+
+**AJAX (Asynchronous JavaScript And XML)** ဆိုတာ **Page ကို ပြန်မချဘဲ** Server ဆီ Data ပို့ / Server မှ Data ယူတဲ့ နည်းပညာဟောင်းပါ။
+
+Instead:
+- **XMLHttpRequest** (အဟောင်း)
+- **Fetch API** (ခေတ်မီ)
+
+## XMLHttpRequest — အခြေခံအသုံးပြုပုံ
+
+```javascript
+const xhr = new XMLHttpRequest();
+
+xhr.open("GET", "https://jsonplaceholder.typicode.com/todos/1");
+xhr.onload = function () {
+  if (xhr.status === 200) {
+    console.log(JSON.parse(xhr.responseText));
+  }
+};
+xhr.onerror = function () {
+  console.error("Network Error");
+};
+xhr.send();
+```
+
+## onreadystatechange (အစဉ်အလာ)
+
+```javascript
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "data.json");
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    console.log(xhr.responseText);
+  }
+};
+xhr.send();
+```
+
+`readyState` — 0 (unsent) → 1 (opened) → 2 (headers received) → 3 (loading) → 4 (done)
+
+<Aside type="caution" title="ခေတ်ကုန်သွားပါပြီ">
+AJAX ​​နည်းစနစ်က ရှုပ်ထွေးပြီး အဟောင်းပါ။ **Fetch API** က ပိုရိုးရှင်း၊ Promise-based လည်း ဖြစ်လို့ Production မှာ Fetch သုံးပါ။ ဒီသင်ခန်းစာကို သိထားရုံသာ လုံလောက်ပါတယ်။
+</Aside>
+
+## AJAX vs Fetch (နှိုင်းယှဉ်)
+
+| | AJAX (XHR) | Fetch API |
+|---|---|---|
+| Order | ရှုပ်ထွေး | ရိုးရှင်း |
+| Promise | မရှိ | ရှိ (async/await) |
+| Streaming | ခက်ခဲ | Support |
+
+## Fetch နဲ့ အတူတူရလဒ်
+
+```javascript
+// XHR
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "/api/data");
+xhr.onload = () => console.log(JSON.parse(xhr.responseText));
+xhr.send();
+
+// Fetch — ပိုရိုးရှင်း
+fetch("/api/data")
+  .then((res) => res.json())
+  .then((data) => console.log(data));
+```
+
+<LessonCompletion />

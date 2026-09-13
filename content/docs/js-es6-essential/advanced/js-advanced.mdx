@@ -1,0 +1,43 @@
+---
+title: "JS Advanced"
+description: "JavaScript Advanced သင်ခန်းစာများသို့ ကြိုဆိုပါသည်"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Advanced သင်ခန်းစာမှာ ဘာတွေ လေ့လာမလဲ
+
+ဒီအပိုင်းမှာ JavaScript ရဲ့ **အဆင့်မြင့် အကြောင်းအရာ** တွေကို လေ့လာပါမယ်:
+
+- **JS Classes** — Object-oriented ရေးနည်း
+- **JS Asynchronous** — Promise, async/await
+- **JS Modules** — Code ကို အပိုင်းပိုင်း ခွဲခြား
+- **JS Temporal** — ခေတ်မီ Date API (New)
+- **JS Meta & Proxy** — Object ပေါ်တွင် စောင့်ကြည့်ခြင်း
+- **JS Typed Arrays** — Binary Data
+- **JS DOM Navigation** — Element အချင်းချင်း ရွေ့လျားခြင်း
+- **JS Graphics** — Canvas, SVG
+
+## သင်ယူရန် လိုအပ်ချက်
+
+ဒီအပိုင်းကို မစတင်ခင် **JS Tutorial** သင်ခန်းစာတွေကို ကျွမ်းကျင်အောင် ဖတ်ပြီးမှ ဝင်ပါ။
+
+```javascript
+// အခြေခံ ပြန်လည်ဆန်းစစ်ခြင်း
+const API_URL = "https://api.example.com/users";
+
+async function getUsers() {
+  const response = await fetch(API_URL);
+  const users = await response.json();
+  return users;
+}
+```
+
+## သင်ယူပြီးရင် ရနိုင်တဲ့ အကျိုးချက်များ
+
+<Aside type="tip" title="မှတ်ချက်">
+Advanced Concepts တွေက တကယ့် Application တွေ (React, Node.js) ရေးတဲ့အခါ အမြဲတမ်း လိုအပ်ပါတယ်။ တစ်ခုချင်းစီ အနေနဲ့ နားလည်အောင် သေချာ လေ့လာသွားပါ။
+</Aside>
+
+<LessonCompletion />

@@ -1,0 +1,77 @@
+---
+title: "JS Web API"
+description: "Web API အကြောင်း မိတ်ဆက် — Browser ရဲ့ Built-in စွမ်းဆောင်ရည်များ"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Web API ဆိုတာ ဘာလဲ
+
+**Web API (Application Programming Interface)** ဆိုတာ Browser က ပေးထားတဲ့ **စွမ်းဆောင်ရည်** တွေပါ — ဒါတွေကို JavaScript ကနေ အသုံးပြုလို့ရပါတယ်။
+
+## အသုံးများတဲ့ Web API အုပ်စုများ
+
+### Window API — အခြေခံအကျဆုံး
+
+```javascript
+console.log(window.innerWidth);  // Browser အကျယ်
+console.log(window.innerHeight); // Browser အမြင့်
+
+window.scrollTo(0, 0);        // အပေါ်ဆုံးသို့
+window.location.href = "/";   // စာမျက်နှာပြောင်း
+```
+
+### Fetch API — Server ထံမှ Dataset
+
+```javascript
+async function getUsers() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+  const users = await res.json();
+  console.log(users);
+}
+```
+
+### LocalStorage — Local မှာ Data သိမ်း
+
+```javascript
+localStorage.setItem("theme", "dark");
+console.log(localStorage.getItem("theme")); // "dark"
+localStorage.removeItem("theme");
+```
+
+### Geolocation — တည်နေရာ
+
+```javascript
+navigator.geolocation.getCurrentPosition((pos) => {
+  console.log(pos.coords.latitude, pos.coords.longitude);
+});
+```
+
+### Notification — Popup သတိပေးချက်
+
+```javascript
+if ("Notification" in window) {
+  Notification.requestPermission().then((permission) => {
+    if (permission === "granted") {
+      new Notification("မင်္ဂလာပါ!");
+    }
+  });
+}
+```
+
+<Aside type="tip" title="Web API အများအပြား">
+Web API တွေ အများကြီး ရှိပါတယ် — History API, Canvas, Web Workers, Clipboard API, Drag and Drop အများကြီး ရှိပါတယ်။ လိုအပ်မှုနဲ့အညီ သုံးတတ်ဖို့က အဓိက ပါ။
+</Aside>
+
+## Compatibility စစ်ဆေးခြင်း
+
+```javascript
+if (typeof localStorage !== "undefined") {
+  // သင့်ရဲ့ code
+} else {
+  console.warn("ဒီ Browser မှာ API မရှိပါ");
+}
+```
+
+<LessonCompletion />

@@ -1,0 +1,77 @@
+---
+title: "JS Errors"
+description: "Error Handling — try, catch, finally, throw"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Error ဆိုတာ ဘာလဲ
+
+Program လည်ပတ်နေစဉ် **မမျှော်လင့်တဲ့ အမှား (Error)** ဖြစ်နိုင်ပါတယ်။ ဒီလိုအခါ Program မပျက်စီးစေဖို့ Error တွေကို **ကိုင်တွယ် (Handle)** ရပါတယ်။
+
+## `try...catch` — Error ကို ဖမ်းခြင်း
+
+```javascript
+try {
+  let result = 10 / x; // x မသတ်မှတ်ထားလို့ Error
+  console.log(result);
+} catch (error) {
+  console.log("အမှား ဖြစ်သွားပါတယ်:", error.message);
+}
+```
+
+## `finally` — ဖြစ်ဖြစ်၊ မဖြစ်ဖြစ် လုပ်မယ့်အပိုင်း
+
+```javascript
+try {
+  console.log("စမ်းကြည့်တယ်");
+} catch (error) {
+  console.log("Error:", error.message);
+} finally {
+  console.log("ဒါကတော့ အမြဲတမ်း run ပါတယ်");
+}
+```
+
+## `throw` — ကိုယ်တိုင် Error ဖန်တီး
+
+```javascript
+function checkAge(age) {
+  if (age < 0) {
+    throw new Error("အသက်က အနုတ် မဖြစ်နိုင်ပါ!");
+  }
+  return `အသက်က ${age} ဖြစ်ပါတယ်`;
+}
+
+try {
+  console.log(checkAge(25));   // ✓
+  console.log(checkAge(-5));   // Error!
+} catch (error) {
+  console.log("Error:", error.message);
+}
+```
+
+## Error Object ရဲ့ ဂုဏ်သတ္တိများ
+
+```javascript
+try {
+  JSON.parse("not-json");
+} catch (error) {
+  console.log(error.name);    // "SyntaxError"
+  console.log(error.message); // အသေးစိတ် သတင်းစကား
+  console.log(error.stack);   // Stack trace (debug အတွက်)
+}
+```
+
+<Aside type="tip" title="အသုံးများတဲ့ Error Types">
+- `TypeError` — မှားယွင်းတဲ့ Type သုံးတာ
+- `ReferenceError` — variable မရှိတာ
+- `SyntaxError` — Syntax မှားတာ
+- `RangeError` — အကွာအဝေး ကျော်လွန်တာ
+</Aside>
+
+<Aside type="caution" title="သတိထားရန်">
+ချိတ်ဖို့မလိုတဲ့နေရာမှာ catch ကို အလွန်အကျွံ သုံးပြီး Error ကို **စားပစ်မယ့်** အလေ့အကျင့် မလုပ်ပါနဲ့။ Error ကို log လုပ်ပြီး သင့်လျော်စွာ ဖြေရှင်းပါ။
+</Aside>
+
+<LessonCompletion />

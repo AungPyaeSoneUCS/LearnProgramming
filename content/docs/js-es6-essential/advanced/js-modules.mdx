@@ -1,0 +1,94 @@
+---
+title: "JS Modules"
+description: "Modules — export နှင့် import အသုံးပြုနည်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Module ဆိုတာ ဘာလဲ
+
+**Module** ဆိုတာ Code ကို **ဖိုင်တစ်ဖိုင်ချင်း အပိုင်းပိုင်း ခွဲထားခြင်း** ပါ (ES6 ကစပြီး Native ရှိလာတယ်)။ ဖိုင်တစ်ခုစီမှာ ကိုယ်ပိုင် Scope ရှိပြီး လိုတာပဲ `export` လုပ်ပါတယ်။
+
+## Export — ပြင်ပသို့ ပို့
+
+```javascript
+// math.js
+export const PI = 3.14159;
+
+export function add(a, b) {
+  return a + b;
+}
+
+const secret = "မထုတ်လို"; // export မလုပ်လို့ ပြင်ပမှာ မမြင်ရ
+export default function multiply(a, b) {
+  return a * b;
+}
+```
+
+## Import — လက်ခံသုံး
+
+```javascript
+// app.js
+import multiply, { PI, add } from "./math.js";
+
+console.log(add(2, 3));       // 5
+console.log(PI);              // 3.14159
+console.log(multiply(4, 5));  // 20 (default import)
+```
+
+## Named vs Default Export
+
+```javascript
+// Named — နာမည်တူပဲ ရမယ်
+import { add, PI } from "./math.js";
+
+// Default — မည်သည့်နာမည်မဆို ယူလို့ရ
+import math from "./math.js";      // math() → multiply
+import anyName from "./math.js";   // လည်းရ
+```
+
+## `import * as` — တစ်စုလုံး
+
+```javascript
+import * as math from "./math.js";
+
+math.add(1, 2);
+math.PI;
+```
+
+## Rename
+
+```javascript
+import { add as addNumbers } from "./math.js";
+```
+
+## Script Tag — Browser မှာ Module
+
+```html
+<script type="module" src="app.js"></script>
+```
+
+<Aside type="note" title="Module vs Classic Script">
+`type="module"` ပါရင်:
+- Fetch က **async** (defer-like)
+- **Strict mode** အလိုအလျောက်
+- Scope က **module-local** (Global မဟုတ်ဘူး)
+</Aside>
+
+## Re-export
+
+```javascript
+// index.js — တစ်နေရာတည်းကနေ အားလုံးထုတ်
+export { default as multiply } from "./math.js";
+export { add } from "./math.js";
+```
+
+<Aside type="tip" title="ဘာကြောင့် Modules သုံးသလဲ">
+- Code ရှင်းလင်း — အပိုင်းအလိုက် ခွဲထားလို့
+- **Reusable** — နေရာမျိုးစုံသုံးနိုင်
+- Dependency ရှင်းလင်း — ဘာတွေ လိုအပ်လဲ ရှင်းမြင်
+- Testing လွယ်ကူ
+</Aside>
+
+<LessonCompletion />

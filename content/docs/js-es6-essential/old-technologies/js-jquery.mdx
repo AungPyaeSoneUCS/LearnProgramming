@@ -1,0 +1,70 @@
+---
+title: "JS jQuery"
+description: "jQuery — DOM ၊ Events ၊ Effects အတွက် အသုံးများခဲ့ဖူးသော Library"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## jQuery ဆိုတာ ဘာလဲ
+
+**jQuery** ဆိုတာ JavaScript ကို လွယ်ကူအောင် ရေးထားတဲ့ **Library ဟောင်း** တစ်ခုပါ။ DOM ရှာဖွေမှု၊ Event, Animation တွေကို အတိုကောက် ရေးလို့ရအောင် လုပ်ပေးပါတယ်။
+
+```html
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+```
+
+## jQuery Syntax
+
+```javascript
+// $(selector).action()
+$("h1").hide();        // h1 အားလုံး ပုန်း
+$("#box").fadeIn();    // fade in
+$(".item").addClass("active");
+```
+
+## Document Ready
+
+```javascript
+$(document).ready(function () {
+  console.log("Page Load ပြီးပါပြီ");
+});
+
+// Shortcut
+$(function () {
+  // init code
+});
+```
+
+<Aside type="caution" title="ဘာကြောင့် jQuery မသုံးတော့လဲ">
+- Native JavaScript (ES6+) က DOM APIs တွေ ယခုလွယ်ကူပြီ
+- `querySelectorAll`, `fetch`, `classList` စတာတွေ တည်ပြီးသား
+- jQuery Bundle က 30KB+ — Performance ကျစေ
+- React/Vue/Svelte လို Framework တွေ DOM ကို သူတို့နည်းသူတို့ ကိုင်တွယ်
+</Aside>
+
+## Native နဲ့ နှိုက်ယှဉ်
+
+```javascript
+// jQuery
+$(".item").addClass("active");
+
+// Native
+document.querySelectorAll(".item").forEach((el) =>
+  el.classList.add("active")
+);
+```
+
+```javascript
+// jQuery
+$.ajax({ url: "/data", method: "GET", success: (d) => console.log(d) });
+
+// Native
+fetch("/data").then((r) => r.json()).then(console.log);
+```
+
+## ဘယ်အခါမှာ jQuery ရှိသေးသလဲ
+
+လက်ရှိ Production Website အမြောက်အမြားမှာ jQuery ရှိနေပါသေးတယ်။ Maintenance လုပ်ရတဲ့အခါ **ဖတ်တတ်ဖို့သာ** သိထားပါ။ အသစ် စရေးရင်တော့ Native JavaScript သို့ Framework သုံးပါ။
+
+<LessonCompletion />

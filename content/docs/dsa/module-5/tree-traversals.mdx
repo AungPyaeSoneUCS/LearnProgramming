@@ -1,0 +1,97 @@
+---
+title: "Tree Traversals"
+description: "Preorder, Inorder, Postorder and Level Order walks."
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## Tree Traversals
+
+Tree တစ်ပင် ဆောက်ပြီးရင် အတွင်းက Values တွေကို ဘယ်လို သွားကြည့်မလဲ? ဒီပုံစံ (Order) တွေက Problems တွေပေါ်မူတည်ပြီး ကွဲပြားပါတယ်။ သုံးခုက Recursion နဲ့၊ နောက်တစ်ခုက Queue နဲ့ သွားပါတယ်။
+
+ဒီ Tree လေးကို ဥပမာယူပြီး ကြည့်ကြမယ် -
+
+```
+        8
+      /   \
+     3     10
+    / \      \
+   1   6      14
+```
+
+### 1. Inorder (Left → Root → Right)
+
+ဘယ်ဘက်က စပြီး Root ဆို၊ ညာဘက်။ **BST မှာ Inorder က Sorted Order** ကို ပေးပါတယ် — သင်ခန်းစာအရ အရေးကြီးဆုံး ဒါပါပဲ။
+
+`1  3  6  8  10  14` ✅ (ငယ်စဉ်ကြီးလိုက်)
+
+```javascript
+function inorder(node) {
+  if (!node) return;
+  inorder(node.left);   // 1. ဘယ်
+  console.log(node.val); // 2. Root
+  inorder(node.right);  // 3. ညာ
+}
+```
+
+### 2. Preorder (Root → Left → Right)
+
+Root ကို အရင်ပြ၊ ပြီးမှ အောက်ကို ဆင်း။ **"Tree ကို Copy ကူးချင်ရင် (ဥပမာ - JSON, Folder Backup)** ဒီပုံစံ သုံးတယ်။
+
+`8  3  1  6  10  14`
+
+```javascript
+function preorder(node) {
+  if (!node) return;
+  console.log(node.val); // 1. Root
+  preorder(node.left);   // 2. ဘယ်
+  preorder(node.right);  // 3. ညာ
+}
+```
+
+### 3. Postorder (Left → Right → Root)
+
+ကလေးတွေ အကုန်ပြီးမှ Root။ **"Tree ကို ဖျက်ချင်ရင် (သို့) Folder Size တွက်ချင်ရင်"** — ဘာလို့လဲဆိုတော့ ကလေးတွေ အကုန်အဆုံးသတ်မှ မိဘကို ဖျက်လို့လို့ ရလို့ပါ။
+
+`1  6  3  14  10  8`
+
+```javascript
+function postorder(node) {
+  if (!node) return;
+  postorder(node.left);  // 1. ဘယ်
+  postorder(node.right); // 2. ညာ
+  console.log(node.val); // 3. Root
+}
+```
+
+### 4. Level Order (BFS — Queue သုံး)
+
+အပေါ်ကနေ အောက်၊ ဘယ်ကနေ ညာ — Level တစ်ခုချင်း။ Recursion မဟုတ်ဘဲ **Queue** နဲ့ သွားပါတယ်။
+
+`8  3  10  1  6  14`
+
+```javascript
+function levelOrder(root) {
+  if (!root) return;
+  const queue = [root]; // (FIFO)
+  while (queue.length) {
+    const node = queue.shift();
+    console.log(node.val);
+    if (node.left) queue.push(node.left);
+    if (node.right) queue.push(node.right);
+  }
+}
+```
+
+### တစ်ချက်ချင်း မှတ်နည်း
+
+| Order | ပုံစံ | အသုံးဝင်တဲ့နေရာ |
+|-------|-------|------------------|
+| Inorder | L-Root-R | BST → Sorted List |
+| Preorder | Root-L-R | Tree Copy / Export |
+| Postorder | L-R-Root | Tree Delete / Size |
+| Level Order | Queue (BFS) | အနီးဆုံး ရှာ / Tree Print |
+
+<Aside title="Complexity">
+Traversal လေးခုစလုံးက Node တိုင်း တစ်ခါပဲ သွားလို့ **$O(n)$** ပါ။ Search အတွက် BST ရဲ့ $O(\log n)$ နဲ့ မရောထွေးပါစေနဲ့ — Traversal က Tree တစ်ပင်လုံး ဖတ်တာပါ။
+</Aside>

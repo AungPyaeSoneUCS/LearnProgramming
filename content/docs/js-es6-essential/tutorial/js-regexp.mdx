@@ -1,0 +1,70 @@
+---
+title: "JS RegExp"
+description: "Regular Expression — Pattern နဲ့ စာသားရှာဖွေခြင်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## RegExp ဆိုတာ ဘာလဲ
+
+**Regular Expression (RegExp)** ဆိုတာ **ပုံစံ (Pattern) နဲ့ စာသားတွေကို ရှာခြင်း၊ ယှဉ်ခြင်း** ပြုလုပ်တဲ့ နည်းလမ်းပါ။ User Input စစ်ဆေးတာ၊ ဖော်မတ် သေချာတာ စတာတွေမှာ သုံးပါတယ်။
+
+```javascript
+const pattern = /hello/;
+const text = "Say hello to him";
+
+console.log(pattern.test(text)); // true (ရှိမရှိ)
+console.log(text.match(pattern)); // ['hello', index: 4, ...]
+console.log(text.replace(pattern, "hi")); // Say hi to him
+```
+
+## Modifiers (Flag)
+
+- `i` — Case မခွဲ (ignore case)
+- `g` — တစ်ခုလုံး ရှာ (global)
+- `m` — Multi-line
+
+```javascript
+const pattern = /hello/gi;
+const text = "Hello, hello, HELLO!";
+
+console.log(text.match(pattern)); // ['Hello', 'hello', 'HELLO']
+```
+
+## အသုံးများတဲ့ Characters
+
+| Pattern | အဓိပ္ပာယ် |
+|---|---|
+| `\d` | Digit (နံပါတ်) |
+| `\w` | Word character |
+| `\s` | Space |
+| `.` | ဘယ် character မဆို |
+| `\d{3}` | Digit ၃ ခု |
+| `[a-z]` | a မှ z အတွင်း |
+
+## အသုံးတည့်တဲ့ ဥပမာများ
+
+```javascript
+// Email ပုံစံ စစ်ဆေး
+const emailPattern = /\S+@\S+\.\S+/;
+console.log(emailPattern.test("user@gmail.com")); // true
+
+// ဖုန်းနံပါတ် (09-XXXXXXXXX ပုံစံ)
+const phonePattern = /^09\d{9}$/;
+console.log(phonePattern.test("09123456789")); // true
+console.log(phonePattern.test("09123"));       // false
+
+// ဒသမကိန်း စစ်ဆေး
+const floatPattern = /^\d+\.\d+$/;
+console.log(floatPattern.test("3.14")); // true
+```
+
+<Aside type="tip" title="မှတ်သားရန်">
+- `test()` → boolean
+- `match()` → Array (သို့) null
+- `replace()` → စာသားအသစ်
+- **Regex101** လို Website မှာ Pattern တွေကို စမ်းသပ်ကြည့်နိုင်ပါတယ်။
+</Aside>
+
+<LessonCompletion />

@@ -1,0 +1,67 @@
+---
+title: "JS Sets"
+description: "Set များ — တန်ဖိုးထပ်မခံတဲ့ Collection"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Set ဆိုတာ ဘာလဲ
+
+**Set** ဆိုတာ **တန်ဖိုး (value) ထပ်တူမရှိ**တဲ့ Collection တစ်ခုပါ (ES6 ကစပြီး ရှိလာတယ်)။ တန်ဖိုးတစ်ခုကို တစ်ခါပဲ သိမ်းပါတယ် — **Uniqueness** အာမခံပါတယ်။
+
+## Set ဖန်တီးခြင်းနဲ့ အသုံးပြုခြင်း
+
+```javascript
+const colors = new Set();
+
+// တန်ဖိုးတွေ ထည့်
+colors.add("Red");
+colors.add("Blue");
+colors.add("Red"); // ထပ်တူ → လျစ်လျူရှုမယ်
+
+console.log(colors.size); // 2 (Red, Blue)
+
+// ရှိမရှိ စစ်
+console.log(colors.has("Blue")); // true
+
+// ဖျက်
+colors.delete("Red");
+console.log(colors.size); // 1
+```
+
+## Array ကို Set နဲ့ ထပ်တူဖယ်
+
+```javascript
+const numbers = [1, 2, 2, 3, 3, 3, 4];
+
+const unique = [...new Set(numbers)];
+console.log(unique); // [1, 2, 3, 4]
+```
+
+## Set ကို Iterate
+
+```javascript
+const fruits = new Set(["Apple", "Banana", "Mango"]);
+
+for (const fruit of fruits) {
+  console.log(fruit);
+}
+
+fruits.forEach((value) => console.log(value));
+```
+
+<Aside type="note" title="Array vs Set">
+- Array — အစဉ်လိုက် တန်ဖိုးတွေ၊ ထပ်တူ ရလို့ရ
+- Set — တန်ဖိုးထပ်မရ၊ ရှိမရှိ စစ်တာ (`has`) ပိုမြန်
+</Aside>
+
+## Set → Array
+
+```javascript
+const set = new Set(["a", "b", "c"]);
+const arr = [...set];         // Spread နည်း
+const arr2 = Array.from(set); // Array.from နည်း
+```
+
+<LessonCompletion />

@@ -1,0 +1,56 @@
+---
+title: "JS Versions"
+description: "JavaScript Versions — ES5, ES6, ES2016+ အဆင့်ဆင့်"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## ECMAScript Versions
+
+JavaScript ကို စံသတ်မှတ်တဲ့ နာမည်ကတော့ **ECMAScript (ES)** ပါ။ အဓိက Version တွေကတော့:
+
+| Version | ခုနှစ် | အရေးကြီး အင်္ဂါရပ်များ |
+|---|---|---|
+| ES5 | 2009 | Strict mode, JSON, Array methods |
+| **ES6 (ES2015)** | 2015 | `let`/`const`, Arrow, Class, Template, Modules |
+| ES2016 | 2016 | Exponent `**`, `Array.includes()` |
+| ES2017 | 2017 | `async`/`await`, Object.values/entries |
+| ES2018 | 2018 | Object spread, Async iteration |
+| ES2019 | 2019 | `Array.flat()`, `Object.fromEntries()` |
+| ES2020 | 2020 | Optional chaining `?.`, BigInt, Nullish `??` |
+| ES2021 | 2021 | Logical assignment `||=` |
+| ES2022 | 2022 | Class fields, `.at()` |
+| ES2023 | 2023 | Array `toSorted()`, `toReversed()` |
+
+## အသုံးများတဲ့ ES2020+ Features
+
+```javascript
+// Optional Chaining — Error မဖြစ်အောင်
+const user = {};
+console.log(user?.address?.city); // undefined (Error မဟုတ်ဘူး)
+console.log(user.address.city);   // Error! ❌
+
+// Nullish Coalescing
+const value = null;
+console.log(value ?? "default"); // "default"
+console.log(0 ?? "default");     // 0 (0 က nullish မဟုတ်လို့)
+
+// Array.at()
+const arr = ["a", "b", "c"];
+console.log(arr.at(-1)); // "c" (နောက်ဆုံး)
+```
+
+<Aside type="tip" title="Browser Support">
+Browser တွေက ES6+ Features အားလုံးကို လွှမ်းခြုံထောက်ပံ့ပြီးပါပြီ။ Transpiler (**Babel**) နဲ့သာ အဟောင်းပိုင်း Browser တွေ လိုအပ်တတ်ပါတယ်။
+</Aside>
+
+## ကိုယ့် Code ကို ဘယ်လို ခေတ်မီအောင် ရေးမလဲ
+
+1. `var` → `const` / `let`
+2. Function expression → Arrow
+3. String concatenation `+` → Template Literal
+4. `==` → `===`
+5. Callback → `async`/`await` (နောက်ပိုင်း သင်ခန်းစာ)
+
+<LessonCompletion />

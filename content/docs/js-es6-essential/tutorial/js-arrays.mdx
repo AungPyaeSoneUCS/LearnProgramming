@@ -1,0 +1,72 @@
+---
+title: "JS Arrays"
+description: "Array များ — Methods, Destructuring, Spread, Map/Filter/Reduce"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Array ဆိုတာ ဘာလဲ
+
+Array ဆိုတာ **ဒေတာများစွာကို စီတန်း သိမ်းထားတဲ့ List** တစ်ခုပါ။ Index က **0 ကစ** ပါတယ်။
+
+```javascript
+const fruits = ["Apple", "Banana", "Mango"];
+
+console.log(fruits[0]);    // Apple
+console.log(fruits.length); // 3
+```
+
+## အသုံးများတဲ့ Array Methods
+
+```javascript
+const numbers = [3, 1, 9, 4];
+
+numbers.push(5);    // အဆုံးမှာ ထည့် → [3,1,9,4,5]
+numbers.pop();      // အဆုံးက ဖယ် → [3,1,9,4]
+numbers.unshift(0); // အစမှာ ထည့် → [0,3,1,9,4]
+numbers.shift();    // အစက ဖယ် → [3,1,9,4]
+
+console.log(numbers.sort());       // [1,3,4,9] (String အနေနဲ့)
+console.log(numbers.indexOf(9));   // 2
+console.log(numbers.includes(3));  // true
+```
+
+## Destructuring (ES6)
+
+```javascript
+const [first, second, ...rest] = ["A", "B", "C", "D"];
+
+console.log(first);  // A
+console.log(second); // B
+console.log(rest);   // ["C", "D"]
+```
+
+## Spread (ES6)
+
+```javascript
+const arr1 = [1, 2];
+const arr2 = [...arr1, 3, 4];
+
+console.log(arr2); // [1, 2, 3, 4]
+```
+
+## `map()` / `filter()` / `reduce()`
+
+```javascript
+const prices = [100, 200, 300];
+const doubled = prices.map((p) => p * 2);
+console.log(doubled); // [200, 400, 600]
+
+const even = prices.filter((p) => p % 2 === 0);
+console.log(even); // [100, 200, 300]
+
+const total = prices.reduce((sum, p) => sum + p, 0);
+console.log(total); // 600
+```
+
+<Aside type="tip" title="Iteration နည်းလမ်း">
+`for (const item of array)` သို့ `array.forEach(...)` ကို သုံးပါ။ `for...in` က Array အတွက် **မသင့်တော်ပါဘူး** — Object အတွက် သာသုံးပါ။
+</Aside>
+
+<LessonCompletion />

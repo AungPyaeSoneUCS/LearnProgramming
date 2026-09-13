@@ -1,0 +1,67 @@
+---
+title: "JS Math"
+description: "Math Object — Functions နှင့် Constants များ"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Math Object ဆိုတာ ဘာလဲ
+
+**Math** ဆိုတာ Error မရှိတဲ့ Functions နဲ့ Constants တွေ ပါဝင်တဲ့ Built-in Object တစ်ခုပါ။
+
+## `Math.random()` — ကျပန်းနံပါတ်
+
+```javascript
+console.log(Math.random());            // 0 မှ 1 အောက် (ကျပန်း)
+console.log(Math.random() * 100);      // 0 မှ 100
+console.log(Math.floor(Math.random() * 100) + 1); // 1-100
+```
+
+## Rounding Functions
+
+```javascript
+console.log(Math.round(4.5));   // 5 (မဲလိုက်)
+console.log(Math.round(4.4));   // 4
+console.log(Math.ceil(4.1));    // 5 (အပေါ်ယူ)
+console.log(Math.floor(4.9));   // 4 (အောက်ယူ)
+console.log(Math.trunc(4.9));   // 4 (ဒသမဖယ်)
+```
+
+## Power / Root / Abs
+
+```javascript
+console.log(Math.pow(2, 3));    // 8 (ထပ်ကိန်း)
+console.log(Math.sqrt(16));     // 4 (နှစ်ထပ်ကိန်းရင်း)
+console.log(Math.abs(-7));      // 7 (အပေါင်းပြောင်း)
+console.log(Math.max(1, 8, 3)); // 8
+console.log(Math.min(1, 8, 3)); // 1
+```
+
+## Constants
+
+```javascript
+console.log(Math.PI);       // 3.14159...
+console.log(Math.E);        // 2.718...
+console.log(Math.SQRT2);    // 1.414...
+```
+
+## Random The Number "အန်စာတုံး" ဥပမာ
+
+```javascript
+function rollDice() {
+  return Math.floor(Math.random() * 6) + 1; // 1 - 6
+}
+
+console.log(rollDice());
+```
+
+<Aside type="note" title="Max/Min အတွက် Spread">
+Array ရဲ့ Max ကို လိုချင်ရင် `Math.max(...numbers)` လို Spread သုံးပါ:
+```javascript
+const scores = [50, 80, 90, 65];
+console.log(Math.max(...scores)); // 90
+```
+</Aside>
+
+<LessonCompletion />

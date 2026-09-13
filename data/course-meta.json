@@ -114,6 +114,12 @@
     "color": "#eab308"
   },
   {
+    "label": "JavaScript ES6+ Essential",
+    "description": "ES6+ ခေတ်မီ JavaScript — let/const, Arrow Functions, Classes, Async/Await, Fetch, Modules, DOM, Web API တွေကို အခြေခံမှ အဆင့်မြင့်အထိ မြန်မာလို လေ့လာမယ်။",
+    "icon": "🟨",
+    "color": "#f7df1e"
+  },
+  {
     "label": "n8n Workflow Automation",
     "description": "n8n နဲ့ Workflow တွေ ချိတ်ဆက်ပြီး Automation Pipeline တွေ တည်ဆောက်နည်းကို လေ့လာမယ်။",
     "icon": "🔗",

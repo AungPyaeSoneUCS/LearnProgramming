@@ -1,0 +1,91 @@
+---
+title: "JS JSON"
+description: "JSON — Data ဖလှယ်ရန် စံပုံစံ၊ parse နှင့် stringify"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## JSON ဆိုတာ ဘာလဲ
+
+**JSON (JavaScript Object Notation)** ဆိုတာ Server ↔ Client အကြား **Data ဖလှယ်ရန် စံပုံစံ** တစ်ခုပါ။ Object ပုံစံနဲ့တူပေမယ့် သီးသန့် **Text format** ဖြစ်ပါတယ်။
+
+```javascript
+// JSON (Text) — Keys တွေက Double Quote ပါရမယ်
+{
+  "name": "Mg Mg",
+  "age": 25,
+  "isStudent": true,
+  "courses": ["SQL", "JavaScript"]
+}
+```
+
+## JSON.parse() — Text → Object
+
+```javascript
+const jsonText = '{"name":"Mg Mg","age":25}';
+
+const obj = JSON.parse(jsonText);
+console.log(obj.name); // "Mg Mg"
+console.log(obj.age);  // 25
+```
+
+## JSON.stringify() — Object → Text
+
+```javascript
+const user = {
+  name: "Su Su",
+  age: 22,
+  skills: ["JS", "React"]
+};
+
+const text = JSON.stringify(user);
+console.log(text);
+// '{"name":"Su Su","age":22,"skills":["JS","React"]}'
+
+// လှလှလေး ပြချင်ရင်
+console.log(JSON.stringify(user, null, 2));
+```
+
+## JSON မှာ ဘာတွေ ပါလို့ရလဲ
+
+```javascript
+// ✅ ရတဲ့ Type များ: string, number, boolean, array, object, null
+// ❌ မရတဲ့ Type များ: undefined, function, Symbol, Date (string ဖြစ်သွားမယ်)
+
+const note = { date: new Date(), fn: () => 1 };
+console.log(JSON.stringify(note));
+// {"date":"2026-01-01T00:00:00.000Z"}  → fn နဲ့ undefined ပျောက်သွားတယ်
+```
+
+<Aside type="caution" title="parse Error">
+Invalid JSON ကို `JSON.parse()` လုပ်ရင် **SyntaxError** တက်ပါတယ် — `try...catch` နဲ့ ဖမ်းပါ။
+```javascript
+try {
+  JSON.parse("invalid json");
+} catch (error) {
+  console.log("Invalid JSON:", error.message);
+}
+```
+</Aside>
+
+## Practical — Fetch နဲ့ JSON
+
+```javascript
+async function getUser() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/users/1");
+  const user = await res.json(); // JSON → Object
+  console.log(user.name);
+}
+```
+
+## Deep Copy — JSON နည်း
+
+```javascript
+const original = { a: 1, nested: { b: 2 } };
+const copy = JSON.parse(JSON.stringify(original));
+copy.nested.b = 99;
+console.log(original.nested.b); // 2 (မပြောင်း — safe copy)
+```
+
+<LessonCompletion />

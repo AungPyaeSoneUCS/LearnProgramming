@@ -1,0 +1,111 @@
+---
+title: "JS Classes"
+description: "Class များ — Constructor, Methods, Inheritance, Static, Getters/Setters"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Class ဆိုတာ ဘာလဲ
+
+**Class** (ES6) ဆိုတာ Object တွေကို တပ်ဆင်ထုတ်ဖို့ **Blueprint (ပုံကြမ်း)** တစ်ခုပါ။ Object-oriented Programming (OOP) ရဲ့ အခြေခံပါ။
+
+## Class အခြေခံ
+
+```javascript
+class Student {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  introduce() {
+    return `ကျွန်တော်က ${this.name}, အသက် ${this.age}`;
+  }
+}
+
+const s1 = new Student("Mg Mg", 25);
+console.log(s1.introduce()); // ကျွန်တော်က Mg Mg, အသက် 25
+```
+
+## Inheritance — မိဘ Class ကနေ ဆက်ခံ
+
+```javascript
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+
+  speak() {
+    return `${this.name} က အသံထွက်တယ်`;
+  }
+}
+
+class Dog extends Animal {
+  speak() {
+    return `${this.name} က ဝူးဝူး!`;
+  }
+
+  fetch() {
+    return `${this.name} က မိုးပြန်လာအောင် ယူလာတယ်`;
+  }
+}
+
+const dog = new Dog("Lucky");
+console.log(dog.speak()); // Lucky က ဝူးဝူး!
+console.log(dog.fetch()); // Lucky က မိုးပြန်...
+```
+
+<Aside type="tip" title="super()"> 
+Child Constructor ထဲမှာ `this` မသုံးခင်မှာ `super(...)` ကို **အရင်ခေါ်** ရပါတယ်။
+```javascript
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name);       // Parent constructor
+    this.breed = breed;
+  }
+}
+```
+</Aside>
+
+## Static — Class ပေါ်မှာပဲ ရှိတဲ့ Method
+
+```javascript
+class MathHelper {
+  static add(a, b) {
+    return a + b;
+  }
+}
+
+console.log(MathHelper.add(2, 3)); // 5
+// MathHelper က instance မလိုဘူး
+```
+
+## Getters / Setters in Class
+
+```javascript
+class Temperature {
+  constructor(celsius) {
+    this._celsius = celsius;
+  }
+
+  get fahrenheit() {
+    return (this._celsius * 9) / 5 + 32;
+  }
+
+  set fahrenheit(value) {
+    this._celsius = ((value - 32) * 5) / 9;
+  }
+}
+
+const temp = new Temperature(25);
+console.log(temp.fahrenheit); // 77
+temp.fahrenheit = 100;
+console.log(temp._celsius);   // 37.77...
+```
+
+<Aside type="note" title="Class vs Function">
+Class တွေက Syntax Sugar ပါ — နောက်ကွယ်မှာ Prototype-based Mechanism ကို အသုံးပြုပါတယ်။ အကျိုးကျေးဇူးက Code ဖတ်ရှင်းမှုနဲ့ စနစ်ကျမှုပါ။
+</Aside>
+
+<LessonCompletion />

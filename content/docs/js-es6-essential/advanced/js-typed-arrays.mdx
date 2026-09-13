@@ -1,0 +1,85 @@
+---
+title: "JS Typed Arrays"
+description: "Typed Arrays — Binary Data ကိုင်တွယ်ခြင်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Typed Array ဆိုတာ ဘာလဲ
+
+Normal Array တွေက ဘာဒေတာမဆို ထည့်လို့ရပေမယ့် **Typed Array** တွေက **သတ်မှတ်ထားတဲ့ Type တစ်မျိုးတည်း** ကို လက်ခံပါတယ်။ Binary Data (Buffer) ကိုင်တွယ်ရာမှာ သုံးပါတယ်။
+
+## အသုံးများတဲ့ Typed Arrays
+
+```javascript
+const int8 = new Int8Array(4);          // 4 bytes (signed 8-bit)
+const uint8 = new Uint8Array([1, 2, 3]); // unsigned 8-bit
+const int32 = new Int32Array([10, 20]);  // 32-bit integer
+const float64 = new Float64Array([1.5]); // double
+```
+
+## Properties & Methods
+
+```javascript
+const arr = new Uint8Array([200, 255, 300]);
+
+console.log(arr.length);         // 3
+console.log(arr.BYTES_PER_ELEMENT); // 1 (byte size)
+console.log(arr[2]);             // 44 (300 က overflow → (300-256))
+
+arr.set([1, 2, 3], 0);           // ပြန်ထည့်
+console.log(arr.join(" - "));    // "1 - 2 - 3"
+```
+
+<Aside type="note" title="Overflow သဘောသဘာဝ">
+Typed Array က Fixed-size ဖြစ်လို့ ကန့် ထက်ကျော်တဲ့တန်ဖိုး ထည့်ရင် **Wrap (လှို)** သွားပါတယ် — ဥပမာ Uint8 (0-255) မှာ `300` → `44`။
+</Aside>
+
+## ArrayBuffer — နောက်ကွယ်မှာ
+
+Typed Array တိုင်းရဲ့ နောက်ကွယ်မှာ **ArrayBuffer** (Memory Block) ရှိပါတယ်။
+
+```javascript
+// 16 bytes buffer ဖန်တီး
+const buffer = new ArrayBuffer(16);
+console.log(buffer.byteLength); // 16
+
+// Buffer အပေါ် မျက်နှာပေး (view)
+const view = new Uint8Array(buffer);
+view[0] = 42;
+console.log(view[0]); // 42
+```
+
+## Practical — Image/File Data
+
+```javascript
+async function readImage(file) {
+  const buffer = await file.arrayBuffer();  // ArrayBuffer
+  const bytes = new Uint8Array(buffer);     // Typed Array
+
+  // PNG Signature စစ်ခြင်း
+  const pngSignature = [137, 80, 78, 71];
+  const isPng = pngSignature.every((b, i) => bytes[i] === b);
+  console.log(isPng ? "ဒါ PNG ပါ" : "PNG မဟုတ်ဘူး");
+}
+```
+
+## Typed Array ↔ Normal Array
+
+```javascript
+const typed = new Uint8Array([5, 10, 15]);
+
+// Typed → Normal
+const normal = Array.from(typed);
+const normal2 = [...typed];
+
+// Normal → Typed
+const back = Uint8Array.from(normal);
+```
+
+<Aside type="tip" title="ဘယ်အခါမှာ သုံးလဲ">
+File Upload, Canvas pixels, WebAudio, Network Streams, WebSockets (binary) စတဲ့ **Binary Data** ကိုင်တွယ်တဲ့နေရာတွေမှာ Typed Array က အမြဲတမ်း ပါပါတယ်။ Performance လည်း ပိုကောင်းပါတယ်။
+</Aside>
+
+<LessonCompletion />

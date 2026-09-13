@@ -1,0 +1,88 @@
+---
+title: "JS Reference"
+description: "အသုံးဝင်သော JavaScript Reference — Built-in Objects, Methods များ"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Reference ဆိုတာ ဘာလဲ
+
+Reference ဆိုတာ **JavaScript ရဲ့ Built-in Objects, Methods, Functions တွေရဲ့ အကျဉ်းချုပ်** ပါ။ အသုံးများတဲ့ ပစ္စည်းတွေကို ဒီနေရာမှာ စုစည်းဖော်ပြထားပါတယ်။
+
+## String Methods (အကျဉ်းချုပ်)
+
+```javascript
+const s = "Hello Myanmar";
+
+s.length;          // အရှည်
+s.toUpperCase();   // အပေါင်း
+s.toLowerCase();   // အမြင့်
+s.includes("My");  // ပါမပါ
+s.startsWith("He");// အစ
+s.endsWith("mar"); // အဆုံး
+s.indexOf("l");    // နေရာ
+s.slice(0, 5);     // ဖြတ်ယူ
+s.split(" ");      // ခွဲ
+s.replace("a", "o");// အစားထိုး
+s.trim();          // အနားရှင်း
+s.padStart(10, "0"); // ရှေ့ဖြည့်
+```
+
+## Array Methods (အကျဉ်းချုပ်)
+
+```javascript
+const arr = [1, 2, 3];
+
+arr.push(4);         // ဆုံးမှာ ထည့်
+arr.pop();           // ဆုံးက ဖယ်
+arr.shift();         // အစက ဖယ်
+arr.unshift(0);      // အစမှာ ထည့်
+arr.includes(2);     // ပါမပါ
+arr.indexOf(2);      // နေရာ
+arr.slice(0, 2);     // ဖြတ်
+arr.splice(1, 1);    // ဖျက်/အစားထိုး
+arr.join("-");       // စာတွဲဖော်ပြ
+arr.reverse();       // ပြောင်းပြန်
+arr.flat();          // နယ် nested (ES2019)
+```
+
+## Number Methods (အကျဉ်းချုပ်)
+
+```javascript
+Number("42");       // 42
+parseInt("3.9");    // 3
+parseFloat("3.9");  // 3.9
+Number.isInteger(3);// true
+Number.isNaN(NaN);  // true
+(3.14159).toFixed(2); // "3.14"
+```
+
+## Math (အကျဉ်းချုပ်)
+
+```javascript
+Math.floor(3.7);   // 3
+Math.ceil(3.2);    // 4
+Math.round(3.5);   // 4
+Math.max(...a);    // အကြီးဆုံး
+Math.min(...a);    // အသေးဆုံး
+Math.pow(2, 3);    // 8
+Math.sqrt(16);     // 4
+```
+
+<Aside type="tip" title="အပြည့်အစုံ ကြည့်ရန်">
+MDN Web Docs (developer.mozilla.org) က ယုံကြည်စိတ်ချရဆုံး JavaScript Reference ဖြစ်ပါတယ်။
+</Aside>
+
+## Console (အကျဉ်းချုပ်)
+
+```javascript
+console.log(x);
+console.info(x);
+console.warn(x);
+console.error(x);
+console.table(arr);
+console.time("label"); console.timeEnd("label");
+```
+
+<LessonCompletion />

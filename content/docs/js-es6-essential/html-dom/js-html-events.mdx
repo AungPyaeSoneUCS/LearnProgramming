@@ -1,0 +1,78 @@
+---
+title: "JS HTML Events"
+description: "HTML Events — Browser မှာ ဖြစ်ပျက်မှုတွေကို JavaScript နဲ့ တုံ့ပြန်ခြင်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Event ဆိုတာ ဘာလဲ
+
+Event ဆိုတာ **Browser ထဲမှာ ဖြစ်ပျက်မှု** တစ်ခုစီပါ — Mouse Click, Keyboard press, Page Load, Form Submit စသဖြင့်။ JavaScript က ဒါတွေကို **Listen (နားထောင်)** ပြီး တုံ့ပြန်နိုင်ပါတယ်။
+
+## အသုံးများတဲ့ Events
+
+| Event | ဘယ်အခါမှာ |
+|---|---|
+| `click` | Element ကို နှိပ်တဲ့အခါ |
+| `dblclick` | နှစ်ချက်နှိပ် |
+| `mouseover` | ပေါ်ရောက်တဲ့အခါ |
+| `keydown` / `keyup` | Key နှိပ် / လွှတ် |
+| `submit` | Form submit |
+| `load` | Page/Image ပြည့်စုံ Load |
+| `input` | Input တန်ဖိုး ပြောင်းတဲ့အခါ |
+
+## Event Listener (အကြံပြုသော နည်းလမ်း)
+
+```html
+<button id="btn">နှိပ်ပါ</button>
+```
+
+```javascript
+const btn = document.getElementById("btn");
+
+btn.addEventListener("click", () => {
+  console.log("Button ကို နှိပ်လိုက်ပါတယ်!");
+});
+```
+
+## Inline Event (onclick attribute)
+
+```html
+<button onclick="sayHello()">နှိပ်ပါ</button>
+```
+
+```javascript
+function sayHello() {
+  alert("မင်္ဂလာပါ!");
+}
+```
+
+## Event Object — အသေးစိတ် အချက်အလက်
+
+```javascript
+document.getElementById("btn").addEventListener("click", (event) => {
+  console.log(event.target);   // ဘယ် element ကို နှိပ်ခဲ့တာလဲ
+  console.log(event.type);     // "click"
+  event.preventDefault();      // Default ကို တားမြစ်
+});
+```
+
+## Keyboard Events
+
+```javascript
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    console.log("Enter နှိပ်လိုက်ပါတယ်!");
+  }
+  if (event.key === "Escape") {
+    console.log("Escape!");
+  }
+});
+```
+
+<Aside type="tip" title="EventListener Removal">
+Listener တွေ မလိုတော့ရင် `removeEventListener` နဲ့ ဖယ်ပါ — လိုအပ်တဲ့အခါပဲ element ထဲကို ထပ်မထည့်ဘဲ Memory သက်သာစေပါတယ်။
+</Aside>
+
+<LessonCompletion />

@@ -75,6 +75,7 @@ function prettifyLabel(s) {
     .split(/[-_]/)
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ")
+    .replace(/\b(Css|Html)(?=\d)/gi, (m) => m.toUpperCase())
     .replace(/\b(Css|Sql|Js)\b/gi, (m) => m.toUpperCase());
 }
 

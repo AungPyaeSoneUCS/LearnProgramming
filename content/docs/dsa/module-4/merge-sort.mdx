@@ -1,0 +1,67 @@
+---
+title: "Merge Sort: Divide & Conquer"
+description: "Splitting into halves and merging sorted pieces back."
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## Merge Sort: Divide & Conquer
+
+Merge Sort မှာတော့ "ခွဲပြီး အုပ်ချုပ်သည်" (Divide and Conquer) ဗျူဟာကို သုံးပါတယ်:
+
+1. **Divide:** Array ကို ယထာပုဂ္ဂလိကအားဖြင့် နှစ်ခြမ်းခြမ်းပြီး Element တစ်ခုချင်း မကျန်မချင်း ခွဲပါတယ်။
+2. **Conquer:** အပိုင်းတစ်ခုချင်း (တစ်ခုတည်းကျတော့ အလိုအလျောက် Sorted) ကို ပြန်ပေါင်းပါတယ်။
+3. **Merge:** Sorted နှစ်ခုကို ယှဉ်ပြီး အကြီးစဉ်ငယ်လိုက် ပြန်စုပါတယ်။
+
+![Divide & Conquer Split/Merge Diagram](../../..//media/dsa/divide-conquer-split-merge-diagram.svg)
+
+### လမ်းလျှောက်ကြည့်မယ် — `[8, 3, 2, 7, 4, 6]`
+
+**ခွဲတဲ့အဆင့် (Divide):**
+`[8, 3, 2, 7, 4, 6]` → `[8, 3, 2]` နဲ့ `[7, 4, 6]` → ... → `[8] | [3] | [2] | [7] | [4] | [6]`
+
+**ပြန်ပေါင်းတဲ့အဆင့် (Merge):**
+- `[8]` + `[3]` → `8` နဲ့ `3` ယှဉ် → `[3, 8]`
+- `[7]` + `[4]` → `[4, 7]`
+- `[3, 8]` + `[2]` → `[2, 3, 8]`
+- `[4, 7]` + `[6]` → `[4, 6, 7]`
+- `[2, 3, 8]` + `[4, 6, 7]` → ယှဉ်ယှဉ်သွား → **`[2, 3, 4, 6, 7, 8]`** ✅
+
+### Code ကြည့်မယ်
+
+```javascript
+function mergeSort(arr) {
+  if (arr.length <= 1) return arr; // Base Case
+
+  const mid = Math.floor(arr.length / 2);
+  const left = mergeSort(arr.slice(0, mid));   // ဘယ်ခြမ်း
+  const right = mergeSort(arr.slice(mid));      // ညာခြမ်း
+  return merge(left, right);
+}
+
+function merge(left, right) {
+  const result = [];
+  let i = 0, j = 0;
+
+  while (i < left.length && j < right.length) {
+    if (left[i] <= right[j]) result.push(left[i++]);
+    else result.push(right[j++]);
+  }
+  // ကျန်နေတဲ့အပိုင်း အကုန် ဆက်ထည့်
+  return result.concat(left.slice(i), right.slice(j));
+}
+
+console.log(mergeSort([8, 3, 2, 7, 4, 6])); // [2, 3, 4, 6, 7, 8]
+```
+
+### ဘာလို့ $O(n \log n)$ လဲ?
+
+- **Divide က log n:** Array ကို တစ်ဝက်တစ်ဝက် ခွဲသွားလို့ Level အရေအတွက်က $\log n$ ပါ။
+- **Merge က n:** Level တိုင်းမှာ Elements အားလုံး ($n$) ကို ပြန်ပေါင်းရတယ်။
+- ပေါင်းလိုက်တော့ $n \times \log n$ = **$O(n \log n)$** — Bubble ရဲ့ $O(n^2)$ ထက် အများကြီး ပိုမြန်ပါတယ်။
+
+<Aside title="Pros & Cons">
+- **Stable** ဖြစ်ပြီး Worst Case မှာတောင် $O(n \log n)$ — အာမခံချက် ရှိတယ်။
+- ဒါပေမဲ့ Merge လုပ်ဖို့ **Extra Array ($O(n)$ Space)** လိုပါတယ်။
+- Recursion ဖြစ်လို့ အတွင်းကျကျ (In-place) မဟုတ်ပါဘူး။
+</Aside>

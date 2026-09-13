@@ -19,7 +19,7 @@ String ဆိုတာ တကယ်တော့ Character တွေ စီထာ
 
 Array သို့မဟုတ် String တစ်ခုကို ဘယ်နဲ့ ညာ၊ ဒါမှမဟုတ် ရှေ့နဲ့ နောက် ကနေ Pointers နှစ်ခု အသုံးပြုပြီး ဖြေရှင်းတဲ့ နည်းလမ်းပါ -
 
-![Two Pointers Palindrome](../../../../assets/dsa/two-pointers-palindrome.svg)
+![Two Pointers Palindrome](../../..//media/dsa/two-pointers-palindrome.svg)
 
 **ဥပမာ - Palindrome စစ်ခြင်း (ရှေ့ဖတ် နောက်ဖတ် အတူတူပဲလား?)**
 
@@ -28,11 +28,30 @@ Array သို့မဟုတ် String တစ်ခုကို ဘယ်န�
 2. ဘယ် 'e'၊ ညာ 'e' -> တူတယ် -> ရှေ့ဆက်တိုး။
 3. အလယ်က 'v' -> ပြီးပြီ။ Palindrome ဖြစ်တယ်။
 
+**Code: Palindrome စစ်ခြင်း**
+
+```javascript
+function isPalindrome(str) {
+  let left = 0, right = str.length - 1;
+  while (left < right) {
+    if (str[left] !== str[right]) return false; // မတူရင် ရပ်
+    left++;
+    right--;
+  }
+  return true; // Palindrome ဖြစ်တယ်
+}
+
+console.log(isPalindrome("level")); // true
+console.log(isPalindrome("hello")); // false
+```
+
+![Palindrome Mirror](../../..//media/dsa/palindrome-mirror.svg)
+
 ### Pattern 2: The "Sliding Window" Technique
 
 ပြတင်းပေါက် (Window) တစ်ခုကနေ ကြည့်သလိုမျိုး၊ Data အစုလိုက် (Subarray/Substring) ကို ရွှေ့ပြီး တွက်ချက်တဲ့ နည်းလမ်းပါ -
 
-![Sliding Window Pattern](../../../../assets/dsa/sliding-window.svg)
+![Sliding Window Pattern](../../..//media/dsa/sliding-window.svg)
 
 **ဥပမာ - အရှည်ဆုံး စာသားကို ရှာမယ် (ထပ်နေတာ မပါစေရ)**
 

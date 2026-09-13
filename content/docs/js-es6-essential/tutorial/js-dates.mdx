@@ -1,0 +1,77 @@
+---
+title: "JS Dates"
+description: "Date များ — Create, Get, Set, Format"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Date ဆိုတာ ဘာလဲ
+
+JavaScript မှာ **Date Object** နဲ့ ရက်စွဲနဲ့ အချိန်တွေကို ကိုင်တွယ်ပါတယ်။
+
+## Date ဖန်တီးခြင်း
+
+```javascript
+const now = new Date();      // လက်ရှိ အချိန်
+const date1 = new Date(2025, 10, 20); // Nov 20, 2025 (လက 0 ကစတယ်)
+const date2 = new Date("2025-11-20");
+```
+
+<Aside type="caution" title="လရဲ့ နံပါတ်">
+`new Date(year, month, day)` မှာ **Month က 0 ကစတယ်** — January = `0`, November = `10`။ ဒါကို မမေ့ပါနဲ့!
+</Aside>
+
+## Date Get Methods
+
+```javascript
+const d = new Date("2025-11-20T14:30:00");
+
+console.log(d.getFullYear()); // 2025
+console.log(d.getMonth());    // 10 (November)
+console.log(d.getDate());     // 20
+console.log(d.getDay());      // 4 (Thursday — တနင်္ဂနွေက 0)
+console.log(d.getHours());    // 14
+console.log(d.getMinutes());  // 30
+console.log(d.toDateString()); // Thu Nov 20 2025
+```
+
+## Date Set Methods
+
+```javascript
+const e = new Date();
+
+e.setFullYear(2026);
+e.setMonth(0);          // January
+e.setDate(1);
+
+console.log(e.toDateString());
+```
+
+## `toLocaleString()` — စာဖတ်ရလွယ်အောင်
+
+```javascript
+const today = new Date();
+
+console.log(today.toLocaleDateString("en-US"));
+console.log(today.toLocaleDateString("my-MM", {
+  year: "numeric",
+  month: "long",
+  day: "numeric"
+}));
+```
+
+## Timestamp (Milliseconds)
+
+```javascript
+const ts = Date.now(); // 1970 ကစပြီး millisecond ရေတွက်
+const fromTs = new Date(ts);
+
+// နှစ်ခုကြားကွာဟချက်
+const start = new Date("2025-01-01");
+const diff = new Date() - start;
+const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+console.log(`ရက်ပေါင်း: ${days}`);
+```
+
+<LessonCompletion />

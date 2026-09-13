@@ -1,0 +1,85 @@
+---
+title: "JS Iterations"
+description: "Iteration များ — For, ForEach, Map, Filter, Reduce, Find, Some, Every"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Iteration ဆိုတာ ဘာလဲ
+
+Iteration ဆိုတာ **Collection တစ်ခုရဲ့ Element တစ်ခုချင်းစီကို ဖြတ်ကျော်သွားခြင်း** ပါ။
+
+## Array Method များ — တစ်ချက်ချင်း
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+
+// map — ပုံစံပြောင်း၊ Array အသစ် ပြန်
+const doubled = numbers.map((n) => n * 2);
+console.log(doubled); // [2,4,6,8,10]
+
+// filter — စစ်ထုတ်
+const evens = numbers.filter((n) => n % 2 === 0);
+console.log(evens); // [2,4]
+
+// find — ပထမဆုံး တွေ့တဲ့ အရာ
+const found = numbers.find((n) => n > 3);
+console.log(found); // 4
+
+// some — တစ်ခုခု မှန်ရင် true
+console.log(numbers.some((n) => n > 4)); // true
+
+// every — အားလုံး မှန်မှ true
+console.log(numbers.every((n) => n > 0)); // true
+
+// reduce — တစ်ပေါင်းတုန်း (accumulate)
+const total = numbers.reduce((sum, n) => sum + n, 0);
+console.log(total); // 15
+```
+
+## `for...of` vs `forEach` vs `for`
+
+```javascript
+const items = ["a", "b", "c"];
+
+// for...of — break/continue ရတယ်
+for (const item of items) {
+  if (item === "b") continue;
+  console.log(item);
+}
+
+// forEach — break/continue မရဘူး၊ ရိုးရှင်း
+items.forEach((item, index) => {
+  console.log(index, item);
+});
+
+// Classic for — index ကို ထိန်းချုပ်ချင်ရင်
+for (let i = 0; i < items.length; i++) {
+  console.log(items[i]);
+}
+```
+
+## Object Iteration
+
+```javascript
+const user = { name: "Aung", age: 30, city: "Bago" };
+
+// Keys ကို loop
+for (const key in user) {
+  console.log(key, user[key]);
+}
+
+// ES6+ နည်းလမ်းများ
+Object.entries(user).forEach(([key, value]) => {
+  console.log(`${key}: ${value}`);
+});
+```
+
+<Aside type="tip" title="ဘယ်ဟာ ဘယ်အခါမှာ">
+- **map / filter / reduce** → Data ပြောင်းလဲခြင်း (Functional)
+- **for...of** → ရိုးရှင်းစွာ ဖြတ်ကျော်ခြင်း
+- **for...in** → Object key iteration — Array မှာ မသုံးပါနဲ့
+</Aside>
+
+<LessonCompletion />

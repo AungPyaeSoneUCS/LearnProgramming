@@ -1,0 +1,71 @@
+---
+title: "JS Maps"
+description: "Map များ — Key-Value Collection ၏ ခေတ်မီနည်းလမ်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Map ဆိုတာ ဘာလဲ
+
+**Map** ဆိုတာ **Key-Value** စုံတွေကို သိမ်းတဲ့ Collection (ES6) တစ်ခုပါ။ Object နဲ့ရောနေပေမယ့် အများကြီး ပိုစွမ်းဆောင်နိုင်ပါတယ်။
+
+## Map ဖန်တီးခြင်းနဲ့ အသုံးပြုခြင်း
+
+```javascript
+const scores = new Map();
+
+scores.set("Mg Mg", 90);      // ထည့်/ပြောင်း
+scores.set("Su Su", 85);
+
+console.log(scores.get("Mg Mg")); // 90 (ယူ)
+console.log(scores.size);         // 2
+console.log(scores.has("Su Su")); // true
+scores.delete("Mg Mg");
+```
+
+## Map စတင်ဖန်တီးတဲ့အခါ ထည့်သွင်းနည်း
+
+```javascript
+const student = new Map([
+  ["name", "Nyi Nyi"],
+  ["age", 23],
+  ["city", "Mandalay"]
+]);
+```
+
+## Map ကို Iterate
+
+```javascript
+for (const [key, value] of student) {
+  console.log(`${key}: ${value}`);
+}
+
+student.forEach((value, key) => console.log(key, value));
+```
+
+## Object vs Map
+
+| | Object | Map |
+|---|---|---|
+| Key | String/Symbol သာ | ဘာမဆို (Function, Objectပါ) |
+| Key အစဉ် | အာမခံမထား | ထည့်လိုက်တဲ့ အစဉ်အတိုင်း |
+| `size` | မရှိ (keys → length) | `.size` တိုက်ရိုက်ရ |
+| Iteration | ခက်တယ် | `for...of` တိုက်ရိုက်ရ |
+
+<Aside type="tip" title="ဘယ်အချိန်မှာ သုံးမလဲ">
+Key တွေ အများကြီးရှိပြီး ထပ်တူကျတာ စစ်ချင်ရင်၊ Key ပေးမှုစနစ် လိုရင် **Map** သုံးပါ။ Object ကိုတော့ "အရာဝတ္ထုတစ်ခုရဲ့ ကိုယ်စားပြု" (Data Model) အတွက် သုံးပါ။
+</Aside>
+
+## Map ↔ Object / Map ↔ Array
+
+```javascript
+const map = new Map([["a", 1], ["b", 2]]);
+
+const obj = Object.fromEntries(map);   // { a: 1, b: 2 }
+const arr = [...map];                  // [["a",1], ["b",2]]
+const keys = [...map.keys()];          // ["a", "b"]
+const values = [...map.values()];      // [1, 2]
+```
+
+<LessonCompletion />

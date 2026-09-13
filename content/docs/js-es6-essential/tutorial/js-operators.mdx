@@ -1,0 +1,68 @@
+---
+title: "JS Operators"
+description: "JavaScript Operators များ — Arithmetic, Assignment, Comparison, Logical, Ternary"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Operators (လုပ်ဆောင်ကိန်း) ဆိုတာ ဘာလဲ
+
+Operators ဆိုတာ **တန်ဖိုးတွေပေါ်မှာ တွက်ချက်မှုတွေ လုပ်ပေးတဲ့ သင်္ကေတများ** ပါ။
+
+## Arithmetic Operators
+
+```javascript
+let a = 10;
+let b = 3;
+
+console.log(a + b); // 13 (ပေါင်း)
+console.log(a - b); // 7  (နုတ်)
+console.log(a * b); // 30 (မြှောက်)
+console.log(a / b); // 3.33 (စား)
+console.log(a % b); // 1  (အကြွင်း)
+console.log(a ** b); // 1000 (ထပ်ကိန်း)
+```
+
+## Assignment Operators
+
+```javascript
+let x = 10;
+x += 5;   // x = x + 5 → 15
+x -= 2;   // x = x - 2 → 13
+x *= 2;   // x = x * 2 → 26
+x /= 2;   // x = x / 2 → 13
+```
+
+## Comparison Operators (နှိုင်းယှဉ်ခြင်း)
+
+```javascript
+console.log(5 == "5");   // true  (တန်ဖိုးသာ ယှဉ်)
+console.log(5 === "5");  // false (တန်ဖိုးနဲ့ Type ပါ ယှဉ်)
+console.log(5 != 3);     // true
+console.log(5 !== "5");  // true
+console.log(5 > 3);      // true
+console.log(5 >= 5);     // true
+```
+
+<Aside type="caution" title="အရေးကြီးသည်">
+`===` (strict) နဲ့ `!==` ကို **အမြဲတမ်း သုံးပါ**။ `==`/`!=` က Type တွေကို အတင်းပြောင်းပေးလို့ မမျှော်လင့်တဲ့ ရလဒ်တွေ ထွက်နိုင်ပါတယ်။
+</Aside>
+
+## Logical Operators
+
+```javascript
+console.log(true && false); // false (နှစ်ခုလုံးမှန်မှ true)
+console.log(true || false); // true  (တစ်ခုခုမှန်ရင် true)
+console.log(!true);         // false (ပြောင်းပြန်)
+```
+
+## Ternary Operator (အကြောင်း/အကျိုး)
+
+```javascript
+const age = 20;
+const status = age >= 18 ? "Adult" : "Minor";
+console.log(status); // Adult
+```
+
+<LessonCompletion />

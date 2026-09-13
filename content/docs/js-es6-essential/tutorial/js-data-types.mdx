@@ -1,0 +1,90 @@
+---
+title: "JS Data Types"
+description: "Data Types များ — Primitive, Reference, typeof"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Data Type ဆိုတာ ဘာလဲ
+
+JavaScript မှာ ဒေတာ အမျိုးအစား (Data Type) နှစ်မျိုးကြီး ရှိပါတယ်: **Primitive** နဲ့ **Reference** ။
+
+## Primitive Types (တန်ဖိုး တစ်ခုတည်း)
+
+```javascript
+// String — စာသား
+const name = "Mg Mg";
+
+// Number — ဂဏန်း
+const age = 25;
+const price = 9.99;
+
+// Boolean — true/false
+const isStudent = true;
+
+// undefined — တန်ဖိုး မသတ်မှတ်ရသေး
+let x;
+console.log(x); // undefined
+
+// null — ဘာမှ မရှိ (တမင်သတ်မှတ်)
+const y = null;
+
+// Symbol — ထူးခြားတဲ့  identifier (ES6)
+const id = Symbol("id");
+
+// BigInt — ကြီးမားတဲ့ ဂဏန်း
+const bignum = 9007199254740991n;
+```
+
+## Reference Types (Object အမျိုးအစားများ)
+
+```javascript
+// Object
+const obj = { name: "Aung" };
+
+// Array
+const arr = [1, 2, 3];
+
+// Function
+const fn = () => "hi";
+```
+
+## `typeof` — Type စစ်ဆေးခြင်း
+
+```javascript
+console.log(typeof "text");      // "string"
+console.log(typeof 42);          // "number"
+console.log(typeof true);        // "boolean"
+console.log(typeof undefined);   // "undefined"
+console.log(typeof null);        // "object" 😅 (ထူးဆန်းတဲ့ bug)
+console.log(typeof {});          // "object"
+console.log(typeof []);          // "object" 😅 (Array လည်း object)
+console.log(typeof 12n);         // "bigint"
+```
+
+<Aside type="caution" title="Array ကို စစ်ချင်ရင်">
+`typeof []` က `"object"` ပြန်လို့:
+```javascript
+console.log(Array.isArray([1, 2])); // true
+console.log(Array.isArray({}));     // false
+```
+</Aside>
+
+## Primitive vs Reference — အရေးကြီးတဲ့ ကွာခြားချက်
+
+```javascript
+// Primitive — မိတ္တူ (copy) အနေနဲ့
+let a = 10;
+let b = a;
+b = 20;
+console.log(a); // 10 (မပြောင်း)
+
+// Reference — လိပ်စာ (reference) ပို
+const obj1 = { value: 1 };
+const obj2 = obj1;
+obj2.value = 99;
+console.log(obj1.value); // 99 (ပြောင်းသွားတယ်!)
+```
+
+<LessonCompletion />

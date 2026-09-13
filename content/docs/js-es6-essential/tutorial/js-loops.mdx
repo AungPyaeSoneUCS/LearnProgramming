@@ -1,0 +1,69 @@
+---
+title: "JS Loops"
+description: "For, For...of, ForEach, While, Do...While — ထပ်ခါထပ်ခါ လုပ်ဆောင်ခြင်း"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Loop ဆိုတာ ဘာလဲ
+
+Loop ဆိုတာ Code ကို **အကြိမ်ကြိမ် ထပ်လုပ်ပေးတဲ့ နည်းလမ်း** ပါ။ ဥပမာ — Student (၁၀၀) ရဲ့ Score တွေကို တစ်ကြောင်းချင်း ရေးစရာမလိုဘဲ Loop နဲ့ ထပ်လုပ်လို့ရပါတယ်။
+
+## `for` Loop
+
+```javascript
+for (let i = 1; i <= 5; i++) {
+  console.log("အကြိမ်ရေ:", i);
+}
+```
+
+- `let i = 1` → စတင်တဲ့ တန်ဖိုး
+- `i <= 5` → ရပ်ရမယ့် အခြေအနေ
+- `i++` → တစ်ကြိမ်ပြီးတိုင်း တိုးစေမယ့် အဆင့်
+
+## `for...of` — Array အတွက် (ES6)
+
+```javascript
+const fruits = ["Apple", "Banana", "Mango"];
+
+for (const fruit of fruits) {
+  console.log(fruit);
+}
+```
+
+## `forEach()` — Array နည်းလမ်း
+
+```javascript
+fruits.forEach((fruit, index) => {
+  console.log(`${index}: ${fruit}`);
+});
+```
+
+## `while` Loop
+
+```javascript
+let count = 1;
+
+while (count <= 3) {
+  console.log("Count:", count);
+  count++;
+}
+```
+
+## `do...while` — အနည်းဆုံး ၁ ကြိမ် လုပ်ပေးမယ်
+
+```javascript
+let n = 10;
+
+do {
+  console.log("Running...", n);
+  n++;
+} while (n < 3); // 10 < 3 မမှန်ပေမယ့် ပထမတစ်ကြိမ် run ပြီးသား
+```
+
+<Aside type="caution" title="သတိထားရန်">
+Loop ရဲ့ အခြေအနေက အမြဲမှန်နေရင် **Infinite Loop (ဘယ်တော့မှ မရပ်တဲ့ Loop)** ဖြစ်ပြီး Browser ကို Hang ဖြစ်စေပါတယ်။ `break` / `continue` ကိုလည်း သုံးနိုင်ပါတယ်။
+</Aside>
+
+<LessonCompletion />

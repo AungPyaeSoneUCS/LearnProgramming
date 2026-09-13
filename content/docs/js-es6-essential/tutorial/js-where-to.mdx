@@ -1,0 +1,55 @@
+---
+title: "JS Where To"
+description: "JavaScript ကို Website ထဲ ဘယ်နေရာမှာ ထည့်ရမလဲ"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## JavaScript ထည့်သွင်းနည်း (၃) မျိုး
+
+JavaScript ကို Website ထဲ ထည့်တဲ့ အဓိက နည်းလမ်း (၃) မျိုး ရှိပါတယ်။
+
+### ၁။ Internal (HTML ထဲမှာ `<script>` tag)
+
+```html
+<script>
+  console.log("Hello Myanmar!");
+</script>
+```
+
+### ၂။ External (သီးခြား `.js` ဖိုင်)
+
+```html
+<script src="app.js"></script>
+```
+
+### ၃။ Inline (HTML element ထဲမှာ)
+
+```html
+<button onclick="alert('Clicked!')">Click Me</button>
+```
+
+## External File ကို ဘာကြောင့် ဦးစားပေးသင့်လဲ
+
+- HTML နဲ့ JavaScript ကို သီးခြားခွဲထားလို့ ရှင်းလင်းစေတယ်
+- တစ်နေရာမှာ ရေးပြီး နေရာပေါင်းများစွာမှာ ပြန်သုံးလို့ရတယ် (Reusable)
+- Browser က ဖိုင်ကို **Caching** လုပ်ထားလို့ Load မြန်တယ်
+
+## `<script>` တွေကို ဘယ်နေရာမှာ ထားမလဲ
+
+Modern နည်းလမ်းကတော့ `</body>` မပိတ်ခင် ထားတာဖြစ်ပြီး HTML ရဲ့ **Content ကို အရင်ပြ** ပါမယ်။
+
+```html
+<body>
+  <h1>Hello</h1>
+  <script src="app.js"></script>
+</body>
+```
+
+<Aside type="tip" title="အကြံပြုချက်">
+`defer` attribute သုံးရင် `<head>` ထဲမှာပဲ ထားလို့ရပြီး Page Load မြန်စေပါတယ်:
+`<script src="app.js" defer></script>`
+</Aside>
+
+<LessonCompletion />

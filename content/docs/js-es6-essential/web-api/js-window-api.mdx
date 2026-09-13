@@ -1,0 +1,77 @@
+---
+title: "JS Window API"
+description: "Window Object — Browser Window ၏ Properties နှင့် Methods များ"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Window Object ဆိုတာ ဘာလဲ
+
+**`window`** ဆိုတာ Browser Window တစ်ခုလုံးကို ကိုယ်စားပြုတဲ့ Global Object ပါ။ JavaScript ရဲ့ Global Variables အားလုံးက `window` ရဲ့ Property ဖြစ်ပါတယ်။
+
+```javascript
+console.log(window);           // Window object
+console.log(this === window);  // Global Scope မှာ true
+```
+
+## Window Properties — Information
+
+```javascript
+console.log(window.innerWidth);      // မြင်ကွင်း အကျယ်
+console.log(window.innerHeight);     // မြင်ကွင်း အမြင့်
+console.log(window.screenX);         // မျက်နှာပြင်ပေါ်ရဲ့ X နေရာ
+console.log(window.localStorage);    // Storage
+console.log(window.location.href);   // Current URL
+console.log(window.navigator.userAgent); // Browser အကြောင်း
+```
+
+## Window Methods — Action
+
+```javascript
+window.alert("သတိပေးချက်");
+window.confirm("သေချာပါသလား?");   // true/false
+window.prompt("နာမည်ထည့်ပါ:");     // Input
+window.open("https://example.com");  // Tab အသစ်ဖွင့်
+window.close();                      // Tab ပိတ်
+window.scrollTo({ top: 0, behavior: "smooth" });
+```
+
+## Location — URL စီမံခြင်း
+
+```javascript
+console.log(window.location.hostname);  // "example.com"
+console.log(window.location.pathname);  // "/courses/..."
+console.log(window.location.search);    // "?q=search"
+
+// စာမျက်နှာ ပြန်လည်ဝင်စေ
+window.location.reload();
+```
+
+## Timing Methods (Window ကပါ ရတာ)
+
+```javascript
+const timeoutId = window.setTimeout(() => {}, 1000);
+window.clearTimeout(timeoutId);
+
+const intervalId = window.setInterval(() => {}, 1000);
+window.clearInterval(intervalId);
+```
+
+<Aside type="tip" title="window ကို ချန်လို့ရတယ်">
+`window` က Global ဖြစ်လို့ `window.alert()` အစား `alert()` ချည်းပဲရေးလို့လည်း ရပါတယ်။ သို့သော် Code ဖတ်ရှင်းမှုအတွက် လိုအပ်ရင် ထည့်ရေးလို့လည်းရပါတယ်။
+</Aside>
+
+## Resize / Scroll Events
+
+```javascript
+window.addEventListener("resize", () => {
+  console.log("Window ပြောင်းသွားတယ်:", window.innerWidth);
+});
+
+window.addEventListener("scroll", () => {
+  console.log("Scroll offset:", window.scrollY);
+});
+```
+
+<LessonCompletion />

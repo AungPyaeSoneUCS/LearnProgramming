@@ -20,7 +20,7 @@ Array ဆိုတာ အတန်းလိုက် စီထားတဲ့ �
   - Size က အလိုအလျောက် ကြီးလာနိုင်တယ်။
   - အခန်းပြည့်သွားရင် သူက နောက်ထပ် အခန်းလွတ် ပိုများတဲ့ နေရာအသစ်ကို ရွှေ့ပြီး Data တွေ အကုန် ကူးထည့်လိုက်တယ်။ (Resize)
 
-![Static vs Dynamic Array](../../../../assets/dsa/static-vs-dynamic-array.svg)
+![Static vs Dynamic Array](../../..//media/dsa/static-vs-dynamic-array.svg)
 
 <Aside title="Under the hood">
 Dynamic Array ပြည့်သွားတဲ့အခါ အသစ်နေရာချဖို့ (Allocation) နဲ့ ကူးပြောင်းဖို့ (Copying) အချိန်နည်းနည်း ပေးရပါတယ်။ ဒါပေမဲ့ ပုံမှန်သုံးနေတဲ့အချိန်မှာတော့ အရမ်းမြန်ပါတယ်။
@@ -35,8 +35,27 @@ Todo List တစ်ခုကို စဉ်းစားကြည့်ပါ -
 
 ဒီလို အစီအစဉ်တကျ သိမ်းဖို့ Array က အသင့်တော်ဆုံးပါပဲ။ Index နဲ့ တန်းခေါ်သုံးလို့ရတဲ့အတွက် Access လုပ်တာ အရမ်းမြန် ($O(1)$) ပါတယ်။
 
+### Array လုပ်ဆောင်ချက် Code ကြည့်မယ်
+
+```javascript
+const arr = [10, 20, 30];
+
+arr.push(40);       // [10, 20, 30, 40]     O(1) amortized
+arr.pop();          // [10, 20, 30]          O(1)
+arr.unshift(5);     // [5, 10, 20, 30]       O(n) — ရှေ့ကို ထည့်
+arr.splice(2, 1);   // [5, 10, 30]           O(n) — အလယ်က ဖျက်
+console.log(arr[1]); // 10                   O(1) — Index Access
+```
+
+![Array Resize Animation](../../..//media/dsa/array-resize-animation.svg)
+
+<Aside title="Array vs Linked List">
+- **Array:** Index Access $O(1)$၊ ဒါပေမဲ့ အလယ်က Insert/Delete $O(n)$
+- **Linked List:** Index Access $O(n)$၊ ဒါပေမဲ့ နေရာသိရင် Insert/Delete $O(1)$
+</Aside>
+
 ---
 
 ## Visual Guides
 
-![Todo List Array Mapping](../../../../assets/dsa/todo-list-array-mapping.svg)
+![Todo List Array Mapping](../../..//media/dsa/todo-list-array-mapping.svg)

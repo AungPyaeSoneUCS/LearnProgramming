@@ -1,0 +1,90 @@
+---
+title: "JS Temporal"
+description: "Temporal — ခေတ်မီ Date/Time API (New)"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Temporal ဆိုတာ ဘာလဲ
+
+**Temporal** ဆိုတာ JavaScript ရဲ့ **အခက်အခဲရှိတဲ့ `Date` ကို အစားထိုးဖို့** လာမယ့် ခေတ်မီ Date/Time API အသစ်တစ်ခုပါ (New / Proposal)။
+
+`Date` ရဲ့ ပြဿနာများ:
+- Mutable (ပြောင်းလဲနိုင်) — မမျှော်လင့်တဲ့ ပြောင်းမှု
+- Timezone ကိုင်တွယ်မှု ဆိုးဝါး
+- Date aritmetic (ရက်ပေါင်း ပေါင်း/နုတ်) ခက်ခဲ
+
+## Temporal Types — နာမည်များ
+
+```javascript
+// အဓိက Types
+Temporal.Now.zonedDateTimeISO("Asia/Yangon"); // လက်ရှိ + Timezone
+
+Temporal.PlainDate.from("2026-09-13");   // ရက်စွဲသက်သက်
+Temporal.PlainTime.from("14:30:00");     // အချိန်သက်သက်
+Temporal.PlainDateTime.from({ year: 2026, month: 9, day: 13, hour: 14 });
+```
+
+## Immutable — ပြောင်းတိုင်း Object အသစ်
+
+```javascript
+// Date — mutable (ပြောင်းနိုင်)
+const d = new Date();
+d.setHours(5); // ဒါပြောင်းလိုက်
+
+// Temporal — ပြောင်းရင် အသစ်ရ
+let date = Temporal.PlainDate.from("2026-09-13");
+const tomorrow = date.add({ days: 1 });
+console.log(tomorrow.toString()); // 2026-09-14
+console.log(date.toString());     // 2026-09-13 (မပြောင်း!)
+```
+
+## Arithmetics — လွယ်ကူစွာ
+
+```javascript
+const start = Temporal.PlainDate.from("2026-09-01");
+const end = Temporal.PlainDate.from("2026-09-13");
+
+const days = start.until(end).total({ unit: "days" });
+console.log(days); // 12
+
+const later = start.add({ months: 1, days: 5 });
+console.log(later.toString()); // 2026-10-06
+```
+
+## Comparison — ယှဉ်ရလွယ်
+
+```javascript
+const a = Temporal.PlainDate.from("2026-09-01");
+const b = Temporal.PlainDate.from("2026-10-01");
+
+console.log(Temporal.PlainDate.compare(a, b)); // -1 (a က စောတယ်)
+console.log(b.since(a).days); // 30
+```
+
+<Aside type="caution" title="Browser Support">
+Temporal က **ECMAScript Proposal** အဖြစ် ရှိနေသေးပြီး Browser Support ရှိနေပါပြီ။ Production မှာ သုံးခင် browser compatibility စစ်ပါ။
+</Aside>
+
+## TimeZone — သေချာစွာ
+
+```javascript
+const now = Temporal.Now.zonedDateTimeISO("Asia/Yangon");
+console.log(now.toString());
+// 2026-09-13T14:30:00+06:30[Asia/Yangon]
+
+console.log(now.hour);      // 14 (MMT)
+console.log(now.offset);    // "+06:30"
+```
+
+## Formatting — Intl နဲ့
+
+```javascript
+const date = Temporal.PlainDate.from("2026-09-13");
+console.log(
+  date.toLocaleString("my-MM", { month: "long", day: "numeric", year: "numeric" })
+);
+```
+
+<LessonCompletion />

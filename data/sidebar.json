@@ -673,6 +673,10 @@
           {
             "label": "The Big O & Memory",
             "slug": "dsa/module-1/foundations"
+          },
+          {
+            "label": "Complexity Analysis",
+            "slug": "dsa/module-1/complexity"
           }
         ]
       },
@@ -711,7 +715,7 @@
         ]
       },
       {
-        "label": "Module 4: Recursion & Sorting",
+        "label": "Module 4: Recursion, Searching & Sorting",
         "items": [
           {
             "label": "Recursion",
@@ -720,6 +724,22 @@
           {
             "label": "Sorting Algorithms",
             "slug": "dsa/module-4/sorting"
+          },
+          {
+            "label": "Binary Search",
+            "slug": "dsa/module-4/binary-search"
+          },
+          {
+            "label": "Bubble & Selection Sort",
+            "slug": "dsa/module-4/bubble-selection-sort"
+          },
+          {
+            "label": "Merge Sort",
+            "slug": "dsa/module-4/merge-sort"
+          },
+          {
+            "label": "Quick Sort",
+            "slug": "dsa/module-4/quick-sort"
           }
         ]
       },
@@ -731,8 +751,16 @@
             "slug": "dsa/module-5/trees"
           },
           {
+            "label": "Tree Traversals",
+            "slug": "dsa/module-5/tree-traversals"
+          },
+          {
             "label": "Heaps",
             "slug": "dsa/module-5/heaps"
+          },
+          {
+            "label": "Dijkstra's Shortest Path",
+            "slug": "dsa/module-5/shortest-path"
           },
           {
             "label": "Graphs",
@@ -2143,6 +2171,237 @@
           {
             "label": "What to Learn Next",
             "slug": "javascript/best-practices/next-steps"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "JavaScript ES6+ Essential",
+    "items": [
+      {
+        "label": "JS Tutorial",
+        "items": [
+          {
+            "label": "JS Home",
+            "slug": "js-es6-essential/tutorial/js-home"
+          },
+          {
+            "label": "JS Introduction",
+            "slug": "js-es6-essential/tutorial/js-introduction"
+          },
+          {
+            "label": "JS Where To",
+            "slug": "js-es6-essential/tutorial/js-where-to"
+          },
+          {
+            "label": "JS Output",
+            "slug": "js-es6-essential/tutorial/js-output"
+          },
+          {
+            "label": "JS Syntax",
+            "slug": "js-es6-essential/tutorial/js-syntax"
+          },
+          {
+            "label": "JS Operators",
+            "slug": "js-es6-essential/tutorial/js-operators"
+          },
+          {
+            "label": "JS If Conditions",
+            "slug": "js-es6-essential/tutorial/js-if-conditions"
+          },
+          {
+            "label": "JS Loops",
+            "slug": "js-es6-essential/tutorial/js-loops"
+          },
+          {
+            "label": "JS Strings",
+            "slug": "js-es6-essential/tutorial/js-strings"
+          },
+          {
+            "label": "JS Numbers",
+            "slug": "js-es6-essential/tutorial/js-numbers"
+          },
+          {
+            "label": "JS Functions",
+            "slug": "js-es6-essential/tutorial/js-functions"
+          },
+          {
+            "label": "JS Timers",
+            "slug": "js-es6-essential/tutorial/js-timers"
+          },
+          {
+            "label": "JS Objects",
+            "slug": "js-es6-essential/tutorial/js-objects"
+          },
+          {
+            "label": "JS Scope",
+            "slug": "js-es6-essential/tutorial/js-scope"
+          },
+          {
+            "label": "JS Dates",
+            "slug": "js-es6-essential/tutorial/js-dates"
+          },
+          {
+            "label": "JS Arrays",
+            "slug": "js-es6-essential/tutorial/js-arrays"
+          },
+          {
+            "label": "JS Sets",
+            "slug": "js-es6-essential/tutorial/js-sets"
+          },
+          {
+            "label": "JS Maps",
+            "slug": "js-es6-essential/tutorial/js-maps"
+          },
+          {
+            "label": "JS Iterations",
+            "slug": "js-es6-essential/tutorial/js-iterations"
+          },
+          {
+            "label": "JS Math",
+            "slug": "js-es6-essential/tutorial/js-math"
+          },
+          {
+            "label": "JS RegExp",
+            "slug": "js-es6-essential/tutorial/js-regexp"
+          },
+          {
+            "label": "JS Data Types",
+            "slug": "js-es6-essential/tutorial/js-data-types"
+          },
+          {
+            "label": "JS Errors",
+            "slug": "js-es6-essential/tutorial/js-errors"
+          },
+          {
+            "label": "JS Debugging",
+            "slug": "js-es6-essential/tutorial/js-debugging"
+          },
+          {
+            "label": "JS Style Guide",
+            "slug": "js-es6-essential/tutorial/js-style-guide"
+          },
+          {
+            "label": "JS Reference",
+            "slug": "js-es6-essential/tutorial/js-reference"
+          },
+          {
+            "label": "JS Projects",
+            "slug": "js-es6-essential/tutorial/js-projects"
+          },
+          {
+            "label": "JS Versions",
+            "slug": "js-es6-essential/tutorial/js-versions"
+          }
+        ]
+      },
+      {
+        "label": "JS HTML DOM",
+        "items": [
+          {
+            "label": "JS HTML Events",
+            "slug": "js-es6-essential/html-dom/js-html-events"
+          },
+          {
+            "label": "JS HTML First",
+            "slug": "js-es6-essential/html-dom/js-html-first"
+          }
+        ]
+      },
+      {
+        "label": "JS Web API",
+        "items": [
+          {
+            "label": "JS Window API",
+            "slug": "js-es6-essential/web-api/js-window-api"
+          },
+          {
+            "label": "JS Fetch API",
+            "slug": "js-es6-essential/web-api/js-fetch-api"
+          },
+          {
+            "label": "JS JSON",
+            "slug": "js-es6-essential/web-api/js-json"
+          },
+          {
+            "label": "JS Web API",
+            "slug": "js-es6-essential/web-api/js-web-api"
+          }
+        ]
+      },
+      {
+        "label": "JS Advanced",
+        "items": [
+          {
+            "label": "JS Advanced မိတ်ဆက်",
+            "slug": "js-es6-essential/advanced/js-advanced"
+          },
+          {
+            "label": "JS Temporal",
+            "slug": "js-es6-essential/advanced/js-temporal"
+          },
+          {
+            "label": "JS Functions",
+            "slug": "js-es6-essential/advanced/js-functions"
+          },
+          {
+            "label": "JS Objects",
+            "slug": "js-es6-essential/advanced/js-objects"
+          },
+          {
+            "label": "JS Classes",
+            "slug": "js-es6-essential/advanced/js-classes"
+          },
+          {
+            "label": "JS Asynchronous",
+            "slug": "js-es6-essential/advanced/js-asynchronous"
+          },
+          {
+            "label": "JS Modules",
+            "slug": "js-es6-essential/advanced/js-modules"
+          },
+          {
+            "label": "JS Meta & Proxy",
+            "slug": "js-es6-essential/advanced/js-meta-proxy"
+          },
+          {
+            "label": "JS Typed Arrays",
+            "slug": "js-es6-essential/advanced/js-typed-arrays"
+          },
+          {
+            "label": "JS DOM Navigation",
+            "slug": "js-es6-essential/advanced/js-dom-navigation"
+          },
+          {
+            "label": "JS Graphics",
+            "slug": "js-es6-essential/advanced/js-graphics"
+          }
+        ]
+      },
+      {
+        "label": "Old Technologies",
+        "items": [
+          {
+            "label": "JS AJAX",
+            "slug": "js-es6-essential/old-technologies/js-ajax"
+          },
+          {
+            "label": "JS jQuery",
+            "slug": "js-es6-essential/old-technologies/js-jquery"
+          },
+          {
+            "label": "JS JSONP",
+            "slug": "js-es6-essential/old-technologies/js-jsonp"
+          }
+        ]
+      },
+      {
+        "label": "JS Examples",
+        "items": [
+          {
+            "label": "JS Examples",
+            "slug": "js-es6-essential/examples/js-examples"
           }
         ]
       }

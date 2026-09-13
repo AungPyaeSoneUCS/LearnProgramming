@@ -1,0 +1,77 @@
+---
+title: "Bubble & Selection Sort"
+description: "Two simple O(n^2) sorts with step-by-step passes."
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## Bubble Sort: ဘေးချင်းကပ် ယှဉ်လဲ
+
+Bubble Sort က အနားယှဉ်နေတဲ့ Items နှစ်ခုကို ယှဉ်ပြီး၊ နေရာမှားနေရင် လဲ (Swap) ပေးပါတယ်။ Pass တစ်ခုစီပြီးတိုင်း **အကြီးဆုံး Value က အဆုံး (End) ကို ရောက်သွားပြီး**၊ နောက် Pass တွေမှာ ပြန်ယှဉ်စရာ မလိုတော့ပါဘူး။
+
+### Pass-by-Pass ကြည့်မယ် — `[5, 3, 8, 1]`
+
+**Pass 1:**
+- `5` vs `3` → လဲ → `[3, 5, 8, 1]`
+- `5` vs `8` → မလဲ
+- `8` vs `1` → လဲ → `[3, 5, 1, 8]` ← `8` အဆုံးရောက်
+
+**Pass 2:** `[3, 5, 1, 8]`
+- `3` vs `5` → မလဲ
+- `5` vs `1` → လဲ → `[3, 1, 5, 8]` ← `5` နေရာရ
+
+**Pass 3:** `[3, 1, 5, 8]`
+- `3` vs `1` → လဲ → `[1, 3, 5, 8]` ✅ ပြီးပြီ
+
+```javascript
+function bubbleSort(arr) {
+  const n = arr.length;
+  for (let i = 0; i < n - 1; i++) {
+    let swapped = false;
+    for (let j = 0; j < n - 1 - i; j++) { // -i: အဆုံးရောက်ထားတာ ပြန်မယှဉ်
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]; // Swap
+        swapped = true;
+      }
+    }
+    if (!swapped) break; // တစ်ကြိမ်မှ မလဲရင် ပြီးပြီ
+  }
+  return arr;
+}
+```
+
+**Complexity:** $O(n^2)$ — Nested Loop နှစ်ထပ်။ Space: $O(1)$ (In-place)။ **Stable** ဖြစ်ပါတယ်။
+
+![Bubble Sort Pass-by-Pass](../../..//media/dsa/bubble-sort-pass-by-pass.svg)
+
+## Selection Sort: အငယ်ဆုံးကို ရှေ့ပေးမယ်
+
+Selection Sort က Pass တစ်ခုစီမှာ **အငယ်ဆုံး Element ကို ရှာပြီး ရှေ့ဆုံးနဲ့ လဲပေးပါတယ်**။ Bubble လို တစ်ခါချင်း မလဲပါဘူး — Pass တစ်ခုမှာ တစ်ခါပဲ လဲပါတယ်။
+
+### လမ်းကြောင်း — `[5, 3, 8, 1]`
+
+1. **Min = 1** (Index 3) → Index 0 နဲ့ လဲ → `[1, 3, 8, 5]`
+2. နောက်က 3 ယောက်ထဲ **Min = 3** → နေရာမှားမနေဘူး
+3. `[8, 5]` ထဲ **Min = 5** → `[1, 3, 5, 8]` ✅
+
+```javascript
+function selectionSort(arr) {
+  const n = arr.length;
+  for (let i = 0; i < n - 1; i++) {
+    let minIdx = i;
+    for (let j = i + 1; j < n; j++) {
+      if (arr[j] < arr[minIdx]) minIdx = j; // Min ကို မှတ်
+    }
+    if (minIdx !== i) {
+      [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+    }
+  }
+  return arr;
+}
+```
+
+**Complexity:** $O(n^2)$ အကုန်၊ Space: $O(1)$။ Bubble ထက် Swap နည်းတာမို့ အနည်းငယ် မြန်ပါတယ်။ **Stable မဟုတ်** (လဲပေးတဲ့ ပုံစံကြောင့်)။
+
+<Aside type="caution" title="ဘာလို့ ဒီ Sort တွေကို လေ့လာရတာလဲ?">
+လက်တွေ့မှာ `array.sort()` ကို သုံးနိုင်ပါတယ်။ ဒါပေမဲ့ ဒီနှစ်ခုက **Nested Loop ရဲ့ ကုန်ကျစရိတ် ($O(n^2)$)** ကို ခံစားနားလည်စေဖို့ သင်ပေးတာပါ။ နောက် သင်ခန်းစာတွေမှာ **$O(n \log n)$** ရတဲ့ Merge Sort နဲ့ Quick Sort ကို တွေ့ကြရမှာပါ။
+</Aside>

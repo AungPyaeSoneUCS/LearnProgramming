@@ -14,7 +14,7 @@ Stack ဆိုတာ ပန်းကန်ပြား ဆေးဖို့ �
 
 ဒါကို **Last-In, First-Out (LIFO)** ၊ "နောက်ဆုံးဝင်၊ အရင်ထွက်" လို့ ခေါ်ပါတယ်။
 
-![Stack Push/Pop Animation](../../../../assets/dsa/stack-push-pop-animation.svg)
+![Stack Push/Pop Animation](../../..//media/dsa/stack-push-pop-animation.svg)
 
 ### Real World Use: The "Undo" Button
 
@@ -22,8 +22,41 @@ Microsoft Word သို့မဟုတ် Code Editor တွေမှာ စာ
 1. လုပ်လိုက်တဲ့ Action တိုင်းကို Stack ထဲ ထည့်ထားတယ်။ (Push)
 2. Undo နှိပ်လိုက်တဲ့အခါ နောက်ဆုံးလုပ်ခဲ့တဲ့ Action ကို Stack ပေါ်ကနေ ယူထုတ်ပြီး ပြန်ဖျက်လိုက်တယ်။ (Pop)
 
-![Undo Timeline Diagram](../../../../assets/dsa/undo-timeline-diagram.svg)
+![Undo Timeline Diagram](../../..//media/dsa/undo-timeline-diagram.svg)
 
 ### Browser History
 
 Browser မှာ Back Button နှိပ်တာဟာလည်း Stack သဘောတရားပါပဲ။ လက်ရှိ Page ကနေ နောက်တစ်မျက်နှာ နှိပ်လိုက်ရင်၊ လက်ရှိ Page ကို Stack ထဲ ထည့်ခဲ့ပြီး ရှေ့ဆက်သွားတာပါ။
+
+![Browser Back Stack Flow](../../..//media/dsa/browser-back-stack-flow.svg)
+
+### လက်တွေ့ Code: Valid Parentheses
+
+Bracket တွေ မှန်မမှန် စစ်တဲ့ နည်းလမ်း —
+
+```javascript
+function isValid(s) {
+  const stack = [];
+  const map = { ")": "(", "]": "[", "}": "{" };
+
+  for (const char of s) {
+    if (char === "(" || char === "[" || char === "{") {
+      stack.push(char);  // ဖွင့်လိုက်ရင် ထည့်
+    } else {
+      if (stack.pop() !== map[char]) return false; // မတူရင် မှား
+    }
+  }
+  return stack.length === 0; // Stack ဗလာမဖြစ်ရင် မှား
+}
+
+console.log(isValid("{[()]}")); // true
+console.log(isValid("{[(])}")); // false — ရောနှောနေ
+```
+
+<Aside title="Stack ဘယ်အချိန် သုံးမလဲ?">
+- Function Call / Recursion
+- Undo/Redo feature
+- Browser Back/Forward
+- Expression evaluation (3 + 4 * 2 → postfix)
+- DFS (Depth-First Search)
+</Aside>

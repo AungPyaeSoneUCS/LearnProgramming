@@ -1,0 +1,65 @@
+---
+title: "JS Numbers"
+description: "Number များ — Integer, Float, Math Methods, NaN, BigInt"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Number ဆိုတာ ဘာလဲ
+
+JavaScript မှာ Number တစ်မျိုးတည်းနဲ့ **Integer (ကိန်းပြည့်)** ရော **Float (ဒသမကိန်း)** ရော ကိုယ်စားပြုပါတယ်။
+
+```javascript
+let integer = 42;
+let float = 3.14;
+let negative = -7;
+let big = 1_000_000; // အရေဖတ်ရလွယ်အောင် _ သုံးနိုင်
+```
+
+## Number မှာ သတိထားစရာများ
+
+### 1. Decimal (ဒသမ) တွက်ချက်မှု
+
+```javascript
+console.log(0.1 + 0.2);   // 0.30000000000000004 😅
+console.log((0.1 * 10 + 0.2 * 10) / 10); // 0.3 (ဒီလိုပြင်သုံး)
+```
+
+### 2. NaN — "Not a Number"
+
+```javascript
+console.log(100 / "hello"); // NaN
+console.log(isNaN("abc"));  // true
+console.log(Number.isNaN(123)); // false
+```
+
+### 3. String ↔ Number ပြောင်းခြင်း
+
+```javascript
+console.log(Number("123"));   // 123
+console.log(parseInt("3.99")); // 3
+console.log(parseFloat("3.99")); // 3.99
+console.log(String(42));      // "42"
+```
+
+## Math Object
+
+```javascript
+console.log(Math.max(3, 7, 9));  // 9
+console.log(Math.min(3, 7, 9));  // 3
+console.log(Math.round(3.7));    // 4
+console.log(Math.floor(3.7));    // 3
+console.log(Math.ceil(3.2));     // 4
+console.log(Math.random());      // 0 ~ 1 ကြား ကျပန်းနံပါတ်
+console.log(Math.floor(Math.random() * 6) + 1); // အန်စာတုံး (1-6)
+```
+
+<Aside type="note" title="BigInt">
+အရမ်းကြီးတဲ့ ဂဏန်းတွေအတွက် ES2020 ရဲ့ **BigInt** ကို သုံးလို့ရပါတယ်:
+```javascript
+const big = 123456789012345678901234567890n;
+```
+</Aside>
+
+<LessonCompletion />

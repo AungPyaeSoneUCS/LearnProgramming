@@ -13,12 +13,37 @@ Queue (တန်းစီခြင်း) ကတော့ လက်တွေ့�
 
 ဒါကို **First-In, First-Out (FIFO)** ၊ "အရင်ဝင်၊ အရင်ထွက်" လို့ ခေါ်ပါတယ်။
 
-![FIFO Queue Line](../../../../assets/dsa/fifo-queue-line.svg)
+![FIFO Queue Line](../../..//media/dsa/fifo-queue-line.svg)
 
 ### Real World Use: Printer Job Lines
 
 ရုံးခန်းတစ်ခုမှာ Printer က တစ်လုံးတည်းရှိတယ်။ လူ (၅) ယောက်က Print `Ctrl + P` ကို တစ်ပြိုင်နက် နှိပ်လိုက်တယ်။ Printer က ဘယ်လို လုပ်မလဲ?
 သူ့ဆီ ရောက်လာတဲ့ Orders တွေကို Queue ထဲ ထည့်ထားလိုက်တယ်။ ပြီးမှ တစ်ယောက်ချင်းစီ အလှည့်ကျ ထုတ်ပေးသွားတာ ဖြစ်ပါတယ်။
+
+![Printer Queue Dashboard](../../..//media/dsa/printer-queue-dashboard.svg)
+
+### လက်တွေ့ Code: Queue Operations
+
+```javascript
+const queue = [];
+
+queue.push("Job A");  // Enqueue (နောက်ဖက်က ဝင်)  — FIFO
+queue.push("Job B");
+queue.push("Job C");
+
+queue.shift();        // Dequeue (ရှေ့ဖက်က ထွက်) → "Job A"
+console.log(queue);   // ["Job B", "Job C"]  — FIFO အတိုင်း
+console.log(queue[0]); // "Job B"             — Front ကြည့်
+```
+
+<Aside type="caution" title="Queue ဘယ်အချိန် သုံးမလဲ?">
+- Printer / Task Scheduling
+- BFS (Breadth-First Search)
+- Chat / Message Queue
+- Server Request Queues (Ticketmaster ကြုံရတာ)
+
+**မှတ်စု:** JS မှာ `shift()` က $O(n)$ မို့ စစ်တော့ အရမ်းများရင် သီးသန့် Queue Data Structure (သို့) Linked List ကို သုံးတာက ပိုကောင်းပါတယ်။
+</Aside>
 
 ### Ticketmaster Waiting Rooms
 
@@ -28,4 +53,4 @@ Concert လက်မှတ် ဝယ်တဲ့အခါမှာလည်း "
 ပုံမှန် Queue က ရှေ့ကထွက်၊ နောက်ကဝင် ပုံစံပါ။ Deque ကတော့ ရှေ့ရော နောက်ရော ဝင်လို့ထွက်လို့ ရတဲ့ Hybrid ပုံစံလေးပါ။
 </Aside>
 
-![Deque Comparison](../../../../assets/dsa/deque-comparison.svg)
+![Deque Comparison](../../..//media/dsa/deque-comparison.svg)

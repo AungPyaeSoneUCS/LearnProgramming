@@ -1,0 +1,85 @@
+---
+title: "JS Scope"
+description: "Scope များ — Global, Local, Block Scope, let/const vs var, Closure အခြေခံ"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Scope ဆိုတာ ဘာလဲ
+
+Scope ဆိုတာ **variable တစ်ခုကို ဘယ်နေရာတွေမှာ သုံးလို့ရလဲ** ဆိုတာ သတ်မှတ်ပေးတဲ့ နေရာပါ။
+
+## Global vs Local Scope
+
+```javascript
+const globalVar = "ဘယ်နေရာမှာမဆို ရတယ်"; // Global
+
+function show() {
+  const localVar = "ဒီ function ထဲမှာပဲ ရတယ်"; // Local
+  console.log(globalVar); // ✓ ရတယ်
+  console.log(localVar);  // ✓ ရတယ်
+}
+
+show();
+// console.log(localVar); // ✗ Error! အပြင်မှာ မရတော့ဘူး
+```
+
+## Block Scope — `let` / `const` (ES6)
+
+`let` နဲ့ `const` တွေက `{}` (block) ထဲမှာ သိမ်းထားပြီး အပြင်မှာ မမြင်နိုင်ပါဘူး။
+
+```javascript
+if (true) {
+  let blockLet = "block ထဲမှာပဲ";
+  const blockConst = "block ထဲမှာပဲ";
+  var blockVar = "var ကတော့ အပြင်ကို ထွက်လို့ရတယ်";
+}
+
+// console.log(blockLet);   // ✗ Error
+// console.log(blockConst); // ✗ Error
+console.log(blockVar);      // ✓ var ကတော့ ရတယ်
+```
+
+<Aside type="caution" title="သတိထားရန်">
+`var` က Function Scope ဖြစ်ပြီး Block Scope **မဟုတ်**ပါဘူး။ ဒါကြောင့် Hoisting နဲ့ Scope ပြဿနာတွေ ဖြစ်တတ်လို့ **`let`/`const` သာသုံးပါ**။
+</Aside>
+
+## Nested Scope — အတွင်းကနေ အပြင် ရတယ်
+
+```javascript
+const outer = "အပြင်";
+
+function one() {
+  const middle = "အလယ်";
+
+  function two() {
+    const inner = "အတွင်း";
+    console.log(outer);  // ✓
+    console.log(middle); // ✓
+    console.log(inner);  // ✓
+  }
+
+  two();
+}
+
+one();
+```
+
+## Closure အခြေခံ
+
+Function တစ်ခုက အပြင်က variable တွေကို Function ပြီးသွားတာတောင် **မှတ်ထားပေးနိုင်** ပါတယ်။ ဒါကို **Closure** လို့ ခေါ်ပါတယ်။
+
+```javascript
+function counter() {
+  let count = 0;
+  return () => ++count;
+}
+
+const next = counter();
+console.log(next()); // 1
+console.log(next()); // 2
+console.log(next()); // 3
+```
+
+<LessonCompletion />

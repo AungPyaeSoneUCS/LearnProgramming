@@ -1,0 +1,73 @@
+---
+title: "JS Debugging"
+description: "Debugging — console နည်းလမ်းများနှင့် Device စစ်ဆေးနည်းများ"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Debugging ဆိုတာ ဘာလဲ
+
+Debugging ဆိုတာ **Code ထဲက Error (Bug) တွေကို ရှာဖွေ ပြုပြင်ခြင်း** ပါ။ Browser မှာ **DevTools** (F12) ဖွင့်ပြီး Console ကို သုံးပါတယ်။
+
+## Console Method အမျိုးမျိုး
+
+```javascript
+console.log("ပုံမှန် log");
+console.info("အချက်အလက်");
+console.warn("သတိပေးချက်");
+console.error("Error!");
+
+// One or more values
+console.log("Name:", "Mg Mg", "Age:", 25);
+
+// Table — Array/Object တွေအတွက် လှလှလေး
+const users = [
+  { name: "Aung", age: 25 },
+  { name: "Su", age: 22 }
+];
+console.table(users);
+
+// Group
+console.group("User Info");
+console.log("Name: Aung");
+console.log("Age: 25");
+console.groupEnd();
+```
+
+## Time Tracking
+
+```javascript
+console.time("myLoop");
+
+for (let i = 0; i < 1_000_000; i++) {
+  // something
+}
+
+console.timeEnd("myLoop"); // "myLoop: X ms"
+```
+
+## Breakpoint နဲ့ Debug
+
+Code ရဲ့ error ဖြစ်ဖို့ ယူဆတဲ့ နေရာမှာ `debugger` စာကြောင်း ထည့်ပြီး DevTools မှာ ခဏရပ်စေနိုင်ပါတယ်။
+
+```javascript
+const prices = [100, 200, 300];
+
+function total(arr) {
+  debugger; // ဒီနေရာမှာ ရပ်ပြီး variables စစ်ကြည့်ပါ
+  return arr.reduce((sum, n) => sum + n, 0);
+}
+
+console.log(total(prices));
+```
+
+<Aside type="tip" title="Breakpoint အသုံးပြုခြင်း">
+DevTools → **Sources** tab မှာ Line Number ပေါ်ကို နှိပ်ပြီး Breakpoint ချနိုင်ပါတယ်။ Step Over / Step Into / Watch စတဲ့ ကိရိယာတွေနဲ့ Code အဆင့်လိုက် စစ်ဆေးနိုင်ပါတယ်။
+</Aside>
+
+<Aside type="caution" title="Debugger ကို မထားရစ်ပါနဲ့">
+`debugger;` နဲ့ console.log တွေက Production Code မှာ နေရကျိုးနပ်မှု (Performance) ကျစေနိုင်လို့ Shippng မလုပ်ခင် ဖယ်ရှားပါ။
+</Aside>
+
+<LessonCompletion />

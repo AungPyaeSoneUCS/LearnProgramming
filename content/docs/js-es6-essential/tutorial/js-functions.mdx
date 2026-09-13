@@ -1,0 +1,73 @@
+---
+title: "JS Functions"
+description: "Function များ — Declaration, Parameters, Arrow Functions, Default Values"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Function ဆိုတာ ဘာလဲ
+
+Function ဆိုတာ **ထပ်ခါထပ်ခါ ပြန်သုံးလို့ရတဲ့ Code Block** တစ်ခုပါ။ ခေါ်လိုက်တိုင်း အလုပ်လုပ်ပါတယ်။
+
+## Function Declaration
+
+```javascript
+function greet(name) {
+  return `မင်္ဂလာပါ, ${name}!`;
+}
+
+console.log(greet("Su Su")); // မင်္ဂလာပါ, Su Su!
+```
+
+## Function Expression
+
+```javascript
+const add = function (a, b) {
+  return a + b;
+};
+
+console.log(add(2, 3)); // 5
+```
+
+## Arrow Function (ES6)
+
+```javascript
+// ရှည်ရှည်
+const multiply = (a, b) => {
+  return a * b;
+};
+
+// တိုတိုနဲ့ (return ပြန်ချက်တစ်ကြောင်းဆို)
+const multiplyShort = (a, b) => a * b;
+
+console.log(multiply(4, 5));        // 20
+console.log(multiplyShort(4, 5));   // 20
+```
+
+## Default Parameter (ES6)
+
+```javascript
+function greetUser(name = "Guest") {
+  return `Hello, ${name}`;
+}
+
+console.log(greetUser());        // Hello, Guest
+console.log(greetUser("Aung"));  // Hello, Aung
+```
+
+## Parameter အများအပြား (Rest Parameter)
+
+```javascript
+function sumAll(...numbers) {
+  return numbers.reduce((acc, n) => acc + n, 0);
+}
+
+console.log(sumAll(1, 2, 3, 4)); // 10
+```
+
+<Aside type="tip" title="မည်သည့်နည်းကို သုံးမလဲ">
+ခေတ်မီ Code မှာ **Arrow Function** ကို အများဆုံး သုံးပါတယ်။ သို့သော် `this` ကို သုံးတဲ့နေရာမှာ Declaration နဲ့ Arrow Function က မတူပါဘူး — ဒါကို နောက်ပိုင်း သင်ခန်းစာမှာ အသေးစိတ် လေ့လာပါမယ်။
+</Aside>
+
+<LessonCompletion />

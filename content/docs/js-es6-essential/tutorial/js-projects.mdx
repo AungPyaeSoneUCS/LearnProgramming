@@ -1,0 +1,62 @@
+---
+title: "JS Projects"
+description: "လက်တွေ့ လေ့ကျင့်ခန်း အတွေးအခေါ်များ — Project Ideas"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import LessonCompletion from '@/components/mdx/LessonCompletion';
+
+## Project လုပ်ခြင်းက ဘာကြောင့် အရေးကြီးလဲ
+
+စာဖတ်ရုံနဲ့ JavaScript တတ်မြောက်မလာပါဘူး။ **Project ကိုယ်တိုင် ဆောက်ကြည့်ခြင်း** ကသာ Code ရေးနည်းကို တကယ် ဖမ်းစားနိုင်ပါတယ်။
+
+## Beginner Project Ideas
+
+```javascript
+// 1. Counter App
+let count = 0;
+const update = () => {
+  document.getElementById("count").textContent = count;
+};
+// button click → count++; update();
+```
+
+```javascript
+// 2. Random Quote Generator
+const quotes = ["မနက်ဖြန် ပိုကောင်းမယ်", "ကြိုးစားသူ နိုင်တယ်"];
+const randomIndex = Math.floor(Math.random() * quotes.length);
+console.log(quotes[randomIndex]);
+```
+
+```javascript
+// 3. Todo List (Core Logic)
+const todos = [];
+const addTodo = (text) => todos.push({ id: Date.now(), text, done: false });
+const toggleTodo = (id) => {
+  const t = todos.find((t) => t.id === id);
+  if (t) t.done = !t.done;
+};
+```
+
+## Intermediate Project Ideas
+
+- **Calculator** — Operations + Keyboard Support
+- **Weather App** — Fetch API + OpenWeatherMap
+- **Pomodoro Timer** — `setInterval` + Notifications
+- **Quiz App** — Array methods + Score
+- **Markdown Previewer** — Textarea + Convert
+
+## Challenge ပြုလုပ်နည်း
+
+<Aside type="tip" title="Project လုပ်တဲ့နည်း">
+1. **သေးငယ်အောင် ခွဲပါ** — Feature တစ်ခုချင်း စီလုပ်ပါ
+2. **နေ့စဉ် တိုးတက်ပါ** — ရက်တိုအတွင်း ပြီးအောင် ကြိုးစားပါ
+3. **ပြဿနာကျရင် Google ရှာပါ** — Error message ကို ရှာပါ
+4. **ပြီးရင် တင်ပြ** — Code ကို GitHub မှာ share ပါ
+</Aside>
+
+## နောက်ဆုံး သတိပေးချက်
+
+ဒီသင်ခန်းစာတွေကို ဖတ်ပြီးတာနဲ့ **ကိုယ်ပိုင် Project တစ်ခု စပါ**။ ပထမဆုံး Project ဖြစ်တာနဲ့ တစ်ခုအောင်ပြီး နောက် တစ်ခုပြန်လုပ်ပါ။
+
+<LessonCompletion />
