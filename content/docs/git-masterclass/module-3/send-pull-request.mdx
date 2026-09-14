@@ -1,0 +1,53 @@
+---
+title: "GitHub Send Pull Request — GitHub Send Pull Request"
+description: "Fork မှ pull request ပို့ခြင်း, code review နှင့် merge ပြုလုပ်ခြင်း လုပ်ငန်းစဉ်ကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Pull Request ဆိုသည်မှာ အဘယ်နည်း
+
+Pull request (PR) ဆိုသည်မှာ မိမိ၏ branch မှ မူရင်း repository ၏ branch ဆီသို့ ပြောင်းလဲမှုများကို merge သင့်သည်ဟု အကြံပြုသည့် တောင်းဆိုချက် ဖြစ်ပါသည်။ Team များအတွက် code review ပြုလုပ်ရန် အသုံးအများဆုံး လမ်းကြောင်း ဖြစ်ပါသည်။
+
+## PR ပို့ရန် လုပ်ငန်းစဉ် အဆင့်များ
+
+1. Fork သို့မဟုတ် feature branch ပေါ်တွင် အလုပ်လုပ်ပြီး push ပြုလုပ်ပါ။
+2. GitHub တွင် `Compare & pull request` button ပေါ်လာပါသည်။
+3. Base branch (မူရင်း) နှင့် compare branch (မိမိ၏) များကို သေချာ ရွေးပါ။
+4. PR title နှင့် description ကို ရေးပါ။
+5. `Create pull request` ကိုနှိပ်ပါ။
+
+## Fork မှ PR ပို့ခြင်း
+
+Fork ကို local သို့ clone ပြုလုပ်ပြီး feature branch တွင် အလုပ်လုပ်ပါ။
+
+```
+git switch -c feature/fix-typo
+git add README.md
+git commit -m "Fix typo in setup section"
+git push -u origin feature/fix-typo
+```
+
+GitHub ရှိ pull request စာမျက်နှာတွင် base repository (original) နှင့် compare (မိမိ၏ fork) ကို ရွေးပြီး pull request ဖန်တီးပါသည်။
+
+## PR ရေးသားခြင်း အကောင်းဆုံး အလေ့အကျင့်
+
+- Title: ပြောင်းလဲမှု၏ အကျဉ်းချုပ် ဖြစ်ပါသည်။
+- Description: ဘာကြောင့် ပြောင်းလဲကြောင်း, ဘယ်လို test လုပ်ထားကြောင်း အသေးစိတ် ရေးပါ။
+- ဆက်စပ် issue number ကို reference ပြုလုပ်နိုင်ပြီး closes #12 ကဲ့သို့ ရေးပါက merge လုပ်ချိန်တွင် issue ကို အလိုအလျောက် ပိတ်ပေးပါသည်။
+- Screenshot သို့မဟုတ် log များ ပူးတွဲနိုင်ပါသည်။
+
+## Review နှင့် Merge လုပ်ငန်းစဉ်
+
+- Reviewer သည် diff ကို comment နှင့် အကြံပြုချက်များ ပေးပါသည်။
+- Author သည် changes များကို ပြင်ပြီး push ပြုလုပ်ပါသည်။ PR သည် အလိုအလျောက် update ဖြစ်ပါသည်။
+- အတည်ပြုပြီးနောက် maintainer သည် Merge pull request ကိုနှိပ်ပါသည်။
+- Merge ပြီးနောက် feature branch ကို ဖျက်နိုင်ပါသည်။
+
+## Merge ပုံစံ သုံးမျိုး
+
+- **Create a merge commit**: History တွင် merge commit ထည့်၍ branch များကို ပေါင်းပါသည်။
+- **Squash and merge**: Commit အားလုံးကို တစ်ခုတည်း အဖြစ် ပေါင်းပါသည်။
+- **Rebase and merge**: Commit များကို base ၏ ထိပ်တွင် ပြန်စီ၍ linear ဖြစ်စေပါသည်။
+
+Pull request သည် ပူးပေါင်းလုပ်ဆောင်မှု၏ အဓိက အလယ်ဗဟို ဖြစ်ပါသည်။

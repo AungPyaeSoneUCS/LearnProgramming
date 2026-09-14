@@ -1,0 +1,92 @@
+---
+title: "Git Merge Conflicts — Git Merge Conflicts"
+description: "Merge conflict ဖြစ်ပွားရခြင်း အကြောင်း, conflict markers နှင့် ဖြေရှင်းမှု နည်းဗျူဟာများကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Merge Conflict ဆိုသည်မှာ အဘယ်နည်း
+
+Branch နှစ်ခုတွင် တူညီသော line များကို ပြောင်းလဲပြီး merge ပြုလုပ်သောအခါ Git သည် မည်သည့်အရာကို ထားရမည်ကို မသိရသောအခါ conflict ဖြစ်ပွားပါသည်။ Git သည် conflict ဖြစ်နေသော file များတွင် marker များကို ထည့်သွင်းပြီး developer မှ ဖြေရှင်းစေပါသည်။
+
+## Conflict ရရှိပုံ ဥပမာ
+
+Branch နှစ်ခုတွင် တူညီသော file ကို မတူညီစွာ ပြောင်းလဲပါသည်။
+
+```
+git switch main
+git merge feature/login
+```
+
+```
+Auto-merging config.js
+CONFLICT (content): Merge conflict in config.js
+Automatic merge failed; fix conflicts and then commit.
+```
+
+## Conflict Markers များ
+
+Conflict ဖြစ်နေသော file တွင် အောက်ပါအတိုင်း မြင်ရပါမည်။
+
+```
+<<<<<<< HEAD
+export const port = 8080;
+=======
+export const port = 9000;
+>>>>>>> feature/login
+```
+
+- `<<<<<<< HEAD`: Current branch ရှိ content ၏ အစ ဖြစ်ပါသည်။
+- `=======`: Content နှစ်ခုကြား ပိုင်းခြားမျဉ်း ဖြစ်ပါသည်။
+- `>>>>>>> feature/login`: Merge လုပ်မည့် branch ၏ content ၏ အဆုံး ဖြစ်ပါသည်။
+
+## Conflict ဖြေရှင်းခြင်း
+
+1. Conflict ဖြစ်နေသော file များကို စစ်ဆေးပါ။
+
+```
+git status
+```
+
+```
+Unmerged paths:
+        both modified:   config.js
+```
+
+2. File ကိုဖွင့်၍ marker များကို ဖယ်ပြီး မှန်ကန်သော content တစ်ခုတည်းကို ချန်ထားပါ။
+3. File ကို stage ပြုလုပ်ပြီး commit ပြုလုပ်ပါ။
+
+```
+git add config.js
+git commit -m "Resolve merge conflict in config"
+```
+
+## Merge Conflict နှင့် Rebase Conflict
+
+Rebase ပြုလုပ်ချိန်တွင်လည်း conflict marker များ ပေါ်နိုင်ပါသည်။
+
+```
+git rebase main
+# conflict ဖြစ်ပါက file ကို ပြင်ပြီး-
+git add .
+git rebase --continue
+```
+
+Rebase ကို ရပ်လိုပါက `git rebase --abort` ကို အသုံးပြုပါသည်။
+
+## Conflict လျော့ပါးစေမည့် နည်းဗျူဟာများ
+
+- မကြာခဏ pull ပြုလုပ်ပြီး branch များကို သက်တမ်းတိုတို ထားပါ။
+- Feature branch များကို သေးငယ်စွာ ထားရှိပါ။
+- Team အတွင်း file ownership ကို ရှင်းလင်းစွာ သတ်မှတ်ပါ။
+- `git diff` ဖြင့် conflict မဖြစ်မီ ပြောင်းလဲမှုများကို စစ်ဆေးပါ။
+
+## Mergetool အသုံးပြုခြင်း
+
+GUI diff viewer အသုံးပြုလိုပါက-
+
+```
+git mergetool
+```
+
+Conflict ဖြေရှင်းခြင်းသည် developer ၏ အရေးကြီးဆုံး ကျွမ်းကျင်မှုများထဲမှ တစ်ခု ဖြစ်ပါသည်။

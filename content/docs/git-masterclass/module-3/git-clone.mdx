@@ -1,0 +1,65 @@
+---
+title: "Git Clone from GitHub — Git Clone from GitHub"
+description: "Remote repository ကို local သို့ clone ပြုလုပ်ခြင်း၏ အသေးစိတ် အသုံးပြုပုံကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git Clone ဆိုသည်မှာ အဘယ်နည်း
+
+`git clone` သည် remote repository ၏ မိတ္တူကို သင့် computer တွင် ဖန်တီးပါသည်။ Clone ပြုလုပ်ခြင်းတွင် remote ရှိ branch နှင့် commit history အားလုံး ပါဝင်ပြီး working copy သို့ ချက်ချင်း အလုပ်လုပ်နိုင်ပါသည်။
+
+## Clone ပြုလုပ်ခြင်း
+
+```
+git clone https://github.com/mgmg/my-repo.git
+```
+
+Clone သည် repository name အတိုင်း folder အသစ်တစ်ခု ဖန်တီးပါသည်။ Folder name ကို ပြောင်းလိုပါက path တစ်ခု ထပ်ထည့်ပါ။
+
+```
+git clone https://github.com/mgmg/my-repo.git my-project
+```
+
+## Branch တစ်ခုစီ အတွက် Clone
+
+Branch တစ်ခုတည်းသာ လိုအပ်ပါက-
+
+```
+git clone --branch feature/login https://github.com/mgmg/my-repo.git
+```
+
+History မလိုဘဲ လျင်မြန်စွာ clone လိုလျှင် shallow clone ကို အသုံးပြုပါသည်။
+
+```
+git clone --depth 1 https://github.com/mgmg/my-repo.git
+```
+
+## Clone ပြီးနောက် Remote Configuration
+
+Clone ပြုလုပ်သောအခါ origin remote ကို အလိုအလျောက် သတ်မှတ်ပေးပါသည်။
+
+```
+git remote -v
+```
+
+```
+origin  https://github.com/mgmg/my-repo.git (fetch)
+origin  https://github.com/mgmg/my-repo.git (push)
+```
+
+## Pull နှင့် Sync
+
+Clone လုပ်ပြီးနောက် remote မှ နောက်ဆုံး အခြေအနေကို ရယူရန် pull ပြုလုပ်နိုင်ပြီး မိမိ၏ အပြောင်းအလဲများကို push ပြုလုပ်နိုင်ပါသည်။
+
+```
+git pull
+git push
+```
+
+## ခွင့်ပြုချက်များ နှင့် Access
+
+- Public repo များကို မည်သူမဆို clone လုပ်နိုင်ပါသည်။
+- Push ပြုလုပ်ရန် contributor permission (SSH key သို့မဟုတ် token) လိုအပ်ပါသည်။
+
+Clone သည် developer များအတွက် open source code များကို ရယူရန် နေ့စဉ် အသုံးအများဆုံး command ပင် ဖြစ်ပါသည်။

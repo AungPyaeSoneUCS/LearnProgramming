@@ -1,0 +1,93 @@
+---
+title: "Git Hooks — Git Hooks"
+description: "Git event များတွင် အလိုအလျောက် run လုပ်ရန် git hooks ၏ အသုံးပြုပုံနှင့် pre-commit scripts များကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git Hooks ဆိုသည်မှာ အဘယ်နည်း
+
+Git hooks သည် commit, push စသည့် Git event များမတိုင်မီ သို့မဟုတ် ပြီးနောက် အလိုအလျောက် run လုပ်သော scripts များ ဖြစ်ပါသည်။ Code quality, security နှင့် workflow automation များအတွက် အသုံးဝင်ပါသည်။
+
+## Hooks များ တည်နေရာ
+
+Hooks များသည် repository ၏ `.git/hooks` folder တွင် တည်ရှိပြီး sample file များလည်း ပါဝင်ပါသည်။
+
+```
+ls .git/hooks
+```
+
+```
+applypatch-msg.sample  pre-commit.sample
+commit-msg.sample      pre-push.sample
+post-commit.sample     prepare-commit-msg.sample
+```
+
+## Pre-commit Hook ဖန်တီးခြင်း
+
+Name ၏ .sample extension ကို ဖယ်ရှား၍ `pre-commit` file တစ်ခု ဖန်တီးပါသည်။
+
+```
+touch .git/hooks/pre-commit
+```
+
+`.git/hooks/pre-commit` file အတွင်းတွင် အောက်ပါအတိုင်း ရေးနိုင်ပါသည်။
+
+```
+#!/bin/sh
+echo "Running linter before commit..."
+npm run lint
+if [ $? -ne 0 ]; then
+  echo "Lint failed. Commit aborted."
+  exit 1
+fi
+exit 0
+```
+
+Script အတွင်းတွင် လိုအပ်သော validation များကို ထည့်သွင်းနိုင်ပါသည်။
+
+## Permission သတ်မှတ်ခြင်း
+
+Git Bash မှ executable ဖြစ်အောင် ပြုလုပ်ပါသည်။
+
+```
+chmod +x .git/hooks/pre-commit
+```
+
+## Hook အာနိသင် စမ်းသပ်ခြင်း
+
+```
+git add .
+git commit -m "Test pre-commit"
+```
+
+Script က exit 0 ဖြင့်အဆုံးသတ်ပါက commit ဆက်လုပ်ပြီး exit 1 ဖြစ်ပါက commit ကို ရပ်ဆိုင်းစေပါသည်။
+
+## Commit-msg Hook
+
+Commit message ကို validate လုပ်လိုပါက `commit-msg` hook ကို သုံးပါသည်။
+
+```
+#!/bin/sh
+if ! grep -qE '^(feat|fix|docs|chore):' "$1"; then
+  echo "Message must follow Conventional Commits"
+  exit 1
+fi
+exit 0
+```
+
+## Hooks များကို မျှဝေခြင်း
+
+Hooks သည် .git folder အတွင်း ရှိသောကြောင့် repository နှင့်အတူ မသွားပါ။ အဖွဲ့တစ်ဖွဲ့လုံး အသုံးပြုလိုပါက hooks/ folder တွင် သိမ်းဆည်းပြီး core.hooksPath ဖြင့် သတ်မှတ်နိုင်ပါသည်။
+
+```
+git config core.hooksPath hooks
+```
+
+## Hooks အမျိုးမျိုး အကျဉ်းချုပ်
+
+- **pre-commit**: Commit မလုပ်မီ run ပါသည် (linting, secrets scan) ဖြစ်ပါသည်။
+- **pre-push**: Push မလုပ်မီ run ပါသည် (tests) ဖြစ်ပါသည်။
+- **post-commit**: Commit ပြီးနောက် run ပါသည် (notification) ဖြစ်ပါသည်။
+
+Hooks များသည် quality check များတွင် အလွန် အသုံးဝင်ပြီး fail ဖြစ်ပါက commit ကို ရပ်ဆိုင်းစေပါသည်။

@@ -190,5 +190,11 @@
     "description": "Java ကို အခြေခံမှ စနစ်တကျ သင်ယူမည့် Masterclass ဖြစ်သည်။ JDK Setup မှစပြီး OOP, Java 8+ Modern Features နှင့် Module 19 ခု ပါဝင်သော ပြည့်စုံသည့် သင်ရိုးကို လေ့လာမည်။",
     "icon": "🚀",
     "color": "#3b82f6"
+  },
+  {
+    "label": "Git & GitHub",
+    "description": "Version Control နှင့် Collaboration — Git, GitHub, Branching, Merging, CI/CD စတာတွေကို လက်တွေ့လုပ်ရင်း သင်ယူမယ့် သင်တန်း။",
+    "icon": "🔀",
+    "color": "#f97316"
   }
 ]

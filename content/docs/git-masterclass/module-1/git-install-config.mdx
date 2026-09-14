@@ -1,0 +1,72 @@
+---
+title: "Git Install & Git Config — Git Install & Git Config"
+description: "Operating system အသီးသီးတွင် Git ကို ထည့်သွင်းခြင်းနှင့် user identity သတ်မှတ်ခြင်းကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git ကို Install ပြုလုပ်ခြင်း
+
+### Windows
+
+1. https://git-scm.com/downloads မှ installer ကို ဒေါင်းလုဒ်လုပ်ပါ။
+2. Installer ကို run ပြီး default settings အတိုင်း Next နှိပ်ကာ install ပြုလုပ်ပါ။
+3. Install ပြီးပါက Command Prompt သို့မဟုတ် PowerShell ကိုဖွင့်ပြီး အောက်ပါအတိုင်း စစ်ဆေးပါ။
+
+```
+git --version
+```
+
+### macOS
+
+macOS တွင် Homebrew မှ install ပြုလုပ်နိုင်ပါသည်။
+
+```
+brew install git
+git --version
+```
+
+### Linux (Ubuntu/Debian)
+
+```
+sudo apt update
+sudo apt install git
+git --version
+```
+
+## Git Config - User သတ်မှတ်ခြင်း
+
+Git တွင် commit တစ်ခုချင်းစီ ပြုလုပ်သူအား မှတ်တမ်းပြုလုပ်ရန် user name နှင့် email address ကို သတ်မှတ်ရပါမည်။ ဤအချက်အလက်များသည် commit ၏ metadata အဖြစ် ပါဝင်ပါသည်။
+
+```
+git config --global user.name "Mg Mg"
+git config --global user.email "mgmg@example.com"
+```
+
+- `--global` ဆိုသည်မှာ computer ပေါ်ရှိ repository အားလုံးအတွက် အကျုံးဝင်သည် ဖြစ်ပါသည်။
+- Project တစ်ခုအတွက်သာ သတ်မှတ်လိုပါက `--global` ကို ချန်လှပ်ပြီး repo folder အတွင်း၌ လုပ်ဆောင်ပါ။
+
+## Config များကို ကြည့်ရှုခြင်း
+
+```
+git config --list
+```
+
+Output တွင် သတ်မှတ်ထားသော user.name, user.email နှင့် အခြားသော settings များကို စာရင်းတစ်ခုချင်းစီ တွေ့ရပါမည်။
+
+```
+user.name=Mg Mg
+user.email=mgmg@example.com
+core.autocrlf=true
+...
+```
+
+## Editor သတ်မှတ်ခြင်း
+
+Git သည် commit message ရေးသားရာတွင် text editor ကို အသုံးပြုပါသည်။ VS Code ကို default editor အဖြစ် သတ်မှတ်ရန် အောက်ပါအတိုင်း ရိုက်ထည့်ပါ။
+
+```
+git config --global core.editor "code --wait"
+```
+
+Config များသည် `.gitconfig` file တွင် သိမ်းဆည်းထားပြီး မိမိ၏ home directory တွင် တည်ရှိပါသည်။

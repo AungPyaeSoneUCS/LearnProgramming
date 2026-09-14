@@ -1,0 +1,66 @@
+---
+title: "Git Remote Advanced — Git Remote Advanced"
+description: "Remote မျိုးစုံ စီမံခြင်း, URL ပြောင်းလဲခြင်း နှင့် upstream/backup remote များ ပေါင်းထည့်ခြင်းကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Remote မျိုးစုံ ဖြစ်နိုင်ပါသည်
+
+Repository တစ်ခုသည် remote မျိုးစုံနှင့် ချိတ်ဆက်နိုင်ပါသည်။ ဥပမာ fork workflow တွင် origin (မိမိ၏ fork) နှင့် upstream (မူရင်း) ဟူ၍ remote နှစ်ခု ရှိပါသည်။
+
+## Remote စာရင်း ကြည့်ရှုခြင်း
+
+```
+git remote -v
+```
+
+## Remote မျိုးစုံ ပေါင်းထည့်ခြင်း
+
+```
+git remote add origin https://github.com/mgmg/my-app.git
+git remote add upstream https://github.com/company/my-app.git
+git remote add backup git@github.com:mgmg/my-app-backup.git
+```
+
+## Remote များသို့ Push/Pull ပြုလုပ်ခြင်း
+
+Remote name ကို ရွေးချယ်၍ push/pull ပြုလုပ်နိုင်ပါသည်။
+
+```
+git push origin main
+git push backup main
+git pull upstream main
+```
+
+## Remote ဖျက်ခြင်း နှင့် URL ပြောင်းလဲခြင်း
+
+```
+git remote remove upstream
+git remote set-url origin git@github.com:mgmg/my-app.git
+```
+
+## Branch နှင့် Remote Tracking
+
+Local branch နှင့် remote branch ချိတ်ဆက်မှုကို upstream သတ်မှတ်ခြင်းဖြင့် လုပ်ဆောင်ပါသည်။
+
+```
+git push -u backup feature/x
+```
+
+## Remote Branch ဖျက်ခြင်း
+
+```
+git push origin --delete feature/old
+```
+
+## Default Push/Pull
+
+Remote များစွာ ရှိပါက default remote ကို branch configuration အရ ဆုံးဖြတ်ပါသည်။ Upstream သတ်မှတ်ထားပါက `git push` နှင့် `git pull` တို့သည် ထို branch ၏ tracking remote ကို အသုံးပြုပါသည်။
+
+## Origin နှင့် Upstream
+
+- **Origin**: မိမိ၏ repository (fork သို့မဟုတ် original) ဖြစ်ပါသည်။
+- **Upstream**: မူရင်း maintainer ၏ repository ဖြစ်ပါသည်။ Fork ပြုလုပ်သူများအတွက် upstream မှ pull ပြုလုပ်၍ sync လုပ်ထားရပါသည်။
+
+Remote များကို ကျွမ်းကျင်စွာ စီမံခြင်းဖြင့် development workflow ကို များစွာ တိုးတက်စေနိုင်ပါသည်။

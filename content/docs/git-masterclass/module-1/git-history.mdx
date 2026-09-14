@@ -1,0 +1,73 @@
+---
+title: "Git History — Git History"
+description: "git log ဖြင့် commit သမိုင်းကြောင်းကြည့်ရှုခြင်း၊ ပြောင်းလဲမှုများ နှိုင်းယှဉ်ခြင်း နှင့် commit တစ်ခုချင်းစီကို စစ်ဆေးခြင်းကို လေ့လာပါမည်။"
+autoNumbering: true
+---
+
+
+## Commit သမိုင်းကြောင်း ကြည့်ရှုခြင်း
+
+`git log` ဖြင့် commit များကို နောက်ဆုံးမှ ရှေးအစဉ်အလိုက် ကြည့်ရှုနိုင်ပါသည်။
+
+```
+git log
+```
+
+```
+commit 9f8a2d1c4e5b6a7c8d9e0f1a2b3c4d5e6f7a8091 (HEAD -> main)
+Author: Mg Mg <mgmg@example.com>
+Date:   Mon Sep 14 10:30:22 2026 +0630
+
+    Add footer section
+
+commit a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0
+Author: Mg Mg <mgmg@example.com>
+Date:   Mon Sep 14 09:12:05 2026 +0630
+
+    Update heading text
+```
+
+Commit တစ်ခုချင်းစီတွင် အချက်အလက် လေးမျိုး ပါဝင်ပါသည်။
+
+- **Commit hash (SHA)**: Commit တစ်ခုစီကို ဖော်ထုတ်သည့် 40-character identifier ဖြစ်ပါသည်။
+- **Author**: Commit ပြုလုပ်သူ၏ name နှင့် email ဖြစ်ပါသည်။
+- **Date**: Commit ပြုလုပ်သော အချိန် ဖြစ်ပါသည်။
+- **Message**: ထို commit ၏ ရည်ရွယ်ချက်ကို ဖော်ပြသည့် အကြောင်းအရာ ဖြစ်ပါသည်။
+
+## Oneline View
+
+အကျဉ်းချုပ် မြင်ရန် `--oneline` ကို အသုံးပြုပါသည်။
+
+```
+git log --oneline
+```
+
+```
+9f8a2d1 (HEAD -> main) Add footer section
+a1b2c3d Update heading text
+f5e4d3c Initial commit
+```
+
+## ပြောင်းလဲမှု နှိုင်းယှဉ်ခြင်း (Diff)
+
+- `git diff`: Working tree မှ staged မဟုတ်သော ပြောင်းလဲမှုများကို ပြသည် ဖြစ်ပါသည်။
+- `git diff --staged`: Staging area မှ commit မလုပ်ရသေးသော ပြောင်းလဲမှုများကို ပြပါသည်။
+
+```
+git diff
+```
+
+```
+diff --git a/index.html b/index.html
++<footer>Copyright 2026</footer>
+```
+
+## Commit တစ်ခုချင်းစီ စစ်ဆေးခြင်း
+
+`git show` ဖြင့် commit တစ်ခု၏ အချက်အလက်များနှင့် ပြောင်းလဲမှုများကို အသေးစိတ် ကြည့်ရှုပါသည်။
+
+```
+git show 9f8a2d1
+```
+
+Git ၏ history ကို ကျွမ်းကျင်စွာ ကြည့်ရှုတတ်ခြင်းသည် debugging နှင့် code review များတွင် အလွန် အသုံးဝင်ပါသည်။

@@ -1,0 +1,72 @@
+---
+title: "Git Tagging — Git Tagging"
+description: "Version release များကို မှတ်သားရန် tag ၏ အသုံးပြုပုံ နှင့် annotated tag များကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Tag ဆိုသည်မှာ အဘယ်နည်း
+
+Tag သည် commit တစ်ခုကို သီးခြားအမည်ဖြင့် မှတ်သားခြင်း ဖြစ်ပြီး release version (v1.0.0) ကဲ့သို့သော မှတ်တမ်းများအတွက် အသုံးပြုပါသည်။ Branch နှင့် မတူဘဲ tag သည် snapshot တစ်ခုကို အမြဲတမ်း ညွှန်ပြပြီး ရွေ့လျားခြင်း မရှိပါ။
+
+## Tag စာရင်း ကြည့်ရှုခြင်း
+
+```
+git tag
+```
+
+```
+v1.0.0
+v1.1.0
+v2.0.0
+```
+
+## Lightweight Tag ဖန်တီးခြင်း
+
+```
+git tag v1.0.0
+```
+
+Lightweight tag သည် commit ကို ညွှန်ပြသော reference တစ်မျိုးမျှသာ ဖြစ်ပါသည်။
+
+## Annotated Tag ဖန်တီးခြင်း
+
+Annotated tag တွင် tag message, tagger name နှင့် date များ ပါဝင်ပြီး release များအတွက် အကြံပြုပါသည်။
+
+```
+git tag -a v1.0.0 -m "Release v1.0.0"
+git show v1.0.0
+```
+
+```
+tag v1.0.0
+Tagger: Mg Mg <mgmg@example.com>
+Date:   Mon Sep 14 11:00:00 2026 +0630
+
+Release v1.0.0
+```
+
+## သီးခြား Commit ကို Tag ပြုလုပ်ခြင်း
+
+Specific commit တစ်ခုကို tag ပြုလုပ်လိုပါက commit hash ကို ညွှန်ပြပါသည်။
+
+```
+git tag -a v0.9.0 a1b2c3d -m "Beta release"
+```
+
+## Tag ဖျက်ခြင်း
+
+```
+git tag -d v0.9.0
+```
+
+## Remote သို့ Tag Push ပြုလုပ်ခြင်း
+
+Tag များသည် push ပြုလုပ်ရန်အတွက် သီးသန့် လုပ်ဆောင်ရပါသည်။
+
+```
+git push origin v1.0.0
+git push origin --tags
+```
+
+Tag များသည် release အတွက် အရေးကြီးသော အမှတ်အသားများ ဖြစ်သောကြောင့် မှန်ကန်သော commit တွင် ထားရှိရန် သေချာစွာ လုပ်ဆောင်ရပါမည်။

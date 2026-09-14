@@ -1,0 +1,45 @@
+---
+title: "Git Workflow & Git Best Practices — Git Workflow & Git Best Practices"
+description: "စနစ်ကျသော git workflow နှင့် developer တိုင်း လိုက်နာသင့်သော အကောင်းဆုံး အလေ့အကျင့်များကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git Workflow ဆိုသည်မှာ အဘယ်နည်း
+
+Workflow ဆိုသည်မှာ team တစ်ဖွဲ့အနေဖြင့် Git ကို အသုံးပြုပုံ စည်းမျဉ်းများ ဖြစ်ပါသည်။ Branch ဖွဲ့စည်းပုံ, commit convention နှင့် merge နည်းလမ်း တို့ကို ကြိုတင် သတ်မှတ်ထားပါက အဖွဲ့ဝင်အားလုံး လိုက်နာ၍ conflict လျော့ကျစေပါသည်။
+
+## လူကြိုက်များသော Workflow များ
+
+- **GitHub Flow**: Main branch မှ feature branch ခွဲထုတ်ကာ pull request ဖြင့် ပေါင်းစည်းသည့် ရိုးရှင်းသော ပုံစံ ဖြစ်ပါသည်။ Module 2 တွင် အသေးစိတ် လေ့လာရပါမည်။
+- **Git Flow**: Develop နှင့် main ဟူ၍ branch နှစ်မျိုး ခွဲထားပြီး release နှင့် hotfix branch များ ထပ်မံ ထည့်သွင်းသည့် စနစ်ကျသော ပုံစံ ဖြစ်ပါသည်။
+- **Trunk-based**: Developer အားလုံးက main branch တွင် တိုက်ရိုက် အလုပ်လုပ်ပြီး မကြာခဏ commit ပြုလုပ်သည့် ပုံစံ ဖြစ်ပါသည်။
+
+## Commit Message ရေးခြင်း အကောင်းဆုံး အလေ့အကျင့်
+
+- Commit message သည် ဘာကို ပြုလုပ်ခဲ့သည်ကို ဖော်ပြလောက်အောင် ရှင်းလင်းရပါမည်။
+- လုပ်စရာ များစွာကို commit တစ်ခုတည်းတွင် မရော်သင့်ပါ။
+- Conventional Commits ပုံစံကို အသုံးပြုနိုင်ပါသည်။
+
+```
+git commit -m "feat: add login form"
+git commit -m "fix: resolve null pointer in profile page"
+git commit -m "docs: update README setup guide"
+```
+
+## အကောင်းဆုံး အလေ့အကျင့် စည်းမျဉ်းများ
+
+1. **မကြာခဏ commit ပြုလုပ်ပါ**: ပြောင်းလဲမှုတစ်ခုစီကို ယုတ္တိကျကျ ခွဲ၍ commit ပြုလုပ်ပါ။
+2. **Secrets များကို မသိမ်းပါနှင့်**: Password နှင့် API key များကို repository တွင် မထည့်ပါနှင့်။ ထို sensitive file များကို .gitignore ဖြင့် ဖယ်ထုတ်ပါ။
+3. **`git pull` မလုပ်မီ status စစ်ဆေးပါ**: Local changes များ ရှိနေသေးလျှင် stash ပြုလုပ်ပါ။
+4. **Branch name ကို အဓိပ္ပါယ်ရှိစွာ ပေးပါ**: feature/login, fix/header-responsive စသည်ဖြင့် ပေးပါ။
+5. **Large file များကို Git ဖြင့် မသိမ်းပါနှင့်**: Video သို့မဟုတ် binary file ကြီးများကို Git LFS ဖြင့် စီမံပါ။
+6. **Merge မလုပ်မီ diff ကို ပြန်သုံးသပ်ပါ**: `git diff` ဖြင့် ဘာတွေ ပြောင်းလဲမည်ကို ကြိုမြင်ပါ။
+
+## Branching အတွက် အကြံပြုချက်များ
+
+- Feature တစ်ခုစီအတွက် branch အသစ် ဖန်တီးပြီး main မှ သီးခြား ထားပါ။
+- Merge မလုပ်မီ branch ပေါ်တွင် commit ကို test ပြုလုပ်ပါ။
+- Release များအတွက် tag များကို အသုံးပြုပါ။
+
+Git ကို စနစ်ကျစွာ အသုံးပြုခြင်းသည် project ၏ ရေရှည် သက်တမ်းကို အထောက်အကူ ပြုပါသည်။

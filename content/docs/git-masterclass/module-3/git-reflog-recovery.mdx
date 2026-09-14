@@ -1,0 +1,55 @@
+---
+title: "Git Reflog & Git Recovery — Git Reflog & Git Recovery"
+description: "git reflog ဖြင့် ပျောက်ဆုံးသွားသော commit များကို ရှာဖွေ ပြန်လည်ရယူခြင်းကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git Reflog ဆိုသည်မှာ အဘယ်နည်း
+
+`git reflog` သည် HEAD နှင့် branch များ ရွေ့ပြောင်းခဲ့သော မှတ်တမ်းအားလုံးကို သိမ်းဆည်းထားပါသည်။ Reset သို့မဟုတ် rebase ကြောင့် commit များ ပျောက်ဆုံးသွားသော်လည်း reflog ထဲတွင် ကျန်ရှိနေပြီး ၎င်းမှ ပြန်လည် ရယူနိုင်ပါသည်။
+
+## Reflog ကြည့်ရှုခြင်း
+
+```
+git reflog
+```
+
+```
+c3d4e5f (HEAD -> main) HEAD@{0}: commit: Add payment logic
+a1b2c3d HEAD@{1}: reset: moving to HEAD~1
+b2c3d4e HEAD@{2}: commit: broken feature
+```
+
+ဥပမာ `git reset --hard HEAD~1` လုပ်မိပြီး commit ကို တကယ် မဖျက်ချင်၍ ပြန်လည် ရယူလိုသော အခြေအနေကို ကြည့်ကြပါစို့။ Reflog တွင် reset မလုပ်မီ အခြေအနေ hash ဖြစ်သော b2c3d4e ကို တွေ့ရပါသည်။
+
+## ပျောက်ဆုံးသော Commit ကို ပြန်ရယူခြင်း
+
+Reflog မှ hash ကို မှတ်ထားပြီး branch အသစ်တစ်ခု ဖန်တီးပါသည်။
+
+```
+git switch -c recovery/broken b2c3d4e
+```
+
+```
+Switched to a new branch 'recovery/broken'
+```
+
+နောက်တစ်နည်းမှာ commit ကို current branch သို့ cherry-pick ပြုလုပ်ခြင်း ဖြစ်ပါသည်။
+
+```
+git cherry-pick b2c3d4e
+```
+
+## HEAD~ Notation များ
+
+- `HEAD`: လက်ရှိ commit ဖြစ်ပါသည်။
+- `HEAD~1`: နောက်တစ်ဆင့် commit ဖြစ်ပါသည်။
+- `HEAD~3`: သုံးဆင့်မှ ရှေးကျသော commit ဖြစ်ပါသည်။
+
+## Reflog ၏ အဓိက အသုံးဝင်မှုများ
+
+- မှားယွင်းသော reset, rebase, amend များမှ ပြန်လည် ရယူခြင်း ဖြစ်ပါသည်။
+- Branch ဖျက်လိုက်သည့်နောက် ပျောက်ဆုံးသော commit များကို ရှာဖွေခြင်း ဖြစ်ပါသည်။
+
+Reflog entry များသည် ပုံမှန်အားဖြင့် ရက်ပေါင်း 90 ခန့် ထားရှိပြီး garbage collection တွင် ရှင်းလင်းခံရပါသည်။ ထို့ကြောင့် ပျောက်ဆုံးချက်ကို အမြန် ရှာဖွေပါ။

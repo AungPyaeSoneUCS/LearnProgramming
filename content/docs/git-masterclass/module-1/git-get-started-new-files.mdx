@@ -1,0 +1,85 @@
+---
+title: "Git Get Started & Git New Files — Git Get Started & Git New Files"
+description: "Repository အသစ် စတင်ခြင်း၊ file အသစ်များ ထည့်သွင်းခြင်း နှင့် status စစ်ဆေးခြင်းကို လေ့လာပါမည်။"
+autoNumbering: true
+---
+
+
+## Repository အသစ် စတင်ခြင်း
+
+Project folder တစ်ခုတွင် `git init` ရိုက်ထည့်ခြင်းဖြင့် folder ကို git repository အဖြစ် စတင်ပြောင်းလဲနိုင်ပါသည်။
+
+```
+mkdir my-web-app
+cd my-web-app
+git init
+```
+
+Output တွင် အောက်ပါအတိုင်း မှတ်တမ်းကို မြင်ရပါမည်။
+
+```
+Initialized empty Git repository in C:/my-web-app/.git/
+```
+
+`git init` ပြုလုပ်ပြီးပါက folder အတွင်းတွင် hidden folder တစ်ခုဖြစ်သော `.git` ကို ဖန်တီးပြီး ထို folder အတွင်း၌ သမိုင်းကြောင်း ဒေတာများ အားလုံးကို သိမ်းဆည်းပါသည်။
+
+## Status စစ်ဆေးခြင်း
+
+`git status` ဖြင့် repository ၏ လက်ရှိ အခြေအနေကို စစ်ဆေးနိုင်ပါသည်။
+
+```
+git status
+```
+
+```
+On branch main
+
+No commits yet
+
+nothing to commit (create/copy files and use "git add" to track)
+```
+
+## File အသစ် ဖန်တီးခြင်း
+
+ပထမဆုံး file ဖြစ်သော `index.html` ကို ဖန်တီးပြီး နောက်တစ်ကြိမ် status ကို စစ်ဆေးပါ။
+
+```
+echo "<h1>Hello Git</h1>" > index.html
+git status
+```
+
+```
+On branch main
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        index.html
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+## Untracked vs Tracked
+
+- **Untracked file**: Git ၏ စောင့်ကြည့်မှုအောက်တွင် မရှိသေးသော file အသစ်များ ဖြစ်ပါသည်။
+- **Tracked file**: `git add` ပြုလုပ်ပြီး Git ၏ စောင့်ကြည့်မှုအောက်ရောက်နေသော file များ ဖြစ်ပါသည်။
+
+File ကို Git ၏ စောင့်ကြည့်မှုအောက်သို့ ရောက်ရှိစေရန် `git add` ကို အသုံးပြုပါသည်။
+
+```
+git add index.html
+git status
+```
+
+```
+On branch main
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   index.html
+```
+
+File သည် ယခုအခါ Staging Area သို့ ရောက်ရှိပြီး ဖြစ်သောကြောင့် `git commit` ပြုလုပ်ရန် အသင့်ဖြစ်နေပြီ ဖြစ်ပါသည်။

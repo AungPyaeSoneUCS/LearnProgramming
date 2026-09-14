@@ -1,0 +1,54 @@
+---
+title: "Push to GitHub & Pull from GitHub — Push to GitHub & Pull from GitHub"
+description: "git push, git pull, git fetch နှင့် git clone တို့၏ သဘောတရားနှင့် အသုံးပြုပုံကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Push ဆိုသည်မှာ အဘယ်နည်း
+
+Push ဆိုသည်မှာ local repository ၏ commit များကို remote repository သို့ ပို့ပေးခြင်း ဖြစ်ပါသည်။ Remote ပေါ်တွင် commit များကို အလိုအလျောက် ထည့်သွင်းပါသည်။
+
+```
+git push
+```
+
+Upstream ကို နောက်တစ်ကြိမ် `git push -u origin main` ဖြင့် သတ်မှတ်ထားပါက နောက်ပိုင်းတွင် `git push` ဟု တိုတောင်းစွာ ရိုက်နိုင်ပါသည်။
+
+## Pull ဆိုသည်မှာ အဘယ်နည်း
+
+Pull ဆိုသည်မှာ remote မှ commit များကို download ပြုလုပ်ပြီး local branch သို့ merge ပြုလုပ်ခြင်း ဖြစ်ပါသည်။ Pull ကို team များနှင့် အလုပ်လုပ်ချိန်တွင် remote ရှိ နောက်ဆုံး အပြောင်းအလဲများကို ရယူရန် အသုံးပြုပါသည်။
+
+```
+git pull origin main
+```
+
+## Pull နှင့် Fetch ခြားနားချက်
+
+- `git fetch`: Remote မှ commit များကို download ပြုလုပ်ပြီး local working tree ကို မပြောင်းလဲပါ။ နောက်ပိုင်း မိမိသဘောကျသည့်အချိန်၌ merge ပြုလုပ်နိုင်ပါသည်။
+- `git pull`: `git fetch` နှင့် `git merge` ကို တစ်ပြိုင်နက် လုပ်ဆောင်ပါသည်။
+
+## Clone ဆိုသည်မှာ အဘယ်နည်း
+
+Clone ဆိုသည်မှာ remote repository တစ်ခုလုံး၏ မိတ္တူကို local computer တွင် ဖန်တီးခြင်း ဖြစ်ပါသည်။ Public repository များကို clone ပြုလုပ်ခြင်းအားဖြင့် open source code များကို လွယ်ကူစွာ ဒေါင်းလုဒ် လုပ်နိုင်ပါသည်။
+
+```
+git clone https://github.com/mgmg/my-web-app.git
+```
+
+```
+Cloning into 'my-web-app'...
+remote: Enumerating objects: 12, done.
+remote: Total 12 (delta 0), reused 12 (delta 0)
+Receiving objects: 100% (12/12), 4.50 KiB | 3.50 MiB/s, done.
+```
+
+Clone ပြုလုပ်ပြီးပါက folder အသစ်တစ်ခုတွင် remote history အားလုံး ပါဝင်ပြီး origin remote ကိုလည်း အလိုအလျောက် သတ်မှတ်ပေးပါသည်။
+
+## Pull မလုပ်မီ Status စစ်ဆေးခြင်း
+
+```
+git status
+```
+
+Local တွင် uncommitted changes မရှိမှသာ pull ပြုလုပ်ပါ။ ရှိပါက stash ပြုလုပ်ပြီး pull ပြုလုပ်ပါ။

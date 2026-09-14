@@ -1,0 +1,60 @@
+---
+title: "Git Stash — Git Stash"
+description: "အလုပ်မပြီးသော ပြောင်းလဲမှုများကို ယာယီ သိမ်းဆည်းထားနိုင်သော git stash ၏ အသုံးပြုပုံကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git Stash ဆိုသည်မှာ အဘယ်နည်း
+
+အလုပ်မပြီးသေး (unfinished) ပြောင်းလဲမှုများကြောင့် branch ပြောင်းရန် အဆင်မပြေသော အခြေအနေများ ရှိပါသည်။ Stash သည် ထို uncommitted ပြောင်းလဲမှုများကို ယာယီ သိမ်းဆည်းထားပြီး working tree ကို သန့်ရှင်းစေပါသည်။ လိုအပ်ပါက နောက်ပိုင်းတွင် ပြန်လည် ရယူနိုင်ပါသည်။
+
+## အလုပ် သိမ်းဆည်းခြင်း
+
+```
+git stash push -m "WIP: login form"
+git status
+```
+
+Stash ပြုလုပ်ပြီးပါက working tree သည် သန့်ရှင်းသော အခြေအနေသို့ ရောက်ရှိပါသည်။
+
+```
+On branch main
+nothing to commit, working tree clean
+```
+
+## Stash စာရင်း ကြည့်ရှုခြင်း
+
+```
+git stash list
+```
+
+```
+stash@{0}: On main: WIP: login form
+```
+
+Stash တစ်ခုချင်းစီတွင် `stash@{0}` ကဲ့သို့သော index ရှိပြီး နောက်ဆုံး stash သည် index 0 ဖြစ်ပါသည်။ `stash@{0}` သည် shell expansion အတွက် ၎င်းကို single quote ဖြင့်သာ shell တွင် သုံးပါ။
+
+## Stash ပြန်လည် ရယူခြင်း
+
+```
+git stash pop
+```
+
+```
+On branch main
+Changes not staged for commit:
+        modified:   login.html
+```
+
+- `git stash pop`: နောက်ဆုံး stash ကို ပြန်ယူပြီး list မှ ဖယ်ရှားပါသည်။
+- `git stash apply`: Stash ကို ပြန်ယူသော်လည်း list ထဲတွင် ဆက်ထားပါသည်။
+
+## Stash ဖျက်ခြင်း
+
+```
+git stash drop
+git stash list
+```
+
+Stash များအားလုံးကို တစ်ပြိုင်နက် ဖျက်လိုပါက `git stash clear` ကို အသုံးပြုပါသည်။ Stash ကို ဖျက်လိုက်ပါက ပြန်လည် ရယူနိုင်မည် မဟုတ်သောကြောင့် သတိထားရပါမည်။

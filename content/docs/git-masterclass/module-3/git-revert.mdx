@@ -1,0 +1,55 @@
+---
+title: "Git Revert — Git Revert"
+description: "အများသုံး (public) history တွင် လုံခြုံစွာ ပြန်ပြင် ဖျက်ရန် git revert ၏ အသုံးပြုပုံကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git Revert ဆိုသည်မှာ အဘယ်နည်း
+
+`git revert` သည် ရှိပြီးသား commit ၏ ပြောင်းလဲမှုများကို ပြန်ပြောင်းပေးသည့် commit အသစ်တစ်ခုကို ဖန်တီးပေးပါသည်။ History ကို ပြောင်းလဲ၍ မရသောကြောင့် public repository များတွင် လုံခြုံသည် ဖြစ်ပါသည်။
+
+## Revert ပြုလုပ်ခြင်း
+
+မကောင်းသော commit ၏ hash ဖြင့် revert ပြုလုပ်ပါသည်။
+
+```
+git log --oneline
+```
+
+```
+b2c3d4e Add buggy payment logic
+a1b2c3d Add login page
+```
+
+```
+git revert b2c3d4e
+```
+
+Editor တွင် revert message ကို ရေးပြီး save လုပ်ပါက commit အသစ်တစ်ခု ဖန်တီးပါသည်။
+
+```
+[main b3d4e5f] Revert "Add buggy payment logic"
+ 1 file changed, 5 deletions(-)
+```
+
+Merge commit ကို revert ပြုလုပ်လိုပါက `-m 1` ကဲ့သို့ parent ကို ရွေးချယ်ရန် လိုအပ်ပါသည်။
+
+## Revert ပြီးနောက် History
+
+Revert commit သည် မူလ commit ကို မဖျက်ဘဲ ဆန့်ကျင်ဘက် ပြောင်းလဲမှုကို ထပ်မံ ထည့်ပါသည်။ ထို့ကြောင့် original commit ၏ အမှားကို ပြန်ဖျက်နိုင်ပြီး history ကို မပြောင်းပါ။
+
+## Amend နှင့် Revert ခြားနားချက်
+
+- **Amend**: နောက်ဆုံး commit ကို ပြောင်း၍ မည်သူမျှ မသုံးရသေးသော local commit များအတွက် ဖြစ်ပါသည်။
+- **Revert**: Commit အသစ်ကို ဖန်တီး၍ public history တွင် လုံခြုံစွာ အသုံးပြုနိုင်ပါသည်။
+
+## Push လုပ်ပြီးသား Commit ကို Revert ပြုလုပ်ခြင်း
+
+Revert commit ကို ပုံမှန်အတိုင်း push ပြုလုပ်နိုင်ပြီး team ၏ history ကို မညှစ်ဘဲ ပြန်လည် ဖြေရှင်းနိုင်ပါသည်။
+
+```
+git push
+```
+
+Public branch တွင် အမှားပြင်ရန် reset အစား revert ကို ရွေးချယ်ပါ။

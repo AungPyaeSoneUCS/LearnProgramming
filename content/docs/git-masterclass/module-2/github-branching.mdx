@@ -1,0 +1,77 @@
+---
+title: "GitHub Branching — GitHub Branching"
+description: "Branch push ပြုလုပ်ခြင်း, remote branch pull ပြုလုပ်ခြင်း နှင့် upstream tracking ၏ အသုံးပြုပုံကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Branch Push ပြုလုပ်ခြင်း
+
+Local တွင် feature branch ကို ဖန်တီး commit ပြုလုပ်ပြီးနောက် remote သို့ push ပြုလုပ်နိုင်ပါသည်။
+
+```
+git switch -c feature/contact
+git add contact.html
+git commit -m "Add contact page"
+git push -u origin feature/contact
+```
+
+```
+Enumerating objects: 4, done.
+remote:
+remote: Create a pull request for 'feature/contact' on GitHub by visiting:
+remote:      https://github.com/mgmg/my-web-app/pull/new/feature/contact
+remote:
+Branch 'feature/contact' set up to track 'origin/feature/contact'.
+```
+
+Push ပြုလုပ်ပြီးနောက် GitHub စာမျက်နှာတွင် branch ကို dropdown မှ ရွေးကြည့်နိုင်ပါသည်။
+
+## Remote Branch ကို Pull ပြုလုပ်ခြင်း
+
+GitHub တွင် teammate တစ်ဦးက branch အသစ် push ပြုလုပ်ထားပါက Open pull request အိုင်ကွန် ပေါ်လာပါသည်။ မိမိဘက်မှလည်း fetch ပြုလုပ်နိုင်ပါသည်။
+
+```
+git fetch
+git branch -r
+```
+
+```
+origin/HEAD -> origin/main
+origin/feature/navbar
+origin/feature/contact
+origin/main
+```
+
+## Remote Branch ကို Local တွင် စစ်ဆေးခြင်း
+
+Remote branch ကို local တွင် switch ပြုလုပ်လိုပါက အောက်ပါအတိုင်း လုပ်ဆောင်နိုင်ပါသည်။
+
+```
+git switch feature/contact
+```
+
+Git 2.23 နောက်ပိုင်းတွင် `git switch` သည် remote tracking branch အသစ်ကို ဖန်တီးပြီး local branch အဖြစ် ပြောင်းလဲပေးပါသည်။ ပုံစံဟောင်းဖြစ်သော `git checkout feature/contact` ကိုလည်း အသုံးပြုနိုင်ပါသည်။
+
+## Upstream Tracking ဆိုသည်မှာ အဘယ်နည်း
+
+Upstream tracking ဆိုသည်မှာ local branch နှင့် remote branch ကို ချိတ်ဆက်ထားခြင်း ဖြစ်ပါသည်။ `-u` ဖြင့် တည်ဆောက်ပြီးသည့်အခါ push/pull ကို remote name မပါဘဲ ရိုက်နိုင်ပါသည်။
+
+```
+git push
+git pull
+```
+
+## နောက်ဆုံး အခြေအနေ စစ်ဆေးခြင်း
+
+Remote နှင့် local ၏ အကွာအဝေးကို `git status` ဖြင့် ကြည့်ရှုနိုင်ပါသည်။
+
+```
+git status -sb
+```
+
+```
+## feature/contact...origin/feature/contact
+```
+
+ahead သို့မဟုတ် behind ဖော်ပြချက်များသည် local မှ remote သို့ push ရန် ကျန်သော commit များကို ဖော်ပြပါသည်။

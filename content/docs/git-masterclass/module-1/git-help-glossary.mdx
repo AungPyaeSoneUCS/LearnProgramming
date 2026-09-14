@@ -1,0 +1,48 @@
+---
+title: "Git Help & Git Glossary — Git Help & Git Glossary"
+description: "git help command အသုံးပြုနည်းနှင့် Git ၏ အဓိက အသုံးအနှုန်းများကို ရှင်းလင်းထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git Help အသုံးပြုခြင်း
+
+Git တွင် command တစ်ခုချင်းစီအတွက် documentation ပါဝင်ပြီး `git help` ဖြင့် ကြည့်ရှုနိုင်ပါသည်။
+
+```
+git help
+```
+
+Output တွင် common command များ၏ စာရင်းနှင့် usage အကျဉ်းချုပ် ပေါ်လာပါသည်။
+
+```
+usage: git [...]
+common commands:
+   add     Add file contents to the index
+   commit  Record changes to the repository
+   ...
+```
+
+Command တစ်ခုချင်းစီ၏ အသေးစိတ် help ကိုလည်း ဖွင့်နိုင်ပါသည်။
+
+```
+git help commit
+git help log
+```
+
+Browser သို့မဟုတ် terminal အတွင်း manual page တစ်ခုစီ ပေါ်လာပါမည်။ Command ၏ option နှင့် parameter များကို မသုံးမီ help ဖြင့် အမြဲ စစ်ဆေးရန် အကြံပြုပါသည်။
+
+## Git Glossary - အဓိက အသုံးအနှုန်းများ
+
+- **Repository (repo)**: သမိုင်းကြောင်း အပါအဝင် project တစ်ခု၏ ဒေတာအားလုံးကို သိမ်းထားသည့် နေရာ ဖြစ်ပါသည်။
+- **Working Tree**: မိမိလက်ရှိ တည်းဖြတ်နေသည့် file များ တည်ရှိရာ folder ဖြစ်ပါသည်။
+- **Index / Staging Area**: commit ပြုလုပ်ရန် စာရင်းသွင်းထားသော file များ စုဝေးရာ နေရာ ဖြစ်ပါသည်။ `git add` ဖြင့် ထည့်သွင်းပါသည်။
+- **Commit**: Staging area မှ file များကို repository history တွင် snapshot တစ်ခုအနေဖြင့် မှတ်တမ်းတင်ခြင်း ဖြစ်ပါသည်။
+- **Branch**: History မှ သီးခြားခွဲထုတ်လုပ်ထားသော pointer တစ်ခု ဖြစ်ပါသည်။ Feature များကို သီးခြား လုပ်ရန် အသုံးပြုပါသည်။
+- **HEAD**: လက်ရှိ ရောက်နေသော branch ၏ နောက်ဆုံး commit ကို ညွှန်ပြသော pointer ဖြစ်ပါသည်။
+- **Remote**: Network ပေါ်ရှိ အခြားသော repository (ဥပမာ GitHub) ကို ညွှန်ပြသော reference ဖြစ်ပါသည်။
+- **Clone**: Remote repository တစ်ခု၏ မိတ္တူကို local computer သို့ ကော်ပီကူးခြင်း ဖြစ်ပါသည်။
+- **Fetch**: Remote မှ အချက်အလက်များကို local သို့ ဆွဲယူခြင်း ဖြစ်ပြီး working tree ကို မပြောင်းလဲစေပါ။
+- **Pull**: Fetch ပြုလုပ်ပြီး current branch သို့ တစ်ပြိုင်နက် merge ပြုလုပ်ခြင်း ဖြစ်ပါသည်။
+
+ဤအသုံးအနှုန်းများကို သိထားပါက နောက်ထပ် ဆောင်းပါးများ၏ သဘောတရားများကို ပိုမို လွယ်ကူစွာ နားလည်နိုင်ပါသည်။

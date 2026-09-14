@@ -1,0 +1,111 @@
+---
+title: "Git Quiz — Git Quiz"
+description: "Git ၏ သဘောတရားများကို စစ်ဆေးရန် မေးခွန်း 8 ခု ပါဝင်သော quiz ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+သင်တန်းတစ်ခုလုံးကို သင်ယူပြီးပါက အောက်ပါ quiz ဖြင့် မိမိ၏ အသိပညာကို စစ်ဆေးနိုင်ပါသည်။ မေးခွန်းတစ်ခုစီတွင် အဖြေတစ်ခုသာ မှန်ကန်ပြီး submit ပြုလုပ်သောအခါ တစ်ခုချင်းစီ၏ ရှင်းလင်းချက်ကို ကြည့်ရှုနိုင်ပါသည်။
+
+<Quiz
+  title="Git Masterclass Quiz"
+  questions={[
+    {
+      id: "q1",
+      question: "git reset --soft ၏ အဓိက လုပ်ဆောင်ချက်မှာ အဘယ်နည်း",
+      options: [
+        "Staging area ကို ရှင်းလင်းပြီး working directory ကိုလည်း ပြန်ရေးသည်",
+        "Working tree ကို မပြောင်းဘဲ HEAD နှင့် staged changes များကို ထိန်းထားသည်",
+        "Commit hash များကို ပြောင်းလဲပြီး commit history ကို ထိန်းထားသည်",
+        "Merge conflict များကို အလိုအလျောက် ဖြေရှင်းသည်"
+      ],
+      correctAnswer: 1,
+      explanation: "reset --soft သည် HEAD pointer ကိုသာ ရွေ့ပြီး working tree နှင့် staging area ကို မပြောင်းပါ။"
+    },
+    {
+      id: "q2",
+      question: "Git တွင် staging area ၏ အခန်းကဏ္ဍမှာ အဘယ်နည်း",
+      options: [
+        "Remote repository ကို သိမ်းဆည်းရန်",
+        "Commit ပြုလုပ်မည့် changes များကို စုစည်းရန်",
+        "Commit history ကို ပြသရန်",
+        "SSH keys များကို သိမ်းဆည်းရန်"
+      ],
+      correctAnswer: 1,
+      explanation: "Staging area (index) သည် git add ဖြင့် commit လုပ်ရန် ရွေးချယ်ထားသော file များ စုဝေးရာ နေရာ ဖြစ်ပါသည်။"
+    },
+    {
+      id: "q3",
+      question: "Public repository တွင် commit အမှားတစ်ခုကို ပြန်ဖျက်ရန် အကောင်းဆုံး နည်းလမ်းမှာ အဘယ်နည်း",
+      options: [
+        "git reset --hard",
+        "git commit --amend",
+        "git revert",
+        "git stash"
+      ],
+      correctAnswer: 2,
+      explanation: "Revert သည် history ကို မပြောင်းဘဲ commit အသစ်ဖြင့် ပြန်ဖျက်နိုင်သောကြောင့် public history အတွက် သင့်လျော်ပါသည်။"
+    },
+    {
+      id: "q4",
+      question: "git fetch နှင့် git pull ၏ ခြားနားချက်မှာ အဘယ်နည်း",
+      options: [
+        "Fetch သည် remote changes များကို download လုပ်ပြီး merge လုပ်ရန် မလုပ်ပါ",
+        "Pull သည် fetch ကဲ့သို့ working tree ကို မပြောင်းပါ",
+        "Fetch သည် push များသာ လုပ်ဆောင်ပါသည်",
+        "၎င်းတို့သည် လုံးဝ တူညီပါသည်"
+      ],
+      correctAnswer: 0,
+      explanation: "Fetch သည် changes ကို download ပြုလုပ်သော်လည်း merge မလုပ်ပါ။ Pull သည် fetch နှင့် merge ကို တစ်ပြိုင်နက် လုပ်သည်။"
+    },
+    {
+      id: "q5",
+      question: "Merge conflict ဖြစ်ရာတွင် file အတွင်း conflict marker များကို မြင်ရပါက မည်သို့ လုပ်ဆောင်ရမည်နည်း",
+      options: [
+        "Marker အားလုံးကို ချန်ထားပြီး commit ပြုလုပ်ပါ",
+        "Marker များနှင့် မလိုအပ်သော content ကို ဖယ်ရှားပြီး မှန်ကန်သော content ကို ချန်ထားကာ stage နှင့် commit ပြုလုပ်ပါ",
+        "Branch နှစ်ခုလုံး၏ content ကို ထားရှိပြီး marker များကိုသာ ဖယ်ပါ",
+        "Repository ကို ဖျက်ပြီး အသစ် clone ပြုလုပ်ပါ"
+      ],
+      correctAnswer: 1,
+      explanation: "Conflict ဖြေရှင်းမှုမှာ လိုအပ်သော content တစ်ခုကို ရွေးချယ်ပြီး marker အားလုံးကို ဖယ်ရှားကာ stage နှင့် commit ပြုလုပ်ရပါသည်။"
+    },
+    {
+      id: "q6",
+      question: "Git stash ၏ အသုံးပြုမှုမှာ အဘယ်နည်း",
+      options: [
+        "Remote repository ကို ဖျက်ခြင်း",
+        "Uncommitted changes များကို ယာယီ သိမ်းဆည်းခြင်း",
+        "Commit history ကို ပြောင်းလဲခြင်း",
+        "Conflict marker များကို ဖယ်ရှားခြင်း"
+      ],
+      correctAnswer: 1,
+      explanation: "Stash သည် working tree ကို သန့်ရှင်းစေပြီး အလုပ်မပြီးသေး changes များကို ယာယီ သိမ်းဆည်းပေးပါသည်။"
+    },
+    {
+      id: "q7",
+      question: "Git cherry-pick သည် မည်သည့်အလုပ်ကို လုပ်ဆောင်သနည်း",
+      options: [
+        "Branch နှစ်ခုကို ပေါင်းစည်းပြီး merge commit ဖန်တီးခြင်း",
+        "Commit တစ်ခု၏ ပြောင်းလဲမှုကို current branch သို့ ကူးယူခြင်း",
+        "File အားလုံးကို remote သို့ push ပြုလုပ်ခြင်း",
+        "Stash အားလုံးကို ဖျက်ခြင်း"
+      ],
+      correctAnswer: 1,
+      explanation: "Cherry-pick သည် branch တစ်ခုလုံးကို merge မလုပ်ဘဲ commit တစ်ခုတည်း၏ ပြောင်းလဲမှုကို ရွေးချယ် ကူးယူပါသည်။"
+    },
+    {
+      id: "q8",
+      question: "GitHub Flow တွင် main branch ကို သန့်ရှင်းစေရန် developer များ မည်သို့ လုပ်ဆောင်သင့်သနည်း",
+      options: [
+        "Commit များကို main သို့ တိုက်ရိုက် push ပြုလုပ်ပါ",
+        "Feature branch မှ pull request ဖြင့် code review ပြုလုပ်ပြီးမှ merge ပြုလုပ်ပါ",
+        "Main branch မှ feature branch ကို ဖျက်ပြီး branch မသုံးဘဲ အလုပ်လုပ်ပါ",
+        "Remote branch များကို force push ပြုလုပ်ပါ"
+      ],
+      correctAnswer: 1,
+      explanation: "GitHub Flow တွင် feature တိုင်းကို branch ဖြင့် လုပ်ဆောင်ပြီး pull request နှင့် code review ပြုလုပ်ပြီးမှသာ main သို့ merge ပြုလုပ်ပါသည်။"
+    }
+  ]}
+/>
+

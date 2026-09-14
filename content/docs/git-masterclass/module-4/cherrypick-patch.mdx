@@ -1,0 +1,78 @@
+---
+title: "Git Cherrypick & Patch — Git Cherrypick & Patch"
+description: "Commit တစ်ခုတည်းကို ရွေးယူသည့် cherry-pick နှင့် patch file များ အသုံးပြုခြင်းကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Cherry-pick ဆိုသည်မှာ အဘယ်နည်း
+
+`git cherry-pick` သည် အခြား branch သို့မဟုတ် commit ၏ ပြောင်းလဲမှုတစ်ခုတည်းကို current branch ပေါ်သို့ သယ်ယူပါသည်။ Branch တစ်ခုလုံးကို merge လုပ်စရာမလိုဘဲ commit တစ်ခုချင်းစီကို ရွေးချယ် ကူးယူနိုင်ပါသည်။
+
+## Cherry-pick ပြုလုပ်ခြင်း
+
+Hotfix commit ကို feature branch သို့ ရွေးယူလိုသည့် အခြေအနေ-
+
+```
+git switch feature/login
+git cherry-pick a1b2c3d
+```
+
+```
+[feature/login 5f6e7d8] Add login form validation
+```
+
+## Commit အများအပြား ရွေးချယ်ခြင်း
+
+```
+git cherry-pick a1b2c3d b2c3d4e c3d4e5f
+```
+
+## Cherry-pick Conflict ဖြေရှင်းခြင်း
+
+Conflict ဖြစ်ပါက file ကို တည်းဖြတ်ပြီး အောက်ပါအတိုင်း ဆက်လုပ်ပါသည်။
+
+```
+git add src/app.js
+git cherry-pick --continue
+```
+
+Cherry-pick ကို ရပ်လိုပါက `git cherry-pick --abort` ကို အသုံးပြုပါသည်။
+
+## Patch ဆိုသည်မှာ အဘယ်နည်း
+
+Patch သည် commit သို့မဟုတ် diff တစ်ခုကို file သို့မဟုတ် email အဖြစ် ပေးပို့နိုင်သော format ဖြစ်ပါသည်။ Issue တွင် attach လုပ်ခြင်းဖြင့် အခြားသူ လွယ်ကူစွာ apply လုပ်စေနိုင်ပါသည်။
+
+## Format-patch ဖြင့် Patch ထုတ်ခြင်း
+
+```
+git format-patch -1 a1b2c3d -o patches
+```
+
+```
+patches/0001-add-login-form-validation.patch
+```
+
+## Patch Apply ပြုလုပ်ခြင်း
+
+```
+git am patches/0001-add-login-form-validation.patch
+```
+
+```
+Applying: Add login form validation
+```
+
+`git am` သည် patch ကို commit အဖြစ် လုပ်ဆောင်ပါသည်။ Diff-only ကို apply လုပ်လိုပါက-
+
+```
+git diff > changes.diff
+git apply changes.diff
+```
+
+## Patch နှင့် Cherry-pick ရွေးချယ်ခြင်း
+
+- Cherry-pick သည် repository ထဲမှ commit တစ်ခုကို ကူးယူသည် ဖြစ်ပါသည်။
+- Patch သည် diff ကို file အနေဖြင့် ဖလှယ်လိုသည့်အခါ အသုံးပြုပါသည်။
+
+ဤနည်းစနစ်နှစ်ခုသည် သီးခြားအခြေအနေများတွင် အလွန် အသုံးဝင်ပါသည်။

@@ -1,0 +1,64 @@
+---
+title: "Git Rebase — Git Rebase"
+description: "History ကို linear ဖြစ်စေရန် git rebase နှင့် interactive rebase ၏ အသုံးပြုပုံကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git Rebase ဆိုသည်မှာ အဘယ်နည်း
+
+`git rebase` သည် branch ၏ base point ကို အခြား commit တစ်ခုသို့ ပြောင်းရွှေ့ပြီး history ကို ပြန်လည် စီစဉ်ပေးပါသည်။ ထိုသို့ဖြင့် merge commit များကို ရှောင်ရှားနိုင်ပြီး linear history ကို ရရှိစေပါသည်။
+
+## Rebase လုပ်ငန်းစဉ်
+
+Feature branch ကို main ၏ ထိပ်တွင် ပြန်တင်လိုပါက-
+
+```
+git switch feature/login
+git rebase main
+```
+
+Feature branch ၏ commit များကို main ၏ နောက်ဆုံး commit အထက်၌ ပြန်လည် ဖန်တီးပါသည်။ Branch နှစ်ခုစလုံးက တူညီသော line ကို ပြောင်းလဲပါက conflict ဖြစ်ပွားနိုင်ပြီး ဖြေရှင်းပြီးနောက် `git rebase --continue` ဖြင့် ဆက်လုပ်ရပါသည်။
+
+## Fast-forward Merge ဖြင့် Linear History
+
+Rebase ပြီးပါက main သို့ fast-forward merge ပြုလုပ်နိုင်ပါသည်။
+
+```
+git switch main
+git merge feature/login
+```
+
+```
+Updating f5e4d3c..a1b2c3d
+Fast-forward
+```
+
+## Interactive Rebase
+
+`git rebase -i` ဖြင့် commit များကို edit, reorder, squash လုပ်နိုင်ပါသည်။
+
+```
+git rebase -i HEAD~3
+```
+
+Editor တွင် commit list ပေါ်လာပြီး keyword များ ထည့်နိုင်ပါသည်။
+
+```
+pick a1b2c3d Add header
+squash b2c3d4e Fix header typo
+squash c3d4e5f Add header styles => becomes one commit
+```
+
+- `pick`: Commit ကို ထားရှိပါသည်။
+- `reword`: Message ကို ပြောင်းပါသည်။
+- `squash`: Commit ကို ယခင် commit နှင့် ပေါင်းပါသည်။
+- `drop`: Commit ကို ဖယ်ရှားပါသည်။
+
+## သတိပြုရန် အချက်များ
+
+- Rebase သည် commit hash များကို ပြောင်းလဲပါသည်။
+- Push လုပ်ပြီးသား branch ကို rebase မလုပ်ပါနှင့်။
+- Conflict ဖြစ်ပါက `git rebase --abort` ဖြင့် ပြန်ရုပ်သိမ်းနိုင်ပါသည်။
+
+Pull လုပ်ချိန်တွင် rebase ကို အသုံးပြုလိုပါက `git pull --rebase` ကိုလည်း သုံးနိုင်ပါသည်။

@@ -1,0 +1,72 @@
+---
+title: "Git Large File Storage (LFS) — Git Large File Storage (LFS)"
+description: "Large file များကို Git repository မှ သီးခြား သိမ်းဆည်းသည့် Git LFS ၏ အသုံးပြုပုံကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git LFS ဆိုသည်မှာ အဘယ်နည်း
+
+Git Large File Storage (LFS) သည် version control တွင် large binary file များကို စီမံရန် Git အတွက် extension တစ်ခု ဖြစ်ပါသည်။ LFS သည် large file ၏ content ကို repository အပြင်ဘက်တွင် သိမ်းဆည်းပြီး repository အတွင်းတွင်မူ file ကို ညွှန်ပြသည့် pointer text အသေးစားကိုသာ ထားရှိပါသည်။
+
+အသုံးများသော LFS file များမှာ video, image, game assets, model files (psd, blend, zip) များ ဖြစ်ပါသည်။
+
+## Install နှင့် Setup ပြုလုပ်ခြင်း
+
+```
+git lfs install
+```
+
+```
+Updated git hooks.
+LFS initialized.
+```
+
+## File Type Track ပြုလုပ်ခြင်း
+
+```
+git lfs track "*.psd"
+git lfs track "*.zip"
+git add .gitattributes
+git commit -m "Track large files with LFS"
+```
+
+`git lfs track` သည် `.gitattributes` တွင် စာကြောင်းများ ထည့်သွင်းပေးပါသည်။ ထို file ကိုလည်း commit ပြုလုပ်ရပါမည်။
+
+## Large File Commit ပြုလုပ်ခြင်း
+
+Track ပြုလုပ်ထားသော file များကို ပုံမှန်အတိုင်း add နှင့် commit ပြုလုပ်ပါသည်။
+
+```
+git add images/hero.psd
+git commit -m "Add hero design"
+git push
+```
+
+Commit အတွင်းတွင် ကြီးမားသော content ကို LFS server တွင် သိမ်းဆည်းပြီး repository တွင်မူ pointer text သာ ပါဝင်ပါသည်။
+
+## LFS State စစ်ဆေးခြင်း
+
+```
+git lfs ls-files
+```
+
+```
+abc123def456 * images/hero.psd
+```
+
+## LFS အသုံးပြုခြင်း အဓိက အကျိုးကျေးဇူးများ
+
+- Repository size ကို ပေါ့ပါးစွာ ထားရှိနိုင်ပါသည်။
+- Clone နှင့် pull မြန်ဆန်ပါသည်။
+- Large binary များကို version history ဖြင့် စီမံနိုင်ပါသည်။
+
+## Clone လုပ်ချိန်တွင်မှ LFS
+
+LFS ဖြင့် သိမ်းထားသော file များကို clone or pull ပြုလုပ်သောအခါ pointer file ကို download လုပ်ပြီး real content ကို ရယူလိုပါက-
+
+```
+git lfs pull
+```
+
+Large file များအတွက် LFS ကို အသုံးပြုခြင်းသည် repository ၏ performance ကို သိသိသာသာ ပြောင်းလဲစေနိုင်ပါသည်။

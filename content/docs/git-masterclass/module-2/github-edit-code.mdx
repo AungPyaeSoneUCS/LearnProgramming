@@ -1,0 +1,46 @@
+---
+title: "GitHub Edit Code — GitHub Edit Code"
+description: "GitHub browser တွင်ပင် file များ ဖန်တီးခြင်း, တည်းဖြတ်ခြင်း နှင့် commit ပြုလုပ်ခြင်းကို လေ့လာပါမည်။"
+autoNumbering: true
+---
+
+
+## GitHub တွင် File အသစ် ဖန်တီးခြင်း
+
+Repository စာမျက်နှာတွင် `Add file` ကိုနှိပ်၍ `Create new file` ကို ရွေးပါ။ File name ကို ရိုက်ထည့်ပြီး content ကို editor တွင် ရေးသားကာ အောက်ခြေရှိ `Commit new file` စာမျက်နှာမှ commit ပြုလုပ်နိုင်ပါသည်။
+
+## File တည်းဖြတ်ခြင်း
+
+- File ကိုနှိပ်ပါ။
+- ညာဘက်အပေါ်ရှိ pencil (edit) အိုင်ကွန်ကိုနှိပ်ပါ။
+- Content ကို ပြောင်းလဲပါ။
+- Commit message ရေးပြီး `Commit changes` ကိုနှိပ်ပါ။
+
+Commit message များကို local repository ၏ history ကဲ့သို့ပင် နောက်မှ သေချာစွာ ရွေးနိုင်ရန် ရှင်းလင်းသော message များ သုံးပါ။
+
+## Commit Changes Dialog ၏ အစိတ်အပိုင်းများ
+
+- Commit message box: ပြောင်းလဲမှု၏ အကျဉ်းချုပ် ဖြစ်ပါသည်။
+- Extended description (optional): အသေးစိတ် ရှင်းလင်းချက် ဖြစ်ပါသည်။
+- Radio buttons: Commit ကို main branch သို့ တိုက်ရိုက် သို့မဟုတ် new branch တွင် ရေးသားရန် ရွေးချယ်နိုင်ပါသည်။
+
+## Local Changes နှင့် ညှိနှိုင်းခြင်း
+
+Browser မှ commit ပြုလုပ်ထားသောကြောင့် local repository မှ နောက်ဆုံး ဆွဲယူရန် လိုအပ်ပါသည်။
+
+```
+git pull origin main
+```
+
+```
+Updating c3d4e5f..d4e5f6a
+Fast-forward
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)
+```
+
+## Pull မလုပ်ခင် သတိပြုရန်
+
+Local တွင် uncommitted changes ရှိနေပြီး remote ကိုလည်း ပြောင်းထားပါက pull ပြုလုပ်ရာတွင် conflict ဖြစ်နိုင်ပါသည်။ ထိုအခါ ဦးစွာ local changes များကို commit သို့မဟုတ် stash ပြုလုပ်ထားရပါမည်။
+
+Browser-based editing သည် လွယ်ကူသော်လည်း commit history ကို သန့်ရှင်းစေရန် သေးငယ်သော changes များအတွက်သာ အသုံးပြုသင့်ပါသည်။

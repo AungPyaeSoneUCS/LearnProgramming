@@ -1,0 +1,57 @@
+---
+title: "GitHub Flow — GitHub Flow"
+description: "Team များအတွက် standard remote branching model ဖြစ်သော GitHub Flow ကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## GitHub Flow ဆိုသည်မှာ အဘယ်နည်း
+
+GitHub Flow သည် GitHub မှ အကြံပြုထားသော ရိုးရှင်းသော branching model ဖြစ်ပြီး continuous deployment လုပ်နေသော project များနှင့် သင့်လျော်ပါသည်။ စည်းမျဉ်း အနည်းငယ်သာ ရှိသောကြောင့် learn ရလွယ်ပြီး CI/CD pipeline များနှင့်လည်း ကောင်းစွာ အလုပ်လုပ်ပါသည်။
+
+## GitHub Flow ၏ အဓိကစည်းမျဉ်းများ
+
+1. Main branch တွင် deploy ရန် အသင့်ဖြစ်သော code ကိုသာ ထားရှိပါသည်။
+2. New feature တစ်ခုစီအတွက် main မှ branch အသစ် တစ်ခုကို ဖန်တီးပါသည်။
+3. Branch ကိုလည်း မကြာခဏ push ပြုလုပ်ပြီး backup ထားပါသည်။
+4. Pull Request ဖြင့် code review ပြုလုပ်ပါသည်။
+5. Merge ပြုလုပ်ပြီးသည့်နှင့် deploy ပြုလုပ်ရန် အသင့် ဖြစ်ပါသည်။
+
+## Feature Branch လမ်းကြောင်း
+
+Step 1 - New branch ကို main မှ ဖန်တီးပါ။
+
+```
+git switch main
+git pull
+git switch -c feature/pricing
+```
+
+Step 2 - Feature အလုပ်ကို အသေးစား commit များဖြင့် ပြုလုပ်ပါ။
+
+```
+git add pricing.html
+git commit -m "Add pricing table"
+```
+
+Step 3 - Branch ကို မကြာခဏ push ပြုလုပ်ပါ။
+
+```
+git push -u origin feature/pricing
+```
+
+Step 4 - Pull Request ဖွင့်ပြီး teammate များကို review လုပ်ခိုင်းပါ။
+Step 5 - Merge ပြုလုပ်ပြီး feature branch ကို ဖျက်ပါ။
+
+## Pull Request ၏ အခန်းကဏ္ဍ
+
+Pull request သည် branch ၏ ပြောင်းလဲမှုများကို team များက ပြန်လည်သုံးသပ် discuss လုပ်နိုင်သည့် GitHub feature ဖြစ်ပါသည်။ Reviewer များသည် diff ကို comment ပြုလုပ်နိုင်ပြီး အတည်ပြုမှသာ merge ပြုလုပ်နိုင်ပါသည်။
+
+## Main ကို သန့်ရှင်းစေရန် နည်းလမ်းများ
+
+- Pull request ကို issue နှင့် ချိတ်ဆက်ပါ။
+- Merge မလုပ်မီ CI test များ pass ဖြစ်စေပါ။
+- Review အတည်ပြုချက် ရယူပါ။
+- Main branch တွင် တိုက်ရိုက် commit မပြုလုပ်ပါနှင့်။
+
+GitHub Flow သည် feature branch, pull request နှင့် merge လမ်းကြောင်းများအတွက် standard branching model ဖြစ်ပါသည်။

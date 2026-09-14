@@ -1,0 +1,45 @@
+---
+title: "Git What is SSH? & GitHub Add SSH — Git What is SSH? & GitHub Add SSH"
+description: "SSH ဆိုသည်မှာ အဘယ်နည်း, public/private key များ၏ သဘောတရားနှင့် GitHub တွင် SSH key ထည့်သွင်းခြင်းကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## SSH ဆိုသည်မှာ အဘယ်နည်း
+
+SSH (Secure Shell) သည် network ပေါ်တွင် လုံခြုံစွာ ဆက်သွယ်နိုင်ရန် အသုံးပြုသော protocol ဖြစ်ပြီး Git နှင့် GitHub အကြား data ဖလှယ်ရာတွင် password ထည့်သွင်းစရာမလိုဘဲ encrypted ဖြင့် ချိတ်ဆက်နိုင်ပါသည်။
+
+## Public Key နှင့် Private Key
+
+SSH တွင် key အတွဲ နှစ်ခု ပါဝင်ပါသည်။
+
+- **Private key**: မိမိ၏ computer တွင်သာ ထားရှိရမည့် လျှို့ဝှက် key ဖြစ်ပြီး မည်သူ့ကိုမျှ မပေးရပါ။
+- **Public key**: GitHub ကဲ့သို့သော server များတွင် ထည့်သွင်းထားသည့် key ဖြစ်ပြီး ပေးအပ်နိုင်ပါသည်။
+
+Encryption ၏ သဘောတရားမှာ private key ဖြင့် encrypt လုပ်ထားသောအရာကို public key ဖြင့်သာ decrypt လုပ်နိုင်ပြီး အပြန်အလှန်လည်း ဖြစ်ပါသည်။
+
+## GitHub တွင် SSH Key ထည့်သွင်းခြင်း - လုပ်ငန်းစဉ်
+
+1. Key အတွဲကို `ssh-keygen` ဖြင့် ထုတ်လုပ်ပါ။
+2. Public key ၏ content ကို copy ပြုလုပ်ပါ။
+3. GitHub Settings ရှိ SSH and GPG keys တွင် paste ပြုလုပ်၍ ထည့်သွင်းပါ။
+4. `ssh -T git@github.com` ဖြင့် connection ကို စမ်းသပ်ပါ။
+
+## Connection Test အသေးစိတ်
+
+```
+ssh -T git@github.com
+```
+
+အောင်မြင်ပါက အောက်ပါအတိုင်း မှတ်တမ်း ပေါ်လာပါမည်။
+
+```
+Hi mgmg! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+## HTTPS နှင့် SSH နှိုင်းယှဉ်ခြင်း
+
+- **HTTPS**: Clone ပြုလုပ်ရန် လွယ်ကူပြီး personal access token ဖြင့် authenticate ပြုလုပ်ပါသည်။ Firewall အများစုတွင် HTTPS port သည် ဖွင့်ထားပါသည်။
+- **SSH**: Password ထည့်ရန် မလိုဘဲ key-based authentication ကို အသုံးပြုပါသည်။ Git protocol အတွက် port 22 လိုအပ်ပါသည်။
+
+နောက်ဆောင်းပါးတွင် key ထုတ်လုပ်ခြင်းမှ GitHub တွင် ထည့်သွင်းခြင်းအထိ အဆင့်ဆင့် လုပ်ဆောင်ပြီး အသေးစိတ် လေ့လာရပါမည်။

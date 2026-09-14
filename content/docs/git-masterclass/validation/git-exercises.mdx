@@ -1,0 +1,217 @@
+---
+title: "Git Exercises — Git Exercises"
+description: "Terminal ပေါ်တွင် လက်တွေ့ လုပ်ဆောင်ရန် Git exercises များနှင့် အဖြေများ ပါဝင်ပါသည်။"
+autoNumbering: true
+---
+
+
+ဤစာမျက်နှာတွင် သင်တန်းတစ်ခုလုံးကို ပြန်လည် သုံးသပ်နိုင်ရန် terminal-based exercises များ ပါဝင်ပါသည်။ ဥပမာအားဖြင့် merge conflict ကို တမင် ဖြစ်စေပြီး ဖြေရှင်းခြင်းကဲ့သို့သော လုပ်ငန်းဆောင်တာများကို လက်တွေ့ လေ့ကျင့်ရပါမည်။
+
+## Exercise 1 - Repository စတင်ခြင်း
+
+### TASK
+
+- `git-practice` folder တစ်ခု ဖန်တီးပြီး repository အဖြစ် init ပြုလုပ်ပါ။
+- `hello.txt` file ကို ဖန်တီး၍ "Hello Git" ဟု ရေးပါ။
+- `git status` ဖြင့် untracked file ကို စစ်ဆေးပါ။
+
+### ဖြေရှင်းနည်း
+
+```
+mkdir git-practice
+cd git-practice
+git init
+echo "Hello Git" > hello.txt
+git status
+```
+
+```
+Untracked files:
+        hello.txt
+```
+
+## Exercise 2 - Staging နှင့် Commit
+
+### TASK
+
+- `hello.txt` ကို stage လုပ်ပါ။
+- "Add hello file" ဟူသော message ဖြင့် commit ပြုလုပ်ပါ။
+- `git log --oneline` ဖြင့် စစ်ဆေးပါ။
+
+### ဖြေရှင်းနည်း
+
+```
+git add hello.txt
+git commit -m "Add hello file"
+git log --oneline
+```
+
+```
+a1b2c3d (HEAD -> main) Add hello file
+```
+
+## Exercise 3 - Branch ဖန်တီး Merge လုပ်ခြင်း
+
+### TASK
+
+- `feature/greeting` branch ဖန်တီးပြီး switch ပြုလုပ်ပါ။
+- `greeting.txt` file အသစ် ဖန်တီး commit ပြုလုပ်ပါ။
+- Main သို့ ပြန်လည် switch ပြုလုပ်၍ branch ကို merge ပြုလုပ်ပါ။
+
+### ဖြေရှင်းနည်း
+
+```
+git switch -c feature/greeting
+echo "Welcome!" > greeting.txt
+git add greeting.txt
+git commit -m "Add greeting file"
+git switch main
+git merge feature/greeting
+```
+
+```
+Fast-forward
+ greeting.txt | 1 +
+ 1 file changed, 1 insertion(+)
+```
+
+## Exercise 4 - Merge Conflict ဖြစ်စေပြီး ဖြေရှင်းခြင်း
+
+### TASK
+
+- Main branch တွင် `config.txt` ဖန်တီး၍ port=8080 ဟု ရေးပြီး commit ပြုလုပ်ပါ။
+- `feature/change` branch ကို ဖန်တီး၍ port=9090 ဟု ပြောင်း commit ပြုလုပ်ပါ။
+- Main သို့ ပြန်ပြီး port=9000 ဟု ပြောင်း commit ပြုလုပ်ပါ။
+- Feature branch ကို main သို့ merge ပြုလုပ်ပြီး conflict ကို ဖြေရှင်းပါ။
+
+### ဖြေရှင်းနည်း
+
+```
+echo "port=8080" > config.txt
+git add config.txt
+git commit -m "Add config"
+git switch -c feature/change
+echo "port=9090" > config.txt
+git add config.txt
+git commit -m "Change port to 9090"
+git switch main
+echo "port=9000" > config.txt
+git add config.txt
+git commit -m "Change port to 9000"
+git merge feature/change
+```
+
+```
+CONFLICT (content): Merge conflict in config.txt
+Automatic merge failed; fix conflicts and then commit.
+```
+
+File အတွင်းရှိ marker များကို ကြည့်ပြီး port=9000 ကို ချန်၍ stage နှင့် commit ပြုလုပ်ပါ။
+
+```
+git add config.txt
+git commit -m "Resolve port conflict"
+```
+
+## Exercise 5 - Stash မှ ပြန်လည်ရယူခြင်း
+
+### TASK
+
+- File တစ်ခုတွင် uncommitted change ဖန်တီးပါ။
+- `git stash push -m "wip"` ဖြင့် သိမ်းပြီး working tree သန့်ရှင်းကြောင်း စစ်ဆေးပါ။
+- `git stash pop` ဖြင့် ပြန်ရယူပါ။
+
+### ဖြေရှင်းနည်း
+
+```
+echo "update" >> hello.txt
+git stash push -m "wip"
+git status
+git stash pop
+```
+
+```
+On branch main
+nothing to commit, working tree clean
+```
+
+## Exercise 6 - Amend ပြုလုပ်ခြင်း
+
+### TASK
+
+- နောက်ဆုံး commit message ကို "Update greeting text" ဟု ပြောင်းပါ။
+- Commit hash ပြောင်းသွားကြောင်း log ဖြင့် စစ်ဆေးပါ။
+
+### ဖြေရှင်းနည်း
+
+```
+git commit --amend -m "Update greeting text"
+git log --oneline
+```
+
+## Exercise 7 - Undo လေ့ကျင့်ခြင်း
+
+### TASK
+
+- `git log --oneline` မှ commit စာရင်းကို ကြည့်ပါ။
+- `git reset --soft HEAD~1` ဖြင့် နောက်ဆုံး commit ကို ဖယ်ပြီး staged changes ကို ကြည့်ပါ။
+- `git diff --staged` ဖြင့် စစ်ဆေးပါ။
+
+### ဖြေရှင်းနည်း
+
+```
+git reset --soft HEAD~1
+git status
+git diff --staged
+```
+
+## Exercise 8 - Revert ဖြင့် ပြန်ဖျက်ခြင်း
+
+### TASK
+
+- `HEAD~1` commit ကို revert ပြုလုပ်ပြီး log နှင့် reflog တွင် commit history ကို စစ်ဆေးပါ။
+
+### ဖြေရှင်းနည်း
+
+```
+git revert HEAD~1 --no-edit
+git log --oneline
+git reflog
+```
+
+## Exercise 9 - Tag Release ပြုလုပ်ခြင်း
+
+### TASK
+
+- v1.0.0 annotated tag ကို ဖန်တီးပြီး Git tag list တွင် စစ်ဆေးပါ။
+
+### ဖြေရှင်းနည်း
+
+```
+git tag -a v1.0.0 -m "Release v1.0.0"
+git tag
+```
+
+## Exercise 10 - Remote ဖြင့် လေ့ကျင့်ခြင်း
+
+### TASK
+
+- GitHub တွင် repository အသစ်တစ်ခု ဖန်တီးပြီး origin remote ကို ထည့်ပါ။
+- `git push -u origin main` ဖြင့် push ပြုလုပ်ပါ။
+- GitHub စာမျက်နှာတွင် code ပေါ်လာကြောင်း စစ်ဆေးပါ။
+
+### ဖြေရှင်းနည်း
+
+```
+git remote add origin https://github.com/username/git-practice.git
+git push -u origin main
+```
+
+## အပိုဆု Exercise - Reflog Recovery
+
+### TASK
+
+- Branch အသစ်တစ်ခုတွင် commit သုံးခု ပြုလုပ်ပြီး hard reset လုပ်ပါ။
+- Reflog ဖြင့် ပျောက်ဆုံးသွားသော commit hash ကို ရှာပြီး branch အသစ်တစ်ခုတွင် ပြန်လည် ထားရှိပါ။
+
+ဤ exercises အားလုံးကို လုပ်ဆောင်ပြီးပါက Git ၏ အခြေခံ လုပ်ငန်းစဉ်များကို မိမိဘာသာ လုပ်နိုင်ပြီ ဖြစ်ပါသည်။

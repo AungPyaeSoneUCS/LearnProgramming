@@ -1,0 +1,77 @@
+---
+title: "Git .gitignore & Git .gitattributes — Git .gitignore & Git .gitattributes"
+description: ".gitignore ဖြင့် file များကို ဖယ်ထုတ်ခြင်း နှင့် .gitattributes ဖြင့် file attributes သတ်မှတ်ခြင်းကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## .gitignore ဆိုသည်မှာ အဘယ်နည်း
+
+`.gitignore` file သည် track မလုပ်လိုသော file များကို Git အား ဖယ်ထုတ်စေရန် သတ်မှတ်ပေးပါသည်။ Dependency folder, build output နှင့် environment config များကို repository တွင် မထည့်မိစေရန် အသုံးပြုပါသည်။
+
+## အသုံးများသော .gitignore Pattern များ
+
+```
+# dependencies
+node_modules/
+
+# build output
+dist/
+build/
+
+# environment
+.env
+*.local
+
+# logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+```
+
+## Pattern စည်းမျဉ်းများ
+
+- `node_modules/`: Folder တစ်ခုလုံးကို ignore ပြုလုပ်ပါသည်။
+- `*.log`: .log extension ရှိသော file အားလုံးကို ignore ပြုလုပ်ပါသည်။
+- `!keep.log`: ယခင် pattern ဖြင့် ignore ဖြစ်နေသော file ကို ပြန်လည် track ပြုလုပ်ရန် ! ကို သုံးပါသည်။
+- `build/app.js`: Folder တစ်ခုသို့ တိကျစွာ သတ်မှတ်ပါသည်။
+
+## Ignore ဖြစ်နေသည်ကို စစ်ဆေးခြင်း
+
+```
+git check-ignore -v node_modules
+```
+
+## Track ဖြစ်နေပြီးသားကို Ignore ပြောင်းခြင်း
+
+Track လုပ်ထားပြီးသား file ကို .gitignore ထဲ ထည့်လျှင်လည်း track ဆက်ဖြစ်နေပါသည်။ Remove ပြုလုပ်ရန်-
+
+```
+git rm --cached .env
+```
+
+ဤ command သည် file ကို repository မှ ဖယ်ထုတ်သော်လည်း disk ပေါ်တွင် ထားရှိပါသည်။
+
+## .gitattributes ဆိုသည်မှာ အဘယ်နည်း
+
+`.gitattributes` သည် Git အတွက် file types များ၏ attributes (line endings, diff, binary) ကို သတ်မှတ်ပါသည်။ Team တစ်ခုလုံးတွင် တစ်ပြေးညီ ဖြစ်စေရန် အသုံးဝင်ပါသည်။
+
+```
+* text=auto
+*.md text eol=lf
+*.bat text eol=crlf
+*.png binary
+*.psd binary
+```
+
+- `text=auto`: Git သည် line endings ကို အလိုအလျောက် စီမံပါသည်။
+- `eol=lf`: Unix-style line endings ကို သတ်မှတ်ပါသည်။
+- `binary`: Binary file များအတွက် diff ပြုလုပ်ရန် မလိုအပ်ကြောင်း သတ်မှတ်ပါသည်။
+
+ဤ file နှစ်ခုကို commit ပြုလုပ်ပြီး repository အတွင်း ထည့်သွင်းပါက အဖွဲ့ဝင်အားလုံးအတွက် တူညီစွာ အကျိုးသက်ရောက်ပါသည်။

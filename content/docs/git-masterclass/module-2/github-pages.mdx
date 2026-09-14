@@ -1,0 +1,48 @@
+---
+title: "GitHub Pages — GitHub Pages"
+description: "Static website များကို GitHub တွင် free hosting ပြုလုပ်သည့် GitHub Pages ၏ အသုံးပြုပုံကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## GitHub Pages ဆိုသည်မှာ အဘယ်နည်း
+
+GitHub Pages သည် GitHub repository ထဲမှ static file များ (HTML, CSS, JavaScript) ကို free website အဖြစ် publish ပြုလုပ်ပေးသော hosting service ဖြစ်ပါသည်။ URL ပုံစံမှာ https://username.github.io/repo-name/ ဖြစ်ပါသည်။
+
+## Static နှင့် Dynamic Site
+
+- **Static site**: Server မလိုဘဲ browser မှ HTML, CSS, JavaScript ကို တိုက်ရိုက် လုပ်ဆောင်နိုင်သော site ဖြစ်ပါသည်။
+- **Dynamic site**: Database နှင့် server-side code (Node, PHP) လိုအပ်သော site ဖြစ်ပါသည်။ GitHub Pages သည် static site များအတွက်သာ ဖြစ်ပါသည်။
+
+## GitHub Pages ကို Enable ပြုလုပ်ခြင်း
+
+1. Repository ၏ Settings - Pages စာမျက်နှာသို့ သွားပါ။
+2. `Source` ကို `Deploy from a branch` ဟု ထားပြီး branch `main` နှင့် folder `/ (root)` ကို ရွေးပါ။
+3. `Save` ကိုနှိပ်သည့်နှင့် site ကို publish ပြုလုပ်ပေးပါသည်။
+
+## gh-pages Branch ဖြင့် Deploy ပြုလုပ်ခြင်း
+
+တစ်နည်းအားဖြင့် `gh-pages` branch တွင် build output ကို commit ပြုလုပ်၍ deploy ပြုလုပ်နိုင်ပါသည်။
+
+```
+git checkout --orphan gh-pages
+git add .
+git commit -m "Deploy site"
+git push origin gh-pages
+```
+
+## Site URL ကြည့်ရှုခြင်း
+
+Publish အောင်မြင်ပြီးပါက Settings - Pages တွင် site ၏ URL ကို မြင်ရပါမည်။
+
+```
+https://mgmg.github.io/my-web-app/
+```
+
+## Custom Domain
+
+- GitHub Pages ၏ URL အစား မိမိပိုင်ဆိုင်ထားသော domain ကို ချိတ်ဆက်နိုင်ပါသည်။
+- Repository root တွင် `CNAME` file တစ်ခု ဖန်တီးပြီး domain name ကို ရိုက်ထည့်ပါ။
+- Domain provider တွင် DNS record (CNAME သို့မဟုတ် A record) ကို ညွှန်ပြရပါမည်။
+
+GitHub Pages သည် portfolio, documentation site နှင့် project demo များအတွက် အသုံးဝင်သော free hosting ဖြစ်ပါသည်။

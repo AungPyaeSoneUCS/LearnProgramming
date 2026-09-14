@@ -1,0 +1,50 @@
+---
+title: "Git GUI Clients — Git GUI Clients"
+description: "Terminal နှင့်အပြိုင် အသုံးပြုနိုင်သော GUI ကိရိယာများ နှင့် history tree ကို မြင်သာစွာ ကြည့်ရှုခြင်းကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git GUI Clients ဆိုသည်မှာ အဘယ်နည်း
+
+GUI client များသည် Git command များကို graphical interface ဖြင့် လုပ်ဆောင်နိုင်ရန် ကူညီပေးသော application များ ဖြစ်ပါသည်။ Command မှတ်သားစရာ မလိုဘဲ buttons နှင့် dialogs များဖြင့် အလုပ်လုပ်နိုင်ပါသည်။
+
+Terminal ကို အခြေခံကျကျ တတ်မြောက်ထားရန်မှာ အရေးကြီးပြီး GUI သည် visualization အပိုင်းအတွက် အထောက်အကူ ဖြစ်ပါသည်။
+
+## လူကြိုက်များသော GUI Clients
+
+- **GitHub Desktop**: GitHub ၏ official desktop app ဖြစ်ပြီး installation နှင့် အသုံးပြုရန် လွယ်ကူပါသည်။
+- **Sourcetree**: Atlassian ၏ free client ဖြစ်ပြီး branch history tree ကို ရှင်းလင်းစွာ ပြသပါသည်။
+- **VS Code Git**: VS Code editor အတွင်းတွင် built-in ဖြစ်သော source control panel ဖြစ်ပြီး GUI pull/push များကို အသုံးပြုနိုင်ပါသည်။
+- **GitKraken**: Feature ကြွယ်ဝသော cross-platform client ဖြစ်ပြီး သက်တောင့်သက်သာရှိသော interface ရှိပါသည်။
+
+## VS Code တွင် built-in Git အသုံးပြုခြင်း
+
+1. Source Control panel (Ctrl+Shift+G) ကို ဖွင့်ပါသည်။
+2. Changes view တွင် staged/unstaged file များကို မြင်ရပါသည်။
+3. Message ရိုက်ထည့်ပြီး Commit button ကိုနှိပ်ပါ။
+4. ညာဘက်အောက်ရှိ branch indicator မှ branch များကို ပြောင်းနိုင်ပါသည်။
+
+## History Tree ကြည့်ရှုခြင်း
+
+GUI clients များသည် commit log ကို tree visualization ဖြင့် ပြသပြီး commit များ၏ branch ဆက်စပ်ပုံကို node များဖြင့် မြင်နိုင်ပါသည်။ Terminal ဖြင့်လည်း graph ကြည့်ရှုနိုင်ပါသည်။
+
+```
+git log --oneline --graph --all
+```
+
+```
+* c3d4e5f (feature/login) Add login page
+* 9f8a2d1 (main) Add footer section
+| * b5c3d2e (feature/contact) Add contact page
+|/
+* a1b2c3d Update heading text
+* f5e4d3c Initial commit
+```
+
+## Terminal နှင့် GUI နှိုင်းယှဉ်ခြင်း
+
+- **Terminal**: Server SSH session များ သို့မဟုတ် automation scripts များတွင် GUI မရှိပါ။ Command အသိပညာသည် server ပေါ်တွင် လုပ်ဆောင်နိုင်ရန် မရှိမဖြစ် လိုအပ်ပါသည်။
+- **GUI**: လေ့လာရ လွယ်ကူပြီး visualization ကောင်းပါသည်။ Merge conflict ကဲ့သို့သော အခြေအနေများကို graphical diff viewer ဖြင့် ဖြေရှင်းနိုင်ပါသည်။
+
+အကောင်းဆုံး နည်းလမ်းမှာ command line ကို အခြေခံကျကျ တတ်မြောက်ထားပြီး GUI ကို visualization အတွက် ဖြည့်စွက် အသုံးပြုခြင်း ဖြစ်ပါသည်။

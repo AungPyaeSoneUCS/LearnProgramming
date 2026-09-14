@@ -1,0 +1,95 @@
+---
+title: "Git Signing Commits/Tags — Git Signing Commits/Tags"
+description: "GPG keys ဖြင့် commit နှင့် tag များကို လက်မှတ်ထိုး၍ လုံခြုံစေခြင်းကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Signed Commit ဆိုသည်မှာ အဘယ်နည်း
+
+GPG (GNU Privacy Guard) key ဖြင့် commit နှင့် tag များကို လက်မှတ်ထိုးခြင်းဖြင့် ထို commit ကို မိမိကိုယ်တိုင် ပြုလုပ်သည် ဟု အတည်ပြုနိုင်ပါသည်။ GitHub တွင် Verified badge ကို ပြသပြီး commit ၏ ဇာစ်မြစ်ကို အတည်ပြုနိုင်ပါသည်။
+
+## GPG Key ထုတ်လုပ်ခြင်း
+
+```
+gpg --full-generate-key
+```
+
+- Key type: RSA နှင့် RSA ကို ရွေးပါ။
+- Key size: 4096 ကို ရွေးပါ။
+- Validity: 0 (no expiry) ကို ရွေးနိုင်ပါသည်။
+- Real name နှင့် email ကို GitHub account နှင့် ကိုက်ညီစွာ ထည့်ပါ။
+
+## Key ID ရယူခြင်း
+
+```
+gpg --list-secret-keys --keyid-format=long
+```
+
+```
+sec   rsa4096/3A2C5B1D 2026-09-14 [SC]
+     8F1A9B3C5D7E9F1A2B3C4D5E6F7A8B9C0D1E2F3A4
+uid                 [ultimate] Mg Mg <mgmg@example.com>
+```
+
+## Git တွင် Signing Key သတ်မှတ်ခြင်း
+
+```
+git config --global user.signingkey 3A2C5B1D
+git config --global commit.gpgsign true
+```
+
+## Commit လက်မှတ်ထိုးခြင်း
+
+```
+git commit -S -m "Add login form"
+```
+
+commit.gpgsign ကို true ထားထားပါက ပုံမှန်အတိုင်း commit ပြုလုပ်ရုံဖြင့် အလိုအလျောက် လက်မှတ်ထိုးပါသည်။
+
+## Tag လက်မှတ်ထိုးခြင်း
+
+```
+git tag -s v1.0.0 -m "Signed release tag"
+```
+
+Tag validation ပြုလုပ်ရန်-
+
+```
+git tag -v v1.0.0
+```
+
+```
+object c3d4e5f...
+type commit
+tag v1.0.0
+tagger Mg Mg <mgmg@example.com>
+
+Good signature from "Mg Mg <mgmg@example.com>"
+```
+
+## Commit Signature စစ်ဆေးခြင်း
+
+```
+git log --show-signature
+```
+
+## GitHub တွင် GPG Key ထည့်သွင်းခြင်း
+
+1. Public key ကို copy ပြုလုပ်ပါ။
+
+```
+gpg --armor --export 3A2C5B1D
+```
+
+2. GitHub Settings - SSH and GPG keys - New GPG key တွင် paste ပြုလုပ်ပြီး ထည့်သွင်းပါ။
+3. ထို့နောက် လက်မှတ်ထိုးထားသော commit များပေါ်တွင် Verified badge ကို မြင်ရပါသည်။
+
+## လုပ်ငန်းစဉ် အကျဉ်းချုပ်
+
+1. GPG key ထုတ်လုပ်ပါ (gpg --full-generate-key) ဖြစ်ပါသည်။
+2. Git တွင် signingkey သတ်မှတ်ပြီး commit.gpgsign ကို true ထားပါ။
+3. Commit နှင့် tag များကို -S / -s option များဖြင့် လက်မှတ်ထိုးပါ။
+4. Public key ကို GitHub တွင် ထည့်သွင်းပါ။
+
+ဤနည်းဖြင့် commit ၏ စစ်မှန်မှုကို သက်သေပြနိုင်ပြီး supply chain လုံခြုံရေးကို တိုးတက်စေပါသည်။

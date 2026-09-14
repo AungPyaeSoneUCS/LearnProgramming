@@ -1,0 +1,83 @@
+---
+title: "Git Submodules — Git Submodules"
+description: "Repository အတွင်း အခြား repository များ ထည့်သွင်းထားနိုင်သည့် git submodules ၏ အသုံးပြုပုံကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Submodule ဆိုသည်မှာ အဘယ်နည်း
+
+Submodule သည် repository တစ်ခုအတွင်း အခြား repository တစ်ခု ထည့်သွင်းထားခြင်း ဖြစ်ပါသည်။ Shared library သို့မဟုတ် common component ကို သီးခြား project တစ်ခုအဖြစ် ထားရှိ၍ မိမိ၏ project အတွင်းမှ အသုံးပြုနိုင်ပါသည်။
+
+## Submodule ထည့်သွင်းခြင်း
+
+```
+git submodule add https://github.com/mgmg/shared-utils.git lib/shared-utils
+```
+
+```
+Cloning into 'lib/shared-utils'...
+done.
+```
+
+Submodule ထည့်သွင်းပြီးနောက် `.gitmodules` file နှင့် submodule folder နှစ်ခုလုံးကို commit ပြုလုပ်ရပါမည်။
+
+```
+git add .gitmodules lib/shared-utils
+git commit -m "Add shared-utils submodule"
+```
+
+## .gitmodules File
+
+`.gitmodules` သည် submodules ၏ စာရင်းနှင့် URL များကို သိမ်းဆည်းထားပါသည်။
+
+```
+[submodule "lib/shared-utils"]
+	path = lib/shared-utils
+	url = https://github.com/mgmg/shared-utils.git
+```
+
+## Submodule ပါသော Project ကို Clone ပြုလုပ်ခြင်း
+
+Clone လုပ်ပြီးနောက် submodule folder သည် အလွတ်ဖြစ်နေပါသည်။ ပြန်လည် ရယူရန်-
+
+```
+git submodule update --init --recursive
+```
+
+သို့မဟုတ် clone လုပ်ချိန်တွင် တစ်ပြိုင်နက် ရယူနိုင်ပါသည်။
+
+```
+git clone --recurse-submodules https://github.com/mgmg/my-app.git
+```
+
+## Submodule အတွင်း အလုပ်လုပ်ခြင်း
+
+Submodule folder သည် ၎င်း၏ ကိုယ်ပိုင် repository တစ်ခု ဖြစ်ပါသည်။ Submodule အတွင်း feature ကို branch တစ်ခုခုပေါ်တွင် commit ပြုလုပ်ပြီးနောက် parent repository တွင် submodule pointer update ကို ပြန်လည် commit ပြုလုပ်ရပါမည်။
+
+```
+cd lib/shared-utils
+git add .
+git commit -m "Update helper"
+cd ../..
+git add lib/shared-utils
+git commit -m "Bump shared-utils submodule"
+```
+
+## Submodule Update လက်ခံခြင်း
+
+Remote မှ submodule pointer အသစ်ကို ရယူရန်အတွက်-
+
+```
+git submodule update --remote
+git add lib/shared-utils
+git commit -m "Update submodule to latest"
+```
+
+## သတိပြုရန် အချက်များ
+
+- Clone ပြုလုပ်သူတိုင်းသည် submodule ကို `update --init` ပြုလုပ်ရပါမည်။
+- Submodule အတွင်း ဘယ် commit ကို pointer အဖြစ် ထည့်ရမည်ကို သေချာ စဉ်းစားပါ။
+- Submodule ၏ URL ကို .gitmodules တွင် ပြောင်းလဲနိုင်ပါသည်။
+
+Submodule များသည် project များအကြား code ကို မျှဝေရန် အစွမ်းထက်သော နည်းလမ်း ဖြစ်ပါသည်။

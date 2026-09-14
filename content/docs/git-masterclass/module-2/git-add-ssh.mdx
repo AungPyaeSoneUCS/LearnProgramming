@@ -1,0 +1,76 @@
+---
+title: "Git Add SSH — Git Add SSH"
+description: "ssh-keygen ဖြင့် key ဖန်တီးခြင်း, GitHub Settings တွင် key ထည့်သွင်းခြင်း နှင့် SSH connection စမ်းသပ်ခြင်းကို အဆင့်ဆင့် လေ့လာပါမည်။"
+autoNumbering: true
+---
+
+
+## SSH Key ထုတ်လုပ်ခြင်း
+
+Terminal တွင် အောက်ပါ command ဖြင့် key အတွဲကို ထုတ်လုပ်ပါသည်။ Email address ကို GitHub account ၏ email ဖြင့် အစားထိုးပါ။
+
+```
+ssh-keygen -t ed25519 -C "mgmg@example.com"
+```
+
+Terminal သည် file ဖန်တီးမည့်နေရာကို မေးပြီး passphrase ထည့်ရန် မေးပါသည်။ Passphrase မလိုလျှင် နှစ်ကြိမ်စလုံး Enter နှိပ်ကာ ကျော်လိုက်ပါ။
+
+```
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (C:/Users/mgmg/.ssh/id_ed25519):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in C:/Users/mgmg/.ssh/id_ed25519
+Your public key has been saved in C:/Users/mgmg/.ssh/id_ed25519.pub
+```
+
+## Public Key ကို ကြည့်ရှုခြင်း
+
+```
+cat C:/Users/mgmg/.ssh/id_ed25519.pub
+```
+
+Output သည် အောက်ပါအတိုင်း ပုံစံမျိုး ဖြစ်ပါသည်။
+
+```
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... mgmg@example.com
+```
+
+ဤ content တစ်ခုလုံးကို copy ပြုလုပ်ထားပါ။
+
+## GitHub တွင် Key ထည့်သွင်းခြင်း
+
+1. https://github.com/settings/keys သို့ သွားပါ။
+2. `New SSH key` ကိုနှိပ်ပါ။
+3. Title အကွက်တွင် "My Laptop" ကဲ့သို့ အမည်တစ်ခု ထည့်ပါ။
+4. Key အကွက်တွင် မိတ္တူကူးထားသော public key ကို paste ပြုလုပ်ပြီး `Add SSH key` ကိုနှိပ်ပါ။
+
+## Connection စမ်းသပ်ခြင်း
+
+```
+ssh -T git@github.com
+```
+
+အောင်မြင်ပါက အောက်ပါအတိုင်း မှတ်တမ်း ပေါ်လာပါသည်။
+
+```
+Hi mgmg! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+ဤမှတ်တမ်းကို မြင်ရပါက SSH authentication အောင်မြင်ပြီး repository များကို SSH URL ဖြင့် clone, push, pull ပြုလုပ်နိုင်ပြီ ဖြစ်ပါသည်။
+
+## SSH URL အသုံးပြုခြင်း
+
+SSH URL ၏ ပုံစံမှာ git@github.com:user/repo.git ဖြစ်ပါသည်။
+
+```
+git clone git@github.com:mgmg/my-web-app.git
+```
+
+Password ထည့်စရာမလိုဘဲ clone ပြုလုပ်နိုင်ပါသည်။
+
+## သတိပြုရန် အချက်များ
+
+- Private key ကို ဘယ်တော့မျှ မိတ္တူကူးပြီး မပေးပို့ပါနှင့်။
+- Key ပျောက်ဆုံးပါက clone/push များ အလုပ်မလုပ်တော့ပါ။ ထိုအခါ GitHub ရှိ ဟောင်းသော key ကို ဖျက်၍ အသစ်များ ထည့်သွင်းရပါမည်။
+- Computer အသစ်သို့ ပြောင်းပါက new key ကို ထုတ်လုပ်၍ ထည့်သွင်းရပါမည်။

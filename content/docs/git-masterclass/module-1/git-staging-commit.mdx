@@ -1,0 +1,92 @@
+---
+title: "Git Staging & Git Commit — Git Staging & Git Commit"
+description: "Staging area နှင့် commit ၏ သဘောတရား၊ နှစ်ခုကြား ဆက်စပ်ပုံ နှင့် commit message ရေးသားခြင်းကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Staging Area ဆိုသည်မှာ အဘယ်နည်း
+
+Staging area သည် commit ပြုလုပ်ရန် ရွေးချယ်ထားသော file များ စုဝေးရာ intermediate area ဖြစ်ပါသည်။ `git add` ဖြင့် file များကို stage ပြုလုပ်ပြီး `git commit` ဖြင့် staged file များကို history တွင် မှတ်တမ်းတင်ပါသည်။
+
+လုပ်ငန်းစဉ် အဆင့် သုံးခု ရှိပါသည်။
+
+1. **Working Tree**: File များကို တည်းဖြတ်ပါသည်။
+2. **Staging Area**: Commit ပြုလုပ်လိုသော ပြောင်းလဲမှုများကို `git add` ဖြင့် စုစည်းပါသည်။
+3. **Repository**: `git commit` ဖြင့် staging area မှ snapshot ကို history တွင် မှတ်တမ်းတင်ပါသည်။
+
+## File နှစ်ခုကို Stage ပြုလုပ်ခြင်း
+
+```
+echo "<h1>Hello Git</h1>" > index.html
+echo "body { color: red; }" > style.css
+git status
+```
+
+```
+Untracked files:
+        index.html
+        style.css
+```
+
+File တစ်ခုချင်းစီ သို့မဟုတ် အားလုံးကို stage ပြုလုပ်နိုင်ပါသည်။
+
+```
+git add index.html
+git status
+```
+
+```
+Changes to be committed:
+        new file:   index.html
+Untracked files:
+        style.css
+```
+
+နောက်ထပ် file ကိုလည်း stage ပြုလုပ်ပါ။
+
+```
+git add style.css
+git add .
+```
+
+`git add .` ဆိုသည်မှာ directory အတွင်းရှိ file အားလုံးကို stage ပြုလုပ်သည် ဖြစ်ပါသည်။
+
+## Commit ပြုလုပ်ခြင်း
+
+```
+git commit -m "Add home page files"
+```
+
+```
+[main (root-commit) a1b2c3d] Add home page files
+ 2 files changed, 3 insertions(+)
+ create mode 100644 index.html
+ create mode 100644 style.css
+```
+
+- `-m` ဆိုသည်မှာ message ကို terminal တွင် တိုက်ရိုက် ရေးသားနိုင်သည် ဖြစ်ပါသည်။
+- `-m` မပါပါက editor ပွင့်လာပြီး message ရေးသားရပါမည်။
+
+## Modified File များကို Commit ပြုလုပ်ခြင်း
+
+File ကို တည်းဖြတ်ပြီးနောက် status စစ်ဆေးကြည့်ပါ။
+
+```
+echo "<h1>Updated</h1>" >> index.html
+git status
+```
+
+```
+Changes not staged for commit:
+        modified:   index.html
+```
+
+Modified file ကို နောက်တစ်ကြိမ် stage ပြုလုပ်ရန် လိုအပ်ပါသည်။
+
+```
+git add index.html
+git commit -m "Update heading text"
+```
+
+Tracked file များကို လျင်မြန်စွာ stage နှင့် commit ပြုလုပ်ရန် `git commit -am` ကို သုံးနိုင်သော်လည်း untracked file များအတွက်မူ `git add` ကို ဦးစွာ လုပ်ဆောင်ရပါမည်။

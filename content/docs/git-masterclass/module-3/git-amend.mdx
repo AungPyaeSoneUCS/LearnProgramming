@@ -1,0 +1,42 @@
+---
+title: "Git Amend — Git Amend"
+description: "နောက်ဆုံး commit ၏ message နှင့် အကြောင်းအရာများကို ပြင်ဆင်ရန် git commit --amend ၏ အသုံးပြုပုံကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git Amend ဆိုသည်မှာ အဘယ်နည်း
+
+`git commit --amend` သည် နောက်ဆုံး (အသစ်ဆုံး) commit တစ်ခုကို ပြင်ဆင်ရန် အသုံးပြုပါသည်။ Commit အသစ်တစ်ခုကို မဖန်တီးဘဲ ဤ command သည် နောက်ဆုံး commit ၏ message ကို ပြောင်းနိုင်သည် သို့မဟုတ် ၎င်းတွင် file များကို ထပ်ပေါင်းထည့်နိုင်ပါသည်။
+
+## Commit Message ပြင်ဆင်ခြင်း
+
+Message တွင် အမှား ရှိနေပါက အောက်ပါအတိုင်း ပြင်နိုင်ပါသည်။
+
+```
+git commit --amend -m "Fix: correct typo in heading"
+```
+
+## မေ့ကျန်သော File ကို ထပ်ထည့်ခြင်း
+
+File အချို့ကို stage လုပ်ပြီး commit လုပ်ပြီးမှသာ အခြား file တစ်ခု ပါကျန်နေသည်ကို တွေ့ရသော အခြေအနေ ဖြစ်ပါသည်။
+
+```
+git add forgotten.css
+git commit --amend --no-edit
+```
+
+- `--no-edit`: Commit message ကို မပြောင်းဘဲ နောက်ဆုံး commit တွင် file ကိုသာ ထပ်ထည့်လိုသည့်အခါ သုံးပါသည်။
+- `--amend` ကို တစ်ဦးတည်း run ပါက editor ဖွင့်ပြီး message ကို ပြင်နိုင်ပါသည်။
+
+## Commit Hash ပြောင်းလဲခြင်း
+
+Amend ပြုလုပ်သောအခါ commit hash (SHA) အသစ်တစ်ခုကို ရရှိသည်ဆိုသည်ကို သတိပြုရပါမည်။ Commit တစ်ခုကို ပြောင်းလဲခြင်းသည် commit ၏ ကလေးများ၏ hash များကိုလည်း ပြောင်းလဲစေပါသည်။
+
+## Public Commit ကို Amend မလုပ်သင့်ပါ
+
+- မိမိတစ်ဦးတည်း အလုပ်လုပ်သော branch တွင်မူ amend ပြုလုပ်နိုင်ပါသည်။
+- GitHub သို့ push လုပ်ပြီးသော commit ကို amend လုပ်ပါက history နှစ်ခု ကွဲပြားသွား၍ အဖွဲ့သားများအတွက် ညှိနှိုင်းရခက်ပါသည်။
+- Public commit များ ပြင်ဆင်လိုပါက `git revert` ကို သုံးသင့်ပါသည်။
+
+Amend ကို push မလုပ်ရသေးသော local commit များတွင်သာ အသုံးပြုပါ။

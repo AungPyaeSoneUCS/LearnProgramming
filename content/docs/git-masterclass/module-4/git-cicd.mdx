@@ -1,0 +1,110 @@
+---
+title: "Git CI/CD — Git CI/CD"
+description: "GitHub Actions ဖြင့် CI/CD pipeline ဆောက်ခြင်း, workflow trigger များ နှင့် deployment ကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## CI/CD ဆိုသည်မှာ အဘယ်နည်း
+
+CI (Continuous Integration) သည် developer ၏ code ပြောင်းလဲမှုများကို မကြာခဏ ပေါင်းစည်းပြီး automated build နှင့် test ပြုလုပ်ခြင်း ဖြစ်ပါသည်။ CD (Continuous Delivery) သည် ထို code ကို deploy ပြုလုပ်ခြင်း ဖြစ်ပါသည်။ Git ၏ events များကို trigger အဖြစ် အသုံးပြုပါသည်။
+
+## GitHub Actions ဆိုသည်မှာ အဘယ်နည်း
+
+GitHub Actions သည် repository အတွင်း GitHub-hosted runners ပေါ်တွင် workflows ၏ script များကို run စေသော automation platform ဖြစ်ပါသည်။ Workflow များကို `.github/workflows/` folder အတွင်းတွင် YAML file များအနေဖြင့် ရေးသားပါသည်။
+
+## အခြေခံ CI Workflow
+
+```
+# .github/workflows/ci.yml
+name: CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+```
+
+- `on`: Trigger ကို သတ်မှတ်ပါသည် (push, pull_request) ဖြစ်ပါသည်။
+- `jobs`: Run လုပ်ရမည့် job များ ဖြစ်ပါသည်။
+- `steps`: Job အတွင်း လုပ်ဆောင်ရမည့် အဆင့်များ ဖြစ်ပါသည်။
+- `uses`: Pre-built action များကို ခေါ်ယူပါသည် (checkout, setup-node) ဖြစ်ပါသည်။
+- `run`: Shell command ကို လုပ်ဆောင်ပါသည်။
+
+## Workflow Push ပြုလုပ်ခြင်း
+
+```
+git add .github/workflows/ci.yml
+git commit -m "Add CI workflow"
+git push
+```
+
+Push အောင်မြင်ပြီးနောက် Actions tab တွင် workflow run ကို ကြည့်ရှုနိုင်ပါသည်။
+
+## Workflow Trigger များ
+
+- `push`: Branch သို့ commit များ push ပြုလုပ်ချိန် ဖြစ်ပါသည်။
+- `pull_request`: Pull request ဖွင့်ချိန်/ update လုပ်ချိန် ဖြစ်ပါသည်။
+- `schedule`: Cron time ဖြင့် သတ်မှတ်ချိန် ဖြစ်ပါသည်။
+- `workflow_dispatch`: GitHub UI မှ manual trigger ဖြစ်ပါသည်။
+
+## Secrets ကို အသုံးပြုခြင်း
+
+Secrets များကို repository Settings - Secrets - Actions တွင် သိမ်းဆည်းပြီး workflow အတွင်းမှ reference ပြုလုပ်ပါသည်။ Token ကို repository တွင် စာသားအတိုင်း မရေးသားပါနှင့်။
+
+```
+      - name: Run deploy script
+        run: ./deploy.sh
+        env:
+          SUPER_SECRET: ${{ secrets.MY_SECRET }}
+```
+
+GitHub Actions syntax တွင် secrets name ကို ဖော်ပြရန် `${{ secrets.NAME }}` expression ကို အသုံးပြုပါသည်။ ၎င်းသည် workflow run ချိန်တွင်သာ value ဖြင့် အစားထိုးပါသည်။
+
+## Deploy Workflow ဥပမာ
+
+```
+# .github/workflows/deploy.yml
+name: Deploy
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - name: Deploy to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: dist/
+          target: /var/www/app
+```
+
+## CI/CD အကျိုးကျေးဇူးများ
+
+- Merge မလုပ်မီ bug များကို အလိုအလျောက် စစ်ဆေးပါသည်။
+- Build နှင့် deploy များကို manual လုပ်ရန် မလိုတော့ပါ။
+- Deployment ၏ ညီညွတ်မှုနှင့် rollback မြန်ဆန်ပါသည်။
+
+Git ၏ trigger များနှင့် GitHub Actions တို့ကို ပေါင်းစပ်ခြင်းကို GitOps ဟုလည်း ခေါ်ဆိုပါသည်။

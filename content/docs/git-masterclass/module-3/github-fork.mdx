@@ -1,0 +1,63 @@
+---
+title: "GitHub Fork — GitHub Fork"
+description: "Open source repository များကို GitHub ပေါ်တွင် မိတ္တူပွားယူသည့် forking အကြောင်းကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Fork ဆိုသည်မှာ အဘယ်နည်း
+
+Fork ဆိုသည်မှာ မိမိ၏ GitHub account သို့ repository တစ်ခု၏ မိတ္တူကို ပွားယူခြင်း ဖြစ်ပါသည်။ ထိုသို့ဖြင့် မူရင်း (original) repository ကို မထိခိုက်စေဘဲ မိမိဘာသာ code ကို တည်းဖြတ်, experiment လုပ်နိုင်ပြီး လိုအပ်ပါက pull request ပို့နိုင်ပါသည်။
+
+## Fork ၏ အဓိက အသုံးဝင်မှုများ
+
+- Open source project များတွင် ပံ့ပိုးမှု (contribute) ပြုလုပ်ရန် ဖြစ်ပါသည်။
+- အခြားသူ၏ project ကို မိမိ၏ account အောက်တွင် အသုံးချနိုင်ရန် ဖြစ်ပါသည်။
+- မူရင်း repo မှ နောက်ဆုံး အပြောင်းအလဲများကို ဆက်လက် လက်ခံနိုင်ရန် ဖြစ်ပါသည်။
+
+## Fork လုပ်ငန်းဆောင်တာ
+
+1. GitHub repository ၏ စာမျက်နှာသို့ သွားပါ။
+2. ညာဘက်အပေါ်ရှိ `Fork` button ကိုနှိပ်ပါ။
+3. Fork သည် မိတ္တူတစ်ခုအဖြစ် မိမိ၏ account တွင် ဖန်တီးပါသည်။
+
+ထိုအခါ repository URL ပုံစံသည်-
+
+```
+https://github.com/username/original-repo
+```
+
+## Fork မှ Clone ပြုလုပ်ခြင်း
+
+Fork ကို local computer သို့ clone ပြုလုပ်ခြင်းအားဖြင့် development ပြုလုပ်နိုင်ပါသည်။
+
+```
+git clone https://github.com/username/original-repo.git
+```
+
+## Upstream ထည့်သွင်းခြင်း
+
+မူရင်း repo မှ အပြောင်းအလဲများကို လက်ခံရရှိရန်အတွက် upstream remote ကို ထည့်သွင်းပါသည်။
+
+```
+git remote add upstream https://github.com/owner/original-repo.git
+git remote -v
+```
+
+```
+origin    https://github.com/username/original-repo.git (fetch)
+upstream https://github.com/owner/original-repo.git (fetch)
+```
+
+## Upstream မှ Sync ပြုလုပ်ခြင်း
+
+အချိန်ကြာလာသည်နှင့်အမျှ upstream တွင် အပြောင်းအလဲများ ဖြစ်ပေါ်နိုင်ပါသည်။ မိမိ၏ fork ကို နောက်ဆုံးအခြေအနေနှင့် တစ်ပြေးညီ ဖြစ်စေရန်-
+
+```
+git fetch upstream
+git switch main
+git merge upstream/main
+git push
+```
+
+Fork များသည် မူရင်း repository များနှင့် သီးခြားလွတ်လပ်သော မိတ္တူများသာ ဖြစ်ပါသည်။

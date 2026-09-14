@@ -1,0 +1,67 @@
+---
+title: "Git Reset — Git Reset"
+description: "Local timeline ကို ပြန်သတ်မှတ်ရန် git reset ၏ soft, mixed, hard အဆင့်သုံးမျိုးကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Git Reset ဆိုသည်မှာ အဘယ်နည်း
+
+`git reset` သည် branch pointer (HEAD) ကို commit တစ်ခုသို့ ရွေ့ပြောင်းပေးပြီး local history ကို ပြန်လည် သတ်မှတ်ပါသည်။ Mode သုံးမျိုး ရှိပြီး ဘယ် area များ ပြောင်းလဲမည်ကို ရွေးချယ်နိုင်ပါသည်။
+
+## အဆင့်သုံးမျိုး အကျဉ်းချုပ်
+
+| Mode | Working Tree | Staging Area | History |
+|---|---|---|---|
+| --soft | မပြောင်းလဲပါ | မပြောင်းလဲပါ | HEAD ရွေ့ပါသည် |
+| --mixed (default) | မပြောင်းလဲပါ | ပြန်သတ်မှတ်ပါသည် | HEAD ရွေ့ပါသည် |
+| --hard | ပြန်ရေးပါသည် | ပြန်သတ်မှတ်ပါသည် | HEAD ရွေ့ပါသည် |
+
+## Soft Reset
+
+HEAD ကိုသာ ရွေ့ပြီး changes များကို staged အနေဖြင့် ထိန်းထားပါသည်။
+
+```
+git reset --soft HEAD~1
+git status
+```
+
+Staged changes များကို မြင်ရပြီး နောက်တစ်ကြိမ် commit ပြုလုပ်နိုင်ပါသည်။
+
+## Mixed Reset (Default)
+
+Staging area ကို ရှင်းလင်းပြီး changes များကို working tree တွင် ချန်ထားပါသည်။
+
+```
+git reset HEAD~1
+git status
+```
+
+Changes များသည် working tree အတွင်း modified အနေဖြင့် ကျန်နေပါသည်။
+
+## Hard Reset
+
+Working tree နှင့် staging area နှစ်ခုလုံးကို ပြန်ရေးပြီး changes အားလုံးကို ဖျက်ပါသည်။
+
+```
+git reset --hard HEAD~1
+```
+
+```
+HEAD is now at a1b2c3d Add login page
+```
+
+ဤ command သည် file များ၏ ပြောင်းလဲမှုအားလုံးကို ဖျက်နိုင်သောကြောင့် အလွန် သတိထားရပါမည်။
+
+## Mode ရွေးချယ်ခြင်း အကျဉ်းချုပ်
+
+- Commit ကိုဖျက်၍ changes ကို staged ထားလိုလျှင် `--soft` ကို သုံးပါ။
+- Commit ကိုဖျက်၍ changes ကို working tree တွင် ထားလိုလျှင် `--mixed` ကို သုံးပါ။
+- Commit ကိုဖျက်၍ changes ပါ ဖျက်လိုပါက `--hard` ကို သုံးပါ။
+
+## Reset နှင့် Revert ရွေးချယ်ခြင်း
+
+- Reset သည် local, unpublished history များအတွက်သာ ဖြစ်ပါသည်။
+- Push လုပ်ပြီးသား public history အတွက်မူ revert ကို အသုံးပြုပါ။
+
+Reset ကို အသုံးပြုပြီးနောက် ပျောက်ဆုံးသွားသော commit များကို reflog ဖြင့် ပြန်လည် ရှာဖွေနိုင်ကြောင်း နောက်ဆောင်းပါးတွင် လေ့လာရပါမည်။

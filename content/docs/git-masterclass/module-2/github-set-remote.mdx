@@ -1,0 +1,77 @@
+---
+title: "GitHub Set Remote — GitHub Set Remote"
+description: "Local repository ကို GitHub remote နှင့် ချိတ်ဆက်ခြင်း နှင့် remote URL များကို စီမံခြင်းကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Remote ဆိုသည်မှာ အဘယ်နည်း
+
+Remote သည် network ပေါ်ရှိ အခြားသော repository တစ်ခုကို ညွှန်ပြသည့် alias ဖြစ်ပါသည်။ Default remote ကို `origin` ဟု အသုံးများပါသည်။ Remote မရှိပါက local repository သည် GitHub သို့ push ပြုလုပ်၍ မရပါ။
+
+## Remote ပေါင်းထည့်ခြင်း
+
+GitHub တွင် repository အသစ် တစ်ခုကို ဖန်တီးပြီးပါက local repository ထဲတွင် remote ကို အောက်ပါအတိုင်း ပေါင်းထည့်ပါသည်။
+
+```
+git remote add origin https://github.com/mgmg/my-web-app.git
+```
+
+- `remote add`: Remote အသစ် တစ်ခုကို ပေါင်းထည့်သည် ဖြစ်ပါသည်။
+- `origin`: Remote ၏ အမည် (alias) ဖြစ်ပါသည်။
+- URL: Remote repository ၏ လိပ်စာ ဖြစ်ပါသည်။
+
+SSH URL ဖြင့် ချိတ်ဆက်လိုပါက-
+
+```
+git remote add origin git@github.com:mgmg/my-web-app.git
+```
+
+## Remote စစ်ဆေးခြင်း
+
+```
+git remote -v
+```
+
+```
+origin  https://github.com/mgmg/my-web-app.git (fetch)
+origin  https://github.com/mgmg/my-web-app.git (push)
+```
+
+Fetch နှင့် push အတွက် URL နှစ်ခုလုံးကို ပြသပါသည်။
+
+## Remote URL ပြောင်းလဲခြင်း
+
+HTTPS မှ SSH သို့ ပြောင်းလိုပါက `set-url` ကို အသုံးပြုပါသည်။
+
+```
+git remote set-url origin git@github.com:mgmg/my-web-app.git
+git remote -v
+```
+
+## Remote ဖျက်ခြင်း
+
+```
+git remote remove origin
+```
+
+## Initial Push ပြုလုပ်ခြင်း
+
+Remote ချိတ်ဆက်ပြီးပါက local branch ကို remote သို့ push ပြုလုပ်ပါသည်။
+
+```
+git branch -M main
+git push -u origin main
+```
+
+- `git branch -M main`: Branch name ကို `main` အဖြစ် ပြောင်းရန် ဖြစ်ပါသည်။
+- `-u` (upstream): Push လုပ်သောအခါ local branch နှင့် remote branch ကို ချိတ်ဆက်ပေးပြီး နောက်ပိုင်းတွင် `git push` ဟု ရိုက်ရုံဖြင့် ရပါသည်။
+
+```
+Enumerating objects: 5, done.
+Writing objects: 100% (5/5), 4.12 KiB | 4.12 MiB/s, done.
+Total 5 (delta 0), reused 0 (delta 0)
+Branch 'main' set up to track 'origin/main'.
+```
+
+ထိုအချိန်မှစ၍ GitHub စာမျက်နှာတွင် code များကို တွေ့ရပါမည်။

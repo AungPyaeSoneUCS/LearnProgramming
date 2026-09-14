@@ -4974,5 +4974,200 @@
         ]
       }
     ]
+  },
+  {
+    "label": "Git & GitHub",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Git & GitHub Tutorial",
+            "slug": "git-masterclass/index"
+          }
+        ]
+      },
+      {
+        "label": "Module 1: Git Fundamentals",
+        "items": [
+          {
+            "label": "Git Branch & Git Merge",
+            "slug": "git-masterclass/module-1/git-branch-merge"
+          },
+          {
+            "label": "Git Get Started & Git New Files",
+            "slug": "git-masterclass/module-1/git-get-started-new-files"
+          },
+          {
+            "label": "Git Help & Git Glossary",
+            "slug": "git-masterclass/module-1/git-help-glossary"
+          },
+          {
+            "label": "Git History",
+            "slug": "git-masterclass/module-1/git-history"
+          },
+          {
+            "label": "Git HOME & Git Intro",
+            "slug": "git-masterclass/module-1/git-home-intro"
+          },
+          {
+            "label": "Git Install & Git Config",
+            "slug": "git-masterclass/module-1/git-install-config"
+          },
+          {
+            "label": "Git Staging & Git Commit",
+            "slug": "git-masterclass/module-1/git-staging-commit"
+          },
+          {
+            "label": "Git Stash",
+            "slug": "git-masterclass/module-1/git-stash"
+          },
+          {
+            "label": "Git Tagging",
+            "slug": "git-masterclass/module-1/git-tagging"
+          },
+          {
+            "label": "Git Workflow & Git Best Practices",
+            "slug": "git-masterclass/module-1/git-workflow-best-practices"
+          }
+        ]
+      },
+      {
+        "label": "Module 2: GitHub & Remote",
+        "items": [
+          {
+            "label": "Git Add SSH",
+            "slug": "git-masterclass/module-2/git-add-ssh"
+          },
+          {
+            "label": "Git GUI Clients",
+            "slug": "git-masterclass/module-2/git-gui-clients"
+          },
+          {
+            "label": "Git What is SSH? & GitHub Add SSH",
+            "slug": "git-masterclass/module-2/git-what-is-ssh"
+          },
+          {
+            "label": "GitHub Branching",
+            "slug": "git-masterclass/module-2/github-branching"
+          },
+          {
+            "label": "GitHub Edit Code",
+            "slug": "git-masterclass/module-2/github-edit-code"
+          },
+          {
+            "label": "GitHub Flow",
+            "slug": "git-masterclass/module-2/github-flow"
+          },
+          {
+            "label": "GitHub Get Started",
+            "slug": "git-masterclass/module-2/github-get-started"
+          },
+          {
+            "label": "GitHub Pages",
+            "slug": "git-masterclass/module-2/github-pages"
+          },
+          {
+            "label": "GitHub Set Remote",
+            "slug": "git-masterclass/module-2/github-set-remote"
+          },
+          {
+            "label": "Push to GitHub & Pull from GitHub",
+            "slug": "git-masterclass/module-2/push-pull"
+          }
+        ]
+      },
+      {
+        "label": "Module 3: Intermediate Git",
+        "items": [
+          {
+            "label": "Git Amend",
+            "slug": "git-masterclass/module-3/git-amend"
+          },
+          {
+            "label": "Git Clone from GitHub",
+            "slug": "git-masterclass/module-3/git-clone"
+          },
+          {
+            "label": "Git Rebase",
+            "slug": "git-masterclass/module-3/git-rebase"
+          },
+          {
+            "label": "Git Reflog & Git Recovery",
+            "slug": "git-masterclass/module-3/git-reflog-recovery"
+          },
+          {
+            "label": "Git Reset",
+            "slug": "git-masterclass/module-3/git-reset"
+          },
+          {
+            "label": "Git Revert",
+            "slug": "git-masterclass/module-3/git-revert"
+          },
+          {
+            "label": "GitHub Fork",
+            "slug": "git-masterclass/module-3/github-fork"
+          },
+          {
+            "label": "GitHub Send Pull Request",
+            "slug": "git-masterclass/module-3/send-pull-request"
+          }
+        ]
+      },
+      {
+        "label": "Module 4: Advanced Topics",
+        "items": [
+          {
+            "label": "Git Cherrypick & Patch",
+            "slug": "git-masterclass/module-4/cherrypick-patch"
+          },
+          {
+            "label": "Git CI/CD",
+            "slug": "git-masterclass/module-4/git-cicd"
+          },
+          {
+            "label": "Git Hooks",
+            "slug": "git-masterclass/module-4/git-hooks"
+          },
+          {
+            "label": "Git Large File Storage (LFS)",
+            "slug": "git-masterclass/module-4/git-lfs"
+          },
+          {
+            "label": "Git Remote Advanced",
+            "slug": "git-masterclass/module-4/git-remote-advanced"
+          },
+          {
+            "label": "Git Submodules",
+            "slug": "git-masterclass/module-4/git-submodules"
+          },
+          {
+            "label": "Git .gitignore & Git .gitattributes",
+            "slug": "git-masterclass/module-4/gitignore-attributes"
+          },
+          {
+            "label": "Git Signing Commits/Tags",
+            "slug": "git-masterclass/module-4/gpg-signing"
+          },
+          {
+            "label": "Git Merge Conflicts",
+            "slug": "git-masterclass/module-4/merge-conflicts"
+          }
+        ]
+      },
+      {
+        "label": "Exercises & Quiz",
+        "items": [
+          {
+            "label": "Git Exercises",
+            "slug": "git-masterclass/validation/git-exercises"
+          },
+          {
+            "label": "Git Quiz",
+            "slug": "git-masterclass/validation/git-quiz"
+          }
+        ]
+      }
+    ]
   }
 ]

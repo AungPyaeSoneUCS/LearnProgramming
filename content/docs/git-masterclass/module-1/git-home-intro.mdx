@@ -1,0 +1,51 @@
+---
+title: "Git HOME & Git Intro — Git HOME & Git Intro"
+description: "Git ဆိုသည်မှာ အဘယ်နည်း၊ version control ဆိုသည်မှာ အဘယ်နည်း နှင့် repository ဟူသော အယူအဆများကို ရှင်းပြထားပါသည်။"
+autoNumbering: true
+---
+
+
+## Version Control ဆိုသည်မှာ အဘယ်နည်း
+
+Version control ဆိုသည်မှာ file များ၏ ပြောင်းလဲမှုမှတ်တမ်း (history) ကို အချိန်တိုင်း ခြေရာခံထားခြင်း ဖြစ်ပြီး အလိုရှိသော အခြေအနေ (state) သို့ အလွယ်တကူ ပြန်သွားနိုင်အောင် ကူညီပေးသော စနစ်တစ်ခု ဖြစ်ပါသည်။
+
+- မည်သူက ဘာကို ဘယ်အချိန်တွင် ပြောင်းလဲခဲ့သည်ကို သိရပါသည်။
+- Code ပျက်စီးသွားပါက ယခင်အခြေအနေသို့ လွယ်ကူစွာ ပြန်လည်ရောက်ရှိနိုင်ပါသည်။
+- Developer အများအပြား ပြိုင်တူ အလုပ်လုပ်သောအခါ အပြန်အလှန် မထိခိုက်စေဘဲ လုပ်ဆောင်နိုင်ပါသည်။
+
+## Git ဆိုသည်မှာ အဘယ်နည်း
+
+Git သည် 2005 ခုနှစ်တွင် Linus Torvalds မှ တီထွင်ခဲ့သော open-source, distributed version control system ဖြစ်ပါသည်။ Distributed ဟု ဆိုရခြင်းမှာ repository ၏ မိတ္တူအပြည့်အစုံသည် developer တစ်ဦးချင်းစီ၏ computer ပေါ်တွင် ရှိနေသောကြောင့် ဖြစ်ပါသည်။
+
+- **Local**: Git သည် lightweight ဖြစ်ပြီး network မလိုဘဲ မိမိ computer တွင် သမိုင်းကြောင်းကို ထိန်းသိမ်းနိုင်ပါသည်။
+- **Snapshot-based**: Git သည် file များကို ပုံတူပြား လုပ်ထားခြင်းမဟုတ်ဘဲ ၎င်း၏ အခြေအနေတစ်ခုချင်းစီကို snapshot အနေဖြင့် သိမ်းဆည်းပါသည်။
+- **Branching**: Git ၏ branch စနစ်သည် ပေါ့ပါးပြီး main code ကို မထိခိုက်စေဘဲ သီးခြား feature ကို တီထွင်နိုင်စေပါသည်။
+
+## Git Repository ဆိုသည်မှာ အဘယ်နည်း
+
+Repository (repo) ဆိုသည်မှာ project တစ်ခု၏ file များနှင့် ၎င်းတို့၏ version history များကို သိမ်းဆည်းသည့် နေရာ ဖြစ်ပါသည်။ Project အတွင်းတွင် `.git` folder ကို တွေ့ရပါက ထို project သည် git repository ဖြစ်ကြောင်း သိရပါသည်။
+
+```
+my-web-app/
+|-- .git/        (git repository ၏ metadata)
+|-- index.html
+|-- styles/
+|   '-- main.css
+'-- app.js
+```
+
+## Git ကို စတင်စမ်းသပ်ခြင်း
+
+Terminal ကိုဖွင့်ပြီး Git ကို install လုပ်ထားခြင်း ရှိမရှိ စစ်ဆေးပါ။
+
+```
+git --version
+```
+
+Output တွင် version အချက်အလက်များကို မြင်ရပါမည်။
+
+```
+git version 2.47.1.windows.1
+```
+
+Git ကို မတွေ့ရပါက install ပြုလုပ်ရန် လိုအပ်ပြီး ထိုအကြောင်းအရာကို နောက်ဆောင်းပါးတွင် ဆက်လက် လေ့လာရပါမည်။
