@@ -1,0 +1,69 @@
+---
+title: "Module 19: Database Connectivity (JDBC) — Module 19: Database Connectivity (JDBC)"
+description: "Connection — Statement — PreparedStatement — SQL injection ကာကွယ်ခြင်း ။"
+autoNumbering: true
+---
+
+
+Module 19 တွင် JDBC ဖြင့် SQL databases များနှင့် ချိတ်ဆက်ပုံကို လေ့လာပါမည်။ JDBC (Java Database Connectivity) သည် Java code မှ database operations များ (insert, query) ပြုလုပ်ရန် standard API ဖြစ်ပါသည်။
+
+## Connection နှင့် Statement
+
+`DriverManager.getConnection(url)` ဖြင့် database သို့ ချိတ်ဆက်ပြီး `Statement` ဖြင့် SQL commands များကို ပို့လွှတ်ပါသည်။ `executeUpdate` က insert/update/delete များအတွက်ဖြစ်ပြီး `executeQuery` က select အတွက်ဖြစ်ပြီး ResultSet ကို ပြန်ပေးပါသည်။
+
+## PreparedStatement နှင့် SQL Injection
+
+User input ကို SQL query ထဲတွင် string concatenation ဖြင့် ထည့်ပါက SQL injection တိုက်ခိုက်မှု ဖြစ်နိုင်ပါသည်။ `PreparedStatement` သည် placeholders (?) များဖြင့် parameter ကို သီးခြားပို့၍ input ကို quote များအနေဖြင့် မယူတော့ဘဲ value အနေဖြင့်သာ ယူပြီး လုံခြုံစေပါသည်။
+
+## ဥပမာ — SQLite Database နှင့် JDBC
+
+```java
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        String url = "jdbc:sqlite:test.db";
+
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
+            stmt.executeUpdate("INSERT INTO users (name) VALUES ('Aung')");
+            stmt.executeUpdate("INSERT INTO users (name) VALUES ('Mya')");
+        }
+
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE name = ?")) {
+            ps.setString(1, "Aung");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    System.out.println("Found: id=" + rs.getInt("id")
+                            + ", name=" + rs.getString("name"));
+                }
+            }
+        }
+
+        Files.deleteIfExists(Path.of("test.db"));
+    }
+}
+```
+
+အထက်ပါ code တွင် Statement ဖြင့် table create + insert လုပ်ပြီး PreparedStatement ဖြင့် parameterized query ကို run ပါသည်။ `?` placeholder ကို setString ဖြင့် ဖြည့်သောကြောင့် user input မှ SQL injection မဖြစ်နိုင်ပါ။ ဤဥပမာကို run ရန် project တွင် SQLite JDBC driver (org.xerial:sqlite-jdbc) ကို dependency အဖြစ် ထည့်ရန် လိုပါသည်။ Run လုပ်သောအခါ အောက်ပါကဲ့သို့ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Found: id=1, name=Aung
+```
+
+## အဓိက အချက်များ
+
+- DriverManager.getConnection ဖြင့် database သို့ ချိတ်ဆက်သည်။
+- Statement.executeUpdate များအတွက် DDL/DML ဖြစ်သည်။
+- PreparedStatement ? placeholders ဖြင့် parametrized query ရေးသည်။
+- PreparedStatement ဖြင့် SQL injection ကို ကာကွယ်နိုင်သည်။
+- Try-with-resources ဖြင့် connections များကို အလိုအလျောက် close လုပ်သည်။
+

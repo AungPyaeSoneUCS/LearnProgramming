@@ -1,0 +1,44 @@
+---
+title: "Time-Series & RNNs — Time-Series & RNNs"
+description: "RNN — sequences — ဥပမာ။"
+autoNumbering: true
+---
+
+RNN — sequence ဒေတာ — time, text, audio။
+
+## ဘာ ဒေတာ
+
+- Weather — နေ့ စဉ်
+- Stock — time
+- Sentence — words
+
+## RNN အလုပ်
+
+- State — memory
+- Step အလိုက်
+- Past — သုံး
+
+```js
+let h = 0;
+for (const x of sequence) {
+  h = f(h, x); // state update
+}
+```
+
+## LSTM
+
+- Forget gate
+- Keep memory
+- ရှည် အဆက်
+
+## သုံး
+
+- Forecast
+- Speech
+- အဆက် စကား
+
+## အဓိက အချက်များ
+
+- Sequence — အဆက်
+- State — memory
+- LSTM — ကောင်း

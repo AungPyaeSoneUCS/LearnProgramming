@@ -1,0 +1,41 @@
+---
+title: "JS Graphics — JS Graphics"
+description: "Canvas, Plotly, Chart.js, D3 — ဥပမာ။"
+autoNumbering: true
+---
+
+JS graphics — ဒေတာ မြင် — Chart.js, Plotly, D3, Canvas။
+
+## Chart.js
+
+```js
+new Chart(ctx, {
+  type: "line",
+  data: { labels: ["Mon", "Tue"], datasets: [{ data: [10, 20] }] },
+});
+```
+
+## Plotly.js
+
+```js
+Plotly.newPlot("div", [{ x: xs, y: ys, mode: "markers" }]);
+```
+
+## Canvas
+
+```js
+const ctx = canvas.getContext("2d");
+ctx.fillRect(10, 10, 50, 50);
+```
+
+## D3.js
+
+- Data-driven DOM
+- ရှုပ် ချေ တွေ
+- လုပ်
+
+## အဓိက အချက်များ
+
+- Chart.js — လွယ်
+- Plotly — သုတေ
+- Canvas — manual

@@ -1,0 +1,72 @@
+---
+title: "Module 18: Modern Data Structures — Module 18: Modern Data Structures"
+description: "Records — Optional — immutable data — null check ဖယ်ရှားခြင်း ။"
+autoNumbering: true
+---
+
+
+Module 18 တွင် modern data structures များဖြစ်သော Records နှင့် Optional တို့ကို ပေါင်းစပ် အသုံးပြုပုံကို လေ့လာပါမည်။ Records သည် immutable data များအတွက်ဖြစ်၍ Optional သည် null checks များကို ဖယ်ရှားပေးပါသည်။ ဤနှစ်ခုကို ပေါင်းစပ်သုံးခြင်းဖြင့် code သည် ရှင်းလင်း၍ လုံခြုံပါသည်။
+
+## Records — Immutable Data
+
+Record သည် immutable data container ဖြစ်ပြီး constructor, getters, equals, hashCode, toString တို့ကို အလိုအလျောက် ထုတ်လုပ်ပေးပါသည်။ Compact constructor ဖြင့် validation များကိုလည်း ထည့်နိုင်ပါသည်။
+
+## Optional — Null Elimination
+
+Optional ဖြင့် null value ဖြစ်နိုင်သော results များကို container အဖြစ် ထုတ်ပေးပြီး orElse, ifPresent, map တို့ဖြင့် null checks များစွာကို ရေးစရာမလို ဖြစ်စေပါသည်။
+
+## ဥပမာ — Record + Optional ပေါင်းစပ်
+
+```java
+import java.util.Optional;
+
+public class Main {
+    public static void main(String[] args) {
+        User a = new User("Aung", "aung@example.com");
+        System.out.println(a);
+
+        Optional<String> email = findEmail("Aung");
+        email.ifPresent(value -> System.out.println("Email found: " + value));
+        System.out.println("Bob fallback = " + findEmail("Bob").orElse("no email"));
+
+        Box box = new Box("Pen");
+        System.out.println(box);
+        System.out.println("Item in box = " + box.item());
+    }
+
+    static Optional<String> findEmail(String name) {
+        return name.equals("Aung")
+                ? Optional.of("aung@example.com")
+                : Optional.empty();
+    }
+}
+
+record User(String name, String email) {
+    public User {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name must not be blank.");
+        }
+    }
+}
+
+record Box(String item) {
+}
+```
+
+အထက်ပါ code တွင် User record သည် compact constructor ဖြင့် name blank ဖြစ်ပါက exception ပစ်ပါသည်။ findEmail သည် Optional ကို ပြန်ပေး၍ caller က orElse / ifPresent ဖြင့် ကိုင်တွယ်ပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+User[name=Aung, email=aung@example.com]
+Email found: aung@example.com
+Bob fallback = no email
+Box[item=Pen]
+Item in box = Pen
+```
+
+## အဓိက အချက်များ
+
+- Records သည် immutable data ကို boilerplate-free ဖြင့် ဖန်တီးပေးသည်။
+- Compact constructor ဖြင့် validation ထည့်နိုင်သည်။
+- Optional သည် null handling ကို explicit ဖြစ်စေသည်။
+- orElse, ifPresent, map တို့ဖြင့် null checks ကို လျှော့ချသည်။
+

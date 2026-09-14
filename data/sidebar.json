@@ -4467,5 +4467,512 @@
         ]
       }
     ]
+  },
+  {
+    "label": "Machine Learning",
+    "items": [
+      {
+        "label": "1. Foundations & History",
+        "items": [
+          {
+            "label": "သင်တန်းကြိုဆိုခြင်း",
+            "slug": "machine-learning/index"
+          },
+          {
+            "label": "History of Intelligence",
+            "slug": "machine-learning/foundations/history-of-intelligence"
+          },
+          {
+            "label": "History of Languages",
+            "slug": "machine-learning/foundations/history-of-languages"
+          },
+          {
+            "label": "History of Numbers",
+            "slug": "machine-learning/foundations/history-of-numbers"
+          },
+          {
+            "label": "History of Computing",
+            "slug": "machine-learning/foundations/history-of-computing"
+          },
+          {
+            "label": "History of Robots",
+            "slug": "machine-learning/foundations/history-of-robots"
+          },
+          {
+            "label": "History of AI",
+            "slug": "machine-learning/foundations/history-of-ai"
+          },
+          {
+            "label": "Job Replacements",
+            "slug": "machine-learning/foundations/job-replacements"
+          },
+          {
+            "label": "Theory of Mind",
+            "slug": "machine-learning/foundations/theory-of-mind"
+          },
+          {
+            "label": "AI Ethics, Bias & Fairness",
+            "slug": "machine-learning/foundations/ai-ethics-bias-fairness"
+          },
+          {
+            "label": "Privacy & Security in AI",
+            "slug": "machine-learning/foundations/privacy-security-ai"
+          }
+        ]
+      },
+      {
+        "label": "2. Mathematics & Statistics",
+        "items": [
+          {
+            "label": "Mathematics Intro",
+            "slug": "machine-learning/math/math-intro"
+          },
+          {
+            "label": "Linear Functions",
+            "slug": "machine-learning/math/linear-functions"
+          },
+          {
+            "label": "Linear Algebra",
+            "slug": "machine-learning/math/linear-algebra"
+          },
+          {
+            "label": "Calculus Basics",
+            "slug": "machine-learning/math/calculus-basics"
+          },
+          {
+            "label": "Statistics Basics",
+            "slug": "machine-learning/math/statistics-basics"
+          },
+          {
+            "label": "Bayesian vs Frequentist",
+            "slug": "machine-learning/math/probability-bayesian"
+          }
+        ]
+      },
+      {
+        "label": "3. Core Machine Learning",
+        "items": [
+          {
+            "label": "What is ML",
+            "slug": "machine-learning/core/what-is-ml"
+          },
+          {
+            "label": "ML Terminology",
+            "slug": "machine-learning/core/ml-terminology"
+          },
+          {
+            "label": "ML Languages",
+            "slug": "machine-learning/core/ml-languages"
+          },
+          {
+            "label": "ML Data Collection",
+            "slug": "machine-learning/core/data-collection"
+          },
+          {
+            "label": "Data Cleaning",
+            "slug": "machine-learning/core/data-cleaning"
+          },
+          {
+            "label": "Feature Engineering",
+            "slug": "machine-learning/core/feature-engineering"
+          },
+          {
+            "label": "Clustering (K-Means)",
+            "slug": "machine-learning/core/clustering-kmeans"
+          },
+          {
+            "label": "Regressions (Linear, Logistic)",
+            "slug": "machine-learning/core/regressions"
+          },
+          {
+            "label": "Decision Trees & Random Forests",
+            "slug": "machine-learning/core/decision-trees-random-forests"
+          },
+          {
+            "label": "ML Recognition",
+            "slug": "machine-learning/core/ml-recognition"
+          }
+        ]
+      },
+      {
+        "label": "4. Building & Evaluating Models",
+        "items": [
+          {
+            "label": "Linear Graphs & Scatter Plots",
+            "slug": "machine-learning/evaluation/linear-graphs-scatter"
+          },
+          {
+            "label": "Perceptrons",
+            "slug": "machine-learning/evaluation/perceptrons"
+          },
+          {
+            "label": "Training & Testing Splits",
+            "slug": "machine-learning/evaluation/train-test-split"
+          },
+          {
+            "label": "Cross-Validation",
+            "slug": "machine-learning/evaluation/cross-validation"
+          },
+          {
+            "label": "Overfitting & Underfitting",
+            "slug": "machine-learning/evaluation/overfitting-underfitting"
+          },
+          {
+            "label": "Evaluation Metrics",
+            "slug": "machine-learning/evaluation/evaluation-metrics"
+          },
+          {
+            "label": "Hyperparameter Tuning",
+            "slug": "machine-learning/evaluation/hyperparameter-tuning"
+          }
+        ]
+      },
+      {
+        "label": "5. JavaScript AI & Visualization",
+        "items": [
+          {
+            "label": "ML JavaScript Intro",
+            "slug": "machine-learning/javascript/ml-js-intro"
+          },
+          {
+            "label": "Brain.js",
+            "slug": "machine-learning/javascript/brainjs"
+          },
+          {
+            "label": "JS Graphics",
+            "slug": "machine-learning/javascript/js-graphics"
+          },
+          {
+            "label": "TensorFlow.js Basics",
+            "slug": "machine-learning/javascript/tensorflowjs-basics"
+          },
+          {
+            "label": "TFJS Operations, Models & Visor",
+            "slug": "machine-learning/javascript/tfjs-ops-models-visor"
+          }
+        ]
+      },
+      {
+        "label": "6. Advanced Deep Learning & Modern AI",
+        "items": [
+          {
+            "label": "Deep Learning Intro",
+            "slug": "machine-learning/deeplearning/deep-learning-intro"
+          },
+          {
+            "label": "Computer Vision & CNNs",
+            "slug": "machine-learning/deeplearning/computer-vision-cnn"
+          },
+          {
+            "label": "Time-Series & RNNs",
+            "slug": "machine-learning/deeplearning/time-series-rnn"
+          },
+          {
+            "label": "NLP Basics",
+            "slug": "machine-learning/deeplearning/nlp-basics"
+          },
+          {
+            "label": "Transformers & Attention",
+            "slug": "machine-learning/deeplearning/transformers-attention"
+          },
+          {
+            "label": "Generative AI & LLMs",
+            "slug": "machine-learning/deeplearning/generative-ai-llms"
+          },
+          {
+            "label": "Prompt Engineering & APIs",
+            "slug": "machine-learning/deeplearning/prompt-engineering"
+          }
+        ]
+      },
+      {
+        "label": "7. Practical End-to-End Examples",
+        "items": [
+          {
+            "label": "Basic Regression",
+            "slug": "machine-learning/examples/example-regression"
+          },
+          {
+            "label": "Classification",
+            "slug": "machine-learning/examples/example-classification"
+          },
+          {
+            "label": "Image Recognition with TFJS",
+            "slug": "machine-learning/examples/example-image-recognition"
+          },
+          {
+            "label": "Text Sentiment Analysis",
+            "slug": "machine-learning/examples/example-sentiment-analysis"
+          }
+        ]
+      },
+      {
+        "label": "8. Deployment & Production",
+        "items": [
+          {
+            "label": "Saving & Loading Models",
+            "slug": "machine-learning/deployment/saving-loading-models"
+          },
+          {
+            "label": "Deploying ML in the Browser",
+            "slug": "machine-learning/deployment/deploy-in-browser"
+          },
+          {
+            "label": "Deploying on a Node.js Server",
+            "slug": "machine-learning/deployment/deploy-nodejs-server"
+          },
+          {
+            "label": "Introduction to MLOps",
+            "slug": "machine-learning/deployment/intro-mlops"
+          }
+        ]
+      },
+      {
+        "label": "9. ML Examples",
+        "items": [
+          {
+            "label": "ML Editor",
+            "slug": "machine-learning/examples-extra/editor"
+          },
+          {
+            "label": "ML Exercises",
+            "slug": "machine-learning/examples-extra/exercises"
+          },
+          {
+            "label": "ML Quiz",
+            "slug": "machine-learning/examples-extra/quiz"
+          },
+          {
+            "label": "ML Practice Problems",
+            "slug": "machine-learning/examples-extra/practice-problems"
+          },
+          {
+            "label": "ML Syllabus",
+            "slug": "machine-learning/examples-extra/syllabus"
+          },
+          {
+            "label": "ML Study Plan",
+            "slug": "machine-learning/examples-extra/study-plan"
+          },
+          {
+            "label": "ML Learning Outcomes",
+            "slug": "machine-learning/examples-extra/learning-outcomes"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Java Masterclass",
+    "items": [
+      {
+        "label": "1. Course Prerequisites & Environment Setup",
+        "items": [
+          {
+            "label": "သင်တန်းကြိုဆိုခြင်း",
+            "slug": "java-masterclass/index"
+          },
+          {
+            "label": "Download and Install the JDK",
+            "slug": "java-masterclass/prerequisites/install-jdk"
+          },
+          {
+            "label": "Set Environment Variables (JAVA_HOME)",
+            "slug": "java-masterclass/prerequisites/java-home-path"
+          },
+          {
+            "label": "Install an IDE",
+            "slug": "java-masterclass/prerequisites/install-ide"
+          },
+          {
+            "label": "Write and Execute Hello World",
+            "slug": "java-masterclass/prerequisites/hello-world"
+          }
+        ]
+      },
+      {
+        "label": "2. Core OOP Concepts",
+        "items": [
+          {
+            "label": "Classes & Objects",
+            "slug": "java-masterclass/oop/class-object"
+          },
+          {
+            "label": "Encapsulation",
+            "slug": "java-masterclass/oop/encapsulation"
+          },
+          {
+            "label": "Inheritance",
+            "slug": "java-masterclass/oop/inheritance"
+          },
+          {
+            "label": "Polymorphism",
+            "slug": "java-masterclass/oop/polymorphism"
+          },
+          {
+            "label": "Abstraction",
+            "slug": "java-masterclass/oop/abstraction"
+          },
+          {
+            "label": "OOP Summary",
+            "slug": "java-masterclass/oop/oop-summary"
+          }
+        ]
+      },
+      {
+        "label": "3. Modern Java Features (Java 8-21)",
+        "items": [
+          {
+            "label": "Lambda Expressions & Functional Interfaces",
+            "slug": "java-masterclass/modern/lambda-expressions"
+          },
+          {
+            "label": "Functional Interfaces & Method References",
+            "slug": "java-masterclass/modern/functional-interfaces"
+          },
+          {
+            "label": "The Stream API",
+            "slug": "java-masterclass/modern/stream-api"
+          },
+          {
+            "label": "The Optional Class",
+            "slug": "java-masterclass/modern/optional-class"
+          },
+          {
+            "label": "Records (Java 14+)",
+            "slug": "java-masterclass/modern/records"
+          }
+        ]
+      },
+      {
+        "label": "4. Phase 1: Java Mechanics & Syntax",
+        "items": [
+          {
+            "label": "Module 1: The JVM & Execution Lifecycle",
+            "slug": "java-masterclass/modules/01-jvm-execution-lifecycle"
+          },
+          {
+            "label": "Module 2: Environment Setup",
+            "slug": "java-masterclass/modules/02-environment-setup"
+          },
+          {
+            "label": "Module 3: Basics & Variables",
+            "slug": "java-masterclass/modules/03-basics-variables"
+          },
+          {
+            "label": "Module 4: Operators & Control Flow",
+            "slug": "java-masterclass/modules/04-operators-control-flow"
+          }
+        ]
+      },
+      {
+        "label": "5. Phase 2: Object-Oriented Mastery",
+        "items": [
+          {
+            "label": "Module 5: Classes & Objects",
+            "slug": "java-masterclass/modules/05-classes-objects"
+          },
+          {
+            "label": "Module 6: Encapsulation",
+            "slug": "java-masterclass/modules/06-encapsulation"
+          },
+          {
+            "label": "Module 7: Inheritance",
+            "slug": "java-masterclass/modules/07-inheritance"
+          },
+          {
+            "label": "Module 8: Polymorphism",
+            "slug": "java-masterclass/modules/08-polymorphism"
+          },
+          {
+            "label": "Module 9: Abstraction",
+            "slug": "java-masterclass/modules/09-abstraction"
+          }
+        ]
+      },
+      {
+        "label": "6. Phase 3: Core Libraries & Memory",
+        "items": [
+          {
+            "label": "Module 10: Arrays & Strings",
+            "slug": "java-masterclass/modules/10-arrays-strings"
+          },
+          {
+            "label": "Module 11: Exception Handling",
+            "slug": "java-masterclass/modules/11-exception-handling"
+          },
+          {
+            "label": "Module 12: Generics",
+            "slug": "java-masterclass/modules/12-generics"
+          },
+          {
+            "label": "Module 13: The Collections Framework",
+            "slug": "java-masterclass/modules/13-collections"
+          }
+        ]
+      },
+      {
+        "label": "7. Phase 4: Advanced Java & Modern Features",
+        "items": [
+          {
+            "label": "Module 14: Multithreading",
+            "slug": "java-masterclass/modules/14-multithreading-concurrency"
+          },
+          {
+            "label": "Module 15: Functional Java (Java 8+)",
+            "slug": "java-masterclass/modules/15-functional-java"
+          },
+          {
+            "label": "Module 16: The Stream API (Deep Dive)",
+            "slug": "java-masterclass/modules/16-stream-api-deep"
+          },
+          {
+            "label": "Module 17: File I/O & Networking",
+            "slug": "java-masterclass/modules/17-file-io-networking"
+          },
+          {
+            "label": "Module 18: Modern Data Structures",
+            "slug": "java-masterclass/modules/18-records-optional-data-structures"
+          },
+          {
+            "label": "Module 19: Database Connectivity (JDBC)",
+            "slug": "java-masterclass/modules/19-jdbc-database"
+          }
+        ]
+      },
+      {
+        "label": "8. Java Examples",
+        "items": [
+          {
+            "label": "Java Code Editor",
+            "slug": "java-masterclass/examples/editor"
+          },
+          {
+            "label": "Java Exercises",
+            "slug": "java-masterclass/examples/exercises"
+          },
+          {
+            "label": "Java Quiz",
+            "slug": "java-masterclass/examples/quiz"
+          },
+          {
+            "label": "Java Practice Problems",
+            "slug": "java-masterclass/examples/practice-problems"
+          },
+          {
+            "label": "Java Masterclass Syllabus",
+            "slug": "java-masterclass/examples/syllabus"
+          },
+          {
+            "label": "Java Study Plan",
+            "slug": "java-masterclass/examples/study-plan"
+          },
+          {
+            "label": "Java Learning Outcomes",
+            "slug": "java-masterclass/examples/learning-outcomes"
+          }
+        ]
+      }
+    ]
   }
 ]

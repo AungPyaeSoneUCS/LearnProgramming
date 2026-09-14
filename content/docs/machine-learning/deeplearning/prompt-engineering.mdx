@@ -1,0 +1,46 @@
+---
+title: "Prompt Engineering & APIs — Prompt Engineering & APIs"
+description: "Prompt — API — ဥပမာ။"
+autoNumbering: true
+---
+
+Prompt engineering — LLM မှ အကောင်း ထုတ် — API တွဲ။
+
+## Prompt ပုံစံ
+
+- Role — "You are a tutor"
+- Task — အတိအကျ
+- Format — ရေး
+
+```js
+const prompt = "You are a senior JS tutor. " +
+  "Explain closures in 3 lines with an example. " +
+  "Format: bullet points.";
+```
+
+## Techniques
+
+- အဆင့် ခွဲ — step
+- Few-shot — ဥပမာ
+- Chain-of-thought
+
+## API
+
+```js
+const res = await fetch("/api/chat", {
+  method: "POST",
+  body: JSON.stringify({ messages: [{ role: "user", content: prompt }] }),
+});
+```
+
+## စစ်
+
+- Output — validate
+- အရေး — ကာကွယ်
+- Cost — စောင့်
+
+## အဓိက အချက်များ
+
+- Role + task
+- Few-shot
+- Validate output

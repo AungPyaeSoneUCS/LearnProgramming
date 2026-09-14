@@ -1,0 +1,41 @@
+---
+title: "Training & Testing Splits — Training & Testing Splits"
+description: "Split data — train/test — ဥပမာ။"
+autoNumbering: true
+---
+
+Train/test split — ဒေတာ ခွဲ — အမှန် စစ်။
+
+## Why
+
+- အတူ တာ — memorize
+- သစ် တာ — generalize
+- စစ် — ခွဲ
+
+## Split
+
+```js
+const split = (data, ratio = 0.8) => {
+  const i = Math.floor(data.length * ratio);
+  return [data.slice(0, i), data.slice(i)];
+};
+const [train, test] = split(dataset);
+```
+
+## အမြင်
+
+- Train — fit
+- Test — evaluate
+- Validation — tune
+
+## Best practice
+
+- Shuffle လို
+- Stratify — class တူ
+- Leak — ရှောင်
+
+## အဓိက အချက်များ
+
+- Train — လေ့ကျင့်
+- Test — စစ်
+- Split — 3

@@ -1,0 +1,84 @@
+---
+title: "Module 12: Generics — Module 12: Generics"
+description: "Type safety, bounded type parameters, wildcards — (T extends Number) ။"
+autoNumbering: true
+---
+
+
+Module 12 တွင် generics ကို လေ့လာပါမည်။ Generics သည် class သို့မဟုတ် method များကို type parameter ဖြင့် ရေးသားနိုင်စေသည့် feature ဖြစ်ပြီး compile-time တွင် type safety ကို ပေးပါသည်။ Generics မသုံးပါက collection ထဲသို့ မှားယွင်းသော type ထည့်မှန်နိုင်ပြီး runtime မှာမှ error ပေါ်နိုင်ပါသည်။
+
+## Generic Class
+
+Type parameter ကို `<T>` ကဲ့သို့ class နာမည်၏နောက်တွင် ကြေညာပြီး class body အတွင်း T ကို type အစားသုံးနိုင်ပါသည်။ Object node type ကို `Box<String>` ကဲ့သို့ diamond syntax ဖြင့် သတ်မှတ်ပါသည်။
+
+## Bounded Type Parameters
+
+Type parameter ကို extends ဖြင့် limit ပြုလုပ်နိုင်ပြီး `<T extends Number>` ဆိုပါက Number ၏ subclasses များသာ လက်ခံပါသည်။ ဤနည်းဖြင့် T ပေါ်တွင် Number ၏ methods များ (doubleValue စသည်) ကို ခေါ်နိုင်ပါသည်။
+
+## Wildcards
+
+Wildcard `?` သည် type မသေချာသော နေရာများအတွက် ဖြစ်ပြီး `? extends T` သည် upper bound (T နှင့် T ၏ subclasses) ကို လက်ခံပါသည်။ `? super T` မူ lower bound (T နှင့် T ၏ superclasses) ကို လက်ခံပါသည်။
+
+## ဥပမာ — Generic Class, Bounded Method, Wildcard
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        Box<String> box = new Box<>();
+        box.set("Hello");
+        System.out.println("Box value = " + box.get());
+
+        System.out.println("Sum int = " + sum(10, 5));
+        System.out.println("Sum double = " + sum(1.5, 2.5));
+
+        List<Integer> ints = new ArrayList<>();
+        ints.add(5);
+        ints.add(10);
+        System.out.println("Total of list = " + total(ints));
+    }
+
+    static <T extends Number> double sum(T a, T b) {
+        return a.doubleValue() + b.doubleValue();
+    }
+
+    static double total(List<? extends Number> numbers) {
+        double result = 0;
+        for (Number n : numbers) {
+            result += n.doubleValue();
+        }
+        return result;
+    }
+}
+
+class Box<T> {
+    private T value;
+
+    public void set(T value) {
+        this.value = value;
+    }
+
+    public T get() {
+        return value;
+    }
+}
+```
+
+အထက်ပါ code တွင် `Box<T>` သည် generic class ဖြစ်ပြီး `sum` သည် bounded method ဖြစ်ပါသည်။ `total(List<? extends Number>)` သည် wildcard ကို သုံး၍ Number ၏ subclasses မဆိုရ မည်သည့် list ကိုမဆို လက်ခံပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Box value = Hello
+Sum int = 15.0
+Sum double = 4.0
+Total of list = 15.0
+```
+
+## အဓိက အချက်များ
+
+- Generics သည် compile-time type safety ကို ပေးသည်။
+- `Box<T>` ကဲ့သို့ type parameter ဖြင့် class/method ရေးနိုင်သည်။
+- `<T extends Number>` ဖြင့် type ကို ကန့်သတ်နိုင်သည်။
+- Wildcards `? extends` / `? super` ဖြင့် flexible ဖြစ်စေသည်။
+

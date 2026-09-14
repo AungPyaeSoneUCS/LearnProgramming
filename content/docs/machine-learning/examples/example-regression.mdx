@@ -1,0 +1,46 @@
+---
+title: "Basic Regression — Basic Regression"
+description: "Regression — end-to-end — ဥပမာ။"
+autoNumbering: true
+---
+
+Regression end-to-end — data → model → predict။
+
+## 1. Data
+
+```js
+const data = [
+  { size: 30, price: 12000 },
+  { size: 50, price: 20000 },
+  { size: 70, price: 28000 },
+];
+```
+
+## 2. Prepare
+
+```js
+const xs = tf.tensor(data.map((d) => [d.size]));
+const ys = tf.tensor(data.map((d) => [d.price]));
+```
+
+## 3. Model
+
+```js
+const model = tf.sequential();
+model.add(tf.layers.dense({ units: 1, inputShape: [1] }));
+model.compile({ optimizer: "sgd", loss: "meanSquaredError" });
+```
+
+## 4. Train + predict
+
+```js
+await model.fit(xs, ys, { epochs: 200 });
+const pred = model.predict(tf.tensor([[60]]));
+pred.print(); // ~24000
+```
+
+## အဓိက အချက်များ
+
+- Data → tensors
+- Dense 1 unit
+- fit → predict

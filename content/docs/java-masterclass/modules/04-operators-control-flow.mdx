@@ -1,0 +1,96 @@
+---
+title: "Module 4: Operators & Control Flow — Module 4: Operators & Control Flow"
+description: "Operators — if-else — switch expressions — for/while/do-while ။"
+autoNumbering: true
+---
+
+
+Module 4 တွင် operators များနှင့် control flow များကို လေ့လာပါမည်။ Operators များသည် တန်ဖိုးများအပေါ် လုပ်ဆောင်မှုများ ပြုလုပ်ပြီး control flow များသည် အခြေအနေနှင့် loops အပေါ် မူတည်၍ code ၏ စီးဆင်းမှုကို ဆုံးဖြတ်ပါသည်။
+
+## Operators အမျိုးအစားများ
+
+Arithmetic operators များမှာ +, -, *, /, % တို့ဖြစ်ပြီး comparison operators များမှာ ==, !=, `<`, `>`, `<=`, `>=` တို့ ဖြစ်ပါသည်။ Logical operators များမှာ && (AND), || (OR), ! (NOT) တို့ ဖြစ်ပြီး && နှင့် || များသည် short-circuit behavior ရှိသောကြောင့် ရလဒ်ကို သိနိုင်လျှင်ပြီး ကျန်တန်ဖိုးကို မစစ်တော့ပါ။
+
+## if-else ဖြင့် ဆုံးဖြတ်ခြင်း
+
+`if`, `else if` နှင့် `else` တို့ဖြင့် အခြေအနေများကို စစ်ဆေး၍ branch များဆီ ပို့ပေးပါသည်။
+
+## Switch Expressions (Java 14+)
+
+Java 14 မှစ၍ switch ကို expression အဖြစ် ရေးသားနိုင်ပြီး arrow syntax (`->`) ဖြင့် case တစ်ခုစီကို တိုတိုတုတ်တုတ် သတ်မှတ်နိုင်ပါသည်။ Fall-through ပြဿနာကိုလည်း ရှောင်ရှားနိုင်ပါသည်။
+
+## ဥပမာ — Operators + Control Flow
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 3;
+
+        System.out.println("a + b = " + (a + b));
+        System.out.println("a % b = " + (a % b));
+        System.out.println("a > b = " + (a > b));
+
+        int score = 85;
+        if (score >= 90) {
+            System.out.println("Grade A");
+        } else if (score >= 80) {
+            System.out.println("Grade B");
+        } else {
+            System.out.println("Grade C");
+        }
+
+        String day = "MON";
+        String status = switch (day) {
+            case "SAT", "SUN" -> "Weekend";
+            default -> "Weekday";
+        };
+        System.out.println(day + " = " + status);
+
+        for (int i = 0; i < 5; i++) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+
+        int j = 0;
+        while (j < 3) {
+            System.out.println("while loop j = " + j);
+            j++;
+        }
+
+        int k = 0;
+        do {
+            System.out.println("do-while k = " + k);
+            k++;
+        } while (k < 2);
+    }
+}
+```
+
+အထက်ပါ code သည် operators, if-else, switch expression, for, while နှင့် do-while တို့ကို တစ်ခါတည်းတွင် ပြသပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+a + b = 13
+a % b = 1
+a > b = true
+Grade B
+MON = Weekday
+0 1 2 3 4
+while loop j = 0
+while loop j = 1
+while loop j = 2
+do-while k = 0
+do-while k = 1
+```
+
+## Loops များ၏ ကွာခြားချက်
+
+for loop သည် counter အခြေပြု ထပ်ခါထပ်ခါ လုပ်ဆောင်မှုအတွက် သင့်တော်ပြီး while loop သည် condition မှန်နေသရွေ့ ဆက်လုပ်ပါသည်။ do-while သည် အနည်းဆုံး တစ်ခါ လုပ်ဆောင်ပြီးမှ condition ကို စစ်ပါသည်။
+
+## အဓိက အချက်များ
+
+- Arithmetic, comparison, logical operators သုံးမျိုး အဓိကရှိသည်။
+- switch expression ဖြင့် case များကို arrow syntax ဖြင့် ရေးနိုင်သည်။
+- for, while, do-while loops သုံးမျိုးရှိပြီး သုံးစွဲပုံ ကွဲပြားသည်။
+- Short-circuit && || သည် second operand ကို မလိုအပ်ပါက မစစ်တော့ပါ။
+

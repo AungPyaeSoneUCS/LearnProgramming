@@ -1,0 +1,47 @@
+---
+title: "Download and Install the JDK — Download and Install the JDK"
+description: "Oracle/OpenJDK — LTS versions — JDK ကို ဒေါင်းလုဒ်ဆွဲတပ်ဆင်ခြင်း ။"
+autoNumbering: true
+---
+
+
+Java code ကို မရေးမီ သင့် computer ပေါ်တွင် JDK (Java Development Kit) ကို ဦးစွာ တပ်ဆင်ရန် လိုအပ်ပါသည်။ JDK သည် Java development အတွက် လိုအပ်သော tool သုံးမျိုး ပါဝင်သည့် package ဖြစ်ပြီး ၎င်းတို့မှာ compiler (`javac`), execution engine (JVM) နှင့် core libraries များ ဖြစ်ပါသည်။ compiler သည် Java source code ကို bytecode အဖြစ် ပြောင်းပေးပြီး JVM သည် ထို bytecode ကို run ပေးပါသည်။
+
+## JDK အမျိုးအစား ရွေးချယ်ခြင်း
+
+JDK ကို ထောက်ပံ့ပေးသော vendor အများအပြား ရှိပါသည်။ Oracle မှ Official JDK ကို oracle.com တွင် ဒေါင်းလုဒ်ဆွဲနိုင်ပြီး OpenJDK ကို Adoptium (Eclipse Temurin) ကဲ့သို့သော community မှလည်း ရနိုင်ပါသည်။ နှစ်မျိုးလုံးသည် စတင်လေ့လာသူ အတွက် သင့်လျော်ပါသည်။ LTS (Long Term Support) version ဖြစ်သော Java 17 သို့မဟုတ် Java 21 ကို ရွေးချယ်ရန် အကြံပြုပါသည်။ LTS version များသည် အချိန်အကြာကြီး security updates ရရှိသောကြောင့် production အတွက် ယုံကြည်စိတ်ချရပါသည်။
+
+## တပ်ဆင်ခြင်း အဆင့်များ
+
+ပထမအဆင့်အနေဖြင့် Oracle သို့မဟုတ် Adoptium ၏ website မှ သင့် operating system အတွက် installer ကို ဒေါင်းလုဒ်ဆွဲပါသည်။ ဒုတိယအဆင့်တွင် installer ကို run လုပ်၍ ပေါ်လာသော ညွှန်ကြားချက်များအတိုင်း Next နှိပ်ပြီး တပ်ဆင်ပါသည်။ တတိယအဆင့်တွင် တပ်ဆင်ပြီးကြောင်း သေချာစေရန် အောက်ပါ program ကို ရေးသားပြီး compile လုပ်ပြီး run လုပ်ကြည့်ပါသည်။
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Java version: " + System.getProperty("java.version"));
+        System.out.println("Java home: " + System.getProperty("java.home"));
+    }
+}
+```
+
+အထက်ပါ program တွင် `System.getProperty` ဖြင့် JVM ၏ version နှင့် installation path ကို ဖတ်ပြသပါသည်။ ဤ program ကို compile လုပ်ရန် terminal တွင် `javac Main.java` ကို run ၍ run ရန် `java Main` ကို run ပါသည်။
+
+```
+javac Main.java
+java Main
+```
+
+Run လုပ်သောအခါ အောက်ပါကဲ့သို့သော output ကို မြင်ရပါက သင့် JDK သည် မှန်ကန်စွာ တပ်ဆင်ပြီး ဖြစ်ပါသည်။
+
+```
+Java version: 21.0.4
+Java home: C:\Program Files\Java\jdk-21.0.4
+```
+
+## အဓိက အချက်များ
+
+- JDK တွင် compiler, JVM နှင့် core libraries များ ပါဝင်သည်။
+- LTS version ဖြစ်သော Java 17 သို့မဟုတ် 21 ကို ရွေးရန် အကြံပြုသည်။
+- Oracle သို့မဟုတ် OpenJDK (Adoptium) မှ ဒေါင်းလုဒ်ဆွဲနိုင်သည်။
+- `javac` နှင့် `java` တို့ဖြင့် တပ်ဆင်မှုကို စစ်ဆေးနိုင်သည်။
+

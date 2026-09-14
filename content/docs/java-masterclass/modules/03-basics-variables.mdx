@@ -1,0 +1,67 @@
+---
+title: "Module 3: Basics & Variables — Module 3: Basics & Variables"
+description: "Primitive types — reference types — casting — naming conventions ။"
+autoNumbering: true
+---
+
+
+Module 3 တွင် Java ၏ data types များနှင့် variable များကို လေ့လာပါမည်။ Java တွင် data types ကို primitive types နှင့် reference types ဟူ၍ နှစ်မျိုး ခွဲထားပါသည်။ Primitive types များသည် တန်ဖိုးကို တိုက်ရိုက် သိမ်းဆည်းပြီး reference types များသည် object ၏ location (reference) ကို သိမ်းဆည်းပါသည်။
+
+## Primitive Data Types
+
+Java တွင် primitive types ရှစ်မျိုး ရှိပါသည်။ `byte`, `short`, `int`, `long` တို့သည် integer များဖြစ်ပြီး `float` နှင့် `double` တို့သည် decimal များ ဖြစ်ပါသည်။ `boolean` သည် true/false ကို သိမ်းပြီး `char` သည် စာလုံးတစ်လုံးကို သိမ်းပါသည်။ Default တန်ဖိုးများမှာ integer အတွက် 0, boolean အတွက် false, reference အတွက် null ဖြစ်ပါသည်။
+
+## Reference Types
+
+String, arrays နှင့် class များမှ ဖန်တီးထားသော objects များသည် reference types ဖြစ်ပါသည်။ ဤ variables များတွင် data ကို တိုက်ရိုက်မထည့်ဘဲ heap memory အတွင်းရှိ object ၏ address ကို သိမ်းဆည်းပါသည်။
+
+## Type Casting
+
+Type casting ဖြင့် value တစ်ခုကို type တစ်ခုမှ အခြားတစ်ခုသို့ ပြောင်းနိုင်ပါသည်။ Small type မှ large type သို့ ပြောင်းခြင်းသည် implicit (widening) ဖြစ်ပြီး large မှ small သို့ပြောင်းခြင်းမှာ narrowing ဖြစ်၍ explicit cast လိုအပ်ပါသည်။
+
+## ဥပမာ — Variables အားလုံး လေ့ကျင့်ခန်း
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        int age = 25;
+        double price = 99.99;
+        boolean active = true;
+        char grade = 'A';
+        long big = 10_000L;
+        float ratio = 3.14f;
+
+        double widened = age;
+        int casted = (int) price;
+
+        String name = "Aung";
+        int[] scores = { 80, 90, 100 };
+
+        System.out.println("age = " + age + " (widened: " + widened + ")");
+        System.out.println("price casted to int = " + casted);
+        System.out.println("name = " + name + ", first score = " + scores[0]);
+        System.out.println(grade + "/" + big + "/" + ratio + "/active=" + active);
+    }
+}
+```
+
+အထက်ပါ code တွင် `double widened = age` သည် widening ဖြစ်၍ `(int) price` သည် narrowing cast ဖြစ်ပါသည်။ `10_000` တွင် underscore ကို decimal separator အဖြစ် သုံးနိုင်ပြီး ဖတ်ရလွယ်စေပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+age = 25 (widened: 25.0)
+price casted to int = 99
+name = Aung, first score = 80
+A/10000/3.14/active=true
+```
+
+## Naming Conventions
+
+Java ၏ naming conventions များကို လိုက်နာရန် အရေးကြီးပါသည်။ Variables နှင့် methods များကို camelCase (ဥပမာ `myScore`) ဖြင့်လည်းကောင်း, Classes များကို PascalCase (ဥပမာ `StudentRecord`) ဖြင့်လည်းကောင်း, Constants များကို UPPER_SNAKE (ဥပမာ `MAX_SIZE`) ဖြင့်လည်းကောင်း ရေးရပါသည်။
+
+## အဓိက အချက်များ
+
+- Primitive types များသည် value တိုက်ရိုက်သိမ်းပြီး reference types များသည် object location ကို သိမ်းသည်။
+- Types ရှစ်မျိုး − byte, short, int, long, float, double, boolean, char
+- Widening သည် implicit ဖြစ်ပြီး narrowing သည် explicit cast လိုအပ်သည်။
+- Naming conventions များကို တသမတ်တည်း လိုက်နာရန် အရေးကြီးသည်။
+

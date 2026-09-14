@@ -1,0 +1,39 @@
+---
+title: "NLP Basics — NLP Basics"
+description: "NLP — text — ဥပမာ။"
+autoNumbering: true
+---
+
+NLP — text နား လည် — sentiment, classify။
+
+## Steps
+
+1. Tokenize — စကား
+2. Clean — stop words
+3. Vectorize — numbers
+4. Model
+
+```js
+const tokens = "I love coding".toLowerCase().split(" ");
+// ["i", "love", "coding"]
+```
+
+## Vectorize
+
+```js
+const vocab = ["i", "love", "coding"];
+const vec = vocab.map((w) => (tokens.includes(w) ? 1 : 0));
+```
+
+## Tasks
+
+- Sentiment — အခံ
+- Spam
+- Translate
+- QA
+
+## အဓိက အချက်များ
+
+- Tokenize — ခွဲ
+- Vectorize — numbers
+- Model — text

@@ -1,0 +1,86 @@
+---
+title: "Module 16: The Stream API (Deep Dive) — Module 16: The Stream API (Deep Dive)"
+description: "filtering — mapping — flattening — collectors — groupingBy ။"
+autoNumbering: true
+---
+
+
+Module 16 တွင် Stream API ကို နက်ရှိုင်းစွာ လေ့လာပါမည်။ Filtering, mapping, flattening နှင့် collectors များကို real-world ဥပမာများဖြင့် ဖော်ပြမည် ဖြစ်ပါသည်။ Stream ၏ အလှက တစ်ဆင့်ချင်း operation များ ဖွဲ့စည်း၍ ရှင်းလင်းသော pipeline ရေးနိုင်ခြင်းဖြစ်ပါသည်။
+
+## Flattening — flatMap
+
+`flatMap` သည် nested collection များကို single stream အဖြစ် flatten ပြုလုပ်ပါသည်။ List of lists မှ elements အားလုံးကို တစ်ခုတည်းသော list အဖြစ် စုစည်းနိုင်ပါသည်။
+
+## Collectors
+
+`collect(Collectors.toList())` သည် stream ကို list ပြောင်းပြီး `groupingBy` သည် key အလိုက် အုပ်စုခွဲပါသည်။ `joining` သည် strings များကို delimiter ဖြင့် ပေါင်းစည်းပေးပါသည်။
+
+## ဥပမာ — Stream Operations အပြည့်အစုံ
+
+```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> words = Arrays.asList("hello", "world", "java", "stream", "code");
+
+        List<String> upper = words.stream()
+                .map(String::toUpperCase)
+                .collect(Collectors.toList());
+        System.out.println("Uppercase = " + upper);
+
+        List<List<Integer>> nested = Arrays.asList(
+                Arrays.asList(1, 2),
+                Arrays.asList(3, 4),
+                Arrays.asList(5, 6));
+        List<Integer> flat = nested.stream()
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+        System.out.println("Flattened = " + flat);
+
+        long count = words.stream()
+                .filter(w -> w.length() > 4)
+                .count();
+        System.out.println("Words longer than 4 = " + count);
+
+        Map<Integer, List<String>> byLength = words.stream()
+                .collect(Collectors.groupingBy(String::length));
+        System.out.println("Grouped by length = " + byLength);
+
+        String joined = words.stream()
+                .collect(Collectors.joining(" - "));
+        System.out.println("Joined = " + joined);
+
+        Optional<Integer> first = flat.stream().filter(x -> x > 3).findFirst();
+        System.out.println("First greater than 3 = " + first.orElse(0));
+    }
+}
+```
+
+အထက်ပါ code တွင် flatMap ဖြင့် nested lists များကို flatten လုပ်ပြီး groupingBy ဖြင့် word အရှည်အလိုက် အုပ်စုခွဲပါသည်။ findFirst သည် condition နှင့် ကိုက်ညီသော ပထမဆုံး element ကို Optional အနေဖြင့် ပြန်ပေးပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Uppercase = [HELLO, WORLD, JAVA, STREAM, CODE]
+Flattened = [1, 2, 3, 4, 5, 6]
+Words longer than 4 = 3
+Grouped by length = {3=[java], 4=[code], 5=[hello, world], 6=[stream]}
+Joined = hello - world - java - stream - code
+First greater than 3 = 4
+```
+
+## Parallel Streams
+
+Stream များသည် `parallelStream()` ဖြင့် parallel ဖြစ်စွာ လုပ်ဆောင်နိုင်ပြီး data များစွာ ရှိသောအခါ speed မြှင့်နိုင်ပါသည်။ သို့သော် order မသေချာနိုင်သဖြင့် order မဟုတ်ဘဲ ရလဒ်အတွက်သာ လိုအပ်သောအခါ သင့်တော်ပါသည်။
+
+## အဓိက အချက်များ
+
+- Mapping, filtering, reduction တို့ဖြင့် data pipeline ရေးသည်။
+- flatMap ဖြင့် nested streams ကို flatten လုပ်သည်။
+- groupingBy, joining ကဲ့သို့သော collectors များ ရှိသည်။
+- findFirst/optional results များအတွက် အသုံးဝင်သည်။
+- parallelStream ဖြင့် performance မြှင့်နိုင်သည်။
+

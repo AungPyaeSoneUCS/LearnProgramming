@@ -1,0 +1,89 @@
+---
+title: "Module 9: Abstraction — Module 9: Abstraction"
+description: "Abstract classes vs interfaces — default/static methods ။"
+autoNumbering: true
+---
+
+
+Module 9 တွင် abstraction ၏ နည်းနှစ်မျိုးဖြစ်သော abstract classes နှင့် interfaces များကို ကွာခြားချက် အပါအဝင် လေ့လာမည် ဖြစ်ပါသည်။ Abstraction သည် ရှုပ်ထွေးသော details များကို ဖုံးကွယ်၍ အသုံးပြုသူအား essential features များသာ ပြသခြင်း ဖြစ်ပါသည်။
+
+## Abstract Class
+
+Abstract class ကို `abstract` keyword ဖြင့် ကြေညာပြီး object ဖန်တီး၍ မရပါ။ Abstract methods (body မဲ့) များနှင့် သာမန် methods များ နှစ်မျိုးလုံး ပါဝင်နိုင်ပြီး state (fields) များလည်း ပါနိုင်ပါသည်။ Subclass သည် abstract methods အားလုံးကို အမြဲ implement လုပ်ပေးရပါသည်။
+
+## Interface
+
+Interface သည် class များ implement လုပ်ရမည့် contract ဖြစ်ပြီး Java 8 မှစ၍ default နှင့် static methods များကို ခွင့်ပြုပါသည်။ Java 9 မှစ၍ private methods များလည်း ပါဝင်နိုင်ပါသည်။ Class တစ်ခုသည် interface များစွာကို implement လုပ်နိုင်ပါသည်။
+
+## ဥပမာ — Abstract Class + Interface
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Machine washer = new WashingMachine();
+        washer.start();
+        washer.describe();
+
+        Printer printer = new LaserPrinter();
+        printer.powerOn();
+        printer.print("Hello from Java");
+        Printer.showInfo();
+    }
+}
+
+abstract class Machine {
+    abstract void start();
+
+    void describe() {
+        System.out.println("This machine runs on electricity.");
+    }
+}
+
+class WashingMachine extends Machine {
+    @Override
+    void start() {
+        System.out.println("Washing machine started.");
+    }
+}
+
+interface Printer {
+    void print(String text);
+
+    default void powerOn() {
+        System.out.println("Printer powered on.");
+    }
+
+    static void showInfo() {
+        System.out.println("Default printer mode available.");
+    }
+}
+
+class LaserPrinter implements Printer {
+    @Override
+    public void print(String text) {
+        System.out.println("Laser printer: " + text);
+    }
+}
+```
+
+အထက်ပါ code တွင် Machine သည် abstract class ဖြစ်၍ describe() ကို သာမန်နည်းဖြင့် ပေးထားပြီး start() ကို subclass က implement ပြုလုပ်ရပါသည်။ Printer interface တွင် default method (powerOn) နှင့် static method (showInfo) တို့ ပါဝင်ပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Washing machine started.
+This machine runs on electricity.
+Printer powered on.
+Laser printer: Hello from Java
+Default printer mode available.
+```
+
+## Abstract Class vs Interface
+
+Abstract class သည် single inheritance သာရပြီး state နှင့် concrete methods ပါဝင်နိုင်သည်။ Interface သည် multiple implementation ရနိုင်ပြီး behavior contract ကို ဦးစားပေးပါသည်။ ဘုံ fields နှင့် helper logic ရှိလျှင် abstract class ကို သုံးပြီး behavior ကိုသာ သတ်မှတ်လိုပါက interface ကို သုံးရန် အကြံပြုပါသည်။
+
+## အဓိက အချက်များ
+
+- Abstract class သည် object မဖန်တီးနိုင်ဘဲ abstract + concrete methods များ ပါဝင်သည်။
+- Interface သည် contract ဖြစ်ပြီး default/static methods များလည်း ပါဝင်နိုင်သည်။
+- Subclass သည် abstract methods အားလုံးကို implement လုပ်ရမည်။
+- Interface များစွာကို implement လုပ်နိုင်သည်။
+

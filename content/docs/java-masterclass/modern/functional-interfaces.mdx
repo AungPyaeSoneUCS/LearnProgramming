@@ -1,0 +1,59 @@
+---
+title: "Functional Interfaces & Method References — Functional Interfaces & Method References"
+description: "Predicate — Function — Consumer — Supplier — method reference ။"
+autoNumbering: true
+---
+
+
+Java 8 မှစ၍ သာမန် interface များအနက် abstract method တစ်ခုတည်း ပါဝင်သော interface များကို functional interface ဟု ခေါ်ဆို၍ lambda expressions များဖြင့် ၎င်းတို့ကို အကောင်အထည်ဖော်နိုင်ပါသည်။ ထင်ရှားသော functional interfaces များမှာ Predicate, Function, Consumer, Supplier တို့ ဖြစ်ပြီး java.util.function package အတွင်းတွင် တည်ရှိပါသည်။ Method reference သည် lambda ၏ တိုတောင်းသော ပုံစံတစ်မျိုး ဖြစ်ပါသည်။
+
+## အဓိက Functional Interfaces ၄ မျိုး
+
+`Predicate<T>` သည် argument တစ်ခုကို လက်ခံ၍ boolean ပြန်ပေးပါသည်။ `Function<T,R>` သည် argument တစ်ခုကို လက်ခံ၍ ရလဒ်တစ်ခု ပြန်ပေးပါသည်။ `Consumer<T>` သည် argument ကို လက်ခံပြီး ရလဒ် ပြန်မပေးဘဲ လုပ်ဆောင်ချက်တစ်ခုကို လုပ်ဆောင်ပါသည်။ `Supplier<T>` မူကား argument လုံးဝ မရှိဘဲ ရလဒ်တစ်ခုကိုသာ ထုတ်ပေးပါသည်။
+
+## ဥပမာ — Functional Interfaces ၄ မျိုးလုံး
+
+```java
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
+public class Main {
+    public static void main(String[] args) {
+        Predicate<Integer> isEven = n -> n % 2 == 0;
+        System.out.println("4 is even = " + isEven.test(4));
+
+        Function<Integer, Integer> square = n -> n * n;
+        System.out.println("3 squared = " + square.apply(3));
+
+        Consumer<String> printer = System.out::println;
+        printer.accept("Consumer works");
+
+        Supplier<Double> random = Math::random;
+        System.out.println("Random value = " + random.get());
+    }
+}
+```
+
+အထက်ပါ code သည် အဆိုပါ functional interfaces လေးမျိုး၏ ပုံစံကို ပြသပါသည်။ `System.out::println` နှင့် `Math::random` တို့သည် method references များ ဖြစ်ပြီး `System.out::println` ဆိုသည်မှာ `x -> System.out.println(x)` နှင့် ညီမျှပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+4 is even = true
+3 squared = 9
+Consumer works
+Random value = 0.987654321
+```
+
+## Method Reference ပုံစံများ
+
+Method reference တွင် ပုံစံအမျိုးမျိုး ရှိပါသည်။ `Static::method` သည် static method ကို ရည်ညွှန်းပြီး `System.out::println` ကဲ့သို့သော instance method reference များလည်း ရှိပါသည်။ `String::toUpperCase` ကဲ့သို့ unbounded instance method reference ဖြင့် argument ၏ method ကို ခေါ်ပါသည်။ ဤပုံစံများသည် lambda များကို ပိုမို တိုတောင်း လှပစေပါသည်။
+
+## အဓိက အချက်များ
+
+- `Predicate` = argument တစ်ခု + boolean ပြန်
+- `Function` = argument တစ်ခု + ရလဒ်တစ်ခု ပြန်
+- `Consumer` = argument ကို သုံး၍ ရလဒ် မပြန်
+- `Supplier` = argument မရှိဘဲ ရလဒ် ပြန်
+- Method reference ဖြင့် lambda ကို တိုတောင်းအောင် ရေးနိုင်သည်။
+

@@ -1,0 +1,45 @@
+---
+title: "Perceptrons — Perceptrons"
+description: "Perceptron — single neuron — ဥပမာ။"
+autoNumbering: true
+---
+
+Perceptron — အခြေ neuron — neural network အခြေ။
+
+## Structure
+
+- Inputs x
+- Weights w
+- Sum + bias
+- Activation
+
+```js
+function perceptron(inputs, weights, bias) {
+  const sum = inputs.reduce((s, v, i) => s + v * weights[i], 0) + bias;
+  return sum > 0 ? 1 : 0;
+}
+console.log(perceptron([1, 0], [2, 2], -1)); // 1
+```
+
+## Training
+
+- လွဲ — update weight
+- Repeat — epoch
+- Converge
+
+```js
+// update: w += lr * (target - out) * x
+w[i] += 0.1 * (target - out) * x[i];
+```
+
+## Limit
+
+- Linearly separable only
+- XOR — လိုများ
+- ကြောင့် — multi-layer
+
+## အဓိက အချက်များ
+
+- Sum + activation
+- Update weights
+- Multi-layer လို

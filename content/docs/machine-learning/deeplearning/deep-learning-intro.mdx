@@ -1,0 +1,43 @@
+---
+title: "Deep Learning Intro — Deep Learning Intro"
+description: "Deep learning — layers — ဥပမာ။"
+autoNumbering: true
+---
+
+Deep learning — neural network အလွှာ — data မှ features။
+
+## အလွှာ
+
+- Input — features
+- Hidden — learn
+- Output — predict
+
+```js
+const model = tf.sequential();
+model.add(tf.layers.dense({ units: 64, activation: "relu", inputShape: [784] }));
+model.add(tf.layers.dense({ units: 10, activation: "softmax" }));
+```
+
+## Activation
+
+- ReLU — hidden
+- Sigmoid — binary
+- Softmax — classes
+
+## အလုပ်
+
+- Forward — တွက်
+- Backward — gradient
+- Update — weights
+
+## ဘာကြောင့် ကောင်
+
+- Features အလိုအလျောက်
+- ကြီး ဒေတာ
+- GPU — မြန်
+
+## အဓိက အချက်များ
+
+- Layers — နက်
+- Activation — လို
+- Backprop — လေ့လာ

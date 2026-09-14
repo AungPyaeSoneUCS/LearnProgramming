@@ -1,0 +1,71 @@
+---
+title: "Java Quiz — Java Quiz"
+description: "မေးခွန်း ၈ ခု — Java ဗဟုသုတ စမ်းသပ်မှု ။"
+autoNumbering: true
+---
+
+
+ဤစာမျက်နှာတွင် သင်ယူပြီးသား Java ဗဟုသုတကို စမ်းသပ်ရန် မေးခွန်း ရှစ်ခုကို ဖြေဆိုရပါမည်။ မေးခွန်းတိုင်းတွင် ရွေးချယ်စရာ လေးခု ပါဝင်ပြီး မှန်သော အဖြေကို ရွေးချယ်ရပါသည်။
+
+<Quiz
+  title="Java Masterclass Quiz"
+  questions={[
+    {
+      id: "q1",
+      question: "JDK တွင် အောက်ပါတို့အနက် မည်သည့်အရာ ပါဝင်သနည်း။",
+      options: ["Compiler နှင့် JVM", "Java compiler သာ", "JVM သာ", "Text editor"],
+      correctAnswer: 0,
+      explanation: "JDK တွင် compiler (javac), JVM နှင့် core libraries များ ပါဝင်သည်။"
+    },
+    {
+      id: "q2",
+      question: "Java program ၏ entry point မှာ မည်သည့်အရာ ဖြစ်သနည်း။",
+      options: ["Constructor", "main method", "static method", "toString method"],
+      correctAnswer: 1,
+      explanation: "JVM သည် main method မှ စတင် run သည်။"
+    },
+    {
+      id: "q3",
+      question: "Class တစ်ခုမှ အခြား class တစ်ခုကို အမွေဆက်ခံရန် မည်သည့် keyword ကို သုံးသနည်း။",
+      options: ["implements", "inherits", "extends", "super"],
+      correctAnswer: 2,
+      explanation: "Inheritance သည် extends keyword ဖြင့် ဖြစ်သည်။"
+    },
+    {
+      id: "q4",
+      question: "Data ကို ပြင်ပမှ ကာကွယ်ရန် fields များကို မည်သည့် modifier ဖြင့် သတ်မှတ်သနည်း။",
+      options: ["public", "private", "protected", "static"],
+      correctAnswer: 1,
+      explanation: "private field များကို class အတွင်းမှသာ ဝင်ရောက်နိုင်သည်။"
+    },
+    {
+      id: "q5",
+      question: "Abstract method တစ်ခုတည်းရှိသော interface ကို မည်သည့် annotation ဖြင့် ညွှန်မည်နည်း။",
+      options: ["@Override", "@Deprecated", "@FunctionalInterface", "@SuppressWarnings"],
+      correctAnswer: 2,
+      explanation: "Functional interface သည် abstract method တစ်ခုတည်းသာ ပါဝင်သင့်ကြောင်း @FunctionalInterface က စစ်ဆေးပေးသည်။"
+    },
+    {
+      id: "q6",
+      question: "Stream API တွင် condition နှင့် ကိုက်ညီသော elements များကိုသာ ထားရန် မည်သည့် method ကို သုံးသနည်း။",
+      options: ["map", "filter", "reduce", "forEach"],
+      correctAnswer: 1,
+      explanation: "filter သည် condition အရ elements များကို စစ်ထုတ်ပေးသည်။"
+    },
+    {
+      id: "q7",
+      question: "Null value ဖြစ်နိုင်သော ရလဒ်ကို လုံခြုံစွာ ကိုင်တွယ်ရန် မည်သည့် class ကို သုံးသနည်း။",
+      options: ["Optional", "Exception", "String", "Stream"],
+      correctAnswer: 0,
+      explanation: "Optional သည် null ဖြစ်နိုင်သော value ကို container အဖြစ် ကိုင်တွယ်သည်။"
+    },
+    {
+      id: "q8",
+      question: "Record တစ်ခုသည် အောက်ပါတို့အနက် မည်သည့်အရာများကို အလိုအလျောက် ထုတ်လုပ်ပေးသနည်း။",
+      options: ["Constructor သာ", "Getter များသာ", "toString သာ", "Constructor, getters, equals, hashCode, toString အားလုံး"],
+      correctAnswer: 3,
+      explanation: "Record သည် boilerplate members အားလုံးကို အလိုအလျောက် ထုတ်လုပ်ပေးသည်။"
+    }
+  ]}
+/>
+

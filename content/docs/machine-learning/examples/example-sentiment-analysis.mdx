@@ -1,0 +1,50 @@
+---
+title: "Text Sentiment Analysis — Text Sentiment Analysis"
+description: "Sentiment — text — ဥပမာ။"
+autoNumbering: true
+---
+
+Sentiment — text → positive/negative — ဥပမာ။
+
+## 1. Text → tokens
+
+```js
+const vocab = ["good", "bad", "happy", "sad"];
+const textToVec = (text) => {
+  const t = text.toLowerCase().split(" ");
+  return vocab.map((w) => (t.includes(w) ? 1 : 0));
+};
+```
+
+## 2. Data
+
+```js
+const data = [
+  { text: "very good", label: 1 },
+  { text: "so bad", label: 0 },
+];
+```
+
+## 3. Model
+
+```js
+const model = tf.sequential();
+model.add(tf.layers.dense({ units: 8, activation: "relu", inputShape: [vocab.length] }));
+model.add(tf.layers.dense({ units: 1, activation: "sigmoid" }));
+model.compile({ optimizer: "adam", loss: "binaryCrossentropy" });
+```
+
+## 4. Train + predict
+
+```js
+const xs = tf.tensor(data.map((d) => textToVec(d.text)));
+const ys = tf.tensor(data.map((d) => [d.label]));
+await model.fit(xs, ys, { epochs: 100 });
+const p = model.predict(tf.tensor([textToVec("happy day")])).dataSync()[0];
+```
+
+## အဓိက အချက်များ
+
+- Bag-of-words
+- Dense layers
+- Sigmoid — sentiment

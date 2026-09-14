@@ -1,0 +1,47 @@
+---
+title: "Data Cleaning — Data Cleaning"
+description: "Missing values — outliers — ဥပမာ။"
+autoNumbering: true
+---
+
+Data cleaning — ဒေတာ သန့် — 80% ML ဒေတာ။
+
+## Missing values
+
+- Drop row
+- Fill mean
+- Fill median
+
+```js
+const rows = [
+  [1, 2, null],
+  [2, 3, 4],
+];
+// 1) drop row 0
+const clean = rows.filter((r) => r.every((v) => v !== null));
+```
+
+## Outliers
+
+```js
+// 2) cap extremes
+const cap = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
+```
+
+## Duplicates
+
+```js
+const uniq = [...new Set(data.map(JSON.stringify))].map(JSON.parse);
+```
+
+## အဆင့်
+
+1. စစ် — inspect
+2. သန့် — clean
+3. စစ် — validate
+
+## အဓိက အချက်များ
+
+- Missing — fill
+- Outlier — cap
+- Duplicate — remove

@@ -1,0 +1,46 @@
+---
+title: "Brain.js — Brain.js"
+description: "Brain.js — neural net — ဥပမာ။"
+autoNumbering: true
+---
+
+Brain.js — JS neural network — လွယ် ရင်း ။
+
+## Install
+
+```bash
+npm install brain.js
+```
+
+## Train
+
+```js
+const brain = require("brain.js");
+const net = new brain.NeuralNetwork({ activation: "sigmoid" });
+
+net.train([
+  { input: [0, 0], output: [0] },
+  { input: [0, 1], output: [1] },
+  { input: [1, 0], output: [1] },
+  { input: [1, 1], output: [0] }, // XOR
+]);
+```
+
+## Predict
+
+```js
+const out = net.run([1, 0]);
+console.log(Math.round(out[0])); // 1
+```
+
+## Normalize
+
+- Input 0-1
+- Output 0-1
+- Scale data
+
+## အဓိက အချက်များ
+
+- Simple API
+- train() / run()
+- 0-1 scale

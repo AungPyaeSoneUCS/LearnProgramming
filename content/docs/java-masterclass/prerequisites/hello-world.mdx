@@ -1,0 +1,49 @@
+---
+title: "Write and Execute Hello World — Write and Execute Hello World"
+description: "Main.java — public static void main — IDE အသုံးပြု၍ run ခြင်း ။"
+autoNumbering: true
+---
+
+
+တပ်ဆင်မှု တစ်ခုလုံး အောင်မြင်ကြောင်း သေချာစေရန် ပထမဆုံး Java program ဖြစ်သော Hello World ကို ရေးသားပြီး run လုပ်ကြည့်ပါမည်။ ဤ program သည် terminal စခရင်ပေါ်တွင် `Hello World` ဟူသော စာသားကို ပုံနှိပ်ထုတ်ပေးသော အရိုးရှင်းဆုံး program ဖြစ်ပါသည်။ ဤ program ကို run နိုင်ပါက compiler နှင့် JVM နှစ်ခုလုံး မှန်ကန်စွာ အလုပ်လုပ်နေပြီဟု ယူဆနိုင်ပါသည်။
+
+## Main.java ဖိုင် ဖန်တီးခြင်း
+
+IDE ထဲတွင် `Main` အမည်ရှိသော Java class တစ်ခုကို ဖန်တီးပြီး အောက်ပါ code ကို ရေးသားပါသည်။ Java တွင် `public` class ပါဝင်သော ဖိုင်တိုင်းသည် class ၏ အမည်နှင့် ဖိုင်အမည် အတူတူ ဖြစ်ရန် လိုအပ်ပါသည်။
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}
+```
+
+## main Method ၏ ရှင်းလင်းချက်
+
+Java program တိုင်း စတင်ဝင်ရောက်ရာနေရာမှာ main method ဖြစ်ပါသည်။ JVM သည် program ကို run လုပ်သည့်အခါ ဤ method မှ စတင်၍ ဝင်ရောက် လုပ်ဆောင်ပါသည်။ `public` သည် method ကို အပြင်မှ ခေါ်ယူနိုင်စေပြီး `static` သည် object မဖန်တီးဘဲ ခေါ်ယူနိုင်စေပါသည်။ `void` သည် ဤ method မှ တန်ဖိုးတစ်ခုကို ပြန်မပို့ကြောင်း ညွှန်ပြပြီး `String[] args` သည် command line မှ ပို့ပေးသော arguments များကို လက်ခံသော parameter ဖြစ်ပါသည်။
+
+## Program ကို Run လုပ်ခြင်း
+
+IDE အသုံးပြုပါက အောက်ပါအတိုင်း ပြသထားသော `Run` button ကို နှိပ်ရုံဖြင့် run လုပ်နိုင်ပါသည်။ Terminal မှ run လုပ်လိုပါက အောက်ပါ commands များဖြင့် လုပ်ဆောင်ရမည် ဖြစ်ပါသည်။
+
+```
+javac Main.java
+java Main
+```
+
+`javac Main.java` သည် source code ကို compile လုပ်ပြီး `Main.class` ဖိုင်ကို ထုတ်လုပ်ပေးပြီး `java Main` သည် JVM ကို အသုံးပြု၍ program ကို run လုပ်ပါသည်။ Run လုပ်ပြီးသောအခါ အောက်ပါ output ကို မြင်ရမည် ဖြစ်ပါသည်။
+
+```
+Hello World
+```
+
+ထိုကဲ့သို့ output ထွက်လာပါက သင့် compiler နှင့် JVM များသည် ကောင်းမွန်စွာ အလုပ်လုပ်နေကြောင်း သက်သေပြနိုင်ပါပြီ။
+
+## အဓိက အချက်များ
+
+- Class အမည်နှင့် ဖိုင်အမည် အတူတူ ဖြစ်ရန် လိုအပ်သည်။
+- main method သည် program ၏ entry point ဖြစ်သည်။
+- IDE Run button သို့မဟုတ် javac/java commands ဖြင့် run နိုင်သည်။
+- Output ထွက်လာပါက setup အောင်မြင်ကြောင်း ဆိုလိုသည်။
+

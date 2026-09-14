@@ -1,0 +1,46 @@
+---
+title: "Regressions (Linear, Logistic) — Regressions"
+description: "Linear — Logistic — predict — ဥပမာ။"
+autoNumbering: true
+---
+
+Regression — Linear — Logistic — predict value/class။
+
+## Linear regression
+
+- ကိန်း — predict
+- Line fit
+
+```js
+const model = (size) => 200 * size + 10000;
+```
+
+## Logistic regression
+
+- Class 0/1
+- Sigmoid — probability
+
+```js
+const sigmoid = (z) => 1 / (1 + Math.exp(-z));
+console.log(sigmoid(2)); // 0.88 → ဖြစ်
+```
+
+## Linear vs Logistic
+
+| Type | ရလဒ် | မျဉ်း |
+|---|---|---|
+| Linear | number | line |
+| Logistic | prob/class | S-curve |
+
+## ဥပမာ
+
+```js
+const pass = (hours) => sigmoid(hours - 3);
+console.log(pass(4)); // > 0.5 → pass
+```
+
+## အဓိက အချက်များ
+
+- Linear — value
+- Logistic — class
+- Sigmoid — prob

@@ -1,0 +1,77 @@
+---
+title: "Module 5: Classes & Objects — Module 5: Classes & Objects"
+description: "Constructors — this — heap vs stack — static ။"
+autoNumbering: true
+---
+
+
+Phase 2 ၏ ပထမဆုံး module တွင် classes နှင့် objects များကို modules level တွင် ပိုမို လေးလေးနက်နက် လေ့လာပါမည်။ Object-Oriented Programming ၏ foundation ဖြစ်သော objects ဖန်တီးခြင်း, memory အတွင်း သိမ်းဆည်းခြင်းနှင့် constructors များကို နားလည်မည် ဖြစ်ပါသည်။
+
+## Constructors
+
+Constructor သည် object ကို `new` ဖြင့် ဖန်တီးစဉ် အလိုအလျောက် ခေါ်ယူခံရသော method အထူး ဖြစ်ပါသည်။ Constructor ၏ နာမည်သည် class အမည်နှင့် တူပြီး return type မရှိပါ။ Constructor overloading ဖြင့် ပုံစံအမျိုးမျိုးဖြင့် object ဖန်တီးနိုင်ပါသည်။ သင်ကိုယ်တိုင် constructor မရေးပါက default constructor ကို Java compiler က ထည့်ပေးပါသည်။
+
+## this keyword
+
+`this` သည် လက်ရှိ object ကိုညွှန်ပြပြီး constructor ၏ parameters နှင့် fields များ နာမည်တူသောအခါ ခွဲခြားရန် အသုံးပြုပါသည်။ ထို့ပြင် this() ဖြင့် constructor တစ်ခုမှ အခြား constructor ကို ခေါ်နိုင်ပါသည်။
+
+## Heap vs Stack Memory
+
+Objects များကို Heap memory တွင် သိမ်းဆည်းပြီး variables နှင့် method calls များကို Stack memory တွင် သိမ်းဆည်းပါသည်။ Stack တွင် reference ကိုသာ သိမ်း၍ အမှန်တကယ် object data သည် heap ထဲတွင်ရှိပြီး garbage collector က unused objects များကို ရှင်းလင်းပါသည်။
+
+## Static Members
+
+`static` members များသည် class ကိုယ်နှင့်ဆိုင်ပြီး object ဖန်တီးစရာမလိုဘဲ ခေါ်ယူနိုင်ပါသည်။ Static variable များသည် objects အားလုံးအတွက် တူညီသော copy တစ်ခုတည်း ဖြစ်ပါသည်။
+
+## ဥပမာ — Product Class
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Product phone = new Product("Phone", 1000);
+        Product tablet = new Product("Tablet", 2000);
+
+        phone.display();
+        tablet.display();
+        System.out.println("Total products = " + Product.count);
+        Product.showCount();
+    }
+}
+
+class Product {
+    private String name;
+    private double price;
+    static int count = 0;
+
+    Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+        count++;
+    }
+
+    void display() {
+        System.out.println(name + " costs " + price + " Ks");
+    }
+
+    static void showCount() {
+        System.out.println("Static method: " + count + " products created.");
+    }
+}
+```
+
+အထက်ပါ code တွင် `count` သည် static variable ဖြစ်၍ object တစ်ခုစီ ဖန်တီးတိုင်း တစ်ခုစီ တိုးပါသည်။ `this.name` တွင် this ဖြင့် field ကို ခွဲခြားထားပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Phone costs 1000.0 Ks
+Tablet costs 2000.0 Ks
+Total products = 2
+Static method: 2 products created.
+```
+
+## အဓိက အချက်များ
+
+- Constructor သည် object ဖန်တီးစဉ် fields များကို initialize ပြုလုပ်သည်။
+- this keyword ဖြင့် လက်ရှိ object ကို ညွှန်ပြသည်။
+- Objects များသည် heap တွင်ရှိပြီး references များသည် stack တွင် ရှိသည်။
+- Static members များသည် class နှင့်ဆိုင်၍ shared ဖြစ်သည်။
+

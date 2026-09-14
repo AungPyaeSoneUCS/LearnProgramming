@@ -178,5 +178,17 @@
     "description": "MySQL ကို အစကစပြီး SQL Queries, JOINs, Aggregates, Database Design, Constraints, Stored Procedures, Security အထိ လက်တွေ့ သင်ယူမယ့် ပြည့်စုံသင်ရိုး။",
     "icon": "🐬",
     "color": "#00758f"
+  },
+  {
+    "label": "Machine Learning",
+    "description": "AI/ML သဘောတရားများမှ Data Preprocessing, Model Evaluation, JavaScript AI (Brain.js, TensorFlow.js), Deep Learning, CNN, NLP, Transformers, GenAI & LLMs, Deployment/MLOps အထိ Python/JavaScript နှင့် စနစ်တကျ လေ့လာမယ်။",
+    "icon": "🤖",
+    "color": "#7c3aed"
+  },
+  {
+    "label": "Java Masterclass",
+    "description": "Java ကို အခြေခံမှ စနစ်တကျ သင်ယူမည့် Masterclass ဖြစ်သည်။ JDK Setup မှစပြီး OOP, Java 8+ Modern Features နှင့် Module 19 ခု ပါဝင်သော ပြည့်စုံသည့် သင်ရိုးကို လေ့လာမည်။",
+    "icon": "🚀",
+    "color": "#3b82f6"
   }
 ]

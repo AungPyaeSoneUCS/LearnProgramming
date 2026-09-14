@@ -1,0 +1,44 @@
+---
+title: "Statistics Basics — Statistics Basics"
+description: "Descriptive, Variability, Distribution, Probability — ဥပမာ။"
+autoNumbering: true
+---
+
+Statistics — data အကြောင်း — mean, spread, distribution။
+
+## Descriptive
+
+```js
+const data = [3, 5, 7, 5, 10];
+const mean = data.reduce((a, b) => a + b, 0) / data.length;
+console.log(mean); // 6
+```
+
+## Variability
+
+- Variance — spread
+- Std dev — ပြန့်
+- Range — အဆုံး
+
+```js
+const variance = data.reduce((s, v) => s + (v - mean) ** 2, 0) / data.length;
+console.log(Math.sqrt(variance)); // std
+```
+
+## Distribution
+
+- Normal — bell curve
+- Mean = center
+- အများ — အလယ်
+
+## ML သုံး
+
+- Normalize data
+- Detect outliers
+- Feature scaling
+
+## အဓိက အချက်များ
+
+- Mean — center
+- Std — spread
+- Normal — bell

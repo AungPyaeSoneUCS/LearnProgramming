@@ -1,0 +1,47 @@
+---
+title: "ML Learning Outcomes — ML Learning Outcomes"
+description: "ML learning outcomes — သင်ယူရသက် — check — ဥပမာ။"
+autoNumbering: true
+---
+
+Learning outcomes — သင်ယူမှု ရလဒ် — စစ်ဆေး — ကျွမ်းကျင်မှု။
+
+## သင်ယူပြီး — လုပ်နိုင်
+
+- [x] ဒေတာ သန့် — missing, outlier
+- [x] အချက် ရွေး — normalize
+- [x] Regression — linear/logistic
+- [x] Tree — random forest
+- [x] K-Means — cluster
+- [x] Split — cross-validation
+- [x] Metrics — precision/recall/F1
+- [x] TFJS — tensor, model, fit
+- [x] Brain.js — train/predict
+- [x] CNN — image classify
+- [x] LLM — prompt + API
+- [x] Deploy — Node.js server
+
+## စစ်ဆေး — ဥပမာ
+
+```js
+// Competency — linear regression
+import * as tf from "@tensorflow/tfjs";
+const model = tf.sequential();
+model.add(tf.layers.dense({ units: 1, inputShape: [1] }));
+model.compile({ optimizer: "sgd", loss: "meanSquaredError" });
+await model.fit(tf.tensor([1, 2, 3]), tf.tensor([2, 4, 6]), { epochs: 100 });
+```
+
+## ရလဒ် — အဆင့်
+
+| ဖြေ | အဆင့် |
+|---|---|
+| အားလုံး မှန် | ကျွမ်းကျင် |
+| တစ်ဝက် | လေ့ကျင့် လို |
+| မမှန် | ပြန် သင်ယူ |
+
+## အဓိက အချက်များ
+
+- စစ်ဆေး — ကျွမ်းကျင်
+- ပြန်လုပ် — ဆင့်
+- ဆင့်မြင့် — ဖြေ

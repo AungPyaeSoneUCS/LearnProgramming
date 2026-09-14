@@ -1,0 +1,74 @@
+---
+title: "Polymorphism — Polymorphism"
+description: "Many forms — overriding (runtime) — overloading (compile-time) — dynamic dispatch ။"
+autoNumbering: true
+---
+
+
+Polymorphism ဆိုသည်မှာ ဂရိ စကားလုံးမှ ဆင်းသက်လာပြီး "many forms" (ပုံစံများစွာ) ဟု အဓိပ္ပာယ်ရပါသည်။ Polymorphism သည် object များကို ၎င်းတို့၏ တကယ့် class အဖြစ်သာမက parent class ၏ instance အဖြစ်လည်း ဆက်ဆံနိုင်စေပြီး နည်းလမ်းနှစ်မျိုးဖြင့် ဖြစ်ပေါ်ပါသည်။ ပထမနည်းမှာ overriding (run-time polymorphism) ဖြစ်၍ ဒုတိယနည်းမှာ overloading (compile-time polymorphism) ဖြစ်ပါသည်။
+
+## Method Overriding (Run-time)
+
+Overriding တွင် subclass သည် parent class မှ ရှိပြီးသား method များအတွက် သီးခြား implementation တစ်ခုကို ပေးပါသည်။ JVM သည် run ချိန်တွင် object ၏ တကယ့် type ကို ကြည့်၍ မည်သည့် method ကို ခေါ်ရမည်ကို ဆုံးဖြတ်ပါသည်။
+
+## Method Overloading (Compile-time)
+
+Overloading တွင် class တစ်ခုအတွင်း နာမည်တူ method များစွာ ရှိပြီး parameters အရေအတွက် သို့မဟုတ် types များ ကွာခြားပါသည်။ ဥပမာ `add(int a, int b)` နှင့် `add(double a, double b)` တို့သည် overloading ဖြစ်ပါသည်။ Compiler သည် argument များ၏ type ကိုကြည့်၍ မည်သည့် method ကို ခေါ်ရမည် ဆုံးဖြတ်ပါသည်။
+
+## ဥပမာ — Overloading နှင့် Overriding နှစ်မျိုးလုံး
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        System.out.println(calc.add(3, 4));
+        System.out.println(calc.add(1.5, 2.5));
+
+        Animal myAnimal = new Dog();
+        myAnimal.speak();
+    }
+}
+
+class Calculator {
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    double add(double a, double b) {
+        return a + b;
+    }
+}
+
+class Animal {
+    void speak() {
+        System.out.println("Animal speaks");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    void speak() {
+        System.out.println("Dog barks");
+    }
+}
+```
+
+အထက်ပါ code တွင် `add` နှစ်ခုသည် overloading ဖြစ်ပြီး argument type ပေါ်မူတည်၍ compiler မှ ရွေးချယ်ပါသည်။ `Animal myAnimal = new Dog()` တွင် variable type သည် Animal ဖြစ်သော်လည်း အမှန်တကယ် object သည် Dog ဖြစ်သောကြောင့် run-time တွင် Dog ၏ `speak()` ကို ခေါ်ပါသည်။ ဤအချက်ကို dynamic method dispatch ဟု ခေါ်ပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+7
+4.0
+Dog barks
+```
+
+## Overloading နှင့် Overriding ကွဲပြားမှု
+
+Overloading သည် class တစ်ခုတည်းအတွင်း နာမည်တူ method များနှင့် parameters ကွာခြားပြီး compile-time တွင် ဆုံးဖြတ်ပါသည်။ Overriding မူကား subclass တွင် parent method ကို ပြန်ရေးပြီး run-time တွင် ဆုံးဖြတ်ပါသည်။ Override ပြုလုပ်ရာတွင် `@Override` annotation ကို သုံး၍ compiler မှ စစ်ဆေးစေနိုင်ပါသည်။
+
+## အဓိက အချက်များ
+
+- Polymorphism သည် objects များကို parent type အနေဖြင့် ဆက်ဆံနိုင်စေသည်။
+- Overriding သည် run-time polymorphism ဖြစ်သည်။
+- Overloading သည် compile-time polymorphism ဖြစ်သည်။
+- Dynamic method dispatch ဖြင့် JVM သည် object ၏ အမှန်အတိုင်း method ကို ခေါ်သည်။
+

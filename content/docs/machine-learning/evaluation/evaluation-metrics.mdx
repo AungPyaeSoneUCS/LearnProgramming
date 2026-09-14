@@ -1,0 +1,39 @@
+---
+title: "Evaluation Metrics — Evaluation Metrics"
+description: "Confusion Matrix — Precision — Recall — F1 — ဥပမာ။"
+autoNumbering: true
+---
+
+Metrics — လွဲ တိုင်း — Confusion — Precision/Recall — F1။
+
+## Confusion matrix
+
+| | မှန်း pos | မှန်း neg |
+|---|---|---|
+| မှန် pos | TP | FN |
+| မှန် neg | FP | TN |
+
+## အဓိက
+
+- Accuracy — (TP+TN)/all
+- Precision — TP/(TP+FP)
+- Recall — TP/(TP+FN)
+- F1 — harmonic mean
+
+```js
+const precision = (tp, fp) => tp / (tp + fp);
+const recall = (tp, fn) => tp / (tp + fn);
+const f1 = (p, r) => (2 * p * r) / (p + r);
+```
+
+## ဘယ် သုံး
+
+- Spam — precision
+- Cancer — recall
+- Balance — F1
+
+## အဓိက အချက်များ
+
+- Confusion — ဇယား
+- Precision — အမှ်
+- Recall — ဖမ်း

@@ -1,0 +1,84 @@
+---
+title: "Module 11: Exception Handling — Module 11: Exception Handling"
+description: "Checked/unchecked — try-catch-finally — custom exception — try-with-resources ။"
+autoNumbering: true
+---
+
+
+Module 11 တွင် exception handling ကို လေ့လာပါမည်။ Exception ဆိုသည်မှာ program run နေစဉ် ဖြစ်ပေါ်သော ပုံမှန်မဟုတ်သော အခြေအနေတစ်ခုဖြစ်ပြီး ကိုင်တွယ်ခြင်းမရှိပါက program သည် ရပ်တန့်သွားနိုင်ပါသည်။ Exception များကို try-catch blocks များဖြင့် ဖမ်းယူ၍ code ကို လုံခြုံစေနိုင်ပါသည်။
+
+## Checked vs Unchecked Exceptions
+
+Checked exceptions များကို compile-time တွင် compiler က ကိုင်တွယ်ရန် အတင်းအကျပ် ပြုပါသည် (ဥပမာ IOException)။ Unchecked exceptions များမှာ RuntimeException ၏ subclasses များဖြစ်ပြီး compile-time တွင် တွန်းအားပေး မခံရပါ (ဥပမာ ArithmeticException, NullPointerException)။
+
+## try-catch-finally
+
+`try` block အတွင်းတွင် အန္တရာယ်ရှိနိုင်သော code ကို ရေးပြီး exception ဖြစ်ပါက `catch` က ဖမ်းယူပါသည်။ `finally` block သည် exception ဖြစ်စေ မဖြစ်စေ အမြဲ run သော နေရာဖြစ်ပါသည်။ `throw` ဖြင့် exception ကို ကိုယ်တိုင်ပစ်ချနိုင်ပြီး `throws` ဖြင့် method က exception ပစ်ချနိုင်ကြောင်း ကြေညာပါသည်။
+
+## Try-with-Resources
+
+Java 7 မှစ၍ auto-closable resources (file, network) များကို try-with-resources syntax ဖြင့် အသုံးပြုပြီး block ပြီးသွားလျှင် resource ကို အလိုအလျောက် close ပြုလုပ်ပေးပါသည်။
+
+## ဥပမာ — Try/Catch/Finally, Custom Exception, Resources
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        try {
+            int result = divide(10, 0);
+            System.out.println("Result = " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Caught: " + e.getMessage());
+        } finally {
+            System.out.println("Finally always runs.");
+        }
+
+        try {
+            validateAge(15);
+        } catch (InvalidAgeException e) {
+            System.out.println("Custom exception: " + e.getMessage());
+        }
+
+        try (java.io.StringReader reader = new java.io.StringReader("Hello")) {
+            System.out.println("First char via resource = " + (char) reader.read());
+        } catch (java.io.IOException e) {
+            System.out.println("IO error: " + e.getMessage());
+        }
+    }
+
+    static int divide(int a, int b) {
+        return a / b;
+    }
+
+    static void validateAge(int age) throws InvalidAgeException {
+        if (age < 18) {
+            throw new InvalidAgeException("Must be at least 18 years old.");
+        }
+        System.out.println("Age is valid: " + age);
+    }
+}
+
+class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+```
+
+အထက်ပါ code တွင် `divide(10, 0)` သည် ArithmeticException ကို ဖြစ်စေပြီး catch block က ဖမ်းယူပါသည်။ `validateAge(15)` သည် custom exception ဖြစ်သော InvalidAgeException ကို throw ပြုလုပ်ပါသည်။ StringReader ကို try-with-resources ဖြင့် အသုံးပြု၍ ကိုယ်တိုင် close လုပ်ရန် မလိုတော့ပါ။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Caught: / by zero
+Finally always runs.
+Custom exception: Must be at least 18 years old.
+First char via resource = H
+```
+
+## အဓိက အချက်များ
+
+- Checked exceptions ကို compile-time တွင် compiler က ကိုင်တွယ်ရန် တွန်းအားပေးသည်။
+- Unchecked exceptions များမှာ RuntimeException မှ ဆင်းသက်သည်။
+- finally block သည် အမြဲ run သည်။
+- Try-with-resources ဖြင့် resources များကို အလိုအလျောက် close လုပ်သည်။
+- `throw` ဖြင့် exception ကို ကိုယ်တိုင် ပစ်ချနိုင်သည်။
+

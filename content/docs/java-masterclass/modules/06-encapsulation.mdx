@@ -1,0 +1,77 @@
+---
+title: "Module 6: Encapsulation — Module 6: Encapsulation"
+description: "Access modifiers — public/private/protected/default — getter/setter ။"
+autoNumbering: true
+---
+
+
+Module 6 တွင် access modifiers များကို အသေးစိတ် လေ့လာပြီး Encapsulation ၏ အကောင်အထည်ဖော်မှုကို တိုးချဲ့မည် ဖြစ်ပါသည်။ Access modifier များသည် members များကို မည်သူက ဝင်ရောက်နိုင်သည်ကို ထိန်းချုပ်ပေးပါသည်။
+
+## Access Modifiers ၄ မျိုး
+
+`public` သည် မည်သည့်နေရာမှ မဆို ဝင်ရောက်နိုင်သည်။ `private` သည် class ၏ အတွင်းမှသာ ဝင်ရောက်နိုင်သည်။ `protected` သည် package အတွင်းနှင့် subclasses များမှ ဝင်ရောက်နိုင်သည်။ Default (modifier မရှိ) သည် package အတွင်းမှသာ ဝင်ရောက်နိုင်ပါသည်။
+
+## Encapsulation အကောင်အထည်ဖော်မှု
+
+Fields များကို private ထား၍ public getter/setter တို့ဖြင့် အသုံးပြုခွင့် ပေးသောအခါ setter ထဲတွင် validation ထည့်နိုင်ပြီး data ၏ မှန်ကန်မှုကို ကာကွယ်နိုင်ပါသည်။
+
+## ဥပမာ — Student Class
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student();
+        s.setName("Mya");
+        s.setAge(20);
+        s.setAge(-5);
+        s.show();
+        System.out.println("Name via getter = " + s.getName());
+    }
+}
+
+class Student {
+    private String name;
+    private int age;
+    protected int studentId = 101;
+    int gradeLevel = 5;
+    public String school = "HIS";
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        if (age >= 5 && age <= 60) {
+            this.age = age;
+        }
+    }
+
+    void show() {
+        System.out.println(name + ", age " + age + ", id " + studentId
+                + ", grade " + gradeLevel + ", school " + school);
+    }
+}
+```
+
+အထက်ပါ code တွင် `setAge(-5)` ကို ခေါ်သော်လည်း condition ကြောင့် အနုတ်တန်ဖိုး ကို လက်မခံပါ။ `protected` နှင့် default fields များသည် package အတွင်းမှ ဝင်ရောက်နိုင်ပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Mya, age 20, id 101, grade 5, school HIS
+Name via getter = Mya
+```
+
+## အဓိက အချက်များ
+
+- public = အားလုံး, private = class အတွင်း, protected = package + subclasses, default = package အတွင်း
+- Fields ကို private ထား၍ getter/setter ဖြင့် access ပေးသည်။
+- Setter တွင် validation ထည့်၍ data ကို ကာကွယ်နိုင်သည်။
+- Encapsulation သည် data ကို လုံခြုံစွာ ထိန်းချုပ်ပေးသည်။
+

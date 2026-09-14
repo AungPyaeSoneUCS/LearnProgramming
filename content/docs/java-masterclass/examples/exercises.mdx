@@ -1,0 +1,87 @@
+---
+title: "Java Exercises — Java Exercises"
+description: "လေ့ကျင့်ခန်း ၃ ခု — complete solution code များ ။"
+autoNumbering: true
+---
+
+
+ဤစာမျက်နှာတွင် သင်ယူပြီးသော အကြောင်းအရာများကို အားဖြည့်ရန် လေ့ကျင့်ခန်း သုံးခုကို complete solution များနှင့်တကွ ဖော်ပြပါမည်။ လေ့ကျင့်ခန်းတိုင်းကို ဦးစွာ ကိုယ်တိုင် ကြိုစား၍ ဖြေရှင်းပြီး ထို့နောက် solution ကို နှိုင်းယှဉ်ကြည့်ရန် အကြံပြုပါသည်။
+
+## Exercise 1 — Even or Odd
+
+User မှ နံပါတ်တစ်ခု ထည့်သွင်းပြီး ၎င်းသည် စုံလား မက်လား ပြပါ။
+
+```java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int number = scanner.nextInt();
+
+        if (number % 2 == 0) {
+            System.out.println(number + " is even.");
+        } else {
+            System.out.println(number + " is odd.");
+        }
+        scanner.close();
+    }
+}
+```
+
+## Exercise 2 — Factorial
+
+နံပါတ်တစ်ခု၏ factorial ကို loop ဖြင့် တွက်ပါ။ ဥပမာ 5! = 120 ဖြစ်ပါသည်။
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        int n = 5;
+        long fact = 1;
+
+        for (int i = 1; i <= n; i++) {
+            fact *= i;
+        }
+
+        System.out.println(n + "! = " + fact);
+    }
+}
+```
+
+Run လုပ်သောအခါ ```5! = 120``` ကို မြင်ရမည် ဖြစ်ပါသည်။
+
+## Exercise 3 — Fibonacci Series
+
+ပထမဆုံး Fib1=0, Fib2=1 ဖြင့်စ၍ စီရင်ချက် ၁၀ ခုကို ထုတ်ပါ။
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        int a = 0;
+        int b = 1;
+
+        System.out.print(a + " " + b + " ");
+
+        for (int i = 2; i < 10; i++) {
+            int next = a + b;
+            System.out.print(next + " ");
+            a = b;
+            b = next;
+        }
+        System.out.println();
+    }
+}
+```
+
+## လေ့ကျင့်ခန်း များအတွက် အကြံပြုချက်များ
+
+အားလုံးအတွက် answer မှန်ကန်ကြောင်း သေချာစေရန် output ကို သေချာ နှိုင်းယှဉ်ပါ။ ပထမဆုံးအခါ မရပါက error message ကို ဖတ်၍ ဘာ error ဖြစ်သည်ကို ခွဲခြားတတ်ရန် လေ့ကျင့်ပါ။
+
+## အဓိက အချက်များ
+
+- Scanner ဖြင့် input ဖတ်ခြင်းကို လေ့ကျင့်သည်။
+- for loop ကို factorial နှင့် fibonacci တွင် သုံးသည်။
+- % operator ဖြင့် even/odd စစ်သည်။
+- Solution များသည် complete runnable programs များ ဖြစ်သည်။
+

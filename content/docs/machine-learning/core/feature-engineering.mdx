@@ -1,0 +1,41 @@
+---
+title: "Feature Engineering — Feature Engineering"
+description: "Features — normalization — ဥပမာ။"
+autoNumbering: true
+---
+
+Feature engineering — ဒေတာ အချက် — model အကောင်း။
+
+## Encoding
+
+```js
+const cat2num = { red: 0, green: 1, blue: 2 };
+```
+
+## Normalization
+
+- Scale 0-1 / 0-100
+- အချက် အပြန့်
+
+```js
+const norm = (x, min, max) => (x - min) / (max - min);
+console.log(norm(50, 0, 100)); // 0.5
+```
+
+## Feature ဖန်တီး
+
+```js
+const features = { onSale: price < 100, price, rating: rate * 2 };
+```
+
+## Why
+
+- Scale — တူ
+- Pattern — ထင်
+- Dimension — လျှော့
+
+## အဓိက အချက်များ
+
+- Encode — category
+- Normalize — scale
+- Create — သစ်

@@ -1,0 +1,73 @@
+---
+title: "Module 15: Functional Java (Java 8+) — Module 15: Functional Java (Java 8+)"
+description: "Lambda deep dive — method references — Predicate/Function/Consumer ။"
+autoNumbering: true
+---
+
+
+Module 15 တွင် functional programming ၏ အသေးစိတ်ကို လေ့လာပါမည်။ Lambda expressions, method references နှင့် functional interfaces များကို combination ဖြင့် code ရေးသားပုံကို နက်ရှိုင်းစွာ လေ့လာမည် ဖြစ်ပါသည်။
+
+## Lambda နှင့် Method Reference
+
+Lambda သည် anonymous method ကို ပုံစံတိုဖြင့် ရေးသားခြင်းဖြစ်ပြီး method reference သည် ရှိပြီးသား method ကို ထိုနေရာတွင် တိုက်ရိုက် ရည်ညွှန်းခြင်း ဖြစ်ပါသည်။ `String::toUpperCase` သည် `s -> s.toUpperCase()` နှင့် ညီမျှပါသည်။
+
+## Custom Functional Interface
+
+`@FunctionalInterface` annotation ဖြင့် interface တစ်ခုသည် abstract method တစ်ခုတည်းသာ ပါရမည်ကို သတ်မှတ်ပြီး lambda ဖြင့် အကောင်အထည်ဖော်နိုင်ပါသည်။
+
+## ဥပမာ — Lambda, Method Reference, Reduce, Custom Interface
+
+```java
+import java.util.Arrays;
+import java.util.function.Function;
+
+public class Main {
+    public static void main(String[] args) {
+        Function<String, Integer> lengthFn = String::length;
+        System.out.println("Length of Java = " + lengthFn.apply("Java"));
+
+        Arrays.asList("apple", "banana", "cherry").stream()
+              .map(String::toUpperCase)
+              .forEach(System.out::println);
+
+        int total = Arrays.asList(1, 2, 3, 4).stream()
+              .reduce(0, Integer::sum);
+        System.out.println("Sum = " + total);
+
+        Greeter greeter = name -> "Hello, " + name + "!";
+        System.out.println(greeter.greet("Aung"));
+
+        Runnable runnable = () -> System.out.println("Running from lambda");
+        runnable.run();
+    }
+}
+
+@FunctionalInterface
+interface Greeter {
+    String greet(String name);
+}
+```
+
+အထက်ပါ code တွင် `String::length` နှင့် `Integer::sum` တို့သည် method references များဖြစ်ပြီး `reduce` သည် elements များကို စုစည်း၍ single value ဖြစ်စေပါသည်။ `Greeter` သည် custom functional interface ဖြစ်၍ lambda ဖြင့် အကောင်အထည်ဖော်ထားပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Length of Java = 4
+APPLE
+BANANA
+CHERRY
+Sum = 10
+Hello, Aung!
+Running from lambda
+```
+
+## Predicate, Function, Consumer သုံးမျိုးလုံး
+
+`Predicate<T>` က test ဖြင့် boolean ပြန်သည်။ `Function<T,R>` က apply ဖြင့် ရလဒ်ပြန်သည်။ `Consumer<T>` က accept ဖြင့် ရလဒ်မပြန်ဘဲ လုပ်ဆောင်သည်။ ဤ interfaces များကို streams နှင့် ပေါင်းစပ်သုံးသောအခါ code သည် ရှင်းလင်း၍ ပြန်လည်သုံးနိုင်ပါသည်။
+
+## အဓိက အချက်များ
+
+- Lambda ဖြင့် behavior ကို ပို့ဆောင်နိုင်သည်။
+- Method reference က lambda ကို ပိုတိုစေသည်။
+- @FunctionalInterface ဖြင့် abstract method တစ်ခုတည်း သတ်မှတ်သည်။
+- reduce ဖြင့် စုစည်းရလဒ် ထုတ်နိုင်သည်။
+

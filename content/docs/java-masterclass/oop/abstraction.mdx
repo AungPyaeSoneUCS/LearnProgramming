@@ -1,0 +1,87 @@
+---
+title: "Abstraction — Abstraction"
+description: "Hide complexity — abstract classes — interfaces — default/static methods ။"
+autoNumbering: true
+---
+
+
+Abstraction သည် Object-Oriented Programming ၏ စတုတ္ထမဏ္ဍိုင်ဖြစ်ပြီး ရှုပ်ထွေးသော implementation details များကို ဖုံးကွယ်၍ အသုံးပြုသူအား အဓိက features များကိုသာ ပြသခြင်း ဖြစ်ပါသည်။ ဥပမာအားဖြင့် ကားတစ်စီးကို မောင်းသူသည် engine မည်သို့ အလုပ်လုပ်သည်ကို မသိရဘဲ steering wheel နှင့် pedal ကိုသာ အသုံးပြုရပါသည်။ Java တွင် abstraction ကို abstract classes နှင့် interfaces နှစ်မျိုးဖြင့် ရရှိနိုင်ပါသည်။
+
+## Abstract Classes
+
+Abstract class သည် object ဖန်တီး၍ မရနိုင်သော class ဖြစ်ပြီး abstract method များ (ခန္ဓာကိုယ်မဲ့ method များ) နှင့် သာမန်အပြည့်အစုံ method များ နှစ်မျိုးလုံး ပါဝင်နိုင်ပါသည်။ Subclass များသည် abstract methods အားလုံးကို override လုပ်ပေးရန် လိုအပ်ပါသည်။
+
+## Interfaces
+
+Interface သည် class တစ်ခုကို method ဖော်ပြချက်များ (declarations) များ အကောင်အထည်ဖော်ရမည့် စာချုပ် (contract) တစ်ခုဖြစ်ပါသည်။ Java 8 မှစ၍ interface များတွင် default methods နှင့် static methods များလည်း ပါဝင်နိုင်ပြီး Java 9 မှစ၍ private methods များလည်း ပါဝင်နိုင်ပါသည်။
+
+## ဥပမာ — Abstract Class နှင့် Interface
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Payment card = new CreditCardPayment();
+        card.pay(5000);
+
+        Shape circle = new Circle(5);
+        System.out.println("Area = " + circle.area());
+        circle.describe();
+    }
+}
+
+abstract class Payment {
+    abstract void pay(double amount);
+
+    void printReceipt(double amount) {
+        System.out.println("Paid: " + amount);
+    }
+}
+
+class CreditCardPayment extends Payment {
+    @Override
+    void pay(double amount) {
+        printReceipt(amount);
+    }
+}
+
+interface Shape {
+    double area();
+
+    default void describe() {
+        System.out.println("This is a shape");
+    }
+}
+
+class Circle implements Shape {
+    private double radius;
+
+    Circle(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+}
+```
+
+အထက်ပါ code တွင် `Payment` သည် abstract class ဖြစ်၍ pay method ကို subclass က ဖြည့်သွင်းရပါသည်။ `Shape` သည် interface ဖြစ်ပြီး `area()` ကို implements လုပ်သော class က ရေးသားရမည် ဖြစ်ပါသည်။ `describe()` သည် default method ဖြစ်၍ လိုအပ်မှသာ override လုပ်ပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Paid: 5000.0
+Area = 78.53981633974483
+This is a shape
+```
+
+## Abstract Class နှင့် Interface အကြား ရွေးချယ်မှု
+
+Class တစ်ခုသည် abstract class တစ်ခုသာ extends လုပ်နိုင်သော်လည်း interface များစွာကို implements လုပ်နိုင်ပါသည်။ ဘုံ state (fields) များနှင့် အပြည့်အစုံ method များ လိုအပ်ပါက abstract class ကို သုံးပြီး behavior contract သာလိုအပ်ပါက interface ကို အသုံးပြုရန် သင့်လျော်ပါသည်။
+
+## အဓိက အချက်များ
+
+- Abstraction သည် implementation details များကို ဖုံးကွယ်သည်။
+- Abstract class သည် object မဖန်တီးနိုင်ဘဲ abstract methods ပါဝင်နိုင်သည်။
+- Interface သည် class များကို contract ပေးသည်။
+- Default/static methods များဖြင့် interface ၏ စွမ်းရည် မြင့်မားသည်။
+

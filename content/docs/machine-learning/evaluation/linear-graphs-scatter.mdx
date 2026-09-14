@@ -1,0 +1,44 @@
+---
+title: "Linear Graphs & Scatter Plots — Linear Graphs & Scatter Plots"
+description: "Graphs — scatter — ဒေတာ မြင် — ဥပမာ။"
+autoNumbering: true
+---
+
+Graphs & scatter — ဒေတာ မြင် — ဆုံး ဖို့။
+
+## Scatter — ပုံ
+
+- x — feature
+- y — label
+- ပုံစံ — trend
+
+```js
+const house = [[30, 12], [50, 20], [70, 28], [40, 16]];
+```
+
+## Linear မြင်
+
+- Points — လိုင်း ပေါ်
+- စောင်း — relation
+- ပြန့် — noise
+
+## Chart.js သုံး
+
+```js
+new Chart(ctx, {
+  type: "scatter",
+  data: { datasets: [{ data: house.map(([x, y]) => ({ x, y })) }] },
+});
+```
+
+## အကြောင်း
+
+- လိုင်း ခပ် — linear?
+- Outlier — မြင်
+- Group — cluster
+
+## အဓိက အချက်များ
+
+- Scatter — မြင်
+- Trend — ဆံ
+- Plot — အရေး

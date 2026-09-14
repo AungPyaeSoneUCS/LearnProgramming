@@ -1,0 +1,42 @@
+---
+title: "Install an IDE — Install an IDE"
+description: "IntelliJ IDEA — Eclipse — VS Code — code completion — debugging ။"
+autoNumbering: true
+---
+
+
+JDK တစ်ခုတည်းဖြင့်သာ terminal တွင် code ရေးပြီး run နိုင်သော်လည်း IDE (Integrated Development Environment) ကို အသုံးပြုခြင်းဖြင့် code ရေးသားမှုကို ပိုမို မြန်ဆန်၍ မှားယွင်းမှု နည်းပါးအောင် ပြုလုပ်နိုင်ပါသည်။ IDE သည် code completion (စာလုံးများ အလိုအလျောက် အဆိုပြုခြင်း), error highlighting (မှားနေသော နေရာကို အနီရောင် ပြခြင်း) နှင့် built-in compilation (ခလုတ်တစ်ချက်နှိပ်ရုံဖြင့် compile) စသည့် features များကို ပေးပါသည်။
+
+## IDE ရွေးချယ်ခြင်း
+
+Java အတွက် လူကြိုက်များသော IDE သုံးမျိုး ရှိပါသည်။ IntelliJ IDEA သည် Java developer များ အကြိုက်ဆုံး IDE ဖြစ်ပြီး Community Edition သည် အခမဲ့ ဖြစ်ပါသည်။ Eclipse သည် အခမဲ့ ဖြစ်၍ plugin အများအပြား ထောက်ပံ့ပါသည်။ VS Code သည် lightweight ဖြစ်ပြီး Extension Pack for Java ကို တပ်ဆင်ပါက Java development အတွက် အသုံးပြုနိုင်ပါသည်။ စတင်လေ့လာသူများအတွက် IntelliJ IDEA Community Edition ကို အကြံပြုပါသည်။
+
+## IntelliJ တွင် ပထမဆုံး Project ဖန်တီးခြင်း
+
+ပထမအဆင့်တွင် IntelliJ ကို ဖွင့်၍ `New Project` ကို ရွေးပါသည်။ ဒုတိယအဆင့်တွင် Language မှာ Java ကို ရွေး၍ JDK အဖြစ် တပ်ဆင်ထားသော version ကို ရွေးပါသည်။ တတိယအဆင့်တွင် project name ထည့်၍ Finish နှိပ်ပါသည်။ ဖန်တီးပြီးသောအခါ အောက်ပါ program ကို `Main` class ထဲတွင် ရေးသားပြီး Run ခလုတ်ကို နှိပ်ပါသည်။
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("IDE setup is complete!");
+    }
+}
+```
+
+`Run` ခလုတ်သည် main method ပါရှိသော class တစ်ခုအား အလိုအလျောက် compile လုပ်ပြီး run ပေးပါသည်။ Run ပြီးသောအခါ IDE ၏ အောက်ပိုင်း console ထဲတွင် အောက်ပါ output ကို မြင်ရမည် ဖြစ်ပါသည်။
+
+```
+IDE setup is complete!
+```
+
+## IDE ၏ အကျိုးကျေးဇူးများ
+
+IDE သည် code များကို အရောင်ခွဲခြား ပြသခြင်း (syntax highlighting) ဖြင့် ဖတ်ရလွယ်ကူစေပြီး အမှားများကို ရိုက်နေစဉ် တစ်ချိန်တည်းတွင် သိစေပါသည်။ ထို့ပြင် `System.out.println` ကဲ့သို့သော အသုံးများတတ်သော code ကို ရိုက်ပြီးသည်နှင့် auto-complete ဖြင့် ဆက်လက် အမြန်ရေးနိုင်ပါသည်။ ဤအချက်များကြောင့် စတင်သူများ၏ အမှားများကို သိသိသာသာ လျော့ကျစေပါသည်။
+
+## အဓိက အချက်များ
+
+- IDE သည် code completion, error highlighting နှင့် built-in compilation တို့ကို ပေးသည်။
+- IntelliJ IDEA Community Edition ကို အကြံပြုသည်။
+- Project ဖန်တီး၍ `Main` class တွင် code ရေးပြီး Run ခလုတ်ဖြင့် run နိုင်သည်။
+- Output ကို IDE ၏ console ထဲတွင် မြင်နိုင်သည်။
+

@@ -1,0 +1,39 @@
+---
+title: "Deploying ML in the Browser — Deploying ML in the Browser"
+description: "Browser deploy — web app — ဥပမာ။"
+autoNumbering: true
+---
+
+Browser deploy — static site — ML ထဲ — ဥပမာ။
+
+## အကောင်း
+
+- No server
+- မြန်
+- Privacy
+
+## Setup
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<script src="./model.js"></script>
+```
+
+## React/Next
+
+```js
+import * as tf from "@tensorflow/tfjs";
+import { useEffect } from "react";
+```
+
+## ထည့်
+
+- WebWorker — အဆောက်
+- အဖြေ — main thread
+- Bundle — ရှ
+
+## အဓိက အချက်များ
+
+- CDN — သုံး
+- WebWorker — မြန်
+- Static deploy

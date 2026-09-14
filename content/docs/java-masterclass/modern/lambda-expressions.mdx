@@ -1,0 +1,55 @@
+---
+title: "Lambda Expressions & Functional Interfaces — Lambda Expressions & Functional Interfaces"
+description: "Behavior passing — (parameters) -> body — functional interface များ ။"
+autoNumbering: true
+---
+
+
+Part 3 မှစ၍ Java 8 မှ စတင်မိတ်ဆက်ခဲ့သော modern Java features များကို လေ့လာပါမည်။ ဤ feature များသည် boilerplate code (ထပ်ခါထပ်ခါ ရေးရသော code) များကို လျှော့ချပေးပြီး functional programming concepts များကို မိတ်ဆက်ပေးပါသည်။ Lambda expression ဆိုသည်မှာ method တစ်ခုကို expression အနေဖြင့် တိုတိုတုတ်တုတ် ကိုယ်စားပြုနိုင်သော နည်းလမ်း ဖြစ်ပါသည်။ ၎င်းကို behavior များကို argument အဖြစ် ပို့ဆောင်ရာတွင် အများဆုံး အသုံးပြုပါသည်။
+
+## Old vs New နည်းလမ်း
+
+Java 8 မတိုင်မီတွင် ရိုးရှင်းသော လုပ်ဆောင်ချက်တစ်ခုအတွက် anonymous inner class ကြီးများကို ရေးသားရပါသည်။ Lambda ကို သုံးပါက ထို code များကို အနည်းငယ်မျှသော expression ဖြင့် အစားထိုးနိုင်ပါသည်။ Lambda ၏ syntax မှာ `(parameters) -> { body }` ပုံစံ ဖြစ်ပါသည်။
+
+## ဥပမာ — forEach နှင့် Predicate
+
+```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("Alice", "Bob", "Amanda");
+
+        names.forEach(name -> System.out.println("Hi " + name));
+
+        Predicate<String> isLong = name -> name.length() > 4;
+        names.stream()
+             .filter(isLong)
+             .forEach(System.out::println);
+    }
+}
+```
+
+အထက်ပါ code တွင် `name -> System.out.println("Hi " + name)` သည် list ၏ element တစ်ခုချင်းစီ အတွက် ခေါ်ယူခံရသော lambda တစ်ခု ဖြစ်ပါသည်။ `isLong` သည် Predicate functional interface တစ်ခုဖြစ်ပြီး boolean အဖြေ ပြန်ပေးသော lambda ကို သိမ်းဆည်းထားပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Hi Alice
+Hi Bob
+Hi Amanda
+Alice
+Amanda
+```
+
+## Functional Interface ဆိုတာ ဘာလဲ
+
+Functional interface ဆိုသည်မှာ abstract method တစ်ခုတည်းသာ ပါဝင်သော interface ဖြစ်ပါသည်။ `Predicate`, `Function`, `Consumer` နှင့် `Runnable` တို့သည် ဥပမာများ ဖြစ်ပါသည်။ `@FunctionalInterface` annotation ဖြင့် ဤအချက်ကို compiler မှ စစ်ဆေးစေနိုင်ပါသည်။ Lambda တစ်ခုကို functional interface type variable တွင် သိမ်းဆည်းနိုင်ပါသည်။
+
+## အဓိက အချက်များ
+
+- Lambda သည် method ကို expression အနေဖြင့် ကိုယ်စားပြုသည်။
+- Syntax: `(parameters) -> { body }`
+- Functional interface သည် abstract method တစ်ခုတည်းသာ ပါဝင်သည်။
+- Behaviors များကို argument အနေဖြင့် lambda ဖြင့် ပို့နိုင်သည်။
+

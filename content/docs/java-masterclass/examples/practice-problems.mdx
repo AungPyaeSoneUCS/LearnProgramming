@@ -1,0 +1,72 @@
+---
+title: "Java Practice Problems — Java Practice Problems"
+description: "ပြဿနာ ၅ ခု — hints — OOP/stream practice ။"
+autoNumbering: true
+---
+
+
+ဤစာမျက်နှာတွင် သင့်ကျွမ်းကျင်မှုကို စမ်းသပ်ရန် practice problems ငါးခုကို ဖော်ပြပါမည်။ ပြဿနာတိုင်းတွင် hint များလည်း ပါဝင်ပြီး နောက်ဆုံးတစ်ခုအတွက် complete solution ကို ဖော်ပြပါသည်။
+
+## Problem 1 — Max of Three Numbers
+
+နံပါတ်သုံးခုအနက် အကြီးဆုံးကို if-else ဖြင့် ရှာပါ။ Hint: nested if သို့မဟုတ် Math.max ကို သုံးနိုင်သည်။
+
+## Problem 2 — Reverse a String
+
+String တစ်ခုကို ပြောင်းပြန် လှန်ထုတ်ပါ။ Hint: StringBuilder.reverse() ကို သုံးပါ။
+
+## Problem 3 — Even Numbers from a List
+
+List ထဲမှ စုံသော နံပါတ်များကို Stream filter ဖြင့် ထုတ်ပါ။
+
+## Problem 4 — Count Words in a Sentence
+
+စာကြောင်းတစ်ကြောင်းတွင် စာလုံးအရေအတွက်ကို StringTokenizer သို့မဟုတ် split ဖြင့် ရေပါ။
+
+## Problem 5 — Student Class with OOP
+
+Encapsulation ကို သုံး၍ Student class ရေးပြီး name နှင့် score ကို private fields များဖြင့် သိမ်းပြီး getter/setter ပြုလုပ်ပါ။ အောက်ပါ complete solution ကို ကြည့်ပါ။
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Student s1 = new Student("Mya", 85);
+        Student s2 = new Student("Aung", 45);
+
+        s1.display();
+        s2.display();
+        System.out.println("Student with higher score: "
+                + ((s1.getScore() > s2.getScore()) ? s1.getName() : s2.getName()));
+    }
+}
+
+class Student {
+    private String name;
+    private int score;
+
+    public Student(String name, int score) {
+        this.name = name;
+        this.score = score;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void display() {
+        System.out.println(name + " scored " + score);
+    }
+}
+```
+
+## အဓိက အချက်များ
+
+- if-else, loops, streams တို့ကို practice လုပ်သည်။
+- Encapsulation ဖြင့် class ဒီဇိုင်းကို လေ့ကျင့်သည်။
+- Problems များကို ဦးစွာ ကိုယ်တိုင် ဖြေရှင်းပါ။
+- Output ကို စစ်ဆေးပြီးမှ နောက်တစ်ခုသို့ ဆက်ပါ။
+

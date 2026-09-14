@@ -1,0 +1,59 @@
+---
+title: "The Stream API — The Stream API"
+description: "Declarative data processing — filter, map — terminal operations ။"
+autoNumbering: true
+---
+
+
+Stream API သည် collections များကို declarative ပုံစံဖြင့် လုပ်ဆောင်နိုင်ရန် Java 8 တွင် မိတ်ဆက်ခဲ့သော feature ဖြစ်ပါသည်။ Stream ဆိုသည်မှာ elements များ၏ စီးကြောင်း (sequence) တစ်ခုဖြစ်ပြီး data ကို မည်သို့ လုပ်ဆောင်ရမည်ကို loop ရေးစရာမလိုဘဲ filter, map, reduce ကဲ့သို့သော operations များဖြင့် ဖော်ပြနိုင်ပါသည်။ ဤ Stream API သည် I/O streams မဟုတ်ဘဲ collection လုပ်ဆောင်ချက်များ အတွက်သာ ဖြစ်ကြောင်း မှတ်သားထားပါ။
+
+## ဥပမာ — Filter နှင့် Map
+
+အောက်ပါဥပမာတွင် အမည်စာရင်းမှ "A" စာလုံးဖြင့် စသော အမည်များကိုသာ စစ်ထုတ်၍ (filter) စာလုံးကြီးအဖြစ် ပြောင်းပြီး (map) ပုံနှိပ်ပါသည်။
+
+```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("Alice", "Bob", "Amanda", "Charlie");
+
+        names.stream()
+             .filter(name -> name.startsWith("A"))
+             .map(String::toUpperCase)
+             .forEach(System.out::println);
+
+        List<String> collected = names.stream()
+             .filter(name -> name.startsWith("A"))
+             .map(String::toUpperCase)
+             .collect(Collectors.toList());
+        System.out.println("Collected = " + collected);
+    }
+}
+```
+
+အထက်ပါ code တွင် `filter` သည် condition ကို ကျေနပ်သော elements များကိုသာ ထားရှိပြီး `map` သည် element တစ်ခုချင်းစီကို ပုံစံပြောင်းပါသည်။ `collect(Collectors.toList())` သည် stream ကို list အသစ်အဖြစ် ပြောင်းလဲပေးပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+ALICE
+AMANDA
+Collected = [ALICE, AMANDA]
+```
+
+## Stream Pipeline ၏ အဆင့်များ
+
+Stream pipeline တွင် အဆင့်သုံးဆင့် ပါဝင်ပါသည်။ ပထမအဆင့်မှာ source ဖြစ်၍ collection မှ stream ကို ဖန်တီးပါသည်။ ဒုတိယအဆင့်မှာ intermediate operations (filter, map) များ ဖြစ်၍ stream ကို ပြောင်းလဲပေးပါသည်။ တတိယအဆင့်မှာ terminal operation (forEach, collect) ဖြစ်၍ နောက်ဆုံးရလဒ်ကို ထုတ်ပေးပါသည်။ Intermediate operations များသည် lazy ဖြစ်၍ terminal operation ကို မခေါ်မချင်း တကယ်တမ်း လုပ်ဆောင်မှု မဖြစ်ပေါ်ပါ။
+
+## Stream ၏ အရေးကြီးအချက်များ
+
+Stream ကို တစ်ကြိမ်သာ consume လုပ်နိုင်ပြီး ထပ်ခါထပ်ခါ သုံး၍ မရပါ။ Terminal operation ပြီးသွားသော stream ကို ပြန်သုံးရန် ကြိုးစားပါက error ဖြစ်နိုင်ပါသည်။ Stream များသည် source collection ကို မပြောင်းလဲဘဲ ရလဒ်အသစ်များကိုသာ ထုတ်ပေးပါသည်။
+
+## အဓိက အချက်များ
+
+- Stream API သည် data ကို declarative ပုံစံဖြင့် လုပ်ဆောင်ပေးသည်။
+- Pipeline = source + intermediate + terminal ဟူ၍ အဆင့်သုံးဆင့် ရှိသည်။
+- `filter` ဖြင့် စစ်ထုတ်ပြီး `map` ဖြင့် ပြောင်းလဲသည်။
+- `collect` ဖြင့် ရလဒ်ကို collection အဖြစ် ပြောင်းနိုင်သည်။
+

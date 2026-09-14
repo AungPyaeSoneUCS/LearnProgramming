@@ -1,0 +1,65 @@
+---
+title: "Inheritance — Inheritance"
+description: "extends — superclass/subclass — super — method overriding — code reuse ။"
+autoNumbering: true
+---
+
+
+Inheritance သည် Object-Oriented Programming ၏ ဒုတိယမဏ္ဍိုင်ဖြစ်ပြီး အခြား class မှ fields နှင့် methods များကို ပြန်လည် အသုံးပြုနိုင်စေသော နည်းပညာ ဖြစ်ပါသည်။ `extends` keyword ဖြင့် subclass (child class) တစ်ခုသည် superclass (parent class) ၏ အရာအားလုံးကို အမွေဆက်ခံပါသည်။ ဤနည်းဖြင့် တူညီသော code ကို ထပ်ခါထပ်ခါ ရေးစရာမလိုဘဲ ပြန်လည် အသုံးပြုနိုင်ပါသည်။
+
+## ဥပမာ — Vehicle မှ Car သို့
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Car car = new Car("Toyota");
+        car.startEngine();
+        car.openTrunk();
+    }
+}
+
+class Vehicle {
+    String brand;
+
+    Vehicle(String brand) {
+        this.brand = brand;
+    }
+
+    void startEngine() {
+        System.out.println(brand + " engine started.");
+    }
+}
+
+class Car extends Vehicle {
+    Car(String brand) {
+        super(brand);
+    }
+
+    void openTrunk() {
+        System.out.println(brand + " trunk opened.");
+    }
+}
+```
+
+အထက်ပါ code တွင် `Car` သည် `Vehicle` ကို `extends` ပြုထားသောကြောင့် `startEngine()` method ကို ပြန်ရေးစရာမလိုဘဲ အမွေဆက်ခံပါသည်။ `super(brand)` သည် parent class ၏ constructor ကို ခေါ်ယူပြီး `brand` field ကို တန်ဖိုး ပေးပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို မြင်ရမည် ဖြစ်ပါသည်။
+
+```
+Toyota engine started.
+Toyota trunk opened.
+```
+
+## super keyword နှင့် Method Overriding
+
+`super` keyword သည် parent class ၏ members (fields, methods, constructors) များကို ညွှန်ပြပါသည်။ Subclass သည် parent ၏ method ကို လိုအပ်သလို ပြောင်းလဲရေးသားရန် method overriding ကို သုံးပါသည်။ Override ပြုလုပ်ရန် method signature (name + parameters) အတိအကျ တူရမည် ဖြစ်ပါသည်။
+
+## Sample ၏ အကျိုးကျေးဇူး
+
+Inheritance ၏ အဓိက အကျိုးကျေးဇူးမှာ code reuse ဖြစ်ပါသည်။ ထို့ပြင် ဘုံအချက်များကို parent class တစ်ခုတည်းတွင် ထား၍ maintain လုပ်ရ လွယ်ကူပြီး အပြောင်းအလဲတစ်ခုဖြင့် subclass အားလုံးကို သက်ရောက်စေနိုင်ပါသည်။ ထို့အတူ hierarchy ပုံစံဖြင့် class များကို စနစ်တကျ ဖွဲ့စည်းနိုင်ပါသည်။
+
+## အဓိက အချက်များ
+
+- `extends` ဖြင့် subclass သည် superclass မှ အမွေဆက်ခံသည်။
+- `super` သည် parent class ၏ members များကို ခေါ်ယူသည်။
+- Method overriding ဖြင့် parent method ကို ပြောင်းလဲရေးသားနိုင်သည်။
+- ဘုံ methods များကို parent ထဲထား၍ code reuse ပြုလုပ်သည်။
+

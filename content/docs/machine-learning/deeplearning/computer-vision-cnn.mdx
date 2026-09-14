@@ -1,0 +1,41 @@
+---
+title: "Computer Vision & CNNs — Computer Vision & CNNs"
+description: "CNN — image — ဥပမာ။"
+autoNumbering: true
+---
+
+CNN — Convolutional — image recognition။
+
+## အလုပ်
+
+1. Convolve — ပုံစံ
+2. Pool — ရှ
+3. Flatten — 1D
+4. Dense — class
+
+## Conv layer
+
+- Filter — အသွင်
+- Detect — edges, shapes
+- Stride — step
+
+```js
+model.add(tf.layers.conv2d({ filters: 8, kernelSize: 3, activation: "relu", inputShape: [28, 28, 1] }));
+```
+
+## Pool — max
+
+- 2x2 — ရှ
+- အမျာ လောက်တူ
+
+## သုံး
+
+- Digit ဖတ်
+- Face detect
+- Self-driving
+
+## အဓိက အချက်များ
+
+- Conv — ပုံစံ
+- Pool — ရှ
+- Dense — class

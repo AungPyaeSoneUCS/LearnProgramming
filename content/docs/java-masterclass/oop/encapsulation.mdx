@@ -1,0 +1,64 @@
+---
+title: "Encapsulation — Encapsulation"
+description: "Data hiding — private fields — public getter/setter — data ကာကွယ်ခြင်း ။"
+autoNumbering: true
+---
+
+
+Encapsulation သည် Object-Oriented Programming ၏ ပထမဆုံးနှင့် အခြေခံအကျဆုံး မဏ္ဍိုင်ဖြစ်ပါသည်။ Encapsulation ဆိုသည်မှာ data (variables) နှင့် data ကို လုပ်ဆောင်သော code (methods) များကို class တစ်ခုအတွင်း စုစည်းထားပြီး data များကို ပြင်ပမှ တိုက်ရိုက် ဝင်ရောက် ပြောင်းလဲခွင့် ပေးခြင်းမရှိဘဲ public methods များမှတစ်ဆင့်သာ အသုံးပြုခွင့် ပြုသည့် နည်းပညာ ဖြစ်ပါသည်။ ဤနည်းဖြင့် data ၏ လုံခြုံမှုကို ထိန်းသိမ်းပေးပြီး မရည်ရွယ်ဘဲ ပြောင်းလဲခြင်းမှ ကာကွယ်ပေးပါသည်။
+
+## Data Hiding ၏ အဓိပ္ပာယ်
+
+Fields များကို `private` keyword ဖြင့် ကြေညာပါက ၎င်းတို့ကို ပြင်ပမှ တိုက်ရိုက် ဝင်ရောက်၍ မရတော့ပါ။ ပြင်ပမှ ဖတ်ရန် သို့မဟုတ် ပြောင်းရန် တစ်ခုတည်းသော နည်းလမ်းမှာ public `getter` နှင့် `setter` methods များကို ဖြတ်သန်း၍ ဖြစ်ပါသည်။ ဤနည်းဖြင့် field ၏ တန်ဖိုးကို ပြောင်းသည့်အခါ validation စစ်ဆေးမှုများ ပြုလုပ်နိုင်မည် ဖြစ်ပါသည်။
+
+## ဥပမာ — BankAccount Class
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        BankAccount account = new BankAccount();
+        account.deposit(1000);
+        account.withdraw(300);
+        account.deposit(-500);
+        System.out.println("Balance: " + account.getBalance());
+    }
+}
+
+class BankAccount {
+    private double balance;
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+        }
+    }
+}
+```
+
+အထက်ပါ program တွင် `balance` field သည် `private` ဖြစ်သောကြောင့် ပြင်ပမှ တိုက်ရိုက် ပြောင်းလဲ၍ မရပါ။ `deposit(-500)` ကို ခေါ်သောအခါ condition ကြောင့် ငြင်းပယ်၍ balance ကို မပြောင်းပါ။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Balance: 700.0
+```
+
+## Getter / Setter ၏ အကျိုးကျေးဇူး
+
+Getter နှင့် setter များ ရှိခြင်းကြောင့် အနာဂတ်တွင် internal implementation ကို ပြောင်းလဲရာတွင် ပြင်ပကုဒ်များကို မထိခိုက်စေဘဲ ပြောင်းလဲနိုင်ပါသည်။ ထို့ပြင် data ကို read-only ဖြစ်စေရန် setter မပါဘဲ getter သာထားနိုင်ပြီး class ၏ အတွင်းပိုင်းကို ပြင်ပမှ မတွေ့မမြင်ရအောင် ထိန်းချုပ်နိုင်ပါသည်။
+
+## အဓိက အချက်များ
+
+- Encapsulation သည် data ကို class အတွင်း ဖုံးအုပ်ထားသည်။
+- Fields များကို `private` ဖြင့် သတ်မှတ်ရသည်။
+- ပြင်ပမှ public getter/setter များဖြင့်သာ ဝင်ရောက်ခွင့် ပြုသည်။
+- Validation များဖြင့် data ၏ မှန်ကန်မှုကို ကာကွယ်နိုင်သည်။
+

@@ -1,0 +1,86 @@
+---
+title: "Module 13: The Collections Framework — Module 13: The Collections Framework"
+description: "ArrayList, HashSet, HashMap, Queue — collection APIs ။"
+autoNumbering: true
+---
+
+
+Module 13 တွင် Java collections framework ကို လေ့လာပါမည်။ Collections framework သည် data structures များကို ကိုယ်တိုင် ရေးစရာမလိုဘဲ သုံးနိုင်သော готов interfaces နှင့် classes များစွာကို ပေးပါသည်။ ဤ framework ၏ အရေးကြီးဆုံး interfaces များမှာ List, Set, Map နှင့် Queue တို့ ဖြစ်ပါသည်။
+
+## List — ArrayList
+
+`List` သည် စီစဉ်ထားသော (ordered) elements များကို သိမ်းဆည်းပြီး duplicates ခွင့်ပြုပါသည်။ `ArrayList` သည် List ၏ အသုံးအများဆုံး implementation ဖြစ်ပြီး index ဖြင့် မြန်ဆန်စွာ ဝင်ရောက်နိုင်ပါသည်။
+
+## Set — HashSet
+
+`Set` သည် duplicates မခွင့်ပြုပါ။ `HashSet` သည် hashCode ကိုအသုံးပြု၍ elements များကို ထူးခြားစွာ (unique) သိမ်းဆည်းပါသည်။
+
+## Map — HashMap
+
+`Map` သည် key-value pairs များကို သိမ်းဆည်းပြီး `HashMap` သည် key ကို hash လုပ်၍ value ကို မြန်ဆန်စွာ ရှာဖွေပေးပါသည်။
+
+## Queue — LinkedList
+
+`Queue` သည် FIFO (First-In-First-Out) စနစ်ဖြင့် အလုပ်လုပ်ပြီး `offer` ဖြင့် ထည့်ကာ `poll` ဖြင့် ထုတ်ယူပါသည်။ `LinkedList` သည် Queue ၏ implementation တစ်ခု ဖြစ်ပါသည်။
+
+## ဥပမာ — List, Set, Map, Queue အားလုံး
+
+```java
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> names = new ArrayList<>();
+        names.add("Aung");
+        names.add("Mya");
+        names.add("Aung");
+        System.out.println("List = " + names + ", size = " + names.size());
+
+        Set<String> unique = new HashSet<>(names);
+        System.out.println("Set (no duplicates) = " + unique);
+
+        Map<String, Integer> ages = new HashMap<>();
+        ages.put("Aung", 25);
+        ages.put("Mya", 30);
+        System.out.println("Age of Aung = " + ages.get("Aung"));
+        System.out.println("Map = " + ages);
+
+        Queue<String> queue = new LinkedList<>();
+        queue.offer("First");
+        queue.offer("Second");
+        System.out.println("Dequeued = " + queue.poll());
+        System.out.println("Queue size = " + queue.size());
+    }
+}
+```
+
+အထက်ပါ code တွင် List ထဲတွင် "Aung" နှစ်ကြိမ် ပါနေသော်လည်း Set သည် unique ဖြစ်စေပါသည်။ Map သည် key ဖြင့် value ကို ရှာပေးပြီး Queue သည် FIFO ဖြင့် ထုတ်လုပ်ပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+List = [Aung, Mya, Aung], size = 3
+Set (no duplicates) = [Aung, Mya]
+Age of Aung = 25
+Map = {Aung=25, Mya=30}
+Dequeued = First
+Queue size = 1
+```
+
+## ဘယ်အခါ ဘယ်ဟာ သုံးမလဲ
+
+Ordered duplicate list လိုအပ်လျှင် ArrayList, unique elements လိုအပ်လျှင် HashSet, key-value lookup လိုအပ်လျှင် HashMap, FIFO processing လိုအပ်လျှင် Queue ကို အသုံးပြုပါသည်။
+
+## အဓိက အချက်များ
+
+- List = ordered + duplicates ok (ArrayList)
+- Set = unique သာ (HashSet)
+- Map = key-value lookup (HashMap)
+- Queue = FIFO (LinkedList implementation)
+- Collections framework ဖြင့် data structures ကို ကိုယ်တိုင်ရေးစရာ မလို။
+

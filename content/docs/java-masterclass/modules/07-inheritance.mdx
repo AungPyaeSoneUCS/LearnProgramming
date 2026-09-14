@@ -1,0 +1,80 @@
+---
+title: "Module 7: Inheritance — Module 7: Inheritance"
+description: "super — overriding — Object root class — constructor chain ။"
+autoNumbering: true
+---
+
+
+Module 7 တွင် inheritance ကို ပို၍ နက်ရှိုင်းစွာ လေ့လာမည် ဖြစ်ပြီး super keyword, method overriding နှင့် Object root class များကို အသေးစိတ် ကြည့်ရပါမည်။
+
+## super keyword
+
+`super` သည် parent class ၏ members များကို ညွှန်ပြပါသည်။ `super(...)` ဖြင့် parent constructor ကို ခေါ်ပြီး `super.method()` ဖြင့် parent method ကို ခေါ်ပါသည်။ Subclass constructor တွင် super() ကို ပထမဆုံး statement အနေဖြင့် ထားရပါသည်။
+
+## Object Root Class
+
+Java တွင် class အားလုံးသည် `Object` class မှ implicit အနေဖြင့် extends ပြုလုပ်ပါသည်။ `toString()`, `equals()` နှင့် `hashCode()` တို့သည် Object ထံမှ အမွေဆက်ခံရသော methods များ ဖြစ်ပြီး လိုအပ်သလို override ပြုလုပ်နိုင်ပါသည်။
+
+## ဥပမာ — Bike Class
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Bike bike = new Bike("Honda", 180);
+        bike.start();
+        System.out.println("toString = " + bike);
+    }
+}
+
+class Vehicle {
+    protected String brand;
+
+    Vehicle(String brand) {
+        this.brand = brand;
+    }
+
+    void start() {
+        System.out.println(brand + " started.");
+    }
+}
+
+class Bike extends Vehicle {
+    private int speed;
+
+    Bike(String brand, int speed) {
+        super(brand);
+        this.speed = speed;
+    }
+
+    @Override
+    void start() {
+        super.start();
+        System.out.println("Top speed " + speed + " km/h");
+    }
+
+    @Override
+    public String toString() {
+        return brand + " (" + speed + " km/h)";
+    }
+}
+```
+
+အထက်ပါ code တွင် `super(brand)` ဖြင့် Vehicle ၏ constructor ကို ခေါ်ပြီး `super.start()` ဖြင့် parent method ကို ခေါ်ပါသည်။ `toString()` ကို override လုပ်၍ သင့်လျော်သော output ဖော်ပြပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Honda started.
+Top speed 180 km/h
+toString = Honda (180 km/h)
+```
+
+## Constructor Chain
+
+Subclass object ကို ဖန်တီးသောအခါ subclass constructor မှ super() ဖြင့် parent constructor ဆီသော် အထက်ဆုံး Object class အထိ အစဉ်လိုက် constructors များ run ပါသည်။ ဤအချက်ကြောင့် parent ၏ fields များလည်း မှန်ကန်စွာ initialize ဖြစ်သည်။
+
+## အဓိက အချက်များ
+
+- super keyword ဖြင့် parent members များကို ခေါ်ယူသည်။
+- Class အားလုံးသည် Object class မှ ဆင်းသက်သည်။
+- toString, equals, hashCode တို့ကို override ပြုလုပ်နိုင်သည်။
+- Constructor chain ဖြင့် parent များ အစဉ်လိုက် run သည်။
+

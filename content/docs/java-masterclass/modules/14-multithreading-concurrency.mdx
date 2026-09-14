@@ -1,0 +1,75 @@
+---
+title: "Module 14: Multithreading — Module 14: Multithreading"
+description: "Thread lifecycle — synchronization — Runnable — ExecutorService — Future ။"
+autoNumbering: true
+---
+
+
+Module 14 တွင် multithreading နှင့် concurrency ကို လေ့လာပါမည်။ Thread ဆိုသည်မှာ program အတွင်း သီးခြားပြေးနေသော execution path တစ်ခုဖြစ်ပြီး threads များစွာဖြင့် tasks များကို တစ်ပြိုင်တည်း (concurrently) လုပ်ဆောင်နိုင်ပါသည်။ Java တွင် thread ကို Thread class နှင့် Runnable interface တို့ဖြင့် ဖန်တီးပါသည်။
+
+## Thread Lifecycle
+
+Thread ၏ state များဖြစ်သော `NEW` (start မလုပ်ရသေး), `RUNNABLE` (လုပ်ဆောင်ရန် အသင့်), `BLOCKED/WAITING` (စောင့်ဆိုင်းနေ) နှင့် `TERMINATED` (ပြီးဆုံးပြီ) တို့ ဖြစ်ပါသည်။ `start()` ဖြင့် thread စတင်ပြီး `join()` ဖြင့် thread ပြီးသည်အထိ စောင့်ပါသည်။
+
+## Synchronization
+
+Threads များစွာက တူညီသော data ကို တစ်ပြိုင်နက် ပြုပြင်သောအခါ race condition ဖြစ်နိုင်ပါသည်။ `synchronized` keyword ဖြင့် method သို့မဟုတ် block ကို lock လုပ်၍ threads တစ်ခုပြီးတစ်ခုသာ ဝင်ရောက် လုပ်ဆောင်စေပါသည်။
+
+## ExecutorService နှင့် Future
+
+Modern concurrency တွင် thread pool ဖြစ်သော `ExecutorService` ကို သုံးပြီး tasks များကို submit လုပ်ပါသည်။ `Future` သည် task ၏ ရလဒ်ကို အနာဂတ်တွင် ရယူနိုင်သည့် handle ဖြစ်ပြီး `get()` ဖြင့် ရလဒ်ကို စောင့်ဆိုင်း ရယူပါသည်။
+
+## ဥပမာ — Threads, Synchronization, ExecutorService
+
+```java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Counter counter = new Counter();
+
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) counter.increment();
+        }, "Worker-1");
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) counter.increment();
+        }, "Worker-2");
+
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
+        System.out.println("Synchronized count = " + counter.count);
+
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        Future<Integer> future = pool.submit(() -> 42);
+        System.out.println("Future result = " + future.get());
+        pool.shutdown();
+    }
+}
+
+class Counter {
+    int count = 0;
+
+    synchronized void increment() {
+        count++;
+    }
+}
+```
+
+အထက်ပါ code တွင် threads နှစ်ခုက increment ၁၀၀၀ ကြိမ်စီ လုပ်သောအခါ synchronized ကြောင့် ရလဒ်မှာ တိကျစွာ 2000 ဖြစ်ပါသည်။ ExecutorService ဖြင့် task ကို pool ထဲတွင် run စေပြီး Future.get() ဖြင့် ရလဒ် 42 ကို ရယူပါသည်။ Run လုပ်သောအခါ အောက်ပါကဲ့သို့သော output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Synchronized count = 2000
+Future result = 42
+```
+
+## အဓိက အချက်များ
+
+- Thread ၃ ခု state − NEW, RUNNABLE, TERMINATED (BLOCKED/WAITING ပါ)
+- Runnable interface ဖြင့် task ကို သတ်မှတ်သည်။
+- synchronized ဖြင့် race condition ကို ကာကွယ်သည်။
+- ExecutorService + Future ဖြင့် thread pool ကို စီမံသည်။
+

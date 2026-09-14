@@ -1,0 +1,54 @@
+---
+title: "Records (Java 14+) — Records (Java 14+)"
+description: "Immutable data — auto constructor/getter/equals/hashCode/toString ။"
+autoNumbering: true
+---
+
+
+Record သည် Java 14 တွင် preview အဖြစ် စတင်ခဲ့ပြီး Java 16 တွင် တရားဝင် ဖြစ်လာသော special class တစ်မျိုး ဖြစ်ပါသည်။ Record သည် immutable data ကို သိမ်းဆည်းရန် ရည်ရွယ်ပြီး constructor, getter များ, equals(), hashCode() နှင့် toString() methods များကို ကိုယ်တိုင် ရေးစရာမလိုဘဲ အလိုအလျောက် ထုတ်လုပ်ပေးပါသည်။ ဤအချက်ကြောင့် boilerplate code အဆ အဆောက်အဦများ သက်သာစေပါသည်။
+
+## Record ၏ တည်ဆောက်မှု
+
+Record ၏ header တွင် components များကို ကြေညာပြီး class body တွင် ရေးစရာ မလိုအပ်ပါ။ ဤ components များသည် final fields များ ဖြစ်လာပြီး accessor methods များကို component အမည်အတိုင်း ရရှိပါသည်။
+
+## ဥပမာ — Person Record
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Person a = new Person("Aung", 25);
+        Person b = new Person("Aung", 25);
+
+        System.out.println(a);
+        System.out.println("Name = " + a.name());
+        System.out.println("Age = " + a.age());
+        System.out.println("Equals b? " + a.equals(b));
+        System.out.println("Hash codes equal? " + (a.hashCode() == b.hashCode()));
+    }
+}
+
+record Person(String name, int age) {
+}
+```
+
+အထက်ပါ code တွင် `record Person(String name, int age)` ဟူသော line ရိုးရိုးတစ်ကြောင်းဖြင့် constructor, `name()` getter, `age()` getter, equals, hashCode နှင့် toString အားလုံး အလိုအလျောက် ရရှိပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Person[name=Aung, age=25]
+Name = Aung
+Age = 25
+Equals b? true
+Hash codes equal? true
+```
+
+## Record ၏ ထူးခြားချက်များ
+
+Record ၏ fields အားလုံးသည် final ဖြစ်သောကြောင့် data ကို ပြောင်းလဲ၍ မရပါ။ အကယ်၍ value ပြောင်းလိုပါက copy ဖန်တီးရပါသည်။ Compact constructor ရေး၍ validation များ ထည့်နိုင်ပြီး body ထဲတွင် နောက်ထပ် methods များလည်း ရေးနိုင်ပါသည်။ Records များကို DTO (Data Transfer Object) များအနေဖြင့် မကြာခဏ အသုံးပြုပါသည်။
+
+## အဓိက အချက်များ
+
+- Record သည် immutable data container ဖြစ်သည်။
+- Constructor, getters, equals, hashCode, toString တို့ကို auto-generate လုပ်သည်။
+- Fields များသည် final ဖြစ်သည်။
+- DTO များအတွက် boilerplate code ကို သိသိသာသာ လျှော့ချပေးသည်။
+

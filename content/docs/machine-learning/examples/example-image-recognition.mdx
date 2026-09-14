@@ -1,0 +1,45 @@
+---
+title: "Image Recognition with TFJS — Image Recognition with TFJS"
+description: "Image — CNN TFJS — ဥပမာ။"
+autoNumbering: true
+---
+
+Image recognition — CNN — TFJS — ဥပမာ။
+
+## 1. Load image → tensor
+
+```js
+const img = document.getElementById("img");
+const t = tf.browser.fromPixels(img).resizeNearestNeighbor([28, 28])
+  .mean(2).expandDims(0).div(255);
+```
+
+## 2. CNN model
+
+```js
+const model = tf.sequential();
+model.add(tf.layers.conv2d({ filters: 8, kernelSize: 3, activation: "relu", inputShape: [28, 28, 1] }));
+model.add(tf.layers.maxPooling2d({ poolSize: [2, 2] }));
+model.add(tf.layers.flatten());
+model.add(tf.layers.dense({ units: 10, activation: "softmax" }));
+model.compile({ optimizer: "adam", loss: "categoricalCrossentropy" });
+```
+
+## 3. Train
+
+```js
+await model.fit(xs, ys, { epochs: 5 });
+```
+
+## 4. Predict
+
+```js
+const p = model.predict(t).argMax(1).dataSync()[0];
+console.log("digit:", p);
+```
+
+## အဓိက အချက်များ
+
+- fromPixels — ဒေတာ
+- conv + pool
+- softmax — class

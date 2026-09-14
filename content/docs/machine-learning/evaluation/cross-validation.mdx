@@ -1,0 +1,39 @@
+---
+title: "Cross-Validation — Cross-Validation"
+description: "Cross-validation — k-fold — ဥပမာ။"
+autoNumbering: true
+---
+
+Cross-validation — k-fold — အလို အပ်တာ စစ်။
+
+## အလုပ်
+
+- Data — k parts
+- k-1 train, 1 test
+- Rotate — average
+
+```js
+const folds = 5;
+const size = data.length / folds;
+for (let i = 0; i < folds; i++) {
+  // fold i → test
+}
+```
+
+## အကျိုး
+
+- ဒေတာ အပြည့် သုံး
+- ခန့်မှန်း — တည်
+- Variance — နည်း
+
+## သုံး
+
+- ဒေတာ သေး — ထွေး
+- Compare models
+- Tune params
+
+## အဓိက အချက်များ
+
+- k-fold — rotate
+- Average — အကောင်း
+- Robust

@@ -1,0 +1,48 @@
+---
+title: "Java Code Editor — Java Code Editor"
+description: "IDE setup — shortcuts — Scanner-based interactive program ။"
+autoNumbering: true
+---
+
+
+ဤစာမျက်နှာတွင် Java code ကို ရေးသားရန် သင့် editor/IDE ၏ ထိရောက်သော အသုံးပြုနည်းများကို လေ့လာပါမည်။ IntelliJ IDEA, Eclipse သို့မဟုတ် VS Code မည်သည့်ကို သုံးသည်ဖြစ်စေ code writing ကို မြန်ဆန်စေသော skills များသည် တူညီပါသည်။
+
+## IDE Shortcuts များ
+
+IntelliJ ထဲတွင် `main` ဟု ရိုက်ပြီး Tab နှိပ်ပါက main method skeleton ပေါ်လာပါသည်။ `sout` + Tab ဖြင့် System.out.println ကို ရိုက်နိုင်ပြီး `Ctrl + /` ဖြင့် comment လုပ်နိုင်ပါသည်။ VS Code တွင် Extension Pack for Java ကို တပ်ဆင်ထားရန် အရေးကြီးပါသည်။
+
+## Interactive Program ရေးသားခြင်း
+
+Scanner ဖြင့် user မှ input ကို ဖတ်၍ interactive program တစ်ခုကို ရေးနိုင်ပါသည်။ အောက်ပါ program သည် user ၏ နာမည်ကို ဖတ်ပြီး နှုတ်ဆက်ပါသည်။
+
+```java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+
+        System.out.println("Hello, " + name + "!");
+        System.out.println("You typed " + name.length() + " characters.");
+
+        scanner.close();
+    }
+}
+```
+
+Scanner ၏ အလုပ်လုပ်ပုံမှာ `Scanner` က System.in မှ စာကြောင်းတစ်ကြောင်း ဖတ်ပြီး `nextLine()` ဖြင့် user ရိုက်ထည့်သည့် text ကို ရယူပါသည်။ Run လုပ်သောအခါ console တွင် "Enter your name: " ဟု ပေါ်လာပြီး ရိုက်ထည့်လိုက်သော နာမည်နှင့် နှုတ်ဆက်စကား ထွက်လာပါသည်။
+
+## Output ကို ဖတ်နည်း
+
+Console output သည် IDE ၏ အောက်ခြေ `Run` tab တွင် ပေါ်ပါသည်။ Error များဖြစ်ပါက stack trace များကို ကြည့်၍ ပထမဆုံး line တွင် exception type ကို ဖတ်ပြီး မည်သည့် line တွင် မှားကြောင်း သိရှိနိုင်ပါသည်။
+
+## အဓိက အချက်များ
+
+- Shortcuts (main, sout) ဖြင့် မြန်မြန် ရေးနိုင်သည်။
+- Scanner ဖြင့် user input ကို ဖတ်နိုင်သည်။
+- Output နှင့် error messages များကို console ထဲတွင် ဖတ်နိုင်သည်။
+- IDE တစ်ခုတည်းကို ကျွမ်းကျင်စွာ သုံးရန် လေ့ကျင့်ရမည်။
+

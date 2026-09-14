@@ -1,0 +1,44 @@
+---
+title: "Deploying on a Node.js Server — Deploying on a Node.js Server"
+description: "Node.js server — ML API — ဥပမာ။"
+autoNumbering: true
+---
+
+Node.js server — ML API — ဘယ် လိုက် တည်။
+
+## ဘာကြောင့်
+
+- ဒေတာ ကြီး
+- Auth
+- အလွှာ ပေါင်း
+
+## Install
+
+```bash
+npm install @tensorflow/tfjs-node express
+```
+
+## Express API
+
+```js
+import express from "express";
+import * as tf from "@tensorflow/tfjs-node";
+
+const model = await tf.loadLayersModel("file://model/model.json");
+const app = express();
+app.use(express.json());
+
+app.post("/predict", async (req, res) => {
+  const t = tf.tensor2d(req.body.features);
+  const out = model.predict(t).dataSync();
+  res.json({ result: Array.from(out) });
+});
+
+app.listen(3000);
+```
+
+## အဓိက အချက်များ
+
+- tfjs-node — server
+- Express — API
+- Load model — file

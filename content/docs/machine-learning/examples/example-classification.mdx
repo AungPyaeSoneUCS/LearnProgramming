@@ -1,0 +1,47 @@
+---
+title: "Classification — Classification"
+description: "Classification — end-to-end — ဥပမာ။"
+autoNumbering: true
+---
+
+Classification end-to-end — pass/fail — ဥပမာ။
+
+## Data
+
+```js
+const data = [
+  { hours: 1, pass: 0 },
+  { hours: 2, pass: 0 },
+  { hours: 4, pass: 1 },
+  { hours: 5, pass: 1 },
+];
+```
+
+## Model
+
+```js
+const model = tf.sequential();
+model.add(tf.layers.dense({ units: 1, activation: "sigmoid", inputShape: [1] }));
+model.compile({ optimizer: "sgd", loss: "binaryCrossentropy" });
+```
+
+## Train
+
+```js
+const xs = tf.tensor(data.map((d) => [d.hours]));
+const ys = tf.tensor(data.map((d) => [d.pass]));
+await model.fit(xs, ys, { epochs: 200 });
+```
+
+## Predict
+
+```js
+const out = model.predict(tf.tensor([[3]])).dataSync()[0];
+console.log(out > 0.5 ? "pass" : "fail");
+```
+
+## အဓိက အချက်များ
+
+- Sigmoid — 0/1
+- binaryCrossentropy
+- Threshold 0.5

@@ -1,0 +1,77 @@
+---
+title: "OOP Summary — OOP Summary"
+description: "မဏ္ဍိုင်လေးခု နှိုင်းယှဉ်ချက် — အနှစ်ချုပ် — code ဥပမာ ။"
+autoNumbering: true
+---
+
+
+Part 2 တွင် Object-Oriented Programming ၏ မဏ္ဍိုင်ကြီး လေးခုဖြစ်သော Encapsulation, Inheritance, Polymorphism နှင့် Abstraction တို့ကို လေ့လာခဲ့ပြီး ဖြစ်ပါသည်။ ဤစာမျက်နှာတွင် ၎င်းလေးခုကို အနှစ်ချုပ်ဖော်ပြပြီး မြန်မြန်ဆန်ဆန် ပြန်လည် ကြည့်ရှုနိုင်ရန် စုစည်းပေးထားပါသည်။
+
+## မဏ္ဍိုင်လေးခု၏ အနှစ်ချုပ်
+
+`Encapsulation` သည် data ကို private ဖြင့် ဖုံးကွယ်ပြီး getter/setter များမှတစ်ဆင့် ဝင်ရောက်ခွင့် ပေးပါသည်။ `Inheritance` သည် extends ဖြင့် parent class ၏ code များကို ပြန်လည် အသုံးပြုစေပါသည်။ `Polymorphism` သည် overriding နှင့် overloading ဖြင့် object များကို ပုံစံမျိုးစုံဖြင့် ဆက်ဆံစေပြီး `Abstraction` သည် abstract class နှင့် interface တို့ဖြင့် ရှုပ်ထွေးမှုကို ဖုံးကွယ်ပါသည်။
+
+## ပေါင်းစပ် ဥပမာ တစ်ခု
+
+အောက်ပါ code တွင် abstraction (interface), encapsulation (private fields), polymorphism (List တွင် interface type ဖြင့် instrument အမျိုးမျိုး သိမ်းဆည်းခြင်း) တို့ကို ပေါင်းစပ် အသုံးပြုထားပါသည်။
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        List<Instrument> band = new ArrayList<>();
+        band.add(new Guitar());
+        band.add(new Piano());
+        band.add(new Guitar());
+
+        for (Instrument instrument : band) {
+            instrument.play();
+        }
+    }
+}
+
+interface Instrument {
+    void play();
+}
+
+class Guitar implements Instrument {
+    private String material = "wood";
+
+    @Override
+    public void play() {
+        System.out.println("Guitar strums (" + material + ")");
+    }
+}
+
+class Piano implements Instrument {
+    private String brand = "Yamaha";
+
+    @Override
+    public void play() {
+        System.out.println("Piano plays (" + brand + ")");
+    }
+}
+```
+
+Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Guitar strums (wood)
+Piano plays (Yamaha)
+Guitar strums (wood)
+```
+
+## မှတ်သားစရာ အချက်များ
+
+Object-Oriented Programming ကို ကျွမ်းကျင်ရန် အဓိကအချက်မှာ မဏ္ဍိုင်လေးခု၏ သဘောတရားများကို နားလည်ရုံသာမက ၎င်းတို့ကို ပေါင်းစပ် အသုံးပြု၍ ပြဿနာများကို ဖြေရှင်းတတ်ရန်လည်း လိုအပ်ပါသည်။ ဤအခြေခံများကို သေချာရလျှင် Phase 2 ၏ module များကို ဆက်လက် လေ့လာရန် အသင့်ဖြစ်နေပါပြီ။
+
+## အဓိက အချက်များ
+
+- Encapsulation = data hiding + getter/setter
+- Inheritance = extends + code reuse
+- Polymorphism = overriding + overloading
+- Abstraction = abstract class + interface
+- မဏ္ဍိုင်များကို ပေါင်းစပ် အသုံးပြုနိုင်ခြင်းသည် ကျွမ်းကျင်မှု၏ သော့ချက် ဖြစ်သည်။
+

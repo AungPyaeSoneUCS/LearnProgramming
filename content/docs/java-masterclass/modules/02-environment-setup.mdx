@@ -1,0 +1,46 @@
+---
+title: "Module 2: Environment Setup — Module 2: Environment Setup"
+description: "JDK setup — PATH — IDE — verification program ။"
+autoNumbering: true
+---
+
+
+Module 2 တွင် Java development environment ကို အဆင့်ဆင့် ပြင်ဆင်ခြင်းကို ပြန်လည် လေ့လာပါမည်။ Part 1 တွင် လေ့လာခဲ့သော JDK installation, PATH configuration နှင့် IDE ရွေးချယ်မှုတို့ကို စုစည်း၍ အနှစ်ချုပ် ဖော်ပြမည် ဖြစ်ပြီး environment ဆက်စပ်မှုများကို code ဖြင့် စစ်ဆေးပါမည်။
+
+## Setup အဆင့်များ အနှစ်ချုပ်
+
+ပထမအဆင့်တွင် LTS JDK ကို install လုပ်ပြီး `JAVA_HOME` ကို JDK folder သို့ ညွှန်ပြအောင် သတ်မှတ်ပါသည်။ ဒုတိယအဆင့်တွင် PATH ထဲသို့ java နှင့် javac commands များရရှိရန် bin folder ကို ထည့်ပါသည်။ တတိယအဆင့်တွင် IDE ၌ project ဖန်တီးပြီး code compilation ကို IDE က စီမံပေးပါသည်။
+
+## Environment ကို Program ဖြင့် စစ်ဆေးခြင်း
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Java version = " + System.getProperty("java.version"));
+        System.out.println("OS name = " + System.getProperty("os.name"));
+        System.out.println("User dir = " + System.getProperty("user.dir"));
+        System.out.println("JAVA_HOME = " + System.getenv("JAVA_HOME"));
+    }
+}
+```
+
+အထက်ပါ program သည် environment ၏ အခြေခံအချက်အလက်များကို ပြသပါသည်။ Run လုပ်သောအခါ အောက်ပါကဲ့သို့သော output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Java version = 21.0.4
+OS name = Windows 11
+User dir = C:\Users\ASUS
+JAVA_HOME = C:\Program Files\Java\jdk-21.0.4
+```
+
+## IDE Screen ဤအကြောင်း
+
+IDE ကို အသုံးပြုခြင်းဖြင့် compile errors များကို ရိုက်နေစဉ် ချက်ချင်း မြင်နိုင်ပြီး project structure, package များကို မြင်နိုင်ပါသည်။ Built-in terminal ဖြင့် command line များလည်း သုံးနိုင်ပါသည်။
+
+## အဓိက အချက်များ
+
+- Setup ၏ ပထမအဆင့်သုံးခုမှာ JDK install, PATH configure, IDE install ဖြစ်သည်။
+- java, javac commands များကို PATH မှတစ်ဆင့် ရရှိသည်။
+- IDE သည် compile errors များကို ချက်ချင်း ပြသသည်။
+- Environment ကို program ဖြင့် စစ်ဆေးနိုင်သည်။
+

@@ -1,0 +1,71 @@
+---
+title: "Module 10: Arrays & Strings — Module 10: Arrays & Strings"
+description: "1D/2D arrays, String immutability, String Pool, StringBuilder, Regex ။"
+autoNumbering: true
+---
+
+
+Module 10 တွင် array နှင့် string တို့နှင့် ပတ်သက်သည့် အသေးစိတ် အားလုံးကို လေ့လာပါမည်။ Array သည် တူညီသော type တန်ဖိုးများကို စုစည်းသိမ်းဆည်းသော data structure ဖြစ်ပြီး String သည် character များ၏ စီစဉ်မှုကို ကိုယ်စားပြုပါသည်။ String ၏ ထူးခြားချက်များဖြစ်သော immutability နှင့် String Pool တို့ကို အသေအချာ နားလည်ထားရန် လိုအပ်ပါသည်။
+
+## Arrays
+
+Array ၏ size ကို ဖန်တီးစဉ် သတ်မှတ်ပြီး index မှာ 0 မှ စတင်ပါသည်။ Multi-dimensional array များကိုလည်း ဖန်တီးနိုင်ပြီး 2D array သည် table ပုံစံ data များအတွက် အသုံးပြုပါသည်။ `length` property ဖြင့် array ၏ အရေအတွက်ကို ရယူနိုင်ပါသည်။
+
+## String Immutability နှင့် String Pool
+
+String များသည် immutable ဖြစ်ပြီး object ကို ဖန်တီးပြီးသည်နှင့် ၎င်း၏ character များကို ပြောင်းလဲ၍ မရပါ။ Compiler သည် string literals များကို String Pool ဟုခေါ်သော shared memory နေရာတွင် သိမ်းဆည်းပြီး တူညီသော literal ကို ပြန်တွေ့ပါက object အသစ် မဖန်တီးဘဲ ရှိသော reference ကို ပြန်သုံးပါသည်။ `new` ဖြင့် ဖန်တီးထားသော Strings များမှာမူ Pool ၏ အပြင်ဘက်တွင် သီးခြား object များ ဖြစ်ပါသည်။
+
+## StringBuilder နှင့် Regex
+
+Mutable ဖြစ်သော StringBuilder ကို သုံး၍ strings များစွာကို ပေါင်းစည်းနိုင်ပြီး performance ပိုကောင်းပါသည်။ Regex (Regular Expression) သည် string တစ်ခုရှိ pattern ကိုက်ညီမှုကို စစ်ဆေးရန် အသုံးပြုပြီး java.util.regex.Pattern ကို အသုံးပြုပါသည်။
+
+## ဥပမာ — Arrays, Strings, StringBuilder နှင့် Regex
+
+```java
+import java.util.regex.Pattern;
+
+public class Main {
+    public static void main(String[] args) {
+        int[] nums = { 10, 20, 30 };
+        System.out.println("nums[0] = " + nums[0] + ", length = " + nums.length);
+
+        int[][] grid = { {1, 2}, {3, 4} };
+        System.out.println("grid[1][0] = " + grid[1][0]);
+
+        String a = "Hello";
+        String b = a.concat(" World");
+        System.out.println("a = " + a + " (unchanged)");
+        System.out.println("b = " + b);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hello").append(" ").append("World");
+        System.out.println("StringBuilder = " + sb.toString());
+
+        boolean d1 = Pattern.matches("\\d{3}", "123");
+        boolean d2 = Pattern.matches("\\d{3}", "12a");
+        System.out.println("digits = " + d1);
+        System.out.println("digits or letter = " + d2);
+    }
+}
+```
+
+အထက်ပါ code တွင် `a.concat(" World")` သည် String အသစ်တစ်ခုသာ ထုတ်လုပ်ပြီး a ကို မပြောင်းပါ။ `Pattern.matches("\\d{3}", "123")` သည် ဂဏန်းသုံးလုံးနှင့် ကိုက်ညီခြင်းကို စစ်ပြီး `\\d` သည် digit တစ်ခုစီကို ကိုယ်စားပြုပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+nums[0] = 10, length = 3
+grid[1][0] = 3
+a = Hello (unchanged)
+b = Hello World
+StringBuilder = Hello World
+digits = true
+digits or letter = false
+```
+
+## အဓိက အချက်များ
+
+- Array ၏ index သည် 0 မှ စတင်ပြီး length ဖြင့် အရေအတွက် ရသည်။
+- String သည် immutable ဖြစ်ပြီး concatenation သည် object အသစ် ဖန်တီးသည်။
+- String Pool သည် ထပ်တူ literal များကို ပြန်လည် အသုံးပြုသည်။
+- StringBuilder ဖြင့် mutable string processing မြန်ဆန်သည်။
+- Pattern.matches ဖြင့် regex pattern ကို စစ်ဆေးနိုင်သည်။
+

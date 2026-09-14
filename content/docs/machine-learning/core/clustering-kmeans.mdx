@@ -1,0 +1,47 @@
+---
+title: "Clustering (K-Means) — Clustering (K-Means)"
+description: "K-Means — group data — ဥပမာ။"
+autoNumbering: true
+---
+
+K-Means — unsupervised — ဒေတာ အုပ်စု — cluster။
+
+## အလုပ်
+
+1. k centers ကောက်
+2. အနီး သတ်
+3. Center ပြန်
+4. ထပ် — stable
+
+```js
+const dist = (a, b) => Math.sqrt(a.reduce((s, v, i) => s + (v - b[i]) ** 2, 0));
+```
+
+## ဥပမာ ဒေတာ
+
+| person | spent | visits |
+|---|---|---|
+| A | 200 | 3 |
+| B | 220 | 4 |
+| C | 20 | 1 |
+| D | 30 | 2 |
+
+Cluster — ကြီး (A,B) — သေး (C,D)။
+
+## K ရွေး
+
+- Elbow — ပုံ
+- Domain အလိုက်
+- Test
+
+## သုံး
+
+- Customer segment
+- Image compression
+- Anomaly
+
+## အဓိက အချက်များ
+
+- Unsupervised
+- k centers
+- Iterate

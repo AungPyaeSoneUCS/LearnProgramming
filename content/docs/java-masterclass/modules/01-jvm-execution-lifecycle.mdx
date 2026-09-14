@@ -1,0 +1,52 @@
+---
+title: "Module 1: The JVM & Execution Lifecycle — Module 1: The JVM & Execution Lifecycle"
+description: "Bytecode — JVM — JIT — compile-run သံသရာ ။"
+autoNumbering: true
+---
+
+
+Phase 1 ၏ ပထမဆုံး module တွင် Java program တစ်ခု write မှ run အထိ မည်သို့ လုပ်ဆောင်သည်ကို လေ့လာပါမည်။ Java code သည် ပုံမှန် programming language များနှင့် မတူဘဲ သီးခြားသော architecture (platform-independent) ကို အသုံးပြုပါသည်။ ဤသဘောတရားကို နားလည်ပါက Java ၏ အလုပ်လုပ်ပုံ အဆင့်များကို ရှင်းလင်းစွာ မြင်နိုင်မည် ဖြစ်ပါသည်။
+
+## Source Code မှ Bytecode သို့
+
+ပထမအဆင့်တွင် developer သည် `.java` extension ဖြင့် source code ကို ရေးသားပါသည်။ ထို့နောက် `javac` compiler သည် ထို source code ကို `.class` file အဖြစ်ပြောင်းလဲပြီး bytecode ဟုခေါ်သော intermediate format ကို ထုတ်လုပ်ပါသည်။ Bytecode သည် machine code မဟုတ်ဘဲ JVM ၌သာ နားလည်နိုင်သော code ဖြစ်ပါသည်။
+
+## JVM မှ Run ခြင်း
+
+တတိယအဆင့်တွင် JVM သည် bytecode ကို load လုပ်ပြီး ၎င်းကို စက်သို့ run နိုင်သော machine code အဖြစ် Just-In-Time (JIT) compiler ဖြင့် ပြောင်းလဲပါသည်။ JVM သည် run ချိန်တွင် memory management (garbage collection) နှင့် security များကို စီမံပေးပါသည်။ ဤဒီဇိုင်းကြောင့် ရေးသားထားသော program ကို မည်သည့် platform တွင် မဆို JVM တပ်ဆင်ထားလျှင် run နိုင်ပါသည်။
+
+## ဥပမာ — Runtime နှင့် JVM ၏ လက္ခဏာများ
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Runtime runtime = Runtime.getRuntime();
+
+        System.out.println("Available processors = " + runtime.availableProcessors());
+        System.out.println("Max memory (MB) = " + runtime.maxMemory() / (1024 * 1024));
+        System.out.println("Free memory (MB) = " + runtime.freeMemory() / (1024 * 1024));
+        System.out.println("Java version = " + System.getProperty("java.version"));
+    }
+}
+```
+
+အထက်ပါ code သည် JVM ၏ info များကို `Runtime` နှင့် `System` classes များမှ ဖတ်ပြပါသည်။ Run လုပ်သောအခါ အောက်ပါကဲ့သို့သော output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Available processors = 8
+Max memory (MB) = 8192
+Free memory (MB) = 4021
+Java version = 21.0.4
+```
+
+## Execution Lifecycle အနှစ်ချုပ်
+
+Java program ၏ ဘဝသံသရာကို အဆင့်လေးဆင့်ဖြင့် အနှစ်ချုပ်နိုင်ပါသည်။ ပထမအဆင့်တွင် source code (.java) ကို ရေးသည်။ ဒုတိယအဆင့်တွင် `javac` ဖြင့် bytecode (.class) အဖြစ် compile လုပ်သည်။ တတိယအဆင့်တွင် JVM သည် class ကို load ပြီး fourth အဆင့်တွင် JIT ဖြင့် machine code အဖြစ်ပြောင်း၍ run သည်။
+
+## အဓိက အချက်များ
+
+- `javac` သည် .java ကို bytecode (.class) အဖြစ် ပြောင်းသည်။
+- JVM သည် bytecode ကို run ပြီး cross-platform ဖြစ်စေသည်။
+- JIT compiler သည် bytecode ကို machine code အဖြစ် run-time တွင် ပြောင်းသည်။
+- Garbage collection ဖြင့် JVM သည် memory ကို စီမံသည်။
+

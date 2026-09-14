@@ -1,0 +1,53 @@
+---
+title: "Linear Algebra — Linear Algebra"
+description: "Vectors, Matrices, Tensors — ဥပမာ။"
+autoNumbering: true
+---
+
+Linear algebra — vectors, matrices, tensors — ML ဒေတာ ပုံစံ။
+
+## Vector
+
+- ကိန်း စု — 1D
+- Feature — အချက်
+
+```js
+const house = [50, 3, 1]; // area, rooms, garage
+```
+
+## Matrix
+
+- 2D — rows × columns
+- Dataset — ဒေတာ
+
+```js
+const dataset = [
+  [50, 3, 1, 20000],
+  [30, 1, 0, 12000],
+];
+```
+
+## Tensor
+
+- 3D+ — images, sequences
+- CNN — image tensor
+
+```js
+// image: 28 x 28 x 3 (RGB)
+const img = Array.from({ length: 28 }, () =>
+  Array.from({ length: 28 }, () => [0, 0, 0])
+);
+```
+
+## Dot product
+
+```js
+const dot = (a, b) => a.reduce((s, v, i) => s + v * b[i], 0);
+console.log(dot([2, 3], [5, 4])); // 22
+```
+
+## အဓိက အချက်များ
+
+- Vector — 1D
+- Matrix — 2D
+- Tensor — 3D+

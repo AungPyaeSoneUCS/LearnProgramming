@@ -1,0 +1,43 @@
+---
+title: "TFJS Operations, Models & Visor — TFJS Operations, Models & Visor"
+description: "TFJS ops — models — visor — ဥပမာ။"
+autoNumbering: true
+---
+
+TFJS ops, models, visor — full toolbox။
+
+## Ops ထပ်
+
+```js
+const x = tf.tensor([1, 2, 3, 4]);
+x.reshape([2, 2]).print();
+x.sum().print();
+x.square().print();
+```
+
+## Model — sequential
+
+```js
+const model = tf.sequential();
+model.add(tf.layers.dense({ units: 1, inputShape: [1] }));
+model.compile({ optimizer: "sgd", loss: "meanSquaredError" });
+```
+
+## Train
+
+```js
+const xs = tf.tensor([1, 2, 3, 4]);
+const ys = tf.tensor([2, 4, 6, 8]); // y = 2x
+await model.fit(xs, ys, { epochs: 100 });
+```
+
+## Visor
+
+- tfjs-vis — ပုံ စု
+- chart — loss မြင်
+
+## အဓိက အချက်များ
+
+- reshape/sum/square
+- sequential model
+- fit() — လေ့ကျင့်

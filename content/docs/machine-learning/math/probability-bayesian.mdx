@@ -1,0 +1,45 @@
+---
+title: "Bayesian vs Frequentist — Bayesian vs Frequentist"
+description: "Probability အမြင် — Bayesian — Frequentist — ဥပမာ။"
+autoNumbering: true
+---
+
+Probability — uncertainty — Bayesian vs Frequentist။
+
+## Classic probability
+
+```js
+const p = (favorable, total) => favorable / total;
+console.log(p(2, 6)); // 0.333
+```
+
+## Frequentist
+
+- ထပ် လုပ် — အကြိမ်
+- Long-run frequency
+- ဒေတာ ဈေး
+
+## Bayesian
+
+- Prior + data ➜ posterior
+- Belief update
+
+```js
+// Bayes: P(A|B) = P(B|A)*P(A) / P(B)
+let p = 0.5;
+const update = (likelihood) => {
+  p = likelihood * p;
+};
+```
+
+## ML သုံး
+
+- Naive Bayes — classifier
+- Prior — အကြိုး
+- Update — ဒေတာ နဲ့
+
+## အဓိက အချက်များ
+
+- Probability — အသေချာ
+- Frequentist — ကြိမ်
+- Bayesian — prior

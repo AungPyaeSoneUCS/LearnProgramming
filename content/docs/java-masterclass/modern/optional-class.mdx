@@ -1,0 +1,56 @@
+---
+title: "The Optional Class — The Optional Class"
+description: "NullPointerException ကာကွယ်ခြင်း — ofNullable — orElse — ifPresent ။"
+autoNumbering: true
+---
+
+
+NullPointerException သည် Java developer များ မကြာခဏ ကြုံတွေ့ရသော အမှားဖြစ်ပါသည်။ `null` value ကို ကိုင်တွယ်သောအခါ သတိ ထားရန် လိုအပ်ပြီး Java 8 တွင် null ဖြစ်နိုင်သော results များကို လုံခြုံစွာ ကိုင်တွယ်ရန် `Optional` class ကို မိတ်ဆက်ခဲ့ပါသည်။ Optional သည် value တစ်ခုကို ပါဝင်စေသော container object ဖြစ်ပြီး value မရှိသောအခါ empty Optional ကို ပြန်ပေးပါသည်။
+
+## Optional ကို ဖန်တီးခြင်း
+
+`Optional.of(value)` သည် null မဖြစ်သော value အတွက်ဖြစ်ပြီး value မရှိပါက exception ဖြစ်ပါသည်။ `Optional.ofNullable(value)` မူ value က null ဖြစ်စေ မဖြစ်စေ လုံခြုံစွာ လုပ်ဆောင်နိုင်ပြီး `Optional.empty()` သည် value မရှိသော empty container ကို ဖန်တီးပါသည်။
+
+## ဥပမာ — Null ကို အလုံခြုံဆုံး ကိုင်တွယ်ခြင်း
+
+```java
+import java.util.Optional;
+
+public class Main {
+    public static void main(String[] args) {
+        Optional<String> name = Optional.ofNullable(getName(false));
+
+        System.out.println("Present? " + name.isPresent());
+        System.out.println("Value or default = " + name.orElse("Unknown"));
+
+        name.ifPresent(value -> System.out.println("Hello " + value));
+
+        Optional<String> present = Optional.of("Aung");
+        present.ifPresent(value -> System.out.println("Hello " + value));
+    }
+
+    static String getName(boolean flag) {
+        return flag ? "Aung" : null;
+    }
+}
+```
+
+အထက်ပါ code တွင် `getName(false)` သည် null ကို ပြန်လာပါသည်။ `orElse("Unknown")` သည် value null ဖြစ်လျှင် အစားထိုးတန်ဖိုး "Unknown" ကို သုံးပါသည်။ `ifPresent` သည် value ပါမှသာ လုပ်ဆောင်ပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Present? false
+Value or default = Unknown
+Hello Aung
+```
+
+## Optional ၏ အခြား Useful Methods
+
+`map` နှင့် `flatMap` တို့ဖြင့် Optional အတွင်းရှိ value ကို ပြောင်းလဲနိုင်ပြီး `filter` ဖြင့် condition စစ်ဆေးနိုင်ပါသည်။ `orElseGet` သည် supplier မှ တန်ဖိုးထုတ်ပေးပြီး `orElseThrow` သည် value မရှိသောအခါ exception ကို ပစ်ချပါသည်။ ဤနည်းများဖြင့် null စစ်ဆေးမှုများ ရေးရန် မလိုတော့ဘဲ code ကို ရှင်းလင်းစေပါသည်။
+
+## အဓိက အချက်များ
+
+- `Optional` သည် null ကို လုံခြုံစွာ ကိုင်တွယ်ရန် container ဖြစ်သည်။
+- `ofNullable` ဖြင့် null ဖြစ်နိုင်သော value ကို လုပ်ဆောင်နိုင်သည်။
+- `orElse` ဖြင့် အစားထိုးတန်ဖိုး သတ်မှတ်နိုင်သည်။
+- `ifPresent` ဖြင့် value ပါမှသာ လုပ်ဆောင်နိုင်သည်။
+

@@ -1,0 +1,44 @@
+---
+title: "TensorFlow.js Basics — TensorFlow.js Basics"
+description: "TFJS — tensors — ဥပမာ။"
+autoNumbering: true
+---
+
+TensorFlow.js — tensors — အခြေ ပုံစံ။
+
+## Setup
+
+```bash
+npm install @tensorflow/tfjs
+```
+
+## ဥပမာ
+
+```js
+import * as tf from "@tensorflow/tfjs";
+
+const t = tf.tensor2d([[1, 2], [3, 4]]);
+t.print();
+```
+
+## အခြေ ops
+
+```js
+const a = tf.tensor([1, 2, 3]);
+const b = tf.tensor([4, 5, 6]);
+a.add(b).print(); // [5, 7, 9]
+a.mul(b).print(); // [4, 10, 18]
+```
+
+## Shape
+
+- scalar — 0D
+- vector — 1D
+- matrix — 2D
+- tensor — 3D+
+
+## အဓိက အချက်များ
+
+- tf.tensor — ဒေတာ
+- Ops — add/mul
+- Shape — အရေး

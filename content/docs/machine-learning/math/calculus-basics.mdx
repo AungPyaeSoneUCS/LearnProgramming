@@ -1,0 +1,48 @@
+---
+title: "Calculus Basics — Calculus Basics"
+description: "Derivatives — Gradients — model လေ့လာ — ဥပမာ။"
+autoNumbering: true
+---
+
+Calculus — derivative — gradient — model ဘယ် လေ့လာ။
+
+## Derivative
+
+- Rate of change
+- Slope ပြ
+- Loss အချ
+
+```js
+// numeric derivative
+const f = (x) => x * x;
+const d = (x, h = 0.001) => (f(x + h) - f(x)) / h;
+console.log(d(3)); // ~6 → 2x at x=3
+```
+
+## Gradient descent
+
+1. စ နေရာ — random w
+2. Compute gradient
+3. Step — down
+4. Minimize loss
+
+```js
+let w = 0;
+for (let i = 0; i < 100; i++) {
+  const grad = 2 * (w - 3); // loss = (w-3)^2
+  w -= 0.1 * grad;
+}
+console.log(w); // ~3
+```
+
+## Learning rate
+
+- ကြီး — jump ရောက်
+- သေး — နှေး
+- သင့် — ထွက်
+
+## အဓိက အချက်များ
+
+- Derivative — slope
+- Gradient — step
+- LR — အရှိန်

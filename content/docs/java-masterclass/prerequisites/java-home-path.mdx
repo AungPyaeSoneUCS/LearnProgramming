@@ -1,0 +1,53 @@
+---
+title: "Set Environment Variables (JAVA_HOME) — Set Environment Variables (JAVA_HOME)"
+description: "JAVA_HOME — PATH — terminal မှ Java run နိုင်ရန် ပြင်ဆင်ခြင်း ။"
+autoNumbering: true
+---
+
+
+JDK ကို တပ်ဆင်ပြီးနောက်တွင် environment variables များကို ပြင်ဆင်ခြင်းဖြင့် Java ကို terminal တစ်နေရာရာမှာပင် ခေါ်ယူ run နိုင်စေရန် ပြုလုပ်ပါသည်။ Environment variable ဆိုသည်မှာ operating system မှ သိမ်းဆည်းထားသော key-value pair တစ်ခုဖြစ်ပြီး program များသည် ထို variable များမှတစ်ဆင့် system ၏ အချက်အလက်များကို ဖတ်နိုင်ပါသည်။ Java developer အတွက် အရေးကြီးဆုံး variable နှစ်ခုမှာ `JAVA_HOME` နှင့် `PATH` တို့ ဖြစ်ပါသည်။
+
+## JAVA_HOME ၏ အဓိပ္ပာယ်
+
+`JAVA_HOME` သည် JDK ၏ installation folder ကို ညွှန်ပြသော variable ဖြစ်ပါသည်။ ဥပမာအားဖြင့် `JAVA_HOME` သည် `C:\Program Files\Java\jdk-21` ကဲ့သို့သော path ကို သိမ်းဆည်းပါသည်။ Maven, Gradle နှင့် Tomcat ကဲ့သို့သော tools များစွာသည် Java ကို ရှာဖွေရန် ဤ variable ကို အသုံးပြုသောကြောင့် ၎င်းကို သတ်မှတ်ထားခြင်းသည် မဖြစ်မနေ လိုအပ်ပါသည်။
+
+## PATH ၏ အဓိပ္ပာယ်
+
+`PATH` သည် executable program များ တည်ရှိရာ directories များစာရင်း ပါဝင်သော variable ဖြစ်ပါသည်။ PATH ထဲသို့ `%JAVA_HOME%\\bin` ကို ထည့်ခြင်းဖြင့် terminal တွင် `java` နှင့် `javac` commands များကို မည်သည့် folder မှာပင် ရှိစေကာမူ ရိုက်ထည့်၍ အသုံးပြုနိုင်ပါသည်။ `bin` folder အတွင်းတွင် `java.exe` နှင့် `javac.exe` ကဲ့သို့သော executables များ တည်ရှိပါသည်။
+
+## Windows တွင် ပြင်ဆင်ခြင်း
+
+ပထမအဆင့်တွင် Start menu မှ `Environment Variables` ကို ရှာ၍ `Edit the system environment variables` ကို ဖွင့်ပါသည်။ ဒုတိယအဆင့်တွင် `New` ကို နှိပ်၍ `JAVA_HOME` variable ကို ဖန်တီးပြီး ၎င်း၏ value အဖြစ် JDK installation folder ၏ path ကို ထည့်ပါသည်။ တတိယအဆင့်တွင် `Path` variable ကို တည်းဖြတ်၍ `%JAVA_HOME%\\bin` ကို ထပ်ထည့်ပါသည်။
+
+## ပြင်ဆင်မှု အောင်မြင်ကြောင်း စစ်ဆေးခြင်း
+
+Terminal အသစ်တစ်ခုကို ဖွင့်၍ အောက်ပါ commands များကို ရိုက်ထည့်ပါသည်။
+
+```
+java -version
+javac -version
+echo %JAVA_HOME%
+```
+
+Java code ဖြင့် လည်း `System.getenv` ကို သုံးပြီး အောက်ပါအတိုင်း စစ်ဆေးနိုင်ပါသည်။
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        String home = System.getenv("JAVA_HOME");
+        String path = System.getenv("PATH");
+        System.out.println("JAVA_HOME = " + home);
+        System.out.println("PATH has bin folder = " + (path != null && path.contains("bin")));
+    }
+}
+```
+
+Run လုပ်သောအခါ `JAVA_HOME` ၏ value နှင့် PATH ထဲတွင် bin folder ပါကြောင်း မြင်ရပါက ပြင်ဆင်မှု အောင်မြင်ပါပြီ။
+
+## အဓိက အချက်များ
+
+- `JAVA_HOME` သည် JDK installation folder ကို ညွှန်ပြသည်။
+- `PATH` ထဲတွင် `%JAVA_HOME%\\bin` ပါဝင်ရမည်။
+- `java -version` ဖြင့် terminal မှ စစ်ဆေးနိုင်သည်။
+- `System.getenv` ဖြင့် environment variable များကို program ထဲမှ ဖတ်နိုင်သည်။
+

@@ -1,0 +1,42 @@
+---
+title: "Saving & Loading Models — Saving & Loading Models"
+description: "Save — load model — ဥပမာ။"
+autoNumbering: true
+---
+
+Save & load — အလုပ် ပြီး model — သိမ်း — ပြန် သုံး။
+
+## Save (localStorage)
+
+```js
+const json = net.toJSON();
+localStorage.setItem("model", JSON.stringify(json));
+```
+
+## Load
+
+```js
+const saved = localStorage.getItem("model");
+const net = new brain.NeuralNetwork();
+net.fromJSON(JSON.parse(saved));
+```
+
+## TFJS — save/load
+
+```js
+await model.save("localstorage://ml-model");
+const loaded = await tf.loadLayersModel("localstorage://ml-model");
+```
+
+## Storage
+
+- localstorage:// — browser
+- indexeddb:// — IDB
+- https://... — server
+- File — JSON weights
+
+## အဓိက အချက်များ
+
+- toJSON/fromJSON
+- save/loadLayersModel
+- Storage — local/IDB/server

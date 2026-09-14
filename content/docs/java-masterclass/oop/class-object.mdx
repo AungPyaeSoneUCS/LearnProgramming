@@ -1,0 +1,68 @@
+---
+title: "Classes & Objects — Classes & Objects"
+description: "Class နှင့် Object — constructors — this keyword ။"
+autoNumbering: true
+---
+
+
+Java သည် Object-Oriented ဘာသာစကား ဖြစ်ပြီး code အားလုံးနီးပါးသည် class နှင့် object ပေါ်တွင် မူတည်၍ ဖွဲ့စည်းထားပါသည်။ Class ဆိုသည်မှာ object တစ်ခု ဖန်တီးရန် အတွက် blueprint (ပုံစံပြ) တစ်ခု ဖြစ်ပြီး object ဆိုသည်မှာ ထို blueprint မှ ဖန်တီးထားသော တကယ့် instance (ဥပမာ) တစ်ခု ဖြစ်ပါသည်။ Class အတွင်းတွင် state (fields, variables) နှင့် behavior (methods) များ ပါဝင်ပါသည်။
+
+## Class နှင့် Object ၏ ခွဲခြားမှု
+
+Class သည် ပုံစံသာဖြစ်၍ ၎င်းကိုယ်တိုင် သီးခြားတည်ရှိမှု မရှိပါ။ Object ကိုမူ `new` keyword ဖြင့် ဖန်တီးသောအခါ memory တွင် နေရာတစ်ခု သတ်မှတ်ပေးပြီး fields များကို constructor မှတစ်ဆင့် တန်ဖိုး ဖြည့်ပေးပါသည်။ Object တစ်ခုစီသည် သီးခြား copy များ ဖြစ်သောကြောင့် တစ်ခုကို ပြောင်းလဲပါက အခြားတစ်ခုကို မထိခိုက်ပါ။
+
+## ဥပမာ — Car Class နှင့် Object များ
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Car first = new Car("Toyota", 2020);
+        Car second = new Car("Honda", 2022);
+
+        first.startEngine();
+        second.startEngine();
+
+        first.displayInfo();
+        second.displayInfo();
+    }
+}
+
+class Car {
+    String brand;
+    int year;
+
+    Car(String brand, int year) {
+        this.brand = brand;
+        this.year = year;
+    }
+
+    void startEngine() {
+        System.out.println(brand + " engine started.");
+    }
+
+    void displayInfo() {
+        System.out.println(brand + " (" + year + ")");
+    }
+}
+```
+
+Run လုပ်သောအခါ အောက်ပါ output ကို မြင်ရမည် ဖြစ်ပါသည်။
+
+```
+Toyota engine started.
+Honda engine started.
+Toyota (2020)
+Honda (2022)
+```
+
+## Constructor နှင့် this keyword
+
+Constructor သည် နာမည်နှင့် class အမည် တူပြီး return type မရှိသော method အထူးတစ်မျိုး ဖြစ်ပါသည်။ Object ကို `new` ဖြင့် ဖန်တီးစဉ် constructor သည် အလိုအလျောက် ခေါ်ယူခံရပြီး fields များကို စတင်တန်ဖိုး ပေးပါသည်။ `this` keyword သည် လက်ရှိ object ကို ညွှန်ပြပြီး constructor ၏ param နှင့် field ၏ အမည်တူသောအခါ နှစ်ခုကို ခွဲခြားရန် အသုံးပြုပါသည်။
+
+## အဓိက အချက်များ
+
+- Class သည် blueprint ဖြစ်ပြီး Object သည် တကယ့် instance ဖြစ်သည်။
+- `new` keyword ဖြင့် object ကို ဖန်တီးသည်။
+- Constructor သည် object ဖန်တီးစဉ် fields များကို တန်ဖိုးပေးသည်။
+- `this` သည် လက်ရှိ object ကို ညွှန်ပြသည်။
+

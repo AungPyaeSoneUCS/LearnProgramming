@@ -11,6 +11,8 @@ export interface LessonCompletionProps {
 
 let cached: string[] = [];
 
+const EMPTY_COMPLETED: string[] = [];
+
 const readCompleted = (): string[] => {
   if (typeof window === "undefined") return cached;
   try {
@@ -39,7 +41,7 @@ function emitChange() {
 }
 
 export default function LessonCompletion({ lessonId, lessonTitle }: LessonCompletionProps) {
-  const completed = useSyncExternalStore(subscribe, readCompleted, readCompleted);
+  const completed = useSyncExternalStore(subscribe, readCompleted, () => EMPTY_COMPLETED);
 
   if (!lessonId) return null;
   const done = completed.includes(lessonId);

@@ -1,0 +1,98 @@
+---
+title: "Module 8: Polymorphism — Module 8: Polymorphism"
+description: "Dynamic dispatch — overloading vs overriding — interface type ။"
+autoNumbering: true
+---
+
+
+Module 8 တွင် polymorphism ကို ပိုမို နက်ရှိုင်းစွာ လေ့လာမည် ဖြစ်ပြီး dynamic method dispatch နှင့် overloading/overriding ကွာခြားချက်ကို အသေးစိတ် ပြသပါမည်။
+
+## Dynamic Method Dispatch
+
+Object တစ်ခုကို parent type variable တွင် သိမ်းသောအခါ variable ၏ compile-time type သည် parent ဖြစ်သော်လည်း run-time တွင် JVM သည် object ၏ တကယ့် type ကိုကြည့်၍ method ကို ရွေးချယ်ပါသည်။ ဤအချက်ကို dynamic method dispatch ဟုခေါ်ပြီး interface type variables များတွင် ကျယ်ကျယ်ပြန့်ပြန့် အသုံးပြုပါသည်။
+
+## Overloading vs Overriding
+
+Overloading သည် class တစ်ခုအတွင်း နာမည်တူ method များဖြင့် parameter types ကွာခြားပြီး compile-time တွင် ဆုံးဖြတ်ပါသည်။ Overriding သည် subclass တွင် parent method ကို signature အတိအကျ တူအောင် ပြန်ရေးပြီး run-time တွင် ဆုံးဖြတ်ပါသည်။
+
+## ဥပမာ — Shape များ ဖြင့် Dispatch
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Shape circle = new Circle(5);
+        Shape rectangle = new Rectangle(4, 6);
+
+        printArea(circle);
+        printArea(rectangle);
+
+        System.out.println("Sum(int) = " + sum(3, 4));
+        System.out.println("Sum(double) = " + sum(3.5, 4.5));
+    }
+
+    static void printArea(Shape shape) {
+        System.out.println("Area = " + shape.area());
+    }
+
+    static int sum(int a, int b) {
+        return a + b;
+    }
+
+    static double sum(double a, double b) {
+        return a + b;
+    }
+}
+
+interface Shape {
+    double area();
+}
+
+class Circle implements Shape {
+    private double radius;
+
+    Circle(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+}
+
+class Rectangle implements Shape {
+    private double width;
+    private double height;
+
+    Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    @Override
+    public double area() {
+        return width * height;
+    }
+}
+```
+
+အထက်ပါ code တွင် `printArea(shape)` သည် Shape interface type ကို လက်ခံ၍ run-time မှာ circle သို့မဟုတ် rectangle ၏ area() ကို dispatch ပြုလုပ်ပါသည်။ `sum` နှစ်ခုသည် overloading ဖြစ်၍ compile-time တွင် ရွေးချယ်ပါသည်။ Run လုပ်သောအခါ အောက်ပါ output ကို ရမည် ဖြစ်ပါသည်။
+
+```
+Area = 78.53981633974483
+Area = 24.0
+Sum(int) = 7
+Sum(double) = 8.0
+```
+
+## Polymorphism ၏ အကျိုးကျေးဇူး
+
+Code သည် interface သို့မဟုတ် parent type ပေါ်တွင် မှီခို၍ ရေးလိုက်သောအခါ class အသစ်များ ထပ်ဖြည့်သော်လည်း ရှိပြီးသား code ကို ပြောင်းစရာမလိုပါ။ ဤအချက်ကြောင့် system ကို ချဲ့ထွင်ရ လွယ်ကူပြီး flexible ဖြစ်ပါသည်။
+
+## အဓိက အချက်များ
+
+- Dynamic dispatch ဖြင့် run-time တွင် method ကို ရွေးသည်။
+- Overloading = same name, different params (compile-time)
+- Overriding = subclass က parent method ကို ပြန်ရေး (run-time)
+- Parent/interface type ဖြင့် code ရေးပါက flexible ဖြစ်သည်။
+
