@@ -1,0 +1,108 @@
+---
+title: "Python Datetime Module — Python Datetime Module"
+description: "Python datetime module ဖြင့် dates နှင့် times များကို စီမံခြင်း (current, formats, arithmetic) ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+datetime module သည် dates နှင့် times values များကို စီမံရန် class များကို ပံ့ပိုးပါသည်.
+
+## Import Datetime Module
+
+```
+import datetime
+```
+
+## Current Date and Time
+
+```
+import datetime
+
+x = datetime.datetime.now()
+print(x)  # e.g. 2025-12-10 14:30:45.123456
+
+print(x.year)     # 2025
+print(x.month)    # 12
+print(x.day)      # 10
+print(x.hour)     # 14
+print(x.minute)   # 30
+```
+
+## Create Date Objects
+
+```
+import datetime
+
+x = datetime.datetime(2025, 6, 1)
+print(x)  # 2025-06-01 00:00:00
+
+y = datetime.datetime(2025, 6, 1, 12, 30, 45)
+print(y)  # 2025-06-01 12:30:45
+```
+
+## strftime() - Formatting
+
+```
+import datetime
+
+x = datetime.datetime(2025, 6, 1, 14, 30)
+
+x.strftime("%Y-%m-%d")  # "2025-06-01"
+x.strftime("%H:%M")     # "14:30"
+x.strftime("%A")        # "Sunday"
+x.strftime("%B")        # "June"
+x.strftime("%d/%m/%Y")  # "01/06/2025"
+```
+
+► **%d** day, **%m** month, **%Y** year, **%H** hour 24h, **%I** hour 12h, **%M** minute, **%S** second, **%A** weekday, **%B** month name, **%p** AM/PM
+
+## strptime() - Parsing
+
+```
+import datetime
+
+date_string = "2025-06-01 14:30:00"
+parsed = datetime.datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
+print(parsed)  # 2025-06-01 14:30:00
+```
+
+## Date Arithmetic
+
+```
+import datetime
+
+today = datetime.date.today()
+new_date = today + datetime.timedelta(days=10)
+print(new_date)
+
+now = datetime.datetime.now()
+later = now + datetime.timedelta(hours=5, minutes=30)
+print(later)
+```
+
+## Compare Dates
+
+```
+import datetime
+
+d1 = datetime.datetime(2025, 6, 1)
+d2 = datetime.datetime(2025, 12, 31)
+
+print(d1 < d2)   # True
+print(d2 - d1)   # 213 days, 0:00:00
+```
+
+## Timestamp Conversion
+
+```
+import datetime
+
+now = datetime.datetime.now()
+ts = now.timestamp()        # to POSIX timestamp
+print(ts)
+
+restored = datetime.datetime.fromtimestamp(ts)
+print(restored)
+```
+
+Date/time handling ကို logging, scheduling, data analysis များတွင် ကျယ်ကျယ်ပြန့်ပြန့် အသုံးပြုပါသည်.

@@ -1,0 +1,57 @@
+---
+title: "Python MongoDB Drop Collection — Python MongoDB Drop Collection"
+description: "MongoDB collection တစ်ခုလုံးကို drop() method ဖြင့် ဖျက်ခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Collection တစ်ခုလုံးကို drop() method ဖြင့် ဖျက်နိုင်ပြီး ဖျက်လိုက်ပါက documents အားလုံးနှင့်အတူ collection လည်း ပျောက်သွားပါသည်.
+
+## Drop Collection
+
+customers collection ကို ဖျက်ပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+mycol.drop()
+```
+
+► customers collection တစ်ခုလုံးကို ဖျက်ပါသည်.
+
+## Verify Drop
+
+Collection ဖျက်လိုက်၍ မရှိတော့ကြောင်းကို list_collection_names() ဖြင့် စစ်ဆေးပါသည်.
+
+```
+print(mydb.list_collection_names())
+```
+
+► customers name သည် list ထဲမှ ပျောက်သွားပါသည်.
+
+## Drop မပြုလုပ်မီ စစ်ဆေးခြင်း
+
+```
+if "customers" in mydb.list_collection_names():
+    mycol.drop()
+    print("Collection dropped.")
+else:
+    print("Collection does not exist.")
+```
+
+## Return Value
+
+drop() သည် collection ဖျက်ခြင်း အောင်မြင်ပါက True ကို ပြန်ပေးပါသည်.
+
+```
+result = mycol.drop()
+print(result)
+```
+
+► True (ဖျက်နိုင်ခဲ့လျှင်)
+
+DROP Collection သည် irreversible ဖြစ်သောကြောင့် ဖျက်ပြီးနောက် data များ ပြန်မရနိုင်သည်ကို သတိပြုရပါသည်.

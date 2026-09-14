@@ -1,0 +1,50 @@
+---
+title: "Python: Check Django Version — Python: Check Django Version"
+description: "Django ၏ version ကို စစ်ဆေးခြင်းနှင့် installed/not ဖြစ်ကြောင်း သိရှိခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Django ၏ version ကို စစ်ဆေးရန် python မှ import ပြုလုပ်ခြင်း သို့မဟုတ် command line မှ version မေးခြင်း ဖြစ်ပါသည်.
+
+## Check Version
+
+```
+> python -c "import django; print(django.get_version())"
+```
+
+သို့မဟုတ် Python script ရေးနည်း:
+
+```
+import django
+print(django.VERSION)
+print(django.get_version())
+```
+
+## Check if Django is Installed
+
+```
+> python -m django --version
+```
+
+► Django install ဖြစ်ပါက version number (e.g. 5.1.3) ကို ပြပါသည်. Install မဖြစ်ပါက "No module named django" error ဖြစ်ပါသည်.
+
+## Check Where Django is Installed
+
+```
+> python -c "import django; print(django.__file__)"
+```
+
+► Django ၏ path ကို ပြသပါသည် (virtual environment path ဖြစ်နေပါက activate ဖြစ်ကြောင်း သေချာစေပါ).
+
+## Inside a Django Project
+
+Project ၏ settings.py ရှိ version ကို install မလုပ်ဘဲ စစ်ဆေးနိုင်ပါသည်:
+
+```
+> pip show django
+```
+
+► Name, Version, Location အစရှိသော package information များကို ပြသပါသည်.
+
+Version စစ်ဆေးခြင်းသည် debugging နှင့် dependency management များအတွက် အသုံးဝင်ပါသည်.

@@ -1,0 +1,66 @@
+---
+title: "Python MongoDB Delete — Python MongoDB Delete"
+description: "MongoDB collections မှ documents များကို delete_one() နှင့် delete_many() ဖြင့် ဖျက်ခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Documents များကို delete_one() (single document) သို့မဟုတ် delete_many() (multiple documents) method များဖြင့် delete ပြုလုပ်ပါသည်.
+
+## Delete One Document
+
+Address "Mountain 21" ဖြစ်သော document ပထမဆုံးတစ်ခုကို ဖျက်ပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+myquery = { "address": "Mountain 21" }
+
+mycol.delete_one(myquery)
+```
+
+► Condition နှင့် ကိုက်ညီသော document တစ်ခုကိုသာ ဖျက်ပါသည်.
+
+## Delete Many Documents
+
+Address "Mountain 21" ပါသော documents အားလုံးကို ဖျက်ပါသည်.
+
+```
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+x = mycol.delete_many({ "address": "Mountain 21" })
+
+print(x.deleted_count, " documents deleted.")
+```
+
+► ဖျက်လိုက်သော documents အရေအတွက်ကို ပြသပါသည်.
+
+## Delete All Documents
+
+Condition မပါသော empty query `{}` ဖြင့် documents အားလုံးကို ဖျက်နိုင်ပါသည်.
+
+```
+x = mycol.delete_many({})
+print(x.deleted_count, " documents deleted.")
+```
+
+► Collection ထဲရှိ documents အားလုံးကို ဖျက်ပါသည်.
+
+## deleted_count Attribute
+
+DeleteResult object ၏ deleted_count ဖြင့် ဖျက်လိုက်သော ပမာဏကို ရယူပါသည်.
+
+```
+x = mycol.delete_one({ "name": "John" })
+print(x.deleted_count)
+```
+
+► 1 (if document existed)
+
+Delete operations များသည် permanent ဖြစ်သောကြောင့် query conditions များကို သေချာစွာ စစ်ဆေးရန် အရေးကြီးပါသည်.

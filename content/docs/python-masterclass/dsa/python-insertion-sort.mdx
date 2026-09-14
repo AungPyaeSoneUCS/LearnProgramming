@@ -1,0 +1,57 @@
+---
+title: "Python Insertion Sort — Python Insertion Sort"
+description: "Insertion sort algorithm ၏ သဘောတရား၊ card sorting ကဲ့သို့ sorting ပြုလုပ်ပုံကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Insertion sort သည် elements များကို တစ်ခုပြီးတစ်ခု ၎င်းတို့၏ နေရာမှန်ထဲသို့ insert ပြုလုပ်သည့် algorithm ဖြစ်ပြီး playing cards စီခြင်းနှင့် ဆင်တူပါသည်.
+
+## How it Works
+
+- Second element မှ စတင်ပါသည်
+- ဒြပ်sent element ကို previous elements များနှင့် နှိုင်းယှဉ်ပါသည်
+- Previous elements လျော့နည်းပါက shift ပြုလုပ်၍ insert ပြုလုပ်ပါသည်
+- Sorted portion သည် ဘယ်ဘက်မှ ကြီးပွားလာပါသည်
+
+## Python Implementation
+
+```
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and key < arr[j]:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
+```
+
+## စမ်းသပ်ခြင်း
+
+```
+arr = [12, 11, 13, 5, 6]
+insertion_sort(arr)
+print(arr)
+```
+
+► Output: [5, 6, 11, 12, 13]
+
+## Step-by-Step Example
+
+```
+# [12, 11, 13, 5, 6]
+# i=1: key=11 -> [11, 12, 13, 5, 6]
+# i=2: key=13 -> [11, 12, 13, 5, 6]
+# i=3: key=5 -> [5, 11, 12, 13, 6]
+# i=4: key=6 -> [5, 6, 11, 12, 13]
+```
+
+## Time Complexity
+
+- Best: O(n) (already sorted)
+- Average/Worst: O(n^2)
+- Space: O(1)
+
+Insertion sort သည် small datasets များနှင့် nearly-sorted data များအတွက် effective ဖြစ်ပါသည်.

@@ -196,5 +196,11 @@
     "description": "Version Control နှင့် Collaboration — Git, GitHub, Branching, Merging, CI/CD စတာတွေကို လက်တွေ့လုပ်ရင်း သင်ယူမယ့် သင်တန်း။",
     "icon": "🔀",
     "color": "#f97316"
+  },
+  {
+    "label": "Python Masterclass",
+    "description": "Python Masterclass — Tutorial, OOP, ML, DSA, MySQL, MongoDB, Django, NumPy, Pandas, Matplotlib အပါအဝင် အခြေခံမှ အဆင့်မြင့်အထိ ပြည့်စုံသော Python သင်တန်းကြီး။",
+    "icon": "🐍",
+    "color": "#3b82f6"
   }
 ]

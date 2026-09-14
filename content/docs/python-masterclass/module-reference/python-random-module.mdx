@@ -1,0 +1,89 @@
+---
+title: "Python Random Module — Python Random Module"
+description: "Python random module ကို အသုံးပြု၍ random numbers များ ထုတ်လုပ်ခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+random module သည် random numbers များ ထုတ်လုပ်ရန် functions များကို ပံ့ပိုးပါသည်. Games, simulations, testing များတွင် အသုံးဝင်ပါသည်.
+
+## Import Random Module
+
+```
+import random
+```
+
+## Random Number Functions
+
+```
+import random
+
+random.random()          # 0.0 <= x < 1.0
+random.uniform(5, 10)    # float between 5 and 10
+random.randint(1, 100)   # integer between 1 and 100 inclusive
+random.randrange(0, 100, 5)  # step 5: 0, 5, 10, ...
+```
+
+## Sequence Functions
+
+```
+import random
+
+fruits = ["apple", "banana", "cherry", "date"]
+
+random.choice(fruits)        # random item
+random.choices(fruits, k=2)  # 2 items (with replacement)
+random.sample(fruits, k=2)   # 2 unique items
+random.shuffle(fruits)       # shuffle in place
+```
+
+## Seeds for Reproducibility
+
+```
+import random
+
+random.seed(42)
+print(random.random())  # always same value with seed 42
+
+random.seed(42)
+print(random.random())  # same value again
+```
+
+► Seed ကို သတ်မှတ်ပါက same sequence ကို repeat လုပ်နိုင်ပါသည် (testing အတွက် အသုံးဝင်).
+
+## Secure Random
+
+Security-sensitive applications များအတွက် secrets module ကို သုံးပါသည်.
+
+```
+import secrets
+
+# Cryptographically secure random numbers
+secrets.randbelow(100)    # 0 <= x < 100
+secrets.choice(["a", "b", "c"])
+```
+
+## Password Generator Example
+
+```
+import random
+import string
+
+def generate_password(length=12):
+    chars = string.ascii_letters + string.digits + string.punctuation
+    return ''.join(random.choices(chars, k=length))
+
+print(generate_password(16))
+```
+
+## Random from Normal Distribution
+
+```
+import random
+
+random.gauss(0, 1)   # mean=0, std=1 (normal distribution)
+random.betavariate(2, 5)
+random.expovariate(5)
+```
+
+Random module သည် games, data science, testing စသည့် applications များတွင် random values လိုအပ်သည့်အခါ အသုံးဝင်ပါသည်.

@@ -1,0 +1,54 @@
+---
+title: "Python MongoDB Create Database — Python MongoDB Create Database"
+description: "PyMongo ဖြင့် MongoDB database ကို ဖန်တီးခြင်းနှင့် connection check ပြုလုပ်ခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+MongoDB တွင် database ကို ဖန်တီးရန် MongoClient object မှ database library ကို ရယူပြီး documents/data များ ထည့်သွင်းပါက database သည် ပေါ်လာပါသည်.
+
+## Create Database
+
+PyMongo ၏ MongoClient ဖြင့် database ကို ဖန်တီးပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+```
+
+► ဤ object ကို ဖန်တီးလိုက်သည့်အတွက် database သည် volume ထဲတွင် မပေါ်သေးပါ.
+
+## Check if Database Exists
+
+Connection ရှိမရှိ စစ်ဆေးရန် server-info() method ကို သုံးပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+
+print(myclient.server_info())
+```
+
+► Server ၏ information ကို ပြသပြီး connection အောင်မြင်ကြောင်း သေချာစေပါသည်.
+
+## အသုံးပြုသော Database များ List ပြုလုပ်ခြင်း
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+
+print(myclient.list_database_names())
+```
+
+► Server ပေါ်ရှိ database names များ၏ list ကို ပြသပါသည်.
+
+## Collection မရှိသောdatabase
+
+Database တွင် data များ ထည့်ချိန်အထိ list ထဲတွင် ပေါ်မည်မဟုတ်ပါ. Document/data ထည့်သွင်းပါက database ၏ name သည် list ထဲသို့ ဝင်လာပါသည်.
+
+Database ကို MongoDB ကို အသုံးပြုရန် client connection ဖြင့် ရယူပြီး data ထည့်သွင်းခြင်းဖြင့် ဖန်တီးပါသည်.

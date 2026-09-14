@@ -1,0 +1,82 @@
+---
+title: "Python Graphs — Python Graphs"
+description: "Graph data structures ၏ သဘောတရား၊ adjacency list ဖြင့် graph ဖန်တီးခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Graph သည် vertices (nodes) နှင့် edges (connections) ဖြင့် ဖွဲ့စည်းထားသည့် data structure ဖြစ်ပြီး networks, relationships များကို model လုပ်ရန် အသုံးပြုပါသည်.
+
+## Graph ဆိုသည်မှာ
+
+- **Vertex**: Graph ၏ point (node)
+- **Edge**: Vertices နှစ်ခုအကြား ချိတ်ဆက်မှု
+- **Undirected**: Edge တစ်ဖက်တည်း (birectional)
+- **Directed**: Edge နှစ်ဖက် (one-way)
+
+## Adjacency List ဖြင့် Graph
+
+Python dictionary ဖြင့် graph ကို ဖန်တီးပါသည်.
+
+```
+graph = {
+    "A": ["B", "C"],
+    "B": ["A", "D", "E"],
+    "C": ["A", "F"],
+    "D": ["B"],
+    "E": ["B", "F"],
+    "F": ["C", "E"]
+}
+```
+
+## Graph ဖတ်ခြင်း
+
+```
+for vertex in graph:
+    print(f"{vertex}: {graph[vertex]}")
+```
+
+## DFS (Depth-First Search)
+
+DFS သည် graph ကို နက်ရှိုင်းစွာ ရှာဖွေပါသည်.
+
+```
+def dfs(graph, node, visited=None):
+    if visited is None:
+        visited = set()
+    visited.add(node)
+    print(node)
+    for neighbor in graph[node]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+```
+
+## BFS (Breadth-First Search)
+
+BFS သည် layer-by-layer ရှာဖွေပါသည်.
+
+```
+from collections import deque
+
+def bfs(graph, start):
+    visited = set([start])
+    queue = deque([start])
+    while queue:
+        node = queue.popleft()
+        print(node)
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+```
+
+## စမ်းသပ်ခြင်း
+
+```
+print("DFS:")
+dfs(graph, "A")
+print("\nBFS:")
+bfs(graph, "A")
+```
+
+Graphs များသည် GPS, social networks, path finding algorithms များတွင် အသုံးဝင်ပါသည်.

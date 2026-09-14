@@ -1,0 +1,55 @@
+---
+title: "Python Heap Sort — Python Heap Sort"
+description: "Heap sort algorithm ၏ သဘောတရားနှင့် binary heap ကို အသုံးပြု၍ sort ပြုလုပ်ခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Heap sort သည် binary heap data structure ကို အသုံးပြုပြီး max-heap or min-heap property ကို ထိန်းသိမ်းလိုက် sort ပြုလုပ်သည့် algorithm ဖြစ်ပါသည်.
+
+## How it Works
+
+သုံးပေးသော (direction) approaches ရှိပါသည်: heap_sort() function ကို သုံး၍တည်ဆောက်နိုင်ပါသည်.
+
+## Python Implementation
+
+```
+def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+    return arr
+```
+
+## စမ်းသပ်ခြင်း
+
+```
+arr = [12, 11, 13, 5, 6, 7]
+heap_sort(arr)
+print(arr)
+```
+
+► Output: [5, 6, 7, 11, 12, 13]
+
+## Time Complexity
+
+- Best/Average/Worst: O(n log n)
+- Space: O(1)
+
+Heap sort သည် O(n log n) guaranteed complexity ရှိပြီး in-place ဖြစ်သည့်အပြင် extra memory မလိုအပ်ပါ.

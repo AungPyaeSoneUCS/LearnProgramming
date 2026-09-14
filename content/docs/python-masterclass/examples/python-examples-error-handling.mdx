@@ -1,0 +1,139 @@
+---
+title: "Python Examples: Errors — Python Examples: Errors"
+description: "Python exceptions များကို try/except ၊ custom exceptions များဖြင့် ကိုင်တွယ်ခြင်း ဥပမာများ ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Error handling သည် programs များကို crash မဖြစ်ဘဲ user friendly ဖြစ်စေရန် try/except blocks များဖြင့် exceptions များကို စီမံပါသည်.
+
+## Basic try/except
+
+```
+try:
+    result = 10 / int(input("Enter a number: "))
+    print("Result:", result)
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+except ValueError:
+    print("Please enter a valid number!")
+```
+
+## Multiple Exceptions
+
+```
+def risky_operation(lst, index):
+    try:
+        value = lst[index]
+        print(value)
+    except IndexError:
+        print("Index out of range")
+    except TypeError:
+        print("Wrong type")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+
+risky_operation([1, 2, 3], 10)   # Index out of range
+risky_operation([1, 2, 3], "x")  # Wrong type
+```
+
+## else and finally
+
+```
+try:
+    number = int(input("Enter number: "))
+except ValueError:
+    print("Invalid input")
+else:
+    print(f"You entered {number}")   # runs if no error
+finally:
+    print("Always executed")
+```
+
+## Custom Exceptions
+
+```
+class NegativeBalanceError(Exception):
+    pass
+
+class BankAccount:
+    def __init__(self, balance):
+        self._balance = balance
+
+    def withdraw(self, amount):
+        if amount > self._balance:
+            raise NegativeBalanceError("Insufficient funds!")
+        self._balance -= amount
+
+account = BankAccount(100)
+try:
+    account.withdraw(200)
+except NegativeBalanceError as e:
+    print("Error:", e)
+```
+
+## Divide Safely
+
+```
+def safe_divide(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return float("inf")
+    except TypeError:
+        return None
+
+print(safe_divide(10, 2))   # 5.0
+print(safe_divide(10, 0))   # inf
+print(safe_divide(10, "a")) # None
+```
+
+## Retry Pattern
+
+```
+def parse_int_with_retry(prompt, attempts=3):
+    for _ in range(attempts):
+        try:
+            return int(input(prompt))
+        except ValueError:
+            print("Invalid number, try again.")
+    raise ValueError("Too many invalid attempts")
+
+try:
+    age = parse_int_with_retry("Enter age: ")
+    print(f"Age: {age}")
+except ValueError as e:
+    print(e)
+```
+
+## Raise Built-in Exceptions
+
+```
+def validate_age(age):
+    if not isinstance(age, int):
+        raise TypeError("Age must be an integer!")
+    if age < 0:
+        raise ValueError("Age cannot be negative!")
+    return age
+
+try:
+    validate_age(-5)
+except ValueError as e:
+    print("Validation failed:", e)
+```
+
+## Log Errors
+
+```
+import logging
+
+logging.basicConfig(level=logging.ERROR,
+                    format="%(asctime)s %(levelname)s: %(message)s")
+
+try:
+    x = 1 / 0
+except ZeroDivisionError:
+    logging.error("Division by zero occurred")
+```
+
+Error handling examples များသည် programs များကို robust ဖြစ်စေရန် အရေးကြီးပါသည်.

@@ -1,0 +1,81 @@
+---
+title: "Python MySQL Insert Into Table — Python MySQL Insert Into Table"
+description: "MySQL table ထဲသို့ data များကို INSERT INTO statement ဖြင့် ထည့်သွင်းခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Table တစ်ခုထဲသို့ data များကို INSERT INTO statement ဖြင့် ထည့်သွင်းပါသည်. Insertion ပြီးနောက် changes များကို commit ပြုလုပ်ရပါသည်.
+
+## Insert Into Table
+
+customers table ထဲသို့ row တစ်ခု ထည့်ပါသည်.
+
+```
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword",
+    database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+val = ("John", "Highway 21")
+mycursor.execute(sql, val)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record inserted.")
+```
+
+► 1 record inserted.
+
+%s placeholders များသည် SQL injection များကို ကာကွယ်ပါသည်.
+
+## Multiple Rows ထည့်ခြင်း
+
+executemany() method ဖြင့် rows များစွာကို တစ်ကြိမ်တည်း ထည့်နိုင်ပါသည်.
+
+```
+sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+val = [
+    ("Peter", "Lowstreet 4"),
+    ("Amy", "Apple st 652"),
+    ("Hannah", "Mountain 21"),
+    ("Michael", "Valley 345")
+]
+
+mycursor.executemany(sql, val)
+
+mydb.commit()
+
+print(mycursor.rowcount, "records inserted.")
+```
+
+► 4 records inserted.
+
+## INSERT ID ရယူခြင်း
+
+Auto-increment primary key ရှိပါက lastrowid ဖြင့် ထည့်လိုက်သော row ၏ id ကို ရယူနိုင်ပါသည်.
+
+```
+sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+val = ("Michelle", "Blue Village")
+mycursor.execute(sql, val)
+
+mydb.commit()
+
+print("1 record inserted, ID:", mycursor.lastrowid)
+```
+
+► 1 record inserted, ID: 6
+
+## Commit မပြုလုပ်ပါက ဘာဖြစ်မည်နည်း
+
+mydb.commit() မပြုလုပ်ပါက changes များသည် database တွင် သိမ်းဆည်းမည်မဟုတ်ပါ. Transactions များသည် commit ၎င်းနောက်မှသာ permanent ဖြစ်ပါသည်.
+
+Insertion များပြုလုပ်ရန် cursor.execute(), executemany() နှင့် commit() ကို မှန်ကန်စွာ အသုံးပြုရန် အရေးကြီးပါသည်.

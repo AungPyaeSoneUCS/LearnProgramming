@@ -1,0 +1,84 @@
+---
+title: "Python Type Conversions — Python Type Conversions"
+description: "Python data type များကြား ပြောင်းလဲခြင်းနည်းလမ်းများ ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Data type conversions (casting) များကို Python ၏ built-in functions များဖြင့် ပြုလုပ်နိုင်ပါသည်.
+
+## String Conversions
+
+```
+str(123)          # "123"
+str(3.14)         # "3.14"
+str(True)         # "True"
+str([1, 2])       # "[1, 2]"
+```
+
+## Number Conversions
+
+```
+int("42")         # 42
+int(3.99)         # 3 (truncates toward zero)
+int("0b101", 2)   # 5 (binary)
+int("0x1A", 16)   # 26 (hex)
+
+float("3.14")     # 3.14
+float("42")       # 42.0
+float("inf")      # inf
+```
+
+## Boolean Conversion
+
+```
+bool(0)           # False
+bool(1)           # True
+bool("")          # False
+bool("hello")     # True
+bool([])          # False
+bool([1])         # True
+bool(None)        # False
+```
+
+## Collection Conversions
+
+```
+list("hello")            # ["h", "e", "l", "l", "o"]
+list((1, 2, 3))          # [1, 2, 3]
+list({1: "a", 2: "b"})  # [1, 2] (keys only)
+
+tuple([1, 2, 3])         # (1, 2, 3)
+tuple("hello")           # ("h", "e", "l", "l", "o")
+
+set([1, 2, 2, 3])       # {1, 2, 3}
+set("hello")             # {"h", "e", "l", "o"}
+
+dict([("a", 1), ("b", 2)])  # {"a": 1, "b": 2}
+dict([["name", "John"], ["age", 30]])
+```
+
+## Safe Conversion with try/except
+
+```
+def safe_int(value):
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return None
+
+result = safe_int("abc")  # None
+result = safe_int("42")   # 42
+```
+
+## Implicit vs Explicit Conversion
+
+```
+# Implicit (Python does it automatically)
+x = 10 + 3.14   # int + float = float (13.14)
+
+# Explicit (you do it manually)
+y = int(3.14)    # 3
+```
+
+Type conversions များကို မှန်ကန်စွာ အသုံးပြုခြင်းသည် program ၏ data integrity ကို ထိန်းသိမ်းပါသည်.

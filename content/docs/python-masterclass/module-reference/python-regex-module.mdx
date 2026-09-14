@@ -1,0 +1,101 @@
+---
+title: "Python RegEx Module — Python RegEx Module"
+description: "Python re module ကို အသုံးပြု၍ regular expressions (search, findall, sub) များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+re module သည် regular expressions များကို Python တွင် အသုံးပြုနိုင်ရန် functions များကို ပံ့ပိုးပါသည်. Text patterns များကို search, match, replace ပြုလုပ်နိုင်ပါသည်.
+
+## Import re Module
+
+```
+import re
+```
+
+## The search() Function
+
+```
+import re
+
+text = "The rain in Spain"
+x = re.search("Spain", text)
+print(x)  # match object
+
+if x:
+    print("Found at index:", x.start())
+```
+
+## The findall() Function
+
+```
+import re
+
+text = "The rain in Spain stays mainly in the plain"
+
+# a followed by in
+x = re.findall("ain", text)
+print(x)  # ['ain', 'ain', 'ain', 'ain']
+
+# Find all digits
+y = re.findall(r"\d+", "I have 2 apples and 10 oranges")
+print(y)  # ['2', '10']
+```
+
+## The split() Function
+
+```
+import re
+
+text = "Hello World, how are you?"
+x = re.split(r"\s", text)
+print(x)  # split by whitespace
+
+# With maxsplit
+y = re.split(r"\s", text, 2)
+```
+
+## The sub() Function
+
+```
+import re
+
+text = "Hello World"
+x = re.sub(r"\s", "_", text)
+print(x)  # "Hello_World"
+
+# With count limit
+y = re.sub(r"\s", "_", text, 1)
+print(y)  # "Hello_World" (one replacement)
+```
+
+## Metacharacters
+
+- **[a-z]** set of characters (range), **[0-9]** digits
+- **.** any character
+- **^** starts with (outside brackets)
+- **$** ends with
+- **+** one or more
+- **?** zero or one
+- `{n}` exactly n
+- `{n,}` n or more
+- **\d** digit, **\D** non-digit
+- **\s** whitespace, **\S** non-whitespace
+- **\w** word char, **\W** non-word
+
+## Email Validation Example
+
+```
+import re
+
+def validate_email(email):
+    pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    if re.match(pattern, email):
+        return True
+    return False
+
+print(validate_email("user@example.com"))  # True
+print(validate_email("invalid-email"))     # False
+```
+
+Regular expressions များသည် text processing, form validation, data extraction များအတွက် powerful tools ဖြစ်ပါသည်.

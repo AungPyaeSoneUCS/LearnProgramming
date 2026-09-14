@@ -1,0 +1,68 @@
+---
+title: "Python Radix Sort — Python Radix Sort"
+description: "Radix sort algorithm ၏ သဘောတရားနှင့် digit-by-digit sorting နည်းလမ်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Radix sort သည် numbers များကို digit-level ဖြင့် counting sort ကို အသုံးပြုပြီး sort ပြုလုပ်သည့် non-comparison algorithm ဖြစ်ပါသည်.
+
+## How it Works
+
+- Least significant digit (LSD) မှ စတင်ပါသည်
+- Digit တစ်ခုစီတွင် counting sort pass ကို 0-9 digit positions အတွက် ပြုလုပ်ပါသည်
+- Place values (1s, 10s, 100s...) အားလုံးအတွက် ဆက်တိုက်လုပ်ပါသည်
+
+## Python Implementation
+
+```
+def counting_sort_by_digit(arr, exp):
+    n = len(arr)
+    output = [0] * n
+    count = [0] * 10
+
+    for x in arr:
+        index = (x // exp) % 10
+        count[index] += 1
+
+    for i in range(1, 10):
+        count[i] += count[i - 1]
+
+    for i in range(n - 1, -1, -1):
+        index = (arr[i] // exp) % 10
+        count[index] -= 1
+        output[count[index]] = arr[i]
+
+    return output
+
+def radix_sort(arr):
+    max_val = max(arr)
+    exp = 1
+    while max_val // exp > 0:
+        arr = counting_sort_by_digit(arr, exp)
+        exp *= 10
+    return arr
+```
+
+## စမ်းသပ်ခြင်း
+
+```
+arr = [170, 45, 75, 90, 802, 24, 2, 66]
+sorted_arr = radix_sort(arr)
+print(sorted_arr)
+```
+
+► Output: [2, 24, 45, 66, 75, 90, 170, 802]
+
+## Time Complexity
+
+- Best/Average/Worst: O(nk) — k သည် max digits count
+- Space: O(n + k)
+
+## Radix Sort ၏ အားသာချက်များ
+
+- Comparisons မလိုအပ်ပါ
+- Large numbers range များအတွက် counting sort ထက် ပိုမိုကောင်းမွန်ပါသည်
+- Stable sort ဖြစ်ပါသည်
+
+Radix sort သည် digit-based domain များ (phone numbers, IDs) များအတွက် ideal ဖြစ်ပါသည်.

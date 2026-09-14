@@ -1,0 +1,58 @@
+---
+title: "Python MongoDB Create Collection — Python MongoDB Create Collection"
+description: "MongoDB collection အသစ်တစ်ခုကို PyMongo ဖြင့် ဖန်တီးနည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Collection သည် documents များပါဝင်သော MongoDB ၏ container ဖြစ်ပြီး tables ၏ အစားထိုးဖြစ်ပါသည်. Collection ကို database object မှ ရယူပါသည်.
+
+## Create Collection
+
+MongoDB တွင် collection ကို database object ၏ attribute အနေဖြင့် တွေ့နိုင်ပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+
+mycol = mydb["customers"]
+```
+
+► customers collection ကို ရယူပါသည်. Document များမထည့်မချင်း collection သည် ပေါ်မည်မဟုတ်ပါ.
+
+## Check if Collection Exists
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+
+print(mydb.list_collection_names())
+```
+
+► database အတွင်းရှိ collection names များကို list ပြုလုပ်ပါသည်.
+
+## Collection တစ်ခု ဖန်တီးခြင်း
+
+Collection ကို name များဖြင့် check ပြုလုပ်လိုပါက list_collection_names() ကဲ့သို့ method များကို သုံးပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+
+collist = mydb.list_collection_names()
+if "customers" in collist:
+    print("The collection exists.")
+else:
+    print("The collection does not exist.")
+    mydb.create_collection("customers")
+```
+
+► Collection ရှိမရှိ စစ်ဆေးပြီး မရှိပါက ဖန်တီးပါသည်.
+
+Collection ကို documents ထည့်သွင်းခြင်း ဖြင့် သော်လည်း အလိုအလျောက် ဖန်တီးနိုင်ပြီး create_collection() ဖြင့်လည်း explicit ပြုလုပ်နိုင်ပါသည်.

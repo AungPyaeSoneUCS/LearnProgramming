@@ -1,0 +1,63 @@
+---
+title: "Python Merge Sort — Python Merge Sort"
+description: "Merge sort algorithm ၏ divide-and-conquer သဘောတရားနှင့် recursion ကို အသုံးပြုပုံ သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Merge sort သည် divide-and-conquer strategy ကို အသုံးပြုလိုက် data ကို ထက်ခြမ်းခွဲပြီး sorted ဖြစ်အောင် merge ပြုလုပ်သည့် O(n log n) algorithm ဖြစ်ပါသည်.
+
+## How it Works
+
+- Array ကို array များဖြင့် အလယ်မှ ခွဲပါသည် (divide)
+- တစ်ခုစီ array ကို ဆက်တိုက် ခွဲပြီး single-element arrays များဖြစ်စေပါသည်
+- Single libraries များကို sorted order ဖြစ်အောင် merge ပြုလုပ်ပါသည် (conquer)
+
+## Python Implementation
+
+```
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+```
+
+## စမ်းသပ်ခြင်း
+
+```
+arr = [38, 27, 43, 3, 9, 82, 10]
+sorted_arr = merge_sort(arr)
+print(sorted_arr)
+```
+
+► Output: [3, 9, 10, 27, 38, 43, 82]
+
+## Time Complexity
+
+- Best/Average/Worst: O(n log n)
+- Space: O(n) (merge function ကြောင့်)
+
+## Merge Sort ၏ အားသာချက်များ
+
+- Stable sort ဖြစ်ပါသည်
+- O(n log n) guaranteed
+- Linked lists များတွင် အလုပ်လုပ်ပါသည်
+
+Merge sort သည် large datasets များနှင့် production systems များတွင် widespread ဖြစ်ပါသည်.

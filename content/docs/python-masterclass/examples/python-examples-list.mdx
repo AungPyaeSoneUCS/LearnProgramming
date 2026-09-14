@@ -1,0 +1,114 @@
+---
+title: "Python Examples: List — Python Examples: List"
+description: "Python lists များ၏ လက်တွေ့ ဥပမာများ (operations, comprehension, sorting) ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Lists များသည် Python ၏ most important data structures များထဲမှ တစ်ခုဖြစ်ပြီး operations များစွာကို ပံ့ပိုးပါသည်.
+
+## Basic List Operations
+
+```
+numbers = [3, 1, 4, 1, 5, 9, 2]
+
+numbers.append(6)     # add to end
+numbers.insert(0, 0)  # insert at index 0
+numbers.sort()        # [0, 1, 1, 2, 3, 4, 5, 6, 9]
+numbers.reverse()     # reverse order
+print(numbers)
+
+print(len(numbers))   # 9
+print(max(numbers))   # 9
+print(min(numbers))   # 0
+print(sum(numbers))   # 31
+```
+
+## List Comprehension Examples
+
+```
+numbers = [1, 2, 3, 4, 5]
+
+squares = [x**2 for x in numbers]
+print(squares)  # [1, 4, 9, 16, 25]
+
+evens = [x for x in numbers if x % 2 == 0]
+print(evens)    # [2, 4]
+
+matrix = [["*" for _ in range(3)] for _ in range(3)]
+for row in matrix:
+    print(" ".join(row))
+# * * *
+# * * *
+# * * *
+```
+
+## Find Duplicates
+
+```
+def find_duplicates(items):
+    seen = set()
+    duplicates = set()
+    for item in items:
+        if item in seen:
+            duplicates.add(item)
+        seen.add(item)
+    return list(duplicates)
+
+names = ["A", "B", "A", "C", "B", "D"]
+print(find_duplicates(names))  # ["A", "B"]
+```
+
+## Remove Duplicates
+
+```
+numbers = [1, 2, 2, 3, 3, 3, 4]
+unique = list(set(numbers))
+print(unique)  # [1, 2, 3, 4]
+```
+
+## Slicing Examples
+
+```
+fruits = ["apple", "banana", "cherry", "date", "fig"]
+
+print(fruits[1:3])   # ["banana", "cherry"]
+print(fruits[:2])    # ["apple", "banana"]
+print(fruits[::2])   # every other
+print(fruits[::-1])  # reversed
+```
+
+## Group by Category
+
+```
+products = [
+    {"name": "Laptop", "category": "Electronics", "price": 1200},
+    {"name": "Shirt", "category": "Clothing", "price": 25},
+    {"name": "Phone", "category": "Electronics", "price": 800},
+]
+
+electronics = [p for p in products if p["category"] == "Electronics"]
+total = sum(p["price"] for p in products)
+print(electronics)
+print(f"Total: ${total}")
+```
+
+## Rotate a List
+
+```
+def rotate(lst, steps):
+    steps = steps % len(lst)
+    return lst[steps:] + lst[:steps]
+
+print(rotate([1, 2, 3, 4, 5], 2))  # [3, 4, 5, 1, 2]
+```
+
+## Flatten Nested List
+
+```
+nested = [[1, 2], [3, 4], [5, 6]]
+flattened = [item for sublist in nested for item in sublist]
+print(flattened)  # [1, 2, 3, 4, 5, 6]
+```
+
+List examples များသည် data manipulation ၏ core concepts များကို သရုပ်ပြပါသည်.

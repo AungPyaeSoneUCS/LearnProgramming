@@ -5251,6 +5251,754 @@
     ]
   },
   {
+    "label": "Python Masterclass",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Python Masterclass Home",
+            "slug": "python-masterclass/index"
+          }
+        ]
+      },
+      {
+        "label": "Module 1: Python Tutorial",
+        "items": [
+          {
+            "label": "Python Intro",
+            "slug": "python-masterclass/tutorial/python-intro"
+          },
+          {
+            "label": "Python Get Started",
+            "slug": "python-masterclass/tutorial/python-get-started"
+          },
+          {
+            "label": "Python HOME",
+            "slug": "python-masterclass/tutorial/python-home"
+          },
+          {
+            "label": "Python Syntax",
+            "slug": "python-masterclass/tutorial/python-syntax"
+          },
+          {
+            "label": "Python Output",
+            "slug": "python-masterclass/tutorial/python-output"
+          },
+          {
+            "label": "Python Comments",
+            "slug": "python-masterclass/tutorial/python-comments"
+          },
+          {
+            "label": "Python Variables",
+            "slug": "python-masterclass/tutorial/python-variables"
+          },
+          {
+            "label": "Python Numbers",
+            "slug": "python-masterclass/tutorial/python-numbers"
+          },
+          {
+            "label": "Python Casting",
+            "slug": "python-masterclass/tutorial/python-casting"
+          },
+          {
+            "label": "Python Strings",
+            "slug": "python-masterclass/tutorial/python-strings"
+          },
+          {
+            "label": "Python String Formatting",
+            "slug": "python-masterclass/tutorial/python-string-formatting"
+          },
+          {
+            "label": "Python Booleans",
+            "slug": "python-masterclass/tutorial/python-booleans"
+          },
+          {
+            "label": "Python Operators",
+            "slug": "python-masterclass/tutorial/python-operators"
+          },
+          {
+            "label": "Python If...Else",
+            "slug": "python-masterclass/tutorial/python-if-else"
+          },
+          {
+            "label": "Python While Loops",
+            "slug": "python-masterclass/tutorial/python-while-loops"
+          },
+          {
+            "label": "Python For Loops",
+            "slug": "python-masterclass/tutorial/python-for-loops"
+          },
+          {
+            "label": "Python Range",
+            "slug": "python-masterclass/tutorial/python-range"
+          },
+          {
+            "label": "Python Match",
+            "slug": "python-masterclass/tutorial/python-match"
+          },
+          {
+            "label": "Python Functions",
+            "slug": "python-masterclass/tutorial/python-functions"
+          },
+          {
+            "label": "Python Arrays",
+            "slug": "python-masterclass/tutorial/python-arrays"
+          },
+          {
+            "label": "Python Lists",
+            "slug": "python-masterclass/tutorial/python-lists"
+          },
+          {
+            "label": "Python Tuples",
+            "slug": "python-masterclass/tutorial/python-tuples"
+          },
+          {
+            "label": "Python Sets",
+            "slug": "python-masterclass/tutorial/python-sets"
+          },
+          {
+            "label": "Python Dictionaries",
+            "slug": "python-masterclass/tutorial/python-dictionaries"
+          },
+          {
+            "label": "Python User Input",
+            "slug": "python-masterclass/tutorial/python-user-input"
+          },
+          {
+            "label": "Python Dates",
+            "slug": "python-masterclass/tutorial/python-dates"
+          },
+          {
+            "label": "Python Math",
+            "slug": "python-masterclass/tutorial/python-math"
+          },
+          {
+            "label": "Python JSON",
+            "slug": "python-masterclass/tutorial/python-json"
+          },
+          {
+            "label": "Python RegEx",
+            "slug": "python-masterclass/tutorial/python-regex"
+          },
+          {
+            "label": "Python Modules",
+            "slug": "python-masterclass/tutorial/python-modules"
+          },
+          {
+            "label": "Python PIP",
+            "slug": "python-masterclass/tutorial/python-pip"
+          },
+          {
+            "label": "Python VirtualEnv",
+            "slug": "python-masterclass/tutorial/python-virtualenv"
+          },
+          {
+            "label": "Python Data Types",
+            "slug": "python-masterclass/tutorial/python-data-types"
+          },
+          {
+            "label": "Python Iterators",
+            "slug": "python-masterclass/tutorial/python-iterators"
+          },
+          {
+            "label": "Python None",
+            "slug": "python-masterclass/tutorial/python-none"
+          },
+          {
+            "label": "Python Try...Except",
+            "slug": "python-masterclass/tutorial/python-try-except"
+          }
+        ]
+      },
+      {
+        "label": "Module 2: Classes & OOP",
+        "items": [
+          {
+            "label": "Python Class Methods",
+            "slug": "python-masterclass/classes/class-methods"
+          },
+          {
+            "label": "Python Class Properties",
+            "slug": "python-masterclass/classes/class-properties"
+          },
+          {
+            "label": "Python Classes/Objects",
+            "slug": "python-masterclass/classes/classes-objects"
+          },
+          {
+            "label": "Python Encapsulation",
+            "slug": "python-masterclass/classes/encapsulation"
+          },
+          {
+            "label": "Python Inheritance",
+            "slug": "python-masterclass/classes/inheritance"
+          },
+          {
+            "label": "Python __init__ Method",
+            "slug": "python-masterclass/classes/init-method"
+          },
+          {
+            "label": "Python Inner Classes",
+            "slug": "python-masterclass/classes/inner-classes"
+          },
+          {
+            "label": "Python Magic Methods",
+            "slug": "python-masterclass/classes/magic-methods"
+          },
+          {
+            "label": "Python Polymorphism",
+            "slug": "python-masterclass/classes/polymorphism"
+          },
+          {
+            "label": "Python OOP",
+            "slug": "python-masterclass/classes/python-oop"
+          },
+          {
+            "label": "Python self Parameter",
+            "slug": "python-masterclass/classes/self-parameter"
+          }
+        ]
+      },
+      {
+        "label": "Module 3: File Handling",
+        "items": [
+          {
+            "label": "Python File Handling",
+            "slug": "python-masterclass/files/python-file-handling"
+          },
+          {
+            "label": "Python Open Function",
+            "slug": "python-masterclass/files/python-open"
+          },
+          {
+            "label": "Python Read File",
+            "slug": "python-masterclass/files/python-read-file"
+          },
+          {
+            "label": "Python Write File",
+            "slug": "python-masterclass/files/python-write-file"
+          }
+        ]
+      },
+      {
+        "label": "Module 4: Modules & Packages",
+        "items": [
+          {
+            "label": "Python Django",
+            "slug": "python-masterclass/modules/python-django"
+          },
+          {
+            "label": "Python NumPy",
+            "slug": "python-masterclass/modules/python-numpy"
+          },
+          {
+            "label": "Python Pandas",
+            "slug": "python-masterclass/modules/python-pandas"
+          },
+          {
+            "label": "Python SciPy",
+            "slug": "python-masterclass/modules/python-scipy"
+          }
+        ]
+      },
+      {
+        "label": "Module 5: Matplotlib",
+        "items": [
+          {
+            "label": "Python Matplotlib 3D Plotting",
+            "slug": "python-masterclass/matplotlib/3d-plotting"
+          },
+          {
+            "label": "Python Matplotlib Bars",
+            "slug": "python-masterclass/matplotlib/bars"
+          },
+          {
+            "label": "Python Matplotlib Grid",
+            "slug": "python-masterclass/matplotlib/grid"
+          },
+          {
+            "label": "Python Matplotlib Histograms",
+            "slug": "python-masterclass/matplotlib/histogram"
+          },
+          {
+            "label": "Python Matplotlib Labels",
+            "slug": "python-masterclass/matplotlib/labels"
+          },
+          {
+            "label": "Python Matplotlib Line",
+            "slug": "python-masterclass/matplotlib/line"
+          },
+          {
+            "label": "Python Matplotlib Markers",
+            "slug": "python-masterclass/matplotlib/markers"
+          },
+          {
+            "label": "Python Matplotlib",
+            "slug": "python-masterclass/matplotlib/matplotlib-home"
+          },
+          {
+            "label": "Python Matplotlib Pie Charts",
+            "slug": "python-masterclass/matplotlib/pie-charts"
+          },
+          {
+            "label": "Python Matplotlib Plotting",
+            "slug": "python-masterclass/matplotlib/plotting"
+          },
+          {
+            "label": "Python Matplotlib Pyplot",
+            "slug": "python-masterclass/matplotlib/pyplot"
+          },
+          {
+            "label": "Python Matplotlib Scatter",
+            "slug": "python-masterclass/matplotlib/scatter"
+          },
+          {
+            "label": "Python Matplotlib Subplot",
+            "slug": "python-masterclass/matplotlib/subplot"
+          }
+        ]
+      },
+      {
+        "label": "Module 6: Machine Learning",
+        "items": [
+          {
+            "label": "Confusion Matrix",
+            "slug": "python-masterclass/machine-learning/ml-confusion-matrix"
+          },
+          {
+            "label": "Cross Validation",
+            "slug": "python-masterclass/machine-learning/ml-cross-validation"
+          },
+          {
+            "label": "Machine Learning Data Distribution",
+            "slug": "python-masterclass/machine-learning/ml-data-distribution"
+          },
+          {
+            "label": "Decision Tree",
+            "slug": "python-masterclass/machine-learning/ml-decision-tree"
+          },
+          {
+            "label": "Grid Search",
+            "slug": "python-masterclass/machine-learning/ml-grid-search"
+          },
+          {
+            "label": "What is Machine Learning",
+            "slug": "python-masterclass/machine-learning/ml-home"
+          },
+          {
+            "label": "Types of Machine Learning",
+            "slug": "python-masterclass/machine-learning/ml-intro"
+          },
+          {
+            "label": "K-Means Clustering",
+            "slug": "python-masterclass/machine-learning/ml-kmeans"
+          },
+          {
+            "label": "K-Nearest Neighbors (KNN)",
+            "slug": "python-masterclass/machine-learning/ml-knn"
+          },
+          {
+            "label": "Logistic Regression",
+            "slug": "python-masterclass/machine-learning/ml-logistic-regression"
+          },
+          {
+            "label": "Machine Learning Mean Median Mode",
+            "slug": "python-masterclass/machine-learning/ml-mean-median-mode"
+          },
+          {
+            "label": "Multiple Regression",
+            "slug": "python-masterclass/machine-learning/ml-multiple-regression"
+          },
+          {
+            "label": "Naive Bayes",
+            "slug": "python-masterclass/machine-learning/ml-naive-bayes"
+          },
+          {
+            "label": "Machine Learning Normal Data Distribution",
+            "slug": "python-masterclass/machine-learning/ml-normal-data"
+          },
+          {
+            "label": "Machine Learning Percentiles",
+            "slug": "python-masterclass/machine-learning/ml-percentiles"
+          },
+          {
+            "label": "Polynomial Regression",
+            "slug": "python-masterclass/machine-learning/ml-polynomial-regression"
+          },
+          {
+            "label": "Machine Learning Scale",
+            "slug": "python-masterclass/machine-learning/ml-scale"
+          },
+          {
+            "label": "Simple Linear Regression",
+            "slug": "python-masterclass/machine-learning/ml-simple-linear-regression"
+          },
+          {
+            "label": "Machine Learning Standard Deviation",
+            "slug": "python-masterclass/machine-learning/ml-standard-deviation"
+          },
+          {
+            "label": "Stratified Shuffle Split",
+            "slug": "python-masterclass/machine-learning/ml-stratified-shuffle-split"
+          },
+          {
+            "label": "Support Vector Machine",
+            "slug": "python-masterclass/machine-learning/ml-svm"
+          },
+          {
+            "label": "Machine Learning Train/Test",
+            "slug": "python-masterclass/machine-learning/ml-train-test"
+          },
+          {
+            "label": "Machine Learning Variance",
+            "slug": "python-masterclass/machine-learning/ml-variance"
+          }
+        ]
+      },
+      {
+        "label": "Module 7: Data Structures & Algorithms",
+        "items": [
+          {
+            "label": "Algorithms Intro",
+            "slug": "python-masterclass/dsa/python-algorithms-intro"
+          },
+          {
+            "label": "Python Arrays",
+            "slug": "python-masterclass/dsa/python-arrays"
+          },
+          {
+            "label": "Python Binary Search",
+            "slug": "python-masterclass/dsa/python-binary-search"
+          },
+          {
+            "label": "Python Bubble Sort",
+            "slug": "python-masterclass/dsa/python-bubble-sort"
+          },
+          {
+            "label": "Python Counting Sort",
+            "slug": "python-masterclass/dsa/python-counting-sort"
+          },
+          {
+            "label": "Data Structures & Algorithms",
+            "slug": "python-masterclass/dsa/python-dsa"
+          },
+          {
+            "label": "Python Graphs",
+            "slug": "python-masterclass/dsa/python-graphs"
+          },
+          {
+            "label": "Python Hash Tables",
+            "slug": "python-masterclass/dsa/python-hash-tables"
+          },
+          {
+            "label": "Python Heap",
+            "slug": "python-masterclass/dsa/python-heap"
+          },
+          {
+            "label": "Python Heap Sort",
+            "slug": "python-masterclass/dsa/python-heap-sort"
+          },
+          {
+            "label": "Python Insertion Sort",
+            "slug": "python-masterclass/dsa/python-insertion-sort"
+          },
+          {
+            "label": "Python Linked Lists",
+            "slug": "python-masterclass/dsa/python-linked-lists"
+          },
+          {
+            "label": "Python Merge Sort",
+            "slug": "python-masterclass/dsa/python-merge-sort"
+          },
+          {
+            "label": "Python Queues",
+            "slug": "python-masterclass/dsa/python-queues"
+          },
+          {
+            "label": "Python Quick Sort",
+            "slug": "python-masterclass/dsa/python-quick-sort"
+          },
+          {
+            "label": "Python Radix Sort",
+            "slug": "python-masterclass/dsa/python-radix-sort"
+          },
+          {
+            "label": "Python Recursion",
+            "slug": "python-masterclass/dsa/python-recursion"
+          },
+          {
+            "label": "Python Selection Sort",
+            "slug": "python-masterclass/dsa/python-selection-sort"
+          },
+          {
+            "label": "Python Stacks",
+            "slug": "python-masterclass/dsa/python-stacks"
+          },
+          {
+            "label": "Python Trees",
+            "slug": "python-masterclass/dsa/python-trees"
+          }
+        ]
+      },
+      {
+        "label": "Module 8: MySQL Database",
+        "items": [
+          {
+            "label": "Python MySQL Create Database",
+            "slug": "python-masterclass/mysql/python-mysql-create-database"
+          },
+          {
+            "label": "Python MySQL Create Table",
+            "slug": "python-masterclass/mysql/python-mysql-create-table"
+          },
+          {
+            "label": "Python MySQL Delete",
+            "slug": "python-masterclass/mysql/python-mysql-delete"
+          },
+          {
+            "label": "Python MySQL Drop Table",
+            "slug": "python-masterclass/mysql/python-mysql-drop-table"
+          },
+          {
+            "label": "Python MySQL Get Started",
+            "slug": "python-masterclass/mysql/python-mysql-get-started"
+          },
+          {
+            "label": "Python MySQL Insert Into Table",
+            "slug": "python-masterclass/mysql/python-mysql-insert"
+          },
+          {
+            "label": "Python MySQL Join",
+            "slug": "python-masterclass/mysql/python-mysql-join"
+          },
+          {
+            "label": "Python MySQL Limit",
+            "slug": "python-masterclass/mysql/python-mysql-limit"
+          },
+          {
+            "label": "Python MySQL Order By",
+            "slug": "python-masterclass/mysql/python-mysql-order-by"
+          },
+          {
+            "label": "Python MySQL Select",
+            "slug": "python-masterclass/mysql/python-mysql-select"
+          },
+          {
+            "label": "Python MySQL Update",
+            "slug": "python-masterclass/mysql/python-mysql-update"
+          },
+          {
+            "label": "Python MySQL Where",
+            "slug": "python-masterclass/mysql/python-mysql-where"
+          }
+        ]
+      },
+      {
+        "label": "Module 9: MongoDB Database",
+        "items": [
+          {
+            "label": "Python MongoDB Create Collection",
+            "slug": "python-masterclass/mongodb/python-mongodb-create-collection"
+          },
+          {
+            "label": "Python MongoDB Create Database",
+            "slug": "python-masterclass/mongodb/python-mongodb-create-database"
+          },
+          {
+            "label": "Python MongoDB Delete",
+            "slug": "python-masterclass/mongodb/python-mongodb-delete"
+          },
+          {
+            "label": "Python MongoDB Drop Collection",
+            "slug": "python-masterclass/mongodb/python-mongodb-drop-collection"
+          },
+          {
+            "label": "Python MongoDB Find",
+            "slug": "python-masterclass/mongodb/python-mongodb-find"
+          },
+          {
+            "label": "Python MongoDB Get Started",
+            "slug": "python-masterclass/mongodb/python-mongodb-home"
+          },
+          {
+            "label": "Python MongoDB Insert",
+            "slug": "python-masterclass/mongodb/python-mongodb-insert"
+          },
+          {
+            "label": "Python MongoDB Limit",
+            "slug": "python-masterclass/mongodb/python-mongodb-limit"
+          },
+          {
+            "label": "Python MongoDB Query",
+            "slug": "python-masterclass/mongodb/python-mongodb-query"
+          },
+          {
+            "label": "Python MongoDB Sort",
+            "slug": "python-masterclass/mongodb/python-mongodb-sort"
+          },
+          {
+            "label": "Python MongoDB Update",
+            "slug": "python-masterclass/mongodb/python-mongodb-update"
+          }
+        ]
+      },
+      {
+        "label": "Module 10: Certificate",
+        "items": [
+          {
+            "label": "Python Masterclass Certificate",
+            "slug": "python-masterclass/cert/python-masterclass"
+          }
+        ]
+      },
+      {
+        "label": "Module 11: Reference",
+        "items": [
+          {
+            "label": "Python Built-in Functions",
+            "slug": "python-masterclass/reference/python-builtin-functions"
+          },
+          {
+            "label": "Python Dictionary Methods",
+            "slug": "python-masterclass/reference/python-dict-methods"
+          },
+          {
+            "label": "Python Exceptions",
+            "slug": "python-masterclass/reference/python-exceptions"
+          },
+          {
+            "label": "Python Functions Reference",
+            "slug": "python-masterclass/reference/python-functions-reference"
+          },
+          {
+            "label": "Python Keywords",
+            "slug": "python-masterclass/reference/python-keywords"
+          },
+          {
+            "label": "Python List Methods",
+            "slug": "python-masterclass/reference/python-list-methods"
+          },
+          {
+            "label": "Python Operators",
+            "slug": "python-masterclass/reference/python-operators"
+          },
+          {
+            "label": "Python Set Methods",
+            "slug": "python-masterclass/reference/python-set-methods"
+          },
+          {
+            "label": "Python String Methods",
+            "slug": "python-masterclass/reference/python-string-methods"
+          },
+          {
+            "label": "Python Tuple Methods",
+            "slug": "python-masterclass/reference/python-tuple-methods"
+          },
+          {
+            "label": "Python Type Conversions",
+            "slug": "python-masterclass/reference/python-type-conversions"
+          }
+        ]
+      },
+      {
+        "label": "Module 12: Module Reference",
+        "items": [
+          {
+            "label": "Python Datetime Module",
+            "slug": "python-masterclass/module-reference/python-datetime-module"
+          },
+          {
+            "label": "Python JSON Module",
+            "slug": "python-masterclass/module-reference/python-json-module"
+          },
+          {
+            "label": "Python Math Module",
+            "slug": "python-masterclass/module-reference/python-math-module"
+          },
+          {
+            "label": "Python OS Module",
+            "slug": "python-masterclass/module-reference/python-os-module"
+          },
+          {
+            "label": "Python Random Module",
+            "slug": "python-masterclass/module-reference/python-random-module"
+          },
+          {
+            "label": "Python RegEx Module",
+            "slug": "python-masterclass/module-reference/python-regex-module"
+          }
+        ]
+      },
+      {
+        "label": "Module 13: How-To Guides",
+        "items": [
+          {
+            "label": "Python: Check Django Version",
+            "slug": "python-masterclass/howto/python-check-django-version"
+          },
+          {
+            "label": "Python Setup Environment",
+            "slug": "python-masterclass/howto/python-setup-environment"
+          },
+          {
+            "label": "Python Virtual Environments",
+            "slug": "python-masterclass/howto/python-virtual-environments"
+          }
+        ]
+      },
+      {
+        "label": "Module 14: Examples",
+        "items": [
+          {
+            "label": "Python Examples: Calculator",
+            "slug": "python-masterclass/examples/python-examples-calculator"
+          },
+          {
+            "label": "Python Examples: Classes",
+            "slug": "python-masterclass/examples/python-examples-classes"
+          },
+          {
+            "label": "Python Examples: Datetime",
+            "slug": "python-masterclass/examples/python-examples-datetime"
+          },
+          {
+            "label": "Python Examples: Dictionary",
+            "slug": "python-masterclass/examples/python-examples-dictionary"
+          },
+          {
+            "label": "Python Examples: Errors",
+            "slug": "python-masterclass/examples/python-examples-error-handling"
+          },
+          {
+            "label": "Python Examples: File Handling",
+            "slug": "python-masterclass/examples/python-examples-file-handling"
+          },
+          {
+            "label": "Python Examples: Functions",
+            "slug": "python-masterclass/examples/python-examples-functions"
+          },
+          {
+            "label": "Python Examples: List",
+            "slug": "python-masterclass/examples/python-examples-list"
+          },
+          {
+            "label": "Python Examples: Math",
+            "slug": "python-masterclass/examples/python-examples-math"
+          },
+          {
+            "label": "Python Examples: Real World",
+            "slug": "python-masterclass/examples/python-examples-realworld"
+          },
+          {
+            "label": "Python Examples: String",
+            "slug": "python-masterclass/examples/python-examples-string"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "label": "Advanced CSS",
     "items": [
       {

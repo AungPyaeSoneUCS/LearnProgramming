@@ -1,0 +1,63 @@
+---
+title: "Python MongoDB Find — Python MongoDB Find"
+description: "MongoDB collections မှ documents များကို find() နှင့် find_one() ဖြင့် ရယူခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Collection မှ documents များကို find() method ဖြင့် select ပြုလုပ်ပြီး find_one() ဖြင့် document တစ်ခုတည်းကို ရယူပါသည်.
+
+## Find One Document
+
+find_one() ဖြင့် collection ၏ ပထမဆုံး document တစ်ခုသာ ပြန်ပေးပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+x = mycol.find_one()
+
+print(x)
+```
+
+► Document တစ်ခုသာ (dictionary အဖြစ်) ပြသပါသည်.
+
+## Find ALL Documents
+
+find() ဖြင့် documents အားလုံးကို select ပြုလုပ်၍ Cursor object ကို ရရှိပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+for x in mycol.find():
+    print(x)
+```
+
+► Documents အားလုံးကို dictionary အဖြစ် loop ဖြင့် ပြသပါသည်. (Cursor object ကို iterating ပြုလုပ်ပါသည်)
+
+## Return Only Some Fields
+
+find() အတွင်းတွင် projection (second parameter) ဖြင့် fields များကို ရွေးချယ်နိုင်ပါသည်.
+
+```
+for x in mycol.find({}, { "_id": 0, "name": 1, "address": 1 }):
+    print(x)
+```
+
+► _id မပါဘဲ name နှင့် address fields များကိုသာ ပြသပါသည်.
+
+- 0: exclude (မပါ)
+- 1: include (ပါ)
+
+## Order by _id
+
+find() ၏ return documents များသည် _id order အတိုင်း ဖြစ်ပါသည်.
+
+find_one() နှင့် find() method များသည် MongoDB queries ၏ အခြေခံ ဖြစ်ပြီး cursor iterating ဖြင့် documents များကို ရယူပါသည်.

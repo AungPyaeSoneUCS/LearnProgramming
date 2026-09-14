@@ -1,0 +1,71 @@
+---
+title: "Python Keywords — Python Keywords"
+description: "Python ရှိ reserved keywords များ၏ list နှင့် ၎င်းတို့၏ အဓိပ္ပာယ်များ ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Python တွင် reserved words (keywords) များရှိပြီး ၎င်းတို့ကို variable, function, class အမည်များအဖြစ် အသုံးပြုမရပါ.
+
+## All Python 3.x Keywords
+
+```
+import keyword
+print(keyword.kwlist)
+```
+
+## Keywords များ
+
+### Control Flow
+- **if / elif / else**: conditional statements
+- **for / while**: loops
+- **break / continue / pass**: loop control
+
+### Logic
+- **True / False / None**: boolean and null values
+- **and / or / not**: logical operators
+
+### Function & Class
+- **def**: function definition
+- **return**: return value from function
+- **class**: class definition
+- **lambda**: anonymous function
+
+### Error Handling
+- **try / except / finally**: exception handling
+- **raise**: raise an exception
+- **assert**: assert condition
+
+### Import & Module
+- **import**: import modules
+- **from**: import specific items
+- **as**: alias name
+
+### Scope & Yield
+- **global**: global variable
+- **nonlocal**: non-local variable
+- **yield**: generator function
+- **del**: delete object
+
+### Other
+- **with**: context manager
+- **is**: identity comparison
+- **in**: membership test
+
+## Keyword ကို စစ်ဆေးခြင်း
+
+```
+import keyword
+
+print(keyword.iskeyword("if"))    # True
+print(keyword.iskeyword("hello")) # False
+```
+
+## Keyword ကို Variable Name အဖြစ် သုံးပါက
+
+```
+# Python error ဖြစ်ပါသည်
+# if = 5   # SyntaxError
+```
+
+Keywords များကို Python ၏ grammar ၏ အစိတ်အပိုင်းများအဖြစ် မှတ်သားထားရန် အရေးကြီးပါသည်.

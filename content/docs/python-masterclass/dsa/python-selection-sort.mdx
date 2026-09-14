@@ -1,0 +1,63 @@
+---
+title: "Python Selection Sort — Python Selection Sort"
+description: "Selection sort algorithm ၏ သဘောတရားနှင့် Python ဖြင့် implementation ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Selection sort သည် list တစ်ခုစီမှ အသေးဆုံး element ကို ရှာပြီး ရှေ့ဆုံးသို့ ပြောင်းလဲ လုပ်ဆောင်သည့် algorithm ဖြစ်ပါသည်.
+
+## How it Works
+
+- Position 1 ၏ element မှ အားလုံးထဲတွင် အသေးဆုံးကို ရှာပါသည်
+- ၎င်းကို position 1 နှင့် swap ပြုလုပ်ပါသည်
+- Position 2 ၏ element မှ အသေးဆုံးကို ရှာပြီး swap ပြုလုပ်ပါသည်
+- ဆက်တိုက် continue လုပ်ပါသည်
+
+## Python Implementation
+
+```
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_index = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_index]:
+                min_index = j
+        arr[i], arr[min_index] = arr[min_index], arr[i]
+    return arr
+```
+
+## စမ်းသပ်ခြင်း
+
+```
+arr = [64, 25, 12, 22, 11]
+selection_sort(arr)
+print(arr)
+```
+
+► Output: [11, 12, 22, 25, 64]
+
+## Step-by-Step Example
+
+```
+# [64, 25, 12, 22, 11]
+
+# Step 1: min=11, swap with pos 0 -> [11, 25, 12, 22, 64]
+# Step 2: min=12, swap with pos 1 -> [11, 12, 25, 22, 64]
+# Step 3: min=22, swap with pos 2 -> [11, 12, 22, 25, 64]
+# Step 4: min=25, swap with pos 3 -> [11, 12, 22, 25, 64]
+```
+
+## Time Complexity
+
+- Best/Average/Worst: O(n^2)
+- Space: O(1)
+
+## Comparison များ
+
+- Video swap count: maximum n-1 swaps
+- Bubble sort ထက် swap နည်းပါသည်
+- သို့သော် comparisons များ ဆဲ ဖြစ်ပါသည်
+
+Selection sort သည် simple ဖြစ်သော်လည်း large data များတွင် inefficient ဖြစ်ပါသည်.

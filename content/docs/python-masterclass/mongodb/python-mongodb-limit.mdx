@@ -1,0 +1,48 @@
+---
+title: "Python MongoDB Limit — Python MongoDB Limit"
+description: "MongoDB query results များ၏ အရေအတွက်ကို limit() method ဖြင့် သတ်မှတ်ခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+find() ၏ results များစွာရှိပါက limit() method ဖြင့် return ပြန်လာသော documents အရေအတွက်ကို သတ်မှတ်နိုင်ပါသည်.
+
+## Limit The Result
+
+Documents 5 ခုကိုသာ ပြန်ပေးရန် limit(5) ကို သုံးပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+myresult = mycol.find().limit(5)
+
+for x in myresult:
+    print(x)
+```
+
+► Documents 5 ခုကိုသာ ပြသပါသည်.
+
+## Limit + Sort
+
+Results များကို sort ပြီး limit ပြုလုပ်နိုင်ပါသည်.
+
+```
+myresult = mycol.find().sort("name").limit(3)
+
+for x in myresult:
+    print(x)
+```
+
+► Name ascending order တွင် documents 3 ခုကိုသာ ပြသပါသည်.
+
+## Limit ၏ အသုံးပြုမှု
+
+- Performance ကို မြှင့်တင်ရန် large collections များတွင်
+- Pagination အလိုအလျောက်ပြုလုပ်ရန်
+- Sample data များ ကြည့်ရန်
+
+limit() method သည် queries များ၏ performance နှင့် payload များကို ထိန်းချုပ်ရန် အသုံးဝင်ပါသည်.

@@ -1,0 +1,103 @@
+---
+title: "Python Hash Tables — Python Hash Tables"
+description: "Hash tables ၏ သဘောတရား၊ Python dictionaries နှင့် hash functions ၏ လုပ်ဆောင်ပုံကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Hash table သည် key-value pairs များကို O(1) average time ဖြင့် store/retrieve ပြုနိုင်သည့် data structure ဖြစ်ပါသည်. Python ၏ dictionary သည် hash table implementation ဖြစ်ပါသည်.
+
+## Hash Table ဆိုသည်မှာ
+
+Key ကို hash function ဖြင့် index သို့ ပြောင်းပြီး value ကို ထို index တွင် သိမ်းဆည်းပါသည်.
+
+## Python Dictionary ဖြင့် Hash Table
+
+```
+# dictionary = hash table
+car = {
+    "brand": "Ford",
+    "model": "Mustang",
+    "year": 1964
+}
+```
+
+## Access ပြုခြင်း
+
+```
+print(car["brand"])    # Ford
+print(car.get("model")) # Mustang
+```
+
+## Add/Modify
+
+```
+car["color"] = "red"      # add new
+car["year"] = 1965        # modify existing
+print(car)
+```
+
+## Delete
+
+```
+del car["model"]
+print(car)
+```
+
+## Keys/Values/Items
+
+```
+print(car.keys())
+print(car.values())
+print(car.items())
+```
+
+## Hash Function ၏ Concept
+
+Key → Hash Function → Index → Value
+
+```
+def simple_hash(key, size):
+    return hash(key) % size
+```
+
+## Collision Handling
+
+Hash collisions ဖြစ်ပါက chaining ဖြင့် ကိုင်တွယ်ပါသည်-
+
+```
+class HashTable:
+    def __init__(self, size):
+        self.size = size
+        self.table = [[] for _ in range(size)]
+
+    def hash(self, key):
+        return hash(key) % self.size
+
+    def insert(self, key, value):
+        idx = self.hash(key)
+        for i, (k, v) in enumerate(self.table[idx]):
+            if k == key:
+                self.table[idx][i] = (key, value)
+                return
+        self.table[idx].append((key, value))
+
+    def get(self, key):
+        idx = self.hash(key)
+        for k, v in self.table[idx]:
+            if k == key:
+                return v
+        return None
+```
+
+## စမ်းသပ်ခြင်း
+
+```
+ht = HashTable(10)
+ht.insert("name", "Alice")
+ht.insert("age", 30)
+print(ht.get("name"))
+print(ht.get("age"))
+```
+
+Hash tables များသည် lookup, insert, delete operations များတွင် အလွန်မြန်ဆန်ပါသည်.

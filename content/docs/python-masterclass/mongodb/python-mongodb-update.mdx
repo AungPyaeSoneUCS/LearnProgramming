@@ -1,0 +1,60 @@
+---
+title: "Python MongoDB Update — Python MongoDB Update"
+description: "MongoDB documents များ၏ fields များကို update_one() နှင့် update_many() ဖြင့် ပြောင်းလဲခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Existing documents များ၏ fields များကို update_one() (single) သို့မဟုတ် update_many() (multiple) method များဖြင့် update ပြုလုပ်ပါသည်.
+
+## Update Collection
+
+$set operator ဖြင့် address field ကို "Canyon 123" ဟု update ပြုလုပ်ပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+myquery = { "address": "Valley 345" }
+newvalues = { "$set": { "address": "Canyon 123" } }
+
+mycol.update_one(myquery, newvalues)
+```
+
+► Condition နှင့် ကိုက်ညီသော document ပထမဆုံးတစ်ခုကိုသာ update ပြုလုပ်ပါသည်.
+
+## Update Many Documents
+
+Condition နှင့် ကိုက်ညီသော documents အားလုံးကို update ပြုလုပ်ပါသည်.
+
+```
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+myquery = { "address": { "$regex": "^S" } }
+newvalues = { "$set": { "name": "Minnie" } }
+
+x = mycol.update_many(myquery, newvalues)
+
+print(x.modified_count, "documents updated.")
+```
+
+► Address "S" ဖြင့်စတင်သော documents များ၏ name ကို "Minnie" သို့ ပြောင်းလဲပြီး update လုပ်ခဲ့သော အရေအတွက်ကို ပြသပါသည်.
+
+## modified_count Attribute
+
+UpdateResult ၏ modified_count ဖြင့် update ပြုလုပ်ခဲ့သော documents အရေအတွက်ကို ရယူပါသည်.
+
+```
+print(x.modified_count)
+```
+
+## $set Operator ၏ Meaning
+
+$set သည် fields များတွင် new values များကို assign ပြုလုပ်ပါသည်. Fields မရှိပါက new field အဖြစ် add ပြုလုပ်ပါသည်.
+
+Update operations များသည် documents များတွင် current data များကို နောက်ဆုံးအခြေအနေတွင် ထားရန် အသုံးဝင်ပါသည်.

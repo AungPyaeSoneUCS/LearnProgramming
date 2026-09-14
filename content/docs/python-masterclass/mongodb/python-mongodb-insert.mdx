@@ -1,0 +1,81 @@
+---
+title: "Python MongoDB Insert — Python MongoDB Insert"
+description: "MongoDB collections များထဲသို့ documents များကို insert_one() နှင့် insert_many() ဖြင့် ထည့်သွင်းခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Collection ထဲသို့ documents များကို insert_one() (single document) သို့မဟုတ် insert_many() (multiple documents) များဖြင့် ထည့်သွင်းပါသည်.
+
+## Insert One Document
+
+customers collection ထဲသို့ document တစ်ခု ထည့်ပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+mydict = { "name": "John", "address": "Highway 37" }
+
+x = mycol.insert_one(mydict)
+
+print(x.inserted_id)
+```
+
+► Document ၏ _id ကို ပြန်ပေးပါသည်. (MongoDB မှ auto-generate)
+
+## Return The _id Field
+
+insert_one() သည် InsertOneResult object ကို ပြန်ပေးပြီး inserted_id ဖြင့် _id ကို ရယူနိုင်ပါသည်.
+
+```
+print(x.inserted_id)
+```
+
+## Insert Multiple Documents
+
+insert_many() ဖြင့် documents များစွာကို list အဖြစ် ထည့်ပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+mylist = [
+    { "name": "Amy", "address": "Apple st 652" },
+    { "name": "Hannah", "address": "Mountain 21" },
+    { "name": "Michael", "address": "Valley 345" },
+    { "name": "Sandy", "address": "Ocean blvd 2" }
+]
+
+x = mycol.insert_many(mylist)
+
+print(x.inserted_ids)
+```
+
+► Documents များ၏ _id values များကို list အဖြစ် ပြသပါသည်.
+
+## Insert With Specified IDs
+
+_id field ကို ကိုယ်တိုင်သတ်မှတ်လိုပါက document ထဲတွင် ထည့်၍ရပါသည်.
+
+```
+mylist = [
+    { "_id": 1, "name": "John", "address": "Highway 37" },
+    { "_id": 2, "name": "Peter", "address": "Lowstreet 27" },
+    { "_id": 3, "name": "Amy", "address": "Apple st 652" }
+]
+
+x = mycol.insert_many(mylist)
+
+print(x.inserted_ids)
+```
+
+► [1, 2, 3] — မိမိသတ်မှတ်ထားသော ids များကို ပြသပါသည်.
+
+insert_one() နှင့် insert_many() များသည် MongoDB collections ထဲသို့ data များထည့်သွင်းရန် standard methods ဖြစ်ပါသည်.

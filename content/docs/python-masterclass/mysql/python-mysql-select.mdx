@@ -1,0 +1,75 @@
+---
+title: "Python MySQL Select — Python MySQL Select"
+description: "MySQL table မှ data များကို SELECT statement ဖြင့် ရယူခြင်း၊ fetchall() method များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Table တစ်ခုမှ data များကို SELECT statement ဖြင့် select ပြုလုပ်၍ cursor ၏ fetchall() method ဖြင့် ရယူပါသည်.
+
+## Select From a Table
+
+customers table မှ data အားလုံးကို select ပြုလုပ်ပါသည်.
+
+```
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword",
+    database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("SELECT * FROM customers")
+myresult = mycursor.fetchall()
+
+for row in myresult:
+    print(row)
+```
+
+► Rows တစ်ခုစီကို tuple အဖြစ် ပြသပါသည်.
+
+## Select Columns များ
+
+Column အားလုံးအစား လိုအပ်သော columns များကိုသာ select ပြုလုပ်ပါသည်.
+
+```
+mycursor.execute("SELECT name, address FROM customers")
+
+myresult = mycursor.fetchall()
+
+for row in myresult:
+    print(row)
+```
+
+► name နှင့် address columns နှစ်ခုကိုသာ ပြသပါသည်.
+
+## fetchall() vs fetchone()
+
+- **fetchall()**: Rows အားလုံးကို list အဖြစ် ရယူပါသည်
+- **fetchone()**: Row တစ်ခုကိုသာ ရယူပါသည်
+
+```
+mycursor.execute("SELECT * FROM customers")
+myresult = mycursor.fetchone()
+
+print(myresult)
+```
+
+► ပထမဆုံး row ကိုသာ ပြသပါသည်.
+
+## Where Clause ဖြင့် Select
+
+```
+sql = "SELECT * FROM customers WHERE address LIKE '%St%'"
+mycursor.execute(sql)
+myresult = mycursor.fetchall()
+
+for row in myresult:
+    print(row)
+```
+
+SELECT + fetchall() ပေါင်းစပ်သုံးခြင်းသည် database ၏ data များကို ရယူရန် စံနည်းလမ်း ဖြစ်ပါသည်.

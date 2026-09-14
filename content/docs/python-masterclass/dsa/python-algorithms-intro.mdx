@@ -1,0 +1,85 @@
+---
+title: "Algorithms Intro — Algorithms Intro"
+description: "Algorithms ၏ အခြေခံသဘောတရား၊ types များနှင့် Big O notation ဖြင့် efficiency တိုင်းတာခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Algorithm ဆိုသည်မှာ problem တစ်ခုကို ဖြေရှင်းရန် အဆင့်များပြည့်စုံသော instructions ဖြစ်ပြီး O-notation ဖြင့် speed/memory ကို တိုင်းတာပါသည်.
+
+## Algorithm ဆိုသည်မှာ
+
+- Input ရှိပြီး output ပေးသည်
+- ရေတွက်ချက်နိုင်သည် (finite steps)
+- Terminate ဖြစ်ရမည်
+
+## Time Complexity
+
+Algorithm ကြာချိန်ကို input size n ၏ function အဖြစ် ဖော်ပြပါသည်.
+
+- **O(1)**: Constant - hash lookup
+- **O(log n)**: Logarithmic - binary search
+- **O(n)**: Linear - list iteration
+- **O(n log n)**: Linearithmic - merge sort
+- **O(n^2)**: Quadratic - bubble sort
+
+## Space Complexity
+
+Algorithm သုံးသည့် memory ပမာဏ.
+
+```
+# O(1) space
+def sum_list(lst):
+    total = 0
+    for x in lst:
+        total += x
+    return total
+
+# O(n) space
+def copy_list(lst):
+    new = []
+    for x in lst:
+        new.append(x)
+    return new
+```
+
+## Best/Worst/Average Case
+
+- **Best case**: အမြန်ဆုံး ဖြစ်နိုင်ချေ
+- **Worst case**: အကြာဆုံး ဖြစ်နိုင်ချေ
+- **Average case**: ပျမ်းမျှ ဖြစ်နိုင်ချေ
+
+## ဥပမာ - Linear Search
+
+```
+def linear_search(arr, target):
+    for i in range(len(arr)):
+        if arr[i] == target:
+            return i
+    return -1
+```
+
+- Best: O(1) (ပထမဆုံးတွင် တွေ့ပါက)
+- Worst: O(n) (နောက်ဆုံးမှ တွေ့ပါက)
+- Average: O(n)
+
+## ဥပမာ - Binary Search
+
+```
+def binary_search(arr, target):
+    low, high = 0, len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+```
+
+- Best: O(1)
+- Worst: O(log n)
+
+Algorithm ရွေးချယ်ခြင်းသည် program ၏ efficiency ကို ဆုံးဖြတ်ပါသည်.

@@ -1,0 +1,71 @@
+---
+title: "Python MongoDB Query — Python MongoDB Query"
+description: "MongoDB collections များထဲမှ documents များကို query filters များဖြင့် filter ပြုလုပ်ခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Collection မှ data များကို query filters များဖြင့် ရရှိနိုင်ပြီး find() method အတွင်းရှိ query object ကို အသုံးပြုပါသည်.
+
+## Filter The Result
+
+Address သည် "Park Lane 38" ဖြစ်သော documents များကို ရှာဖွေပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+myquery = { "address": "Park Lane 38" }
+
+mydoc = mycol.find(myquery)
+
+for x in mydoc:
+    print(x)
+```
+
+► Address တိကျစွာ ကိုက်ညီသော documents များကိုသာ ပြသပါသည်.
+
+## Advanced Query ($gt)
+
+Value တစ်ခုထက် ကြီးသော documents များကို ရှာဖွေရန် $gt operator ကို သုံးပါသည်.
+
+```
+myquery = { "address": { "$gt": "S" } }
+
+mydoc = mycol.find(myquery)
+
+for x in mydoc:
+    print(x)
+```
+
+► Address သည် "S" ၏ နောက်တွင် alphabetically ကြီးသော documents များကို ပြသပါသည်.
+
+## Filter With Regular Expression
+
+စတင်သော text ပေါ်မူတည်၍ filter ပြုလုပ်ရန် $regex operator ကို သုံးပါသည်.
+
+```
+myquery = { "address": { "$regex": "^S" } }
+
+mydoc = mycol.find(myquery)
+
+for x in mydoc:
+    print(x)
+```
+
+► Address သည် "S" letter ဖြင့် စတင်သော documents များကို ပြသပါသည်.
+
+## Query Operators များ
+
+- **$gt**: Greater than
+- **$lt**: Less than
+- **$gte**: Greater than or equal
+- **$lte**: Less than or equal
+- **$ne**: Not equal
+- **$in**: In list
+- **$regex**: Regular expression
+
+Query filters များကို documents များမှ specific data များကို ရယူရန် ကျယ်ကျယ်ပြန့်ပြန့် အသုံးပြုပါသည်.

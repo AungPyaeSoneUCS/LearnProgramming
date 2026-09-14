@@ -1,0 +1,79 @@
+---
+title: "Python MySQL Order By — Python MySQL Order By"
+description: "MySQL query results များကို ORDER BY clause ဖြင့် sort ပြုလုပ်ခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Query results များကို ORDER BY clause ဖြင့် ascending/descending order ဖြင့် sort ပြုလုပ်နိုင်ပါသည်.
+
+## Order By - Ascending (default)
+
+customers ကို name column အတိုင်း sort ပြုလုပ်ပါသည်.
+
+```
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword",
+    database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "SELECT * FROM customers ORDER BY name"
+mycursor.execute(sql)
+
+myresult = mycursor.fetchall()
+for row in myresult:
+    print(row)
+```
+
+► name အက္ခရာစဉ်အတိုင်း rows များကို ပြသပါသည်.
+
+## Order By DESC
+
+Descending order အတွက် DESC keyword ကို သုံးပါသည်.
+
+```
+sql = "SELECT * FROM customers ORDER BY name DESC"
+mycursor.execute(sql)
+
+myresult = mycursor.fetchall()
+for row in myresult:
+    print(row)
+```
+
+► name များကို descending order ဖြင့် ပြသပါသည် (Z to A).
+
+## Multiple Columns Sort
+
+Columns များစွာဖြင့် sort ပြုလုပ်နိုင်ပါသည်.
+
+```
+sql = "SELECT * FROM customers ORDER BY name, address"
+mycursor.execute(sql)
+```
+
+► name ၊ နောက်တွင် address order အတိုင်း sort ပြုလုပ်ပါသည်.
+
+## ASC ကို Explicitly သုံးခြင်း
+
+```
+sql = "SELECT * FROM customers ORDER BY name ASC"
+mycursor.execute(sql)
+```
+
+► DESC မပေးပါက default သည် ASC ဖြစ်ပါသည်.
+
+## ဆက်စပ်သော ဥပမာ
+
+```
+# Products table ကို price ဖြင့် sort
+sql = "SELECT * FROM products ORDER BY price DESC"
+mycursor.execute(sql)
+```
+
+ORDER BY clause ဖြင့် results များကို စနစ်တကျ sort ပြုလုပ်နိုင်ပါသည်.

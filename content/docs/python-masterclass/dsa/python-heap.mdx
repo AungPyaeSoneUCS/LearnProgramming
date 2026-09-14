@@ -1,0 +1,97 @@
+---
+title: "Python Heap — Python Heap"
+description: "Heap data structure ၏ သဘောတရား၊ Python heapq module ဖြင့် min/max heap ဖန်တီးခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Heap သည် parent-child relationship ကို ထိန်းသိမ်းသည့် special tree-based data structure ဖြစ်ပြီး priority queue များတွင် အသုံးပြုပါသည်.
+
+## Heap ဆိုသည်မှာ
+
+- **Min-Heap**: Parent သည် children များထက် အသေးငယ်ဆုံး
+- **Max-Heap**: Parent သည် children များထက် အကြီးဆုံး
+
+## Python ၏ heapq Module
+
+Python ၏ built-in `heapq` module ဖြင့် min-heap ကို ဖန်တီးပါသည်.
+
+```
+import heapq
+
+heap = []
+heapq.heappush(heap, 3)
+heapq.heappush(heap, 1)
+heapq.heappush(heap, 4)
+heapq.heappush(heap, 2)
+
+print(heap)
+```
+
+► Output: [1, 2, 4, 3] (min-heap property ကို ထိန်းသိမ်းပါသည်)
+
+## Pop Operation
+
+```
+import heapq
+
+heap = [1, 2, 4, 3]
+print(heapq.heappop(heap))  # 1
+print(heap)                  # [2, 3, 4]
+```
+
+## Heapify ပြုလုပ်ခြင်း
+
+List တစ်ခုကို heap အဖြစ် ပြောင်းရန်-
+
+```
+import heapq
+
+data = [5, 1, 4, 2, 3]
+heapq.heapify(data)
+print(data)
+```
+
+► Output: [1, 2, 3, 5, 4]
+
+## Top K Elements ရှာခြင်း
+
+```
+import heapq
+
+numbers = [5, 2, 8, 1, 9, 3]
+top3 = heapq.nlargest(3, numbers)
+print(top3)
+```
+
+► Output: [9, 8, 3]
+
+## Min K Elements
+
+```
+import heapq
+
+numbers = [5, 2, 8, 1, 9, 3]
+min3 = heapq.nsmallest(3, numbers)
+print(min3)
+```
+
+► Output: [1, 2, 3]
+
+## Max-Heap ဖန်တီးခြင်း
+
+Python ၏ heapq သည် min-heap သာ ပေးပြီး max-heap ဖန်တီးရန် negative value များကို သုံးပါသည်.
+
+```
+import heapq
+
+heap = []
+for x in [3, 1, 4]:
+    heapq.heappush(heap, -x)
+
+print([-heapq.heappop(heap) for _ in range(3)])
+```
+
+► Output: [4, 3, 1] (max-heap order)
+
+Heaps များသည် scheduling, priority queues, top-K problems များတွင် အသုံးဝင်ပါသည်.

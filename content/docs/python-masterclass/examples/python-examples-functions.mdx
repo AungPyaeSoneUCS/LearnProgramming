@@ -1,0 +1,113 @@
+---
+title: "Python Examples: Functions — Python Examples: Functions"
+description: "Python functions များ၏ လက်တွေ့ ဥပမာများ (parameters, return, recursion, decorators) ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Functions များသည် code ကို ပြန်သုံးနိုင်စေရန် reusable blocks များဖြစ်ပြီး arguments များနှင့် return values များကို အသုံးပြုပါသည်.
+
+## Default Parameters
+
+```
+def greet(name, greeting="Hello"):
+    return f"{greeting}, {name}!"
+
+print(greet("John"))              # Hello, John!
+print(greet("Amy", "Welcome"))    # Welcome, Amy!
+```
+
+## Keyword Arguments
+
+```
+def describe(name, age, city):
+    return f"{name} is {age} years old from {city}"
+
+print(describe(city="Yangon", name="John", age=30))
+# Order မလိုက်ညီဘဲ keyword ဖြင့် ခေါ်နိုင်ပါသည်
+```
+
+## *args and **kwargs
+
+```
+def total(*args):
+    return sum(args)
+
+def print_info(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print(total(1, 2, 3, 4))        # 10
+print_info(name="John", age=30)
+# name: John
+# age: 30
+```
+
+## Return Multiple Values
+
+```
+def analyze_numbers(numbers):
+    return min(numbers), max(numbers), sum(numbers)
+
+lo, hi, total = analyze_numbers([3, 1, 4, 1, 5])
+print(lo, hi, total)  # 1 5 14
+```
+
+## Recursion - Fibonacci
+
+```
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+for i in range(10):
+    print(fibonacci(i), end=" ")
+print()  # 0 1 1 2 3 5 8 13 21 34
+```
+
+## Lambda in Functions
+
+```
+names = ["Alice", "bob", "Charlie"]
+names.sort(key=lambda name: name.lower())
+print(names)  # ["Alice", "bob", "Charlie"]
+
+double = lambda x: x * 2
+print(double(5))  # 10
+```
+
+## Function as Argument
+
+```
+def apply_twice(func, value):
+    return func(func(value))
+
+def add_one(x):
+    return x + 1
+
+print(apply_twice(add_one, 5))  # 7
+print(apply_twice(lambda x: x * 2, 3))  # 12
+```
+
+## Decorator Example
+
+```
+def timer(func):
+    import time
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        elapsed = time.perf_counter() - start
+        print(f"{func.__name__} took {elapsed:.6f}s")
+        return result
+    return wrapper
+
+@timer
+def heavy_computation():
+    return sum(range(1_000_000))
+
+print(heavy_computation())
+```
+
+Function examples များသည် modular programming ၏ concepts များကို သရုပ်ပြပါသည်.

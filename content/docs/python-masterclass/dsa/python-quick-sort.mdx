@@ -1,0 +1,61 @@
+---
+title: "Python Quick Sort — Python Quick Sort"
+description: "Quick sort algorithm ၏ pivot-based divide-and-conquer နည်းလမ်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Quick sort သည် pivot element တစ်ခုကို ရွေးပြီး array ကို smaller/larger partitions အဖြစ် ခွဲခြားသည့် divide-and-conquer algorithm ဖြစ်ပါသည်.
+
+## How it Works
+
+- Pivot ကိုရွေးပြီး array ၏ နောက်ဆုံး element ကို (သို့) အခြား element တစ်ခုကို သုံးပါသည်
+- Elements များကို pivot ထက် နည်းသော group နှင့် များသော group ဟု partition ခွဲပါသည်
+- Partitions များကို recursively sort ပြုလုပ်ပါသည်
+
+## Python Implementation
+
+```
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    right = [x for x in arr if x > pivot]
+    middle = [x for x in arr if x == pivot]
+    return quick_sort(left) + middle + quick_sort(right)
+```
+
+## စမ်းသပ်ခြင်း
+
+```
+arr = [10, 7, 8, 9, 1, 5]
+sorted_arr = quick_sort(arr)
+print(sorted_arr)
+```
+
+► Output: [1, 5, 7, 8, 9, 10]
+
+## In-place Version
+
+လိုအပ်သော memory ကို လျှော့ချရန် in-place partition မား ပြုလုပ်နိုင်ပါသည်.
+
+```
+def partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+```
+
+## Time Complexity
+
+- Best/Average: O(n log n)
+- Worst: O(n^2) (pivot နေရာရွေးခြင်း မကောင်းပါက)
+- Space: O(log n) (in-place)
+
+Quick sort သည် merge sort ၏ အလားတူ O(n log n) ဖြစ်ပြီး အများစုတွင် in-place ဖြစ်သောကြောင့် cache-friendly ဖြစ်ပါသည်.

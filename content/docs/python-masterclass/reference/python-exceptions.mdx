@@ -1,0 +1,72 @@
+---
+title: "Python Exceptions — Python Exceptions"
+description: "Python exception types အားလုံးနှင့် exception hierarchy ကို ကြည့်ရန် အညွှန်းဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Exception များသည် runtime တွင် ဖြစ်ပေါ်လာသော errors များဖြစ်ပြီး try/except block ဖြင့် handle ပြုလုပ်ပါသည်.
+
+## Common Exceptions
+
+- **Exception**: General base class for all exceptions
+- **ValueError**: Wrong value passed to function
+- **TypeError**: Wrong type passed to operation
+- **NameError**: Variable name not found
+- **IndexError**: Index out of range
+- **KeyError**: Dictionary key not found
+- **FileNotFoundError**: File not found
+- **ImportError**: Module import failed
+- **ZeroDivisionError**: Division by zero
+- **AttributeError**: Object has no attribute
+- **RuntimeError**: Generic runtime error
+- **StopIteration**: Iterator exhausted
+
+## Exception Hierarchy
+
+```
+BaseException
+ └── Exception
+      ├── ArithmeticError
+      │    ├── ZeroDivisionError
+      │    └── OverflowError
+      ├── LookupError
+      │    ├── IndexError
+      │    └── KeyError
+      ├── OSError
+      │    ├── FileNotFoundError
+      │    └── PermissionError
+      ├── ValueError
+      ├── TypeError
+      ├── ImportError
+      ├── AttributeError
+      ├── NameError
+      ├── RuntimeError
+      └── StopIteration
+```
+
+## Custom Exception ဖန်တီးခြင်း
+
+```
+class MyError(Exception):
+    pass
+
+raise MyError("custom error")
+```
+
+## Exception Handle ပြုလုပ်ခြင်း
+
+```
+try:
+    x = 1 / 0
+except ZeroDivisionError as e:
+    print("Error:", e)
+except Exception as e:
+    print("General error:", e)
+else:
+    print("No error occurred")
+finally:
+    print("Always runs")
+```
+
+Exception handling ကို ကောင်းမွန်စွာ အသုံးပြုခြင်းသည် program ၏ robustness ကို မြှင့်တင်ပါသည်.

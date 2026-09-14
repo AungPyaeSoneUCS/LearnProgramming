@@ -1,0 +1,98 @@
+---
+title: "Python Queues — Python Queues"
+description: "Queues ၏ FIFO principle ၏ သဘောတရားနှင့် Python ၏ deque module ဖြင့် queue ဖန်တီးခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Queue သည် First In, First Out (FIFO) principle ဖြင့် အလုပ်လုပ်သည့် data structure ဖြစ်ပြီး မိတ်ဆွေရောက်ရှိသည့် sequence အတိုင်း ထွက်ပါသည်.
+
+## Queue ဆိုသည်မှာ
+
+- **Enqueue**: Queue ထဲသို့ element ထည့်ခြင်း
+- **Dequeue**: Queue မှ element ထုတ်ခြင်း
+- **Front**: ရှေ့ဆုံး element
+
+## collections.deque ဖြင့် Queue
+
+Python ၏ `deque` module သည် efficient queue operations ပေးပါသည်.
+
+```
+from collections import deque
+
+queue = deque()
+queue.append("A")
+queue.append("B")
+queue.append("C")
+print(queue)
+```
+
+► Output: deque(['A', 'B', 'C'])
+
+## Dequeue ပြုလုပ်ခြင်း
+
+```
+print(queue.popleft())  # 'A'
+print(queue)            # deque(['B', 'C'])
+```
+
+deque သည် list ၏ pop(0) ထက် ပိုမြန်ပါသည်.
+
+## Queue ဖြင့် Task Queue
+
+```
+from collections import deque
+
+task_queue = deque()
+
+def add_task(task):
+    task_queue.append(task)
+
+def process_task():
+    if task_queue:
+        task = task_queue.popleft()
+        return f"Processing {task}"
+    return "No tasks"
+
+add_task("Task 1")
+add_task("Task 2")
+print(process_task())
+print(process_task())
+```
+
+► Output:
+```
+Processing Task 1
+Processing Task 2
+```
+
+## FIFO ၏ ဥပမာ
+
+ရောက်ရှိသည့် order အတိုင်း ထွက်ပါသည်-
+
+```
+from collections import deque
+
+q = deque([1, 2, 3, 4, 5])
+while q:
+    print(q.popleft(), end=" ")
+```
+
+► Output: 1 2 3 4 5
+
+## Priority Queue
+
+Priority queue သည် priority အမြင့်ဆုံးကို ပထမဆုံး ထုတ်ပါသည်. Python ၏ `heapq` module ကို သုံးပါသည်.
+
+```
+import heapq
+
+pq = []
+heapq.heappush(pq, (2, "low"))
+heapq.heappush(pq, (1, "high"))
+heapq.heappush(pq, (3, "lowest"))
+
+print(heapq.heappop(pq))  # (1, 'high')
+```
+
+Queues များသည် task scheduling, breadth-first search များတွင် အသုံးဝင်ပါသည်.

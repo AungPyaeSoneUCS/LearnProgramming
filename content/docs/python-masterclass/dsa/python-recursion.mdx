@@ -1,0 +1,72 @@
+---
+title: "Python Recursion — Python Recursion"
+description: "Recursion ၏ သဘောတရား၊ base case နှင့် recursive functions များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Recursion ဆိုသည်မှာ function တစ်ခုသည် မိမိကိုယ်တိုင် ခေါ်ဝေါ်သော technique ဖြစ်ပြီး problems များကို sub-problems များသို့ ခွဲခြားပြီး ဖြေရှင်းပါသည်.
+
+## Recursive Function ဆိုသည်မှာ
+
+Function တစ်ခုသည် မိမိကိုယ်တိုင် ခေါ်ဝေါ်ခြင်း ဖြစ်ပြီး base case (ရပ်တန့်သည့်အခြေအနေ) ရှိရန် မလိုအပ်မီ စနစ်တကျ စီမံထားရပါသည်.
+
+## Why Use Recursion
+
+- ထပ်ခါထပ်ခါ ဖြစ်သော structural problems (trees, graphs) များတွင် အသုံးဝင်ပါသည်
+- Divide-and-conquer algorithms များ၏ အခြေခံ ဖြစ်ပါသည်
+- Code ကို ရိုးရှင်းစေပြီး readable ဖြစ်စေပါသည်
+
+## Base Case ၏ သဘောတရား
+
+Default ၏ Condition ဖြစ်သော base case ကို function သည် Stop condition မရှိဘဲ infinite loop ဖြစ်မည့်နည်းဖြင့် ရပ်တန့်ပါသည်.
+
+## Factorial ဥပမာ
+
+```
+def factorial(n):
+    if n <= 1:   # base case
+        return 1
+    return n * factorial(n - 1)
+
+print(factorial(5))
+```
+
+► Output: 120 (5 x 4 x 3 x 2 x 1)
+
+## Fibonacci ဥပမာ
+
+```
+def fibonacci(n):
+    if n <= 1:   # base case
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+for i in range(6):
+    print(fibonacci(i), end="")
+```
+
+► Output: 0 1 1 2 3 5
+
+## Directory Traversal ဥပမာ
+
+```
+import os
+
+def list_files(path, indent=0):
+    for item in os.listdir(path):
+        item_path = os.path.join(path, item)
+        print("  " * indent + item)
+        if os.path.isdir(item_path):
+            list_files(item_path, indent + 1)
+
+list_files("myfolder")
+```
+
+## Recursion vs Iteration
+
+- Recursion: Code ရိုးရှင်းသော်လည်း performance လျော့နည်းနိုင်ပါသည်
+- Iteration: Loops ဖြင့် efficient ဖြစ်သော်လည်း code ရှုပ်ထွေးနိုင်ပါသည်
+- Recursion depth မြင့်ပါက RecursionError ဖြစ်နိုင်ပါသည်
+
+Recursion ကို problems များ၏ structure နှင့် sub-problems များအဖြစ် natural divide ဖြစ်ပါက အသုံးဝင်ပါသည်.

@@ -1,0 +1,70 @@
+---
+title: "Python String Methods — Python String Methods"
+description: "Python strings ၏ built-in methods အားလုံး၏ အညွှန်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+String methods များကို string object ပေါ်တွင် တိုက်ရိုက်ခေါ်သုံးပြီး string ကို ပြောင်းလဲ/ခွဲခြမ်းနိုင်ပါသည်.
+
+## Case Methods
+
+```
+"hello".upper()       # "HELLO"
+"HELLO".lower()       # "hello"
+"hello world".title() # "Hello World"
+"hello".capitalize()  # "hello"
+"hello".swapcase()    # "HELLO"
+```
+
+## Search Methods
+
+```
+"hello world".find("world")    # 6
+"hello world".index("world")   # 6 (not found: ValueError)
+"hello world".count("l")       # 3
+"hello".startswith("he")       # True
+"hello".endswith("lo")         # True
+```
+
+## Strip Methods
+
+```
+"  hello  ".strip()   # "hello"
+"  hello  ".lstrip()  # "hello  "
+"  hello  ".rstrip()  # "  hello"
+```
+
+## Split & Join
+
+```
+"a,b,c".split(",")           # ["a", "b", "c"]
+"a,b,c".split(",", 1)        # ["a", "b,c"]
+" ".join(["hello", "world"]) # "hello world"
+```
+
+## Replace & Encode
+
+```
+"hello".replace("l", "L")     # "heLLo"
+"hello".encode("utf-8")       # b'hello'
+b'hello'.decode("utf-8")      # "hello"
+```
+
+## Check Methods
+
+```
+"hello".isalpha()   # True
+"123".isdigit()     # True
+"hello123".isalnum() # True
+"  ".isspace()      # True
+```
+
+## Format & Pad
+
+```
+"hello".center(20, "-") # "--------hello---------"
+"hello".zfill(10)       # "00000hello"
+```
+
+String methods များသည် text processing တွင် နေ့စဉ် အသုံးပြုနေရပါသည်.

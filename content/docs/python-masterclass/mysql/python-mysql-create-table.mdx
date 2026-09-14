@@ -1,0 +1,77 @@
+---
+title: "Python MySQL Create Table — Python MySQL Create Table"
+description: "MySQL တွင် tables များ ဖန်တီးခြင်း၊ primary keys များ သတ်မှတ်ခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+MySQL table တစ်ခုကို ဖန်တီးရန် CREATE TABLE statement ကို အသုံးပြုပြီး column names နှင့် data types များကို သတ်မှတ်ရပါသည်.
+
+## Create Table
+
+"customers" table ကို id, name, address columns များဖြင့် ဖန်တီးပါသည်.
+
+```
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword",
+    database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("""
+CREATE TABLE customers (
+    name VARCHAR(255),
+    address VARCHAR(255)
+)
+""")
+```
+
+► customers table ကို name နှင့် address columns များဖြင့် ဖန်တီးပါသည်.
+
+## Primary Key ထည့်ခြင်း
+
+Primary key ဖြင့် row တစ်ခုစီတွင် unique identifier ရှိစေပါသည်.
+
+```
+mycursor.execute("""
+CREATE TABLE customers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    address VARCHAR(255)
+)
+""")
+```
+
+သို့မဟုတ် table ကို ALTER statement ဖြင့် primary key ထည့်နိုင်ပါသည်.
+
+```
+mycursor.execute("ALTER TABLE customers ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY")
+```
+
+## Existing Tables များ စစ်ဆေးခြင်း
+
+SHOW TABLES statement ဖြင့် tables များကို list ပြုလုပ်ပါသည်.
+
+```
+mycursor.execute("SHOW TABLES")
+
+for table in mycursor:
+    print(table)
+```
+
+► Database အတွင်းရှိ tables များကို ပြသပါသည်.
+
+## Columns ပြောင်းလဲခြင်း
+
+Column အသစ်များ ထည့်ရန် ALTER TABLE statement ကို သုံးပါသည်.
+
+```
+mycursor.execute("ALTER TABLE customers ADD COLUMN email VARCHAR(255)")
+```
+
+Tables များကို primary key နှင့် data types များဖြင့် မှန်ကန်စွာ ဖန်တီးပါက data များ၏ integrity ကို ထိန်းသိမ်းနိုင်ပါသည်.

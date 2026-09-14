@@ -1,0 +1,98 @@
+---
+title: "Python Linked Lists — Python Linked Lists"
+description: "Linked lists ၏ သဘောတရား၊ node များနှင့် pointer/links များဖြင့် ဖန်တီးပုံကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Linked list သည် nodes များကို pointer/link ဖြင့် ဆက်ထားသည့် data structure ဖြစ်ပြီး arrays ကဲ့သို့ contiguous memory မလိုအပ်ပါ.
+
+## Node Class ဖန်တီးခြင်း
+
+Node တစ်ခုတွင် data နှင့် next pointer နှစ်ခုလုံး ပါဝင်ပါသည်.
+
+```
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+```
+
+## LinkedList Class ဖန်တီးခြင်း
+
+```
+class LinkedList:
+    def __init__(self):
+        self.head = None
+```
+
+## ထည့်သွင်းခြင်း
+
+Linked list ထဲသို့ elements ထည့်ရန်-
+
+```
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+            return
+        last = self.head
+        while last.next:
+            last = last.next
+        last.next = new_node
+```
+
+## ဖတ်ခြင်း
+
+```
+    def print_list(self):
+        current = self.head
+        while current:
+            print(current.data)
+            current = current.next
+```
+
+## List ဖန်တီး၍ ဖတ်ခြင်း
+
+```
+ll = LinkedList()
+ll.append(1)
+ll.append(2)
+ll.append(3)
+ll.print_list()
+```
+
+► Output: 1, 2, 3
+
+## Length ရှာခြင်း
+
+```
+    def length(self):
+        count = 0
+        current = self.head
+        while current:
+            count += 1
+            current = current.next
+        return count
+```
+
+## Delete ပြုခြင်း
+
+```
+    def delete(self, data):
+        if self.head and self.head.data == data:
+            self.head = self.head.next
+            return
+        current = self.head
+        while current and current.next:
+            if current.next.data == data:
+                current.next = current.next.next
+                return
+            current = current.next
+```
+
+Linked lists များသည် insertion/deletion အလွယ်တကူဖြစ်ပြီး arrays ထက် memory efficiency ပိုကောင်းပါသည်.

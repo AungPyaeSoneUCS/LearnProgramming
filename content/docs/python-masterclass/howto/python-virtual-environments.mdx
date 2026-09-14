@@ -1,0 +1,93 @@
+---
+title: "Python Virtual Environments — Python Virtual Environments"
+description: "Virtual environment များ၏ အဓိပ္ပာယ်၊ ဖန်တီးခြင်းနှင့် အသုံးပြုခြင်းကို အသေးစိတ် သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Virtual environment သည် project တစ်ခုအတွက် isolated Python environment ဖြစ်ပြီး dependencies များကို ခွဲခြားထားနိုင်ပါသည်.
+
+## Virtual Environment ဆိုသည်မှာ
+
+Virtual environment ဖြင့် project တစ်ခုစီတွင် မိမိ၏ packages versions များကို အသုံးပြုနိုင်ပါသည်. Project A အတွက် package version 1.0, Project B အတွက် version 2.0 ကို ခွဲခြား၍ သိမ်းနိုင်ပါသည်.
+
+## Create Virtual Environment
+
+```
+> python -m venv venv
+```
+
+venv သည် my environment ၏ name ဖြစ်ပါသည်. လိုသလို ပေးနိုင်ပါသည်.
+
+## Activate Virtual Environment
+
+Windows:
+
+```
+> venv\Scripts\activate
+```
+
+Mac/Linux:
+
+```
+> source venv/bin/activate
+```
+
+► Activated ဖြစ်ပါက prompt ၌ (venv) ပေါ်လာပါသည်.
+
+## Deactivate Virtual Environment
+
+```
+> deactivate
+```
+
+► Virtual environment မှ ထွက်ပါသည်.
+
+## Why Use Virtual Environments
+
+- **Isolated dependencies**: project တစ်ခုစီအတွက် separate packages
+- **Version control**: versions များကို တိကျစွာ ထိန်းချုပ်
+- **Avoid conflicts**: project များကြား package clashes ရှောင်ခြင်း
+- **Sharing**: requirements.txt ဖြင့် easy setup
+
+## Install Packages Inside venv
+
+```
+> pip install flask
+> pip install numpy pandas
+> pip list          # list installed packages
+> pip freeze > requirements.txt
+```
+
+## Use Requirements to Recreate
+
+```
+# In a new environment
+> pip install -r requirements.txt
+```
+
+## Anaconda Environments
+
+Anaconda/Miniconda များတွင် conda environments များဖြင့် အလားတူ လုပ်ဆောင်နိုင်ပါသည်:
+
+```
+> conda create -n myenv python=3.13
+> conda activate myenv
+> conda install numpy pandas
+```
+
+## .venv Naming Convention
+
+Team collaboration အတွက်:
+
+- venv name တွင် "venv" ကိုသာ သုံးပါ (.venv / virtualenv)
+- .gitignore တွင် venv/ ကို ထည့်ပါ
+
+```
+# .gitignore
+venv/
+__pycache__/
+*.pyc
+```
+
+Virtual environments များကို professional Python projects အားလုံးတွင် standard practice အဖြစ် အသုံးပြုပါသည်.

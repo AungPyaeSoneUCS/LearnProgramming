@@ -1,0 +1,45 @@
+---
+title: "Python MongoDB Get Started — Python MongoDB Get Started"
+description: "MongoDB ကို Python မှ အသုံးပြုရန် PyMongo driver install နှင့် connection ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+MongoDB သည် document database ဖြစ်ပြီး data များကို JSON-like documents အဖြစ် သိမ်းဆည်းပါသည်. Python မှ MongoDB ကို PyMongo driver ဖြင့် အသုံးပြုပါသည်.
+
+## MongoDB ဆိုသည်မှာ
+
+MongoDB သည် NoSQL database တစ်ခုဖြစ်ပြီး collections (tables ၏ အစား) နှင့် documents (rows ၏ အစား) များဖြင့် data များကို သိမ်းဆည်းပါသည်.
+
+## Install PyMongo
+
+```
+pip install pymongo
+```
+
+## Create Database
+
+MongoDB တွင် database မရှိပါက connection ပြုလုပ်ပြီး database ကို ဖန်တီးနိုင်ပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+```
+
+► MongoDB connection string ဖြင့် server သို့ ချိတ်ဆက်ပြီး mydatabase ကို ရယူပါသည်.
+
+## MongoDB ၏ Key Concepts
+
+- **Collection**: Documents များ၏ group (MySQL table နှင့် ဆင်တူ)
+- **Document**: Key-value pairs များပါသော record (JSON-like)
+- **_id**: MongoDB မှ document တစ်ခုစီအတွက် auto-generate ပြုလုပ်သော unique identifier
+
+## Create Collection
+
+```
+mycol = mydb["customers"]
+```
+
+PyMongo ဖြင့် database နှင့် collection ကို ဖန်တီးခြင်းသည် MongoDB ကို Python project များတွင် အသုံးပြုရန် ပထမဆုံး အဆင့် ဖြစ်ပါသည်.

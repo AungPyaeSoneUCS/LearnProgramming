@@ -1,0 +1,55 @@
+---
+title: "Python MySQL Get Started — Python MySQL Get Started"
+description: "Python မှ MySQL database ကို ချိတ်ဆက်ရန် MySQL Connector install နှင့် connection ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Python မှ MySQL database များကို access ပြုလုပ်ရန် MySQL Connector/Python driver ကို အသုံးပြုပါသည်.
+
+## Install MySQL Connector
+
+MySQL connector ကို pip ဖြင့် install ပြုလုပ်ပါသည်.
+
+```
+pip install mysql-connector-python
+```
+
+## Test MySQL Connector
+
+Install ပြီးနောက် import ပြုလုပ်နိုင်ကြောင်း စစ်ဆေးပါသည်.
+
+```
+import mysql.connector
+print("MySQL Connector works!")
+```
+
+## Connection ဖန်တီးခြင်း
+
+MySQL database server နှင့် connection တစ်ခုကို ဖန်တီးပါသည်.
+
+```
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword"
+)
+
+print(mydb)
+```
+
+► host, user, password parameters များဖြင့် MySQL server သို့ ချိတ်ဆက်ပါသည်.
+
+## Connection ကို Object ပြုလုပ်ခြင်း
+
+Server နှင့် connection အောင်မြင်ပါက mydb object အစား cursor object သို့ ပြောင်း၍ queries များ run ပြုလုပ်ပါသည်.
+
+```
+mycursor = mydb.cursor()
+```
+
+Cursors များကို သုံး၍ SELECT, INSERT, UPDATE queries များကို execute ပြုလုပ်ပါသည်.
+
+MySQL Connector ကို install ပြုလုပ်ပြီး connection ပြုလုပ်နည်းကို သိရှိပါက database operations များကို ဆက်လက်လုပ်ဆောင်နိုင်ပါသည်.

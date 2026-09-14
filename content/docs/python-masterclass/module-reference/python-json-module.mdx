@@ -1,0 +1,96 @@
+---
+title: "Python JSON Module — Python JSON Module"
+description: "Python ၌ JSON data များကို json module ဖြင့် parse/serialize ပြုလုပ်ခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+json module သည် JSON (JavaScript Object Notation) data များကို parse နှင့် generate ပြုလုပ်နိုင်ပါသည်. JSON သည် data exchange ၏ standard format ဖြစ်ပါသည်.
+
+## Import JSON Module
+
+```
+import json
+```
+
+## Parse JSON (JSON to Python)
+
+```
+import json
+
+json_string = '{"name": "John", "age": 30, "city": "Yangon"}'
+data = json.loads(json_string)
+
+print(data["name"])  # "John"
+```
+
+## Convert to JSON (Python to JSON)
+
+```
+import json
+
+data = {
+    "name": "John",
+    "age": 30,
+    "city": "Yangon",
+    "hobbies": ["reading", "coding"]
+}
+
+json_string = json.dumps(data)
+print(json_string)
+```
+
+► `{"name": "John", "age": 30, "city": "Yangon", "hobbies": ["reading", "coding"]}`
+
+## Python to JSON Table
+
+- **dict** → Object `{...}`
+- **list / tuple** → Array `[...]`
+- **str** → String `"..."`
+- **int / float** → Number
+- **True** → true
+- **False** → false
+- **None** → null
+
+## Formatting JSON Output
+
+```
+import json
+
+data = {"name": "John", "age": 30}
+
+print(json.dumps(data, indent=4, sort_keys=True))
+```
+
+► Pretty-printed, sorted JSON output ကို ပြသပါသည်.
+
+## Working with JSON Files
+
+```
+import json
+
+# Write JSON to file
+data = {"name": "John", "age": 30}
+with open("data.json", "w") as f:
+    json.dump(data, f, indent=4)
+
+# Read JSON from file
+with open("data.json") as f:
+    data = json.load(f)
+
+print(data["name"])  # "John"
+```
+
+## Error Handling for JSON
+
+```
+import json
+
+invalid_json = '{"name": "John"'
+try:
+    data = json.loads(invalid_json)
+except json.JSONDecodeError as e:
+    print("Invalid JSON:", e)
+```
+
+JSON format သည် APIs, config files နှင့် data storage များတွင် standard format အဖြစ် တွင်ကျယ်စွာ အသုံးပြုပါသည်.

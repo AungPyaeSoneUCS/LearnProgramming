@@ -1,0 +1,75 @@
+---
+title: "Python List Methods — Python List Methods"
+description: "Python lists ၏ built-in methods အားလုံး၏ အညွှန်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+List methods များကို list object ပေါ်တွင် တိုက်ရိုက်ခေါ်သုံးပြီး list ကို ပြောင်းလဲ/စီမံနိုင်ပါသည်.
+
+## Add Methods
+
+```
+fruits = ["apple", "banana"]
+fruits.append("cherry")        # ["apple", "banana", "cherry"]
+fruits.insert(1, "blueberry")  # ["apple", "blueberry", "banana", "cherry"]
+fruits.extend(["date", "fig"]) # add multiple items
+```
+
+## Remove Methods
+
+```
+fruits = ["apple", "banana", "cherry"]
+fruits.remove("banana")    # removes first occurrence
+fruits.pop()               # removes and returns last
+fruits.pop(0)              # removes and returns index 0
+fruits.clear()             # empties the list
+```
+
+## Search & Sort
+
+```
+fruits = ["apple", "banana", "cherry"]
+fruits.index("banana")     # 1
+fruits.count("apple")      # 1
+fruits.sort()              # sorts in place
+fruits.reverse()           # reverses in place
+```
+
+## Copy
+
+```
+original = [1, 2, 3]
+copy_list = original.copy()
+copy_list2 = original[:]
+import copy
+copy_list3 = copy.deepcopy(original)
+```
+
+## List Comprehension
+
+```
+squares = [x**2 for x in range(5)]
+evens = [x for x in range(10) if x % 2 == 0]
+matrix = [[i*3+j+1 for j in range(3)] for i in range(3)]
+```
+
+## Sort with Key
+
+```
+words = ["banana", "apple", "cherry"]
+words.sort(key=len)  # sort by length
+
+pairs = [("b", 2), ("a", 1), ("c", 3)]
+pairs.sort(key=lambda x: x[1])  # sort by second element
+```
+
+## Negative Indexing
+
+```
+fruits = ["apple", "banana", "cherry"]
+fruits[-1]  # "cherry" (last)
+fruits[-2]  # "banana" (second last)
+```
+
+List methods များသည် Python ၏ most versatile data structure ဖြစ်သော lists များကို စီမံရန် မရှိမဖြစ် လိုအပ်ပါသည်.

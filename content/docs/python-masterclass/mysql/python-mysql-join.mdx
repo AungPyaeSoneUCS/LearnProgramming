@@ -1,0 +1,72 @@
+---
+title: "Python MySQL Join — Python MySQL Join"
+description: "MySQL ရှိ tables များကိုပေါင်းစည်းသည့် JOIN clauses (INNER, LEFT, RIGHT) များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+JOIN clause များသည် common column (ဆက်စပ်သော column) ရှိသော tables နှစ်ခုကို ပေါင်းစည်းပြီး queries များတွင် column နှစ်ဖက်စလုံးမှ data များကို ရယူနိုင်ပါသည်.
+
+## Join Two Tables
+
+"users" နှင့် "products" tables များကို favorite product column ဖြင့် join ပြုလုပ်ပါသည်.
+
+```
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword",
+    database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = """
+SELECT users.name, products.name AS favorite
+FROM users
+INNER JOIN products ON users.fav = products.id
+"""
+mycursor.execute(sql)
+myresult = mycursor.fetchall()
+
+for row in myresult:
+    print(row)
+```
+
+► Users ၏ name နှင့် ၎င်းတို့၏ favorite product names များကို ပြသပါသည်.
+
+## JOIN Types များ
+
+- **INNER JOIN**: Tables နှစ်ခုလုံးတွင် match ဖြစ်သော rows
+- **LEFT JOIN**: Left table ၏ rows အားလုံး + right table မှ matches
+- **RIGHT JOIN**: Right table ၏ rows အားလုံး + left table မှ matches
+
+```
+# LEFT JOIN
+sql = """
+SELECT users.name, products.name AS favorite
+FROM users
+LEFT JOIN products ON users.fav = products.id
+"""
+mycursor.execute(sql)
+```
+
+► Left table (users) ၏ rows အားလုံးပါဝင်ပြီး right matches မရှိပါက NULL ဖြစ်ပါသည်.
+
+## Multiple Joins များ
+
+Tables 3 ခုကို join ပြုလုပ်နိုင်ပါသည်.
+
+```
+sql = """
+SELECT orders.id, users.name, products.name
+FROM orders
+JOIN users ON orders.user_id = users.id
+JOIN products ON orders.product_id = products.id
+"""
+mycursor.execute(sql)
+```
+
+JOIN clauses များဖြင့် relational databases များ၏ power ကို အသုံးပြုနိုင်ပါသည်.

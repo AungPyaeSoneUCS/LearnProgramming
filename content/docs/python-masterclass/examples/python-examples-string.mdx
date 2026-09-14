@@ -1,0 +1,101 @@
+---
+title: "Python Examples: String — Python Examples: String"
+description: "Python strings များ၏ လက်တွေ့ ဥပမာများ (methods, formatting, slicing) ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Strings များသည် text data များကို ကိုယ်စားပြုရာတွင် အသုံးဝင်ပြီး methods များစွာ ရှိပါသည်. အောက်ပါတို့သည် common string operations များ ဖြစ်ပါသည်.
+
+## String Length and Check
+
+```
+name = "Python Programming"
+print(len(name))               # 19
+print("Python" in name)        # True
+print(name.upper())            # PYTHON PROGRAMMING
+print(name.lower())            # python programming
+```
+
+## Count Occurrences
+
+```
+text = "The quick brown fox jumps over the lazy dog"
+word = "the"
+
+print(text.count(word))   # 2 (case-sensitive)
+print(text.lower().count(word.lower()))  # 3 (case-insensitive)
+```
+
+## String Methods Chain
+
+```
+raw = "  Hello,  World!  "
+
+clean = raw.strip().replace(",", "").title()
+print(clean)   # Hello World
+
+parts = "apple,banana,cherry".split(",")
+print(parts)   # ["apple", "banana", "cherry"]
+```
+
+## f-String Formatting
+
+```
+name = "John"
+age = 30
+salary = 4500.5
+
+print(f"Name: {name}")
+print(f"Age: {age} years")
+print(f"Salary: ${salary:,.2f}")
+print(f"Double: {age * 2}")       # expression
+print(f"Pad: {salary:>10.1f}")    # right align width 10
+```
+
+## Palindrome Check
+
+```
+def is_palindrome(s):
+    cleaned = ''.join(c.lower() for c in s if c.isalnum())
+    return cleaned == cleaned[::-1]
+
+print(is_palindrome("A man a plan a canal Panama"))  # True
+print(is_palindrome("hello"))                        # False
+```
+
+## Reverse a String
+
+```
+text = "Hello"
+print(text[::-1])   # "olleH"
+
+for char in reversed(text):
+    print(char, end="")  # olleH
+print()
+```
+
+## Capitalize Every Word
+
+```
+sentence = "python is awesome"
+words = sentence.split(" ")
+title = " ".join(word.capitalize() for word in words)
+print(title)   # Python Is Awesome
+
+# Shortcut
+print(sentence.title())  # Python Is Awesome
+```
+
+## Check Character Types
+
+```
+data = "Hello123"
+
+print(data.isalnum())   # True
+print(data.isalpha())   # False
+print(data.isdigit())   # False
+print("123".isdigit())  # True
+```
+
+String examples များသည် day-to-day text processing များကို ကိုင်တွယ်ရန် အသုံးဝင်ပါသည်.

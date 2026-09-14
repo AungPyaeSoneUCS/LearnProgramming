@@ -1,0 +1,114 @@
+---
+title: "Python Examples: File Handling — Python Examples: File Handling"
+description: "Python ဖြင့် files များကို read, write, append, manage ပြုလုပ်ခြင်း လက်တွေ့ ဥပမာများ ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+File handling သည် data persistence များအတွက် အရေးကြီးပြီး open(), with statement နှင့် various modes များကို အသုံးပြုပါသည်.
+
+## Write to File
+
+```
+with open("notes.txt", "w") as f:
+    f.write("Hello Python!\n")
+    f.write("Second line.\n")
+```
+
+## Read from File
+
+```
+with open("notes.txt", "r") as f:
+    content = f.read()
+    print(content)
+
+# Read line by line
+with open("notes.txt", "r") as f:
+    for line in f:
+        print(line.strip())
+```
+
+## Append to File
+
+```
+with open("notes.txt", "a") as f:
+    f.write("Appended line.\n")
+```
+
+## Read Lines into List
+
+```
+with open("notes.txt", "r") as f:
+    lines = f.readlines()
+
+# Remove newlines
+cleaned = [line.strip() for line in lines]
+print(cleaned)
+```
+
+## Copy File
+
+```
+with open("notes.txt", "r") as src:
+    content = src.read()
+
+with open("notes_copy.txt", "w") as dst:
+    dst.write(content)
+```
+
+## Count Words in File
+
+```
+def count_words(filename):
+    with open(filename, "r") as f:
+        text = f.read()
+    return len(text.split())
+
+print(count_words("notes.txt"))
+```
+
+## Write CSV File
+
+```
+import csv
+
+with open("people.csv", "w", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow(["name", "age"])
+    writer.writerow(["John", 30])
+    writer.writerow(["Amy", 25])
+
+# Read CSV
+with open("people.csv", "r") as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        print(row["name"], row["age"])
+```
+
+## Handle File Errors
+
+```
+try:
+    with open("missing.txt", "r") as f:
+        print(f.read())
+except FileNotFoundError:
+    print("File not found!")
+except PermissionError:
+    print("Permission denied!")
+```
+
+## Append Log with Timestamp
+
+```
+from datetime import datetime
+
+def log(message):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open("app.log", "a") as f:
+        f.write(f"[{timestamp}] {message}\n")
+
+log("Application started")
+log("User logged in")
+```
+
+File handling examples များသည် data များကို disk တွင် သိမ်းဆည်းရန် အသုံးဝင်ပါသည်.

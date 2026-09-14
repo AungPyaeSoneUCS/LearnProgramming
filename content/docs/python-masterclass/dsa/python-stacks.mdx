@@ -1,0 +1,81 @@
+---
+title: "Python Stacks — Python Stacks"
+description: "Stacks ၏ LIFO principle ၏ သဘောတရားနှင့် Python lists ဖြင့် stack ဖန်တီးခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Stack သည် Last In, First Out (LIFO) principle ဖြင့် အလုပ်လုပ်သည့် data structure ဖြစ်ပါသည်. မိုးကုတ် မတ်စောက်များကဲ့သို့ နောက်ဆုံးထည့်သော အရာသည် ပထမဆုံးထွက်ပါသည်.
+
+## Stack ဆိုသည်မှာ
+
+- **Push**: Stack ထဲသို့ element ထည့်ခြင်း
+- **Pop**: Stack မှ element ထုတ်ခြင်း
+- **Peek/Top**: ထိပ်ရှိ element ကို ကြည့်ခြင်း
+
+## Python List ဖြင့် Stack ဖန်တီးခြင်း
+
+```
+stack = []
+
+# push
+stack.append(1)
+stack.append(2)
+stack.append(3)
+print(stack)     # [1, 2, 3]
+
+# pop
+popped = stack.pop()
+print(popped)    # 3
+print(stack)     # [1, 2]
+
+# peek (last element)
+print(stack[-1]) # 2
+```
+
+## Length / Check
+
+```
+stack = [1, 2, 3]
+print(len(stack))     # 3
+print(len(stack) == 0) # False (empty stack)
+```
+
+## Parentheses Matching
+
+Stack ၏ classic example မှာ parentheses matching ဖြစ်ပါသည်.
+
+```
+def is_balanced(expr):
+    stack = []
+    for ch in expr:
+        if ch == "(":
+            stack.append(ch)
+        elif ch == ")":
+            if not stack:
+                return False
+            stack.pop()
+    return len(stack) == 0
+
+print(is_balanced("((()))"))   # True
+print(is_balanced("(()"))      # False
+```
+
+## Stack ဖြင့် Undo Feature
+
+Undo functionality ကို stack ဖြင့် ဖန်တီးနိုင်ပါသည်.
+
+```
+undo_stack = []
+
+def edit(text):
+    undo_stack.append(text)
+    return text
+
+def undo():
+    if undo_stack:
+        return undo_stack.pop()
+    return None
+```
+
+Stacks များသည် function calls, undo features, ဘာသာစကား parsing များတွင် အသုံးဝင်ပါသည်.

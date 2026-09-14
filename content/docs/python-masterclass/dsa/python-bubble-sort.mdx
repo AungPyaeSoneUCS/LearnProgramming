@@ -1,0 +1,81 @@
+---
+title: "Python Bubble Sort — Python Bubble Sort"
+description: "Bubble sort algorithm ၏ သဘောတရားနှင့် Python ဖြင့် implementation ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Bubble sort သည် array ထဲရှိ elements များကို နောက်တစ်ခုနှင့် ရှေ့တစ်ခု နှိုင်းယှဉ်ပြီး မှားယွင်းပါက swap ပြုလုပ်သည့် algorithm ဖြစ်ပါသည်.
+
+## How it Works
+
+- Pass တစ်ခုချင်းစီတွင် အကြီးဆုံး element သည် နောက်ဆုံးသို့ ရောက်သွားပါသည်
+- Unsorted portion ကို ထပ်ခါထပ်ခါ scan ပြုပါသည်
+- Swap မပြုတော့ပါက sorted ဖြစ်ပါပြီ
+
+## Python Implementation
+
+```
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if not swapped:
+            break
+    return arr
+```
+
+## စမ်းသပ်ခြင်း
+
+```
+arr = [64, 34, 25, 12, 22, 11, 90]
+bubble_sort(arr)
+print(arr)
+```
+
+► Output: [11, 12, 22, 25, 34, 64, 90]
+
+## Step-by-Step Example
+
+```
+# arr = [5, 1, 4, 2, 8]
+
+# Pass 1:
+# [5,1,4,2,8] -> [1,5,4,2,8] (swap 5,1)
+# [1,5,4,2,8] -> [1,4,5,2,8] (swap 5,4)
+# [1,4,5,2,8] -> [1,4,2,5,8] (swap 5,2)
+# [1,4,2,5,8] -> [1,4,2,5,8] (8 is in place)
+
+# Pass 2:
+# [1,4,2,5,8] -> [1,2,4,5,8] (swap 4,2)
+```
+
+## Optimized Version
+
+swapped flag ဖြင့် early termination ပြုလုပ်ပါသည်.
+
+```
+def bubble_sort_optimized(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if not swapped:
+            break
+    return arr
+```
+
+## Time Complexity
+
+- Best: O(n) (sorted array - optimized version)
+- Average/Worst: O(n^2)
+- Space: O(1)
+
+Bubble sort သည် educational purposes အတွက် ကောင်းသော်လည်း production code တွင် O(n log n) algorithms များကို ပို၍ သုံးပါသည်.

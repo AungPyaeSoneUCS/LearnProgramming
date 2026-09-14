@@ -1,0 +1,79 @@
+---
+title: "Python Dictionary Methods — Python Dictionary Methods"
+description: "Python dictionaries ၏ built-in methods အားလုံး၏ အညွှန်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Dictionary methods များကို dict object ပေါ်တွင် တိုက်ရိုက်ခေါ်သုံးပြီး keys, values, items များကို စီမံနိုင်ပါသည်.
+
+## Access Methods
+
+```
+person = {"name": "John", "age": 30}
+person.get("name")        # "John"
+person.get("email", "N/A")  # "N/A" (default if not found)
+```
+
+## Update Methods
+
+```
+person = {"name": "John"}
+person.update({"age": 30, "email": "john@example.com"})
+person.setdefault("city", "Yangon")  # key exists? keep it. No? add it.
+```
+
+## Remove Methods
+
+```
+person = {"name": "John", "age": 30, "city": "Yangon"}
+person.pop("age")      # removes "age": 30, returns 30
+person.popitem()       # removes last inserted item
+del person["city"]     # deletes key
+person.clear()         # empties dict
+```
+
+## Keys, Values, Items
+
+```
+person = {"name": "John", "age": 30}
+person.keys()    # dict_keys(["name", "age"])
+person.values()  # dict_values(["John", 30])
+person.items()   # dict_items([("name", "John"), ("age", 30)])
+
+for key, value in person.items():
+    print(f"{key}: {value}")
+```
+
+## Copy & Merge
+
+```
+original = {"a": 1, "b": 2}
+copy_dict = original.copy()
+merged = original | {"c": 3}   # Python 3.9+
+original.update({"d": 4})
+```
+
+## Dictionary Comprehension
+
+```
+squares = {x: x**2 for x in range(5)}
+evens = {x: x**2 for x in range(10) if x % 2 == 0}
+```
+
+## From Keys
+
+```
+keys = ["name", "age", "city"]
+new_dict = dict.fromkeys(keys, "unknown")
+# {"name": "unknown", "age": "unknown", "city": "unknown"}
+```
+
+## Pop With Default
+
+```
+d = {"a": 1}
+d.pop("b", None)  # returns None if key not found
+```
+
+Dictionary methods များသည် key-value data များကို စီမံရန် အသုံးဝင်ပါသည်.

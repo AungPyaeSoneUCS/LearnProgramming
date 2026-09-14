@@ -1,0 +1,178 @@
+---
+title: "Python Examples: Real World — Python Examples: Real World"
+description: "Python programming ၏ real-world applications များကို ပေါင်းစပ်၍ ဥပမာ လေ့လာခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+အောက်ပါတို့သည် Python concepts များကို real-world tasks များတွင် ပေါင်းစပ် အသုံးပြုပုံများ ဖြစ်ပါသည်.
+
+## Student Grade System
+
+```
+students = [
+    {"name": "John", "grades": [80, 90, 85]},
+    {"name": "Amy", "grades": [75, 88, 92]},
+    {"name": "Bob", "grades": [60, 70, 65]},
+]
+
+for student in students:
+    average = sum(student["grades"]) / len(student["grades"])
+    letter = "A" if average >= 90 else "B" if average >= 80 else "C" if average >= 70 else "D"
+    print(f"{student['name']}: {average:.1f} ({letter})")
+```
+
+## To-Do List App
+
+```
+tasks = []
+
+def add_task(task):
+    tasks.append({"task": task, "done": False})
+
+def mark_done(index):
+    if 0 <= index < len(tasks):
+        tasks[index]["done"] = True
+
+def show_tasks():
+    for i, t in enumerate(tasks):
+        status = "[x]" if t["done"] else "[ ]"
+        print(f"{i}: {status} {t['task']}")
+
+add_task("Learn Python")
+add_task("Build a project")
+mark_done(0)
+show_tasks()
+```
+
+## Contact Book
+
+```
+contacts = {}
+
+def add_contact(name, phone):
+    contacts[name] = phone
+
+def find_contact(name):
+    return contacts.get(name, "Not found")
+
+def remove_contact(name):
+    if name in contacts:
+        del contacts[name]
+
+add_contact("John", "09-1234567")
+add_contact("Amy", "09-7654321")
+print(find_contact("John"))    # 09-1234567
+print(find_contact("Bob"))     # Not found
+```
+
+## Word Counter (File)
+
+```
+from collections import Counter
+
+def analyze_text(filename):
+    with open(filename, "r") as f:
+        words = f.read().split()
+    counts = Counter(word.lower().strip(".,!?") for word in words)
+    return words, counts
+
+def summarize(filename):
+    words, counts = analyze_text(filename)
+    print(f"Total words: {len(words)}")
+    print("Most common:")
+    for word, count in counts.most_common(5):
+        print(f"  {word}: {count}")
+
+# summarize("notes.txt")
+```
+
+## Simple Banking System
+
+```
+class Bank:
+    def __init__(self):
+        self.accounts = {}
+
+    def create_account(self, name, initial=0):
+        if name not in self.accounts:
+            self.accounts[name] = initial
+            return f"Account created for {name}"
+        return "Account already exists"
+
+    def deposit(self, name, amount):
+        if name in self.accounts and amount > 0:
+            self.accounts[name] += amount
+            return f"Deposited {amount}"
+        return "Operation failed"
+
+    def balance(self, name):
+        return self.accounts.get(name, "No account")
+
+bank = Bank()
+print(bank.create_account("John", 500))
+print(bank.deposit("John", 200))
+print(bank.balance("John"))   # 700
+```
+
+## Currency Converter (Unit)
+
+```
+def convert(amount, rate):
+    return amount * rate
+
+kinds = {
+    "USD to JPY": 145.0,
+    "USD to EUR": 0.92,
+    "USD to MMK": 2100.0,
+}
+
+for pair, rate in kinds.items():
+    print(f"{pair}: ${100} = {convert(100, rate):.2f}")
+```
+
+## Simple Inventory System
+
+```
+inventory = {}
+
+def add_item(name, quantity):
+    inventory[name] = inventory.get(name, 0) + quantity
+
+def sell_item(name, quantity):
+    if inventory.get(name, 0) >= quantity:
+        inventory[name] -= quantity
+        return f"Sold {quantity} {name}"
+    return "Not enough stock"
+
+def low_stock(threshold=5):
+    return {k: v for k, v in inventory.items() if v <= threshold}
+
+add_item("apple", 20)
+add_item("banana", 3)
+print(sell_item("apple", 5))     # Sold 5 apple
+print(low_stock())               # {"banana": 3}
+```
+
+## Password Strength Checker
+
+```
+def check_strength(password):
+    score = 0
+    if len(password) >= 8:
+        score += 1
+    if any(c.isupper() for c in password):
+        score += 1
+    if any(c.islower() for c in password):
+        score += 1
+    if any(c.isdigit() for c in password):
+        score += 1
+    if any(not c.isalnum() for c in password):
+        score += 1
+    return score
+
+print(check_strength("pass"))          # 0
+print(check_strength("Passw0rd!"))     # 5
+```
+
+Real-world examples များသည် course မှ concepts များအားလုံးကို ပေါင်းစပ်၍ practical solutions များ တည်ဆောက်ရန် လမ်းညွှန်ကြောင်း ဖြစ်ပါသည်.

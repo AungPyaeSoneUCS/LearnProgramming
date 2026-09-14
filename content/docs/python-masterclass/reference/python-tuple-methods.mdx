@@ -1,0 +1,75 @@
+---
+title: "Python Tuple Methods — Python Tuple Methods"
+description: "Python tuples ၏ built-in methods များနှင့် operations များ ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Tuples များသည် immutable (ပြောင်းလဲမရသော) sequences များဖြစ်ပြီး methods နည်းပါးပါသည်. Tuples တွင် count() နှင့် index() methods နှစ်ခုသာ ရှိပါသည်.
+
+## Tuple ဖန်တီးခြင်း
+
+```
+my_tuple = (1, 2, 3, "apple", "banana")
+single = (1,)          # single element (comma လိုအပ်ပါသည်)
+empty = ()             # empty tuple
+no_parent = 1, 2, 3    # tuple packing (parentheses optional)
+```
+
+## Tuple Methods
+
+```
+my_tuple = (1, 2, 3, 2, 2)
+
+my_tuple.count(2)   # 3 (occurrences of 2)
+my_tuple.index(3)   # 2 (position of first 3)
+```
+
+## Tuple Operations
+
+```
+a = (1, 2)
+b = (3, 4)
+
+a + b            # (1, 2, 3, 4) - concatenation
+a * 3            # (1, 2, 1, 2, 1, 2) - repetition
+2 in a           # True
+len(a)           # 2
+max((1, 5, 3))   # 5
+min((1, 5, 3))   # 1
+```
+
+## Tuple Unpacking
+
+```
+person = ("John", 30, "Yangon")
+name, age, city = person
+
+# unpack with *
+first, *rest = (1, 2, 3, 4)
+# first = 1, rest = [2, 3, 4]
+```
+
+## Tuple vs List
+
+```
+# Tuples - immutable, faster
+my_tuple = (1, 2, 3)
+my_tuple[0] = 5   # TypeError!
+
+# Lists - mutable
+my_list = [1, 2, 3]
+my_list[0] = 5    # OK
+```
+
+## Tuple Iteration
+
+```
+for fruit in ("apple", "banana", "cherry"):
+    print(fruit)
+
+for i, fruit in enumerate(("apple", "banana")):
+    print(i, fruit)
+```
+
+Tuples များသည် data များကို ပြောင်းလဲရန် မလိုအပ်သော အခြေအနေများတွင် lists များထက် memory efficient ဖြစ်ပါသည်.

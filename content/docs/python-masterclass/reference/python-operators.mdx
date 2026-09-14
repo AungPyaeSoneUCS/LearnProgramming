@@ -1,0 +1,97 @@
+---
+title: "Python Operators — Python Operators"
+description: "Python operators အားလုံး (arithmetic, comparison, logical, assignment) များ၏ အညွှန်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Python တွင် operators အမျိုးမျိုးရှိပြီး values များ နှင့် variables များပေါ်တွင် operation များ လုပ်ဆောင်ပါသည်.
+
+## Arithmetic Operators
+
+```
+x = 10
+y = 3
+
+x + y   # 13  addition
+x - y   # 7   subtraction
+x * y   # 30  multiplication
+x / y   # 3.333... division
+x % y   # 1   modulus
+x ** y  # 1000 exponent
+x // y  # 3   floor division
+```
+
+## Assignment Operators
+
+```
+x = 5
+x += 3     # x = 8
+x -= 2     # x = 6
+x *= 2     # x = 12
+x /= 3     # x = 4.0
+x //= 2    # x = 2.0
+x %= 2     # x = 0
+x **= 3    # x = 0
+x &= 2     # bitwise and
+x |= 3     # bitwise or
+```
+
+## Comparison Operators
+
+```
+5 == 5   # True
+5 != 3   # True
+5 > 3    # True
+5 < 3    # False
+5 >= 5   # True
+5 <= 4   # False
+```
+
+## Logical Operators
+
+```
+True and True    # True
+True and False   # False
+True or False    # True
+not True         # False
+```
+
+## Identity & Membership
+
+```
+a = [1, 2]
+b = a
+c = [1, 2]
+
+a is b       # True  (same object)
+a is c       # False (different objects)
+
+2 in a       # True
+3 not in a   # True
+"h" in "hello"  # True
+```
+
+## Operator Precedence
+
+အမြင့်ဆုံးမှ အနိမ့်ဆုံး order:
+
+```
+**          # exponent
++x, -x      # sign
+*, /, //, % # multiplication/division
++, -        # addition/subtraction
+== != < > <= >=  # comparison
+not         # logical not
+and         # logical and
+or          # logical or
+```
+
+## Ternary Operator
+
+```
+age = 20
+status = "adult" if age >= 18 else "minor"
+```
+
+Operators precedence များကို သိရှိခြင်းသည် expressions များကို မှန်ကန်စွာ ရေးသားနိုင်စေပါသည်.

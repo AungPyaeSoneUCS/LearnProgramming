@@ -1,0 +1,66 @@
+---
+title: "Python MySQL Update — Python MySQL Update"
+description: "MySQL table ရှိ existing records များကို UPDATE statement ဖြင့် ပြောင်းလဲခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+MySQL ရှိ existing rows များ၏ values များကို UPDATE statement ဖြင့် ပြောင်းလဲနိုင်ပါသည်. Update ပြီးနောက် commit() ပြုလုပ်ရပါသည်.
+
+## Update Table
+
+customer John ၏ address ကို update ပြုလုပ်ပါသည်.
+
+```
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword",
+    database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "UPDATE customers SET address = 'Canyon 123' WHERE address = 'Valley 345'"
+mycursor.execute(sql)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record(s) affected")
+```
+
+► 1 record affected.
+
+## WHERE ၏ မဖြစ်မနေလိုအပ်မှု
+
+WHERE clause မပါပါက row အားလုံး၏ values များကို ပြောင်းလဲပါသည်.
+
+```
+sql = "UPDATE customers SET address = 'Unknown' WHERE name = 'Amy'"
+mycursor.execute(sql)
+mydb.commit()
+```
+
+## Parameters ဖြင့် Update
+
+```
+sql = "UPDATE customers SET address = %s WHERE name = %s"
+val = ("Valley 345", "Hannah")
+mycursor.execute(sql, val)
+mydb.commit()
+```
+
+## Limit ဖြင့် Update ပြုလုပ်ခြင်း
+
+```
+sql = "UPDATE customers SET address = %s WHERE name = %s LIMIT 3"
+val = ("New Place", "Peter")
+mycursor.execute(sql, val)
+mydb.commit()
+```
+
+► LIMIT 3 သည် at most rows 3 ခုကိုသာ ပြောင်းလဲပါသည်.
+
+UPDATE operations များသည် accurate WHERE clauses လိုအပ်ပြီး မှားယွင်းပါက data များကို unintended ပြောင်းလဲစေနိုင်ပါသည်.

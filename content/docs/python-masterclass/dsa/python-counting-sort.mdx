@@ -1,0 +1,60 @@
+---
+title: "Python Counting Sort — Python Counting Sort"
+description: "Counting sort algorithm ၏ သဘောတရားနှင့် integers များကို count array ဖြင့် sort ပြုလုပ်ခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Counting sort သည် non-comparison based sorting algorithm ဖြစ်ပြီး elements များ၏ frequencies ကို count ပြီး sorted positions များတွင် နေရာချပါသည်.
+
+## How it Works
+
+- Array တွင် value တစ်ခုစီ၏ frequency ကို count array ဖြင့် တွက်ပါသည်
+- Count array ကို cumulative sum ပြုလုပ်ပါသည်
+- Output array ထဲတွင် elements များကို positions များတွင် ထည့်ပါသည်
+
+## Python Implementation
+
+```
+def counting_sort(arr):
+    if not arr:
+        return arr
+    max_val = max(arr)
+    count = [0] * (max_val + 1)
+
+    for x in arr:
+        count[x] += 1
+
+    for i in range(1, len(count)):
+        count[i] += count[i - 1]
+
+    output = [0] * len(arr)
+    for x in reversed(arr):
+        count[x] -= 1
+        output[count[x]] = x
+
+    return output
+```
+
+## စမ်းသပ်ခြင်း
+
+```
+arr = [4, 2, 2, 8, 3, 3, 1]
+sorted_arr = counting_sort(arr)
+print(sorted_arr)
+```
+
+► Output: [1, 2, 2, 3, 3, 4, 8]
+
+## Time Complexity
+
+- Best/Average/Worst: O(n + k) — k သည် range (max value)
+- Space: O(k)
+
+## ကန့်သတ်ချက်များ
+
+- Positive integers များကိုသာ ကိုင်တွယ်နိုင်ပါသည် (သို့မဟုတ် offset လိုအပ်ပါသည်)
+- Value range ကြီးလာလျှင် memory များလာပါသည်
+- Decimal/negative numbers များတွင် suitable မဟုတ်ပါ
+
+Counting sort သည် integer values များ၏ range သေးသေးတွင် O(n) complexity ဖြင့် အလွန်မြန်ဆန်ပါသည်.

@@ -1,0 +1,86 @@
+---
+title: "Python Built-in Functions — Python Built-in Functions"
+description: "Python တွင် ကြိုတင်ပါဝင်ပြီးသား built-in functions များ၏ အညွှန်းနှင့် အသုံးပြုပုံ ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Python ၏ built-in functions များသည် မည်သည့် import မှ မလိုဘဲ တိုက်ရိုက်အသုံးပြုနိုင်ပါသည်. အောက်ပါ functions များသည် Python Masterclass ၏ အဓိက built-in functions များ ဖြစ်ပါသည်.
+
+## String & Type Functions
+
+```
+# str() - string အဖြစ် ပြောင်းလဲခြင်း
+str(123)       # "123"
+
+# int() - integer အဖြစ် ပြောင်းလဲခြင်း
+int("42")      # 42
+
+# float() - float အဖြစ် ပြောင်းလဲခြင်း
+float("3.14")  # 3.14
+
+# bool() - boolean အဖြစ် ပြောင်းလဲခြင်း
+bool(0)        # False
+
+# type() - data type ကြည့်ခြင်း
+type("hello")  # <class 'str'>
+```
+
+## Collection Functions
+
+```
+# len() - length
+len([1, 2, 3])  # 3
+
+# sum() - sum
+sum([1, 2, 3])  # 6
+
+# min() / max()
+min([3, 1, 2])  # 1
+max([3, 1, 2])  # 3
+
+# sorted() - sorted list
+sorted([3, 1, 2])  # [1, 2, 3]
+
+# list() / tuple() / set() / dict()
+list((1, 2, 3))  # [1, 2, 3]
+tuple([1, 2])    # (1, 2)
+```
+
+## Utility Functions
+
+```
+# print() - output
+print("Hello")
+
+# input() - user input
+name = input("Enter name: ")
+
+# range() - number sequence
+range(5)       # 0, 1, 2, 3, 4
+range(1, 6)    # 1, 2, 3, 4, 5
+
+# enumerate() - index + value
+for i, v in enumerate(["a", "b"]):
+    print(i, v)  # 0 a, 1 b
+
+# zip() - combine iterables
+zip([1, 2], ["a", "b"])  # [(1,"a"), (2,"b")]
+
+# map() - apply function
+map(str, [1, 2, 3])  # ["1", "2", "3"]
+
+# filter() - filter values
+filter(lambda x: x > 1, [1, 2, 3])  # [2, 3]
+```
+
+## Math Functions
+
+```
+abs(-5)       # 5
+round(3.7)    # 4
+pow(2, 3)     # 8
+divmod(10, 3) # (3, 1)
+```
+
+Built-in functions များသည် Python programming ၏ အခြေခံ tools များ ဖြစ်ပြီး နေ့စဉ် အသုံးပြုနေရပါသည်.

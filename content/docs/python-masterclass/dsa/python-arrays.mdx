@@ -1,0 +1,62 @@
+---
+title: "Python Arrays — Python Arrays"
+description: "Python arrays ၏ သဘောတရား၊ lists နှင့် array module ၏ ကွာခြားချက်များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Array သည် elements များကို sequential order တွင် သိမ်းဆည်းသည့် data structure ဖြစ်ပါသည်. Python မှ lists, tuples, arrays များ ရှိပြီး arrays ၏ concept ကို နားလည်ရန် အရေးကြီးပါသည်.
+
+## Array ဆိုသည်မှာ
+
+Element များကို index ဖြင့် access ပြုနိုင်သည့် data structure တစ်ခု ဖြစ်ပါသည်.
+
+## Python ရှိ Array Structures
+
+Python တွင် built-in array structures များစွာရှိပါသည်.
+
+```
+# List
+mylist = [1, 2, 3]
+
+# Tuple
+mytuple = (1, 2, 3)
+
+# Array (array module)
+import array
+myarr = array.array('i', [1, 2, 3])
+```
+
+## Access ပြုခြင်း
+
+```
+arr = [10, 20, 30, 40, 50]
+print(arr[0])    # 10
+print(arr[-1])   # 50 (last element)
+```
+
+## Slice ပြုခြင်း
+
+```
+arr = [10, 20, 30, 40, 50]
+print(arr[1:4])  # [20, 30, 40]
+```
+
+## Modify ပြုခြင်း
+
+```
+arr = [10, 20, 30]
+arr[1] = 25
+print(arr)       # [10, 25, 30]
+```
+
+## numpy array
+
+```
+import numpy as np
+arr = np.array([1, 2, 3, 4, 5])
+print(arr)
+print(type(arr))
+```
+
+Arrays များသည် iteration, searching, sorting operations များတွင် fundamental ဖြစ်ပါသည်.

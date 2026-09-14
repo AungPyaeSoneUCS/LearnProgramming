@@ -1,0 +1,66 @@
+---
+title: "Python MySQL Create Database — Python MySQL Create Database"
+description: "MySQL တွင် database အသစ်တစ်ခု ဖန်တီးခြင်းနှင့် existing databases များကို စစ်ဆေးခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Python မှ MySQL database အသစ်တစ်ခုကို CREATE DATABASE statement ဖြင့် ဖန်တီးပါသည်.
+
+## Create Database
+
+Database အသစ်တစ်ခု ဖန်တီးရန် CREATE DATABASE statement ကို cursor မှတစ်ဆင့် execute ပြုလုပ်ပါသည်.
+
+```
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword"
+)
+
+mycursor = mydb.cursor()
+mycursor.execute("CREATE DATABASE mydatabase")
+```
+
+► mydatabase ဟူသော database အသစ်တစ်ခု ဖန်တီးပါသည်.
+
+## Database များ List ပြုလုပ်ခြင်း
+
+Existing databases များကို SHOW DATABASES statement ဖြင့် ကြည့်ပါသည်.
+
+```
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword"
+)
+
+mycursor = mydb.cursor()
+mycursor.execute("SHOW DATABASES")
+
+for db in mycursor:
+    print(db)
+```
+
+► Database အားလုံး၏ list ကို ပြသပါသည်.
+
+## Database ထဲသို့ ချိတ်ဆက်ခြင်း
+
+Database ကို ဖန်တီးပြီးပါက connection တွင် database parameter ကို ထည့်နိုင်ပါသည်.
+
+```
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword",
+    database="mydatabase"
+)
+```
+
+Database parameter ကို ထည့်ပါက tables/queries များကို ထို database အတွင်းတွင် run နိုင်ပါသည်.
+
+Database မဖန်တီးဘဲ ချိတ်ဆက်ပါက error ရနိုင်သောကြောင့် database ရှိမရှိ စစ်ဆေးရန် အရေးကြီးပါသည်.

@@ -1,0 +1,69 @@
+---
+title: "Python Set Methods — Python Set Methods"
+description: "Python sets ၏ built-in methods အားလုံး၏ အညွှန်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Sets များသည် unordered, unique elements များပါဝင်သော data types ဖြစ်ပြီး set operations (union, intersection) များကို ပံ့ပိုးပါသည်.
+
+## Add & Remove
+
+```
+fruits = {"apple", "banana"}
+fruits.add("cherry")          # {"apple", "banana", "cherry"}
+fruits.update(["date", "fig"])  # add multiple
+fruits.remove("banana")       # KeyError if missing
+fruits.discard("banana")      # no error if missing
+fruits.pop()                  # removes random element
+fruits.clear()                # empties the set
+```
+
+## Set Operations
+
+```
+a = {1, 2, 3}
+b = {3, 4, 5}
+
+a.union(b)             # {1, 2, 3, 4, 5}
+a.intersection(b)      # {3}
+a.difference(b)        # {1, 2}   (a - b)
+a.symmetric_difference(b)  # {1, 2, 4, 5}
+```
+
+## Set Comparison
+
+```
+x = {1, 2, 3}
+y = {1, 2}
+
+y.issubset(x)     # True
+x.issuperset(y)   # True
+x.isdisjoint({9}) # True
+```
+
+## Set Operators
+
+```
+a = {1, 2, 3}
+b = {3, 4, 5}
+
+a | b   # union
+a & b   # intersection
+a - b   # difference
+a ^ b   # symmetric difference
+```
+
+## Common Set Use Cases
+
+```
+# Remove duplicates
+numbers = [1, 2, 2, 3, 3, 3]
+unique = list(set(numbers))  # [1, 2, 3]
+
+# Check membership (fast)
+if 3 in a:
+    print("found")
+```
+
+Sets များသည် duplicate removal နှင့် fast membership testing အတွက် အသုံးဝင်ပါသည်.

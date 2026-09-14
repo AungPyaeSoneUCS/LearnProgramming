@@ -1,0 +1,75 @@
+---
+title: "Python Functions Reference — Python Functions Reference"
+description: "Python function များဆိုင်ရာ အဓိက built-in functions နှင့် အသုံးပြုပုံအညွှန်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+ဤစာမျက်နှာသည် Python ၏ အသုံးဝင်သော built-in functions များ ဖြစ်ပါသည်. အပြည့်အစုံ list သည် Python documentation တွင် ကြည့်ရှုနိုင်ပါသည်.
+
+## Numeric Functions
+
+```
+abs(-7)        # 7  absolute value
+round(3.14159, 2)  # 3.14
+pow(2, 3)      # 8
+sum([1, 2, 3]) # 6
+divmod(17, 5)  # (3, 2)
+```
+
+## Sequence Functions
+
+```
+len([1, 2, 3])     # 3
+max(3, 1, 5)       # 5
+min(3, 1, 5)       # 1
+sorted([3, 1, 2])  # [1, 2, 3]
+reversed([1, 2, 3])  # reverse iterator
+slice(1, 4)        # slice object
+```
+
+## Iterator Functions
+
+```
+iter([1, 2, 3])    # iterator object
+next(iter([1, 2])) # 1
+enumerate(["a", "b"])  # (0, "a"), (1, "b")
+zip([1, 2], ["a", "b"])  # (1, "a"), (2, "b")
+map(len, ["a", "ab"])  # [1, 2]
+filter(lambda x: x > 2, [1, 2, 3])  # [3]
+all([True, True])  # True
+any([False, True]) # True
+```
+
+## Object Functions
+
+```
+type(5)          # <class 'int'>
+id(5)            # memory address
+hash("hello")    # hash value
+isinstance(x, int)  # True
+issubclass(B, A)    # True
+repr("hello")    # repr representation
+str(5)           # string representation
+```
+
+## Functional Programming
+
+```
+lambda x: x * 2   # anonymous function
+functools.reduce(lambda a, b: a + b, [1, 2, 3])  # 6
+```
+
+## Example: Map + Filter + Lambda
+
+```
+numbers = [1, 2, 3, 4, 5]
+
+squares = list(map(lambda x: x**2, numbers))
+# [1, 4, 9, 16, 25]
+
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+# [2, 4]
+```
+
+Built-in functions များကို ကျွမ်းကျင်စွာ အသုံးပြုခြင်းသည် Python code ကို ပိုမိုတိုတောင်းပြီး readable ဖြစ်စေပါသည်.

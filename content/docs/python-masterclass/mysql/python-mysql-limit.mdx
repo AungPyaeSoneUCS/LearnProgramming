@@ -1,0 +1,73 @@
+---
+title: "Python MySQL Limit — Python MySQL Limit"
+description: "MySQL query results များ၏ အရေအတွက်ကို LIMIT clause ဖြင့် သတ်မှတ်ခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Query results များစွာရှိပါက LIMIT clause ဖြင့် return ပြန်လာသော rows များ၏ အရေအတွက်ကို သတ်မှတ်နိုင်ပါသည်.
+
+## LIMIT Clause
+
+customers မှ rows 5 ခုကိုသာ select ပြုလုပ်ပါသည်.
+
+```
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword",
+    database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("SELECT * FROM customers LIMIT 5")
+myresult = mycursor.fetchall()
+
+for row in myresult:
+    print(row)
+```
+
+► Rows 5 ခုကိုသာ ပြသပါသည်.
+
+## OFFSET ဖြင့် စတင်သည့် နေရာ
+
+OFFSET keyword ဖြင့် rows များကို skip ပြုလုပ်နိုင်ပါသည်.
+
+```
+mycursor.execute("SELECT * FROM customers LIMIT 5 OFFSET 2")
+myresult = mycursor.fetchall()
+```
+
+► Rows 5 ခုကို second row မှ စတင်၍ return ပြုလုပ်ပါသည် (0-indexed).
+
+## Shorthand Syntax
+
+MySQL သည် "LIMIT offset, count" shorthand ကို ပံ့ပိုးပါသည်.
+
+```
+mycursor.execute("SELECT * FROM customers LIMIT 2, 5")
+myresult = mycursor.fetchall()
+```
+
+► OFFSET 2 မှ rows 5 ခု (LIMIT 5 OFFSET 2 နှင့် တူညီပါသည်).
+
+## Pagination အတွက် အသုံးပြုခြင်း
+
+Web applications များတွင် pagination ပြုလုပ်ရန် LIMIT/OFFSET ကို သုံးပါသည်.
+
+```
+page = 2
+page_size = 10
+offset = (page - 1) * page_size
+
+sql = "SELECT * FROM customers LIMIT %s OFFSET %s"
+val = (page_size, offset)
+mycursor.execute(sql, val)
+```
+
+► Page 2 အတွက် rows 10 ခုကို ရယူပါသည်.
+
+LIMIT သည် large tables များတွင် query performance ကို မြန်ဆန်စေခြင်းဖြင့် အသုံးဝင်ပါသည်.

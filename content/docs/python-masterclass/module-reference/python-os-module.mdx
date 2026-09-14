@@ -1,0 +1,80 @@
+---
+title: "Python OS Module — Python OS Module"
+description: "Python os module ကို အသုံးပြု၍ operating system ၏ files, paths နှင့် environment များကို စီမံခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+os module သည် operating system နှင့် ဆက်သွယ်ရန် functions များကို ပံ့ပိုးပါသည်. Files, directories, environment variables များကို စီမံနိုင်ပါသည်.
+
+## Import OS Module
+
+```
+import os
+```
+
+## Current Working Directory
+
+```
+import os
+
+os.getcwd()  # e.g. "C:/Users/User/Desktop"
+os.chdir("C:/Users")  # change directory
+```
+
+## List & Create Directories
+
+```
+import os
+
+os.listdir(".")        # list files/dirs in current dir
+os.mkdir("new_folder") # create directory
+os.makedirs("a/b/c")   # create nested directories
+```
+
+## Remove Directories
+
+```
+import os
+
+os.rmdir("new_folder")   # remove empty directory
+os.removedirs("a/b/c")   # remove nested directories
+os.unlink("file.txt")    # remove a file
+os.remove("file.txt")    # remove a file
+```
+
+## Environment Variables
+
+```
+import os
+
+os.environ.get("PATH")   # get environment variable
+os.environ["MY_VAR"] = "hello"  # set variable
+```
+
+## Path Operations (os.path)
+
+```
+import os.path
+
+os.path.exists("file.txt")     # True/False
+os.path.isfile("file.txt")     # True/False
+os.path.isdir("folder")        # True/False
+os.path.join("folder", "file.txt")  # "folder/file.txt"
+os.path.basename("a/b/c.txt")  # "c.txt"
+os.path.dirname("a/b/c.txt")   # "a/b"
+os.path.getsize("file.txt")    # size in bytes
+```
+
+## File Statistics
+
+```
+import os
+from datetime import datetime
+
+stat = os.stat("file.txt")
+print(stat.st_size)          # file size
+print(datetime.fromtimestamp(stat.st_mtime))  # modified time
+```
+
+OS module သည် Python မှ system-level operations များ လုပ်ဆောင်ရန် standard library ၏ module ဖြစ်ပါသည်.

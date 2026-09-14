@@ -1,0 +1,135 @@
+---
+title: "Python Examples: Datetime — Python Examples: Datetime"
+description: "Python datetime ဆိုင်ရာ လက်တွေ့ ဥပမာများ (current time, formatting, calculations) ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Dates နှင့် times များကို datetime module ဖြင့် ရယူ၊ format၊ arithmetic ပြုလုပ်နိုင်ပါသည်.
+
+## Get Current Date and Time
+
+```
+from datetime import datetime
+
+now = datetime.now()
+print(now)                       # full timestamp
+print(now.date())                # YYYY-MM-DD
+print(now.time())                # HH:MM:SS
+print(now.strftime("%A, %B %d, %Y"))
+```
+
+## Format Dates
+
+```
+from datetime import datetime
+
+now = datetime.now()
+
+print(now.strftime("%Y-%m-%d"))      # 2025-12-10
+print(now.strftime("%d/%m/%Y"))      # 10/12/2025
+print(now.strftime("%I:%M %p"))      # 03:30 PM
+print(now.strftime("%A, %B %d, %Y")) # Wednesday, December 10, 2025
+```
+
+## Days Until a Date
+
+```
+from datetime import date
+
+today = date.today()
+target = date(2026, 1, 1)
+
+delta = target - today
+print(f"{delta.days} days until New Year")
+```
+
+## User-Parse Date String
+
+```
+from datetime import datetime
+
+date_string = "2025-12-24"
+parsed = datetime.strptime(date_string, "%Y-%m-%d")
+print(parsed)                      # 2025-12-24 00:00:00
+print(parsed.strftime("%A"))       # weekday name
+```
+
+## Age Calculator
+
+```
+from datetime import date
+
+def calculate_age(birth_year):
+    today = date.today()
+    year_now = today.year
+    month_day_tuple = (today.month, today.day)
+    age = year_now - birth_year
+    return age
+
+try:
+    birth_year = int(input("Enter birth year: "))
+    print(f"You are about {calculate_age(birth_year)} years old")
+except ValueError:
+    print("Invalid year")
+```
+
+## Add Days to a Date
+
+```
+from datetime import datetime, timedelta
+
+now = datetime.now()
+
+tomorrow = now + timedelta(days=1)
+last_week = now - timedelta(weeks=1)
+in_90_days = now + timedelta(days=90)
+
+print("Tomorrow:", tomorrow.date())
+print("Last week:", last_week.date())
+print("In 90 days:", in_90_days.date())
+```
+
+## Measure Execution Time
+
+```
+import time
+from datetime import datetime
+
+start = datetime.now()
+time.sleep(1.5)
+end = datetime.now()
+
+elapsed = end - start
+print(f"Elapsed: {elapsed.total_seconds():.1f}s")
+```
+
+## Timestamp Conversion
+
+```
+from datetime import datetime
+
+now = datetime.now()
+timestamp = now.timestamp()
+print(f"Timestamp: {timestamp}")
+
+restored = datetime.fromtimestamp(timestamp)
+print(f"Restored: {restored}")
+```
+
+## Working Days (Skip Weekends)
+
+```
+from datetime import date, timedelta
+
+def next_working_day(start):
+    day = start + timedelta(days=1)
+    while day.weekday() >= 5:    # 5=Sat, 6=Sun
+        day = day + timedelta(days=1)
+    return day
+
+today = date.today()
+print("Next working day:", next_working_day(today))
+```
+
+Datetime examples များသည် scheduling နှင့် time-based logic များတွင် အသုံးဝင်ပါသည်.

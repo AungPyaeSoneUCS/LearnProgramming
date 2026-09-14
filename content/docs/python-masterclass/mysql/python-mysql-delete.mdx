@@ -1,0 +1,65 @@
+---
+title: "Python MySQL Delete — Python MySQL Delete"
+description: "MySQL table မှ rows များကို DELETE statement ဖြင့် ဖျက်ခြင်း၊ safety နှင့် transaction များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Table မှ rows များကို DELETE FROM statement ဖြင့် ဖျက်နိုင်ပြီး delete ပြီးနောက် commit() ကို မှတ်သားရပါသည်.
+
+## DELETE Statement
+
+customers မှ Peter rows ကို ဖျက်ပါသည်.
+
+```
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword",
+    database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "DELETE FROM customers WHERE address = 'Mountain 21'"
+mycursor.execute(sql)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record(s) deleted")
+```
+
+► 1 record deleted.
+
+## Flask ဖြင့် Delete
+
+Rows ဖျက်ရန် parameters (%s) များဖြင့် safe ပြုလုပ်ပါသည်.
+
+```
+sql = "DELETE FROM customers WHERE address = %s"
+adr = ("Yellow Garden 2", )
+mycursor.execute(sql, adr)
+
+mydb.commit()
+```
+
+## တစ်ခုလုံး ဖျက်ခြင်း (သတိ!)
+
+WHERE မပါပါက table ရှိ rows အားလုံး ဖျက်ခံရပါသည်.
+
+```
+# Rows အားလုံး ဖျက်ခြင်း - သတိ!
+sql = "DELETE FROM customers"
+mycursor.execute(sql)
+mydb.commit()
+```
+
+## Table တစ်ခုလုံး ဖျက်ခြင်း
+
+DROP TABLE statement ဖြင့် table တစ်ခုလုံးနှင့် structure ကို ဖျက်ပါသည် (ဆက်စပ်စာမျက်နှာတွင် အသေးစိတ်).
+
+DELETE statement များကို WHERE clause ဖြင့် specific rows များကိုသာ ဖျက်ရန် သေချာစွာ သုံးပါသည်.
+
+DELETE သည် permanent ဖြစ်သောကြောင့် WHERE clause မပါဘဲ execute ပြုလုပ်ခြင်းကို ရှောင်ကြဉ်ပါသည်.

@@ -1,0 +1,70 @@
+---
+title: "Python MySQL Drop Table — Python MySQL Drop Table"
+description: "MySQL tables များကို DROP TABLE ဖြင့် ဖျက်ခြင်း၊ existing tables များကို စစ်ဆေးခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Table တစ်ခုလုံးကို DROP TABLE statement ဖြင့် ဖျက်နိုင်ပြီး ဖျက်ထားသော table ၏ columns, data အားလုံး ပျောက်သွားပါသည်.
+
+## Drop Table
+
+customers table ကို ဖျက်ပါသည်.
+
+```
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword",
+    database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "DROP TABLE customers"
+mycursor.execute(sql)
+```
+
+► customers table တစ်ခုလုံး (structure + data) ဖျက်ပါသည်.
+
+## Drop Only If Exists
+
+IF EXISTS keyword ဖြင့် table မရှိပါက error မဖြစ်စေပါ.
+
+```
+sql = "DROP TABLE IF EXISTS customers"
+mycursor.execute(sql)
+```
+
+► Table မရှိပါက error မပြဘဲ skip ပြုလုပ်ပါသည်.
+
+## Table ရှိမရှိ စစ်ဆေးခြင်း
+
+DROP မပြုလုပ်မီ SHOW TABLES ဖြင့် table ရှိမရှိ စစ်ဆေးနိုင်ပါသည်.
+
+```
+mycursor.execute("SHOW TABLES")
+tables = [t[0] for t in mycursor.fetchall()]
+
+if "customers" in tables:
+    mycursor.execute("DROP TABLE customers")
+    print("Table dropped")
+else:
+    print("Table does not exist")
+```
+
+## Rows များသာ ဖျက်လိုပါက
+
+Table ၏ structure ကို ထားပြီး data များကိုသာ ဖျက်လိုပါက TRUNCATE TABLE ကို သုံးပါသည်.
+
+```
+sql = "TRUNCATE TABLE customers"
+mycursor.execute(sql)
+```
+
+- **DROP TABLE**: Structure + data အားလုံး ဖျက်
+- **TRUNCATE**: Structure ထား၍ data များကိုသာ ဖျက်
+
+DROP TABLE သည် irreversible ဖြစ်သောကြောင့် IF EXISTS guard များထည့်၍ သေချာစွာ အသုံးပြုရပါသည်.

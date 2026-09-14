@@ -1,0 +1,60 @@
+---
+title: "Python MongoDB Sort — Python MongoDB Sort"
+description: "MongoDB query results များကို sort() method ဖြင့် ascending/descending order ဖြင့် sort ပြုလုပ်ခြင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+find() ၏ results များကို sort() method ဖြင့် order ပြုလုပ်နိုင်ပြီး param1 သည် field name, param2 သည် direction ဖြစ်ပါသည်.
+
+## Sort The Result
+
+Documents များကို name field အလိုက် alphabetically sort ပြုလုပ်ပါသည်.
+
+```
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+mydoc = mycol.find().sort("name")
+
+for x in mydoc:
+    print(x)
+```
+
+► Name အက္ခရာစဉ်အတိုင်း documents များကို ပြသပါသည်.
+
+## Descending Order
+
+Descending order အတွက် direction parameter အနေဖြင့် -1 ကို သုံးပါသည်.
+
+```
+mydoc = mycol.find().sort("name", -1)
+
+for x in mydoc:
+    print(x)
+```
+
+► Name များကို Z-A order ဖြင့် ပြသပါသည်.
+
+## Direction Values များ
+
+- **1**: Ascending order (A-Z)
+- **-1**: Descending order (Z-A)
+
+## Sort Multiple Fields
+
+Fields များစွာဖြင့် sort ပြုလုပ်နိုင်ပါသည်.
+
+```
+mydoc = mycol.find().sort([
+    ("name", 1),
+    ("address", -1)
+])
+```
+
+► Name ascending ဖြင့် နောက်တွင် address descending ဖြင့် sort ပြုလုပ်ပါသည်.
+
+sort() method ဖြင့် MongoDB queries ၏ results များကို စနစ်တကျ order ပြုလုပ်နိုင်ပါသည်.

@@ -1,0 +1,98 @@
+---
+title: "Python Setup Environment — Python Setup Environment"
+description: "Python development environment ကို install လုပ်ခြင်း၊ virtual environments နှင့် IDE များ သတ်မှတ်ခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Python development environment ကို စတင်သတ်မှတ်ရန် Python interpreter install, package manager နှင့် code editor များ လိုအပ်ပါသည်.
+
+## Step 1: Install Python
+
+အောက်ပါအတိုင်း Python ကို install ပြုလုပ်ပါသည်:
+
+1. Python.org မှ latest version ကို download လုပ်ပါ
+2. Installer မှာ "Add Python to PATH" ကို check လုပ်ပါ
+3. Install ပြီးနောက် terminal ပတ်လည်း စစ်ဆေးပါ
+
+```
+> python --version
+> pip --version
+```
+
+## Step 2: Create a Project Folder
+
+```
+> mkdir my-python-project
+> cd my-python-project
+```
+
+## Step 3: Create Virtual Environment
+
+```
+> python -m venv venv
+```
+
+Windows မှာ activate လုပ်ရန်:
+
+```
+> venv\Scripts\activate
+```
+
+Mac/Linux မှာ:
+
+```
+> source venv/bin/activate
+```
+
+► Virtual environment ကို activate လုပ်လိုက်သောအခါ prompt တွင် (venv) ပေါ်လာပါသည်.
+
+## Step 4: Install Packages
+
+```
+> pip install requests
+> pip install numpy pandas matplotlib
+> pip install -r requirements.txt
+```
+
+## Step 5: Requirements File
+
+Dependencies များကို requirements.txt တွင် သိမ်းဆည်းပါသည်.
+
+```
+> pip freeze > requirements.txt
+```
+
+## Step 6: Choose a Code Editor
+
+Popular Python editors:
+
+- **VS Code**: Free, popular, Python extension ရှိ
+- **PyCharm**: Professional IDE, features များစွာ
+- **Sublime Text**: Lightweight editor
+- **Jupyter Notebook**: Data science အတွက်
+
+## VS Code Settings
+
+VS Code အတွက် extensions များ:
+
+- Python (Microsoft)
+- Pylance
+- Python debugger
+
+## Verify Everything Works
+
+```
+# script.py
+print("Hello from Python!")
+
+x = 5
+y = 10
+print(f"{x} + {y} = {x + y}")
+```
+
+```
+> python script.py
+```
+
+Development environment ကို မှန်ကန်စွာ သတ်မှတ်ခြင်းသည် project များကို လွယ်ကူစွာ စတင်နိုင်စေပါသည်.
