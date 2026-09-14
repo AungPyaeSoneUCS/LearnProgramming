@@ -1,0 +1,58 @@
+---
+title: "Support Vector Machine — Support Vector Machine"
+description: "Support Vector Machine (SVM) ၏ သဘောတရားနှင့် sklearn ဖြင့် classification ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Support Vector Machine (SVM) သည် classes များအကြား best hyperplane (ကွဲပြားစေသော line/plane) ကို ရှာဖွေသော supervised ML algorithm ဖြစ်ပါသည်.
+
+## SVM ဆိုသည်မှာ
+
+SVM သည် သီးခြားဖြစ်သော classes နှစ်ခုအတွက် margin အကြီးဆုံး hyperplane ကို ရှာပါသည်. Support vectors များသည် hyperplane အနီးဆုံး points များ ဖြစ်ပါသည်.
+
+- **Hyperplane**: Classes များကို ခွဲခြားသော line
+- **Margin**: Hyperplane မှ support vectors အထိ distance
+- Best hyperplane: margin အကြီးဆုံး
+
+## Seed ၏ Data
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import svm
+
+rng = np.random.default_rng(137)
+X = rng.random((10, 2))   # 10 2D random points
+y = (X[:, 0] + X[:, 1] > 1).astype(int)  # labels
+```
+
+## SVM Classifier Train ပြုလုပ်ခြင်း
+
+```
+clf = svm.SVC(kernel="rbf")
+clf.fit(X, y)
+```
+
+- kernel="linear": straight line
+- kernel="rbf": non-linear boundaries
+
+## Plot/Visualize
+
+```
+plt.scatter(X[:, 0], X[:, 1], c=y)
+plt.show()
+```
+
+Red and green points များကို scatter plot ဖြင့် ပြသပါသည်.
+
+## Predict ပြုလုပ်ခြင်း
+
+```
+new_point = [[0.6, 0.6]]
+print(clf.predict(new_point))
+```
+
+► New point ၏ class ကို predict ပြုလုပ်ပါသည်.
+
+SVM သည် text, image classification နှင့် high-dimensional data များတွင် အားကောင်းပါသည်.

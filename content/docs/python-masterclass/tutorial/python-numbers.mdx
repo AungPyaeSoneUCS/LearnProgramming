@@ -1,0 +1,100 @@
+---
+title: "Python Numbers — Python Numbers"
+description: "Python တွင် int, float, complex ဟူသော numeric types များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Python တွင် numeric types သုံးမျိုး ရှိပါသည်။
+
+- **int**: အပြည့်ကိန်းများ (ဥပမာ 10, -5, 1000)
+- **float**: ဒဿမပိုင်း ကိန်းများ (ဥပမာ 3.14, -0.5)
+- **complex**: ရှုပ်ထွေးသော ကိန်းများ (j ပါသောအပိုင်း)
+
+## Number Types များ ဖန်တီးခြင်း
+
+```
+x = 1    # int
+y = 2.8  # float
+z = 1j   # complex
+print(type(x))
+print(type(y))
+print(type(z))
+```
+
+## Integer များ
+
+```
+x = 1
+y = 35656222554887711
+z = -3255522
+print(type(x))
+print(type(y))
+print(type(z))
+```
+
+## Float များ
+
+```
+x = 1.10
+y = 1.0
+z = -35.59
+print(type(x))
+print(type(y))
+print(type(z))
+```
+
+Float များကို scientific notation ဖြင့်လည်း ရေးနိုင်ပါသည်။
+
+```
+x = 35e3
+y = 12E4
+z = -87.7e100
+print(type(x))
+print(type(y))
+print(type(z))
+```
+
+## Complex များ
+
+Complex number များတွင် imaginary part အတွက် j ကို အသုံးပြုပါသည်။
+
+```
+x = 3+5j
+y = 5j
+z = -5j
+print(type(x))
+print(type(y))
+print(type(z))
+```
+
+## Type Conversion
+
+Number types များကို တစ်ခုမှတစ်ခုသို့ convert လုပ်နိုင်ပါသည်။
+
+```
+x = 1    # int
+y = 2.8  # float
+z = 1j   # complex
+
+a = float(x)     # int မှ float သို့
+b = int(y)       # float မှ int သို့
+c = complex(x)   # int မှ complex သို့
+
+print(a)
+print(b)
+print(c)
+```
+
+သတိပြုရမည့်အချက်မှာ complex ကို int သို့မဟုတ် float သို့ convert မလုပ်နိုင်ပါ။
+
+## Random Number
+
+Python တွင် random number ထုတ်ရန် random module ကို import ပြုလုပ်ရပါသည်။
+
+```
+import random
+print(random.randrange(1, 10))
+```
+
+ဤ code သည် 1 မှ 9 အထိ ကျပန်း ကိန်းတစ်ခုကို ပြသပါသည်။

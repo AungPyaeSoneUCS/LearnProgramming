@@ -1,0 +1,78 @@
+---
+title: "K-Means Clustering — K-Means Clustering"
+description: "K-Means clustering ၏ သဘောတရားနှင့် unsupervised grouping ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+K-Means သည် unsupervised learning algorithm ဖြစ်ပြီး unlabeled data များကို K groups (clusters) အဖြစ် Auto-classify ပြုလုပ်ပါသည်.
+
+## K-Means ဆိုသည်မှာ
+
+Data points များကို centroid (cluster ၏ center) များသို့ အနီးဆုံးအုပ်စု အလိုက် ခွဲခြားပြီး centroids များကို ဆက်တိုက် ပြုပြင်ပါသည်.
+
+- **K**: Cluster အရေအတွက် (သင်ကိုယ်တိုင် သတ်မှတ်ရပါသည်)
+- **Centroid**: Cluster တစ်ခုစီ၏ အလယ်အမှတ်
+
+## How it Works
+
+1. K centroids များကို ကျပန်း ရွေးပါသည်
+2. Point တစ်ခုစီကို အနီးဆုံး centroid သို့ assign ပြုလုပ်ပါသည်
+3. Cluster တစ်ခုစီ၏ centroid ကို ပြန်တွက်ပါသည်
+4. Assignments မပြောင်းမချင်း steps 2-3 ကို ထပ်လုပ်ပါသည်
+
+## Data Preparation
+
+"x" coordinate နှင့် "y" coordinate points များကို scale ဖြင့် ဖန်တီးပါသည် (features မညီမျှမှုကြောင့်).
+
+```
+import numpy as np
+import pandas as pd
+
+x = np.random.uniform(0, 10, 50)
+y = np.random.uniform(0, 10, 50)
+points = pd.DataFrame({"x": x, "y": y})
+```
+
+## KMeans Model Train ပြုလုပ်ခြင်း
+
+```
+from sklearn.cluster import KMeans
+
+kmeans = KMeans(n_clusters=3)
+kmeans.fit(points)
+labels = kmeans.labels_
+```
+
+- n_clusters=3: အုပ်စု 3 ခုခွဲပါသည်
+
+## Plot Results
+
+```
+import matplotlib.pyplot as plt
+
+plt.scatter(points["x"], points["y"], c=labels, cmap="viridis")
+plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], marker="x", s=100, color="red")
+plt.show()
+```
+
+► Clusters များနှင့် centroids (red x) များကို ပြသပါသည်.
+
+## Elbow Method (K ရွေးချယ်ခြင်း)
+
+K တန်ဖိုး ရွေးရန် inertia (within-cluster sum of squares) ကို K အလိုက် plot လုပ်ပါသည်.
+
+```
+inertias = []
+for k in range(1, 6):
+    km = KMeans(n_clusters=k)
+    km.fit(points)
+    inertias.append(km.inertia_)
+
+plt.plot(range(1, 6), inertias, marker="o")
+plt.show()
+```
+
+► Elbow နေရာ (curve ကွေ့သော K) ကို အကောင်းဆုံး K အဖြစ် ရွေးပါသည်.
+
+K-Means သည် customer segmentation, image compression စသည့် exploratory data analysis များတွင် အသုံးဝင်ပါသည်.

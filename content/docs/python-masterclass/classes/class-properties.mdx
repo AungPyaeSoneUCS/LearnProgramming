@@ -1,0 +1,115 @@
+---
+title: "Python Class Properties — Python Class Properties"
+description: "Python class properties (attributes) များကို access, modify နှင့် manage လုပ်နည်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Class properties (attributes) များသည် object တစ်ခုစီ၏ data များကို သိမ်းဆည်းပေးပါသည်။ ၎င်းတို့ကို __init__() method အတွင်းတွင် instance variables အဖြစ် သတ်မှတ်လေ့ ရှိပါသည်။
+
+## Instance Attributes
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+p1 = Person("John", 36)
+print(p1.name)
+```
+
+## Attribute များကို Modify ပြုလုပ်ခြင်း
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+p1 = Person("John", 36)
+p1.age = 40
+print(p1.age)
+```
+
+► Output: 40
+
+## Attribute အသစ် ထည့်ခြင်း
+
+Class ပြင်ပတွင်လည်း attribute အသစ်များ ထည့်နိုင်ပါသည်။
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+p1 = Person("John", 36)
+p1.salary = 50000
+print(p1.salary)
+```
+
+► Output: 50000
+
+## Class Attributes (Shared)
+
+Class level attributes များသည် class မှ object များအားလုံးအတွက် မျှဝေခံရပါသည်။
+
+```
+class Employee:
+    company = "ABC Corp"   # class attribute
+
+    def __init__(self, name):
+        self.name = name
+
+e1 = Employee("Alice")
+e2 = Employee("Bob")
+print(e1.company)
+print(e2.company)
+```
+
+► Output:
+```
+ABC Corp
+ABC Corp
+```
+
+## Attribute ဖျက်ခြင်း
+
+del keyword ဖြင့် attribute တစ်ခုကို ဖျက်နိုင်ပါသည်။
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+p1 = Person("John", 36)
+del p1.age
+print(p1.age)  # AttributeError ဖြစ်ပါသည်
+```
+
+## Getter/Setter Pattern
+
+Access များကို ထိန်းချုပ်ရန် methods များဖြင့် attributes များကို ရယူ/သတ်မှတ်နိုင်ပါသည်။
+
+```
+class BankAccount:
+    def __init__(self, balance):
+        self._balance = balance  # private attribute
+
+    def get_balance(self):       # getter
+        return self._balance
+
+    def set_balance(self, amount):  # setter
+        if amount >= 0:
+            self._balance = amount
+
+acc = BankAccount(1000)
+acc.set_balance(1500)
+print(acc.get_balance())
+```
+
+► Output: 1500
+
+Properties များကို စနစ်တကျ စီမံခြင်းသည် data integrity ကို သေချာစေပါသည်။

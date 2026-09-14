@@ -1,0 +1,69 @@
+---
+title: "Decision Tree — Decision Tree"
+description: "Decision trees များ၏ သဘောတရား၊ sklearn decision tree ဖြင့် classification ပြုလုပ်နည်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Decision tree သည် questions (nodes) များ၏ ဆုံးဖြတ်ချက်ပုံစံဖြင့် input data ကို classification/regression ပြုလုပ်သော supervised ML algorithm ဖြစ်ပါသည်.
+
+## Decision Tree ဆိုသည်မှာ
+
+Decision tree သည် "should I play outside today?" ကဲ့သို့သော မေးခွန်းများမှ ပုံထွက်သော tree structure ဖြစ်ပြီး nodes (ဆုံးဖြတ်ချက်များ) နှင့် leaves (ရလဒ်များ) များဖြင့် ဖွဲ့စည်းပါသည်.
+
+## How Does it Work
+
+- **Root node**: ပထမဆုံး ဆုံးဖြတ်ချက် (ဥပမာ - humidity မြင့်လား)
+- **Internal nodes**: အလယ်ပိုင်း ဆုံးဖြတ်ချက်များ
+- **Leaf nodes**: နောက်ဆုံး ရလဒ်များ
+
+## Data Preparation
+
+Scikit-learn ဖြင့် categorical data များကို numerical values များသို့ ပြောင်းရပါသည်.
+
+```
+import pandas
+
+df = pd.read_csv("data.csv")
+
+d = {"UK": 0, "USA": 1, "N": 2}
+df["Nationality"] = df["Nationality"].map(d)
+
+d = {"YES": 1, "NO": 0}
+df["Go"] = df["Go"].map(d)
+```
+
+## Features နှင့် Target ခွဲခြားခြင်း
+
+```
+features = df[["Age", "Experience", "Rank", "Nationality"]]
+target = df["Go"]
+```
+
+## Train Decision Tree
+
+```
+from sklearn import tree
+
+dtree = tree.DecisionTreeClassifier()
+dtree = dtree.fit(features, target)
+```
+
+## Prediction ပြုလုပ်ခြင်း
+
+```
+print(dtree.predict([[40, 10, 6, 1]]))
+```
+
+► Output: [1] - "YES" (Go)
+
+## အနာဂတ် Predictions
+
+Example များစွာဖြင့် classification ကို ဆက်လက် စမ်းသပ်နိုင်ပါသည်.
+
+```
+print(dtree.predict([[40, 10, 6, 1]]))   # predicts Yes
+print(dtree.predict([[20, 2, 3, 2]]))    # predicts according to tree
+```
+
+Decision trees များသည် interpretable (နားလည်ရလွယ်ကူသော) models များဖြစ်ပြီး classification များစွာတွင် အသုံးဝင်ပါသည်.

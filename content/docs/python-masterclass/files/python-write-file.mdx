@@ -1,0 +1,77 @@
+---
+title: "Python Write File — Python Write File"
+description: "Python files များတွင် content ရေးသားနည်း၊ write() နှင့် append() modes များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+File တစ်ခုတွင် content ရေးရန် Python ၏ write() method ကို အသုံးပြုပါသည်။ File ကို "w" (write) mode ဖြင့် ဖွင့်ပါက ရှိပြီးသား content များကို အစားထိုးရေးပါသည်။
+
+## Write ပြုလုပ်ခြင်း
+
+```
+f = open("demofile2.txt", "a")
+f.write("Now the file has more content!")
+f.close()
+```
+
+► Append mode ဖြင့် file ၏ နောက်တွင် ထည့်ရေးပါသည်။
+
+## Overwrite ပြုလုပ်ခြင်း
+
+"w" mode ဖြင့် ရေးပါက ရှိပြီးသား content များကို လုံးဝ ပြောင်းလဲရေးပါသည်။
+
+```
+f = open("demofile2.txt", "w")
+f.write("Woops! I have deleted the content!")
+f.close()
+```
+
+## Append Mode ၏ ဥပမာ
+
+```
+f = open("demofile2.txt", "a")
+f.write("Line 1 added\n")
+f.write("Line 2 added\n")
+f.close()
+
+with open("demofile2.txt", "r") as f:
+    print(f.read())
+```
+
+## File အသစ် ဖန်တီးခြင်း
+
+"x" mode ဖြင့် file အသစ်တစ်ခုကို ဖန်တီးပါသည်။ File ရှိပြီးသားဆိုပါက error ဖြစ်ပါသည်။
+
+```
+f = open("myfile.txt", "x")
+```
+
+## Delete File
+
+File ဖျက်ရန် os module ကို သုံးပါသည်။
+
+```
+import os
+os.remove("demofile.txt")
+```
+
+## File ရှိမရှိ စစ်ဆေးခြင်း
+
+```
+import os
+if os.path.exists("demofile.txt"):
+    os.remove("demofile.txt")
+else:
+    print("The file does not exist")
+```
+
+## With + Write ဥပမာ
+
+```
+with open("notes.txt", "w") as f:
+    f.write("Hello, Python!\n")
+    f.write("This is written automatically.")
+```
+
+write() ကို "w" သို့မဟုတ် "a" mode များတွင် အသုံးပြုပါသည်။

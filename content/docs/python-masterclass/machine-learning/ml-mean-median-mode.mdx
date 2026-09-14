@@ -1,0 +1,60 @@
+---
+title: "Machine Learning Mean Median Mode — Machine Learning Mean Median Mode"
+description: "Data sets များ၏ central tendency ကို တိုင်းတာသော mean, median, mode methods များကို NumPy နှင့် SciPy ဖြင့် သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Mean, Median နှင့် Mode များသည် data ၏ "central tendency" (အလယ်ဗဟိုတွင်ပေါ်သော value) ကို တိုင်းတာသော methods သုံးခု ဖြစ်ပါသည်။ Machine learning မှာ data များ ခွဲခြမ်းစိတ်ဖြာရန် အသုံးပြုပါသည်။
+
+## Mean (ပျမ်းမျှ)
+
+Mean သည် values များအားလုံးကို ပေါင်းပြီး အရေအတွက်ဖြင့် စားခြင်း ဖြစ်ပါသည်။ အများဆုံး အသုံးပြုသော average ဖြစ်ပါသည်။ NumPy ၏ mean() ဖြင့် တွက်ရသည်။
+
+```
+import numpy as np
+
+speed = [99, 86, 87, 88, 111, 86, 103, 87, 94, 78, 77, 85, 86]
+
+x = np.mean(speed)
+print(x)
+```
+
+► Output: 89.77 (ပျမ်းမျှ speed value)
+
+## Median (အလယ် value)
+
+Median သည် data ကို sort လုပ်ပြီးနေသည့်အလယ် value ဖြစ်ပါသည်။ NumPy ၏ median() ဖြင့် တွက်ရသည်။
+
+```
+import numpy as np
+
+speed = [99, 86, 87, 88, 111, 86, 103, 87, 94, 78, 77, 85, 86]
+
+x = np.median(speed)
+print(x)
+```
+
+► Output: 87.0
+
+- Values ပမာဏ even ဖြစ်ပါက အလယ်နှစ်ခု၏ mean ကို ယူပါသည်
+- Odd ဖြစ်ပါက အလယ် value ဖြစ်သည်
+
+Median သည် outliers များ၏ သက်ရောက်မှုကို reduce လုပ်ပါသည်။
+
+## Mode (အများဆုံးပေါ်သော value)
+
+Mode သည် data တွင် အကြိမ်အများဆုံး ပေါ်သည့် value ဖြစ်ပါသည်။ SciPy ၏ mode() ဖြင့် တွက်ရသည်။
+
+```
+from scipy import stats
+
+speed = [99, 86, 87, 88, 111, 86, 103, 87, 94, 78, 77, 85, 86]
+
+x = stats.mode(speed)
+print(x)
+```
+
+► Output: ModeResult(mode=86, count=3) - 86 သည် 3 ကြိမ်ပေါ်ပြီး အများဆုံးဖြစ်ပါသည်
+
+Mean, median, mode တို့သည် dataset ၏ ပုံသဏ္ဌာန်ကို နားလည်ရန် ပထမဆုံး အသုံးပြုသော tools ဖြစ်ပါသည်။

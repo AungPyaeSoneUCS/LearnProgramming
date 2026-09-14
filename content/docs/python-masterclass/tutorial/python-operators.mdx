@@ -1,0 +1,106 @@
+---
+title: "Python Operators — Python Operators"
+description: "Python operators များ ဖြစ်သော arithmetic, assignment, comparison, logical စသည်တို့ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Operators များသည် variable များနှင့် values များပေါ်တွင် လုပ်ဆောင်ချက်များ လုပ်ဆောင်ရန် အသုံးပြုပါသည်။ Python တွင် operator groups များစွာ ရှိပါသည်။
+
+## 1. Arithmetic Operators
+
+- `+`: Addition
+- `-`: Subtraction
+- `*`: Multiplication
+- `/`: Division
+- `%`: Modulus
+- `**`: Exponentiation
+- `//`: Floor division
+
+```
+print(10 + 5)   # 15
+print(10 - 5)   # 5
+print(10 * 5)   # 50
+print(10 / 5)   # 2.0
+print(10 % 3)   # 1
+print(10 ** 2)  # 100
+print(10 // 3)  # 3
+```
+
+## 2. Assignment Operators
+
+Value များကို variable သို့ assign ပြုလုပ်ရန် သုံးပါသည်။
+
+```
+x = 5
+x += 3   # x = x + 3
+print(x) # 8
+```
+
+အခြားသော assignment operators များ: `-=`, `*=`, `/=`, `%=`, `**=`
+
+## 3. Comparison Operators
+
+Value နှစ်ခုကို နှိုင်းယှဉ်ရန် သုံးပါသည်။
+
+```
+x = 5
+y = 3
+print(x == y)  # False
+print(x != y)  # True
+print(x > y)   # True
+print(x < y)   # False
+print(x >= y)  # True
+print(x <= y)  # False
+```
+
+## 4. Logical Operators
+
+Condition များကို ပေါင်းစပ်ရန် သုံးပါသည်။
+
+```
+x = 5
+print(x > 3 and x < 10)  # True
+print(x > 3 or x < 4)    # True
+print(not(x > 3 and x < 10))  # False
+```
+
+## 5. Identity Operators
+
+Object များသည် memory တွင် နေရာတစ်ခုတည်း ရှိ/မရှိ စစ်ဆေးရန် is နှင့် is not ကို သုံးပါသည်။
+
+```
+x = ["apple", "banana"]
+y = ["apple", "banana"]
+z = x
+print(x is z)   # True
+print(x is y)   # False
+print(x == y)   # True
+```
+
+## 6. Membership Operators
+
+Sequence တစ်ခုအတွင်း member ရှိ/မရှိ စစ်ဆေးရန် in ကို သုံးပါသည်။
+
+```
+x = ["apple", "banana"]
+print("banana" in x)          # True
+print("pineapple" not in x)   # True
+```
+
+## 7. Bitwise Operators
+
+Binary level တွင် လုပ်ဆောင်ရန် bitwise operators များကို သုံးပါသည်။
+
+```
+a = 10  # 1010 in binary
+b = 3   # 0011 in binary
+print(a & b)   # 2  (AND)
+print(a | b)   # 11 (OR)
+print(a ^ b)   # 9  (XOR)
+print(~a)      # -11 (NOT)
+print(a << 1)  # 20 (left shift)
+print(a >> 1)  # 5  (right shift)
+```
+
+Operators များသည် program ၏ အရေးကြီးသော အစိတ်အပိုင်း ဖြစ်ပြီး တစ်ခုစီ၏ အသုံးပြုမှုကို နားလည်ထားရပါမည်။

@@ -1,0 +1,56 @@
+---
+title: "Machine Learning Percentiles — Machine Learning Percentiles"
+description: "Percentiles များ၏ သဘောတရား၊ data ၏ အနေအထား ခွဲခြမ်းစိတ်ဖြာခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Percentile ဆိုသည်မှာ data အစုတစ်ခုရှိ observation တစ်ခု၏ အနေအထားကို ဖော်ပြသော တိုင်းတာမှု ဖြစ်ပါသည်။ "ဤ value သည် observation များ၏ percent မည်မျှအောက်တွင် နေသည်" ဟု ဆိုလိုပါသည်။
+
+## Percentile ဆိုသည်မှာ
+
+ဥပမာ - Leonardo သည် အသက် 30 ဖြစ်ပြီး ၎င်းသည် သူ၏ friend 100 ယောက်အနက် 50 ယောက်ထက် အသက်ငယ်/ကြီးနေပါက percentile 50 ၏ meaning ဖြစ်ပါသည်။
+
+## NumPy Percentiles
+
+NumPy ၏ percentile() function ဖြင့် percentiles များကို တွက်ချက်ပါသည်။
+
+```
+import numpy as np
+
+# Data ဖန်တီးပါ
+ages = [5, 31, 43, 48, 50, 41, 7, 11, 15, 39, 80, 82, 32, 2, 8, 6, 25, 36, 27, 61, 31]
+
+x = np.percentile(ages, 75)
+print(x)
+```
+
+► Output: 43.0
+
+Meaning: data ၏ 75% သည် 43 အောက်တွင် ရှိပါသည်။
+
+## How Does It Work
+
+1. Ages ကို sort လုပ်ပါသည်
+2. percentile 75 ဆိုသည်မှာ elements ၏ 75% ၏ အပေါ်ဆုံးတန်ဖိုးကို ရှာပါသည်
+3. 21 element မှ 75% သည် 15.75 ဖြစ်ပြီး 16th element ကို ကြည့်ပါသည်
+
+## ဆက်စပ်သော ဥပမာ
+
+```
+import numpy as np
+
+ages = [5, 31, 43, 48, 50, 41, 7, 11, 15, 39, 80, 82, 32, 2, 8, 6, 25, 36, 27, 61, 31]
+
+print(np.percentile(ages, 10))   # ပထမ 10%
+print(np.percentile(ages, 50))   # Median (အလယ်)
+print(np.percentile(ages, 90))   # ပထမ 90%
+```
+
+## Percentile ၏ အသုံးပြုမှု
+
+- Data ၏ spread ကို နားလည်ရန်
+- Outliers များကို ရှာဖွေရန်
+- Boundaries များ သတ်မှတ်ရန် (ဥပမာ - အပေါ်ဆုံး 10%)
+
+Percentiles များသည် data analysis နှင့် statistics ၏ အဓိက tool ဖြစ်ပါသည်။

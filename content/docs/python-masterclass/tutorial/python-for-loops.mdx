@@ -1,0 +1,118 @@
+---
+title: "Python For Loops — Python For Loops"
+description: "Python for loop များ၊ range(), break, continue, nested loops များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+For loop သည် sequence (list, tuple, string, etc.) ၏ items များကို တစ်ခုချင်းစီ လည်ပတ်ရန် အသုံးပြုပါသည်။
+
+## For Loop အခြေခံ
+
+```
+fruits = ["apple", "banana", "cherry"]
+for x in fruits:
+    print(x)
+```
+
+► Output:
+```
+apple
+banana
+cherry
+```
+
+## String များပေါ်တွင် Loop
+
+```
+for x in "banana":
+    print(x)
+```
+
+စာလုံးတစ်လုံးချင်းစီ ပြပါသည်။
+
+## Break
+
+```
+fruits = ["apple", "banana", "cherry"]
+for x in fruits:
+    print(x)
+    if x == "banana":
+        break
+```
+
+## Continue
+
+```
+fruits = ["apple", "banana", "cherry"]
+for x in fruits:
+    if x == "banana":
+        continue
+    print(x)
+```
+
+banana ကို ကျော်ပြီး ကျန်တာကို ပြပါသည်။
+
+## range() Function
+
+range() သည် numbers sequence တစ်ခုကို ပြုလုပ်ပေးပါသည်။
+
+```
+for x in range(6):
+    print(x)
+```
+
+► Output: 0, 1, 2, 3, 4, 5 (0 မှ 5 အထိ)
+
+Range ၏ စတင်နှင့် အဆုံးကို သတ်မှတ်နိုင်ပါသည်။
+
+```
+for x in range(2, 6):
+    print(x)
+```
+
+► Output: 2, 3, 4, 5
+
+Step ကိုလည်း သတ်မှတ်နိုင်ပါသည်။
+
+```
+for x in range(2, 30, 3):
+    print(x)
+```
+
+2 မှစ၍ 3 ခြားတိုင်း 30 အထိ ပြသပါသည်။
+
+## Else in For Loop
+
+```
+for x in range(6):
+    print(x)
+else:
+    print("Finally finished!")
+```
+
+Loop အပြီးတွင် "Finally finished!" ကို ပြပါသည်။ break ဖြင့် ရပ်လိုက်ပါက else သည် run မည် မဟုတ်ပါ။
+
+## Nested Loops
+
+```
+adj = ["red", "big", "tasty"]
+fruits = ["apple", "banana", "cherry"]
+
+for x in adj:
+    for y in fruits:
+        print(x, y)
+```
+
+Combination အားလုံး ပြပါသည်။
+
+## Pass
+
+Loop တစ်ခုတွင် ဘာမှမလုပ်လိုပါက pass ကို သုံးပါသည်။
+
+```
+for x in [0, 1, 2]:
+    pass
+```
+
+For loop များသည် collection များကို iterate လုပ်ရန် အသုံးအများဆုံး tool ဖြစ်ပါသည်။

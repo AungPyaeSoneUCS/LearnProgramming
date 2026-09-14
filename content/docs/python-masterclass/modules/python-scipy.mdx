@@ -1,0 +1,104 @@
+---
+title: "Python SciPy — Python SciPy"
+description: "SciPy library ဖြင့် scientific computing နှင့် advanced functions များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+SciPy သည် numerical algorithms များ (optimization, linear algebra, integration, statistics စသည်) အတွက် Python library တစ်ခု ဖြစ်ပါသည်။ ဤ library သည် NumPy array များပေါ်တွင် တည်ဆောက်ထားပါသည်။
+
+## Install ပြုလုပ်ခြင်း
+
+```
+pip install scipy
+```
+
+## Import ပြုလုပ်ခြင်း
+
+```
+from scipy import constants
+```
+
+## Constants
+
+SciPy တွင် physical constants များစွာ ပါဝင်ပါသည်။
+
+```
+from scipy import constants
+
+print(constants.pi)
+print(constants.c)       # Speed of light
+print(constants.g)       # Gravitational acceleration
+```
+
+## Optimize
+
+minimize() function သည် function တစ်ခု၏ minimum value ကို ရှာပါသည်။
+
+```
+from scipy.optimize import minimize
+
+def f(x):
+    return x**2 + 5*x + 6
+
+result = minimize(f, 0)
+print(result.x)
+```
+
+► ခန့်မှန်းခြေအားဖြင့် -2.5 အနီးမှ minimum ကို တွေ့ရပါသည်။
+
+## Linear Algebra
+
+scipy.linalg သည် matrix operations များကို ပံ့ပိုးပါသည်။
+
+```
+from scipy import linalg
+import numpy as np
+
+A = np.array([[3, 1], [2, 4]])
+print(linalg.det(A))
+print(linalg.inv(A))
+```
+
+► Output:
+```
+10.0
+[[ 0.4 -0.1]
+ [-0.2  0.3]]
+```
+
+## Statistics
+
+scipy.stats သည် probability distributions များကို ပံ့ပိုးပါသည်။
+
+```
+from scipy import stats
+import numpy as np
+
+data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+mean = np.mean(data)
+median = np.median(data)
+std = np.std(data)
+
+print("Mean:", mean)
+print("Median:", median)
+print("Std:", std)
+```
+
+## Integration
+
+scipy.integrate ဖြင့် integrals များကို တွက်ချက်နိုင်ပါသည်။
+
+```
+from scipy.integrate import quad
+
+def f(x):
+    return x**2
+
+result, error = quad(f, 0, 1)
+print(result)
+```
+
+► Output: 0.3333... (x^2 ၏ integral 0 မှ 1 အထိ)
+
+SciPy သည် data scientists နှင့် engineers များအတွက် အစွမ်းထက်သော toolkit ဖြစ်ပါသည်။

@@ -1,0 +1,118 @@
+---
+title: "Python Lists — Python Lists"
+description: "Python lists များ ဖန်တီးနည်း၊ access, change, add, remove နှင့် copy ပြုလုပ်နည်းများကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Lists များသည် order လိုက်၊ change လို့ရသော (mutable) collections များ ဖြစ်ပါသည်။ List တစ်ခုကို square brackets [] ဖြင့် ဖန်တီးပြီး items များကို comma ဖြင့် ခြားပါသည်။
+
+## List ဖန်တီးခြင်း
+
+```
+thislist = ["apple", "banana", "cherry"]
+print(thislist)
+```
+
+List များသည် duplicate values များကို ခွင့်ပြုပါသည်။
+
+```
+thislist = ["apple", "banana", "cherry", "apple", "cherry"]
+print(thislist)
+```
+
+## List Length
+
+```
+thislist = ["apple", "banana", "cherry"]
+print(len(thislist))
+```
+
+► Output: 3
+
+## Data Types များ
+
+```
+list1 = ["apple", "banana", "cherry"]       # str
+list2 = [1, 5, 7, 9, 3]                     # int
+list3 = [True, False, False]                # bool
+list4 = ["abc", 34, True, 40, "male"]       # mixed
+```
+
+## List Item များကို Access ပြုလုပ်ခြင်း
+
+```
+thislist = ["apple", "banana", "cherry"]
+print(thislist[1])
+```
+
+► Output: banana
+
+## Index အပိုင်းကို Access ပြုလုပ်ခြင်း
+
+```
+thislist = ["apple", "banana", "cherry", "orange", "kiwi", "melon", "mango"]
+print(thislist[2:5])
+```
+
+► Output: ['cherry', 'orange', 'kiwi']
+
+## Item ပြောင်းခြင်း
+
+```
+thislist = ["apple", "banana", "cherry"]
+thislist[1] = "blackcurrant"
+print(thislist)
+```
+
+► Output: ['apple', 'blackcurrant', 'cherry']
+
+## Item များထည့်ခြင်း
+
+append ဖြင့် အဆုံးတွင် ထည့်ပြီး insert ဖြင့် နေရာသတ်မှတ်၍ ထည့်နိုင်ပါသည်။
+
+```
+thislist = ["apple", "banana", "cherry"]
+thislist.append("orange")
+thislist.insert(1, "blueberry")
+print(thislist)
+```
+
+► Output: ['apple', 'blueberry', 'banana', 'cherry', 'orange']
+
+## Item ဖယ်ရှားခြင်း
+
+```
+thislist = ["apple", "banana", "cherry"]
+thislist.remove("banana")
+print(thislist)
+```
+
+or using pop:
+```
+thislist = ["apple", "banana", "cherry"]
+thislist.pop(1)
+print(thislist)
+```
+
+## List ကို Loop ပြုလုပ်ခြင်း
+
+```
+thislist = ["apple", "banana", "cherry"]
+for x in thislist:
+    print(x)
+```
+
+## List Comprehension
+
+List တစ်ခုမှ new list တစ်ခုကို ထုတ်ရန် အတိုအကျဆုံး နည်းလမ်း ဖြစ်ပါသည်။
+
+```
+fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
+newlist = [x for x in fruits if "a" in x]
+print(newlist)
+```
+
+► Output: ['apple', 'banana', 'mango']
+
+List methods များကို Reference ပိုင်းတွင် ဆက်လက် လေ့လာနိုင်ပါသည်။

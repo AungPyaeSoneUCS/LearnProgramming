@@ -1,0 +1,141 @@
+---
+title: "Python NumPy — Python NumPy"
+description: "NumPy library ဖြင့် numerical computing ပြုလုပ်နည်း၊ arrays များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+NumPy သည် Python ၏ numerical computing library ဖြစ်ပြီး matrices, arrays များကို အလွယ်တကူ ကိုင်တွယ်နိုင်ရန် အသုံးပြုပါသည်။ Machine learning နှင့် data science ၏ အခြေခံအုတ်မြစ် ဖြစ်ပါသည်။
+
+## Install ပြုလုပ်ခြင်း
+
+```
+pip install numpy
+```
+
+## Import ပြုလုပ်ခြင်း
+
+NumPy ကို import ပြုလုပ်ရန် စံနှုန်းမှာ np alias ဖြင့် ဖြစ်ပါသည်။
+
+```
+import numpy as np
+```
+
+## NumPy Array များ
+
+NumPy array ကို np.array() function ဖြင့် ဖန်တီးပါသည်။
+
+```
+import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5])
+print(arr)
+print(type(arr))
+```
+
+► Output:
+```
+[1 2 3 4 5]
+class 'numpy.ndarray'
+```
+
+## List နှင့် Array ၏ ကွာခြားချက်
+
+List များသည် element types မတူညီ၍ array များသည် element အားလုံး တစ်မျိုးတည်း ဖြစ်ပါသည်။
+
+## 0-D Array
+
+```
+import numpy as np
+
+arr = np.array(42)
+print(arr)
+```
+
+► Output: 42
+
+## 1-D Array
+
+```
+import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5])
+print(arr)
+```
+
+## 2-D Array
+
+```
+import numpy as np
+
+arr = np.array([[1, 2, 3], [4, 5, 6]])
+print(arr)
+```
+
+► Output:
+```
+[[1 2 3]
+ [4 5 6]]
+```
+
+## 3-D Array
+
+```
+import numpy as np
+
+arr = np.array([[[1, 2, 3], [4, 5, 6]], [[1, 2, 3], [4, 5, 6]]])
+print(arr)
+```
+
+## ndim Attribute
+
+Array ၏ dimension အရေအတွက်ကို ndim ဖြင့် ကြည့်ပါသည်။
+
+```
+import numpy as np
+
+a = np.array(42)
+b = np.array([1, 2, 3])
+c = np.array([[1, 2, 3], [4, 5, 6]])
+
+print(a.ndim)
+print(b.ndim)
+print(c.ndim)
+```
+
+► Output: 0, 1, 2
+
+## Array Operations များ
+
+NumPy ဖြင့် vectorized operations များကို ပြုလုပ်နိုင်ပါသည်။
+
+```
+import numpy as np
+
+arr1 = np.array([1, 2, 3])
+arr2 = np.array([4, 5, 6])
+
+print(arr1 + arr2)
+print(arr1 * 2)
+print(arr1.sum())
+```
+
+► Output:
+```
+[5 7 9]
+[2 4 6]
+6
+```
+
+## Slicing များ
+
+```
+import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5, 6, 7])
+print(arr[1:5])
+```
+
+► Output: [2 3 4 5]
+
+NumPy သည် large data sets များတွင် list များထက် များစွာ မြန်ဆန်သည် ဖြစ်ပါသည်။

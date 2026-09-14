@@ -1,0 +1,101 @@
+---
+title: "Python Strings — Python Strings"
+description: "Python strings များ ဖန်တီးနည်း၊ slicing, methods နှင့် formatting တို့ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Strings ဆိုသည်မှာ စာလုံးများ၏ အစီအစဉ် တစ်ခု ဖြစ်ပါသည်။ Python တွင် strings များကို quotes များဖြင့် ဖန်တီးပါသည်။
+
+## String ဖန်တီးခြင်း
+
+```
+print("Hello")
+print('Hello')
+```
+
+## Quotes များ ခွဲခြားခြင်း
+
+String တစ်ခုအတွင်း quotes များကို သုံးရန်-
+
+```
+print("It's alright")
+print("He is called 'Johnny'")
+print('He is called "Johnny"')
+```
+
+## String များကို Variables အဖြစ် သတ်မှတ်ခြင်း
+
+```
+a = "Hello"
+print(a)
+```
+
+## Multiline Strings
+
+```
+a = """Lorem ipsum dolor sit amet,
+consectetur adipiscing elit,
+sed do eiusmod tempor incididunt."""
+print(a)
+```
+
+## Strings များသည် Arrays ဖြစ်ပါသည်
+
+String ၏ စာလုံးများကို square brackets ဖြင့် ရယူနိုင်ပါသည်။
+
+```
+a = "Hello, World!"
+print(a[1])
+```
+
+► Output: e
+
+## Slicing
+
+String ၏ အပိုင်းတစ်ခုကို ရယူရန် slice syntax ကို သုံးပါသည်။
+
+```
+b = "Hello, World!"
+print(b[2:5])
+```
+
+► Output: llo
+
+(Index 2 မှ index 4 အထိ ရယူပါသည်)
+
+## Negative Indexing
+
+Python သည် negative indexing ကို ထောက်ခံပါသည်။
+
+```
+b = "Hello, World!"
+print(b[-5:-2])
+```
+
+► Output: orl
+
+## String Concatenation
+
+String များကို + operator ဖြင့် ပေါင်းစပ်ပါသည်။
+
+```
+a = "Hello"
+b = "World"
+c = a + " " + b
+print(c)
+```
+
+► Output: Hello World
+
+## Format - F-Strings
+
+Python တွင် variable များကို string အတွင်း ထည့်ရန် f-strings ကို အသုံးပြုပါသည်။
+
+```
+age = 36
+txt = f"My name is John, I am {age}"
+print(txt)
+```
+
+String methods များကို Reference ပိုင်းတွင် အသေးစိတ် လေ့လာနိုင်ပါသည်။

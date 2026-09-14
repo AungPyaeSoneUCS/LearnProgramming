@@ -1,0 +1,72 @@
+---
+title: "Confusion Matrix — Confusion Matrix"
+description: "Classification models များ၏ performance ကို confusion matrix ဖြင့် တိုင်းတာနည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Confusion matrix သည် classification model ၏ predictions များကို မည်မျှ correct/incorrect ဖြစ်သည်ကို ပြသသော table ဖြစ်ပါသည်.
+
+## Confusion Matrix ဆိုသည်မှာ
+
+Table သည် TP, TN, FP, FN ဟုခေါ်သော values လေးမျိုးဖြင့် ဖွဲ့စည်းပြီး class တစ်ခုအတွက် classification ၏ performance ကို ဖော်ပြပါသည်.
+
+- **TP (True Positive)**: မှန်မှန်နှင့် မှန်း predict (actual: Yes, predicted: Yes)
+- **TN (True Negative)**: မှန်မှန်နှင့် No predict
+- **FP (False Positive)**: အမှားနှင့် Yes predict (Type 1 error)
+- **FN (False Negative)**: အမှားနှင့် No predict (Type 2 error)
+
+## Data Preparation
+
+Diabetes dataset ကဲ့သို့ data များကို sklearn ၏ train_test_split ဖြင့် ခွဲပါသည်.
+
+```
+from sklearn.model_selection import train_test_split
+
+X = df[["age", "blood_pressure", "insulin"]]
+y = df["diabetes"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+```
+
+## Decision Tree Train ပြုလုပ်ခြင်း
+
+```
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+
+dtree = DecisionTreeClassifier()
+dtree.fit(X_train, y_train)
+y_pred = dtree.predict(X_test)
+```
+
+## Confusion Matrix ဖန်တီးခြင်း
+
+```
+from sklearn.metrics import confusion_matrix
+
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+```
+
+## Result ၏ Interpretation
+
+Confusion Matrix Output ၏ array structure ကို အောက်ပါအတိုင်း ကိုယ်စားပြုသည်.
+
+```
+[[TN, FP]
+ [FN, TP]]
+```
+
+## Accuracy ဖြင့် တိုင်းတာခြင်း
+
+```
+from sklearn.metrics import accuracy_score
+
+acc = accuracy_score(y_test, y_pred)
+print(acc)
+```
+
+--- ထို့အပြင် classification_report ဖြင့် precision, recall, f1-score များကိုပါ ကြည့်နိုင်ပါသည်.
+
+Confusion matrix သည် classification models ၏ quality ကို ပိုင်းခြားရန် အရေးကြီးသော visualization tool ဖြစ်ပါသည်.

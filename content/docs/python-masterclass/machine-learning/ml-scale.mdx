@@ -1,0 +1,61 @@
+---
+title: "Machine Learning Scale — Machine Learning Scale"
+description: "Features များ၏ scale ကို normalize ပြုလုပ်နည်း၊ MinMaxScaler ဖြင့် data scaling ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Machine learning algorithm အများစုတွင် data features များသည် တူညီသော scale ပေါ်တွင် ရှိရန် လိုအပ်ပါသည်။ မည်သည့် feature မဆို အခြားသော feature များကို မလွှမ်းမိုးစေရန် scaling ပြုလုပ်ရပါသည်။
+
+## Scale ၏ သဘောတရား
+
+ဥပမာ - Weight (790-2230) နှင့် Volume (1.2-4.2) မညီမျှသော scales နှစ်ခုရှိပါသည်. ပိုကြီးသော range ရှိသော feature သည် model ၏ predict ကို ပိုလွှမ်းမိုးနိုင်ပါသည်.
+
+## Standardize ပြုလုပ်ခြင်း
+
+Standardization ၏ နည်းတစ်ခုမှာ min-max scaler ဖြစ်ပြီး feature များကို 0 မှ 1 အကြားရှိ values သို့ ပြောင်းလဲပါသည်.
+
+Formula:
+$$$ scale = (value - min) / (max - min)
+
+## How to Use
+
+sklearn library ၏ MinMaxScaler() သို့မဟုတ် custom function များကို သုံးနိုင်ပါသည်.
+
+```
+import pandas as pd
+from sklearn import linear_model
+
+data = pd.read_csv("data.csv")
+X = data[["Weight", "Volume"]]
+y = data["CO2"]
+
+regr = linear_model.LinearRegression()
+regr.fit(X, y)
+
+predictedCO2 = regr.predict([[2300, 1300]])
+print(predictedCO2)
+```
+
+## MinMaxScaler ဥပမာ
+
+```
+from sklearn.preprocessing import MinMaxScaler
+import numpy as np
+
+weights = np.array([[790], [1224], [1160], [2230]])
+scaler = MinMaxScaler()
+scaled = scaler.fit_transform(weights)
+
+print(scaled)
+```
+
+► Values များကို 0 - 1 အကြား ဝင်အောင် ပြောင်းလဲပေးပါသည်.
+
+## Why Scale is Important
+
+- Gradient-based algorithms များသည် တူညီသော scale လိုအပ်ပါသည်
+- Distance-based algorithms (KNN, SVM) များတွင် အရေးကြီးပါသည်
+- Features များ မညီမျှခြင်းကို ဖယ်ရှားပါသည်
+
+Scaling သည် preprocessing ၏ အရေးကြီးသော အဆင့် ဖြစ်ပါသည်.

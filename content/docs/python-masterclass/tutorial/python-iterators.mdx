@@ -1,0 +1,107 @@
+---
+title: "Python Iterators — Python Iterators"
+description: "Python iterators များ၊ __iter__ နှင့် __next__ methods များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Iterator ဆိုသည်မှာ collection (list, tuple, etc.) များကို item အလိုက် iterate လုပ်ရန် အသုံးပြုသော object ဖြစ်ပါသည်။ Python တွင် ဤ concept ကို __iter__ နှင့် __next__ ဟူသော methods နှစ်ခုဖြင့် လုပ်ဆောင်ပါသည်။
+
+## Iteration ဆိုသည်မှာ အဘယ်နည်း
+
+List, tuple, dict, sets စသည့် objects အများစုသည် iterable ဖြစ်ပါသည်။ ၎င်းတို့ကို for loop ဖြင့် iterate လုပ်နိုင်ပါသည်။
+
+```
+mytuple = ("apple", "banana", "cherry")
+for x in mytuple:
+    print(x)
+```
+
+## Iterator Objects
+
+List တစ်ခုသည် iterator မဟုတ်ပါ။ iter() function ဖြင့် iterator အဖြစ် ပြောင်းလဲပါသည်။
+
+```
+mytuple = ("apple", "banana", "cherry")
+myit = iter(mytuple)
+
+print(next(myit))
+print(next(myit))
+print(next(myit))
+```
+
+► Output:
+```
+apple
+banana
+cherry
+```
+
+## String များတွင် Iteration
+
+```
+mystr = "banana"
+myit = iter(mystr)
+
+print(next(myit))
+print(next(myit))
+print(next(myit))
+```
+
+## Iterable နှင့် Iterator
+
+Iterable အားလုံးသည် iterator မဟုတ်ပါ။ List သည် iterable (iteration လုပ်နိုင်) သော်လည်း ၎င်းကိုယ်တိုင် iterator မဟုတ်ပါ။ iter() ကို ခေါ်မှသာ iterator ဖြစ်လာပါသည်။
+
+## Custom Iterator ဖန်တီးခြင်း
+
+Class တစ်ခုတွင် __iter__ နှင့် __next__ methods များ ရှိပါက ၎င်းသည် iterator ဖြစ်ပါသည်။
+
+```
+class MyNumbers:
+    def __iter__(self):
+        self.a = 1
+        return self
+
+    def __next__(self):
+        x = self.a
+        self.a += 1
+        return x
+
+myclass = MyNumbers()
+myiter = iter(myclass)
+
+print(next(myiter))
+print(next(myiter))
+print(next(myiter))
+```
+
+► Output: 1, 2, 3 (တစ်ခုပြီးတစ်ခု အမြဲတိုးနေပါသည်)
+
+## StopIteration
+
+အကန့်အသတ်မရှိ iterate မလုပ်ရန် StopIteration ကို သုံးပါသည်။
+
+```
+class MyNumbers:
+    def __iter__(self):
+        self.a = 1
+        return self
+
+    def __next__(self):
+        if self.a <= 3:
+            x = self.a
+            self.a += 1
+            return x
+        else:
+            raise StopIteration
+
+myclass = MyNumbers()
+myiter = iter(myclass)
+
+for x in myiter:
+    print(x)
+```
+
+► Output: 1, 2, 3 (ပြီးနောက် loop အဆုံးသတ်ပါသည်)
+
+Iterators များသည် Python ၏ data processing ၏ အခြေခံ mechanism ဖြစ်ပါသည်။

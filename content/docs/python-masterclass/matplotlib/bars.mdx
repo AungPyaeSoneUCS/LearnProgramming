@@ -1,0 +1,102 @@
+---
+title: "Python Matplotlib Bars — Python Matplotlib Bars"
+description: "bar() function ဖြင့် bar charts များကို ဖန်တီး၍ customize ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Bar chart သည် categorical data များကို bar များဖြင့် ပြသရန် အသုံးပြုပါသည်။ Bar ၏ အမြင့် (height) သည် value ကို ကိုယ်စားပြုပါသည်။
+
+## Bar Chart ဆိုသည်မှာ
+
+bar() function ဖြင့် bar charts များကို ဆွဲပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = ["Apple", "Banana", "Orange"]
+y = [10, 15, 7]
+
+plt.bar(x, y)
+plt.show()
+```
+
+► Fruit များ၏ value များကို bar chart ဖြင့် ပြသပါသည်။
+
+## Horizontal Bars
+
+barh() function ဖြင့် horizontal bar charts များကို ဆွဲပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = ["Apple", "Banana", "Orange"]
+y = [10, 15, 7]
+
+plt.barh(x, y)
+plt.show()
+```
+
+► Horizontal direction ဖြင့် bars များကို ဆွဲပါသည်.
+
+## Bar Color
+
+color parameter ဖြင့် bars ၏ အရောင်များကို သတ်မှတ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = ["A", "B", "C"]
+y = [10, 15, 7]
+
+plt.bar(x, y, color="red")
+plt.show()
+```
+
+► Red bars များကို ဆွဲပါသည်.
+
+## Color Names ၏ ဥပမာ
+
+color="hotpink" ကဲ့သို့ color names များကိုလည်း အသုံးပြုနိုင်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = ["A", "B", "C"]
+y = [10, 15, 7]
+
+plt.bar(x, y, color="hotpink")
+plt.show()
+```
+
+## Bar Width
+
+width parameter ဖြင့် bars ၏ အကျယ်ကို သတ်မှတ်ပါသည်။ (0 - 1)
+
+```
+import matplotlib.pyplot as plt
+
+x = ["A", "B", "C"]
+y = [10, 15, 7]
+
+plt.bar(x, y, width=0.3)
+plt.show()
+```
+
+► Bars များ ပိန်သွားပါသည်.
+
+## Bar Height (horizontal)
+
+barh() အတွက် height parameter ဖြင့် သတ်မှတ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = ["A", "B", "C"]
+y = [10, 15, 7]
+
+plt.barh(x, y, height=0.3)
+plt.show()
+```
+
+Bar charts များသည် categories အလိုက် data နှိုင်းယှဉ်ရန် အသုံးဝင်ပါသည်.

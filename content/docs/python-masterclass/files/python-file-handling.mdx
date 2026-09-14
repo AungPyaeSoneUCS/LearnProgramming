@@ -1,0 +1,57 @@
+---
+title: "Python File Handling — Python File Handling"
+description: "Python files များကို ဖတ်နိုင်ရန်၊ ရေးနိုင်ရန် အသုံးပြုသော file handling function များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+File handling သည် program တစ်ခုတွင် file များကို ဖန်တီးခြင်း၊ ဖတ်ခြင်း၊ နောက်ဆုံး ရေးခြင်းစသည့် operations များကို လုပ်ဆောင်ခြင်း ဖြစ်ပါသည်။ Python တွင် file operations များကို built-in functions များဖြင့် လုပ်ဆောင်နိုင်ပါသည်။
+
+## File Handling Functions
+
+- **open()**: File ကိုဖွင့်ရန်
+- **read()**: File ၏ အတွင်းcontent ကိုဖတ်ရန်
+- **write()**: File တွင်ရေးရန်
+- **readline()**: File ၏ အကြောင်းအရာ တစ်ကြောင်းကိုဖတ်ရန်
+- **close()**: File ကိုပိတ်ရန်
+
+## File ဖွင့်ခြင်း
+
+File တစ်ခုကို ဖွင့်ရန် open() function ကို သုံးပါသည်။
+
+```
+f = open("demofile.txt", "r")
+print(f.read())
+```
+
+## Modes များ
+
+Python တွင် file များကို mode များဖြင့် ဖွင့်နိုင်ပါသည်။
+
+- **"r"** - Read mode (default)
+- **"a"** - Append mode (ထည့်ရေးခြင်း)
+- **"w"** - Write mode (စာရေးခြင်း)
+- **"x"** - Create file (မရှိသေးသော file ဖန်တီးခြင်း)
+- **"rb"** သို့မဟုတ် **"wb"** - Binary mode
+
+## Today ၏ ဥပမာ
+
+```
+f = open("demofile.txt", "r")
+for x in f:
+  print(x)
+```
+
+## With Statement (အကြံပြုချက်)
+
+with statement ကို သုံးပါက file ကို အလိုအလျောက် ပိတ်ပါသည်။
+
+```
+with open("demofile.txt", "r") as f:
+    content = f.read()
+    print(content)
+```
+
+File ကို manually close လုပ်ရန် မလိုဘဲ handle လုပ်ပေးပါသည်။
+
+File handling ကို အောက်ပါ စာမျက်နှာများတွင် အသေးစိတ် လေ့လာရပါမည်။

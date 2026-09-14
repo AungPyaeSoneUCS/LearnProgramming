@@ -1,0 +1,83 @@
+---
+title: "Python Matplotlib 3D Plotting — Python Matplotlib 3D Plotting"
+description: "mpl_toolkits.mplot3d ဖြင့် 3D plots များကို ဖန်တီး၍ data များကို သုံးဖက်မြင် visualize ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Matplotlib ကို 3D plotting များအတွက်လည်း အသုံးပြုနိုင်ပြီး data များကို x, y, z axes သုံးခုဖြင့် ပြသနိုင်ပါသည်.။
+
+## 3D Axes ဖန်တီးခြင်း
+
+၎င်းကို 3D projection ဖြင့် ဖန်တီးပါသည်.။
+
+```
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+plt.show()
+```
+
+► 3D axes ပါသော empty figure ကို ဖန်တီးပါသည်.။
+
+## 3D Line Plot
+
+```
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 50)
+y = np.sin(x)
+z = np.cos(x)
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot(x, y, z)
+plt.show()
+```
+
+► 3D space တွင် helical line တစ်ခုကို ဆွဲပါသည်.
+
+## 3D Scatter Plot
+
+```
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.random.randint(10, size=20)
+y = np.random.randint(10, size=20)
+z = np.random.randint(10, size=20)
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter(x, y, z)
+plt.show()
+```
+
+► 3D scatter plot ကို ဆွဲပါသည်.
+
+## 3D Surface Plot
+
+```
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(-5, 5, 30)
+y = np.linspace(-5, 5, 30)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(np.sqrt(X**2 + Y**2))
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, Z)
+plt.show()
+```
+
+► 3D surface ကို ဆွဲပါသည်.
+
+3D plots များသည် x, y, z သုံးခုစလုံး ပါဝင်သော data များကို ပြသရန် အသုံးဝင်ပါသည်.

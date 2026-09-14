@@ -1,0 +1,77 @@
+---
+title: "Python Matplotlib Labels — Python Matplotlib Labels"
+description: "xlabel(), ylabel(), title() function များဖြင့် chart ၏ labels နှင့် title များကို သတ်မှတ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Labels များသည် chart ၏ လေးစားမှု axes များကို ရှင်းလင်းစေပြီး readers များကို data များကို နားလည်ရန် ကူညီပါသည်။
+
+## Create Labels
+
+xlabel() ဖြင့် x-axis label ကို၊ ylabel() ဖြင့် y-axis label ကို၊ title() ဖြင့် chart title ကို သတ်မှတ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [1, 4, 9, 16]
+
+plt.plot(x, y)
+plt.xlabel("X Axis Label")
+plt.ylabel("Y Axis Label")
+plt.title("Chart Title")
+plt.show()
+```
+
+► Labels များကို သင့်လျော်ရာ axes များထဲနှင့် chart ၏ ထိပ်တွင် ပြသပါသည်။
+
+## Font Properties
+
+fontdict parameter ဖြင့် font size, family, style များကို သတ်မှတ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [1, 4, 9, 16]
+
+plt.plot(x, y)
+plt.xlabel("X Label", fontdict={'family': 'serif', 'color': 'blue', 'size': 15})
+plt.title("My Chart", fontdict={'family': 'serif', 'color': 'red', 'size': 20})
+plt.show()
+```
+
+## Position Parameters
+
+loc parameter ဖြင့် label ၏ နေရာကို သတ်မှတ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [1, 4, 9, 16]
+
+plt.plot(x, y)
+plt.xlabel("X Label", loc='right')
+plt.ylabel("Y Label", loc='top')
+plt.show()
+```
+
+► X label ကို ညာဘက်တွင်၊ Y label ကို အပေါ်တွင် ထားပါသည်။
+
+## Title ၏ Alignment
+
+title() တွင် loc parameter ဖြင့် title ၏ နေရာကို သတ်မှတ်ရန်-
+
+```
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3])
+plt.title("Left Title", loc='left')
+plt.show()
+```
+
+► Title ကို ဘယ်ဘက်တွင် ပြသပါသည်။
+
+Labels နှင့် titles များသည် professional charts များ၏ အခြေခံ ဖြစ်ပါသည်။

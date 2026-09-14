@@ -1,0 +1,76 @@
+---
+title: "Multiple Regression — Multiple Regression"
+description: "Multiple features များဖြင့် value တစ်ခုကို enable ပြုလုပ်သော multiple regression ကို sklearn ဖြင့် သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Multiple regression သည် independent variables (features) များစွာဖြင့် dependent variable (target) တစ်ခုကို predict လုပ်သော regression type ဖြစ်ပါသည်.
+
+## Multiple Regression ဆိုသည်မှာ
+
+Linear regression တွင် x နှင့် y နှစ်ခုသာ ပါသော်လည်း multiple regression တွင် features များစွာ ပါဝင်ပြီး regression plane (hyper-plane) ကို fit လုပ်ပါသည်.
+
+ဥပမာ - Car အမျိုးအစား အလိုက် CO2 emission ကို predict လုပ်ရန် car weight, engine size စသည့် features များကို သုံးပါသည်.
+
+## Predict CO2 Emission - Data
+
+CSV file တွင် Car တစ်ခုစီ၏ Model, Volume (engine size), Weight နှင့် CO2 emission များ ပါဝင်ပါသည်.
+
+- Car, Model, Volume, Weight, CO2
+- Toyota, Aygo, 1000, 790, 99
+- Mitsubishi, Space Star, 1200, 1160, 95
+
+## 1. pandas ဖြင့် Data ဖတ်ခြင်း
+
+```
+import pandas as pd
+
+df = pd.read_csv("data.csv")
+
+X = df[["Weight", "Volume"]]
+y = df["CO2"]
+```
+
+- **X**: Features (independent variables)
+- **y**: Target (dependent variable)
+
+## 2. sklearn ၏ LinearRegression
+
+```
+from sklearn import linear_model
+
+regr = linear_model.LinearRegression()
+regr.fit(X, y)
+```
+
+## 3. Prediction ပြုလုပ်ခြင်း
+
+```
+# Weight 2300, Volume 1300 ၏ CO2 modeling
+predictedCO2 = regr.predict([[2300, 1300]])
+print(predictedCO2)
+```
+
+► Output: 107.2087328...
+
+## Coefficient ၏ Meaning
+
+Regression ၏ coefficients များသည် feature တစ်ခုစီ၏ effect ကို ဖော်ပြပါသည်.
+
+```
+print(regr.coef_)
+```
+
+► Output: [0.00755095, 0.00780526]
+
+- Weight ၏ coefficient: 0.00755095 - weight 1ယူနစ်တိုင်း CO2 ၏ 0.00755095 တိုးစေသည်
+- Volume ၏ coefficient: 0.00780526 - Volume ခုတိုင်း CO2 ကို 0.00780526 တိုးစေသည်
+
+## Prediction Formula
+
+$$CO2 = 0.00755095*Weight + 0.00780526*Volume + intercept$$
+
+Multiple regression သည် real-world data (features များစွာ) များကို model လုပ်ရန် အားမာန် ရှိပါသည်.
+
+

@@ -1,0 +1,81 @@
+---
+title: "Python Dates — Python Dates"
+description: "Python datetime module ကို အသုံးပြု၍ date နှင့် time များ ကိုင်တွယ်နည်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Python တွင် date နှင့် time များသည် built-in data type မဟုတ်ပါ။ ၎င်းကို datetime module ဖြင့် ကိုင်တွယ်ရပါသည်။
+
+## Date ရယူခြင်း
+
+```
+import datetime
+
+x = datetime.datetime.now()
+print(x)
+```
+
+လက်ရှိ date နှင့် time ကို ပြသပါသည်။
+
+## Date Object ဖန်တီးခြင်း
+
+datetime() constructor ဖြင့် မိမိကြိုက်ရာ date တစ်ခုကို ဖန်တီးနိုင်ပါသည်။
+
+```
+import datetime
+
+x = datetime.datetime(2020, 5, 17)
+print(x)
+```
+
+► Output: 2020-05-17 00:00:00
+
+## strftime() - Date Formatting
+
+Date တစ်ခုကို readable format ဖြင့် ပြသရန် strftime() method ကို သုံးပါသည်။
+
+```
+import datetime
+
+x = datetime.datetime(2018, 6, 1)
+print(x.strftime("%B"))
+```
+
+► Output: June
+
+## Common Format Codes
+
+- **%a**: Weekday, short version (Wed)
+- **%A**: Weekday, full version (Wednesday)
+- **%d**: Day of month (01-31)
+- **%B**: Month name, full version (December)
+- **%m**: Month as number (01-12)
+- **%y**: Year, short version (18)
+- **%Y**: Year, full version (2018)
+- **%H**: Hour (00-23)
+- **%M**: Minute (00-59)
+- **%S**: Second (00-59)
+
+## Strftime ၏ ဥပမာများ
+
+```
+import datetime
+
+x = datetime.datetime(2018, 6, 1)
+
+print(x.strftime("%A"))
+print(x.strftime("%d"))
+print(x.strftime("%m"))
+print(x.strftime("%Y"))
+```
+
+► Output:
+```
+Friday
+01
+06
+2018
+```
+
+datetime module သည် date/time operations အားလုံးအတွက် အသုံးဝင်ပါသည်။

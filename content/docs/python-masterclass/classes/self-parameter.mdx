@@ -1,0 +1,77 @@
+---
+title: "Python self Parameter — Python self Parameter"
+description: "Python self parameter ၏ သဘောတရား၊ class အတွင်းရှိ methods များတွင် အသုံးပြုပုံကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+self parameter သည် class ၏ methods များအားလုံးတွင် ပထမဆုံး parameter အဖြစ် ပါဝင်ပြီး object ကိုယ်တိုင် (current instance) ကို ရည်ညွှန်းပါသည်။
+
+## Self ဆိုသည်မှာ
+
+self သည် object ၏ attributes နှင့် methods များကို access ပြုလုပ်ရန် အသုံးပြုပါသည်။
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def myfunc(self):
+        print("Hello my name is " + self.name)
+
+p1 = Person("John", 36)
+p1.myfunc()
+```
+
+► Output: Hello my name is John
+
+## Self ကို ဘာကြောင့် သုံးရသနည်း
+
+Method ကို ခေါ်သောအခါ Python သည် object ကိုယ်တိုင်ကို self အနေဖြင့် အလိုအလျောက် ပို့ပေးပါသည်။ ထို့ကြောင့် method အတွင်းတွင် object ၏ data များကို self ဖြင့် access လုပ်နိုင်ပါသည်။
+
+## Self ၏ အမည်ပြောင်းလဲခြင်း
+
+self သည် parameter အမည်သာဖြစ်ပြီး အခြားအမည်ဖြင့်လည်း ရေးနိုင်ပါသည်။
+
+```
+class Person:
+    def __init__(mysillyobject, name, age):
+        mysillyobject.name = name
+        mysillyobject.age = age
+
+    def myfunc(abc):
+        print("Hello my name is " + abc.name)
+
+p1 = Person("John", 36)
+p1.myfunc()
+```
+
+► Output: Hello my name is John
+
+သို့သော် ရိုးရာစံအနေဖြင့် self ဟု ထားရန် အကြံပြုပါသည်။
+
+## Class Method များတွင် Self
+
+```
+class Car:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+
+    def describe(self):
+        print(f"This car is a {self.brand} {self.model}")
+
+car1 = Car("Toyota", "Corolla")
+car2 = Car("Honda", "Civic")
+car1.describe()
+car2.describe()
+```
+
+► Output:
+```
+This car is a Toyota Corolla
+This car is a Honda Civic
+```
+
+self သည် object တစ်ခုစီ၏ data များကို သီးသန့်ထားရှိပေးသောကြောင့် object တိုင်း ၎င်း၏ attributes များကို ရရှိပါသည်။

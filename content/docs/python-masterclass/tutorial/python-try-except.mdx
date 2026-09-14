@@ -1,0 +1,98 @@
+---
+title: "Python Try...Except — Python Try...Except"
+description: "Python try, except, else, finally blocks များဖြင့် exceptions များကို ကိုင်တွယ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Try...Except သည် program တစ်ခုတွင် error များဖြစ်သောအခါ code ကို ပုံမှန်အတိုင်း ရပ်တန့်မည့်အစား graceful ဖြစ်အောင် ကိုင်တွယ်ရန် အသုံးပြုပါသည်။
+
+## အခြေခံ ဥပမာ
+
+Error ဖြစ်နိုင်သော code များကို try block အတွင်းတွင် ထားပါသည်။
+
+```
+try:
+    print(x)
+except:
+    print("An exception occurred")
+```
+
+► Output: An exception occurred (x မသတ်မှတ်ရသေးသောကြောင့်)
+
+try block သည် error ဖြစ်ပါက except block ကို run ပြီး program ဆက်လက် အလုပ်လုပ်ပါသည်။
+
+## များစွာသော Exceptions
+
+```
+try:
+    print(x)
+except NameError:
+    print("Variable x is not defined")
+except:
+    print("Something else went wrong")
+```
+
+## Else Block
+
+Error မဖြစ်ပါက else block ကို run ပါသည်။
+
+```
+try:
+    print("Hello")
+except:
+    print("Something went wrong")
+else:
+    print("Nothing went wrong")
+```
+
+► Output:
+```
+Hello
+Nothing went wrong
+```
+
+## Finally Block
+
+Error ဖြစ်သည် မဖြစ်သည်မကြားမှ အမြဲ run ပါသည်။
+
+```
+try:
+    print(x)
+except:
+    print("Something went wrong")
+finally:
+    print("The 'try except' is finished")
+```
+
+The 'try except' is finished ကို အမြဲ ပြသပါသည်။
+
+## Raise an Exception
+
+မိမိ၏ program တွင် exception တစ်ခုကို မိမိကိုယ်တိုင် raise လုပ်နိုင်ပါသည်။
+
+```
+x = -1
+
+if x < 0:
+    raise Exception("Sorry, no numbers below zero")
+```
+
+## ဘုံ Exception Types များ
+
+- **TypeError**: Type လွဲခြင်း
+- **ValueError**: Value မှားယွင်းခြင်း
+- **FileNotFoundError**: File မတွေ့ခြင်း
+- **KeyError**: Key မရှိခြင်း
+
+## ValueError ဥပမာ
+
+```
+try:
+    b = int("abc")
+    print(b)
+except ValueError:
+    print("Cannot convert to integer")
+```
+
+Exceptions များကို ကိုင်တွယ်ခြင်းသည် robust programs များ ရေးရန် မရှိမဖြစ် ဖြစ်ပါသည်။

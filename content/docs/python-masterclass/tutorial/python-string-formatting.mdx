@@ -1,0 +1,90 @@
+---
+title: "Python String Formatting — Python String Formatting"
+description: "Python တွင် strings များကို format ပြုလုပ်နည်း f-strings နှင့် format() method များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+String formatting သည် string အတွင်း variable များကို ထည့်သွင်းခြင်း ဖြစ်ပါသည်။ Python တွင် နည်းလမ်းများစွာ ရှိပြီး အသုံးအများဆုံးမှာ f-strings များ ဖြစ်ပါသည်။
+
+## F-Strings
+
+F-string ကို f prefix ဖြင့် ရေးပြီး variable များကို {} အတွင်းတွင် ထည့်ပါသည်။
+
+```
+name = "John"
+age = 36
+txt = f"My name is {name}, I am {age}"
+print(txt)
+```
+
+► Output: My name is John, I am 36
+
+## Placeholder များထည့်ခြင်း
+
+```
+price = 59
+txt = f"The price is {price} dollars"
+print(txt)
+```
+
+► Output: The price is 59 dollars
+
+## Expressions များထည့်ခြင်း
+
+Placeholder အတွင်းတွင် expression များ ရေးနိုင်ပါသည်။
+
+```
+price = 59
+txt = f"The price is {price * 2} dollars"
+print(txt)
+```
+
+► Output: The price is 118 dollars
+
+## Modifiers
+
+Formats များ ပြုလုပ်ရန် placeholder အတွင်းတွင် modifier များ ထည့်နိုင်ပါသည်။
+
+```
+price = 59
+txt = f"The price is {price:.2f} dollars"
+print(txt)
+```
+
+► Output: The price is 59.00 dollars
+
+.d2f သည် decimal နေရာ 2 ခုအထိ ပြသပါသည်။
+
+## Format - format() Method
+
+f-string မတိုင်မီ နည်းလမ်းမှာ format() method ဖြစ်ပါသည်။
+
+```
+price = 49
+txt = "The price is {} dollars"
+print(txt.format(price))
+```
+
+► Output: The price is 49 dollars
+
+## Index များဖြင့် Format ပြုလုပ်ခြင်း
+
+```
+quantity = 3
+itemno = 567
+price = 49.95
+myorder = "I want {} pieces of item {} for {} dollars."
+print(myorder.format(quantity, itemno, price))
+```
+
+► Output: I want 3 pieces of item 567 for 49.95 dollars.
+
+Index များကို သုံး၍ order ပြောင်းနိုင်ပါသည်။
+
+```
+myorder = "I want {0} pieces of item {1} for {2:.2f} dollars."
+print(myorder.format(quantity, itemno, price))
+```
+
+String formatting သည် သုံးစွဲသူများအတွက် clear output များဖန်တီးရန် အရေးကြီးပါသည်။

@@ -1,0 +1,69 @@
+---
+title: "Stratified Shuffle Split — Stratified Shuffle Split"
+description: "Train/test split များတွင် class ratios များကို ထိန်းသိမ်းရန် StratifiedShuffleSplit ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Stratified Shuffle Split သည် datasets များကို shuffle ပြုလုပ်ပြီး class distribution များကို train/test sets နှစ်ခုစလုံးတွင် အတူတူ ထိန်းသိမ်းပေးသော cross-validation strategy ဖြစ်ပါသည်.
+
+## Why Stratify?
+
+ဥပမာ - class distribution အားနည်းသော dataset တစ်ခုတွင်ရှိပါက random split သည် test set ထဲတွင် class များအားလုံး ပါဝင်မည်မဟုတ်ပါ. Stratified split သည် ratio များကို ထိန်းသိမ်း၍ ဤပြဿနာကို ဖြေရှင်းပါသည်.
+
+## StratifiedShuffleSplit ဆိုသည်မှာ
+
+Dataset တစ်ခုကို folds များစွာသို့ ခွဲ၍ (shuffle) ပြီး class distribution အချိုးအစားကို မပြောင်းစေဘဲ test strips များကို ထုတ်ယူပါသည်.
+
+## How to Use
+
+```
+from sklearn.model_selection import StratifiedShuffleSplit
+
+split = StratifiedShuffleSplit(n_splits=1, test_size=0.2)
+
+for train_index, test_index in split.split(X, y):
+    print("TRAIN:", train_index)
+    print("TEST:", test_index)
+```
+
+## Example - Iris Dataset
+
+```
+from sklearn.datasets import load_iris
+from sklearn.model_selection import StratifiedShuffleSplit
+
+iris = load_iris()
+X, y = iris.data, iris.target
+
+sss = StratifiedShuffleSplit(n_splits=2, test_size=0.2)
+for train_idx, test_idx in sss.split(X, y):
+    print("Train size:", len(train_idx), "Test size:", len(test_idx))
+```
+
+► Folds 2 ခုတွင် train/test sizes များကို ပြသပါသည်.
+
+## n_splits ၏ Meaning
+
+- n_splits=2: Splits 2 ခုကို ထုတ်ပေးပါသည် (နှစ်ကြိမ်စီ shuffle)
+
+## ၎င်းကို Data များဖြင့် Train model လုပ်ခြင်း
+
+```
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+clf = DecisionTreeClassifier()
+scores = []
+for train_idx, test_idx in sss.split(X, y):
+    clf.fit(X[train_idx], y[train_idx])
+    y_pred = clf.predict(X[test_idx])
+    scores.append(accuracy_score(y[test_idx], y_pred))
+
+print("Accuracies:", scores)
+print("Mean:", sum(scores) / len(scores))
+```
+
+► Folds တစ်ခုစီတွင် model ကို train/test လုပ်ပြီး accuracies များကို ရယူပါသည်.
+
+StratifiedShuffleSplit သည် imbalanced datasets များတွင် reliable evaluation ပြုလုပ်ရန် အကောင်းဆုံး ဖြစ်ပါသည်.

@@ -1,0 +1,106 @@
+---
+title: "Python Class Methods — Python Class Methods"
+description: "Python class ၏ methods များကို ဖန်တီး၍ အသုံးပြုနည်း၊ self ဖြင့် attribute များ access ပြုလုပ်ခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Class methods များသည် class အတွင်းတွင် သတ်မှတ်ထားသော functions များ ဖြစ်ပြီး object ၏ data များကို ကိုင်တွယ်၍ အလုပ်လုပ်ပါသည်။
+
+## Method တစ်ခု ဖန်တီးခြင်း
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def myfunc(self):
+        print("Hello my name is " + self.name)
+
+p1 = Person("John", 36)
+p1.myfunc()
+```
+
+► Output: Hello my name is John
+
+## Parameters ပါသော Methods
+
+```
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+rect = Rectangle(5, 3)
+print(rect.area())        # 15
+print(rect.perimeter())   # 16
+```
+
+## args များ လက်ခံသော Methods
+
+```
+class Calculator:
+    def add(self, a, b):
+        return a + b
+
+    def multiply(self, a, b):
+        return a * b
+
+calc = Calculator()
+print(calc.add(10, 5))
+print(calc.multiply(10, 5))
+```
+
+► Output: 15, 50
+
+## Str Representation
+
+__str__() method သည် object ကို string အဖြစ် ပြသရန် သုံးပါသည်။
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return f"Person({self.name}, {self.age})"
+
+p1 = Person("John", 36)
+print(p1)
+```
+
+► Output: Person(John, 36)
+
+## Method chaining
+
+Methods များကို return self ဖြင့် chain လုပ်နိုင်ပါသည်။
+
+```
+class Counter:
+    def __init__(self):
+        self.count = 0
+
+    def increment(self):
+        self.count += 1
+        return self
+
+    def reset(self):
+        self.count = 0
+        return self
+
+c = Counter()
+c.increment().increment().reset().increment()
+print(c.count)
+```
+
+► Output: 1
+
+Methods များသည် objects များ၏ behavior များကို သတ်မှတ်ပေးပြီး data manipulation များကို snapshot ပြုလုပ်ရန် အသုံးပြုပါသည်။

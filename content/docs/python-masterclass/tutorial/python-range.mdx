@@ -1,0 +1,77 @@
+---
+title: "Python Range — Python Range"
+description: "Python range() function ကို အသုံးပြုနည်း၊ parameters များနှင့် loops များတွင် အသုံးချခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+range() function သည် numbers sequence များကို ထုတ်လုပ်ပေးပြီး loops များတွင် သတ်မှတ်ထားသော အကြိမ်အရေအတွက် iterate လုပ်ရန် အသုံးပြုပါသည်။
+
+## Range Function ၏ အသုံးပြုပုံ
+
+```
+range(start, stop, step)
+```
+
+- **start**: sequence စတင်မည့် နံပါတ် (optional, default 0)
+- **stop**: sequence အဆုံးသတ်မည့် နံပါတ် (မပါဝင်ပါ)
+- **step**: တိုးများမည့် ပမာဏ (optional, default 1)
+
+## ဥပမာများ
+
+```
+# 1. 0 မှ 5 အထိ
+for x in range(6):
+    print(x)
+
+# 2. 2 မှ 6 အထိ
+for x in range(2, 6):
+    print(x)
+
+# 3. 2 မှ 29 အထိ step 3 ဖြင့်
+for x in range(2, 30, 3):
+    print(x)
+```
+
+## Range Object
+
+range() သည် list မျိုးမဟုတ်ဘဲ range object တစ်ခုကို ပြန်ပေးပါသည်။
+
+```
+x = range(6)
+print(x)
+print(type(x))
+```
+
+ဤ code တွင် range object ၏ ဖွဲ့စည်းပုံနှင့် type ကို ပြသပါသည်။
+
+## List သို့ ပြောင်းခြင်း
+
+```
+nums = list(range(5))
+print(nums)
+```
+
+► Output: [0, 1, 2, 3, 4]
+
+## Steps ဖြင့် သုံးခြင်း
+
+```
+for x in range(0, 20, 5):
+    print(x)
+```
+
+► Output: 0, 5, 10, 15
+
+## Negative Step
+
+Range ကို ပြောင်းပြန် သွားစေရန် negative step ကို သုံးပါသည်။
+
+```
+for x in range(5, 0, -1):
+    print(x)
+```
+
+► Output: 5, 4, 3, 2, 1
+
+range() သည် for loops များတွင် iteration အကြိမ်အရေအတွက်ကို ထိန်းချုပ်ရန် အသုံးအများဆုံး function ဖြစ်ပါသည်။

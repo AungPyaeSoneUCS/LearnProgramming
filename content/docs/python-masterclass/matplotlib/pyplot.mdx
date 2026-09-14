@@ -1,0 +1,60 @@
+---
+title: "Python Matplotlib Pyplot — Python Matplotlib Pyplot"
+description: "pyplot subpackage မှ plot() function ကို အသုံးပြု၍ charts များကို ဖန်တီးနည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+pyplot သည် Matplotlib ၏ subpackage တစ်ခုဖြစ်ပြီး plotting functions များစွာကို ပေးဆောင်ပါသည်။ ၎င်းကို plt aliases ဖြင့် အသုံးအများဆုံး ဖြစ်ပါသည်။
+
+## Import ပြုလုပ်ခြင်း
+
+```
+import matplotlib.pyplot as plt
+```
+
+## Plot Function
+
+plot() function သည် column နှစ်ခုမှ data များကို points များပေါ်တွင် ထားပေးပြီး အမှတ်များကို line ဖြင့် ဆက်ပေးပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+xpoints = [0, 6]
+ypoints = [0, 20]
+plt.plot(xpoints, ypoints)
+plt.show()
+```
+
+► (0,0) မှ (6,20) အထိ line တစ်ကြောင်း ဆွဲပါသည်။
+
+## A Point များသာ ပြသခြင်း
+
+'o' marker ဖြင့် line မပါဘဲ points များကိုသာ ပြသနိုင်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+xpoints = [1, 4, 9, 16]
+ypoints = [1, 8, 27, 64]
+plt.plot(xpoints, ypoints, 'o')
+plt.show()
+```
+
+## Matplotlib သည် Default Param ၏ Point များကို သုံးခြင်း
+
+xpoints မပေးဘဲ ypoints ကိုသာပေးပါက Python သည် x အတွက် 0, 1, 2, 3... တို့ကို အလိုအလျောက် သုံးပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+ypoints = [3, 8, 1, 10]
+plt.plot(ypoints)
+plt.show()
+```
+
+► x-axis တွင် [0, 1, 2, 3] နှင့် y-axis တွင် [3, 8, 1, 10] ပါသော line ကို ဆွဲပါသည်။
+
+## Matplotlib ဖြင့် ဆက်လက်လေ့လာခြင်း
+
+အောက်ပါ စာမျက်နှာများတွင် line, markers, labels, subplots စသည်တို့ကို အသေးစိတ် လေ့လာရပါမည်။

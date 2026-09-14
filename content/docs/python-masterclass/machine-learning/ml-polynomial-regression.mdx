@@ -1,0 +1,91 @@
+---
+title: "Polynomial Regression — Polynomial Regression"
+description: "Polynomial regression ၏ သဘောတရား၊ curve များဖြင့် non-linear data များကို predict ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+အကယ်၍ data points များသည် straight line တွင် fit မဖြစ်ပါက polynomial regression ကို အသုံးပြုပြီး curve (bent line) တစ်ခုဖြင့် fit လုပ်ပါသည်။
+
+## Polynomial Regression ဆိုသည်မှာ
+
+Linear regression ကဲ့သို့ပင် x နှင့် y ၏ ဆက်စပ်မှုကို ရှာဖွေသော်လည်း line အစား curve (polyline) ကို သုံးပါသည်.
+
+ဥပမာ - 18 car များ၏ passing (မမီဘဲ) နှင့် measurement များအကြား ဆက်စပ်မှုကို ရှာဖွေသောအခါ scatter graph သည် curve shape ဖြစ်နေပါသည်.
+
+## Python ဖြင့် Polynomial Regression
+
+NumPy ကို အသုံးပြုပါသည်.
+
+## 1. Import Modules
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+```
+
+## 2. X များကို ဖန်တီးခြင်း
+
+```
+x = np.arange(-5, 5, 0.01)
+y = x**3  # Example polynomial function
+```
+
+## 3-4. Regression ပြုလုပ်ခြင်း
+
+NumPy ၏ poly1d() နှင့် polyfit() function များဖြင့် polynomial regression ကို ပြုလုပ်ပါသည်.
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(-5, 5, 0.01)
+y = x**3
+
+mymodel = np.poly1d(np.polyfit(x, y, 3))
+
+myline = np.linspace(-5, 5, 100)
+plt.scatter(x, y)
+plt.plot(myline, mymodel(myline))
+plt.show()
+```
+
+► Curve တစ်ခုဖြင့် best fit ပြုလုပ်ပါသည်.
+
+## 5. R-Squared ဖြင့် Relationship စစ်ဆေးခြင်း
+
+```
+import numpy as np
+from sklearn.metrics import r2_score
+
+x = np.arange(-5, 5, 0.01)
+y = x**3
+
+mymodel = np.poly1d(np.polyfit(x, y, 3))
+r2 = r2_score(y, mymodel(x))
+print(r2)
+```
+
+► 1.0 နီးလျှင် perfect relationship ဖြစ်သည်.
+
+## 6. Predict ပြုလုပ်ခြင်း
+
+```
+import numpy as np
+
+x = np.arange(-5, 5, 0.01)
+y = x**3
+
+mymodel = np.poly1d(np.polyfit(x, y, 3))
+speed = mymodel(2)
+print(speed)
+```
+
+► Polynomial function ၏ Estimated value ဖြစ်သော y(2).
+
+## Bad Fit ၏ ဥပမာ
+
+R-squared နိမ့်လျှင် (0 ၏ အနီး) fit သည် မကောင်းပါ.
+
+Polynomial regression သည် non-linear trends များကို model လုပ်ရန် အသုံးဝင်ပါသည်.

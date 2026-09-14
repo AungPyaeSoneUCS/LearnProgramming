@@ -1,0 +1,75 @@
+---
+title: "Python Variables — Python Variables"
+description: "Python variables များ ဖန်တီးနည်း၊ naming rules နှင့် assignment methods များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Variables များသည် data များကို သိမ်းဆည်းရန် container များ ဖြစ်ပါသည်။ Python တွင် variables များကို value တစ်ခု သတ်မှတ်လိုက်သည်နှင့် အလိုအလျောက် ဖန်တီးပါသည်။
+
+## Variable ဖန်တီးခြင်း
+
+Variable တစ်ခုကို name နှင့် value ကို = symbol ဖြင့် ဆက်စပ်၍ သတ်မှတ်ပါသည်။
+
+```
+x = 5
+y = "John"
+print(x)
+print(y)
+```
+
+`x` သည် integer value 5 ကို သိမ်းဆည်းပြီး `y` သည် string "John" ကို သိမ်းဆည်းပါသည်။ Variable များကို type မကြေညာဘဲ အသုံးပြုပါသည်။
+
+## Variable အများအပြား သတ်မှတ်ခြင်း
+
+Line တစ်ကြောင်းတွင် variable အများအပြားကို သတ်မှတ်နိုင်ပါသည်။
+
+```
+x, y, z = "Orange", "Banana", "Cherry"
+print(x)
+print(y)
+print(z)
+```
+
+## Variables များ၏ Scope
+
+Function ၏ ပြင်ပ (global) နှင့် အတွင်း (local) scope ကွာခြားပါသည်။
+
+```
+x = "awesome"   # global
+
+def myfunc():
+    x = "fantastic"  # local
+    print("Python is " + x)
+
+myfunc()
+print("Python is " + x)
+```
+
+► Output:
+```
+Python is fantastic
+Python is awesome
+```
+
+## Naming Rules
+
+Variable names များတွင်-
+
+- Letter (a-z, A-Z) ဖြင့် စတင်နိုင်ပြီး underscore _ ဖြင့်လည်း စတင်နိုင်ပါသည်။
+- နံပါတ်ဖြင့် စတင်မရပါ။
+- Space မပါဝင်နိုင်ပါ။
+- Camel Case, Pascal Case, Snake Case စသည့် ပုံစံအမျိုးမျိုးဖြင့် ရေးနိုင်ပါသည်။
+
+## Type စစ်ဆေးခြင်း
+
+Variable ၏ type ကို စစ်ဆေးရန် `type()` function ကို အသုံးပြုပါသည်။
+
+```
+x = 5
+y = "John"
+print(type(x))
+print(type(y))
+```
+
+► Output: class 'int' , class 'str'

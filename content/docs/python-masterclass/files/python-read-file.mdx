@@ -1,0 +1,67 @@
+---
+title: "Python Read File — Python Read File"
+description: "Python files များကို read() method ဖြင့် ဖတ်နည်း၊ readline() နှင့် loops များဖြင့် ဖတ်နည်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+File များကို ဖတ်ရန် Python တွင် read() method ကို အသုံးပြုပါသည်။ File ဖတ်ရန် built-in functions များ မရှိပါက မိမိကိုယ်တိုင် create လုပ်ရပါသည်။
+
+## File ဖတ်ခြင်း
+
+```
+f = open("demofile.txt", "r")
+print(f.read())
+```
+
+## Read အစိတ်အပိုင်း
+
+Character များကို သတ်မှတ်သောအရေအတွက် ဖတ်နိုင်ရန် read() အတွင်းတွင် number ထည့်ပါသည်။
+
+```
+f = open("demofile.txt", "r")
+print(f.read(5))
+```
+
+► ပထမ 5 characters ကိုသာ ဖတ်ပါသည်။
+
+## Read Line
+
+readline() method သည် file ၏ line တစ်ကြောင်းကိုသာ ဖတ်ပါသည်။
+
+```
+f = open("demofile.txt", "r")
+print(f.readline())
+```
+
+## Loop ဖြင့် Line အားလုံး ဖတ်ခြင်း
+
+```
+f = open("demofile.txt", "r")
+for x in f:
+  print(x)
+```
+
+► File ရှိ line များကို loop ဖြင့် ဖတ်ပါသည်။
+
+## File ပိတ်ခြင်း
+
+File ကို အသုံးပြုပြီးပါက close() ဖြင့် ပိတ်သင့်ပါသည်။
+
+```
+f = open("demofile.txt", "r")
+print(f.readline())
+f.close()
+```
+
+## With Statement
+
+နောက်ဆုံးတွင် context manager ကို သုံးပါက file ကို အလိုအလျောက် close ပြုလုပ်ပါသည်။
+
+```
+with open("demofile.txt", "r") as f:
+    for line in f:
+        print(line.strip())
+```
+
+File object ၏ read(), readline() များကို သုံး၍ file များ၏ အကြောင်းအရာများကို ရရှိပါသည်။

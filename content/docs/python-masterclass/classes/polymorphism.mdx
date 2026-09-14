@@ -1,0 +1,103 @@
+---
+title: "Python Polymorphism — Python Polymorphism"
+description: "Python polymorphism ဆိုသည်မှာ objects များ မိမိတို့၏ class အလိုက် မတူညီသော method များကို လုပ်ဆောင်ခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Polymorphism ဆိုသည်မှာ "many forms" ဟု အဓိပ္ပာယ်ရပြီး object ၏ class ပေါ်မူတည်၍ method များ ကွဲပြားစွာ ပြုမူခြင်းကို ဆိုလိုပါသည်။
+
+## Class Methods များတွင် Polymorphism
+
+Class တစ်ခုစီတွင် methods များကို တူညီသော အမည်ဖြင့် သတ်မှတ်ပြီး loop ဖြင့် verb လုပ်နိုင်ပါသည်။
+
+```
+class Car:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+
+    def move(self):
+        print("Drive!")
+
+class Boat:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+
+    def move(self):
+        print("Sail!")
+
+class Plane:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+
+    def move(self):
+        print("Fly!")
+
+car1 = Car("Ford", "Mustang")
+boat1 = Boat("Ibiza", "Touring 20")
+plane1 = Plane("Boeing", "747")
+
+for x in (car1, boat1, plane1):
+    x.move()
+```
+
+► Output:
+```
+Drive!
+Sail!
+Fly!
+```
+
+Objects သုံးခုစလုံးတွင် move() method တစ်ခုစီ ရှိပြီး class အလိုက် ကွဲပြားသော output ကို ပေးပါသည်။
+
+## Inheritance ဖြင့် Polymorphism
+
+Child classes များသည် parent method များကို override လုပ်နိုင်ပါသည်။
+
+```
+class Vehicle:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+
+    def move(self):
+        print("Move!")
+
+class Car(Vehicle):
+    pass
+
+class Boat(Vehicle):
+    def move(self):
+        print("Sail!")
+
+class Plane(Vehicle):
+    def move(self):
+        print("Fly!")
+
+car1 = Car("Ford", "Mustang")
+boat1 = Boat("Ibiza", "Touring 20")
+plane1 = Plane("Boeing", "747")
+
+for x in (car1, boat1, plane1):
+    print(x.brand)
+    print(x.model)
+    x.move()
+```
+
+► Output:
+```
+Ford
+Mustang
+Move!
+Ibiza
+Touring 20
+Sail!
+Boeing
+747
+Fly!
+```
+
+Child classes များသည် move() method ကို override ၍ မိမိပုံစံ ပြုလုပ်နိုင်ပါသည်။

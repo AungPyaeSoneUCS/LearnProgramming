@@ -1,0 +1,64 @@
+---
+title: "Logistic Regression — Logistic Regression"
+description: "Logistic regression ၏ သဘောတရား၊ classification အတွက် အသုံးပြုပုံကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Logistic Regression သည် binary classification ပြုလုပ်ရန် အသုံးပြုသော supervised learning algorithm ဖြစ်ပြီး output ကို probability (0-1) အဖြစ် ပေးပါသည်.
+
+## Logistic Regression ဆိုသည်မှာ
+
+Linear regression ကဲ့သို့ပင် feature များကို အသုံးပြုသော်လည်း output ကို sigmoid function ဖြင့် 0-1 အကြားသို့ ပြောင်းလဲပြီး class ခွဲခြားပါသည်.
+
+"If the probability is > 0.5, predict class 1; else predict class 0."
+
+## Dataset ဖန်တီးခြင်း
+
+ဥပမာ - Tumor size နှင့် malignant/benign သတ်မှတ်ချက်.
+
+```
+import numpy as np
+import pandas as pd
+
+# tumor_size, result(0=benign, 1=malignant)
+data = {
+    "size": [1, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6],
+    "malignant": [0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
+}
+df = pd.DataFrame(data)
+```
+
+## Model Train ပြုလုပ်ခြင်း
+
+```
+from sklearn.linear_model import LogisticRegression
+
+X = df[["size"]]
+y = df["malignant"]
+
+model = LogisticRegression()
+model.fit(X, y)
+```
+
+## Prediction ပြုလုပ်ခြင်း
+
+```
+# tumor size 3.5 ဆိုပါက
+print(model.predict([[3.5]]))
+print(model.predict_proba([[3.5]]))
+```
+
+► predict() သည် class ကို ပေးပြီး predict_proba() သည် probability ကို ပေးပါသည်.
+
+## Decision Threshold
+
+$$$ Probability $}geq 0.5 Rightarrow$ Class 1...
+
+Logistic regression ၏ output ကို threshold 0.5 ဖြင့် class ခွဲပါသည်.
+
+## Evaluation
+
+Confusion matrix နှင့် accuracy score ဖြင့် model ကို evaluate ပြုလုပ်ပါသည်.
+
+Logistic regression သည် simple နှင့် efficient ဖြစ်သော baseline classifier ဖြစ်ပါသည်.

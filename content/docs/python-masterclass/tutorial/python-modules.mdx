@@ -1,0 +1,93 @@
+---
+title: "Python Modules — Python Modules"
+description: "Python modules များကို ဖန်တီးနည်း၊ import လုပ်နည်းများနှင့် built-in modules များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Module ဆိုသည်မှာ Python code များ ပါဝင်သော file တစ်ခု ဖြစ်ပြီး မိမိရေးသားထားသော functions, classes, variables များကို အခြား file များတွင် ပြန်လည် အသုံးပြုနိုင်ပါသည်။
+
+## Module ဖန်တီးခြင်း
+
+mymodule.py ဟူသော file တစ်ခုတွင် code များ ရေးပါ။
+
+```
+def greeting(name):
+    print("Hello, " + name)
+```
+
+## Module Import ပြုလုပ်ခြင်း
+
+ထို module ကို အခြား file များတွင် import ပြုလုပ်၍ သုံးနိုင်ပါသည်။
+
+```
+import mymodule
+
+mymodule.greeting("Jonathan")
+```
+
+## Module ထဲမှ Variables
+
+Module ထဲတွင် variable များကိုလည်း ထားနိုင်ပြီး import ပြုလုပ်ထားသော file များမှ access နိုင်ပါသည်။
+
+```
+person1 = {
+  "name": "John",
+  "age": 36,
+  "country": "Norway"
+}
+```
+
+```
+import mymodule
+
+a = mymodule.person1["age"]
+print(a)
+```
+
+## Module အမည် ပြောင်းလဲခြင်း
+
+As keyword ဖြင့် alias သတ်မှတ်နိုင်ပါသည်။
+
+```
+import mymodule as mx
+
+a = mx.person1["age"]
+print(a)
+```
+
+## Built-in Modules
+
+Python တွင် built-in modules အများအပြား ရှိပြီး import ပြုလုပ်ပြီးမှသာ အသုံးပြုရပါသည်။
+
+```
+import platform
+
+x = platform.system()
+print(x)
+```
+
+► Output: Windows (မိမိ၏ platform အတိုင်း)
+
+## Using the dir() Function
+
+Module အတွင်းရှိ functions နှင့် variables အားလုံးကို စစ်ဆေးရန် dir() ကို သုံးပါသည်။
+
+```
+import platform
+
+x = dir(platform)
+print(x)
+```
+
+## Import from Module
+
+Module ထဲမှ အပိုင်းတစ်ခုကိုသာ import လုပ်နိုင်ပါသည်။
+
+```
+from mymodule import person1
+
+print(person1["age"])
+```
+
+Modules များသည် code ကို စနစ်တကျ ခွဲခြမ်းစီစဉ်ရန် မရှိမဖြစ် ဖြစ်ပါသည်။

@@ -1,0 +1,58 @@
+---
+title: "Python User Input — Python User Input"
+description: "Python input() function ဖြင့် သုံးစွဲသူထံမှ data များ ရယူနည်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Python တွင် သုံးစွဲသူထံမှ input ရယူရန် input() function ကို အသုံးပြုပါသည်။ ဤ function သည် သုံးစွဲသူ ရိုက်ထည့်သော data ကို string အဖြစ် ပြန်ပေးပါသည်။
+
+## Input ရယူခြင်း
+
+```
+username = input("Enter username: ")
+print("Username is: " + username)
+```
+
+## Python 3.6 အကြာ Version များတွင်
+
+ရှေးနည်းလမ်းတွင် raw_input() ကို သုံးခဲ့သော်လည်း Python 3 တွင် input() သာဖြစ်ပါသည်။
+
+## Input သည် String ဖြစ်ပါသည်
+
+input() မှရလာသော data သည် string type ဖြစ်ပါသည်။
+
+```
+x = input("Enter a number: ")
+print(type(x))
+```
+
+► Output: class 'str'
+
+## ၎င်းကို Integer အဖြစ် ပြောင်းခြင်း
+
+Math operations များ ပြုလုပ်ရန် input ကို int() ဖြင့် ပြောင်းရပါသည်။
+
+```
+x = input("Enter a number: ")
+y = int(x) + 5
+print(y)
+```
+
+သို့မဟုတ် တိုက်ရိုက် convert ပြုလုပ်နိုင်ပါသည်။
+
+```
+x = int(input("Enter a number: "))
+print(x + 10)
+```
+
+## ဂဏန်းတွက်စက် ဥပမာ
+
+```
+num1 = float(input("Enter first number: "))
+num2 = float(input("Enter second number: "))
+result = num1 + num2
+print("Sum:", result)
+```
+
+Input ကို interactive programs များတွင် အသုံးပြု၍ သုံးစွဲသူနှင့် dialog ပြုလုပ်နိုင်ပါသည်။

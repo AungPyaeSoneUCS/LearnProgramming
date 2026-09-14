@@ -1,0 +1,126 @@
+---
+title: "Python Dictionaries — Python Dictionaries"
+description: "Python dictionaries များ ဖန်တီးနည်း၊ access, change, add, remove လုပ်နည်းများကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Dictionary သည် key-value pairs များကို သိမ်းဆည်းသော collection တစ်ခု ဖြစ်ပါသည်။ Python 3.7 မှစ၍ dictionary များသည် ordered ဖြစ်ပါသည်။ Changeable ဖြစ်ပြီး duplicate keys များကို ခွင့်မပြုပါ။
+
+## Dictionary ဖန်တီးခြင်း
+
+```
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+print(thisdict)
+```
+
+## Access ပြုလုပ်ခြင်း
+
+Key ကို သုံး၍ value များကို ရယူပါသည်။
+
+```
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+print(thisdict["brand"])
+```
+
+► Output: Ford
+
+get() method ဖြင့်လည်း ရယူနိုင်ပါသည်။
+
+```
+x = thisdict.get("model")
+print(x)
+```
+
+## Keys များကို View ပြုလုပ်ခြင်း
+
+keys() ဖြင့် key များ ပါဝင်သော list ကို ရရှိပါသည်။
+
+```
+thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}
+x = thisdict.keys()
+print(x)
+```
+
+## ပြောင်းလဲခြင်း
+
+```
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+thisdict["year"] = 2018
+print(thisdict)
+```
+
+## Item ထည့်ခြင်း
+
+```
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+thisdict["color"] = "red"
+print(thisdict)
+```
+
+## Item ဖယ်ရှားခြင်း
+
+pop ဖြင့် သီးသန့် key ကို ဖယ်နိုင်ပါသည်။
+
+```
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+thisdict.pop("model")
+print(thisdict)
+```
+
+## Loop ပြုလုပ်ခြင်း
+
+```
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+for x in thisdict:
+    print(x)           # key များကို ပြသည်
+for x in thisdict:
+    print(thisdict[x]) # value များကို ပြသည်
+```
+
+## Nested Dictionaries
+
+Dictionary ၏ အတွင်းတွင် dictionary များကို ထားနိုင်ပါသည်။
+
+```
+myfamily = {
+  "child1": {"name": "Emil", "year": 2004},
+  "child2": {"name": "Tobias", "year": 2007},
+  "child3": {"name": "Linus", "year": 2011}
+}
+print(myfamily["child2"]["name"])
+```
+
+## in Operator
+
+```
+thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}
+if "model" in thisdict:
+    print("Yes, model is a key in thisdict")
+```
+
+Dictionary များသည် JSON-like data structures များကို ကိုယ်စားပြုရန် အကောင်းဆုံး နည်းလမ်း ဖြစ်ပါသည်။

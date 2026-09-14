@@ -1,0 +1,92 @@
+---
+title: "Python Matplotlib Markers — Python Matplotlib Markers"
+description: "plot() function ၏ marker parameter များကို အသုံးပြု၍ points များကို marker styles ဖြင့် ပြသနည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Matplotlib တွင် plot ပြုလုပ်သောအခါ marker parameter ဖြင့် points များကို symbol များနှင့် ပြသနိုင်ပါသည်။
+
+## Marker Styles များသတ်မှတ်ခြင်း
+
+marker parameter ဖြင့် plot ပြုလုပ်ပါသည်-
+
+```
+import matplotlib.pyplot as plt
+
+ypoints = [3, 8, 1, 10]
+plt.plot(ypoints, marker = 'o')
+plt.show()
+```
+
+► 'o' marker ဖြင့် points များကို circle အဖြစ် ပြသပါသည်။
+
+## Common Markers များ
+
+- **'o'** - Circle
+- **'*'** - Star
+- **'.'** - Point
+- **','** - Pixel
+- **'x'** - X
+- **'+'** - Plus
+- **'s'** - Square
+- **'d'** - Diamond
+- **'p'** - Pentagon
+- **'h'** - Hexagon
+
+## Format String ၏ Parameter များ
+
+marker|line|color format string ကို သုံး၍ တစ်ခါတည်း သတ်မှတ်နိုင်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+ypoints = [3, 8, 1, 10]
+plt.plot(ypoints, 'o:r')
+plt.show()
+```
+
+► 'o' = circle marker, ':' = dotted line, 'r' = red color
+
+## Marker Size
+
+ms (marker size) parameter ဖြင့် အရွယ်အစား သတ်မှတ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+ypoints = [3, 8, 1, 10]
+plt.plot(ypoints, marker = 'o', ms = 20)
+plt.show()
+```
+
+► Marker များကို ပိုကြီးစွာ ပြသပါသည်။
+
+## Marker Color
+
+mec (marker edge color) ဖြင့် marker ၏ အနားနှင့် mfc (marker face color) ဖြင့် အရောင်သတ်မှတ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+ypoints = [3, 8, 1, 10]
+plt.plot(ypoints, marker = 'o', ms = 20, mec = 'r', mfc = 'r')
+plt.show()
+```
+
+► Marker များကို အနီရောင် ဖြစ်စေပါသည်။
+
+## Marker Style Table
+
+အောက်ပါ style များကို ကြိုက်နှစ်သက်ရာ combination ဖြင့် သုံးနိုင်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+for marker in ['o', '*', 's', 'd', 'x', '^', '<', '>', 'p', 'h']:
+    plt.plot([1, 2, 3], marker=marker, markersize=8)
+
+plt.show()
+```
+
+Markers များသည် scatter plots နှင့် line plots များတွင် data points များကို ထင်ရှားစေပါသည်။

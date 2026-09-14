@@ -1,0 +1,66 @@
+---
+title: "Python Data Types — Python Data Types"
+description: "Python ၏ data types များနှင့် built-in types များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Python တွင် data များကို type အမျိုးမျိုးဖြင့် သိမ်းဆည်းပါသည်။ Built-in data types များသည် data ၏ သဘောသဘာဝကို သတ်မှတ်ပေးပါသည်။
+
+## Data Types နှင့် Class များ
+
+Python တွင် data type တိုင်းသည် class တစ်ခု ဖြစ်ပါသည်။ `type()` ကို သုံး၍ variable ၏ data type ကို သိရှိနိုင်ပါသည်။
+
+```
+x = 5
+print(type(x))
+```
+
+## Common Data Types
+
+- **Text Type**: `str`
+- **Numeric Types**: `int`, `float`, `complex`
+- **Sequence Types**: `list`, `tuple`, `range`
+- **Mapping Type**: `dict`
+- **Set Types**: `set`, `frozenset`
+- **Boolean Type**: `bool`
+- **Binary Types**: `bytes`, `bytearray`, `memoryview`
+- **None Type**: `NoneType`
+
+## Data Type သတ်မှတ်ခြင်း
+
+Python သည် value တစ်ခုကို assign ပြုလုပ်သောအခါ type ကို အလိုအလျောက် သတ်မှတ်ပါသည်။
+
+```
+x = "Hello World"        # str
+x = 20                   # int
+x = 20.5                 # float
+x = 1j                   # complex
+x = ["apple", "banana"]  # list
+x = ("apple", "banana")  # tuple
+x = range(6)             # range
+x = {"name": "John"}     # dict
+x = {"apple", "banana"}  # set
+x = frozenset({1, 2})    # frozenset
+x = True                 # bool
+x = b"Hello"             # bytes
+x = None                 # NoneType
+```
+
+## Type သတ်မှတ်ခြင်း (Constructor)
+
+အချို့သော type များကို constructor function များဖြင့် သတ်မှတ်နိုင်ပါသည်။
+
+```
+x = str("Hello World")
+x = int(20)
+x = float(20.5)
+x = complex(1j)
+x = list(("apple", "banana"))
+x = tuple(("apple", "banana"))
+x = range(6)
+x = dict(name="John", age=36)
+x = set(("apple", "banana"))
+```
+
+Type မှန်ကန်စွာ ရွေးချယ်ခြင်းသည် program ၏ လုပ်ဆောင်ချက်ကို သေချာ ထိရောက်စေပါသည်။

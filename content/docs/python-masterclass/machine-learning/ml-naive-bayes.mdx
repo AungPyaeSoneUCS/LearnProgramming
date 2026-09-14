@@ -1,0 +1,62 @@
+---
+title: "Naive Bayes — Naive Bayes"
+description: "Naive Bayes classifier ၏ သဘောတရားနှင့် sklearn ဖြင့် applications ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Naive Bayes သည် Bayes theorem ကို အခြေခံ၍ classification ပြုလုပ်သော supervised ML algorithm ဖြစ်ပြီး features များ သီးခြား independent ဖြစ်သည်ဟု assume ပြုလုပ်သည် ("naive" assumption) .
+
+## Naive Bayes ဆိုသည်မှာ
+
+Bayes' theorem ကို အခြေခံပြီး features များ၏ probabilities များကို အသုံးပြု၍ class ခန့်မှန်းပါသည်.
+
+Main use cases:
+- Text classification (spam detection)
+- Sentiment analysis
+- Recommendation systems
+
+## Data Preparation
+
+Weather conditions (outlook) နှင့် "play" ရှိမရှိ ကဲ့သို့ data:
+
+```
+# outlook: 0=rain, 1=overcast, 2=sunny
+# play: 1=yes, 0=no
+outlook = [0, 1, 2, 2, 0, 1, 1, 0]
+play = [0, 1, 1, 0, 1, 1, 0, 1]
+```
+
+## Train Naive Bayes Model
+
+%s/categorical data များကို GaussianNB classifier ဖြင့် train ပြုလုပ်ပါသည်.
+
+```
+from sklearn.naive_bayes import GaussianNB
+
+clf = GaussianNB()
+clf.fit(X_train, y_train)
+```
+
+## Prediction ပြုလုပ်ခြင်း
+
+```
+y_pred = clf.predict(X_test)
+print(y_pred)
+```
+
+## Evaluation
+
+```
+from sklearn.metrics import accuracy_score
+
+print(accuracy_score(y_test, y_pred))
+```
+
+## Naive Bayes ၏ Advantages
+
+- Train ပြုလုပ်ရန် မြန်ဆန်ပါသည်
+- High-dimensional data များတွင် အလုပ်လုပ်ပါသည်
+- Text classification အတွက် အကောင်းဆုံး ဖြစ်ပါသည်
+
+Naive Bayes သည် classification problems အများစုအတွက် အလွန် good baseline algorithm ဖြစ်ပါသည်.

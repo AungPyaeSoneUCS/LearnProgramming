@@ -1,0 +1,93 @@
+---
+title: "Python Inner Classes — Python Inner Classes"
+description: "Python inner (nested) classes များကို ဖန်တီး၍ object orientation structure များတွင် အသုံးပြုနည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Inner class (nested class) သည် class တစ်ခု၏ အတွင်းတွင် သတ်မှတ်ထားသော class ဖြစ်ပါသည်။ ၎င်းကို logically related များကို အုပ်စုဖွဲ့ရန် သုံးပါသည်။
+
+## Inner Class ဖန်တီးခြင်း
+
+```
+class Outer:
+    def __init__(self):
+        self.message = "Hello from Outer"
+
+    class Inner:
+        def __init__(self):
+            self.msg = "Hello from Inner"
+```
+
+## Inner Class Object ဖန်တီးခြင်း
+
+```
+class Outer:
+    def __init__(self):
+        self.message = "Hello"
+
+    class Inner:
+        def introduce(self):
+            return "Inside Inner class"
+
+outer = Outer()
+inner = Outer.Inner()
+print(inner.introduce())
+```
+
+► Output: Inside Inner class
+
+Inner class ၏ instance ကို Outer.Inner() ဖြင့် ဖန်တီးပါသည်။
+
+## Outer Class ၏ Data များကို Access ပြုလုပ်ခြင်း
+
+Inner class မှ outer class ၏ instance ကို ရရန် parameter အဖြစ် လက်ခံပါသည်။
+
+```
+class Outer:
+    def __init__(self):
+        self.name = "Outer"
+
+    class Inner:
+        def __init__(self, outer):
+            self.outer = outer
+
+        def show_outer(self):
+            return self.outer.name
+
+o = Outer()
+i = Outer.Inner(o)
+print(i.show_outer())
+```
+
+► Output: Outer
+
+## Classmethod ဖြင့် Pattern
+
+```
+class School:
+    def __init__(self, school_name):
+        self.school_name = school_name
+
+    class Student:
+        def __init__(self, name, grade):
+            self.name = name
+            self.grade = grade
+
+        def info(self):
+            return f"{self.name} in {self.grade}"
+
+school = School("Greenwood High")
+student = School.Student("Alice", "Grade 10")
+print(student.info())
+```
+
+► Output: Alice in Grade 10
+
+## Inner Classes ၏ အသုံးပြုမှု
+
+- Related classes များကို အုပ်စုဖွဲ့ရန်
+- Namespace conflicts များကို ရှောင်ရန်
+- Code organization ပိုမိုရှင်းလင်းစေရန်
+
+Inner classes များသည် complex data structures များကို model လုပ်ရန် အသုံးဝင်ပါသည်။

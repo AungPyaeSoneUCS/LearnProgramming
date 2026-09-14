@@ -1,0 +1,67 @@
+---
+title: "K-Nearest Neighbors (KNN) — K-Nearest Neighbors (KNN)"
+description: "KNN algorithm ၏ သဘောတရားနှင့် sklearn ဖြင့် classification ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+K-Nearest Neighbors (KNN) သည် classification/regression အတွက် ရိုးရှင်းသော supervised ML algorithm ဖြစ်ပြီး data points များ၏ neighbors များကို အခြေခံ၍ predict ပြုလုပ်ပါသည်.
+
+## KNN ဆိုသည်မှာ
+
+KNN သည် data point တစ်ခု၏ category ကို ၎င်း၏ နီးစပ်သော K neighbors များ၏ majority vote ဖြင့် ဆုံးဖြတ်ပါသည်.
+
+- **K**: ကြည့်ရန် nearest neighbors အရေအတွက်
+- Distance: Euclidean distance ဖြင့် တိုင်းတာပါသည်
+
+## Start With Data
+
+Weight, Height နှင့် Clothing Color labels ပါသော data များကို ဖန်တီးပါမည်.
+
+```
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+df = pd.DataFrame({
+    "weight": [70, 65, 80, 90, 55, 60],
+    "height": [175, 165, 180, 190, 160, 158],
+    "color": [1, 0, 1, 1, 0, 0]   # 1=red, 0=green
+})
+```
+
+## Data Split ပြုလုပ်ခြင်း
+
+```
+X = df[["weight", "height"]]
+y = df["color"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+```
+
+## KNN Model Train ပြုလုပ်ခြင်း
+
+```
+from sklearn.neighbors import KNeighborsClassifier
+
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(X_train, y_train)
+```
+
+- n_neighbors=3: နီးစပ်သော 3 points ကို ကြည့်ပါသည်
+
+## Prediction နှင့် Evaluation
+
+```
+from sklearn.metrics import accuracy_score
+
+y_pred = knn.predict(X_test)
+print(accuracy_score(y_test, y_pred))
+```
+
+## K ၏ Effect
+
+- K နည်းလွန်းပါက noise ကြောင့် overfit ဖြစ်နိုင်ပါသည်
+- K များလွန်းပါက underfit ဖြစ်နိုင်ပါသည်
+- အကောင်းဆုံး K ကို cross-validation ဖြင့် ရှာပါသည်
+
+KNN သည် ရိုးရှင်းပြီး effective ဖြစ်သော်လည်း dataset ကြီးများတွင် slow ဖြစ်နိုင်ပါသည်.

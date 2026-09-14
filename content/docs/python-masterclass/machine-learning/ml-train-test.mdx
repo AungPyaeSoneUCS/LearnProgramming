@@ -1,0 +1,80 @@
+---
+title: "Machine Learning Train/Test — Machine Learning Train/Test"
+description: "Model များကို train နှင့် test data ခွဲခြား၍ လေ့လာခြင်း၊ accuracy ကို တိုင်းတာခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Train/Test ဆိုသည်မှာ model တစ်ခုအား train နှင့် test နှစ်ပိုင်းခွဲ၍ စမ်းသပ်ခြင်း ဖြစ်ပါသည်. Models များသည် မြင်ဖူးသော data များကို အလွယ်တကူ overfit ဖြစ်နိုင်သောကြောင့် မမြင်ဖူးသော data ဖြင့် test လုပ်ရန် အရေးကြီးပါသည်.
+
+## Train/Test ဆိုသည်မှာ
+
+- **Training Set**: Model ကို train လုပ်ရန် data (80%)
+- **Test Set**: Model ၏ performance ကို test လုပ်ရန် data (20%)
+
+မမြင်ဖူးသော Data များတွင် model ၏ behavior ကို test လုပ်နိုင်ရန် ခွဲခြားပါသည်.
+
+## Start With the Data
+
+ဥပမာ - startup company ၏ customer 100 ယောက် ၏ အသက်နှင့် အိပ်ချိန် စသည့် data.
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+rng = np.random.default_rng(130)
+x = rng.integers(10, 90, 100)   # age
+y = 65 - x + rng.integers(-5, 6, 100)   # sleep minutes
+```
+
+## Split Into Train/Test
+
+Data ကို 80/20 ဖြင့် ခွဲပါသည်.
+
+```
+train_x = x[:80]
+train_y = y[:80]
+
+test_x = x[80:]
+test_y = y[80:]
+```
+
+## Display the Training Set
+
+```
+plt.scatter(train_x, train_y)
+plt.show()
+```
+
+► Training data များကို scatter plot ဖြင့် ပြသပါသည်.
+
+## Model ဖန်တီး + Predict
+
+```
+mymodel = np.poly1d(np.polyfit(train_x, train_y, 4))
+myline = np.linspace(10, 90, 100)
+plt.scatter(train_x, train_y)
+plt.plot(myline, mymodel(myline))
+plt.show()
+```
+
+► Training data တွင် polynomial line fit လုပ်ပါသည်.
+
+## R-squared ဖြင့် Test
+
+```
+from sklearn.metrics import r2_score
+
+r2 = r2_score(train_y, mymodel(train_x))
+print(r2)
+```
+
+## Testing Set ၏ Result
+
+```
+print(r2_score(test_y, mymodel(test_x)))
+```
+
+► Test data များတွင် model ၏ စစ်မှန်သော performance ကို ပြသပါသည်.
+
+Train/test split ပြုလုပ်ခြင်းသည် overfitting ကို ကာကွယ်ရန်နှင့် model ၏ performance ကို တရားမျှတစွာ တိုင်းတာရန် အရေးကြီးပါသည်.

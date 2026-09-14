@@ -1,0 +1,96 @@
+---
+title: "Python Inheritance — Python Inheritance"
+description: "Python inheritance ၏ သဘောတရား၊ child class များ parent properties နှင့် methods များကို အမွေဆက်ခံခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Inheritance သည် class တစ်ခုမှ နောက်တစ်ခုသို့ attributes နှင့် methods များကို အမွေပေးခြင်း ဖြစ်ပါသည်။ ဤနည်းဖြင့် code ပြန်လည် အသုံးပြုနိုင်သော authority ရရှိပါသည်။
+
+## Parent Class ဖန်တီးခြင်း
+
+```
+class Person:
+    def __init__(self, fname, lname):
+        self.firstname = fname
+        self.lastname = lname
+
+    def printname(self):
+        print(self.firstname, self.lastname)
+
+p = Person("John", "Doe")
+p.printname()
+```
+
+► Output: John Doe
+
+## Child Class ဖန်တီးခြင်း
+
+Child class ကို parent class ကို brackets အတွင်းတွင် ဖြတ်၍ ဖန်တီးပါသည်။
+
+```
+class Student(Person):
+    pass
+
+s = Student("Mike", "Olsen")
+s.printname()
+```
+
+► Output: Mike Olsen
+
+Child class သည် parent မှ method များကို အလိုအလျောက် အမွေဆက်ခံပါသည်။
+
+## Child Class တွင် __init__() ထည့်သွင်းခြင်း
+
+သို့သော် Student class ကို __init__() မဖန်တီးဘဲ ထားပါက parent မှသာ ဆက်ခံပါသည်။ တစ်ခါတစ်ရံ child ၏ ကိုယ်ပိုင် __init__() ကို သတ်မှတ်လိုပါသည်။
+
+```
+class Student(Person):
+    def __init__(self, fname, lname):
+        Person.__init__(self, fname, lname)
+```
+
+## super() Function
+
+Python 3 တွင် super() ကို သုံးနိုင်ပြီး parent __init__() ကို ခေါ်ဝေါ်ပါသည်။
+
+```
+class Student(Person):
+    def __init__(self, fname, lname):
+        super().__init__(fname, lname)
+```
+
+super() ကို သုံးခြင်းဖြင့် parent class ၏ အမည်ကို ထည့်ရန် မလိုတော့ပါ။
+
+## Properties များ ထည့်သွင်းခြင်း
+
+```
+class Student(Person):
+    def __init__(self, fname, lname, year):
+        super().__init__(fname, lname)
+        self.graduationyear = year
+
+s = Student("Mike", "Olsen", 2019)
+print(s.graduationyear)
+```
+
+► Output: 2019
+
+## Methods များ ထည့်သွင်းခြင်း
+
+```
+class Student(Person):
+    def __init__(self, fname, lname, year):
+        super().__init__(fname, lname)
+        self.graduationyear = year
+
+    def welcome(self):
+        print("Welcome", self.firstname, self.lastname, "to the class of", self.graduationyear)
+
+s = Student("Mike", "Olsen", 2019)
+s.welcome()
+```
+
+► Output: Welcome Mike Olsen to the class of 2019
+
+Inheritance သည် ဆက်စပ်သော classes များအကြား code ကို မျှဝေရန် အစွမ်းထက်သော feature ဖြစ်ပါသည်။

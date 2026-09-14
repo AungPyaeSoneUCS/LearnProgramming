@@ -1,0 +1,98 @@
+---
+title: "Python Tuples — Python Tuples"
+description: "Python tuples များ ဖန်တီးနည်း၊ access နှင့် unpacking တို့ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Tuple သည် order လိုက်သော collection တစ်ခု ဖြစ်ပြီး items များကို comma ဖြင့် ခြားပြီး parentheses () ဖြင့် ရေးပါသည်။ Tuple များသည် ordered ဖြစ်ပြီး change မလုပ်နိုင်ပါ (immutable)။
+
+## Tuple ဖန်တီးခြင်း
+
+```
+thistuple = ("apple", "banana", "cherry")
+print(thistuple)
+```
+
+## Items များကို ရယူခြင်း
+
+```
+thistuple = ("apple", "banana", "cherry")
+print(thistuple[1])
+```
+
+► Output: banana
+
+## Negative Indexing
+
+```
+thistuple = ("apple", "banana", "cherry")
+print(thistuple[-1])
+```
+
+► Output: cherry
+
+## Range of Indexes
+
+```
+thistuple = ("apple", "banana", "cherry", "orange", "kiwi", "melon", "mango")
+print(thistuple[2:5])
+```
+
+► Output: ('cherry', 'orange', 'kiwi')
+
+## Type စစ်ဆေးခြင်း
+
+```
+mytuple = ("apple", "banana", "cherry")
+print(type(mytuple))
+```
+
+► Output: class 'tuple'
+
+## Items ပြောင်းလဲခြင်း (ခွင့်မပြု)
+
+Tuple များသည် immutable ဖြစ်သောကြောင့် item တစ်ခုကို တိုက်ရိုက် ပြောင်းလဲ၍ မရပါ။ သို့သော် tuple ကို list အဖြစ် ပြောင်း၍ ပြင်ပြီး tuple အဖြစ် ပြန်ပြောင်းနိုင်ပါသည်။
+
+```
+x = ("apple", "banana", "cherry")
+y = list(x)
+y[1] = "kiwi"
+x = tuple(y)
+print(x)
+```
+
+► Output: ('apple', 'kiwi', 'cherry')
+
+## Unpacking
+
+Tuple ၏ items များကို variable အများအပြားထဲသို့ unpack လုပ်နိုင်ပါသည်။
+
+```
+fruits = ("apple", "banana", "cherry")
+(green, yellow, red) = fruits
+print(green)
+print(yellow)
+print(red)
+```
+
+## Asterisk ဖြင့် Unpacking
+
+Item အရေအတွက်ထက် variable နည်းပါက asterisk ဖြင့် ကျန်တာကို list အဖြစ် ရယူနိုင်ပါသည်။
+
+```
+fruits = ("apple", "banana", "cherry", "strawberry", "raspberry")
+(green, yellow, *red) = fruits
+print(green)
+print(yellow)
+print(red)
+```
+
+► Output:
+```
+apple
+banana
+['cherry', 'strawberry', 'raspberry']
+```
+
+Tuple များသည် data များ ပြောင်းလဲလို့ မရသော နေရာများတွင် အသုံးပြုရန် သင့်လျော်ပါသည်။

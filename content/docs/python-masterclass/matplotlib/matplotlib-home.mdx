@@ -1,0 +1,68 @@
+---
+title: "Python Matplotlib — Python Matplotlib"
+description: "Matplotlib ဆိုသည်မှာ charts နှင့် graphs များကို ဖန်တီးရန် Python library တစ်ခု ဖြစ်ပါသည်။ install ပြုလုပ်၍ စတင်အသုံးပြုနည်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Matplotlib သည် plotting library တစ်ခုဖြစ်ပြီး Python တွင် charts, graphs များကို ဖန်တီးရန် အသုံးပြုပါသည်။ ၎င်းကို 2002 ခုနှစ်တွင် John D. Hunter မှ ဖန်တီးခဲ့ပြီး data science နှင့် machine learning လုပ်ငန်းများတွင် မရှိမဖြစ် အသုံးပြုပါသည်။
+
+## Matplotlib ကို ဘာကြောင့် သုံးရသနည်း
+
+- Data visualization ပြုလုပ်ရန် လွယ်ကူပါသည်။
+- Charts အမျိုးပေါင်း များစွာကို ပံ့ပိုးပါသည်။
+- Python နှင့် အပြည့်အဝ integrate ဖြစ်ပါသည်။
+- Display များအတွက်ရော files များအတွက်ရော သင့်တော်ပါသည်။
+
+## Install ပြုလုပ်ခြင်း
+
+```
+pip install matplotlib
+```
+
+## Import ပြုလုပ်ခြင်း
+
+Matplotlib ကို import ပြုလုပ်ရန်-
+
+```
+import matplotlib
+```
+
+အသုံးအများဆုံးပုံစံမှာ pyplot ၏ subpackage ကို ဖြစ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+```
+
+## ပထမဆုံး Plot ဖန်တီးခြင်း
+
+```
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3, 4])
+plt.show()
+```
+
+► [1, 2, 3, 4] ကို plot ပြုလုပ်ပြီး window/app တွင် ပြသပါသည်။
+
+## Plot ကို File အဖြစ် သိမ်းခြင်း
+
+```
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3, 4])
+plt.savefig("myplot.png")
+```
+
+## Version စစ်ဆေးခြင်း
+
+```
+import matplotlib
+print(matplotlib.__version__)
+```
+
+## Examples များ
+
+Matplotlib ဖြင့် line charts, scatter plots, bar charts, histograms, pie charts စသည့် visualization များစွာကို ဖန်တီးနိုင်ပါသည်။
+
+Chart ရွေးချယ်သောအခါ data ၏သဘောသဘာဝနှင့် ကိုက်ညီသော chart type ကို ရွေးရန် အရေးကြီးပါသည်။

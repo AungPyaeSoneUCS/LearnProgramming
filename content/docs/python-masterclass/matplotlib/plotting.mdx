@@ -1,0 +1,82 @@
+---
+title: "Python Matplotlib Plotting — Python Matplotlib Plotting"
+description: "plot() function ဖြင့် x နှင့် y axes များကို တိုက်ရိုက်သတ်မှတ်၍ plotting ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+plot() function သည် data များကို plot ပြုလုပ်ရန် အသုံးပြုပြီး x နှင့် y parameters များကို လက်ခံပါသည်။ ယခင်စာမျက်နှာတွင် x-points မပါဘဲ ဖြစ်ခဲ့သည်။
+
+## Plotting: x နှင့် y
+
+ပထမဆုံး x-axis နှင့် y-axis ကို သတ်မှတ်၍ plot ပြုလုပ်ပါမည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [1, 4, 9, 16]
+
+plt.plot(x, y)
+plt.show()
+```
+
+► (1,1), (2,4), (3,9), (4,16) points များကို line ဖြင့် ဆက်သွယ်ပါသည်။
+
+## ဤနေရာတွင် သတိပြုရန်
+
+ဤနေရာတွင် x-data သည် 1,2,3,4 ဖြစ်ပြီး y-data သည် 1,4,9,16 ဖြစ်ပါသည်။
+
+## Labels များ ထည့်ခြင်း
+
+Better visualization အတွက် axis labels များ ထည့်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [1, 4, 9, 16]
+
+plt.plot(x, y)
+plt.xlabel("X values")
+plt.ylabel("Y values")
+plt.title("My First Plot")
+plt.show()
+```
+
+## Multiple Lines များ
+
+plot() ကို နှစ်ကြိမ် ခေါ်ကာ lines များစွာ ပြသနိုင်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y1 = [1, 4, 9, 16]
+y2 = [1, 2, 3, 4]
+
+plt.plot(x, y1)
+plt.plot(x, y2)
+plt.show()
+```
+
+► Lines နှစ်ခုမျဉ်းပြိုင် ပေါ်လာပါသည်။
+
+## Plot လုပ်ရန် Data များ ပြင်ဆင်ခြင်း
+
+Real data များကို numpy မှ ဖန်တီးလေ့ရှိပါသည်။
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(0, 10, 0.1)
+y = np.sin(x)
+
+plt.plot(x, y)
+plt.show()
+```
+
+► Sine wave တစ်ခုကို ဆွဲပါသည်။
+
+plot() ကို ကျွမ်းကျင်ပါက charts များစွာကို ဖန်တီးနိုင်ပါသည်။

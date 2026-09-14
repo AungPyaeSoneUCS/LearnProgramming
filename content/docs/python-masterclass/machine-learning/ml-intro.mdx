@@ -1,0 +1,64 @@
+---
+title: "Types of Machine Learning — Types of Machine Learning"
+description: "Supervised နှင့် Unsupervised machine learning များ၏ ကွာခြားချက်များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Machine Learning တွင် အဓိကအားဖြင့် types သုံးမျိုး ရှိပြီး data ၏ labels ရှိမရှိပေါ်မူတည်ပါသည်။
+
+## Data Type များ
+
+- **Labeled data**: တန်ဖိုး (label) ပါသော data (ဥပမာ - ကြောင်ပုံတစ်ပုံတွင် "cat" label ပါ)
+- **Unlabeled data**: Label မပါသော data
+
+## Supervised Learning
+
+Labels ပါသော data များမှ model ကို train လုပ်ပါသည်။
+
+- **Classification**: Categories ခွဲခြားခြင်း (spam/not spam)
+- **Regression**: Numerical value ခန့်မှန်းခြင်း (house price)
+
+```
+# Classification ဥပမာ - ကြောင်လား၊ ခွေးလား
+images = ["cat1.jpg", "dog1.jpg", "cat2.jpg"]
+labels = ["cat", "dog", "cat"]
+# model = train(images, labels)
+```
+
+## Unsupervised Learning
+
+Labels မပါသော data များမှ patterns ရှာပါသည်။
+
+- **Clustering**: Similar data များကို အုပ်စုခွဲခြင်း
+- **Dimensionality Reduction**: Data ၏ ရှုပ်ထွေးမှုကို လျှော့ချခြင်း
+
+```
+# Clustering ဥပမာ - ဖောက်သည်များ အုပ်စုခွဲခြင်း
+customers = [
+    {"age": 25, "spend": 300},
+    {"age": 45, "spend": 150},
+    {"age": 30, "spend": 280}
+]
+# groups = cluster(customers)
+```
+
+## Reinforcement Learning
+
+Agent တစ်ခုသည် environment မှ actions များကို လုပ်ဆောင်ပြီး rewards များအပေါ်မူတည်၍ learning ပြုလုပ်ပါသည်။ (ဥပမာ - chess bot, self-driving car)
+
+## Scikit-learn ၏ Overview
+
+Scikit-learn သည် Python ၏ နာမည်ကြီး ML library ဖြစ်ပြီး classifiers, regressors, clusterers များစွာ ပါဝင်ပါသည်။ Install ပြုလုပ်ရန်-
+
+```
+pip install scikit-learn
+```
+
+## How to Choose ၏ ဥပမာ
+
+- Labels ရှိပြီး categories ခွဲလိုလျှင်: Classification
+- Labels ရှိပြီး number ခန့်မှန်းလိုလျှင်: Regression
+- Labels မရှိပြီး အုပ်စုဖွဲ့လိုလျှင်: Clustering
+
+Supervised နှင့် unsupervised ကွာခြားချက်ကို နားလည်ခြင်းသည် algorithm ရွေးချယ်ရန် အရေးကြီးပါသည်။

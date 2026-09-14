@@ -1,0 +1,94 @@
+---
+title: "Python Arrays — Python Arrays"
+description: "Python arrays (lists ဖြင့်) ဖန်တီးနည်း၊ access, loop, add, remove လုပ်နည်းများကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Python တွင် array အတွက် dedicated built-in data type မရှိပါ။ Array ဆိုသည့် concept ကို list ဖြင့် ကိုယ်စားပြုပါသည်။ List များသည် array ကဲ့သို့ items များကို သိမ်းဆည်းပါသည်။
+
+## Array အဖြစ် List ဖန်တီးခြင်း
+
+```
+cars = ["Ford", "Volvo", "BMW"]
+```
+
+## Array ကို Access ပြုလုပ်ခြင်း
+
+Index ကို သုံး၍ item တစ်ခုကို ရယူပါသည်။
+
+```
+cars = ["Ford", "Volvo", "BMW"]
+x = cars[0]
+print(x)
+```
+
+► Output: Ford
+
+Index ကို သုံး၍ item ကို ပြောင်းလဲနိုင်ပါသည်။
+
+```
+cars = ["Ford", "Volvo", "BMW"]
+cars[0] = "Toyota"
+print(cars)
+```
+
+## Loop ပြုလုပ်ခြင်း
+
+```
+cars = ["Ford", "Volvo", "BMW"]
+for x in cars:
+    print(x)
+```
+
+## Array Length
+
+```
+cars = ["Ford", "Volvo", "BMW"]
+x = len(cars)
+print(x)
+```
+
+► Output: 3
+
+## Item ထည့်ခြင်း
+
+append ဖြင့် အဆုံးတွင် ထည့်ပါသည်။
+
+```
+cars = ["Ford", "Volvo", "BMW"]
+cars.append("Honda")
+print(cars)
+```
+
+► Output: ['Ford', 'Volvo', 'BMW', 'Honda']
+
+## Item ဖယ်ရှားခြင်း
+
+pop ဖြင့် index အလိုက် ဖယ်နိုင်ပြီး remove ဖြင့် value အလိုက် ဖယ်နိုင်ပါသည်။
+
+```
+cars = ["Ford", "Volvo", "BMW"]
+cars.pop(1)
+print(cars)
+```
+
+```
+cars = ["Ford", "Volvo", "BMW"]
+cars.remove("Volvo")
+print(cars)
+```
+
+## Python Array အတွက် Modules
+
+Real arrays အတွက် (performance ပိုကောင်းရန်) array module ကို အသုံးပြုနိုင်ပါသည်။
+
+```
+import array
+arr = array.array("i", [1, 2, 3])
+print(arr)
+```
+
+NumPy ကဲ့သို့သော libraries များသည် scientific uses အတွက် real arrays များကို ပေးပါသည်။
+
+ဤသင်ခန်းစာတွင် list ကို array အဖြစ် သုံးနည်းကို လေ့လာပြီးပါပြီ။

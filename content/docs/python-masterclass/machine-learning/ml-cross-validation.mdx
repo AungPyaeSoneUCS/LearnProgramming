@@ -1,0 +1,56 @@
+---
+title: "Cross Validation — Cross Validation"
+description: "Cross validation ၏ သဘောတရားနှင့် sklearn validation functions များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Model တစ်ခုကို train/test split ဖြင့် test လုပ်ခြင်းသည် training set ၏ ရလဒ်ပေါ်တွင် များစွာ မူတည်ပါသည်. Cross-validation သည် data ကို folds များခွဲ၍ စနစ်တကျ validation ပြုလုပ်ပါသည်.
+
+## Cross Validation ဆိုသည်မှာ
+
+Data ကို ပိုင်းခွဲပြီး model တစ်ခုစီကို validation set အလှည့်ကျ သုံး၍ accuracy များစွာ တိုင်းတာပါသည်.
+
+ဥပမာ - K-Fold Cross Validation သည် data ကို K parts ခွဲပြီး တစ်ကြိမ်တစ်ခုစီတွင် part တစ်ခုကို test set အနေဖြင့် သုံးပါသည်.
+
+## 1. Dataset ဖန်တီးခြင်း
+
+```
+from sklearn.datasets import load_iris
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+```
+
+## 2. Cross Validation Functions
+
+sklearn ၏ cross_val_score() ဖြင့် folds များစွာဖြင့် validation ပြုလုပ်ပါသည်.
+
+```
+from sklearn.model_selection import cross_val_score
+from sklearn.tree import DecisionTreeClassifier
+
+clf = DecisionTreeClassifier()
+scores = cross_val_score(clf, X, y, cv=5)
+print(scores)
+print("Mean:", scores.mean())
+```
+
+► Scores 5 ခု (fold 5 ခုစီ) နှင့် average accuracy ကို ပြသပါသည်.
+
+## 3. cv Parameter ၏ Meaning
+
+- cv=5: Data ကို 5 folds ခွဲပြီး 5 iteration validation ပြုလုပ်ပါသည်
+- တစ်ကြိမ်တစ်ခုစီတွင် fold 4 ခုကို train၊ fold 1 ခုကို test သုံးပါသည်
+
+## Cross-Validation vs Train/Test
+
+- Train/test: dataset တစ်ပိုင်းတည်းကိုသာ test သုံးပါသည်
+- Cross-validation: every instance သည် validation set တွင် အနည်းဆုံး တစ်ကြိမ် ပါဝင်ပါသည်
+
+## Overfitting ကို လျှော့ချခြင်း
+
+Cross validation သည် model ၏ generalization performance ကို ပိုမိုတိကျစွာ ခန့်မှန်းနိုင်အောင် ကူညီပါသည်.
+
+Cross validation ကို သုံးခြင်းဖြင့် model ၏ စစ်မှန်သော performance ကို ယုံကြည်စိတ်ချစွာ ရရှိနိုင်ပါသည်.

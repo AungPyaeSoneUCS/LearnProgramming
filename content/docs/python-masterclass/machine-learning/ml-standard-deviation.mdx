@@ -1,0 +1,55 @@
+---
+title: "Machine Learning Standard Deviation — Machine Learning Standard Deviation"
+description: "Standard deviation ၏ သဘောတရား၊ data ၏ spread ကို NumPy std() ဖြင့် တွက်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Standard deviation သည် numbers များ ပျမ်းမျှမှ မည်မျှ spread ဖြစ်နေသည် (ပျံ့နှံ့နေသည်) ကို တိုင်းတာသော number ဖြစ်ပါသည်။
+
+## Standard Deviation ဆိုသည်မှာ
+
+Standard deviation (sd) သည် values များ မည်မျှ scattered (ပြန့်ကျဲ) နေသည်ကို ဖော်ပြပါသည်။
+
+- နည်းလျှင် values များကို mean အနီးတွင် စုနေပါသည်
+- များလျှင် values များ ပြန့်ကျဲနေပါသည်
+
+## Low vs High SD ၏ ဥပမာ
+
+High standard deviation (ပြန့်ကျဲ):
+
+```
+# Car အမြန်နှုန်းများ - spread များသော data
+speed = [99, 86, 87, 88, 111, 86, 103, 87, 94, 78, 77, 85, 86]
+```
+
+မြန်နှုန်းများ ကွာခြားမှု များပါသည်။
+
+## What is Std Python
+
+NumPy ၏ std() function ဖြင့် standard deviation ကို တွက်ပါသည်။
+
+```
+import numpy as np
+
+speed = [99, 86, 87, 88, 111, 86, 103, 87, 94, 78, 77, 85, 86]
+
+x = np.std(speed)
+print(x)
+```
+
+► Output: 9.06 - mean 89.77 မှ ပျမ်းမျှ 9.06 ယူနစ် ဝေးပါသည်
+
+## How to Calculate
+
+1. Mean ကို တွက်
+2. Value တစ်ခုစီမှ mean ကို နုတ်
+3. ရလဒ်များကို square လုပ်
+4. Mean (variance) ကို တွက်
+5. Square root ရိုက်
+
+## Variance နှင့် ဆက်စပ်မှု
+
+Standard deviation သည် variance ၏ square root ဖြစ်ပါသည်။ Variance ကို variance() ဖြင့် တွက်နိုင်ပြီး နှစ်ခုလုံး data spread ကို ဖော်ပြပါသည်။
+
+Standard deviation သည် data ၏ variability ကို နားလည်ရန် အရေးကြီးပါသည်။

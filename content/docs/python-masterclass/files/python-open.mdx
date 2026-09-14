@@ -1,0 +1,76 @@
+---
+title: "Python Open Function — Python Open Function"
+description: "Python open() function ဖြင့် files များကို ဖွင့်နည်း၊ မတူညီသော modes များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+open() function သည် file တစ်ခုကို ဖွင့်ရန် အသုံးပြုပြီး file object တစ်ခုကို ပြန်ပေးပါသည်။ File မရှိပါက FileNotFoundError ဖြစ်ပါသည်။
+
+## Syntax
+
+```
+f = open(file, mode)
+```
+
+## File ဖွင့်ရန်
+
+```
+f = open("demofile.txt", "r")
+print(f.read())
+```
+
+## Modes များ
+
+- **"r"** - Read (default)
+- **"a"** - Append
+- **"w"** - Write
+- **"x"** - Create
+
+## Bytes Mode
+
+```
+f = open("img.png", "rb")
+print(f.read(4))
+```
+
+## File Paths များ
+
+File ၏ နေရာပေါ်မူတည်၍ path ကို ထည့်ပါသည်။
+
+```
+f = open("C:/Users/MyName/Documents/demofile.txt", "r")
+print(f.read())
+```
+
+Relative path ဖြင့်လည်း ဖွင့်နိုင်ပါသည်။
+
+```
+f = open("../demofile.txt", "r")
+print(f.read())
+```
+
+## အကြံပြုချက်
+
+read() method ကို parameters များဖြင့် bytes အရေအတွက်ကို သတ်မှတ်၍သာ ဖတ်နိုင်ပါသည်။
+
+```
+f = open("demofile.txt", "r")
+print(f.read(5))
+```
+
+► ပထမ 5 characters ကိုသာ ဖတ်ပါသည်။
+
+## Error Handling
+
+File မရှိပါက error မဖြစ်ရန် try/except ကို သုံးနိုင်ပါသည်။
+
+```
+try:
+    f = open("missing.txt", "r")
+    print(f.read())
+except FileNotFoundError:
+    print("File does not exist")
+```
+
+open() ဖြင့် file modes များကို မှန်ကန်စွာ ရွေးချယ်ပါက file များနှင့် ကိုင်တွယ်ရန် အဆင်သင့် ဖြစ်လာပါသည်။

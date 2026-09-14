@@ -1,0 +1,108 @@
+---
+title: "Python Classes/Objects — Python Classes/Objects"
+description: "Python classes နှင့် objects များကို ဖန်တီးနည်း၊ __init__ function နှင့် object properties များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Class သည် object များအတွက် template တစ်ခု ဖြစ်ပြီး Object သည် class ၏ instance တစ်ခု ဖြစ်ပါသည်။ ဤသင်ခန်းစာတွင် classes/objects များကို ဖန်တီးနည်းကို လေ့လာရပါမည်။
+
+## Class ဖန်တီးခြင်း
+
+Class keyword ဖြင့် class တစ်ခုကို ဖန်တီးပါသည်။
+
+```
+class MyClass:
+    x = 5
+```
+
+## Object ဖန်တီးခြင်း
+
+ဤ class မှ object တစ်ခုကို ဖန်တီး၍ attribute များကို access ပြုလုပ်နိုင်ပါသည်။
+
+```
+class MyClass:
+    x = 5
+
+p1 = MyClass()
+print(p1.x)
+```
+
+► Output: 5
+
+## __init__() Function
+
+ဤ special function သည် class တစ်ခုမှ object တစ်ခုကို ဖန်တီးမည့်အခါ အလိုအလျောက် run ပါသည်။
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+p1 = Person("John", 36)
+
+print(p1.name)
+print(p1.age)
+```
+
+► Output:
+```
+John
+36
+```
+
+"self" parameter သည် object ကိုယ်တိုင် ကို ရည်ညွှန်းပြီး class ၏ attributes များကို access ပြုလုပ်ရန် သုံးပါသည်။
+
+## Object Methods
+
+Object တစ်ခုတွင် methods (class အတွင်းရှိ functions) များလည်း ရှိနိုင်ပါသည်။
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def myfunc(self):
+        print("Hello my name is " + self.name)
+
+p1 = Person("John", 36)
+p1.myfunc()
+```
+
+► Output: Hello my name is John
+
+## Object Properties ပြောင်းလဲခြင်း
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+p1 = Person("John", 36)
+p1.age = 40
+print(p1.age)
+```
+
+► Output: 40
+
+## Object ဖျက်ခြင်း
+
+del keyword ဖြင့် object ကို ဖျက်နိုင်ပါသည်။
+
+```
+del p1
+```
+
+## Pass Statement
+
+class definitions များတွင် မဖြစ်မနေ class body တစ်ခု လိုအပ်သောကြောင့် ဘာမှမလုပ်လိုပါက pass ကို သုံးပါသည်။
+
+```
+class Person:
+    pass
+```
+
+Classes နှင့် objects များသည် OOP ၏ အခြေခံအုတ်မြစ် ဖြစ်ပါသည်။

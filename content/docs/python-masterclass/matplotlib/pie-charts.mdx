@@ -1,0 +1,90 @@
+---
+title: "Python Matplotlib Pie Charts — Python Matplotlib Pie Charts"
+description: "pie() function ဖြင့် pie charts များကို ဖန်တီး၍ customize ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Pie chart သည် data ၏ အပိုင်းအစများကို စက်ဝိုင်း၏ အစိတ်အပိုင်းများအဖြစ် ပြသရန် အသုံးပြုပါသည်။
+
+## Pie Chart ဆိုသည်မှာ
+
+pie() function ဖြင့် pie charts များကို ဆွဲပါသည်.
+
+```
+import matplotlib.pyplot as plt
+
+y = [35, 25, 25, 15]
+
+plt.pie(y)
+plt.show()
+```
+
+► 4 slices ပါသော pie chart တစ်ခုကို ဖန်တီးပါသည်.
+
+## Labels
+
+labels parameter ဖြင့် label များကို ထည့်ပါသည်.
+
+```
+import matplotlib.pyplot as plt
+
+y = [35, 25, 25, 15]
+labels = ["Apples", "Bananas", "Cherries", "Dates"]
+
+plt.pie(y, labels=labels)
+plt.show()
+```
+
+► Labels များကို pie chart ပေါ်တွင် ပြသပါသည်.
+
+## Start Angle
+
+startangle parameter ဖြင့် pie chart ၏ စတင်ရိုက်ထားသော angle ကိုသတ်မှတ်ပါသည်.
+
+```
+import matplotlib.pyplot as plt
+
+y = [35, 25, 25, 15]
+labels = ["Apples", "Bananas", "Cherries", "Dates"]
+
+plt.pie(y, labels=labels, startangle=90)
+plt.show()
+```
+
+► x-axis မှ 90 degrees တွင် စတင်ပါသည်.
+
+## Explode
+
+explode parameter ဖြင့် slice တစ်ခုကို သီးသန့်ခွဲထုတ်ပြသနိုင်ပါသည်.
+
+```
+import matplotlib.pyplot as plt
+
+y = [35, 25, 25, 15]
+labels = ["Apples", "Bananas", "Cherries", "Dates"]
+explode = [0.2, 0, 0, 0]
+
+plt.pie(y, labels=labels, explode=explode)
+plt.show()
+```
+
+► Apples slice ကို ဆွဲထုတ်ပြသနိုင်ရန် explode ကို ပြုလုပ်ပါသည်.
+
+## Shadow
+
+shadow=True ဖြင့် pie chart တွင် shadow ထည့်ပါသည်.
+
+```
+import matplotlib.pyplot as plt
+
+y = [35, 25, 25, 15]
+labels = ["Apples", "Bananas", "Cherries", "Dates"]
+
+plt.pie(y, labels=labels, shadow=True)
+plt.show()
+```
+
+► Shadow ပါသော pie chart ကို ပြသပါသည်.
+
+Pie charts များသည် percentage ဖြန့်ကျက်မှုကို ပြသရန် သင့်လျော်ပါသည်.

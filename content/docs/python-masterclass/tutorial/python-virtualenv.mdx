@@ -1,0 +1,79 @@
+---
+title: "Python VirtualEnv — Python VirtualEnv"
+description: "Python virtual environments များကို ဖန်တီးအသုံးပြုနည်း၊ project အလိုက် dependencies ရှင်းရှင်းလင်းလင်း ထားရန် venv ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Virtual environment သည် project တစ်ခုအတွက် dependencies များကို သီးသန့် သိမ်းဆည်းရန် isolation ဖန်တီးသော tool တစ်ခု ဖြစ်ပါသည်။ ဤနည်းဖြင့် project တစ်ခုစီတွင် မိမိလိုအပ်သော versions များကို မချိုးဖျက်ဘဲ သုံးနိုင်ပါသည်။
+
+## Virtual Environment ဆိုသည်မှာ
+
+- Project တစ်ခုစီအတွက် သီးသန့် Python environment တစ်ခု ဖြစ်ပါသည်။
+- Dependencies (packages) များကို system ထဲတွင် သိမ်းမည့်အစား project အတွင်းတွင် သိမ်းပါသည်။
+- မတူညီသော project များတွင် မတူညီသော package versions များ သုံးနိုင်ပါသည်။
+
+## venv Module ဖြင့် ဖန်တီးခြင်း
+
+Python 3.3 မှစ၍ venv module ကို built-in အနေဖြင့် ရှိပါသည်။
+
+```
+python -m venv myenv
+```
+
+ဤ command သည် myenv folder တစ်ခုကို ဖန်တီးပြီး သီးသန့် Python ကို ထည့်သွင်းပါသည်။
+
+## Activate ပြုလုပ်ခြင်း
+
+### Windows
+
+```
+myenv\Scripts\activate
+```
+
+### macOS / Linux
+
+```
+source myenv/bin/activate
+```
+
+Activate ပြုလုပ်ပြီးနောက် command prompt တွင် (myenv) စာသား ပေါ်လာပါသည်။
+
+## Packages Install ပြုလုပ်ခြင်း
+
+Environment ၏ အတွင်းတွင် packages များကို install လုပ်ပါသည်။
+
+```
+pip install requests
+```
+
+## Deactivate ပြုလုပ်ခြင်း
+
+Environment မှ ထွက်ရန်-
+
+```
+deactivate
+```
+
+## Requirements File
+
+Project ၏ dependencies များကို သိမ်းရန် requirements.txt ဖိုင်ကို ထုတ်ပါသည်။
+
+```
+pip freeze > requirements.txt
+```
+
+အခြား machine တစ်ခုတွင် dependencies များကို ပြန်လည် install လုပ်ရန်-
+
+```
+pip install -r requirements.txt
+```
+
+## Virtual Environment ၏ အကျိုးကျေးဇူးများ
+
+- Project များအကြား dependency conflicts မဖြစ်အောင် ကာကွယ်ပါသည်။
+- Requirements များကို ရှင်းရှင်းလင်းလင်း မှတ်တမ်းတင်နိုင်ပါသည်။
+- Production environment နှင့် တူညီသော setup ကို ပြန်လည် ဖန်တီးနိုင်ပါသည်။
+- System Python ကို မပျက်စီးစေပါ။
+
+Virtual environments များသည် professional Python development ၏ မဖြစ်မနေ အစိတ်အပိုင်း ဖြစ်ပါသည်။

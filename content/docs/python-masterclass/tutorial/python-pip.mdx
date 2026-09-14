@@ -1,0 +1,76 @@
+---
+title: "Python PIP — Python PIP"
+description: "Python packages များကို install ပြုလုပ်ရန် PIP package manager ကို အသုံးပြုနည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+PIP သည် Python packages (modules) များကို install နှင့် manage လုပ်ရန် အသုံးပြုသော package manager တစ်ခု ဖြစ်ပါသည်။
+
+## PIP ဆိုသည်မှာ အဘယ်နည်း
+
+- PIP သည် "Pip Installs Packages" ဟု ဆိုလိုပါသည်။
+- Packages များသည် modules များ ပါဝင်သော file များ ဖြစ်ပါသည်။
+- Packages အားလုံးကို Python Package Index (PyPI) တွင် ရှာဖွေနိုင်ပါသည်။
+
+## PIP Check ပြုလုပ်ခြင်း
+
+PIP ရှိမရှိ စစ်ဆေးရန် command line တွင်-
+
+```
+pip --version
+```
+
+## Package Install ပြုလုပ်ခြင်း
+
+camelcase package ကို install ပြုလုပ်ရန်-
+
+```
+pip install camelcase
+```
+
+camelcase ကဲ့သို့သော packages များသည် PyPI မှ download လုပ်ရပါသည်။
+
+## Package ကို Import ပြုလုပ်ခြင်း
+
+```
+import camelcase
+
+c = camelcase.CamelCase()
+txt = "hello world"
+print(c.hump(txt))
+```
+
+► Output: Hello World
+
+## Package ဖြုတ်ခြင်း
+
+```
+pip uninstall camelcase
+```
+
+## Pip List
+
+Install လုပ်ထားသော packages များကို ကြည့်ရန်-
+
+```
+pip list
+```
+
+## Package ၏ Information ကြည့်ခြင်း
+
+```
+pip show camelcase
+```
+
+► Package ၏ name, version, summary စသည့် အချက်များကို ပြသပါသည်။
+
+## Popular Packages များ
+
+- **requests**: HTTP requests
+- **numpy**: Numerical computing
+- **pandas**: Data analysis
+- **scikit-learn**: Machine learning
+- **matplotlib**: Data visualization
+
+PIP ကို ကျွမ်းကျင်ပါက third-party packages များကို အလွယ်တကူ အသုံးပြုနိုင်ပါသည်။

@@ -1,0 +1,126 @@
+---
+title: "Python Pandas — Python Pandas"
+description: "Pandas library ဖြင့် data analysis ပြုလုပ်နည်း၊ DataFrames များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Pandas သည် data analysis နှင့် manipulation အတွက် Python library တစ်ခု ဖြစ်ပြီး table-like data structures များကို ကိုင်တွယ်ရန် အသုံးပြုပါသည်။ ၎င်း၏ အဓိက data structure မှာ DataFrame ဖြစ်ပါသည်။
+
+## Install ပြုလုပ်ခြင်း
+
+```
+pip install pandas
+```
+
+## Import ပြုလုပ်ခြင်း
+
+```
+import pandas as pd
+```
+
+## Series
+
+Series သည် labelled 1D array တစ်ခု ဖြစ်ပါသည်။
+
+```
+import pandas as pd
+
+s = pd.Series(["A", "B", "C"])
+print(s)
+```
+
+► Output:
+```
+0    A
+1    B
+2    C
+dtype: object
+```
+
+## DataFrame
+
+DataFrame သည် 2D table ဖြစ်ပြီး rows နှင့် columns များဖြင့် ဖွဲ့စည်းပါသည်။
+
+```
+import pandas as pd
+
+data = {
+    "name": ["Alice", "Bob", "Charlie"],
+    "age": [25, 30, 35]
+}
+
+df = pd.DataFrame(data)
+print(df)
+```
+
+► Output:
+```
+      name  age
+0    Alice   25
+1      Bob   30
+2  Charlie   35
+```
+
+## Data များကြည့်ရှုခြင်း
+
+```
+import pandas as pd
+
+df = pd.DataFrame(data)
+print(df.head())      # ပထမ 5 rows
+print(df.tail())      # နောက်ဆုံး 5 rows
+```
+
+## DataFrame ၏ Information
+
+```
+print(df.info())
+print(df.describe())
+```
+
+## Rows များ Filter လုပ်ခြင်း
+
+```
+import pandas as pd
+
+df = pd.DataFrame(data)
+adults = df[df["age"] > 28]
+print(adults)
+```
+
+► Output:
+```
+      name  age
+1      Bob   30
+2  Charlie   35
+```
+
+## CSV Files များ ဖတ်ခြင်း
+
+CSV file တစ်ခုကို DataFrame သို့ ပြောင်းရန်-
+
+```
+import pandas as pd
+
+df = pd.read_csv("employees.csv")
+print(df)
+```
+
+## CSV သို့ ပြန်ပြောင်းခြင်း
+
+```
+df.to_csv("output.csv", index=False)
+```
+
+## Missing Data များ ကိုင်တွယ်ခြင်း
+
+```
+import pandas as pd
+
+df = pd.DataFrame({"A": [1, None, 3]})
+df["A"] = df["A"].fillna(0)   # NaN ကို 0 ဖြင့် အစားထိုး
+print(df)
+```
+
+Pandas သည် data cleaning, transformation နှင့် analysis အတွက် industry standard tool ဖြစ်ပါသည်။

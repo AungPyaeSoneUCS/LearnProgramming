@@ -1,0 +1,81 @@
+---
+title: "Python Matplotlib Grid — Python Matplotlib Grid"
+description: "grid() function ဖြင့် chart အတွင်း grid lines များ ထည့်သွင်းနည်း၊ customize ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Grid lines များသည် chart အတွင်းရှိ data points များ၏ တန်ဖိုးများကို ခန့်မှန်းရန် ကူညီပါသည်။ Pyplot မှ grid() function ကို အသုံးပြုပါသည်။
+
+## Grid Lines ထည့်ခြင်း
+
+grid() function ဖြင့် grid lines များကို chart အတွင်းတွင် ထည့်နိုင်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [1, 4, 9, 16]
+
+plt.plot(x, y)
+plt.grid()
+plt.show()
+```
+
+► Grid lines များကို chart အတွင်းတွင် ပြသပါသည်။
+
+## Axis Parameter
+
+axis parameter ဖြင့် grid lines များကို axes ပေါ် ခေါ်နိုင်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [1, 4, 9, 16]
+
+plt.plot(x, y)
+plt.grid(axis='x')
+plt.show()
+```
+
+► ဒေါင်လိုက် grid lines များကိုသာ ပြသပါသည်။
+
+## Axis Parameter ၏ တန်ဖိုးများ
+
+- **'both'** - Grid နှစ်ဖက်စလုံးတွင် (default)
+- **'x'** - X-axis တွင်
+- **'y'** - Y-axis တွင်
+
+## Grid Customization
+
+color, linestyle, linewidth parameters များဖြင့် grid ၏ အသွင်အပြင်ကို ပြောင်းလဲနိုင်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [1, 4, 9, 16]
+
+plt.plot(x, y)
+plt.grid(color='green', linestyle='--', linewidth=0.5)
+plt.show()
+```
+
+► Green dashed grid lines များကို ဆွဲပါသည်။
+
+## Grid တွင် Alpha (Opacity)
+
+alpha parameter ဖြင့် grid lines များ၏ ပွင့်လင်းမှုကို သတ်မှတ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3, 4], [1, 4, 9, 16])
+plt.grid(color='grey', alpha=0.4)
+plt.show()
+```
+
+► Grid lines များကို ပွင့်လင်းစွာ ပြသပါသည်။
+
+Grid customization များသည် charts များကို ပိုမို readable ဖြစ်စေပါသည်။

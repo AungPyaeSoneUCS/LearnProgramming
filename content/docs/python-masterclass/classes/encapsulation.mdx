@@ -1,0 +1,96 @@
+---
+title: "Python Encapsulation — Python Encapsulation"
+description: "Python encapsulation ကို သင်ယူခြင်း - private attributes, getters, setters များဖြင့် data များကို ကာကွယ်နည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Encapsulation သည် object ၏ data များကို အပြင်မှ တိုက်ရိုက် access မလုပ်နိုင်အောင် ကာကွယ်ခြင်း ဖြစ်ပါသည်။ ဤနည်းဖြင့် data များ၏ state ကို ထိန်းချုပ်နိုင်ပါသည်။
+
+## Private Attributes
+
+Python တွင် attribute အမည်၏ ရှေ့တွင် underscore _ နှစ်ခုထားလျှင် name mangling ဖြစ်ပြီး တိုက်ရိုက် access မလုပ်နိုင်ပါ။
+
+```
+class Person:
+    def __init__(self, name):
+        self.__name = name
+
+p = Person("John")
+# print(p.__name)  # AttributeError ဖြစ်ပါသည်
+```
+
+## Getters နှင့် Setters
+
+Data များကို methods များမှ တစ်ဆင့် access ပြုလုပ်နိုင်ပါသည်။
+
+```
+class Person:
+    def __init__(self, name):
+        self.__name = name
+
+    def get_name(self):
+        return self.__name
+
+    def set_name(self, name):
+        self.__name = name
+
+p = Person("John")
+print(p.get_name())   # John
+p.set_name("Mike")
+print(p.get_name())   # Mike
+```
+
+## Validation များ ထည့်သွင်းခြင်း
+
+Setter အတွင်းတွင် validation များ ထည့်၍ invalid data များကို တားဆီးနိုင်ပါသည်။
+
+```
+class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+
+    def get_balance(self):
+        return self.__balance
+
+acc = BankAccount(1000)
+acc.deposit(500)
+print(acc.get_balance())   # 1500
+acc.deposit(-200)          # invalid, ignored
+print(acc.get_balance())   # 1500
+```
+
+## Property Decorator
+
+@property decorator ဖြင့် getters/setters များကို attributes ကဲ့သို့ သုံးနိုင်ပါသည်။
+
+```
+class Person:
+    def __init__(self, name):
+        self.__name = name
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        self.__name = value
+
+p = Person("John")
+print(p.name)        # John
+p.name = "Mike"
+print(p.name)        # Mike
+```
+
+## Encapsulation ၏ အကျိုးကျေးဇူးများ
+
+- Data များ၏ safety ကို တိုးမြှင့်ပေးပါသည်။
+- Validation logic များကို တစ်နေရာတည်းတွင် ထားနိုင်ပါသည်။
+- Internal implementation ကို ပြောင်းလဲခဲ့ပါက external code ကို မထိခိုက်စေပါ။
+
+Encapsulation သည် robust software engineering ၏ အခြေခံသဘောတရားတစ်ခု ဖြစ်ပါသည်။

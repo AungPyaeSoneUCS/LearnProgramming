@@ -1,0 +1,92 @@
+---
+title: "Python None — Python None"
+description: "Python None keyword ၏ သဘောတရားနှင့် အသုံးပြုပုံကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+None သည် value တစ်ခုမျှ မရှိခြင်းကို ကိုယ်စားပြုသော special constant တစ်ခု ဖြစ်ပါသည်။ ၎င်းသည် 0, empty string, false ကဲ့သို့ မဟုတ်ပဲ "မည်သည့်အရာမှမရှိ" ဟူသော သဘောဖြစ်ပါသည်။
+
+## None ဆိုသည်မှာ
+
+None သည် မှန်သည်လည်း မဟုတ်၊ မှားသည်လည်း မဟုတ်သော special value ဖြစ်ပါသည်။
+
+```
+x = None
+print(x)
+```
+
+► Output: None
+
+## None Type
+
+None ၏ type သည် 'NoneType' ဖြစ်ပါသည်။
+
+```
+x = None
+print(type(x))
+```
+
+► Output: class 'NoneType'
+
+## None ကို Variable များတွင် သုံးခြင်း
+
+Variable တစ်ခုကို None ဟု သတ်မှတ်လိုက်သောအခါ ၎င်းတွင် value လုံးဝ မရှိပါ။
+
+```
+x = None
+if x is None:
+    print("x has no value")
+else:
+    print("x has a value")
+```
+
+► Output: x has no value
+
+## Function များတွင် None Return ပြုလုပ်ခြင်း
+
+Return statement မပါသော function သည် None ကို ပြန်ပေးပါသည်။
+
+```
+def greet():
+    print("Hello")
+
+result = greet()
+print(result)
+```
+
+► Output:
+```
+Hello
+None
+```
+
+## None vs Empty
+
+None သည် 0, "" တို့နှင့် ကွဲပြားပါသည်။
+
+```
+print(None == 0)       # False
+print(None == "")      # False
+print(None == False)   # False
+print(None == None)    # True
+```
+
+► Output: False False False True
+
+## is Operator ဖြင့် စစ်ဆေးခြင်း
+
+None ကို is operator ဖြင့် စစ်ဆေးရန် အကြံပြုပါသည်။
+
+```
+def find_user(user_id):
+    return None  # အသုံးပြုသူ မတွေ့သော ကိစ္စ
+
+user = find_user(123)
+if user is not None:
+    print("User found")
+else:
+    print("User not found")
+```
+
+None သည် optional values များနှင့် function returns များတွင် data မရှိခြင်းကို ဖော်ပြရန် သုံးပါသည်။

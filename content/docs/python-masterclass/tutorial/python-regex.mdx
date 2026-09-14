@@ -1,0 +1,106 @@
+---
+title: "Python RegEx — Python RegEx"
+description: "Python re module ဖြင့် regular expressions များကို သုံးနည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Regular Expression (RegEx) သည် string တစ်ခုအတွင်းရှိ patterns များကို ရှာဖွေရန် သုံးသော character sequence ဖြစ်ပါသည်။ Python တွင် ၎င်းကို re module ဖြင့် ကိုင်တွယ်ပါသည်။
+
+## RegEx Module ကို Import ပြုလုပ်ခြင်း
+
+```
+import re
+```
+
+## search() Function
+
+Pattern ကို string အတွင်း ရှာဖွေပြီး Match object ကို ပြန်ပေးပါသည်။
+
+```
+import re
+
+txt = "The rain in Spain"
+x = re.search("^The.*Spain$", txt)
+
+if x:
+    print("YES! We have a match!")
+else:
+    print("No match")
+```
+
+► Output: YES! We have a match!
+
+## findall() Function
+
+Match ဖြစ်သော items အားလုံးကို list အဖြစ် ပြန်ပေးပါသည်။
+
+```
+import re
+
+txt = "The rain in Spain"
+x = re.findall("ai", txt)
+print(x)
+```
+
+► Output: ['ai', 'ai']
+
+## split() Function
+
+Match ဖြစ်သော နေရာများတွင် string ကို ပိုင်းဖြတ်ပါသည်။
+
+```
+import re
+
+txt = "The rain in Spain"
+x = re.split("\s", txt)
+print(x)
+```
+
+► Output: ['The', 'rain', 'in', 'Spain']
+
+## sub() Function
+
+Match ဖြစ်သော text များကို အခြားစာသားဖြင့် အစားထိုးပါသည်။
+
+```
+import re
+
+txt = "The rain in Spain"
+x = re.sub("\s", "9", txt)
+print(x)
+```
+
+► Output: The9rain9in9Spain
+
+## Metacharacters
+
+- **[]**: Set of characters [a-z]
+- **.**: Any character
+- **^**: Starts with
+- **$**: Ends with
+- **+**: One or more occurrences
+- **?**: Zero or one occurrence
+
+## Special Sequences
+
+- **\d**: Digit
+- **\s**: Whitespace
+- **\D**: Non-digit
+- **\w**: Word character
+
+## Caret ဖြင့် Example
+
+```
+import re
+
+txt = "The rain in Spain"
+
+x = re.findall("^The", txt)
+if x:
+    print("Starts with The")
+else:
+    print("No match")
+```
+
+RegEx သည် string processing များတွင် အစွမ်းထက်သော tool ဖြစ်ပါသည်။

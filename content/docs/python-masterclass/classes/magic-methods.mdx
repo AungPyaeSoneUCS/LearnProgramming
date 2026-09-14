@@ -1,0 +1,111 @@
+---
+title: "Python Magic Methods — Python Magic Methods"
+description: "Python dunder (magic) methods များဖြစ်သော __init__, __str__, __eq__, __add__ စသည်တို့ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Magic methods (dunder methods) များသည် Python ၏ built-in operations များနှင့် integrate လုပ်ရန် သုံးသော special methods များ ဖြစ်ပါသည်။ ၎င်းတို့ကို double underscores __ ဖြင့် ရေးပါသည်။
+
+## __init__ Method
+
+Object ဖန်တီးရာတွင် attribute များ initialize လုပ်ရန် သုံးပါသည်။
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+```
+
+## __str__ Method
+
+Print ပြုလုပ်သောအခါ object ကို string အဖြစ် ပြသရန် သုံးပါသည်။
+
+```
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return f"{self.name} ({self.age})"
+
+p1 = Person("John", 36)
+print(p1)
+```
+
+► Output: John (36)
+
+__str__ မရှိပါက object ၏ memory address ကို ပြသပါသည်။
+
+## __repr__ Method
+
+Developer representation အတွက် သုံးပါသည်။
+
+```
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return f"Point(x={self.x}, y={self.y})"
+
+p = Point(2, 3)
+print(p)
+```
+
+► Output: Point(x=2, y=3)
+
+## __eq__ Method
+
+ညီမျှခြင်းကို စစ်ဆေးရန် == operator နှင့် interlinked ပြုလုပ်ပါသည်။
+
+```
+class Student:
+    def __init__(self, name, grade):
+        self.name = name
+        self.grade = grade
+
+    def __eq__(self, other):
+        return self.name == other.name and self.grade == other.grade
+
+s1 = Student("Alice", 90)
+s2 = Student("Alice", 90)
+print(s1 == s2)
+```
+
+► Output: True
+
+## __add__ Method
+
++ operator ကို custom objects များအတွက် define လုပ်ရန် သုံးပါသည်။
+
+```
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __repr__(self):
+        return f"Vector({self.x}, {self.y})"
+
+v1 = Vector(1, 2)
+v2 = Vector(3, 4)
+print(v1 + v2)
+```
+
+► Output: Vector(4, 6)
+
+## အခြားသော Magic Methods
+
+- **__len__**: len() သုံးစဉ်
+- **__getitem__**: indexing ပြုလုပ်စဉ်
+- **__call__**: object ကို function ကဲ့သို့ ခေါ်စဉ်
+- **__gt__**: greater than comparison
+
+Magic methods များသည် Python objects များကို built-in syntax များနှင့် သီးချင် integrate ဖြစ်စေပါသည်။

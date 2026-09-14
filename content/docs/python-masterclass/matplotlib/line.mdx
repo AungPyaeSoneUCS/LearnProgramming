@@ -1,0 +1,84 @@
+---
+title: "Python Matplotlib Line — Python Matplotlib Line"
+description: "plot() function ၏ linestyle, linewidth parameters များ သုံး၍ lines များကို style ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Line များကို linestyle, linewidth, color စသည့် parameters များဖြင့် customize ပြုလုပ်နိုင်ပါသည်။
+
+## Linestyle
+
+ls parameter ဖြင့် line ၏ style ကို သတ်မှတ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+ypoints = [1, 4, 9, 16]
+plt.plot(ypoints, ls = ':')
+plt.show()
+```
+
+► Dotted line ကို ဆွဲပါသည်။
+
+## Line Styles များ
+
+- **'-'** - Solid (default)
+- **':'** - Dotted
+- **'--'** - Dashed
+- **'-.'** - Dashed-dotted
+
+## Line Color
+
+color (c) parameter ဖြင့် line ၏ အရောင်ကို သတ်မှတ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+ypoints = [3, 8, 1, 10]
+plt.plot(ypoints, color = 'r')
+plt.show()
+```
+
+► Red line ကို ဆွဲပါသည်။
+
+## Color Shortcuts များ
+
+- **'r'** - Red
+- **'g'** - Green
+- **'b'** - Blue
+- **'y'** - Yellow
+- **'k'** - Black
+- **'w'** - White
+
+## Line Width
+
+linewidth (lw) parameter ဖြင့် line ၏ အထူကို သတ်မှတ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+ypoints = [3, 8, 1, 10]
+plt.plot(ypoints, linewidth = '12.5')
+plt.show()
+```
+
+► အလွန်ထူသော line ကို ဆွဲပါသည်။
+
+## Multiple Lines များကို Style ပြုလုပ်ခြင်း
+
+```
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y1 = [1, 4, 9, 16]
+y2 = [2, 5, 10, 17]
+
+plt.plot(x, y1, color='g', ls='--', lw=2)
+plt.plot(x, y2, color='r', ls=':', lw=4)
+plt.show()
+```
+
+► Line နှစ်ခုကို မတူညီသော styles ဖြင့် ဆွဲပါသည်။
+
+Line styles များသည် complex charts များတွင် lines များစွာကို ခွဲခြားပြသရန် အသုံးဝင်ပါသည်။

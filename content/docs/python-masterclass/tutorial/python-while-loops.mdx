@@ -1,0 +1,83 @@
+---
+title: "Python While Loops — Python While Loops"
+description: "Python while loop များ၊ break, continue နှင့် else statements များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+While loop သည် condition မှန်နေသမျှ code block ကို ထပ်ခါထပ်ခါ run ပါသည်။ Loop သည် condition မှားသွားပါက အဆုံးသတ်ပါသည်။
+
+## While Loop အခြေခံ
+
+```
+i = 1
+while i < 6:
+    print(i)
+    i += 1
+```
+
+► Output:
+```
+1
+2
+3
+4
+5
+```
+
+i ကို 1 မှစ၍ တစ်ကြိမ်တိုင်း 1 သို့တိုးပြီး 6 ထက် နည်းသမျှ run ပါသည်။
+
+## Break ဖြင့် Loop ရပ်ခြင်း
+
+```
+i = 1
+while i < 6:
+    print(i)
+    if i == 3:
+        break
+    i += 1
+```
+
+i သည် 3 ဖြစ်ပါက break ကို run ပြီး loop ရပ်သွားပါသည်။
+
+## Continue
+
+```
+i = 0
+while i < 6:
+    i += 1
+    if i == 3:
+        continue
+    print(i)
+```
+
+3 ကို ကျော်ပြီး အခြားသော numbers များ ပြပါသည်။
+
+## Else Statement
+
+While loop ၏ condition မှားသွားပါက else block ကို run ပါသည်။
+
+```
+i = 1
+while i < 6:
+    print(i)
+    i += 1
+else:
+    print("i is no longer less than 6")
+```
+
+ဤ output ၏ အဆုံးတွင် "i is no longer less than 6" ကို တစ်ကြိမ် ပြသပါသည်။
+
+## Infinite Loop
+
+Condition ကို ပြောင်းလဲမှုမရှိပါက loop သည် မရပ်တော့ပါ။ ၎င်းကို infinite loop ဟု ခေါ်ပါသည်။
+
+```
+i = 1
+while i < 6:
+    print(i)
+```
+
+i ကို မတိုးသောကြောင့် condition မမှားတော့ပဲ ထာဝရ run ပါသည်။ Ctrl+C ဖြင့် ရပ်သင့်ပါသည်။
+
+While loop များသည် iteration count မသိသော နေရာများတွင် အသုံးဝင်ပါသည်။

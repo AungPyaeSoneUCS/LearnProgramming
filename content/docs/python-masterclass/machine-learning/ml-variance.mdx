@@ -1,0 +1,49 @@
+---
+title: "Machine Learning Variance — Machine Learning Variance"
+description: "Variance ၏ သဘောတရား၊ data ၏ spread ကို NumPy var() ဖြင့် တွက်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Variance သည် data values များ mean မှ မည်မျှ spread ဖြစ်နေသည်ကို ဖော်ပြသော number ဖြစ်ပြီး standard deviation ၏ square ဖြစ်ပါသည်။
+
+## Variance ဆိုသည်မှာ
+
+Variance (var) သည် standard deviation ၏ square ဖြစ်ပြီး data ၏ spread ကို တိုင်းတာပါသည်။ Standard deviation သည် variance မှ သီးခြား root ၏ အဖြေဖြစ်သည်။
+
+## Variance ၏ Computation
+
+1. Mean ကို တွက်
+2. Value တစ်ခုစီမှ mean ကို နုတ်
+3. ရလဒ်များကို square လုပ်
+4. Square values များ၏ mean ကို တွက် → variance
+
+ဥပမာ - Mean 89.77 အခြေခံဖြင့် 13 car speeds များ၏ variance ကို တွက်ပါက 82.08 ရရှိပါသည်။
+
+## NumPy var() function
+
+```
+import numpy as np
+
+speed = [99, 86, 87, 88, 111, 86, 103, 87, 94, 78, 77, 85, 86]
+
+x = np.var(speed)
+print(x)
+```
+
+► Output: 82.08
+
+## Standard Deviation နှင့် ဆက်စပ်မှု
+
+- Variance = 82.08
+- Standard deviation = sqrt(82.08) = 9.06
+
+စာလုံးနှစ်မျိုးလုံးသည် data ၏ spread ကို ဖော်ပြပါသည်။
+
+## Variance ၏ အသုံးအဝင်ပုံ
+
+- Data ၏ consistency ကို စစ်ဆေးရန်
+- Feature scaling လုပ်ရန်
+- Outliers များကို detect လုပ်ရန်
+
+Variance နှင့် standard deviation နှစ်ခုလုံးသည် dataset ၏ spread ကို နားလည်ရန် မရှိမဖြစ် ဖြစ်ပါသည်။

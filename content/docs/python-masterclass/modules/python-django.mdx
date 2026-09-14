@@ -1,0 +1,105 @@
+---
+title: "Python Django — Python Django"
+description: "Django web framework ၏ အခြေခံများ၊ URL routing နှင့် templates များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Django သည် Python တွင် အသုံးအများဆုံး web frameworks များထဲမှ တစ်ခု ဖြစ်ပြီး secure, scalable websites များကို မြန်မြန် တည်ဆောက်ရန် အသုံးပြုပါသည်။
+
+## Install ပြုလုပ်ခြင်း
+
+```
+pip install django
+```
+
+## Project ဖန်တီးခြင်း
+
+django-admin command ဖြင့် project အသစ်တစ်ခုကို ဖန်တီးပါသည်။
+
+```
+django-admin startproject mysite
+```
+
+## Development Server စတင်ခြင်း
+
+```
+cd mysite
+python manage.py runserver
+```
+
+► http://127.0.0.1:8000 တွင် development server စတင်ပါသည်။
+
+## App ဖန်တီးခြင်း
+
+Project သည် settings များကို ထားရှိပြီး App သည် web pages များ၏ လုပ်ဆောင်ချက်များကို ထားရှိပါသည်။
+
+```
+python manage.py startapp myapp
+```
+
+## URL Routing
+
+App ထဲတွင် urls.py file ကို ဖန်တီးပြီး URLs များကို views များနှင့် ချိတ်ဆက်ပါသည်။
+
+```
+// urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("hello/", views.hello),
+]
+```
+
+## View ဖန်တီးခြင်း
+
+```
+// views.py
+from django.http import HttpResponse
+
+def hello(request):
+    return HttpResponse("Hello, Django!")
+```
+
+Browser မှ http://127.0.0.1:8000/hello/ ကိုဝင်ပါက "Hello, Django!" ကို မြင်ရပါသည်။
+
+## Templates
+
+Templates များသည် HTML files များဖြစ်ပြီး app/mysite/templates folder တွင် ထားရှိပါသည်။
+
+```
+<!-- templates/index.html -->
+<h1>Welcome</h1>
+<p>{{ message }}</p>
+```
+
+## Models
+
+Models များသည် database tables များကို Python classes ဖြင့် သတ်မှတ်ပါသည်။
+
+```
+// models.py
+from django.db import models
+
+class Member(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+```
+
+Model ကို database ၌ ထည့်သွင်းရန်-
+
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+## Admin Panel
+
+Django တွင် built-in admin panel ပါဝင်ပြီး admin user ဖန်တီးရန်-
+
+```
+python manage.py createsuperuser
+```
+
+Django သည် "batteries included" philosophy အတိုင်း common features (auth, database, admin) များကို built-in အဖြစ် ပေးပါသည်။

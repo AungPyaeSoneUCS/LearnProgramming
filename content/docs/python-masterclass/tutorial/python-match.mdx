@@ -1,0 +1,109 @@
+---
+title: "Python Match — Python Match"
+description: "Python 3.10 တွင် မိတ်ဆက်ခဲ့သော match statement ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Match statement သည် switch/case ကဲ့သို့သော သဘောတရားကို ပေးပြီး value တစ်ခုကို case pattern များနှင့် နှိုင်းယှဉ်ပါသည်။ Python 3.10 မှစ၍ ရနိုင်ပါသည်။
+
+## Match Statement အခြေခံ
+
+```
+def http_error(status):
+    match status:
+        case 400:
+            return "Bad request"
+        case 404:
+            return "Not found"
+        case 418:
+            return "I'm a teapot"
+        case _:
+            return "Something's wrong with the internet"
+
+print(http_error(404))
+```
+
+► Output: Not found
+
+case _ သည် default ဖြစ်ပြီး အခြား cases အားလုံး မကိုက်ညီပါက run ပါသည်။
+
+## Or Pattern (|)
+
+Case တစ်ခုတွင် pattern အများအပြား သုံးနိုင်ပါသည်။
+
+```
+def status_message(status):
+    match status:
+        case 200:
+            return "OK"
+        case 301 | 302:
+            return "Redirect"
+        case 403 | 404:
+            return "Problem found"
+    return "Unknown"
+
+print(status_message(301))
+print(status_message(404))
+```
+
+## If Guards
+
+Case တစ်ခုကို condition တစ်ခုနှင့် စစ်ရန် guard (if) ကို သုံးနိုင်ပါသည်။
+
+```
+point = (5, 0)
+match point:
+    case (0, 0):
+        print("Origin")
+    case (0, y):
+        print(f"Y={y}")
+    case (x, 0):
+        print(f"X={x}")
+    case _:
+        print("Somewhere else")
+```
+
+► Output: X=5
+
+## Pattern များကို Variable ဖြင့် Bind လုပ်ခြင်း
+
+```
+def describe(value):
+    match value:
+        case {"x": x, "y": y}:
+            return f"Point at ({x}, {y})"
+        case [a, b]:
+            return f"List with {a} and {b}"
+        case str(s):
+            return f"String: {s}"
+        case _:
+            return "Unknown value"
+
+print(describe({"x": 1, "y": 2}))
+print(describe([10, 20]))
+print(describe("hello"))
+```
+
+## Class Pattern များ
+
+Class instance များနှင့်လည်း pattern match လုပ်နိုင်ပါသည်။
+
+```
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+def where(point):
+    match point:
+        case Point(x=0, y=0):
+            print("Origin")
+        case Point():
+            print("Some point")
+
+where(Point(0, 0))
+where(Point(1, 1))
+```
+
+Match statement သည် complex conditional logic များကို ပိုမိုဖတ်ရလွယ်ကူစေပါသည်။

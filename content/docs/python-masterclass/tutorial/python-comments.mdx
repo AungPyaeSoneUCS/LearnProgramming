@@ -1,0 +1,58 @@
+---
+title: "Python Comments — Python Comments"
+description: "Python တွင် comment များရေးနည်း၊ inline comments နှင့် multiline comments အကြောင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Comment များသည် code ကို ရှင်းလင်းစွာ ရှင်းပြရန်အတွက် အသုံးပြုသော စာသားများ ဖြစ်ပါသည်။ Python သည် comment များကို run စဉ်တွင် လျစ်လျူရှုပါသည်။
+
+## Comment ဖန်တီးခြင်း
+
+Comment ကို # သင်္ကေတဖြင့် စတင်ပါသည်။
+
+```
+# ဤသည် comment ဖြစ်ပါသည်
+print("Hello, World!")
+```
+
+## Inline Comment
+
+Code ၏ ဘေးတွင်လည်း comment ရေးနိုင်ပါသည်။
+
+```
+print("Hello, World!") # ၎င်းသည် inline comment ဖြစ်ပါသည်
+```
+
+## Comment ဖြင့် Code ကို ပိတ်ခြင်း
+
+Comment သည် line ၏ အဆုံးအထိ ပါဝင်ပါသည်။
+
+```
+# print("Hello, World!")
+print("Cheers, Mate!" + "Bye")
+```
+
+ဤတွင် ပထမ print line ကို comment ပြုလုပ်ထားသောကြောင့် run မည် မဟုတ်ပါ။
+
+## Multiline Comment
+
+Python တွင် multiline comment syntax ဟူ၍ မရှိပါ။ သို့သော် line အများအပြားတွင် # ကို သုံးနိုင်ပါသည်။
+
+```
+# ဤသည် line 1 ဖြစ်ပါသည်
+# ဤသည် line 2 ဖြစ်ပါသည်
+# ဤသည် line 3 ဖြစ်ပါသည်
+print("Hello, World!")
+```
+
+သို့မဟုတ် multiline string တစ်ခုအနေဖြင့် comment ရေးနိုင်ပါသည်။
+
+```
+"""
+ဤသည် multiline comment အနေဖြင့် အသုံးပြုသော string ဖြစ်ပါသည်
+"""
+print("Hello, World!")
+```
+
+Comment များကို code ကို ရှင်းပြရန်၊ debugging လုပ်ရန်နှင့် code များကို ယာယီဖျက်ရန် သုံးပါသည်။

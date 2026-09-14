@@ -1,0 +1,109 @@
+---
+title: "Python JSON — Python JSON"
+description: "Python json module ဖြင့် JSON data များကို parse ခြင်း၊ serialize ခြင်းတို့ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+JSON သည် data များကို သိမ်းဆည်း၍ ပို့ဆောင်ရန် သုံးသော text format တစ်ခု ဖြစ်ပါသည်။ Python တွင် JSON ကို json module ဖြင့် ကိုင်တွယ်ပါသည်။
+
+## JSON ကို Parse ပြုလုပ်ခြင်း
+
+JSON string ကို Python dictionary အဖြစ် ပြောင်းရန် json.loads() ကို သုံးပါသည်။
+
+```
+import json
+
+x = '{ "name": "John", "age": 30, "city": "New York"}'
+y = json.loads(x)
+
+print(y["age"])
+print(y["name"])
+```
+
+► Output:
+```
+30
+John
+```
+
+## Python Object ကို JSON သို့ ပြောင်းခြင်း
+
+Python object ကို JSON string အဖြစ် ပြောင်းရန် json.dumps() ကို သုံးပါသည်။
+
+```
+import json
+
+x = {
+  "name": "John",
+  "age": 30,
+  "active": True
+}
+
+print(json.dumps(x))
+```
+
+► Output: {"name": "John", "age": 30, "active": true}
+
+## Convertible Types
+
+json.dumps() ဖြင့် object types များစွာကို JSON သို့ ပြောင်းနိုင်ပါသည်။
+
+```
+import json
+
+print(json.dumps({"name": "John", "age": 30}))
+print(json.dumps(["apple", "bananas"]))
+print(json.dumps(("apple", "bananas")))
+print(json.dumps("hello"))
+print(json.dumps(42))
+print(json.dumps(31.76))
+print(json.dumps(True))
+print(json.dumps(None))
+```
+
+## Python JSON သို့ ပြောင်းခြင်း Table
+
+- **dict** -> Object
+- **list** -> Array
+- **tuple** -> Array
+- **str** -> String
+- **int** -> Number
+- **float** -> Number
+- **True** -> true
+- **False** -> false
+- **None** -> null
+
+## Formatting ပြုလုပ်ခြင်း
+
+dumps() အတွင်းတွင် indent parameter ကို သုံး၍ ဖော်မက် ပြုလုပ်နိုင်ပါသည်။
+
+```
+import json
+
+x = {
+  "name": "John",
+  "age": 30,
+  "married": True
+}
+
+print(json.dumps(x, indent=4))
+```
+
+## Sort Keys ပြုလုပ်ခြင်း
+
+sort_keys parameter ဖြင့် keys များကို alphabet အလိုက် စီနိုင်ပါသည်။
+
+```
+import json
+
+x = {
+  "name": "John",
+  "age": 30,
+  "married": True
+}
+
+print(json.dumps(x, indent=4, sort_keys=True))
+```
+
+JSON သည် web APIs များမှ data များ ဖလှယ်ရာတွင် standard format ၏ အရေးကြီးသော အစိတ်အပိုင်း ဖြစ်ပါသည်။

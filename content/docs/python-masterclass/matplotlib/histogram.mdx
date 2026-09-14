@@ -1,0 +1,60 @@
+---
+title: "Python Matplotlib Histograms — Python Matplotlib Histograms"
+description: "Histograms များကို hist() function ဖြင့် ဖန်တီး၍ data distribution ကို ပြသနည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Histogram သည် data ၏ distribution (တန်ဖိုးများ ဖြန့်ကျက်ပုံ) ကို ပြသရန် အသုံးပြုပါသည်။ Data များကို bins (interval များ) အဖြစ် ပိုင်း၍ ပြသပါသည်။
+
+## Histogram ဆိုသည်မှာ
+
+Histogram သည် data ၏ distribution ကို interval (bin) များအလိုက် ပြသသော chart တစ်မျိုး ဖြစ်ပါသည်။
+
+```
+import matplotlib.pyplot as plt
+
+ages = [22, 55, 62, 45, 21, 22, 34, 42, 42, 4, 99, 102, 110, 120, 121, 122, 130, 111, 115, 112, 80, 75, 65, 54, 44, 43, 42, 48]
+
+plt.hist(ages)
+plt.show()
+```
+
+► Data Distribution ဖြစ်သော histogram ကို ဖန်တီးပါသည်.
+
+## Create Histogram
+
+hist() function သည် array မှ data များကို လက်ခံပြီး bins များအလိုက် စီပါသည်.
+
+## Bins များ သတ်မှတ်ခြင်း
+
+bins parameter ဖြင့် bin အရေအတွက်ကို သတ်မှတ်ပါသည်.
+
+```
+import matplotlib.pyplot as plt
+
+ages = [22, 55, 62, 45, 21, 22, 34, 42, 42, 4, 99, 102, 110, 120]
+
+plt.hist(ages, bins=5)
+plt.show()
+```
+
+► 5 bins ဖြင့် histogram ကို ပြသပါသည်.
+
+## Normal Distribution
+
+Random data များဖြင့် normal distribution histogram ကို ဖန်တီးနိုင်ပါသည်.
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.random.normal(170, 10, 250)
+
+plt.hist(x)
+plt.show()
+```
+
+► Normal distribution shape ဖြင့် histogram ကို ပြသပါသည်.
+
+Histograms များသည် statistical data ၏ spread နှင့် distribution ကို နားလည်ရန် အသုံးဝင်ပါသည်.

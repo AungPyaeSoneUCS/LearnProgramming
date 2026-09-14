@@ -1,0 +1,95 @@
+---
+title: "Python Sets — Python Sets"
+description: "Python sets များ ဖန်တီးနည်း၊ access, add, remove လုပ်နည်းများကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Set သည် index မရှိသော (unindexed) collection တစ်ခု ဖြစ်ပြီး duplicate value များကို ခွင့်မပြုပါ။ Set များကို curly braces {} ဖြင့် ဖန်တီးပါသည်။
+
+## Set ဖန်တီးခြင်း
+
+```
+thisset = {"apple", "banana", "cherry"}
+print(thisset)
+```
+
+## Items များကို Access ပြုလုပ်ခြင်း
+
+Set များတွင် index မရှိပါ။ Loop ဖြင့်သာ item များကို access ပြုလုပ်နိုင်ပါသည်။
+
+```
+thisset = {"apple", "banana", "cherry"}
+for x in thisset:
+    print(x)
+```
+
+## Member ရှိ/မရှိ စစ်ဆေးခြင်း
+
+```
+thisset = {"apple", "banana", "cherry"}
+print("banana" in thisset)
+```
+
+► Output: True
+
+## Items ထည့်ခြင်း
+
+```
+thisset = {"apple", "banana", "cherry"}
+thisset.add("orange")
+print(thisset)
+```
+
+Set အများအပြား ပေါင်းရန် update ကို သုံးပါသည်။
+
+```
+thisset = {"apple", "banana", "cherry"}
+tropical = {"pineapple", "mango", "papaya"}
+thisset.update(tropical)
+print(thisset)
+```
+
+## Items ဖယ်ရှားခြင်း
+
+```
+thisset = {"apple", "banana", "cherry"}
+thisset.remove("banana")
+print(thisset)
+```
+
+or using discard:
+```
+thisset = {"apple", "banana", "cherry"}
+thisset.discard("banana")
+print(thisset)
+```
+
+clear ဖြင့် set အားလုံးကို ရှင်းပါသည်။
+
+```
+thisset = {"apple", "banana", "cherry"}
+thisset.clear()
+print(thisset)
+```
+
+► Output: set()
+
+## Set Operations
+
+- `union()`: Set နှစ်ခု၏ items အားလုံး ပေါင်းခြင်း
+- `intersection()`: နှစ်ခုလုံးတွင် ရှိသော items များ
+- `difference()`: တစ်ခုတွင်သာ ရှိသော items များ
+- `symmetric_difference()`: နှစ်ခုလုံးတွင် မရှိသော လွဲနေသော items များ
+
+## Example
+
+```
+set1 = {"a", "b", "c"}
+set2 = {"b", "c", "d"}
+print(set1.union(set2))
+print(set1.intersection(set2))
+print(set1.difference(set2))
+```
+
+Set များကို duplicate data မရှိစေရန် သေချာစွာ ကိုင်တွယ်ရန် အသုံးပြုပါသည်။

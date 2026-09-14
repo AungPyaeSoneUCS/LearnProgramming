@@ -1,0 +1,73 @@
+---
+title: "Python Booleans — Python Booleans"
+description: "Python တွင် True/False ဟူသော boolean value များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Booleans သည် condition များ မှန်ကန်ခြင်း၊ မမှန်ကန်ခြင်းကို ကိုယ်စားပြုပါသည်။ Boolean value နှစ်မျိုးသာ ရှိပါသည်။
+
+- **True**: အမှန်
+- **False**: အမှား
+
+## Boolean Value များကို စစ်ဆေးခြင်း
+
+```
+print(10 > 9)    # True
+print(10 == 9)   # False
+print(10 < 9)    # False
+```
+
+## Condition များတွင် Boolean
+
+Program တစ်ခုတွင် condition ကို စစ်ဆေး၍ ဆုံးဖြတ်ရန် boolean ကို အသုံးပြုပါသည်။
+
+```
+a = 200
+b = 33
+
+if b > a:
+    print("b is greater than a")
+else:
+    print("b is not greater than a")
+```
+
+## bool() Function
+
+`bool()` function သည် value တစ်ခုကို boolean အဖြစ် ပြောင်းလဲပါသည်။
+
+```
+print(bool("Hello"))
+print(bool(15))
+```
+
+► Output: True True
+
+## False ဖြစ်စေသော Value များ
+
+Empty string, 0, None နှင့် empty collections များသည် False ဖြစ်ပါသည်။
+
+```
+print(bool(False))
+print(bool(None))
+print(bool(0))
+print(bool(""))
+print(bool([]))
+print(bool({}))
+```
+
+► Output: False False False False False False
+
+## Function များတွင် Boolean Return ပြုလုပ်ခြင်း
+
+```
+def myFunction():
+    return True
+
+if myFunction():
+    print("YES!")
+else:
+    print("NO!")
+```
+
+Boolean value များသည် condition များ၊ comparisons နှင့် logical operations များတွင် အခြေခံအကျဆုံး အရာများ ဖြစ်ပါသည်။

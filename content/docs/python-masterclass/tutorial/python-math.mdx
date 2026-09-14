@@ -1,0 +1,102 @@
+---
+title: "Python Math — Python Math"
+description: "Python math module နှင့် built-in math functions များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Python တွင် math functions များစွာ ရှိပြီး numbers များပေါ်တွင် math operations များ လုပ်ဆောင်ရန် အသုံးပြုပါသည်။
+
+## Built-in Math Functions
+
+min() နှင့် max() ဖြင့် အငယ်ဆုံးနှင့် အကြီးဆုံး တန်ဖိုး ရယူပါသည်။
+
+```
+x = min(5, 10, 25)
+y = max(5, 10, 25)
+
+print(x)
+print(y)
+```
+
+► Output: 5, 25
+
+## abs() - Absolute Value
+
+```
+x = abs(-7.25)
+print(x)
+```
+
+► Output: 7.25
+
+## pow(x, y) - Power
+
+```
+x = pow(4, 3)
+print(x)
+```
+
+► Output: 64
+
+## Math Module
+
+math module ကို import ပြုလုပ်ပြီး သုံးရန် ပိုမိုများပြားသော functions များကို ရပါသည်။
+
+### math.sqrt()
+
+```
+import math
+
+x = math.sqrt(64)
+print(x)
+```
+
+► Output: 8.0
+
+### math.ceil() နှင့် math.floor()
+
+```
+import math
+
+x = math.ceil(1.4)
+y = math.floor(1.4)
+
+print(x)
+print(y)
+```
+
+► Output: 2, 1 (ceil သည် အပေါ်သို့ round လုပ်ပြီး floor သည် အောက်သို့ round လုပ်ပါသည်)
+
+### math.pi
+
+```
+import math
+
+x = math.pi
+print(x)
+```
+
+► Output: 3.141592653589793
+
+## Trigonometry Functions
+
+```
+import math
+
+print(math.sin(math.pi / 2))   # 1.0
+print(math.cos(0))             # 1.0
+print(math.tan(math.pi / 4))   # ~1.0
+```
+
+## Math Module ၏ Functions များ
+
+math module တွင် functions ပေါင်းများစွာ ပါဝင်ပြီး အောက်ပါတို့ ပါဝင်ပါသည်။
+
+- `math.exp(x)`: e^x တန်ဖိုး
+- `math.log(x)`: Natural logarithm
+- `math.log10(x)`: Base-10 logarithm
+- `math.factorial(x)`: Factorial
+- `math.gcd(a, b)`: Greatest common divisor
+
+Math functions များသည် scientific calculations များတွင် အရေးပါပါသည်။

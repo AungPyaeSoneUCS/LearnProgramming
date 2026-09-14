@@ -1,0 +1,126 @@
+---
+title: "Python If...Else — Python If...Else"
+description: "Python တွင် if, elif, else condition များ ရေးနည်း၊ logical operators များနှင့် nested conditions များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Condition များသည် program ၏ ဆုံးဖြတ်ချက်များကို ကိုင်တွယ်ရန် အသုံးပြုပါသည်။ Python တွင် condition ကို if keyword ဖြင့် ရေးပြီး comparison operators များကို သုံးပါသည်။
+
+## If
+
+```
+a = 33
+b = 200
+if b > a:
+    print("b is greater than a")
+```
+
+## Elif
+
+Condition တစ်ခုမဟုတ်ပါက နောက်တစ်ခုကို စစ်ရန် elif ကို သုံးပါသည်။
+
+```
+a = 33
+b = 33
+if b > a:
+    print("b is greater than a")
+elif a == b:
+    print("a and b are equal")
+```
+
+## Else
+
+Condition တစ်ခုမှမကိုက်ညီပါက else ကို run ပါသည်။
+
+```
+a = 200
+b = 33
+if b > a:
+    print("b is greater than a")
+elif a == b:
+    print("a and b are equal")
+else:
+    print("a is greater than b")
+```
+
+## Short Hand If
+
+Condition ကို line တစ်ကြောင်းတည်း ဖြင့် ရေးနိုင်ပါသည်။
+
+```
+a = 10
+if a > b: print("a is greater than b")
+```
+
+## Short Hand If...Else (Ternary)
+
+```
+a = 330
+b = 200
+print("A") if a > b else print("B")
+```
+
+Ternary ကို condition အများအပြားတွင်လည်း သုံးနိုင်ပါသည်။
+
+```
+a = 330
+b = 330
+print("A") if a > b else print("=") if a == b else print("B")
+```
+
+► Output: =
+
+## And / Or
+
+```
+a = 200
+b = 33
+c = 500
+if a > b and c > a:
+    print("Both conditions are True")
+```
+
+```
+a = 200
+b = 33
+c = 500
+if a > b or a > c:
+    print("At least one of the conditions is True")
+```
+
+## Not
+
+```
+a = 33
+b = 200
+if not a > b:
+    print("a is NOT greater than b")
+```
+
+## Nested If
+
+If အတွင်းတွင် if တစ်ခုထပ် ထားနိုင်ပါသည်။
+
+```
+x = 41
+if x > 10:
+    print("Above ten,")
+    if x > 20:
+        print("and also above 20!")
+    else:
+        print("but not above 20.")
+```
+
+## Pass Statement
+
+If condition တစ်ခုတွင် အချည်းနှီး body တစ်ခု ထားလိုပါက pass ကို သုံးပါသည်။
+
+```
+a = 33
+b = 200
+if b > a:
+    pass
+```
+
+Conditions များသည် program ၏ flow ကို ထိန်းချုပ်မှုတွင် မရှိမဖြစ် အရေးကြီး ဖြစ်ပါသည်။

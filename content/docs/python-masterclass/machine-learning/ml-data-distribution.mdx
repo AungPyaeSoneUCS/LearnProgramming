@@ -1,0 +1,57 @@
+---
+title: "Machine Learning Data Distribution — Machine Learning Data Distribution"
+description: "Data distribution ၏ သဘောတရား၊ arrays များတွင် frequencies များကို လေ့လာခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Machine Learning model များသည် data များအပေါ်တွင် များစွာ မှီခိုသည်။ Data ၏ distribution ကို နားလည်ပါက model ကို ကောင်းစွာ select နှင့် evaluate လုပ်နိုင်ပါသည်။
+
+## Data Distribution ဆိုသည်မှာ
+
+Data တစ်ခုတွင် value များ မည်သို့ ဖြန့်ကျက်နေသည်ကို distribution ဟု ခေါ်ပါသည်။ ဥပမာ - 250 ယောက်သော students များ၏ နေ့စဉ် အိပ်ချိန်။
+
+## How to Use
+
+Dataset ကြီးတစ်ခုကို ဖန်တီးပြီး frequencies ကို analyze ပြုလုပ်ပါသည်။ အောက်ပါဥပမာတွင် array ထဲတွင် value တစ်ခုစီ ဘယ်နှစ်ကြိမ်ပေါ်သည်ကို ရေတွက်ပါသည်။
+
+```
+import numpy as np
+import scipy.stats as stats
+
+# 1000 random values များ ဖန်တီးပါ
+values = np.random.randint(1, 101, size=1000)
+
+# Value တစ်ခုစီ၏ frequency ကို ရေတွက်ပါ
+freq = {}
+for v in values:
+    freq[v] = freq.get(v, 0) + 1
+
+print("Value 25 appears", freq.get(25, 0), "times")
+```
+
+## Frequency Distribution
+
+Data ၏ distribution ၏ အရေးကြီးသော အချက်မှာ frequency distribution (value တစ်ခုစီ၏ ပေါ်နှုန်း) ဖြစ်ပါသည်။
+
+```
+import numpy as np
+
+# 1000 random values များ ဖန်တီးပါ (0-100)
+rng = np.random.default_rng(130)
+values = rng.integers(0, 101, 1000)
+
+unique, counts = np.unique(values, return_counts=True)
+for u, c in zip(unique[:10], counts[:10]):
+    print(f"Value {u}: {c} times")
+```
+
+## အနာဂတ် Predictions နှင့် ဆက်စပ်မှု
+
+Data distribution ၏ shape ကို နားလည်ပါက-
+
+- အများဆုံးပေါ်တတ်သော value များကို သိပါသည်
+- Outliers (ထူးခြားသော တန်ဖိုးများ) ကို ရှာတွေ့ပါသည်
+- Model ၏ performance ကို ခန့်မှန်းနိုင်ပါသည်
+
+Distribution ၏ သဘောတရားကို နားလည်ခြင်းသည် ML ၏ အခြေခံအုတ်မြစ် ဖြစ်ပါသည်။

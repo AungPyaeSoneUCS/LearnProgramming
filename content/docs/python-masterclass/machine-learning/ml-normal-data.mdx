@@ -1,0 +1,51 @@
+---
+title: "Machine Learning Normal Data Distribution — Machine Learning Normal Data Distribution"
+description: "Normal distribution ၏ သဘောတရားနှင့် NumPy ဖြင့် normal data ဖန်တီးခြင်းကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+
+Normal Distribution (Gaussian distribution, Bell curve) သည် data အများစု အလယ်ဗဟိုတွင် စုနေပြီး နှစ်ဖက်သို့ တဖြည်းဖြည်း ပျံ့နှံ့သွားသော distribution တစ်မျိုး ဖြစ်ပါသည်။
+
+## Normal Distribution ဆိုသည်မှာ
+
+ကျောင်းသားများ၏ အမှတ်များ၊ ဘာတီများ၏ အလေးချိန် စသည့် natural data အများစုသည် normal distribution အတိုင်း ဖြန့်ကျက်ပါသည်။ ပုံတွင် bell curve (ခေါင်းလောင်းပုံ) ကို တွေ့ရပါသည်။
+
+## NumPy ဖြင့် Normal Data ဖန်တီးခြင်း
+
+NumPy ၏ random.normal() function ဖြင့် normal distribution data များကို ဖန်တီးနိုင်ပါသည်။
+
+```
+# normal(mean, std, size)
+x = np.random.normal(5.0, 1.0, 100000)
+```
+
+- **mean**: Average value
+- **std**: Standard deviation (ပျံ့နှံ့မှု အတိုင်းအတာ)
+- **size**: Random values အရေအတွက်
+
+## ဥပမာ - Histogram ဖြင့် ပြသခြင်း
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.random.normal(5.0, 1.0, 100000)
+
+plt.hist(x, bins=100)
+plt.show()
+```
+
+► Bell shape ဖြစ်သော histogram ကို မြင်ရပြီး values အများစုသည် 5.0 အနီးတွင် စုနေပါသည်။
+
+## Data collection ၏ ဥပမာ
+
+Dataset အတွင်းရှိ values အားလုံး၏ "achieved roll numbers" (truncated) ကို ဤပုံစံအတိုင်း ဖန်တီးနိုင်ပါသည်။
+
+## Normal Distribution ၏ အရေးပါမှု
+
+- များစွာသော statistical methods များသည် normality ကို assume လုပ်ပါသည်
+- Central Limit Theorem ကို အခြေခံပါသည်
+- Statistics နှင့် ML algorithms များစွာ၏ foundation ဖြစ်ပါသည်
+
+Normal distribution ကို နားလည်ခြင်းသည် statistics ၏ အရေးကြီးသော အစိတ်အပိုင်း ဖြစ်ပါသည်။
