@@ -1,0 +1,61 @@
+---
+title: "TS Enums — TypeScript Enums"
+description: "TypeScript enums — named constants — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Enum — named constants ‌စာရင်း။
+
+## ‌အခြေ‌ခံ
+
+```ts
+enum Color {
+  Red,
+  Green,
+  Blue,
+}
+```
+
+Default values — 0, 1, 2။
+
+## Numeric enum
+
+```ts
+enum Status {
+  Pending,   // 0
+  Done = 5,  // 5
+  Failed,    // 6
+}
+
+console.log(Status.Done);     // 5
+console.log(Status[5]);       // "Done"
+```
+
+## String enum
+
+```ts
+enum Direction {
+  Up = "UP",
+  Down = "DOWN",
+}
+
+console.log(Direction.Up); // "UP"
+```
+
+## ‌သုံးစွဲခြင်း
+
+```ts
+function handle(s: Status): void {
+  if (s === Status.Done) {
+    console.log("Finished");
+  }
+}
+
+handle(Status.Pending);
+```
+
+## ‌အဓိက အချက်များ
+- Named constants
+- 0 ‌ကစ ‌ပေး
+- String လည်း
+- ‌သေ‌ချာ ‌သော option ‌စာရင်း — ‌သင့်

@@ -1,0 +1,45 @@
+---
+title: "TypeScript Introduction — TS Introduction"
+description: "TypeScript ‌မိတ်ဆက် — ‌ဘာကြောင့် type ‌လို — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+TypeScript ‌မိတ်ဆက် — JavaScript ၏ typed superset။
+
+## JavaScript ‌ပြဿနာ
+
+```js
+function add(a, b) {
+  return a + b;
+}
+
+add("hello", 5); // "hello5" — ‌မှားသော်လည်း runtime ‌မှာပဲ ‌တွေ့
+```
+
+## TypeScript ‌ဖြင့်
+
+```ts
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+add("hello", 5); // ❌ compile error — ‌ကြိုတင် ‌ဖမ်း
+```
+
+## ‌ဘယ်လို ‌အလုပ် ‌လုပ်
+
+```
+TS source ──tsc──▶ JavaScript ──node──▶ output
+```
+
+Browser/Node က JS သာ — TS ‌က compile ‌လုပ် ‌ပေး။
+
+## TS advantages
+- Static types — ‌လုံး‌ခြုံ
+- Modern JS features ‌ထောက်ခံ
+- TypeScript tooling — refactor, navigate
+
+## ‌အဓိက အချက်များ
+- Typed superset of JS
+- Compile ‌ချိန် error ‌ဖမ်း
+- JS သို့ transpile

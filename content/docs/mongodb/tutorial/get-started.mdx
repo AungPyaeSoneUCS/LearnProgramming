@@ -1,0 +1,62 @@
+---
+title: "MongoDB Get Started — MongoDB Get Started"
+description: "MongoDB ‌စတင် — install, Atlas, mongosh, setup — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+MongoDB ‌ကို ‌စတင်သုံးရန် — 3 ‌နည်း။
+
+## 1. MongoDB Atlas (Cloud)
+
+Atlas — managed cloud — ‌အလွယ်ဆုံး။
+
+1. Sign up — cloud.mongodb.com
+2. Create cluster (M0 free)
+3. Database User ‌လုပ်
+4. Network access — 0.0.0.0/0
+5. Connect — connection string
+
+```
+mongodb+srv://user:password@cluster.mongodb.net/
+```
+
+## 2. Install locally
+
+```bash
+# Ubuntu
+wget -qO - https://www.mongodb.org/static/pgp/server-7.0.asc | sudo apt-key add -
+```
+
+```bash
+# macOS
+brew tap mongodb/brew
+brew install mongodb-community
+```
+
+```bash
+# Windows — MSI installer က download
+```
+
+## 3. Run server
+
+```bash
+sudo systemctl start mongod          # service
+mongod --dbpath ./data/db            # manual
+```
+
+## mongosh — shell
+
+```bash
+mongosh
+```
+
+```js
+show dbs
+use mydb
+```
+
+## ‌အဓိက အချက်များ
+- Atlas — cloud
+- Local install
+- `mongod` — server
+- `mongosh` — shell

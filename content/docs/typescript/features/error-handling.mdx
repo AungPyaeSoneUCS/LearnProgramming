@@ -1,0 +1,66 @@
+---
+title: "TS Error Handling — TypeScript Error Handling"
+description: "TypeScript error handling — try/catch, typed errors, throw — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Errors — handle ‌နည်း — types ‌နှင့်။
+
+## try/catch
+
+```ts
+try {
+  risky();
+} catch (err) {
+  const message = err instanceof Error ? err.message : String(err);
+  console.error(message);
+}
+```
+
+`catch` — `unknown` — ‌အစစ် ‌လို။
+
+## Custom error
+
+```ts
+class ApiError extends Error {
+  constructor(
+    public status: number,
+    message: string,
+  ) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
+try {
+  throw new ApiError(404, "Not found");
+} catch (err) {
+  if (err instanceof ApiError) {
+    console.log(err.status, err.message);
+  }
+}
+```
+
+## Result pattern
+
+```ts
+type Result<T> =
+  | { ok: true; value: T }
+  | { ok: false; error: string };
+
+function parse(input: string): Result<number> {
+  const n = Number(input);
+  return Number.isNaN(n)
+    ? { ok: false, error: "not a number" }
+    : { ok: true, value: n };
+}
+
+const r = parse("42");
+if (r.ok) console.log(r.value);
+```
+
+## ‌အဓိက အချက်များ
+- try/catch — ‌စစ်
+- Custom Error class
+- Result — ‌လုံး‌ခြုံ
+- ‌ရှောင် — ‌တိ

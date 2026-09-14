@@ -1,0 +1,79 @@
+---
+title: "TS Aliases & Interfaces — TypeScript Aliases & Interfaces"
+description: "TypeScript type aliases and interfaces — differences — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Type alias နှင့် interface — types ‌ပြန်သုံး။
+
+## Type alias
+
+```ts
+type Name = string;
+type Age = number;
+
+type Person = {
+  name: Name;
+  age: Age;
+};
+
+const p: Person = { name: "Aung", age: 22 };
+```
+
+## Interface
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+const p: Person = { name: "Aung", age: 22 };
+```
+
+## Extend
+
+```ts
+interface Animal {
+  name: string;
+}
+
+interface Dog extends Animal {
+  breed: string;
+}
+
+const d: Dog = { name: "Bo", breed: "Husky" };
+```
+
+## Union & intersection (alias)
+
+```ts
+type A = { x: number };
+type B = { y: number };
+type C = A & B; // both
+
+type StrOrNum = string | number;
+```
+
+## Interface merge
+
+```ts
+interface Box {
+  w: number;
+}
+interface Box {
+  h: number;
+}
+```
+
+➡ ‌တစ်‌ခု‌ထဲ ‌ပေါင်း — declaration merging။
+
+## ‌ဘယ်ဟာ ‌သုံး
+- Object shape — interface
+- ‌ရှိ‌သော type ‌ပေါင်း — alias
+- Union/primitive — alias
+
+## ‌အဓိက အချက်များ
+- Alias — ‌ပြန်သုံး
+- Interface — ‌တိုးချဲ့
+- Merge ‌လုပ်လို — interface

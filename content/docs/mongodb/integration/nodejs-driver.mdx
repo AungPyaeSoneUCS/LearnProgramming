@@ -1,0 +1,94 @@
+---
+title: "MongoDB Node.js Driver — MongoDB Node.js Driver"
+description: "MongoDB Node.js driver — CRUD, complete example — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Node.js driver — full-stack ‌သုံး — ‌လက်တွေ့ CRUD။
+
+## Setup
+
+```bash
+npm init -y
+npm install mongodb dotenv
+```
+
+`.env`:
+```
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/
+```
+
+## Connect + insert
+
+```js
+import "dotenv/config";
+import { MongoClient } from "mongodb";
+
+const client = new MongoClient(process.env.MONGODB_URI);
+await client.connect();
+
+const db = client.db("shopdb");
+const products = db.collection("products");
+
+await products.insertMany([
+  { name: "Laptop", price: 1000 },
+  { name: "Mouse", price: 15 }
+]);
+
+await client.close();
+console.log("done");
+```
+
+## Read
+
+```js
+const results = await products.find({ price: { $gt: 20 } }).toArray();
+console.log(results);
+```
+
+## Update + delete
+
+```js
+await products.updateOne(
+  { name: "Mouse" },
+  { $set: { price: 12 } }
+);
+
+await products.deleteMany({ price: { $lt: 1 } });
+```
+
+## Complete Express API
+
+```js
+import express from "express";
+import { MongoClient } from "mongodb";
+
+const app = express();
+app.use(express.json());
+
+const client = new MongoClient(process.env.MONGODB_URI);
+await client.connect();
+const items = client.db("shopdb").collection("items");
+
+app.get("/items", async (req, res) => {
+  res.json(await items.find().toArray());
+});
+
+app.post("/items", async (req, res) => {
+  const result = await items.insertOne(req.body);
+  res.status(201).json(result);
+});
+
+app.delete("/items/:id", async (req, res) => {
+  await items.deleteOne({ _id: new ObjectId(req.params.id) });
+  res.sendStatus(204);
+});
+
+app.listen(3000);
+```
+
+## ‌အဓိက အချက်များ
+- mongodb package
+- dotenv — uri
+- collection CRUD
+- Express — API ‌တွဲ

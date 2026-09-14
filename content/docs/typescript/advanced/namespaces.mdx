@@ -1,0 +1,59 @@
+---
+title: "TS Namespaces — TypeScript Namespaces"
+description: "TypeScript namespaces — organize code, export — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Namespaces — code ‌စု — ‌သုံး ‌ဖို့ `namespace` + `export`။
+
+## ‌အခြေ‌ခံ
+
+```ts
+namespace Geometry {
+  export function area(r: number): number {
+    return Math.PI * r * r;
+  }
+
+  export const PI = Math.PI;
+}
+
+console.log(Geometry.area(2));
+```
+
+## Nested
+
+```ts
+namespace App {
+  export namespace Utils {
+    export function log(msg: string): void {
+      console.log(msg);
+    }
+  }
+}
+
+App.Utils.log("hello");
+```
+
+## Multi-file
+
+```ts
+// math.ts
+namespace MathLib {
+  export function add(a: number, b: number): number {
+    return a + b;
+  }
+}
+
+// index.ts — ‌ချိတ်
+/// <reference path="math.ts" />
+console.log(MathLib.add(1, 2));
+```
+
+## ‌မှတ်
+- Modules (ESM) ‌ပိုခေတ် — namespaces ‌ကို ‌ဟောင်း/UMD မှာ
+- ‌သုံးရန် — export ‌လို
+
+## ‌အဓိက အချက်များ
+- namespace — ‌စု
+- export — ‌အပ်
+- Modules ‌ပိုသုံး — ‌အသစ်

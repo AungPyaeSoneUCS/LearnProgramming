@@ -1,0 +1,55 @@
+---
+title: "TS Tooling — TypeScript Tooling"
+description: "TypeScript tooling — ESLint, Prettier, editors — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Tooling — productivity — TS ‌အ‌ကူ။
+
+## Compiler
+
+```bash
+tsc --watch          # ‌ပြောင်း — auto compile
+tsc --noEmit         # compile ‌သာ — output မရ
+```
+
+## ESLint — typescript-eslint
+
+```bash
+npm install -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
+```
+
+```json
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"]
+}
+```
+
+## Prettier
+
+```bash
+npm install -D prettier
+npx prettier --write src
+```
+
+Config `.prettierrc`:
+```json
+{
+  "semi": true,
+  "singleQuote": true,
+  "printWidth": 100
+}
+```
+
+## Editor — VS Code
+- Built-in TS support
+- Go to definition, refactoring
+- Problems panel — ‌အ‌မှား ‌ပြ
+
+## ‌အဓိက အချက်များ
+- tsc --watch/--noEmit
+- typescript-eslint
+- Prettier
+- VS Code — built-in

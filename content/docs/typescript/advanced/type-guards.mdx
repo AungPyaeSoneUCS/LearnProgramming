@@ -1,0 +1,73 @@
+---
+title: "TS Type Guards — TypeScript Type Guards"
+description: "TypeScript type guards — typeof, instanceof, is, narrowing — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Type guards — runtime ‌မှာ type ‌စစ် — narrowing။
+
+## `typeof`
+
+```ts
+function show(x: string | number): void {
+  if (typeof x === "string") {
+    console.log(x.toUpperCase()); // string
+  } else {
+    console.log(x.toFixed(2));    // number
+  }
+}
+```
+
+## `instanceof`
+
+```ts
+class Dog {
+  bark(): string { return "woof"; }
+}
+
+function action(animal: Dog | string): void {
+  if (animal instanceof Dog) {
+    console.log(animal.bark());
+  } else {
+    console.log(animal.length);
+  }
+}
+```
+
+## `in` operator
+
+```ts
+type Fish = { swim(): void };
+type Bird = { fly(): void };
+
+function move(pet: Fish | Bird): void {
+  if ("swim" in pet) {
+    pet.swim();
+  } else {
+    pet.fly();
+  }
+}
+```
+
+## Custom guard — `is`
+
+```ts
+interface Car {
+  wheels: number;
+}
+
+function isCar(x: unknown): x is Car {
+  return typeof x === "object" && x !== null && "wheels" in x;
+}
+
+const val: unknown = { wheels: 4 };
+if (isCar(val)) {
+  console.log(val.wheels); // narrowed
+}
+```
+
+## ‌အဓိက အချက်များ
+- typeof — primitives
+- instanceof — classes
+- `in` — properties
+- `x is T` — custom

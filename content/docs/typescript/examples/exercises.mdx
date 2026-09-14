@@ -1,0 +1,61 @@
+---
+title: "TS Exercises — TypeScript Exercises"
+description: "TypeScript exercises — ‌တနှင့် — ‌ဖြေ — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Exercises — ‌ကျင့် — ‌ဖြေ — ‌မှန်။
+
+## 1. ‌အဆင့် — types ‌လို
+
+```ts
+// ‌လို type ‌ထည့် — age
+function getAge() {
+  return 22;
+}
+
+const age: number = getAge();
+```
+
+## 2. ‌အဆင့် — array
+
+```ts
+// ‌လို type ‌ထည့်
+const scores: number[] = [90, 80, 70];
+const total = scores.reduce((a, b) => a + b, 0);
+```
+
+## 3. ‌အဆင့် — function
+
+```ts
+// ‌လို type — parameter ‌နှင့် return
+function multiply(x: number, y: number): number {
+  return x * y;
+}
+```
+
+## 4. ‌အဆင့် — interface
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+const p: Person = { name: "Aung", age: 22 };
+```
+
+## 5. ‌အဆင့် — generic
+
+```ts
+function last<T>(arr: T[]): T {
+  return arr[arr.length - 1];
+}
+
+console.log(last([1, 2, 3])); // number
+```
+
+## ‌အဓိက အချက်များ
+- ‌အဆင့် ‌လိုက် — ‌ဖြေ
+- ‌နားလည် — ‌နောက် ‌ဆင့်
+- Practice — ‌မရ ‌ရှောင်

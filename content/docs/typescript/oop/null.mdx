@@ -1,0 +1,62 @@
+---
+title: "TS Null — TypeScript Null & Undefined"
+description: "TypeScript null and undefined — strictNullChecks, optional chaining — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`null`/`undefined` — value ‌မရှိ — ‌ထိန်းနည်း။
+
+## ‌အခြေ‌ခံ
+
+```ts
+let a: string = null; // ❌ strict mode — ‌မရ
+let b: string | null = null; // ✓
+let c: string | undefined = undefined; // ✓
+```
+
+## strictNullChecks
+
+tsconfig:
+```json
+{
+  "compilerOptions": {
+    "strictNullChecks": true
+  }
+}
+```
+
+`null` — type ‌မှ မဟုတ်လျှင် — မရ။
+
+## Optional chaining
+
+```ts
+type User = { address?: { city: string } };
+
+const u: User = {};
+const city = u.address?.city; // undefined — ‌မကွဲ
+```
+
+## Nullish coalescing
+
+```ts
+const name = u.address?.name ?? "Default";
+```
+
+`??` — null/undefined မှ ၌ — default။
+
+## Guards
+```ts
+function print(x: string | null): void {
+  if (x === null) {
+    console.log("empty");
+  } else {
+    console.log(x.toUpperCase());
+  }
+}
+```
+
+## ‌အဓိက အချက်များ
+- strictNullChecks
+- `?.` — optional
+- `??` — default
+- Narrow — null check

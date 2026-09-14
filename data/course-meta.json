@@ -6,8 +6,8 @@
     "color": "#10b981"
   },
   {
-    "label": "MongoDB အခြေခံ",
-    "description": "Document-based NoSQL Database ဖြစ်တဲ့ MongoDB ရဲ့ Collections, Documents, Indexing နဲ့ Aggregation တွေကို အခြေခံမှ အဆင့်မြင့်အထိ လေ့လာမယ်။",
+    "label": "MongoDB",
+    "description": "Document NoSQL Database — CRUD, Operators, Aggregations, Indexing, Drivers — Collections နှင့် Documents အခြေခံမှ လက်တွေ့အထိ လေ့လာမယ်။",
     "icon": "🍃",
     "color": "#22c55e"
   },

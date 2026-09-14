@@ -1,0 +1,63 @@
+---
+title: "TS Async Programming — TypeScript Async Programming"
+description: "TypeScript async — Promise, async/await, parallel — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Async — Promise — ‌တန်ဖိုး ‌နောက်မှ။
+
+## Promise types
+
+```ts
+const delay = (ms: number): Promise<string> =>
+  new Promise((resolve) => {
+    setTimeout(() => resolve("done"), ms);
+  });
+```
+
+## async/await
+
+```ts
+async function run(): Promise<void> {
+  const result = await delay(1000);
+  console.log(result); // done
+}
+
+run();
+```
+
+## Parallel
+
+```ts
+async function loadAll(): Promise<void> {
+  const [a, b] = await Promise.all([fetchA(), fetchB()]);
+  console.log(a, b);
+}
+
+async function fetchA(): Promise<number> {
+  return 1;
+}
+async function fetchB(): Promise<number> {
+  return 2;
+}
+```
+
+## Errors
+
+```ts
+async function safe(): Promise<string | null> {
+  try {
+    const d = await delay(100);
+    return d;
+  } catch (err) {
+    console.error((err as Error).message);
+    return null;
+  }
+}
+```
+
+## ‌အဓိက အချက်များ
+- `Promise` — types
+- async/await
+- Promise.all — parallel
+- try/catch — ‌ကိုင်

@@ -1,0 +1,44 @@
+---
+title: "TS Editor — TypeScript Editor"
+description: "TypeScript editor — ‌သုံးမှု — setup — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Editor — TS ‌ရေးရန် — ‌အကူ — ‌အဆင့်။
+
+## ‌အကြံ — VS Code
+
+- Intelligent autocomplete
+- Go to definition
+- Errors — ‌ပြ
+- Built-in — ‌လွယ်
+
+## Setup
+
+```bash
+npm install -D typescript
+npx tsc --init
+```
+
+## ‌သုံး
+
+```ts
+interface User {
+  name: string;
+}
+
+const u: User = { name: "Aung" };
+u.name.toUpperCase(); // autocomplete — string
+```
+
+## Shortcuts
+
+- `F12` — Go to definition
+- `Shift+F12` — Find references
+- `Ctrl+.` — Quick fix
+
+## ‌အဓိက အချက်များ
+- VS Code — ‌အ‌သုံး
+- Autocomplete/errors
+- tsc — ‌တွဲ
+- Shortcuts — ‌မြန်

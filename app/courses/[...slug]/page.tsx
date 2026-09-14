@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, ChevronRight, Home } from "lucide-react";
 import { mdxComponents } from "@/components/mdx";
 import { CopyCode } from "@/components/site/CopyCode";
 import { LessonDrawer } from "@/components/courses/LessonDrawer";
+import { MobileTableOfContents } from "@/components/site/MobileTableOfContents";
 import { ReadingProgress } from "@/components/site/ReadingProgress";
 import { TableOfContents } from "@/components/site/TableOfContents";
 import { getAllLeafSlugs, getNavCourses, getSiblings, courseInfo, toUrl } from "@/lib/lessons";
@@ -62,6 +63,8 @@ export default async function LessonPage({ params }: LessonPageProps) {
         <LessonDrawer courses={courses} />
       </div>
 
+      <MobileTableOfContents items={lesson.toc} />
+
       <div className="flex w-full gap-10">
         <div className="min-w-0 flex-1">
           <header className="mb-8 border-b border-border/70 pb-6">
@@ -97,7 +100,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
             )}
           </header>
 
-          <article className="lesson-content">
+          <article className="lesson-content mx-auto max-w-[46rem]">
             <lesson.MDXContent components={mdxComponents} />
             <CopyCode />
           </article>

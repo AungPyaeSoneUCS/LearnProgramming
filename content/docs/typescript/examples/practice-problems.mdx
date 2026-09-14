@@ -1,0 +1,109 @@
+---
+title: "TS Practice Problems — TypeScript Practice Problems"
+description: "TypeScript practice problems — exercises ရှုပ်ထွေး — solutions — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Practice — ‌လက်တွေ့ ပြဿနာ — ‌ဖြေရှင်း။
+
+## 1. Typed calculator
+
+```ts
+type Operation = "add" | "sub" | "mul" | "div";
+
+function calc(a: number, b: number, op: Operation): number {
+  switch (op) {
+    case "add": return a + b;
+    case "sub": return a - b;
+    case "mul": return a * b;
+    case "div": return b === 0 ? 0 : a / b;
+  }
+}
+
+console.log(calc(10, 5, "mul")); // 50
+```
+
+## 2. Generic stack
+
+```ts
+class Stack<T> {
+  private items: T[] = [];
+
+  push(item: T): void {
+    this.items.push(item);
+  }
+
+  pop(): T | undefined {
+    return this.items.pop();
+  }
+
+  size(): number {
+    return this.items.length;
+  }
+}
+
+const s = new Stack<number>();
+s.push(1);
+s.push(2);
+console.log(s.pop()); // 2
+```
+
+## 3. Narrowing parser
+
+```ts
+function parseValue(input: string | number): string {
+  if (typeof input === "number") {
+    return input.toFixed(2);
+  }
+  return input.toUpperCase();
+}
+
+console.log(parseValue(3.5));      // "3.50"
+console.log(parseValue("hello"));  // "HELLO"
+```
+
+## 4. Utility + mapped
+
+```ts
+interface Product {
+  name: string;
+  price: number;
+  stock: number;
+}
+
+type Public = Omit<Product, "stock">;
+
+function show(p: Public): void {
+  console.log(p.name, p.price);
+}
+
+show({ name: "Book", price: 500 });
+```
+
+## 5. Error handling
+
+```ts
+class ValidationError extends Error {
+  constructor(public field: string, msg: string) {
+    super(msg);
+    this.name = "ValidationError";
+  }
+}
+
+function validateAge(age: number): void {
+  if (age < 18) throw new ValidationError("age", "too young");
+}
+
+try {
+  validateAge(15);
+} catch (err) {
+  if (err instanceof ValidationError) {
+    console.log(err.field, err.message);
+  }
+}
+```
+
+## ‌အဓိက အချက်များ
+- ‌ဖြေရှင်းပါ — ‌နားလည်
+- Type ‌ချ — safer
+- ‌ရှုပ်ထွေး — စမ်း

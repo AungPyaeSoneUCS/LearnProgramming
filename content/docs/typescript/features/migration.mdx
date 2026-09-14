@@ -1,0 +1,71 @@
+---
+title: "TS Migration — TypeScript Migration"
+description: "TypeScript migration — JS to TS step by step — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+JS → TS — ‌ချ ‌ချ ‌ပြောင်း — risky ‌နည် — ‌ဥပမာ။
+
+## Step 1 — allowJs
+
+```json
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "noEmit": true
+  }
+}
+```
+
+JS ‌အတိုင်း — ‌အဆင့် ‌စစ်။
+
+## Step 2 — strict ‌ဖွင့်
+
+```json
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true
+  }
+}
+```
+
+JSDoc ‌ထည့် — ‌ပြဿနာ ‌ရှာ။
+
+## Step 3 — .ts ‌ပြောင်း
+
+```diff
+- // @ts-check
++ // file.ts — extension ‌ပြောင်း
+```
+
+```ts
+interface User {
+  name: string;
+  age: number;
+}
+
+const users: User[] = getUsers();
+```
+
+## Step 4 — strict: true
+
+```json
+{
+  "compilerOptions": {
+    "strict": true
+  }
+}
+```
+
+## Step 5 — incrementally
+
+- အက်‌ဆို modules — pointer errors
+- အသုံး `any` — ‌များ
+- ‌အစစ် types — ‌ထည့်
+
+## ‌အဓိက အချက်များ
+- allowJs → checkJs → strict
+- ‌ချ ‌ချ — file ‌ပြောင်း
+- any — ‌အရေးမလို
+- tsconfig ‌အဆင့်

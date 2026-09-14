@@ -1,0 +1,48 @@
+---
+title: "TS Definitely Typed — Definitely Typed"
+description: "TypeScript Definitely Typed — @types packages — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Definitely Typed — community ‌ရေး type definitions — npm `@types`။
+
+## ‌ဘာလဲ
+JavaScript libraries — types ‌မပါ — types ကို `@types/*` ‌ဖြင့် ပေး။
+
+## Install
+
+```bash
+npm install --save-dev @types/node
+npm install --save-dev @types/express
+npm install --save-dev @types/react
+```
+
+## ‌သုံးစွဲခြင်း
+
+```ts
+import express from "express";
+
+const app = express(); // types ‌ရပြီ
+```
+
+## Types ‌ရှိ — မရှိ
+
+```bash
+npm info @types/lodash
+```
+
+Lodash — ‌ကိုယ်ပိုင် types ‌ပါ — @types ‌မလို။ Express — @types လို။
+
+## Custom declarations
+
+```ts
+// globals.d.ts
+declare module "my-lib" {
+  export function hello(): string;
+}
+```
+
+## ‌အဓိက အချက်များ
+- `@types/*` — type packages
+- devDependencies
+- ‌ကိုယ်ပိုင် `.d.ts`

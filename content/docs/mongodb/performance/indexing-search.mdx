@@ -1,0 +1,68 @@
+---
+title: "MongoDB Indexing/Search — MongoDB Indexing & Search"
+description: "MongoDB indexing and search — createIndex, $text, Atlas Search — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Index — query ‌မြန် — collection copy — search ‌လွယ်။
+
+## Create index
+
+```js
+db.users.createIndex({ age: 1 });        // asc
+db.users.createIndex({ city: 1, age: -1 }); // compound
+```
+
+## Index type
+
+```ts
+// 1 asc, -1 desc, hashed, text
+db.users.createIndex({ email: 1 }, { unique: true });
+db.users.dropIndex({ email: 1 });
+```
+
+## Text search
+
+```js
+db.articles.createIndex({ title: "text", body: "text" });
+
+db.articles.find({
+  $text: { $search: "mongodb" }
+});
+```
+
+## Explain — ‌စစ်
+
+```js
+db.users.find({ age: 20 }).explain("executionStats");
+// winningPlan — ‌သုံးခဲ့ index
+```
+
+## Atlas Search
+
+```
+Atlas → Dashboard → Search indexes
+→ Create search index → $search query
+```
+
+```js
+db.products.aggregate([
+  {
+    $search: {
+      text: { path: "name", query: "phone" }
+    }
+  }
+]);
+```
+
+## Guidelines
+- Filter fields — index
+- Compound — ‌နှစ်ခု‌ပေါင်း
+- ‌များလွန်း — ‌ရှောင်
+- Unique — ‌သေ‌ချာ
+
+## ‌အဓိက အချက်များ
+- createIndex — ‌မြန်
+- Unique/compound
+- $text — search
+- explain — ‌စစ်

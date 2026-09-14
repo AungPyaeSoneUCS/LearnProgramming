@@ -1,0 +1,53 @@
+---
+title: "TS Union Types — TypeScript Union Types"
+description: "TypeScript union types — multiple types, narrowing — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Union — ‌တစ်မျိုး‌ထက် type ‌ခံ — `|`။
+
+```ts
+let value: string | number = 10;
+value = "hello"; // ‌ရ
+```
+
+## ‌အခြေ‌ခံ
+
+```ts
+function printId(id: number | string): void {
+  console.log(id);
+}
+
+printId(101);
+printId("A101");
+```
+
+## Narrowing (type guard)
+
+```ts
+function size(input: string | string[]): number {
+  if (typeof input === "string") {
+    return input.length;    // string
+  }
+  return input.length;      // array
+}
+```
+
+## Union with objects
+
+```ts
+type Success = { ok: true; data: string };
+type Fail = { ok: false; error: string };
+
+function run(): Success | Fail {
+  return { ok: true, data: "OK" };
+}
+```
+
+## ‌အဓိက အချက်များ
+- `A | B`
+- typeof — narrow
+- သေချာ ‌သော branch — ‌အာမခံ
+
+## ‌အဓိက အချက်များ
+Union ‌က multiple types ခံ — ‌လို‌သော ‌နေရာ ‌သုံး။

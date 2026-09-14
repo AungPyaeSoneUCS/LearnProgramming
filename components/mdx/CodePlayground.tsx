@@ -24,7 +24,7 @@ export default function CodePlayground({
             const frame = document.getElementById("pgframe") as HTMLIFrameElement | null;
             frame?.contentWindow?.postMessage({ event: "reload" }, "*");
           }}
-          className="rounded-md border border-border bg-background px-3 py-1 text-xs font-semibold text-muted-foreground hover:border-amber-400 hover:text-amber-600"
+          className="btn btn-outline btn-sm rounded-md"
         >
           ▶ Run
         </button>

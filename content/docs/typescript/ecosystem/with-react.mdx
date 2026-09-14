@@ -1,0 +1,54 @@
+---
+title: "TS with React — TypeScript with React"
+description: "TypeScript with React — props, hooks, useState — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+TypeScript + React — components ‌အားလုံး types နှင့်။
+
+## Setup
+
+```bash
+npm create vite@latest my-app -- --template react-ts
+```
+
+## Props
+
+```tsx
+interface CardProps {
+  title: string;
+  count?: number; // optional
+}
+
+export function Card({ title, count = 0 }: CardProps) {
+  return (
+    <div>
+      {title} — {count}
+    </div>
+  );
+}
+```
+
+## useState
+
+```tsx
+import { useState } from "react";
+
+const [name, setName] = useState<string>("");
+const [count, setCount] = useState(0); // inferred
+```
+
+## Events
+
+```tsx
+const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  console.log("submitted");
+};
+```
+
+## ‌အဓိက အချက်များ
+- react-ts template
+- Props — interface
+- useState type
+- Event types

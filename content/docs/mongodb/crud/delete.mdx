@@ -1,0 +1,54 @@
+---
+title: "MongoDB Delete — MongoDB Delete"
+description: "MongoDB delete — deleteOne, deleteMany, drop — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Document ‌ဖျက် — delete methods။
+
+## deleteOne
+
+```js
+db.users.deleteOne({ name: "Aung" });
+```
+
+## deleteMany
+
+```js
+db.users.deleteMany({ city: "Mandalay" });
+db.users.deleteMany({}); // ‌အားလုံး
+```
+
+## drop — collection ‌ဖျက်
+
+```js
+db.users.drop();
+```
+
+## ‌ဥပမာ: complete
+
+```js
+use shopdb;
+
+db.products.insertMany([
+  { name: "A", price: 10 },
+  { name: "B", price: 5 },
+  { name: "C", price: 100 }
+]);
+
+db.products.deleteOne({ name: "B" });
+db.products.deleteMany({ price: { $lt: 15 } });
+db.products.find(); // C သာ
+```
+
+## Check result
+
+```js
+{ acknowledged: true, deletedCount: 2 }
+```
+
+## ‌အဓိက အချက်များ
+- deleteOne — 1
+- deleteMany — filter
+- `{}` — ‌အား‌လုံး
+- drop — collection

@@ -87,7 +87,7 @@ export default function Quiz({ title, questions = [] }: QuizProps) {
         <button
           onClick={() => setRevealed(true)}
           disabled={!allAnswered}
-          className="rounded-lg bg-amber-600 px-5 py-2 text-sm font-semibold text-white transition-colors enabled:hover:bg-amber-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="btn btn-primary"
         >
           စစ်ဆေးမည်
         </button>
@@ -97,7 +97,7 @@ export default function Quiz({ title, questions = [] }: QuizProps) {
               setAnswers({});
               setRevealed(false);
             }}
-            className="text-sm font-semibold text-muted-foreground underline"
+            className="btn btn-ghost btn-sm"
           >
             ပြန်စမည်
           </button>

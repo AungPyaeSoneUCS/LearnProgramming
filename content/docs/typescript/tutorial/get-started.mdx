@@ -1,0 +1,72 @@
+---
+title: "TypeScript Get Started — TS Get Started"
+description: "TypeScript ‌စတင် — install, tsc, tsconfig — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+TypeScript ‌ကို ‌စတင် ‌သုံးနည်း — setup ‌အဆင့်။
+
+## Install
+
+```bash
+npm install -g typescript
+tsc --version
+```
+
+Project ‌အတွက်:
+
+```bash
+npm init -y
+npm install --save-dev typescript @types/node
+```
+
+## First file
+
+`hello.ts`:
+
+```ts
+function greet(name: string): string {
+  return `Hello ${name}`;
+}
+console.log(greet("Aung"));
+```
+
+## Compile
+
+```bash
+tsc hello.ts        # → hello.js
+node hello.js
+```
+
+## tsconfig.json
+
+```bash
+npx tsc --init
+```
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "strict": true,
+    "outDir": "dist"
+  }
+}
+```
+
+```bash
+npx tsc              # ‌အားလုံး compile
+```
+
+## Watch
+
+```bash
+npx tsc --watch
+```
+
+## ‌အဓိက အချက်များ
+- install typescript
+- tsc hello.ts — compile
+- tsconfig — settings
+- --watch — auto compile

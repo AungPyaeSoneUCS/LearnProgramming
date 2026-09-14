@@ -1,0 +1,51 @@
+---
+title: "MongoDB Editor — MongoDB Editor"
+description: "MongoDB editor — mongosh, playground, VS Code — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Editor — MongoDB ‌ရေး — ‌လွယ် ‌သော ‌နည်း။
+
+## mongosh — shell
+
+```bash
+mongosh
+```
+
+```js
+use shopdb
+db.products.find({ price: { $lt: 50 } });
+```
+
+## VS Code extension — MongoDB
+
+1. Install "MongoDB for VS Code"
+2. Add connection
+3. Explorer — collections ‌မြင်ယောင်
+4. Playground — `.mongodb.js`
+
+## Playground
+
+```js
+// new.mongodb.js
+use shopdb;
+
+db.products.insertOne({ name: "Pen", price: 1 });
+
+db.products.find().limit(5);
+```
+
+Run — ‌လုပ်တ် — Run MongoDB Playground (shift+enter)。
+
+## Compass — GUI
+
+- Visual ဖန်တီး/‌ကြည့်
+- CRUD — click ‌ဖြင့်
+- Aggregation builder
+- Index ‌စီမံ
+
+## ‌အဓိက အချက်များ
+- mongosh — CLI
+- VS Code playground
+- Compass — GUI
+- ‌ရွေး ‌လွယ်

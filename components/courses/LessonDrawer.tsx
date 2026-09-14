@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 import type { NavCourse } from "@/lib/lessons";
@@ -14,36 +14,55 @@ export interface LessonDrawerProps {
 export function LessonDrawer({ courses }: LessonDrawerProps) {
   const [open, setOpen] = useState(false);
 
+  const close = () => setOpen(false);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [open]);
+
   return (
     <div className="lg:hidden">
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-semibold text-foreground transition-colors hover:border-amber-500/60 hover:bg-muted"
+        className="btn btn-outline btn-sm"
       >
-        <Menu className="h-4 w-4" />
+        <Menu className="size-4" />
         သင်ခန်းစာများ
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="သင်ခန်းစာများ">
           <div
-            className="absolute inset-0 bg-foreground/40 backdrop-blur-sm"
-            onClick={() => setOpen(false)}
+            className="animate-overlay-in absolute inset-0 bg-foreground/40 backdrop-blur-sm"
+            onClick={close}
           />
-          <div className="absolute inset-y-0 left-0 flex w-80 max-w-[85vw] flex-col bg-background shadow-2xl">
+          <div className="animate-panel-in-left absolute inset-y-0 left-0 flex w-80 max-w-[85vw] flex-col bg-background shadow-2xl shadow-black/20">
             <div className="flex shrink-0 items-center justify-between border-b border-border px-4 py-3">
               <span className="text-sm font-bold text-foreground">သင်ခန်းစာများ</span>
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={close}
                 aria-label="မီနူးပိတ်ရန်"
-                className="cursor-pointer rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                className="btn btn-icon btn-ghost"
               >
-                <X className="h-5 w-5" />
+                <X className="size-5" />
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto px-4 py-4" onClick={() => setOpen(false)}>
+            <div className="flex-1 overflow-y-auto px-4 py-4" onClick={close}>
               <CoursesSidebar courses={courses} />
             </div>
           </div>

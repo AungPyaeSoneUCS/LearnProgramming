@@ -1,0 +1,55 @@
+---
+title: "MongoDB Learning Outcomes — MongoDB Learning Outcomes"
+description: "MongoDB learning outcomes — ‌သင်ယူရသက် — check — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Learning outcomes — ‌သင်ယူမှု ရလဒ် — ‌စစ်ဆေး — ‌ကျွမ်းကျင်မှု။
+
+## ‌သင်ယူပြီး — ‌လုပ်‌နိုင်
+
+- [x] MongoDB ‌ဆိုတာ ‌ပြ
+- [x] Atlas ‌ဖွင့် — cluster ‌လုပ်
+- [x] mongosh ‌ချိတ် — query
+- [x] CRUD — insert/find/update/delete
+- [x] Query operators ‌သုံး
+- [x] Update operators ‌သုံး
+- [x] Aggregation pipeline ‌ဆောက်
+- [x] Index ‌လုပ် — query ‌မြန်
+- [x] Validation ‌စည်းကမ်း ‌ချ
+- [x] Node.js driver — app ‌လုပ်
+- [x] Data API/Charts — ‌ရင်း
+
+## ‌စစ်ဆေး — ‌ဥပမာ
+
+```js
+// Competency check — ‌ပြည့် ‌ဖို့
+use checkdb;
+
+db.orders.insertMany([
+  { user: "u1", item: "A", qty: 2, total: 20 },
+  { user: "u2", item: "B", qty: 1, total: 5 },
+  { user: "u1", item: "C", qty: 1, total: 7 }
+]);
+
+// Find ‌အား‌လုံး — total > 15
+db.orders.find({ total: { $gt: 15 } });
+
+// ‌အသုံးပြု‌သူ အား‌လုံး — ‌ပေါင်း
+db.orders.aggregate([
+  { $group: { _id: "$user", spent: { $sum: "$total" } } }
+]);
+```
+
+## ‌ရလဒ် — ‌အဆင့်
+
+| ‌ဖြေ | ‌အဆင့် |
+|---|---|
+| ‌အား‌လုံး ‌မှန် | ‌ကျွမ်းကျင် |
+| ‌တစ်ဝက် | ‌လေ့ကျင့် ‌လို |
+| ‌မမှန် | ‌ပြန် ‌သင်ယူ |
+
+## ‌အဓိက အချက်များ
+- ‌စစ်ဆေး — ‌ကျွမ်းကျင်
+- ‌ပြန်လုပ် — ‌ဆင့်
+- ‌ဆင့်မြင့် — ‌ဖြေ

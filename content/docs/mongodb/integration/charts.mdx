@@ -1,0 +1,55 @@
+---
+title: "MongoDB Charts — MongoDB Charts"
+description: "MongoDB Charts — dashboards, visualizations, embed — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+MongoDB Charts — Atlas data — dashboard ‌ဆွဲ — chart ‌ပြ။
+
+## Setup
+
+1. Atlas → Charts ‌ဖွင့်
+2. Data source ‌ရွေး (cluster + db)
+3. Dashboard ‌အသစ်
+4. Add chart
+
+## Chart types
+
+| Type | ‌သုံး |
+|---|---|
+| Bar | ‌အကဲ / category |
+| Line | Trend — ‌အချိန် |
+| Pie | Proportion |
+| Table | Data ‌တန်း |
+| Scatter | Relationship |
+
+## Example pipeline
+
+```js
+db.sales.aggregate([
+  { $group: { _id: "$month", total: { $sum: "$amount" } } },
+  { $sort: { _id: 1 } }
+]);
+```
+
+Chart → encodings → X/Y fields ‌ချိတ်။
+
+## Embed
+
+```html
+<iframe src="YOUR_CHART_EMBED_URL" 
+        style="width:100%;height:600px;">
+</iframe>
+```
+
+## Filters
+
+- Dashboard filter bar
+- Date range
+- Drill-down — ‌စူးစိုက်
+
+## ‌အဓိက အချက်များ
+- Charts — data visual
+- Pipeline — ‌ပြင်ဆင်
+- Dashboard — ‌စု
+- Embed — ‌ထည့်

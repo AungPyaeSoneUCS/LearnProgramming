@@ -1,0 +1,58 @@
+---
+title: "MongoDB Drivers — MongoDB Drivers"
+description: "MongoDB drivers — languages, install, connect, use — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Drivers — official client libraries — language ‌တစ်ခုချင်း။
+
+## Official drivers
+
+| Language | Package |
+|---|---|
+| Node.js | `mongodb` |
+| Python | `pymongo` |
+| Java | `mongodb-driver-sync` |
+| Go | `go.mongodb.org/mongo-driver` |
+| C# | `MongoDB.Driver` |
+
+## Install
+
+```bash
+# Node
+npm install mongodb
+
+# Python
+pip install pymongo
+```
+
+## Node.js connect
+
+```js
+import { MongoClient } from "mongodb";
+
+const uri = "mongodb+srv://user:pass@cluster.mongodb.net/";
+const client = new MongoClient(uri);
+
+await client.connect();
+const db = client.db("mydb");
+console.log(db.databaseName);
+await client.close();
+```
+
+## Python connect
+
+```python
+from pymongo import MongoClient
+
+client = MongoClient("mongodb://localhost:27017")
+db = client["mydb"]
+print(db.list_collection_names())
+client.close()
+```
+
+## ‌အဓိက အချက်များ
+- ‌ကိုယ့် language — driver
+- MongoClient — connect
+- db/collection ‌ထုတ်
+- Connection string

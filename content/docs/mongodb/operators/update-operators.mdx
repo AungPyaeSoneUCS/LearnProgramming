@@ -1,0 +1,91 @@
+---
+title: "MongoDB Update Operators — MongoDB Update Operators"
+description: "MongoDB update operators — $set, $inc, $push, $pull, array — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Update operators — field/document ‌ပြောင်း — update ‌တွင် ‌သုံး။
+
+## $set / $unset
+
+```js
+db.users.updateOne(
+  { name: "Aung" },
+  { $set: { age: 23 } }
+);
+
+db.users.updateOne(
+  { name: "Aung" },
+  { $unset: { temporary: "" } } // field ‌ဖယ်
+);
+```
+
+## $inc / $mul
+
+```js
+db.users.updateOne(
+  { name: "Aung" },
+  { $inc: { points: 10 } }  // +10
+);
+
+db.users.updateOne(
+  { name: "Aung" },
+  { $mul: { price: 0.9 } }  // * 0.9
+);
+```
+
+## Array: $push / $addToSet
+
+```js
+db.users.updateOne(
+  { name: "Aung" },
+  { $push: { skills: "mongo" } }       // append
+);
+
+db.users.updateOne(
+  { name: "Aung" },
+  { $addToSet: { skills: "react" } }   // dup ‌မထည့်
+);
+```
+
+## Array: $pull / $pop
+
+```js
+db.users.updateOne(
+  { name: "Aung" },
+  { $pull: { skills: "old" } }   // ‌ဖယ်
+);
+
+db.users.updateOne(
+  { name: "Aung" },
+  { $pop: { skills: -1 } }       // first / [-1 last]
+);
+```
+
+## ‌ဥပမာ: complete
+
+```js
+use shopdb;
+
+db.products.insertOne({
+  name: "Phone",
+  price: 500,
+  tags: ["mobile"],
+  stock: 10
+});
+
+db.products.updateOne(
+  { name: "Phone" },
+  {
+    $inc: { stock: -1 },
+    $push: { tags: "hot" },
+    $set: { updatedAt: new Date() }
+  }
+);
+```
+
+## ‌အဓိက အချက်များ
+- $set/‌unset
+- $inc/mul — math
+- $push/pull — array
+- Multiple operators — ‌ပေါင်း

@@ -1,0 +1,66 @@
+---
+title: "MongoDB Update — MongoDB Update"
+description: "MongoDB update — updateOne, updateMany, replaceOne, $set — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Document ‌ပြောင်း — update methods + operators။
+
+## updateOne
+
+```js
+db.users.updateOne(
+  { name: "Aung" },
+  { $set: { age: 23 } }
+);
+```
+
+`$set` — field ‌ပြောင်း — ‌ကျန် ‌ထား။
+
+## updateMany
+
+```js
+db.users.updateMany(
+  { city: "Mandalay" },
+  { $set: { verified: true } }
+);
+```
+
+## replaceOne
+
+```js
+db.users.replaceOne(
+  { name: "Aung" },
+  { name: "Aung", age: 24 } // ‌အသစ် — ‌လုံး
+);
+```
+
+## ‌ဥပမာ: complete
+
+```js
+use shopdb;
+
+// stock -1
+db.products.updateOne(
+  { name: "Mouse" },
+  { $inc: { stock: -1 } }
+);
+
+// ‌အဆင့်ရှိ ‌အားလုံး
+db.products.updateMany(
+  { price: { $lt: 20 } },
+  { $set: { price: 20 } }
+);
+```
+
+## Check result
+
+```js
+{ matchedCount: 1, modifiedCount: 1 }
+```
+
+## ‌အဓိက အချက်များ
+- updateOne/$set
+- updateMany
+- replaceOne — ‌လုံး
+- matched/modified counts

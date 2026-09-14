@@ -1,0 +1,86 @@
+---
+title: "TS Best Practices — TypeScript Best Practices"
+description: "TypeScript best practices — strict, explicit, avoid any — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Best practices — clean, ‌လုံး‌ခြုံ TS။
+
+## 1. Strict mode
+
+```json
+{
+  "compilerOptions": {
+    "strict": true
+  }
+}
+```
+
+## 2. Avoid any
+
+```ts
+// ❌
+let data: any = api();
+// ✓
+let data: unknown = api();
+
+if (typeof data === "string") console.log(data.length);
+```
+
+## 3. Explicit returns
+
+```ts
+function calc(a: number, b: number): number {
+  return a * b;
+}
+```
+
+## 4. readonly — ‌မပြောင်း
+
+```ts
+interface Config {
+  readonly id: string;
+}
+
+const c: Config = { id: "x" };
+```
+
+## 5. Named types
+
+```ts
+// ❌ ‌ပတ်တိုး inline
+function f(p: { a: string; b: number }) {}
+
+// ✓
+interface Input {
+  a: string;
+  b: number;
+}
+function f(p: Input) {}
+```
+
+## 6. Never ‌လုပ် — ‌ထိန်း types
+
+```ts
+function assertNever(x: never): never {
+  throw new Error(`Unexpected: ${x}`);
+}
+
+type Color = "red" | "green" | "blue";
+
+function pickLight(c: Color): number {
+  switch (c) {
+    case "red": return 1;
+    case "green": return 2;
+    case "blue": return 3;
+    default: return assertNever(c);
+  }
+}
+```
+
+## ‌အဓိက အချက်များ
+- strict — ‌ဖွင့်
+- any — ‌ရှောင်
+- readonly
+- Named types
+- assertNever — ‌ကာကွယ်

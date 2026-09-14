@@ -1,0 +1,44 @@
+---
+title: "TS Arrays — TypeScript Arrays"
+description: "TypeScript arrays — syntax, readonly, tuple — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Arrays — ‌တန်ဖိုး စာရင်း — type ‌သတ်။
+
+## Array ‌ရေးနည်း
+
+```ts
+let nums: number[] = [1, 2, 3];
+let strs: string[] = ["a", "b"];
+let mix: any[] = [1, "two", true];
+```
+
+## Generic syntax
+
+```ts
+let nums: Array<number> = [1, 2, 3];
+let strs: Array<string> = ["a", "b"];
+```
+
+Types ‌ဓလေ့ — `type[]` ‌ပိုသုံး။
+
+## ‌သုံးစွဲခြင်း
+
+```ts
+nums.push(4);         // ‌ထည့်
+const first = nums[0]; // number
+nums.forEach((n) => console.log(n));
+```
+
+## readonly
+
+```ts
+const names: readonly string[] = ["Aung", "Su"];
+// names.push("Bo"); // ❌ ‌မရ
+```
+
+## ‌အဓိက အချက်များ
+- `type[]` — array
+- `Array` generic
+- readonly — ‌ပြောင်းမလို

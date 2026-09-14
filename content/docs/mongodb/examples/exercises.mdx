@@ -1,0 +1,60 @@
+---
+title: "MongoDB Exercises — MongoDB Exercises"
+description: "MongoDB exercises — ‌အဆင့် — ‌ဖြေ — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Exercises — ‌ကျင့် — ‌ဖြေ — ‌မှန်။
+
+## 1. Insert — 3 documents
+
+```js
+use mydb;
+
+db.students.insertMany([
+  { name: "Aung", score: 80 },
+  { name: "Su", score: 95 },
+  { name: "Bo", score: 60 }
+]);
+```
+
+## 2. Find — score >= 70
+
+```js
+db.students.find({ score: { $gte: 70 } });
+```
+
+## 3. Update — Aung score +5
+
+```js
+db.students.updateOne(
+  { name: "Aung" },
+  { $inc: { score: 5 } }
+);
+```
+
+## 4. Aggregation — average
+
+```js
+db.students.aggregate([
+  { $group: { _id: null, avgScore: { $avg: "$score" } } }
+]);
+```
+
+## 5. Delete — score < 65
+
+```js
+db.students.deleteMany({ score: { $lt: 65 } });
+```
+
+## 6. Index — score
+
+```js
+db.students.createIndex({ score: 1 });
+```
+
+## ‌အဓိက အချက်များ
+- ‌အဆင့် ‌လိုက် — CRUD
+- Aggregation
+- Index — optimize
+- ‌ဖြေ — ‌အားလုံး

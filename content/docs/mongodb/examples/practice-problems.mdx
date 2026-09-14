@@ -1,0 +1,69 @@
+---
+title: "MongoDB Practice Problems — MongoDB Practice Problems"
+description: "MongoDB practice problems — ‌လက်တွေ့ — ‌လုပ်ငန်း — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Practice — ‌လက်တွေ့ ‌ပြဿနာ — ‌ဖြေရှင်း — code ‌အ‌ပြည့်။
+
+## 1. Inventory ‌ထား
+
+```js
+use inventory;
+
+db.products.insertMany([
+  { sku: "A1", name: "Coffee", qty: 50, price: 4 },
+  { sku: "B2", name: "Tea", qty: 120, price: 2 },
+  { sku: "C3", name: "Sugar", qty: 10, price: 1 }
+]);
+```
+
+## 2. Low stock ‌ရှာ
+
+```js
+db.products.find({ qty: { $lt: 30 } });
+// Sugar — restock ‌အား‌လုံး
+```
+
+## 3. price ‌ပြောင်း
+
+```js
+db.products.updateMany(
+  { price: { $gt: 3 } },
+  { $inc: { price: 1 } }
+);
+```
+
+## 4. Summary — aggregation
+
+```js
+db.products.aggregate([
+  { $group: { _id: null, stock: { $sum: "$qty" } } }
+]);
+```
+
+## 5. Validation ‌ထည့်
+
+```js
+db.runCommand({
+  collMod: "products",
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["sku", "name"]
+    }
+  }
+});
+```
+
+## 6. Index ‌လုပ်ရန်
+
+```js
+db.products.createIndex({ sku: 1 }, { unique: true });
+db.products.createIndex({ qty: 1, price: -1 });
+```
+
+## ‌အဓိက အချက်များ
+- ‌လက်တွေ့ — ‌လုပ်
+- ‌ဆင့်မြင့် — ‌ကောင်း
+- ‌ဖြေ — ‌အား‌လုံး

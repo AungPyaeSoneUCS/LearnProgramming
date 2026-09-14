@@ -1,0 +1,51 @@
+---
+title: "MongoDB Query API — MongoDB Query API"
+description: "MongoDB Query API — CRUD ‌အခြေခံ, ‌ရေးနည်း — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Query API — MongoDB ‌က data ကို query ‌လုပ်သော ‌နည်း — CRUD operations။
+
+## ‌အကြောင်း
+
+```js
+// Create
+db.collection.insertOne({ name: "Aung" });
+
+// Read
+db.users.find({ age: { $gt: 18 } });
+
+// Update
+db.users.updateOne({ name: "Aung" }, { $set: { age: 23 } });
+
+// Delete
+db.users.deleteMany({ age: { $lt: 0 } });
+```
+
+## Commands vs Methods
+
+| Shell command | Query method |
+|---|---|
+| use mydb | `db = db.getSiblingDB("mydb")` |
+| db.help() | — |
+| show collections | `db.getCollectionNames()` |
+
+## Filter documents
+
+```js
+db.users.find({ age: { $gte: 18, $lte: 30 } });
+db.users.find({ $and: [{ status: "active" }, { age: { $gt: 18 } }] });
+```
+
+## Index ‌သုံး
+
+```js
+db.users.createIndex({ age: 1 });
+db.users.find({ age: 20 }).explain("executionStats");
+```
+
+## ‌အဓိက အချက်များ
+- CRUD — 4 ‌မျိုး
+- Filter — ‌ထိန်
+- Index — ‌မြန်
+- Shell နှင့် drivers — ‌တူ

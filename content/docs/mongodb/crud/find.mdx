@@ -1,0 +1,48 @@
+---
+title: "MongoDB Find — MongoDB Find"
+description: "MongoDB find — find, findOne, projection, sort, limit — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Document ‌ရှာ — find ‌နှင့် options။
+
+## find — ‌အားလုံး
+
+```js
+db.users.find();          // ‌အားလုံး
+db.users.find().pretty(); // ‌ပိုဖတ်လွယ်
+```
+
+## Filter
+
+```js
+db.users.find({ age: 22 });
+db.users.find({ age: { $gt: 20 } });
+db.users.find({ city: "Yangon" });
+```
+
+## findOne
+
+```js
+db.users.findOne({ name: "Aung" });
+```
+
+## Projection — fields ‌ရွေး
+
+```js
+db.users.find({}, { name: 1, _id: 0 });
+// name သာ — _id ဖျောက်
+```
+
+## Sort / Limit / Skip
+
+```js
+db.users.find().sort({ age: -1 }).limit(3).skip(1);
+// sort -1 — desc; limit 3; skip 1
+```
+
+## ‌အဓိက အချက်များ
+- find — ‌အားလုံး
+- findOne — 1
+- Projection — fields
+- sort/limit/skip

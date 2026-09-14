@@ -1,0 +1,93 @@
+---
+title: "MongoDB Aggregations — MongoDB Aggregations"
+description: "MongoDB aggregations — $match, $group, $sum, $lookup, pipeline — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Aggregation pipeline — documents ‌ကို stages ‌လိုက် ‌ပြောင်း — `aggregate()`။
+
+## Basic aggregation
+
+```js
+db.orders.aggregate([
+  { $match: { status: "done" } },
+  { $group: { _id: "$customer", total: { $sum: "$amount" } } },
+  { $sort: { total: -1 } }
+]);
+```
+
+Stages: `$match` → `$group` → output → `$sort`။
+
+## $group + agg operators
+
+```js
+db.products.aggregate([
+  {
+    $group: {
+      _id: "$category",
+      count: { $sum: 1 },
+      avgPrice: { $avg: "$price" },
+      minPrice: { $min: "$price" },
+      maxPrice: { $max: "$price" }
+    }
+  }
+]);
+```
+
+## $project — fields ‌ရွေး
+
+```js
+db.users.aggregate([
+  { $project: { name: 1, age: 1, _id: 0 } }
+]);
+```
+
+## $unwind — array ‌ခွဲ
+
+```js
+db.orders.aggregate([
+  { $unwind: "$items" },
+  { $group: { _id: "$items.sku", total: { $sum: "$items.qty" } } }
+]);
+```
+
+## $lookup — join
+
+```js
+db.orders.aggregate([
+  {
+    $lookup: {
+      from: "customers",
+      localField: "customerId",
+      foreignField: "_id",
+      as: "customer"
+    }
+  }
+]);
+```
+
+## ‌ဥပမာ: complete
+
+```js
+db.sales.insertMany([
+  { item: "A", qty: 2, price: 10 },
+  { item: "B", qty: 1, price: 5 },
+  { item: "A", qty: 1, price: 10 }
+]);
+
+db.sales.aggregate([
+  { $group: { _id: "$item", totalQty: { $sum: "$qty" } } },
+  { $sort: { totalQty: -1 } }
+]);
+/*
+{ _id: "A", totalQty: 3 }
+{ _id: "B", totalQty: 1 }
+*/
+```
+
+## ‌အဓိက အချက်များ
+- Pipeline — stages
+- $match/$group/$sort
+- $project/$unwind
+- $lookup — join
+- $sum/$avg/$min/$max

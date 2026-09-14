@@ -1,0 +1,62 @@
+---
+title: "TS Utility Types — TypeScript Utility Types"
+description: "TypeScript utility types — Partial, Required, Pick, Omit, Record — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Utility types — built-in ‌အ‌ထောက်အ‌ကူ — types ‌ပြောင်း။
+
+## Partial
+```ts
+interface User {
+  name: string;
+  age: number;
+}
+
+type PartialUser = Partial<User>;
+// { name?: string; age?: number }
+```
+
+## Required
+```ts
+type RequiredUser = Required<PartialUser>;
+// name, age — ‌မလိုမဖြစ်
+```
+
+## Pick & Omit
+```ts
+type NameOnly = Pick<User, "name">; // { name: string }
+type NoAge = Omit<User, "age">;     // { name: string }
+```
+
+## Record
+```ts
+type Roles = "admin" | "user";
+
+const perms: Record<Roles, boolean> = {
+  admin: true,
+  user: false,
+};
+```
+
+## Readonly
+```ts
+type ReadonlyUser = Readonly<User>;
+// ‌ပြောင်းမရ
+```
+
+## ReturnType
+```ts
+function createUser() {
+  return { name: "Aung", age: 22 };
+}
+
+type UserType = ReturnType<typeof createUser>;
+// { name: string; age: number }
+```
+
+## ‌အဓိက အချက်များ
+- Partial/Required — optional ‌ပြောင်း
+- Pick/Omit — ‌ရွေး
+- Record — map
+- ReturnType — ‌ထုတ်

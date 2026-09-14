@@ -1,0 +1,61 @@
+---
+title: "TS Object Types — TypeScript Object Types"
+description: "TypeScript object types — properties, optional, readonly — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Object types — properties ‌စာရင်း။
+
+## ‌အခြေ‌ခံ
+
+```ts
+let user: {
+  name: string;
+  age: number;
+} = {
+  name: "Aung",
+  age: 22,
+};
+```
+
+## Optional property
+
+```ts
+type Car = {
+  brand: string;
+  year?: number; // optional
+};
+
+const c1: Car = { brand: "Toyota" }; // ✓
+```
+
+## readonly property
+
+```ts
+type Config = {
+  readonly apiKey: string;
+  timeout: number;
+};
+
+const cfg: Config = {
+  apiKey: "123",
+  timeout: 5000,
+};
+// cfg.apiKey = "999"; // ❌
+```
+
+## Index signature
+
+```ts
+type Bag = {
+  [key: string]: number;
+};
+
+const b: Bag = { apples: 3, mangoes: 5 };
+```
+
+## ‌အဓိက အချက်များ
+- Properties ‌စာရင်း
+- `?` — optional
+- `readonly` — ‌မပြောင်း
+- Index signature — dynamic keys

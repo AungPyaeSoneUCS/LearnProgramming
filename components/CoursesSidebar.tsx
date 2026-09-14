@@ -37,7 +37,7 @@ function NavLeafLink({ slug, label, activeSlug }: { slug: string; label: string;
       className={
         "relative block rounded-lg py-1.5 pl-8 pr-2 text-[13px] leading-snug no-underline transition-colors " +
         (active
-          ? "font-bold text-amber-700 dark:text-amber-300"
+          ? "bg-amber-500/10 font-bold text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
           : "text-muted-foreground hover:bg-muted/60 hover:text-foreground")
       }
     >

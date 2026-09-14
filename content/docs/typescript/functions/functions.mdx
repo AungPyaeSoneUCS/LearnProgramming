@@ -1,0 +1,70 @@
+---
+title: "TS Functions — TypeScript Functions"
+description: "TypeScript functions — parameters, return types, optional, rest — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Functions — parameter နှင့် return types။
+
+## ‌အခြေ‌ခံ
+
+```ts
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+console.log(add(2, 3)); // 5
+```
+
+## Return type
+
+```ts
+function greet(name: string): string {
+  return `Hello ${name}`;
+}
+
+function log(msg: string): void {
+  console.log(msg);
+}
+```
+
+## Optional & default
+
+```ts
+function fullName(first: string, last?: string): string {
+  return last ? `${first} ${last}` : first;
+}
+
+function power(base: number, exp: number = 2): number {
+  return base ** exp;
+}
+```
+
+`?` — optional — undefined ‌ခံ။ Default — value ‌ပေး။
+
+## Rest parameter
+
+```ts
+function sum(...nums: number[]): number {
+  return nums.reduce((a, b) => a + b, 0);
+}
+
+console.log(sum(1, 2, 3)); // 6
+```
+
+## Type function
+
+```ts
+type Callback = (err: string | null, data: string) => void;
+
+function fetchData(cb: Callback): void {
+  cb(null, "data");
+}
+```
+
+## ‌အဓိက အချက်များ
+- Parameter types
+- Return types
+- `?` — optional
+- Default value
+- Rest parameters

@@ -1,0 +1,52 @@
+---
+title: "TS Special Types — TypeScript Special Types"
+description: "TypeScript special types — any, unknown, never, void — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Special types — အ‌ထူး ‌အခြေ‌အ‌ထေ အတွက်။
+
+## any
+
+```ts
+let val: any = 10;
+val = "hello"; // ‌ရပါ
+val = true;    // ‌ရ
+```
+
+Type checking ‌ကျော် — ‌သေ‌ချာ ‌မလို မှသာ ‌သုံး — ‌အလွန်သုံး မလိုလား။
+
+## unknown
+
+```ts
+let data: unknown = 20;
+// data.toUpperCase(); // ❌ ‌မရ — type ‌မသေချာ
+
+if (typeof data === "string") {
+  console.log(data.toUpperCase()); // ✓ ‌စစ်ပြီး
+}
+```
+
+any ‌ထက် ‌လုံး‌ခြုံ — ‌ရှေ့‌ရုံ check ‌တို။
+
+## void
+
+```ts
+function log(msg: string): void {
+  console.log(msg); // ဘာမှ return မလို
+}
+```
+
+## never
+
+```ts
+function error(msg: string): never {
+  throw new Error(msg); // ဘယ်တော့မှ return မလား
+}
+```
+
+## ‌အဓိက အချက်များ
+- any — ‌ရှောင်
+- unknown — check ‌ဖြင့်
+- void — return ‌မရှိ
+- never — ‌အဆုံးသတ်

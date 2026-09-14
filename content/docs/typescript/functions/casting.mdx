@@ -1,0 +1,49 @@
+---
+title: "TS Casting — TypeScript Casting"
+description: "TypeScript casting — as, angle bracket, unknown — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Casting — type ‌ပြောင်း — TS ‌က ‌ထိန်း။
+
+## ‌အခြေ‌ခံ — `as`
+
+```ts
+let val: unknown = "hello";
+let len: number = (val as string).length;
+
+console.log(len); // 5
+```
+
+## Angle bracket syntax
+
+```ts
+let val: unknown = "hello";
+let len: number = (string)(val).length; // TSX ‌မှာ မရ
+```
+
+JSX/TSX မှာ — `as` ‌သာသုံး။
+
+## Narrowing vs casting
+
+```ts
+if (typeof val === "string") {
+  // ✓ ‌သေချာ — narrowing
+}
+
+// Casting — ‌ကိုယ် ‌ယူဆ — ‌သေ‌ချာ လို
+```
+
+## Cast with `as any`
+
+```ts
+let num = 10;
+let str = num as unknown as string; // ‌အတင်း
+```
+
+Mask အတင်း — ‌ရှောင်။
+
+## ‌အဓိက အချက်များ
+- `x as T`
+- ‌သေ‌ချာ ‌မရှိ ‌နေရာ — unknown
+- ‌အစစ် ‌ရှိ — narrowing ‌ပိုလုံး

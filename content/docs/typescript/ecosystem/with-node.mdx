@@ -1,0 +1,71 @@
+---
+title: "TS with Node.js — TypeScript with Node.js"
+description: "TypeScript with Node.js — ts-node, tsx, build — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+TypeScript + Node.js — setup နည်း ‌များ။
+
+## Setup
+
+```bash
+npm init -y
+npm install -D typescript @types/node tsx
+npx tsc --init
+```
+
+tsconfig:
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "nodenext",
+    "strict": true
+  }
+}
+```
+
+## tsx — run (no build)
+
+```bash
+npx tsx src/index.ts
+```
+
+## Build
+
+```bash
+npx tsc
+node dist/index.js
+```
+
+package.json:
+```json
+{
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  }
+}
+```
+
+## Example
+
+```ts
+import { readFile } from "node:fs/promises";
+
+interface Config {
+  port: number;
+}
+
+const cfg: Config = { port: 3000 };
+const data = await readFile("package.json", "utf8");
+console.log(cfg.port, data.length);
+```
+
+## ‌အဓိက အချက်များ
+- tsx — dev
+- tsc — build
+- @types/node
+- node: imports

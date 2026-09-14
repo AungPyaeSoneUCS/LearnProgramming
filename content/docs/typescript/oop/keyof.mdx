@@ -1,0 +1,50 @@
+---
+title: "TS Keyof — TypeScript keyof Operator"
+description: "TypeScript keyof — keys of type — union — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`keyof` — type ‌တစ်ခု၏ key ‌အားလုံး — union ‌ထုတ်။
+
+## ‌အခြေ‌ခံ
+
+```ts
+type Person = {
+  name: string;
+  age: number;
+};
+
+type Keys = keyof Person; // "name" | "age"
+```
+
+## Function parameter
+
+```ts
+function getValue(obj: Person, key: keyof Person): void {
+  console.log(obj[key]);
+}
+
+const p: Person = { name: "Aung", age: 22 };
+getValue(p, "name"); // ✓
+// getValue(p, "email"); // ❌
+```
+
+## Combined with generics
+
+```ts
+function get<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+
+console.log(get(p, "age")); // number
+```
+
+## Indexed access
+```ts
+type Age = Person["age"]; // number
+```
+
+## ‌အဓိက အချက်များ
+- `keyof T` — key union
+- `K extends keyof T` — ‌သေ‌ချာ
+- `T[K]` — value type

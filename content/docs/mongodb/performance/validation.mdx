@@ -1,0 +1,67 @@
+---
+title: "MongoDB Validation — MongoDB Schema Validation"
+description: "MongoDB validation — $jsonSchema, validator, rules — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Schema validation — rules ‌သတ် — invalid documents ‌တား။
+
+## validator နှင့် ‌ဖန်တီး
+
+```js
+db.createCollection("users", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name", "age"],
+      properties: {
+        name: { bsonType: "string" },
+        age: { bsonType: "int", minimum: 0, maximum: 120 }
+      }
+    }
+  }
+});
+```
+
+## ‌ဥပမာ
+
+```js
+db.users.insertOne({ name: "Aung", age: 22 });       // ✓
+db.users.insertOne({ name: "Su" });                  // ❌ age လို
+db.users.insertOne({ name: "Bo", age: -5 });         // ❌ min
+```
+
+## Validation level/action
+
+```js
+db.createCollection("items", {
+  validator: { $jsonSchema: { required: ["sku"] } },
+  validationLevel: "strict",   // ‌အားလုံး
+  validationAction: "error"    // ‌တား (warn)
+});
+```
+
+## Add ‌နောက်မှ
+
+```js
+db.runCommand({
+  collMod: "users",
+  validator: { $jsonSchema: { required: ["email"] } }
+});
+```
+
+## Patterns
+
+```js
+// email ‌ပုံစံ
+email: {
+  bsonType: "string",
+  pattern: "^[^@]+@[^@]+\\.[^@]+$"
+}
+```
+
+## ‌အဓိက အချက်များ
+- $jsonSchema — rules
+- required/properties
+- validationLevel/Action
+- collMod — ‌ပြောင်း

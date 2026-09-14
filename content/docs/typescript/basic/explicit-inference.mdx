@@ -1,0 +1,50 @@
+---
+title: "TS Explicit & Inference — TypeScript Explicit Types & Inference"
+description: "TypeScript explicit types vs inference — annotation ‌နှင့် ‌ဆုံးဖြတ်မှု — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Types ‌ရေးနည်း ‌နှစ်မျိုး — explicit ‌နှင့် inference။
+
+## Explicit type
+
+```ts
+let age: number = 25;   // ‌ကိုယ်‌တိုင် type ‌ရေး
+let name: string = "Aung";
+let isDone: boolean = true;
+```
+
+## Type inference
+
+```ts
+let count = 10;     // number — TS ‌ပဲ ‌ဆုံးဖြတ်
+let city = "Yangon"; // string
+```
+
+`=` right side ‌ကြည့် — type ‌ထုတ် — optional initializer ‌ရှိရင်။
+
+## ‌ဘယ်အချိန် explicit
+
+```ts
+let data: string;      // ‌နောက်မှ ‌ပေး
+data = "later";
+
+function add(a: number, b: number): number {
+  return a + b;
+}
+```
+
+Function ‌parameter/return — explicit ‌ပိုရှင်း။
+
+## Inference limitations
+
+```ts
+let result = add(2, "3"); // ❌ TS ‌က ‌သိ
+```
+
+Inference ‌ရှိသော် — ‌သေချာ ‌ဖို့ types ‌ရေးပါ။
+
+## ‌အဓိက အချက်များ
+- Explicit — ‌ကိုယ်‌တိုင် ‌ရေး
+- Inference — TS ‌ဆုံးဖြတ်
+- Function — explicit ‌ပိုသင့်

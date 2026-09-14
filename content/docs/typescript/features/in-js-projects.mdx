@@ -1,0 +1,69 @@
+---
+title: "TS in JS Projects — TypeScript in JavaScript Projects"
+description: "TypeScript in JS projects — JSDoc, checkJs, gradual types — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+JS ‌မှာ TS — ‌ချ ‌ချ ‌ထည့် — JSDoc + `checkJs`။
+
+## JSDoc types
+
+```js
+/**
+ * @param {string} name
+ * @returns {string}
+ */
+function greet(name) {
+  return `Hello ${name}`;
+}
+```
+
+## checkJs
+
+```json
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "strict": false
+  }
+}
+```
+
+JS ‌ကိုလည်း type-check — JSDoc ‌ဖြင့်။
+
+## Allow JS
+
+```ts
+// tsconfig
+{
+  "compilerOptions": {
+    "allowJs": true
+  }
+}
+```
+
+## ‌စစ်ရန်
+
+```json
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "noEmit": true
+  }
+}
+```
+
+Check ‌သာ — emit ‌မလို။
+
+## ESLint ‌အတွက်
+
+```bash
+npm install -D typescript @typescript-eslint/parser
+```
+
+## ‌အဓိက အချက်များ
+- JSDoc — types ‌ထည့်
+- checkJs — JS ‌စစ်
+- allowJs — ‌ရော
+- ‌ချ ‌ချ — migration

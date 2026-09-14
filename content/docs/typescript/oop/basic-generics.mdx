@@ -1,0 +1,79 @@
+---
+title: "TS Basic Generics — TypeScript Basic Generics"
+description: "TypeScript generics — reusable types — T, constraints — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Generics — type parameter — ‌တစ်မျိုးထက် ‌သုံးရန်။
+
+## Identity function
+
+```ts
+function identity<Type>(value: Type): Type {
+  return value;
+}
+
+const a = identity<string>("hi"); // string
+const b = identity(42);           // number — inferred
+```
+
+## ‌ဘာကြောင့်
+`any` ‌များ — type ‌ဆုံး lost။ Generic — type ‌လိုက် ‌ကာကွယ်။
+
+```ts
+function first(arr: any[]): any {
+  return arr[0];
+}
+// ↓
+function first<T>(arr: T[]): T {
+  return arr[0];
+}
+```
+
+## Multiple types
+
+```ts
+function pair<L, R>(a: L, b: R): [L, R] {
+  return [a, b];
+}
+
+console.log(pair("x", 1));
+```
+
+## Constraints
+
+```ts
+interface HasLength {
+  length: number;
+}
+
+function longest<T extends HasLength>(a: T, b: T): T {
+  return a.length >= b.length ? a : b;
+}
+
+console.log(longest("abc", "de"));
+console.log(longest([1, 2, 3], [1]));
+```
+
+`extends` — shape ‌အာမခံ — `length` ‌ရှိမှသာ။
+
+## Generic class
+
+```ts
+class Box<T> {
+  constructor(private value: T) {}
+
+  get(): T {
+    return this.value;
+  }
+}
+
+const b = new Box<string>("x");
+console.log(b.get()); // x
+```
+
+## ‌အဓိက အချက်များ
+- `<T>` — type parameter
+- Inferred — ‌ရေး မလို
+- `extends` — constraint
+- Class generics

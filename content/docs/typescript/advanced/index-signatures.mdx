@@ -1,0 +1,61 @@
+---
+title: "TS Index Signatures — TypeScript Index Signatures"
+description: "TypeScript index signatures — dynamic keys — [key: string] — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Index signature — key ‌အ‌သေး ‌မရှိ — dynamic ‌လက်‌တွေ့ value types။
+
+## ‌အခြေ‌ခံ
+
+```ts
+type Dictionary = {
+  [key: string]: number;
+};
+
+const prices: Dictionary = {
+  apple: 500,
+  mango: 700,
+};
+```
+
+## Property ‌ထည့်
+
+```ts
+interface Config {
+  listen: () => void; // ‌တိ ‌သော property
+  [key: string]: unknown;
+}
+
+const c: Config = {
+  listen: () => {},
+  port: 3000,
+};
+```
+
+## Union value
+
+```ts
+type Bag = {
+  [key: string]: string | number;
+};
+
+const b: Bag = { name: "Aung", age: 22 };
+```
+
+## Readonly
+
+```ts
+type Cache = {
+  readonly [key: string]: string;
+};
+
+const cache: Cache = { a: "1" };
+// cache.a = "2"; // ❌
+```
+
+## ‌အဓိက အချက်များ
+- `[key: string]` — dynamic
+- Value types စီး
+- ‌ရှိ property — ‌တွဲ
+- readonly — ‌မပြောင်း

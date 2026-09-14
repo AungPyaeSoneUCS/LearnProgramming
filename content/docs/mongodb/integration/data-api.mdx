@@ -1,0 +1,68 @@
+---
+title: "MongoDB Data API — MongoDB Data API"
+description: "MongoDB Data API — HTTPS REST, fetch, endpoints — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Data API — Atlas REST API — HTTPS ‌ဖြင့် data ‌လုပ် — driver မလို။
+
+## Setup
+
+1. Atlas → Data API → Enable
+2. API Key ‌လုပ်
+3. Endpoint URL ‌ရ
+
+```
+https://ap-southeast-1.data.mongodb-api.com/app/APPID/endpoint/data/v1
+```
+
+## Fetch document
+
+```bash
+curl -X POST "ENDPOINT/action/findOne" \
+  -H "Content-Type: application/json" \
+  -H "api-key: YOUR_KEY" \
+  -d '{
+    "dataSource": "Cluster0",
+    "database": "mydb",
+    "collection": "users",
+    "filter": { "name": "Aung" }
+  }'
+```
+
+## JavaScript fetch
+
+```js
+const endpoint = "https://.../action/find";
+
+const res = await fetch(endpoint, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "api-key": "YOUR_KEY"
+  },
+  body: JSON.stringify({
+    dataSource: "Cluster0",
+    database: "mydb",
+    collection: "users",
+    filter: { age: { $gt: 18 } }
+  })
+});
+
+const data = await res.json();
+console.log(data);
+```
+
+## Actions
+
+```js
+// insertOne, insertMany
+// find, findOne, updateOne, updateMany
+// deleteOne, deleteMany, aggregate
+```
+
+## ‌အဓိက အချက်များ
+- HTTPS REST
+- api-key header
+- Actions — CRUD
+- ‌client — fetch/curl

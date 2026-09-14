@@ -1,0 +1,66 @@
+---
+title: "TS Conditional Types — TypeScript Conditional Types"
+description: "TypeScript conditional types — T extends U ? X : Y — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Conditional types — type-‌အလိုက် ‌ရွေး — `T extends U ? X : Y`။
+
+## ‌အခြေ‌ခံ
+
+```ts
+type IsNumber<T> = T extends number ? true : false;
+
+type A = IsNumber<42>;  // true
+type B = IsNumber<"x">; // false
+```
+
+## Extract
+
+```ts
+type Fruit = "apple" | "banana" | "cherry";
+
+type E = Extract<Fruit, "apple" | "banana">;
+// "apple" | "banana"
+```
+
+## Exclude
+
+```ts
+type F = Exclude<Fruit, "cherry">;
+// "apple" | "banana"
+```
+
+## Distributive
+
+```ts
+type ToArray<T> = T extends any ? T[] : never;
+
+type A = ToArray<string | number>;
+// string[] | number[] — ‌တစ်ခုချင်း
+```
+
+## Real use
+
+```ts
+interface ApiSuccess<T> {
+  status: 200;
+  data: T;
+}
+
+interface ApiError {
+  status: 500;
+  error: string;
+}
+
+type ApiResponse<T> =
+  T extends string ? ApiSuccess<T> | ApiError : never;
+
+type Res = ApiResponse<"user">;
+```
+
+## ‌အဓိက အချက်များ
+- `T extends U ? X : Y`
+- Extract/Exclude
+- Distributive — union
+- ‌ပုံစံ ‌ရှိ type ‌ပြောင်း

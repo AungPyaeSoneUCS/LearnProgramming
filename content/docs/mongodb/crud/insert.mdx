@@ -1,0 +1,52 @@
+---
+title: "MongoDB Insert — MongoDB Insert"
+description: "MongoDB insert — insertOne, insertMany, _id — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Document ‌ထည့် — 2 ‌နည်း။
+
+## insertOne
+
+```js
+db.users.insertOne({
+  name: "Aung",
+  age: 22,
+  city: "Yangon"
+});
+```
+
+Return:
+```js
+{ acknowledged: true, insertedId: ObjectId("...") }
+```
+
+## insertMany
+
+```js
+db.users.insertMany([
+  { name: "Su", age: 20 },
+  { name: "Bo", age: 25 },
+  { name: "Mya", age: 24 }
+]);
+```
+
+## ‌ဥပမာ: complete
+
+```js
+use shopdb;
+
+db.products.insertMany([
+  { name: "Keyboard", price: 30, stock: 10 },
+  { name: "Mouse", price: 15, stock: 25 },
+  { name: "Monitor", price: 200, stock: 5 }
+]);
+
+db.products.countDocuments(); // 3
+```
+
+## ‌အဓိက အချက်များ
+- insertOne — 1
+- insertMany — array
+- auto `_id`
+- acknowledged — result

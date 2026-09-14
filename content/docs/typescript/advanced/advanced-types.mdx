@@ -1,0 +1,57 @@
+---
+title: "TS Advanced Types — TypeScript Advanced Types"
+description: "TypeScript advanced types — intersection, type operators — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Advanced types — ‌ပေါင်း — ‌ပြောင်း — ‌ထုတ်။
+
+## Intersection (`&`)
+
+```ts
+type Person = { name: string };
+type Contact = { email: string };
+
+type Profile = Person & Contact;
+// name + email ‌နှစ်ခုလုံး
+
+const p: Profile = { name: "Aung", email: "a@a.com" };
+```
+
+## Conditional
+
+```ts
+type IsString<T> = T extends string ? "yes" : "no";
+
+type A = IsString<"hi">;  // "yes"
+type B = IsString<42>;    // "no"
+```
+
+## Indexed access
+
+```ts
+type Obj = { a: number; b: string };
+type BType = Obj["b"]; // string
+```
+
+## `typeof`
+
+```ts
+const config = { port: 3000, host: "0.0.0.0" };
+type Cfg = typeof config;
+// { port: number; host: string }
+```
+
+## Template literal types
+
+```ts
+type Path = `/api/${string}`;
+
+const p1: Path = "/api/users"; // ✓
+// const p2: Path = "/users"; // ❌
+```
+
+## ‌အဓိက အချက်များ
+- `&` intersection
+- extends conditional
+- Template literal — string pattern

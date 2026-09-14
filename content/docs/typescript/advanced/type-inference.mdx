@@ -1,0 +1,70 @@
+---
+title: "TS Type Inference — TypeScript Type Inference"
+description: "TypeScript type inference — how TS chooses types — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Inference — TS ‌က type ‌ကို code ‌မှ ဆုံးဖြတ်။
+
+## Variable
+
+```ts
+let x = 42;    // number
+let y = "str"; // string
+let z = true;  // boolean
+```
+
+## Function return
+
+```ts
+function add(a: number, b: number) {
+  return a + b; // number — inference
+}
+
+function mix(arr: string[]) {
+  return arr.length > 0 ? arr[0] : null;
+  // string | null
+}
+```
+
+## Best common type
+
+```ts
+const values = [1, 2, 3, "a"]; // (string | number)[]
+```
+
+## Contextual typing
+
+```ts
+const nums = [1, 2, 3];
+
+nums.forEach((n) => {
+  console.log(n.toFixed()); // n — number (context)
+});
+```
+
+## Object & generics
+
+```ts
+const obj = { name: "Aung", age: 22 };
+// { name: string; age: number }
+
+function first<T>(arr: T[]): T {
+  return arr[0];
+}
+
+const f = first([1, 2]); // number
+```
+
+## ‌လို အခါ — ‌ရေး
+
+```ts
+let data: string | null = null;
+data = "ready"; // union — ‌ကိုယ် ‌ရေး
+```
+
+## ‌အဓိက အချက်များ
+- Return/‌parameter — inference
+- Best common type
+- Contextual typing
+- ‌လို ‌အခါ annotation

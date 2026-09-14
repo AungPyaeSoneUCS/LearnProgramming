@@ -1,0 +1,55 @@
+---
+title: "TS Declaration Merging — TypeScript Declaration Merging"
+description: "TypeScript declaration merging — interface merge, namespace — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Declaration merging — ‌တူ ‌သော ‌ကြေညာ — ‌ပေါင်း။
+
+## Interface merge
+
+```ts
+interface User {
+  name: string;
+}
+
+interface User {
+  age: number;
+}
+
+const u: User = { name: "Aung", age: 22 }; // ✓
+```
+
+## ‌သုံးစွဲ — augment
+
+```ts
+interface Window {
+  appName?: string;
+}
+
+window.appName = "takkatho"; // ✓ ‌ထည့်
+```
+
+## Namespace + function
+
+```ts
+function parse(input: string): number[] {
+  return input.split(",").map(Number);
+}
+
+namespace parse {
+  export const version = "1.0";
+}
+
+parse.version; // ✓
+```
+
+## Generic ‌မှတ်
+- Interface — merge ‌ရ
+- Type alias — merge ‌မရ
+- ‌အ‌တူ — methods ‌ထပ်ရင် overload
+
+## ‌အဓိက အချက်များ
+- ‌တူ ‌သော ‌ကြေညာ — ‌ပေါင်း
+- Interface — ‌ရ
+- Augment — ‌အပြင် ‌ထည့်

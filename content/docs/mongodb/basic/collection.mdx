@@ -1,0 +1,42 @@
+---
+title: "MongoDB Collection — MongoDB Collection"
+description: "MongoDB collections — create, show, drop — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Collection — documents ‌စု — table ‌နှင့် တူ။
+
+## ‌အလိုအလျှောက်
+
+```js
+db.users.insertOne({ name: "Aung" });
+// users collection — ‌အလိုအလျှောက် ‌ဖန်တီး
+```
+
+## Explicit createCollection
+
+```js
+db.createCollection("orders");
+db.createCollection("logs", { capped: true, size: 5000 });
+```
+
+`capped` — size ‌ကန့်သတ် — old docs ‌ဖျက်။
+
+## Show & rename
+
+```js
+show collections
+db.logs.collection.renameCollection("logs2");
+```
+
+## Drop
+
+```js
+db.orders.drop(); // collection ‌ဖျက် — docs ‌အားလုံး
+```
+
+## ‌အဓိက အချက်များ
+- insert — auto create
+- createCollection ‌နှင့် options
+- renameCollection
+- drop

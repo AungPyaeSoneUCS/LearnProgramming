@@ -1,0 +1,48 @@
+---
+title: "MongoDB Create Database — MongoDB Create Db"
+description: "MongoDB create database — use, insert, show — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+MongoDB ‌တွင် database — ‌ဖန်တီး — lazy — data ‌ထည့်မှ ပေါ်။
+
+## use ‌ဖြင့်
+
+```js
+use mydb
+```
+
+`use` — ‌ရွေးသော database — ‌မရှိ memory မှာ ‌ဖန်တီး။
+
+## ‌ထည့် — actual create
+
+```js
+db.products.insertOne({
+  name: "Laptop",
+  price: 1000
+});
+```
+
+Database — first document ‌ထည့်မှ disk ‌ပေါ် ‌ပေါ်။
+
+## Show
+
+```js
+show dbs        // ‌အားလုံး
+db.getName()     // current
+db.dropDatabase() // ‌ဖျက်
+```
+
+## ‌သိုလှောင်မှု
+
+```
+mydb
+ └── products (collection)
+      └── documents
+```
+
+## ‌အဓိက အချက်များ
+- `use name`
+- insert — ‌ပေါ်
+- show dbs
+- dropDatabase — ‌ဖျက်

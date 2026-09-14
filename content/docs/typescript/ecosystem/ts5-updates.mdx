@@ -1,0 +1,64 @@
+---
+title: "TS 5 Updates — TypeScript 5 Updates"
+description: "TypeScript 5 — new features — decorators, const, tsconfig, ESM — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+TypeScript 5 — ‌အသစ်များ — speed, ergonomics။
+
+## Decorators standard
+
+```ts
+function log(target: Function) {
+  console.log("Created");
+}
+
+@log
+class Example {
+  run() {}
+}
+```
+
+## `const` type parameters
+
+```ts
+function makeConst<const T extends string>(value: T): T {
+  return value;
+}
+
+const x = makeConst("hello"); // literal type
+```
+
+## tsconfig improvements
+
+```json
+{
+  "compilerOptions": {
+    "noUncheckedSideEffectImports": true,
+    "module": "nodenext"
+  }
+}
+```
+
+## ESM support
+
+```ts
+import { readFile } from "node:fs";
+
+await readFile("file.txt", "utf8");
+```
+
+## `--erasableSyntaxOnly`
+
+Strict — enum/namespace ကဲ့သို့ runtime code ‌ထုတ် — ‌ရှောင်။
+
+## Speed improvements
+
+- Tsbuildinfo ‌ခွဲ
+- ‌ဆောင် caching — rewrite
+
+## ‌အဓိက အချက်များ
+- Standard decorators
+- `const` type args
+- ESM — ‌ကောင်း
+- ‌မြန်

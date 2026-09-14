@@ -1,0 +1,72 @@
+---
+title: "TS Decorators — TypeScript Decorators"
+description: "TypeScript decorators — classes, methods, properties — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Decorators — class ‌ပေါ်မှာ ‌ထည့် — metadata/logic — `@`။
+
+## tsconfig
+
+```json
+{
+  "compilerOptions": {
+    "experimentalDecorators": true
+  }
+}
+```
+
+## Class decorator
+
+```ts
+function sealed<T extends new (...args: any[]) => object>(
+  target: T,
+): T {
+  Object.seal(target);
+  return target;
+}
+
+@sealed
+class Car {
+  run(): void {}
+}
+```
+
+## Method decorator
+
+```ts
+function logged(
+  target: object,
+  key: string,
+  descriptor: PropertyDescriptor,
+): void {
+  const original = descriptor.value;
+  descriptor.value = function (...args: unknown[]) {
+    console.log(`call ${key}`);
+    return original.apply(this, args);
+  };
+}
+
+class Math {
+  @logged
+  add(a: number, b: number): number {
+    return a + b;
+  }
+}
+
+new Math().add(1, 2); // call add
+```
+
+## Parameter decorator
+
+```ts
+function inject(target: object, key: string, index: number): void {
+  console.log(`${key} param ${index}`);
+}
+```
+
+## ‌အဓိက အချက်များ
+- `@` — ‌ထည့်
+- ‌အပ်: ‌ထိန်း — ‌ခွင့်
+- Method — wrap
+- experimentalDecorators — ‌လို (TS5) standard ‌ရှိ

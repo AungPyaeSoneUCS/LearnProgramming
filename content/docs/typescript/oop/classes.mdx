@@ -1,0 +1,95 @@
+---
+title: "TS Classes — TypeScript Classes"
+description: "TypeScript classes — fields, modifiers, getter/setter, abstract — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Classes — OOP — access modifiers ဖြင့်။
+
+## ‌အခြေ‌ခံ
+
+```ts
+class Person {
+  name: string;
+  age: number;
+
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+
+  greet(): string {
+    return `Hi, ${this.name}`;
+  }
+}
+
+const p = new Person("Aung", 22);
+console.log(p.greet());
+```
+
+## Access modifiers
+
+```ts
+class Bank {
+  public owner: string;   // ‌အပြင် ရ
+  private balance: number; // class ‌ထဲသာ
+  protected pin: number;   // subclass ရ
+
+  constructor(owner: string, balance: number) {
+    this.owner = owner;
+    this.balance = balance;
+    this.pin = 1234;
+  }
+}
+```
+
+## Parameter properties
+
+```ts
+class User {
+  constructor(
+    public id: number,
+    private name: string,
+  ) {}
+}
+
+const u = new User(1, "Aung");
+console.log(u.id); // ✓
+// console.log(u.name); // ❌
+```
+
+## Getter & setter
+
+```ts
+class Temp {
+  private c = 0;
+
+  get f(): number {
+    return (this.c * 9) / 5 + 32;
+  }
+}
+```
+
+## Abstract
+
+```ts
+abstract class Shape {
+  abstract area(): number;
+}
+
+class Square extends Shape {
+  constructor(private s: number) {
+    super();
+  }
+
+  area(): number {
+    return this.s * this.s;
+  }
+}
+```
+
+## ‌အဓိက အချက်များ
+- Constructor
+- public/private/protected
+- Parameter properties
+- abstract — base class

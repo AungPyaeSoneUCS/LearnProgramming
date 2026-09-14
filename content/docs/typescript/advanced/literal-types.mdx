@@ -1,0 +1,54 @@
+---
+title: "TS Literal Types — TypeScript Literal Types"
+description: "TypeScript literal types — exact values, const, union — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Literal types — ‌အ‌တိအကျ value — string/number ‌အ‌သေး ‌သတ်။
+
+## ‌အခြေ‌ခံ
+
+```ts
+let direction: "left" | "right";
+direction = "left"; // ✓
+// direction = "up"; // ❌
+
+let status: "active" | "inactive";
+```
+
+## Literal with const
+
+```ts
+const name = "Aung";   // "Aung" — literal
+let city = "Yangon";   // string — widened
+```
+
+## Function parameter
+
+```ts
+function show(size: "small" | "medium" | "large"): void {
+  console.log(`Size: ${size}`);
+}
+
+show("medium");
+// show("huge"); // ❌
+```
+
+## ‌ပေါင်းသုံး
+
+```ts
+type Direction = "up" | "down" | "left" | "right";
+
+type Move = {
+  d: Direction;
+  steps: number;
+};
+
+const m: Move = { d: "up", steps: 2 };
+```
+
+## ‌အဓိက အချက်များ
+- Exact values
+- const — literal
+- Union — ‌ရွေး
+- Autocomplete — ‌ရ

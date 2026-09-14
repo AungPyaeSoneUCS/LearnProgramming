@@ -1,0 +1,64 @@
+---
+title: "TS Configuration — tsconfig.json"
+description: "TypeScript tsconfig — compilerOptions — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+`tsconfig.json` — TS ‌အလုပ်လုပ်မှု — ‌ထိန်း။
+
+## Create
+
+```bash
+npx tsc --init
+```
+
+## Common options
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
+```
+
+## Strict options
+
+```json
+{
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noFallthroughCasesInSwitch": true
+  }
+}
+```
+
+## Extends — base
+
+```json
+{
+  "extends": "@tsconfig/node20/tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist"
+  }
+}
+```
+
+## ‌အဓိက အချက်များ
+- `strict: true`
+- include/exclude
+- outDir/rootDir
+- Extends — preset

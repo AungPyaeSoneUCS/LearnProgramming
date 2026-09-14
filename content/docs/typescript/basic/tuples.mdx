@@ -1,0 +1,49 @@
+---
+title: "TS Tuples — TypeScript Tuples"
+description: "TypeScript tuples — fixed types, ‌အ‌နေအ‌ထား — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Tuple — array ‌အသေး — position ‌လိုက် types — ‌ဥပမာ။
+
+```ts
+let person: [string, number] = ["Aung", 22];
+```
+
+## ‌အခြေ‌ခံ
+
+```ts
+let tuple: [string, number, boolean] = ["hello", 10, true];
+
+const [str, num, bool] = tuple; // destructure
+```
+
+Position ‌လိုက် type — index 0 string, index 1 number။
+
+## ‌သုံးစွဲခြင်း
+
+```ts
+let rgb: [number, number, number] = [255, 0, 128];
+rgb[0]; // number
+
+type Pair = [string, string];
+const map: Pair[] = [
+  ["key", "value"],
+  ["name", "Aung"],
+];
+```
+
+## Tricks — named
+
+```ts
+type Result = [score: number, status: string];
+
+function play(): Result {
+  return [100, "win"];
+}
+```
+
+## ‌အဓိက အချက်များ
+- Fixed positions
+- types ‌တစ်ခုချင်း
+- Destructure ‌လွယ်

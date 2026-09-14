@@ -1,0 +1,68 @@
+---
+title: "TS Mapped Types — TypeScript Mapped Types"
+description: "TypeScript mapped types — iterate over keys — transform — ‌ဥပမာ။"
+autoNumbering: true
+---
+
+Mapped types — type ‌တစ်ခု၏ keys ‌ကို loop — ‌ပြောင်း။
+
+## ‌အခြေ‌ခံ
+
+```ts
+type Flags = {
+  a: boolean;
+  b: boolean;
+};
+
+type Optional<T> = {
+  [K in keyof T]?: T[K];
+};
+
+type OptFlags = Optional<Flags>;
+// { a?: boolean; b?: boolean }
+```
+
+## Readonly/Nullable
+
+```ts
+type ReadonlyAll<T> = {
+  readonly [K in keyof T]: T[K];
+};
+
+type Nullable<T> = {
+  [K in keyof T]: T[K] | null;
+};
+```
+
+## Add/remove modifiers
+
+```ts
+type Mutable<T> = {
+  -readonly [K in keyof T]: T[K];
+};
+
+type NonNullable<T> = {
+  [K in keyof T]: T[K];
+};
+```
+
+`-readonly` — ‌ဖယ်။ `?`/`-?` — optional ‌ထည့်/‌ဖယ်။
+
+## Remap keys (as)
+
+```ts
+type Getters<T> = {
+  [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K];
+};
+
+type Person = { name: string };
+
+type G = Getters<Person>;
+// { getName: () => string }
+```
+
+## ‌အဓိက အချက်များ
+- `[K in keyof T]`
+- Modifiers — readonly/`?`
+- `as` — rename
+- Transform types

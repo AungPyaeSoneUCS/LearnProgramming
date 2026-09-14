@@ -67,50 +67,145 @@
     ]
   },
   {
-    "label": "MongoDB အခြေခံ",
+    "label": "MongoDB",
     "items": [
       {
-        "label": "1. မိတ်ဆက်",
+        "label": "1. MongoDB Tutorial",
         "items": [
           {
-            "label": "MongoDB ဆိုတာ ဘာလဲ?",
-            "slug": "mongodb-course/introduction/what-is-mongodb"
+            "label": "သင်တန်းကြိုဆိုခြင်း",
+            "slug": "mongodb/index"
+          },
+          {
+            "label": "Get Started",
+            "slug": "mongodb/tutorial/get-started"
+          },
+          {
+            "label": "Query API",
+            "slug": "mongodb/tutorial/query-api"
           }
         ]
       },
       {
-        "label": "2. အခြေခံသဘောတရားများ",
+        "label": "2. MongoDB Database Basics",
         "items": [
           {
-            "label": "Collections နဲ့ Documents",
-            "slug": "mongodb-course/basics/collections-documents"
+            "label": "Create Database",
+            "slug": "mongodb/basic/create-db"
+          },
+          {
+            "label": "Collection",
+            "slug": "mongodb/basic/collection"
           }
         ]
       },
       {
-        "label": "3. ဒေတာစီမံခန့်ခွဲခြင်း (CRUD)",
+        "label": "3. MongoDB CRUD",
         "items": [
           {
-            "label": "Insert, Find, Update, Delete",
-            "slug": "mongodb-course/crud/insert-find-update-delete"
+            "label": "Insert",
+            "slug": "mongodb/crud/insert"
+          },
+          {
+            "label": "Find",
+            "slug": "mongodb/crud/find"
+          },
+          {
+            "label": "Update",
+            "slug": "mongodb/crud/update"
+          },
+          {
+            "label": "Delete",
+            "slug": "mongodb/crud/delete"
           }
         ]
       },
       {
-        "label": "4. အဆင့်မြင့် လုပ်ဆောင်ချက်များ",
+        "label": "4. MongoDB Operators",
         "items": [
           {
-            "label": "Indexing နဲ့ Aggregation",
-            "slug": "mongodb-course/advanced/indexing-aggregation"
+            "label": "Query Operators",
+            "slug": "mongodb/operators/query-operators"
+          },
+          {
+            "label": "Update Operators",
+            "slug": "mongodb/operators/update-operators"
           }
         ]
       },
       {
-        "label": "5. Cloud နှင့် လက်တွေ့အသုံးချခြင်း",
+        "label": "5. MongoDB Aggregations",
         "items": [
           {
-            "label": "MongoDB Atlas",
-            "slug": "mongodb-course/cloud/mongodb-atlas"
+            "label": "Aggregations",
+            "slug": "mongodb/aggregation/aggregations"
+          }
+        ]
+      },
+      {
+        "label": "6. MongoDB Indexing & Validation",
+        "items": [
+          {
+            "label": "Indexing/Search",
+            "slug": "mongodb/performance/indexing-search"
+          },
+          {
+            "label": "Validation",
+            "slug": "mongodb/performance/validation"
+          }
+        ]
+      },
+      {
+        "label": "7. MongoDB Data API & Drivers",
+        "items": [
+          {
+            "label": "Data API",
+            "slug": "mongodb/integration/data-api"
+          },
+          {
+            "label": "Drivers",
+            "slug": "mongodb/integration/drivers"
+          },
+          {
+            "label": "Node.js Driver",
+            "slug": "mongodb/integration/nodejs-driver"
+          },
+          {
+            "label": "Charts",
+            "slug": "mongodb/integration/charts"
+          }
+        ]
+      },
+      {
+        "label": "8. MongoDB Examples",
+        "items": [
+          {
+            "label": "Editor",
+            "slug": "mongodb/examples/editor"
+          },
+          {
+            "label": "Exercises",
+            "slug": "mongodb/examples/exercises"
+          },
+          {
+            "label": "Quiz",
+            "slug": "mongodb/examples/quiz"
+          },
+          {
+            "label": "Practice Problems",
+            "slug": "mongodb/examples/practice-problems"
+          },
+          {
+            "label": "Syllabus",
+            "slug": "mongodb/examples/syllabus"
+          },
+          {
+            "label": "Study Plan",
+            "slug": "mongodb/examples/study-plan"
+          },
+          {
+            "label": "Learning Outcomes",
+            "slug": "mongodb/examples/learning-outcomes"
           }
         ]
       }
@@ -411,87 +506,6 @@
       {
         "label": "Java မိတ်ဆက်",
         "slug": "java/index"
-      }
-    ]
-  },
-  {
-    "label": "TypeScript",
-    "items": [
-      {
-        "label": "Introduction",
-        "items": [
-          {
-            "label": "Welcome",
-            "slug": "typescript"
-          }
-        ]
-      },
-      {
-        "label": "Module 1: Basic Types",
-        "items": [
-          {
-            "label": "Basic Types",
-            "slug": "typescript/module-1"
-          }
-        ]
-      },
-      {
-        "label": "Module 2: Functions",
-        "items": [
-          {
-            "label": "Functions",
-            "slug": "typescript/module-2"
-          }
-        ]
-      },
-      {
-        "label": "Module 3: Objects & Interfaces",
-        "items": [
-          {
-            "label": "Objects & Interfaces",
-            "slug": "typescript/module-3"
-          }
-        ]
-      },
-      {
-        "label": "Module 4: Union & Intersection",
-        "items": [
-          {
-            "label": "Union & Intersection Types",
-            "slug": "typescript/module-4"
-          }
-        ]
-      },
-      {
-        "label": "Module 5: Enums & Tuples",
-        "items": [
-          {
-            "label": "Enums & Tuples",
-            "slug": "typescript/module-5"
-          }
-        ]
-      },
-      {
-        "label": "Module 6: Classes & OOP",
-        "items": [
-          {
-            "label": "Classes & OOP",
-            "slug": "typescript/module-6"
-          }
-        ]
-      },
-      {
-        "label": "Module 7: Mini Project",
-        "items": [
-          {
-            "label": "Todo List Logic",
-            "slug": "typescript/module-7"
-          }
-        ]
-      },
-      {
-        "label": "TypeScript မိတ်ဆက်",
-        "slug": "typescript/index"
       }
     ]
   },
@@ -4291,6 +4305,244 @@
           {
             "label": "Study Plan",
             "slug": "node/resources/study-plan"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "TypeScript",
+    "items": [
+      {
+        "label": "1. TypeScript Tutorial",
+        "items": [
+          {
+            "label": "သင်တန်းကြိုဆိုခြင်း",
+            "slug": "typescript/index"
+          },
+          {
+            "label": "Introduction",
+            "slug": "typescript/tutorial/intro"
+          },
+          {
+            "label": "Get Started",
+            "slug": "typescript/tutorial/get-started"
+          }
+        ]
+      },
+      {
+        "label": "2. TS Basic Types",
+        "items": [
+          {
+            "label": "Simple Types",
+            "slug": "typescript/basic/simple-types"
+          },
+          {
+            "label": "Explicit & Inference",
+            "slug": "typescript/basic/explicit-inference"
+          },
+          {
+            "label": "Special Types",
+            "slug": "typescript/basic/special-types"
+          },
+          {
+            "label": "Arrays",
+            "slug": "typescript/basic/arrays"
+          },
+          {
+            "label": "Tuples",
+            "slug": "typescript/basic/tuples"
+          },
+          {
+            "label": "Object Types",
+            "slug": "typescript/basic/object-types"
+          },
+          {
+            "label": "Enums",
+            "slug": "typescript/basic/enums"
+          },
+          {
+            "label": "Aliases & Interfaces",
+            "slug": "typescript/basic/aliases-interfaces"
+          },
+          {
+            "label": "Union Types",
+            "slug": "typescript/basic/union-types"
+          }
+        ]
+      },
+      {
+        "label": "3. TS Functions",
+        "items": [
+          {
+            "label": "Functions",
+            "slug": "typescript/functions/functions"
+          },
+          {
+            "label": "Casting",
+            "slug": "typescript/functions/casting"
+          }
+        ]
+      },
+      {
+        "label": "4. TS OOP & Generics",
+        "items": [
+          {
+            "label": "Classes",
+            "slug": "typescript/oop/classes"
+          },
+          {
+            "label": "Basic Generics",
+            "slug": "typescript/oop/basic-generics"
+          },
+          {
+            "label": "Utility Types",
+            "slug": "typescript/oop/utility-types"
+          },
+          {
+            "label": "Keyof",
+            "slug": "typescript/oop/keyof"
+          },
+          {
+            "label": "Null & Undefined",
+            "slug": "typescript/oop/null"
+          }
+        ]
+      },
+      {
+        "label": "5. TS Ecosystem & Tooling",
+        "items": [
+          {
+            "label": "Definitely Typed",
+            "slug": "typescript/ecosystem/definitely-typed"
+          },
+          {
+            "label": "TypeScript 5 Updates",
+            "slug": "typescript/ecosystem/ts5-updates"
+          },
+          {
+            "label": "Configuration",
+            "slug": "typescript/ecosystem/configuration"
+          },
+          {
+            "label": "With Node.js",
+            "slug": "typescript/ecosystem/with-node"
+          },
+          {
+            "label": "With React",
+            "slug": "typescript/ecosystem/with-react"
+          },
+          {
+            "label": "Tooling",
+            "slug": "typescript/ecosystem/tooling"
+          }
+        ]
+      },
+      {
+        "label": "6. TS Advanced Types",
+        "items": [
+          {
+            "label": "Advanced Types",
+            "slug": "typescript/advanced/advanced-types"
+          },
+          {
+            "label": "Type Guards",
+            "slug": "typescript/advanced/type-guards"
+          },
+          {
+            "label": "Conditional Types",
+            "slug": "typescript/advanced/conditional-types"
+          },
+          {
+            "label": "Mapped Types",
+            "slug": "typescript/advanced/mapped-types"
+          },
+          {
+            "label": "Type Inference",
+            "slug": "typescript/advanced/type-inference"
+          },
+          {
+            "label": "Literal Types",
+            "slug": "typescript/advanced/literal-types"
+          },
+          {
+            "label": "Namespaces",
+            "slug": "typescript/advanced/namespaces"
+          },
+          {
+            "label": "Index Signatures",
+            "slug": "typescript/advanced/index-signatures"
+          },
+          {
+            "label": "Declaration Merging",
+            "slug": "typescript/advanced/declaration-merging"
+          }
+        ]
+      },
+      {
+        "label": "7. TS Features",
+        "items": [
+          {
+            "label": "Async Programming",
+            "slug": "typescript/features/async-programming"
+          },
+          {
+            "label": "Decorators",
+            "slug": "typescript/features/decorators"
+          },
+          {
+            "label": "In JS Projects",
+            "slug": "typescript/features/in-js-projects"
+          },
+          {
+            "label": "Migration",
+            "slug": "typescript/features/migration"
+          },
+          {
+            "label": "Error Handling",
+            "slug": "typescript/features/error-handling"
+          },
+          {
+            "label": "Best Practices",
+            "slug": "typescript/features/best-practices"
+          }
+        ]
+      },
+      {
+        "label": "8. TypeScript Cert",
+        "items": [
+          {
+            "label": "Certificate",
+            "slug": "typescript/cert/certificate"
+          }
+        ]
+      },
+      {
+        "label": "9. TypeScript Examples",
+        "items": [
+          {
+            "label": "Editor",
+            "slug": "typescript/examples/editor"
+          },
+          {
+            "label": "Exercises",
+            "slug": "typescript/examples/exercises"
+          },
+          {
+            "label": "Quiz",
+            "slug": "typescript/examples/quiz"
+          },
+          {
+            "label": "Practice Problems",
+            "slug": "typescript/examples/practice-problems"
+          },
+          {
+            "label": "Syllabus",
+            "slug": "typescript/examples/syllabus"
+          },
+          {
+            "label": "Study Plan",
+            "slug": "typescript/examples/study-plan"
           }
         ]
       }
