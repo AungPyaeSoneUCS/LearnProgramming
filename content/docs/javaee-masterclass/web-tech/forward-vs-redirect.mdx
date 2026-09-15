@@ -1,0 +1,78 @@
+---
+title: "Navigating Requests"
+description: "RequestDispatcher ၏ forward() နှင့် sendRedirect() ကွာခြားချက်နှင့် server-side vs client-side navigation တို့ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Servlet များအကြား သို့မဟုတ် Servlet မှ JSP သို့ သွားရန် နည်းနှစ်မျိုးရှိပါသည်။ forward() သည် server တွင်းတွင် လမ်းကြောင်းပြောင်းပြီး sendRedirect() သည် browser ကို URL အသစ်သို့ ပို့ပါသည်။ နှစ်ခု၏ ကွာခြားချက်ကို သေချာနားလည်ရန် အရေးကြီးပါသည်။
+
+## forward() — Server-Side Navigation
+
+forward() ကို သုံးပါက request နှင့် response object များသည် နေရာအသစ်သို့ ပြောင်းပါပြီး browser ၏ URL သည် မပြောင်းလဲပါ။ Request attributes များကို ဆက်လက် မျှဝေနိုင်သောကြောင့် MVC pattern တွင် controller မှ view သို့ data ပို့ရန် အသုံးပြုပါသည်။
+
+```
+@WebServlet("/login-forward")
+public class LoginForwardServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        req.setAttribute("message", "Welcome back!");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/welcome.jsp");
+        dispatcher.forward(req, resp);
+    }
+}
+```
+
+► Browser သည် /login-forward ကို ဖွင့်ထားဆဲဖြစ်ပြီး မြင်ရသည့် content သည် welcome.jsp ၏ အကြောင်းအရာ ဖြစ်ပါသည်။ URL bar တွင် /welcome.jsp ဟု မပြောင်းပါ။
+
+## sendRedirect() — Client-Side Navigation
+
+sendRedirect() ကို သုံးပါက server က browser သို့ 302 status code နှင့်အတူ နေရာအသစ် ပို့ပြီး browser သည် request အသစ်တစ်ခုကို ပြန်လုပ်ပါသည်။ URL သည် သေချာပေါက် ပြောင်းလဲပြီး request attributes များ ဆုံးပါးသွားပါသည်။ Login ပြီးနောက် home page သို့ သွားရန် (PRG pattern) တွင် အသုံးပြုပါသည်။
+
+```
+@WebServlet("/login-legacy")
+public class LoginRedirectServlet extends HttpServlet {
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        boolean ok = "admin".equals(req.getParameter("user"));
+        if (ok) {
+            resp.sendRedirect("home");
+        } else {
+            resp.sendRedirect("login?error=1");
+        }
+    }
+}
+```
+
+► Login အောင်မြင်ပါက browser သည် /home သို့ ပြောင်းသွားမည် ဖြစ်ပြီး URL bar တွင် /home ကို မြင်ရပါမည်။
+
+## forward vs redirect နှိုင်းယှဉ်ဇယား
+
+| Aspect | forward() | sendRedirect() |
+| --- | --- | --- |
+| Location | Server အတွင်း | Client (browser) |
+| URL ပြောင်းလျှင် | မပြောင်း | ပြောင်း |
+| HTTP status | မရှိ (200) | 302 |
+| Request attributes | ထိန်းသိမ်း | ဆုံးရှုံး |
+| Performance | မြန် | နှေးနိုင်သည် |
+| အသုံးပြုပုံ | MVC view ပြခြင်း | Login ပြီးနောက် redirect |
+
+## Relative vs Absolute Path
+
+sendRedirect() တွင် context path မပါဘဲ URL နှင့် forward() တွင် context-relative path ကို သုံးရပါသည်။ Forward အတွက် path သည် Servlet context ၏ root မှ စတင်ရပြီး ရှေ့ဆုံးတွင် forward slash ထည့်ရပါသည်။
+
+```
+// redirect (absolute or relative to current URL)
+resp.sendRedirect("https://example.com/home");
+resp.sendRedirect("home");
+
+// forward (always starts with /)
+req.getRequestDispatcher("/WEB-INF/views/product.jsp").forward(req, resp);
+```
+
+► forward() တွင် /WEB-INF ၏ အတွင်းကို ထည့်ပေးပါက browser က တိုက်ရိုက် access မပြုလုပ်နိုင်၍ ပိုမို လုံခြုံပါသည်။
+
+forward နှင့် redirect ကို မှန်ကန်စွာ ခွဲခြား သုံးတတ်ပါက web application ၏ လမ်းကြောင်းထိန်းချုပ်မှုကို ကျွမ်းကျင်စွာ လုပ်ဆောင်နိုင်မည် ဖြစ်ပါသည်။

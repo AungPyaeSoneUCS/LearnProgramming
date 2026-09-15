@@ -1,0 +1,98 @@
+---
+title: "Session Timeout & Events"
+description: "session timeout ကို web.xml တွင် configure ပြုလုပ်ခြင်းနှင့် session creation ကို စောင့်ကြည့်သော HttpSessionListener အကြောင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Session သည် ထာဝရ အသက်မရှည်ပါ။ User သည် browser ကို မပိတ်ဘဲ ထားခဲ့သည့်တိုင်အောင် server သည် resource များကို သက်သာစေရန် session ကို အချိန်အတိုင်းအတာတစ်ခုအကြာတွင် ဖျက်ပစ်ပါသည်။ ထို timeout ကို configuration ဖြင့် ထိန်းချုပ်နိုင်ပြီး session event များကို listener ဖြင့် စောင့်ကြည့်နိုင်ပါသည်။
+
+## web.xml တွင် Timeout Configure ပြုလုပ်ခြင်း
+
+Session timeout ကို session-config အတွင်း session-timeout ဖြင့် သတ်မှတ်ပါသည်။ ယူနစ်မှာ မိနစ်များ ဖြစ်ပါသည်။
+
+```
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         version="6.0">
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+</web-app>
+```
+
+► ဤ configuration ဖြင့် session တစ်ခုသည် 30 မိနစ် inactive ဖြစ်ပါက server မှ အလိုအလျောက် ဖျက်ပစ်မည် ဖြစ်ပါသည်။
+
+## Session ID ပြောင်းလဲခြင်း နှင့် Auto-Refresh
+
+Programmatically timeout ကို session.setMaxInactiveInterval() ဖြင့် စက္ကန့်ယူနစ်ဖြင့် သတ်မှတ်နိုင်ပြီး 0 ထားပါက session ကို ဘယ်တော့မှ timeout မဖြစ်အောင် ပြုလုပ်နိုင်ပါသည်။
+
+```
+HttpSession session = request.getSession();
+session.setMaxInactiveInterval(600);  // 10 minutes in seconds
+
+// Get current timeout
+int seconds = session.getMaxInactiveInterval();
+System.out.println("Session timeout: " + seconds + " seconds");
+```
+
+► web.xml က global timeout ဖြစ်ပြီး setMaxInactiveInterval က session တစ်ခုချင်းအလိုက် သတ်မှတ်ခြင်း ဖြစ်ပါသည်။
+
+## HttpSessionListener ဖြင့် Events စောင့်ကြည့်ခြင်း
+
+HttpSessionListener က session ဖန်တီးခြင်း (sessionCreated) နှင့် session ဖျက်ခြင်း (sessionDestroyed) event များကို လက်ခံပါသည်။ Active user အရေအတွက် တွက်ရန် အသုံးပြုနိုင်ပါသည်။
+
+```
+@WebListener
+public class SessionCounterListener implements HttpSessionListener {
+
+    private static final AtomicInteger ACTIVE = new AtomicInteger();
+
+    @Override
+    public void sessionCreated(HttpSessionEvent se) {
+        ACTIVE.incrementAndGet();
+        System.out.println("Session created, active=" + ACTIVE.get());
+    }
+
+    @Override
+    public void sessionDestroyed(HttpSessionEvent se) {
+        ACTIVE.decrementAndGet();
+        System.out.println("Session destroyed, active=" + ACTIVE.get());
+    }
+
+    public static int getActiveCount() {
+        return ACTIVE.get();
+    }
+}
+```
+
+► Active session အရေအတွက်ကို listener တွင် ခြေရာခံထားပြီး dashboard ၌ ပြသနိုင်ပါသည်။
+
+## Listener များ၏ ခေါ်ချိန် (Trigger Points)
+
+Listener event များသည် အောက်ပါ အချိန်များတွင် ဖြစ်ပွားပါသည်။
+
+| Event | ဖြစ်ပွားချိန် |
+| --- | --- |
+| sessionCreated | Session အသစ် ဖန်တီးသောအခါ |
+| sessionDestroyed | Session timeout ဖြစ်ခြင်း၊ invalidate လုပ်ခြင်းတွင် |
+| attributeAdded | Session တွင် attribute အသစ် ထည့်သည့်အခါ |
+| attributeRemoved | Attribute ဖယ်သည့်အခါ |
+
+```
+@WebListener
+public class SessionAttributeListener implements HttpSessionAttributeListener {
+
+    @Override
+    public void attributeAdded(HttpSessionBindingEvent se) {
+        System.out.println("Added: " + se.getName() + "=" + se.getValue());
+    }
+
+    @Override
+    public void attributeRemoved(HttpSessionBindingEvent se) {
+        System.out.println("Removed: " + se.getName());
+    }
+}
+```
+
+► Cart ထဲတွင် item ထည့်ခြင်း၊ ဖယ်ခြင်းတို့ကို audit log ပြုလုပ်ရန် ဤ listener ကို အသုံးပြုနိုင်ပါသည်။
+
+Session timeout နှင့် events များကို သေချာ configure ပြုလုပ်ပါက server resource များကို ထိရောက်စွာ အသုံးချနိုင်မည် ဖြစ်ပါသည်။ နောက် section တွင် view layer ဖြစ်သော JSP နှင့် JSTL ကို လေ့လာပါမည်။

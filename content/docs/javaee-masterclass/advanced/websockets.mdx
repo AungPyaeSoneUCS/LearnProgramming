@@ -1,0 +1,105 @@
+---
+title: "WebSockets (Real-time Communication)"
+description: "@ServerEndpoint ၊ onOpen/onMessage/onClose များဖြင့် WebSocket realtime messaging ရေးသားနည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+WebSocket သည် client နှင့် server အကြား persistent၊ bidirectional connection ကို ပေးသော protocol ဖြစ်ပါသည်။ HTTP ကဲ့သို့ client က request လုပ်မှသာ ပြန်ပို့ရခြင်းမဟုတ်ပဲ server က အချိန်မရွေး message ပို့နိုင်ပါသည်။ Chat ၊ live notifications ၊ stock tickers ကဲ့သို့ realtime applications များအတွက် သင့်လျော်ပါသည်။
+
+## WebSocket Endpoint ဖန်တီးခြင်း
+
+@ServerEndpoint ဖြင့် endpoint path ကို သတ်မှတ်ပြီး lifecycle callbacks များကို implement ပြုလုပ်ပါသည်။
+
+```
+@ServerEndpoint("/chat")
+public class ChatServer {
+
+    private static final Set<Session> sessions =
+        ConcurrentHashMap.newKeySet();
+
+    @OnOpen
+    public void onOpen(Session session) {
+        sessions.add(session);
+        broadcast("A user joined");
+    }
+
+    @OnMessage
+    public void onMessage(String message, Session session) {
+        broadcast(session.getId() + ": " + message);
+    }
+
+    @OnClose
+    public void onClose(Session session) {
+        sessions.remove(session);
+        broadcast("A user left");
+    }
+
+    private void broadcast(String message) {
+        for (Session s : sessions) {
+            s.getBasicRemote().sendText(message);
+        }
+    }
+}
+```
+
+- @OnOpen — connection တည်ဆောက်ချိန် ခေါ်ပါသည်။
+- @OnMessage — message ရောက်ချိန် ခေါ်ပါသည်။
+- @OnClose — connection ပိတ်ချိန် ခေါ်ပါသည်။
+- sessions set တွင် active sessions များကို သိမ်းပြီး broadcast က အားလုံးကို message ပို့ပါသည်။
+
+## Client ဘက်မှ Connection
+
+JavaScript ဖြင့် WebSocket connection ဖွင့်ပြီး message ပို့/လက်ခံ ပြုလုပ်နိုင်ပါသည်။
+
+```
+const ws = new WebSocket("ws://localhost:8080/ws/chat");
+
+ws.onopen = function () {
+    ws.send("Hello server!");
+};
+
+ws.onmessage = function (event) {
+    console.log("Received: " + event.data);
+};
+
+ws.onclose = function () {
+    console.log("Connection closed");
+};
+```
+
+► Browser ဖြင့် endpoint ကို handshake လုပ်ပြီးနောက် text messages များကို full-duplex ပုံစံဖြင့် ပို့လက်ခံ နိုင်ပါသည်။
+
+## Session ၏ Response ခွဲခြားခြင်း
+
+Session object တွင် connection နှင့်ပတ်သက်သော info (id၊ query string၊ open sessions) ပါဝင်ပြီး session ကို သီးသန့် message ပို့လိုပါက getBasicRemote().sendText(...) ကို သုံးပါသည်။
+
+```
+@OnMessage
+public void replyTo(String who, Session session) throws IOException {
+    session.getBasicRemote().sendText("Echo: " + who);
+}
+```
+
+► Message ပို့သည့် session ကိုသာ သီးသန့် response ပြန်၍ ပို့ပါသည်။ Broadcast ပြုလိုပါက session များအားလုံးကို loop လုပ်ရပါသည်။
+
+## WebSocket Interceptors ၊
+
+@ServerEndpoint တွင် decoders ၊ encoders များကို သတ်မှတ်၍ object → JSON အလိုအလျောက် ပြောင်းနိုင်ပါသည်။
+
+```
+@ServerEndpoint(
+    value = "/prices",
+    encoders = { PriceEncoder.class },
+    decoders = { PriceDecoder.class })
+public class PriceEndpoint {
+
+    @OnMessage
+    public void onMessage(Price price, Session session) {
+        // receives Price object directly from JSON
+    }
+}
+```
+
+► Encoder က object ကို JSON string အဖြစ်ပြောင်းပြီး Decoder က JSON မှ object သို့ ပြောင်းပါသည်။ ထို့ကြောင့် @OnMessage method ထဲတွင် object ကို တိုက်ရိုက် လက်ခံရရှိပါသည်။
+
+Realtime features များကို WebSockets ဖြင့် ရိုးရှင်းစွာ ထည့်သွင်းနိုင်ပါသည်။ နောက် module တွင် application security ကို လေ့လာပါမည်။

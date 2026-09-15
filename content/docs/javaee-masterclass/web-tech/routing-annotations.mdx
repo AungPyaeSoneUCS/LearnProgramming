@@ -1,0 +1,72 @@
+---
+title: "Routing & Annotations"
+description: "@WebServlet annotation နှင့် URL mapping များ၊ web.xml deployment descriptor အသုံးပြုနည်းတို့ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Servlet တစ်ခုကို URL pattern တစ်ခုနှင့် ချိတ်ဆက်ရန် Java 5 မှစ၍ annotation ကို အသုံးပြုနိုင်ပြီး ရှေးနည်းဖြစ်သော web.xml descriptor ကိုလည်း အသုံးပြုနိုင်ပါသည်။
+
+## @WebServlet Annotation
+
+@WebServlet ကို Servlet class ပေါ်တွင် တပ်ခြင်းဖြင့် URL mapping ကို သတ်မှတ်ပါသည်။ URL pattern တစ်ခုထက်ပို၍ သတ်မှတ်နိုင်ပြီး name နှင့် loadOnStartup တို့ကိုလည်း configure ပြုလုပ်နိုင်ပါသည်။
+
+```
+@WebServlet(
+    name = "ProductServlet",
+    urlPatterns = { "/products", "/items", "/catalog/*" },
+    loadOnStartup = 1
+)
+public class ProductServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        resp.setContentType("text/html");
+        resp.getWriter().println("<h2>Product catalog</h2>");
+    }
+}
+```
+
+► /products ၊ /items သို့မဟုတ် /catalog/xyz ဟု ခေါ်ဆိုမှုအားလုံးသည် ဤ Servlet သို့ ရောက်ရှိပါမည်။ loadOnStartup = 1 ထားသဖြင့် server start ချိန်တွင် ချက်ချင်း load ဖြစ်ပါသည်။
+
+## URL Pattern များ
+
+URL pattern သုံးမျိုး ခွဲခြားနိုင်ပါသည်။ * သည် wildcard ဖြစ်၍ / ဖြင့် စတင်သောအခါ path mapping ဖြစ်ပြီး *. ဖြင့် အဆုံးသတ်ပါက extension mapping ဖြစ်ပါသည်။
+
+- Exact: /products
+- Path: /catalog/*
+- Extension: *.do
+
+```
+@WebServlet("*.do")
+public class LegacyServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        resp.getWriter().println("Legacy action executed");
+    }
+}
+```
+
+► http://localhost:8080/mywebapp/login.do ကဲ့သို့သော request အားလုံးသည် ဤ Servlet သို့ ရောက်ပါသည်။
+
+## web.xml Deployment Descriptor
+
+web.xml တွင် servlet-mapping ကို ရေးသားခြင်းဖြင့် annotation မထည့်ပဲလည်း routing ပြုလုပ်နိုင်ပါသည်။ ခေတ်မီသော နည်းမှာ annotation ဖြစ်ပြီး web.xml ကို ရှေးနည်းအဖြစ် သတ်မှတ်ပါသည်။
+
+```
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         version="6.0">
+    <servlet>
+        <servlet-name>hello</servlet-name>
+        <servlet-class>com.example.HelloServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>hello</servlet-name>
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+</web-app>
+```
+
+► /hello URL ရောက်လာပါက com.example.HelloServlet class ကို run ပေးမည် ဖြစ်ပါသည်။
+
+Annotation နှင့် web.xml နှစ်မျိုးလုံးသည် mapping ကို လုပ်ဆောင်ပေးသော်လည်း annotation ကို ပိုမို အသုံးပြုလာပါသည်။ နောက် module တွင် forward နှင့် redirect ကွာခြားချက်ကို လေ့လာပါမည်။

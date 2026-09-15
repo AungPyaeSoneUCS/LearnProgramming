@@ -1,0 +1,90 @@
+---
+title: "Scriptlets ၏ ဆိုးကျိုးများနှင့် Implicit Objects"
+description: "Scriptlet များ၏ ဆိုးကျိုးနှင့် out, request, response, session စသည့် implicit objects များကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+JSP ၏ ရှေးနည်းဖြစ်သော scriptlet က HTML အတွင်းတွင် Java code ကို တိုက်ရိုက် ရေးသားစေပါသည်။ ၎င်းသည် ရေးရလွယ်ကူသော်လည်း business logic နှင့် presentation ရောထွေးကာ maintain ရခက်စေသောကြောင့် ခေတ်မီ နည်းများတွင် မသုံးတော့ပါ။
+
+## Scriptlet ဆိုတာ ဘာလဲ
+
+Scriptlet သည် `<% %>` အတွင်းတွင် ရေးသားသော Java code ဖြစ်ပြီး request တိုင်းတွင် ၎င်းနေရာ၌ execute ပြုလုပ်ပါသည်။
+
+```
+<%
+    String name = request.getParameter("name");
+    if (name == null) name = "Guest";
+    out.println("<p>Hello, " + name + "</p>");
+%>
+```
+
+► Code သည် အလုပ်လုပ်သော်လည်း စမ်းသပ်ရန်ခက်ခဲပြီး designer နှင့် developer အကြား ခွဲရန်လည်း မလွယ်ကူတော့ပါ။
+
+## Scriptlet ၏ ဆိုးကျိုးများ
+
+Scriptlet ကို သုံးခြင်းသည် အောက်ပါအတိုင်း ပြဿနာများ ဖြစ်စေပါသည်။
+
+- Business logic နှင့် view ရောထွေးခြင်း။
+- Unit test ပြုလုပ်ရခက်ခဲခြင်း။
+- XSS (cross-site scripting) အန္တရာယ် မြင့်မားခြင်း။
+- JSP file ကို ရှည်လျားစေပြီး ပြုပြင်ရခက်ခြင်း။
+
+```
+<!-- BAD: business logic inside the view -->
+<%
+    double total = 0;
+    String[] items = request.getParameterValues("item");
+    for (String it : items) {
+        total += Double.parseDouble(it);
+    }
+%>
+<p>Total: <%= total %></p>
+```
+
+► Total တွက်ချက်ခြင်းကို JSP တွင် ထည့်ရေးမည့်အစား Servlet (controller) တွင် ရေးကာ JSP က value ကို ပြသရန်သာ focus လုပ်သင့်ပါသည်။
+
+## Implicit Objects
+
+JSP တွင် container က ကြိုတင် ဖန်တီးပေးထားသော implicit objects များ ရှိပါသည်။ ၎င်းတို့ကို declaration မလုပ်ဘဲ တိုက်ရိုက် အသုံးပြုနိုင်ပါသည်။
+
+| Object | အဓိပ္ပာယ် |
+| --- | --- |
+| request | HttpServletRequest |
+| response | HttpServletResponse |
+| out | JspWriter (output buffer) |
+| session | HttpSession |
+| application | ServletContext |
+| pageContext | PageContext (အားလုံး၏ အချက်အချာ) |
+
+```
+<%
+    response.setContentType("text/html");
+    String user = (String) session.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+    out.println("<p>Logged in as: " + user + "</p>");
+%>
+```
+
+► Implicit object များဖြင့် request, response, session များကို တိုက်ရိုက် ထိန်းချုပ်နိုင်ပါသည်။
+
+## Modern နည်းလမ်း — JSP ကို View အဖြစ်သာ
+
+ခေတ်မီသော နည်းတွင် JSP တွင် Java logic မရေးဘဲ data ကို request attribute မှရယူ၍ EL သို့မဟုတ် JSTL ဖြင့် ပြသပါသည်။
+
+```
+<!-- JSP as pure view: no scriptlets -->
+<%@ page language="java" %>
+<html>
+<body>
+    <h2>Hello</h2>
+    <p>Welcome to the modern JSP approach.</p>
+</body>
+</html>
+```
+
+► View ကို သန့်ရှင်းအောင် ထားကာ logic အားလုံးကို Servlet / EJB ဘက်တွင် ခွဲထားပါသည်။
+
+Scriptlet ကို ရှောင်ပြီး view ကို သန့်ရှင်းစွာ ထားခြင်းသည် enterprise application ၏ အခြေခံ စည်းကမ်းတစ်ခု ဖြစ်ပါသည်။ နောက် module တွင် EL ကို လေ့လာပါမည်။

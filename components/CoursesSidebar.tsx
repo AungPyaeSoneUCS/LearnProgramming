@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { ChevronRight } from "lucide-react";
 
 import type { NavCourse, NavLeaf, NavGroup } from "@/lib/lessons";
 
@@ -18,28 +20,47 @@ function collectLeaves(nodes: NavCourse["items"]): NavLeaf[] {
     if ("slug" in node && typeof node.slug === "string") {
       out.push({ label: node.label, slug: node.slug });
     } else if ("items" in node) {
-      out.push(...collectLeaves(node.items));
+      out.push(...collectLeaves(node.items as NavCourse["items"]));
     }
   }
   return out;
+}
+
+/** Path (dot notation of group indices) to the group that contains `slug`. */
+function groupPathOf(nodes: NavCourse["items"], slug: string, prefix = ""): string | null {
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+    if ("slug" in node) {
+      if (node.slug === slug) return prefix;
+    } else {
+      const childPath = groupPathOf(
+        (node as NavGroup).items as NavCourse["items"],
+        slug,
+        prefix ? `${prefix}.${i}` : `${i}`,
+      );
+      if (childPath !== null) return childPath;
+    }
+  }
+  return null;
 }
 
 function toLessonHref(slug: string): string {
   return "/courses/" + slug.split("/").map(encodeURIComponent).join("/");
 }
 
-function NavLeafLink({ slug, label, activeSlug }: { slug: string; label: string; activeSlug: string }) {
+function NavLeafLink({ slug, label, activeSlug, indent }: { slug: string; label: string; activeSlug: string; indent: number }) {
   const active = slug === activeSlug;
   return (
     <a
       href={toLessonHref(slug)}
       aria-current={active ? "page" : undefined}
       className={
-        "relative block rounded-lg py-1.5 pl-8 pr-2 text-[13px] leading-snug no-underline transition-colors " +
+        "relative block rounded-lg py-1.5 pr-2 text-[13px] leading-snug no-underline transition-colors " +
         (active
           ? "bg-amber-500/10 font-bold text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
           : "text-muted-foreground hover:bg-muted/60 hover:text-foreground")
       }
+      style={{ paddingLeft: `${12 + indent}px` }}
     >
       {active && (
         <span
@@ -52,6 +73,67 @@ function NavLeafLink({ slug, label, activeSlug }: { slug: string; label: string;
   );
 }
 
+interface GroupSectionProps {
+  label: string;
+  items: NavCourse["items"];
+  path: string;
+  indent: number;
+  openSet: Set<string>;
+  onToggle: (path: string) => void;
+  activeSlug: string;
+}
+
+function GroupSection({ label, items, path, indent, openSet, onToggle, activeSlug }: GroupSectionProps) {
+  const open = openSet.has(path);
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={() => onToggle(path)}
+        aria-expanded={open}
+        aria-controls={`sidebar-group-${path.replaceAll(".", "-")}`}
+        className="group flex w-full items-center gap-1 rounded-lg px-2 py-1.5 text-left text-[11px] font-bold uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
+        style={{ paddingLeft: `${10 + indent}px` }}
+      >
+        <ChevronRight
+          aria-hidden="true"
+          className={`h-3.5 w-3.5 shrink-0 transition-transform duration-200 ${
+            open ? "rotate-90 text-amber-500" : "text-muted-foreground/50"
+          }`}
+        />
+        <span className="truncate">{label}</span>
+      </button>
+      <div
+        id={`sidebar-group-${path.replaceAll(".", "-")}`}
+        className={`grid transition-[grid-template-rows] duration-200 ease-out ${
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <ul className="min-h-0 space-y-0.5 overflow-hidden">
+          {items.map((item, i) =>
+            isLeaf(item) ? (
+              <li key={item.slug}>
+                <NavLeafLink slug={item.slug} label={item.label} activeSlug={activeSlug} indent={indent + 4} />
+              </li>
+            ) : (
+              <GroupSection
+                key={(item as NavGroup).label + "-" + i}
+                label={(item as NavGroup).label}
+                items={(item as NavGroup).items as NavCourse["items"]}
+                path={path + "." + i}
+                indent={indent + 2}
+                openSet={openSet}
+                onToggle={onToggle}
+                activeSlug={activeSlug}
+              />
+            ),
+          )}
+        </ul>
+      </div>
+    </li>
+  );
+}
+
 export default function CoursesSidebar({ courses }: CoursesSidebarProps) {
   const pathname = usePathname();
   const activeSlug = pathname.replace(/^\/courses\//, "");
@@ -59,12 +141,37 @@ export default function CoursesSidebar({ courses }: CoursesSidebarProps) {
   const activeCourse = courses.find((course) =>
     collectLeaves(course.items).some((leaf) => leaf.slug === activeSlug),
   );
+
+  const activeGroupPath = activeCourse ? groupPathOf(activeCourse.items, activeSlug) : null;
+  const ancestorPaths = new Set<string>();
+  if (activeGroupPath) {
+    const parts = activeGroupPath.split(".");
+    for (let i = 1; i <= parts.length; i++) ancestorPaths.add(parts.slice(0, i).join("."));
+  }
+
+  const [openSet, setOpenSet] = useState<Set<string>>(ancestorPaths);
+
+  const [prevSlug, setPrevSlug] = useState<string>(activeSlug);
+  if (prevSlug !== activeSlug) {
+    setPrevSlug(activeSlug);
+    setOpenSet((prev) => new Set([...prev, ...ancestorPaths]));
+  }
+
   if (!activeCourse) return null;
 
   const intro = collectLeaves(activeCourse.items)[0];
 
+  const toggle = (path: string) => {
+    setOpenSet((prev) => {
+      const next = new Set(prev);
+      if (next.has(path)) next.delete(path);
+      else next.add(path);
+      return next;
+    });
+  };
+
   return (
-    <nav className="text-sm">
+    <nav className="text-sm" aria-label="Course navigation">
       <div>
         <h3 className="mb-1.5 px-2 text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
           {intro ? (
@@ -79,24 +186,22 @@ export default function CoursesSidebar({ courses }: CoursesSidebarProps) {
           )}
         </h3>
         <ul className="space-y-0.5">
-          {activeCourse.items.map((item) =>
+          {activeCourse.items.map((item, i) =>
             isLeaf(item) ? (
               <li key={item.slug}>
-                <NavLeafLink slug={item.slug} label={item.label} activeSlug={activeSlug} />
+                <NavLeafLink slug={item.slug} label={item.label} activeSlug={activeSlug} indent={8} />
               </li>
             ) : (
-              <li key={item.label}>
-                <p className="px-2 pb-0.5 pt-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/80">
-                  {item.label}
-                </p>
-                <ul className="mt-1 space-y-0.5">
-                  {item.items.map((leaf) => (
-                    <li key={leaf.slug}>
-                      <NavLeafLink slug={leaf.slug} label={leaf.label} activeSlug={activeSlug} />
-                    </li>
-                  ))}
-                </ul>
-              </li>
+              <GroupSection
+                key={(item as NavGroup).label + "-" + i}
+                label={(item as NavGroup).label}
+                items={(item as NavGroup).items as NavCourse["items"]}
+                path={`${i}`}
+                indent={0}
+                openSet={openSet}
+                onToggle={toggle}
+                activeSlug={activeSlug}
+              />
             ),
           )}
         </ul>

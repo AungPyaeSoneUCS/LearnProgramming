@@ -1,0 +1,123 @@
+---
+title: "Security & Authentication"
+description: "JAAS realms ၊ @RolesAllowed နှင့် declarative security များဖြင့် enterprise application ကို လုံခြုံစေနည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Enterprise applications များတွင် security သည် အရေးကြီးဆုံး ကဏ္ဍတစ်ခု ဖြစ်ပါသည်။ Java EE တွင် container-managed security ကို သုံး၍ authentication (ဘယ်သူဖြစ်ကြောင်း စစ်ဆေးခြင်း) နှင့် authorization (ဘာတွေ လုပ်ခွင့်ရှိကြောင်း စစ်ဆေးခြင်း) ကို စီမံပေးပါသည်။
+
+## Security Domain / Realm
+
+Application server တွင် users ၊ roles များကို realm (security domain) တွင် သိမ်းပြီး container က login ကို စစ်ဆေးပါသည်။ WildFly တွင် DatabaseUsersRolesLoginModule၊ LDAP realms စသဖြင့် ရွေးချယ်နိုင်ပါသည်။
+
+```
+<subsystem xmlns="urn:jboss:domain:security:2.0">
+    <security-domains>
+        <security-domain name="shop-realm" cache-type="default">
+            <authentication>
+                <login-module code="DatabaseUsersRolesLoginModule"
+                              flag="required">
+                    <module-option name="dsJndiName"
+                        value="java:/shopDS"/>
+                    <module-option name="usersQuery"
+                        value="select password from users where username=?"/>
+                    <module-option name="rolesQuery"
+                        value="select role, 'Roles' from user_roles where username=?"/>
+                </login-module>
+            </authentication>
+        </security-domain>
+    </security-domains>
+</subsystem>
+```
+
+► ဤ realm သည် database မှ users နှင့် roles များကို ဖတ်၍ login စစ်ဆေးပါသည်။ Container က password hashing စသည့်အသေးစိတ်ကို ကိုင်တွယ်ပေးပါသည်။
+
+## Declarative Authorization — @RolesAllowed
+
+Method သို့မဟုတ် class level တွင် @RolesAllowed ထည့်၍ ခွင့်ပြုထားသော roles များကိုသာ access ခွင့်ပြုပါသည်။ Servlet security annotations ကိုလည်း သုံးနိုင်ပါသည်။
+
+```
+@Path("/admin")
+@RolesAllowed("ADMIN")
+public class AdminResource {
+
+    @GET
+    public List<String> getAllUsers() {
+        return userService.listAll();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @RolesAllowed({"ADMIN", "SUPERVISOR"})
+    public void deleteUser(@PathParam("id") Long id) {
+        userService.delete(id);
+    }
+}
+```
+
+► class တစ်ခုလုံးကို ADMIN အတွက်သာ ဖွင့်ပြီး delete method ကို ADMIN နှင့် SUPERVISOR နှစ်ခုလုံး ခွင့်ပြုပါသည်။ Role မရှိသော user က ခေါ်ပါက 403 Forbidden ရပါသည်။
+
+## Servlet ရှိ Security Constraints
+
+web.xml တွင် URL patterns များအတွက် auth constraints ကို သတ်မှတ်၍ declarative security ပြုလုပ်နိုင်ပါသည်။
+
+```
+<security-constraint>
+    <web-resource-collection>
+        <web-resource-name>Protected area</web-resource-name>
+        <url-pattern>/members/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+        <role-name>USER</role-name>
+    </auth-constraint>
+</security-constraint>
+
+<login-config>
+    <auth-method>FORM</auth-method>
+    <realm-name>shop-realm</realm-name>
+    <form-login-config>
+        <form-login-page>/login.jsp</form-login-page>
+        <form-error-page>/login-error.jsp</form-error-page>
+    </form-login-config>
+</login-config>
+
+<security-role>
+    <role-name>USER</role-name>
+</security-role>
+```
+
+► /members/* ကို USER role ရှိသူများသာ access လုပ်နိုင်ပြီး FORM authentication ဖြင့် login page ကို ပြပါသည်။
+
+## Programmatic Security — Principal
+
+Login ပြုလုပ်ထားသော user ၏ info ကို programmatically ရယူလိုပါက HttpServletRequest ၏ getUserPrincipal() နှင့် isUserInRole() ကို သုံးပါသည်။
+
+```
+@GET
+public String whoAmI(@Context SecurityContext sec) {
+    if (sec.getUserPrincipal() != null) {
+        return "Logged in as: " + sec.getUserPrincipal().getName();
+    }
+    return "Anonymous";
+}
+```
+
+► JAX-RS ရှိ SecurityContext ဖြင့် current user principal နှင့် roles များကို ရယူနိုင်ပါသည်။
+
+## Secure Data ထိန်းသိမ်းခြင်း
+
+Passwords များကို plain text သိမ်းခြင်းမညီ။ BCrypt ကဲ့သို့ hashing ၊ HTTPS ဖြင့် ပို့ဆောင်ခြင်း လုပ်သင့်ပါသည်။ JPA entity တွင် @Transient နှင့် @JsonbTransient ဖြင့် password field ကို မထုတ်ရန် သေချာထားပါသည်။
+
+```
+public String hashPassword(String raw) {
+    return BCrypt.hashpw(raw, BCrypt.gensalt(12));
+}
+
+public boolean checkPassword(String raw, String hash) {
+    return BCrypt.checkpw(raw, hash);
+}
+```
+
+► သိမ်းထားသော password က hash သာဖြစ်ပြီး raw password ကို ဘယ်တော့မှ DB တွင် မထည့်ပါ။ Salt ပါသော bcrypt ကြောင့် ၎ hash တူညီသော user နှစ်ယောက် မျှမရှိပါ။
+
+Security သည် layers အားလုံးတွင် စဉ်းစားရမည့် အကြောင်းအရာဖြစ်ပြီး container-level ၊ code-level အရ security ကို ပေါင်းစပ်ထားသင့်ပါသည်။ နောက် section တွင် capstone project ဖြင့် သင်ယူခဲ့သမျှကို ပေါင်းစည်း၍ လက်တွေ့ရေးပါမည်။

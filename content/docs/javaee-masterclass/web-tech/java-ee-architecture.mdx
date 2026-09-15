@@ -1,0 +1,66 @@
+---
+title: "Java EE Architecture"
+description: "Java EE ၏ multi-tier architecture ဖြစ်သော Web Tier, Business Tier, EIS Tier များနှင့် Web Container နှင့် App Server ကွာခြားချက်တို့ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Java EE (ယနေ့ Jakarta EE) သည် layered (tier) architecture ကို အခြေခံထားပါသည်။ Client မှ request ရောက်လာသည့်အခါ web tier က အစ လက်ခံပြီး business tier သို့ ပို့လွှတ်ကာ database (EIS) tier နှင့် ဆက်သွယ်ပါသည်။ ဤကဲ့သို့ ခွဲခြားထားခြင်းကြောင့် စနစ်ကို ပြုပြင်ရလွယ်ကူပြီး စမ်းသပ်ရာတွင်လည်း အဆင်ပြေပါသည်။
+
+## Web Tier (Presentation Layer)
+
+Web tier သည်အသုံးပြုသူ (browser / mobile app) နှင့် ဆက်သွယ်သည့် အလွှာ ဖြစ်ပြီး Servlet များ၊ JSP များ၊ JSF များကို ထားရှိပါသည်။ ဤအလွှာ၏ အလုပ်မှာ HTTP request များကို လက်ခံခြင်း၊ business tier ကို ခေါ်ခြင်းနှင့် response ကို format ပြုလုပ်ပြန်ပို့ခြင်း ဖြစ်ပါသည်။
+
+```
+public class LoginServlet extends HttpServlet {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        String username = req.getParameter("username");
+        resp.getWriter().println("Welcome, " + username);
+    }
+}
+```
+
+► Browser မှ username ထည့်၍ POST ပြုလုပ်သောအခါ "Welcome, John" စသည့်စာသား ပြန်လည်ရရှိမည် ဖြစ်ပါသည်။
+
+## Business Tier
+
+Business tier တွင် Enterprise JavaBeans (EJB) များနှင့် business logic တို့ ထားရှိပါသည်။ ဤအလွှာတွင် transaction, security, thread-safety ကဲ့သို့သော ဝန်ဆောင်မှုများကို container က အလိုအလျောက် စီမံပေးပါသည်။
+
+```
+@Stateless
+public class LoginService {
+    public boolean authenticate(String user, String password) {
+        return "admin".equals(user) && "secret".equals(password);
+    }
+}
+```
+
+► ဤ bean ကို web tier ရှိ Servlet မှ `@Inject` ဖြင့် ခေါ်သုံးပြီး authentication ကို business logic အဖြစ် ခွဲထားပါသည်။
+
+## EIS Tier (Enterprise Information System)
+
+EIS tier သည် database (MySQL, PostgreSQL) သို့မဟုတ် legacy system များ ဖြစ်ပါသည်။ Java EE application သည် JDBC သို့မဟုတ် JPA ကို အသုံးပြု၍ ဤအလွှာနှင့် ချိတ်ဆက်ပါသည်။ Web tier သည် database ကို တိုက်ရိုက် မထိဘဲ business tier မှတစ်ဆင့် သာလျှင် ဆက်သွယ်ရပါသည်။
+
+## Web Container vs Application Server
+
+Web Container (Tomcat, Jetty) သည် Servlet နှင့် JSP များကိုသာ execute ပြုလုပ်နိုင်ပြီး EJB, JPA, JMS ကဲ့သို့သော enterprise features များကို မပံ့ပိုးနိုင်ပါ။ Application Server (WildFly, GlassFish, Payara) သည် အားလုံးကို ပံ့ပိုးပေးပါသည်။ Tomcat တစ်ခုတည်းဖြင့် Servlet/Filters/JSP သင်ယူရန် လုံလောက်သော်လည်း EJB သင်ယူရန် application server တစ်ခု လိုအပ်ပါသည်။
+
+## Tier သုံးခု၏ ဆက်သွယ်မှု
+
+```
+Client (Browser)
+   |
+   v
+Web Tier  ---> Servlet (accepts HTTP, calls service)
+   |
+   v
+Business Tier ---> EJB (transactions, business rules)
+   |
+   v
+EIS Tier  ---> Database (JDBC/JPA)
+```
+
+► Request သည် အပေါ်မှ အောက်သို့ စီးဆင်းပြီး response သည် ပြောင်းပြန် ပြန်လာပါသည်။ ဤပုံစံဖြင့် presentation နှင့် business logic ကို ခွဲခြားထား၍ စနစ်ကို လွယ်ကူစွာ scale လုပ်နိုင်ပါသည်။
+
+Java EE architecture ကို နားလည်ခြင်းသည် ကျန်သော module အားလုံး၏ အခြေခံ ဖြစ်ပါသည်။ နောက် module တွင် လက်တွေ့ environment တစ်ခုကို ပြင်ဆင်တော့မည် ဖြစ်ပါသည်။

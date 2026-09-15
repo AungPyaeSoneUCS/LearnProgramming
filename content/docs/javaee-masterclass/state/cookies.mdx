@@ -1,0 +1,88 @@
+---
+title: "Working with Cookies"
+description: "Cookie ဖန်တီးခြင်း၊ Max-Age သတ်မှတ်ခြင်း၊ Cookie များကို ဖတ်ခြင်းနှင့် security ဆိုင်ရာ ကိစ္စများကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Cookie သည် server က browser ၏ hard drive တွင် သိမ်းပေးသော အလွန်သေးငယ်သည့် text piece တစ်ခု ဖြစ်ပါသည်။ Server က cookie ကို ပေးပို့ပြီးနောက် browser သည် နောက် request တိုင်းတွင် ၎င်း cookie ကို server သို့ ပြန်ပို့ပေးသောကြောင့် server က user ကို မှတ်မိစေပါသည်။
+
+## Cookie ဖန်တီးပြီး ပေးပို့ခြင်း
+
+Cookie အသစ်တစ်ခုကို name ၊ value ဖြင့် ဖန်တီး၍ response.addCookie() ဖြင့် browser သို့ ပို့ပါသည်။ setMaxAge() ဖြင့် cookie ၏ သက်တမ်း (စက္ကန့်ဖြင့်) ကို သတ်မှတ်ပါသည်။
+
+```
+@WebServlet("/remember")
+public class RememberMeServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        Cookie cookie = new Cookie("username", "john_doe");
+        cookie.setMaxAge(60 * 60 * 24 * 7); // 7 days
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        resp.addCookie(cookie);
+        resp.getWriter().println("Cookie saved for 7 days");
+    }
+}
+```
+
+► Browser ၏ developer tools (Application tab) တွင် username cookie ကို expiration date 7 ရက်နှင့် တွေ့ရမည် ဖြစ်ပါသည်။
+
+## Cookie ဖတ်ခြင်း
+
+Browser က cookie ကို ပြန်ပို့လာပါက request.getCookies() ဖြင့် cookie array အားလုံးကို ရယူပြီး name နှင့် နှိုင်းယှဉ်ကာ value ကို ထုတ်ပါသည်။
+
+```
+@WebServlet("/profile")
+public class ProfileServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        String username = null;
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("username")) {
+                    username = c.getValue();
+                }
+            }
+        }
+        resp.getWriter().println(username != null
+            ? "Welcome back, " + username : "No remember cookie");
+    }
+}
+```
+
+► ရှေ့က save လုပ်ထားသော cookie ရှိပါက "Welcome back, john_doe" ဟု ပြသမည် ဖြစ်ပြီး မရှိပါက "No remember cookie" ဟု ပြပါမည်။
+
+## Cookie ကို ဖျက်ခြင်း
+
+Cookie ကို ဖျက်ရန် Max-Age ကို 0 သတ်မှတ်၍ တူညီသော name နှင့် path ဖြင့် ပြန်ပို့ရပါသည်။ Logout လုပ်သည့်အခါ ဤနည်းကို အသုံးပြုပါသည်။
+
+```
+Cookie killCookie = new Cookie("username", "");
+killCookie.setMaxAge(0);
+killCookie.setPath("/");
+resp.addCookie(killCookie);
+```
+
+► Browser သည် ၎င်း cookie ကို ချက်ချင်း ဖျက်ပစ်မည် ဖြစ်ပါသည်။
+
+## Cookie Security
+
+Cookie တွင် password ကဲ့သို့သော sensitive data ကို မသိမ်းပါနှင့်။ value သည် user က အတုအယောင် ပြုလုပ်နိုင်သောကြောင့် sessionId ကဲ့သို့ unpredictable value များကိုသာ သိမ်းပြီး အရေးကြီးသော data ကို server ဘက်တွင် ထားရပါသည်။ setSecure(true) ကို သုံးပါက HTTPS တွင်သာ cookie ကို ပို့ပါသည်။
+
+```
+Cookie sessionCookie = new Cookie("JSESSIONID_SUPPORT", "xyz123abc");
+sessionCookie.setSecure(true);      // HTTPS only
+sessionCookie.setHttpOnly(true);    // JavaScript cannot read it
+sessionCookie.setAttribute("SameSite", "Strict");
+sessionCookie.setMaxAge(3600);
+resp.addCookie(sessionCookie);
+```
+
+► ဤနည်းဖြင့် cross-site scripting (XSS) နှင့် CSRF တိုက်ခိုက်မှုများကို လျှော့ချနိုင်ပါသည်။
+
+Cookie ကို မှန်ကန်စွာ အသုံးပြုပါက user experience ကို မြှင့်တင်နိုင်ပြီး လုံခြုံရေးကိုပါ ကာကွယ်နိုင်ပါသည်။ Cookie ကို browser တွင် disable လုပ်ထားသည့်အခါအတွက် နောက် module တွင် URL rewriting ကို လေ့လာပါမည်။

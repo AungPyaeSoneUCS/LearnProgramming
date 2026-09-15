@@ -1,0 +1,74 @@
+---
+title: "URL Rewriting"
+description: "Browser cookies ကို disable လုပ်ထားသည့်အခါ session ID ကို URL တွင် ထည့်သွောငှင့် state ထိန်းသိမ်းနည်းဖြစ်သော URL rewriting အကြောင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Session tracking အတွက် အဓိက နည်းလမ်းမှာ cookie ဖြစ်သော်လည်း user သည် browser တွင် cookie ကို disable လုပ်ထားနိုင်ပါသည်။ ထိုအခြေအနေတွင် session ID ကို URL ၏ query string အတွင်း ထည့်ပေးခြင်း (URL rewriting) ဖြင့် session ကို ဆက်လက် ထိန်းသိမ်းပါသည်။
+
+## response.encodeURL() အသုံးပြုခြင်း
+
+Servlet တွင် session ကို ဖန်တီးပြီးနောက် link များကို response.encodeURL() ဖြင့် ထုတ်ပေးပါသည်။ Cookie ကို သုံးနိုင်လျှင် encodeURL() သည် URL ကို မပြောင်းဘဲ ပြန်ပေးပြီး cookie မရသောအခါ session ID ကို URL တွင် ထည့်ပေးပါသည်။
+
+```
+@WebServlet("/cart")
+public class CartServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        HttpSession session = req.getSession(true);
+        resp.setContentType("text/html");
+        resp.getWriter().println("<a href='" +
+            resp.encodeURL("checkout") + "'>Checkout</a>");
+    }
+}
+```
+
+► Cookie ရပါက href သည် checkout ၊ cookie မရပါက href သည် checkout;jsessionid=ABC123 ၏ ပုံစံအတိုင်း session ID ပါဝင်ပါသည်။
+
+## JSP တွင် URL Rewriting
+
+JSP page တွင် link ၊ form action များကို `response.encodeURL()` ဖြင့် ဖြတ်ပေးပါသည်။ JSP ၏ implicit object ဖြစ်သော response ကို တိုက်ရိုက် သုံးနိုင်ပါသည်။
+
+```
+<%@ page contentType="text/html" %>
+<html>
+<body>
+    <h2>Shopping Cart</h2>
+    <a href="<%= response.encodeURL("checkout.jsp") %>">Proceed to Checkout</a>
+    <form action="<%= response.encodeURL("cart") %>" method="post">
+        <input type="hidden" name="productId" value="10" />
+        <input type="submit" value="Add to Cart" />
+    </form>
+</body>
+</html>
+```
+
+► Cookie disabled ပါက form action တွင်လည်း jsessionid ပါဝင်လာပြီး session ကို ဆက်လက် ထိန်းသိမ်းနိုင်ပါသည်။
+
+## Session ID ၏ ပုံစံ
+
+URL rewriting ပြုလုပ်သောအခါ session ID သည် URL ၏ အောက်ပါပုံစံအတိုင်း တွဲပါလာပါသည်။
+
+```
+http://localhost:8080/shop/checkout;jsessionid=9E1B2C3D4E5F6A7B8C
+```
+
+► ;jsessionid= ဟူသော segment တွင် server က ထုတ်ပေးထားသော unique ID ပါဝင်ပြီး ၎င်းကို server ဘက်တွင် session data နှင့် ချိတ်ဆက်ထားပါသည်။
+
+## URL Rewriting ၏ အားနည်းချက်များ
+
+URL rewriting သည် session tracking ကို ဆက်လက် လုပ်ပေးသော်လည်း session ID ကို URL တွင် ပါအောင်ထားရသောကြောင့် security အားနည်းပါသည်။ Link ကို သူများထံ share လုပ်ပါက session ကိုပင် မျှဝေမိစေနိုင်ပါသည်။ ထို့ကြောင့် အရေးကြီးသော application တွင် cookie ကို default အားဖြင့် သုံးပြီး URL rewriting ကို backup အနေဖြင့်သာ သုံးသင့်ပါသည်။
+
+```
+// Cookie tracking already enabled by default in Tomcat
+// To disable session cookies entirely (for demo only):
+<Context sessionCookieName="JSESSIONID">
+  ...
+</Context>
+```
+
+► Context configuration ကို ပြုလုပ်မလုပ်မီ cookie ကို default အတိုင်းသာ အသုံးပြုပြီး URL rewriting ကို နောက်ဆုံးနည်းလမ်း (fallback) အဖြစ် ထားသင့်ပါသည်။
+
+URL rewriting သည် cookie မရသော environments များတွင် session ဆက်လက် အလုပ်လုပ်ရန် အာမခံပေးပါသည်။ နောက် module တွင် HttpSession API အသေးစိတ်ကို လေ့လာပါမည်။

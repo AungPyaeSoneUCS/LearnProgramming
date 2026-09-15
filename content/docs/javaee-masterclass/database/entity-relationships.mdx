@@ -1,0 +1,127 @@
+---
+title: "Entity Relationships"
+description: "@OneToMany, @ManyToOne, @OneToOne, @ManyToMany စသော relationships များကို JPA တွင် mapping ပြုလုပ်နည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Database tables များကြားတွင် foreign keys ဖြင့် ဆက်သွယ်သကဲ့သို့ JPA entity များကြားတွင်လည်း associations များ ရှိပါသည်။ Cardinality ပုံစံများဖြစ်သော OneToOne, OneToMany, ManyToOne, ManyToMany စသော relationships များဖြင့် သတ်မှတ်ပါသည်။
+
+## ManyToOne (Orders → Member)
+
+ဥပမာ member တစ်ယောက်တွင် order အများအပြားရှိပြီး order တစ်ခုက member တစ်ယောက်တည်း ပိုင်ဆိုင်ပါက ManyToOne relationship ဖြစ်ပါသည်။
+
+```
+@Entity
+public class PurchaseOrder implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private LocalDate orderDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+}
+```
+
+► @JoinColumn က foreign key column ကို သတ်မှတ်ပြီး fetch = LAZY က member ကို လိုအပ်မှ ဖတ်ပါသည်။
+
+## OneToMany (Member → Orders)
+
+Owner အဖက် (Member) တွင် collection field ဖြင့် ပြန်ချိတ်ပါသည်။ mappedBy ဖြင့် ဘယ်ဘက်က many ဘက်ကို ညွှန်ပါသည်။
+
+```
+@Entity
+public class Member implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL,
+               orphanRemoval = true)
+    private List<PurchaseOrder> orders = new ArrayList<>();
+}
+```
+
+- cascade = ALL — member ကို သိမ်းသည့်အခါ orders များပါ သိမ်းဆည်းပါသည်။
+- orphanRemoval = true — list မှ order ဖယ်လိုက်လျှင် DB မှပါ ဖျက်ပါသည်။
+- mappedBy = "member" — foreign key ကို PurchaseOrder ဘက်က စီမံပါသည်။
+
+## OneToOne (Member → Address)
+
+Member တစ်ယောက်တွင် address တစ်ခုတည်း ရှိပါက OneToOne ဖြစ်ပါသည်။
+
+```
+@Entity
+public class Address implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String city;
+    private String street;
+}
+
+@Entity
+public class Member implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address homeAddress;
+}
+```
+
+► Member table တွင် address_id ကို foreign key အနေဖြင့် သိမ်းပြီး ဆက်သွယ်ပါသည်။
+
+## ManyToMany (Member → Role)
+
+Member အများအပြားတွင် role အများအပြား ရှိနိုင်သော (compound) relationship ဖြစ်ပါသည်။ Join table ကို JPA က အလိုအလျောက် ဖန်တီးပါသည်။
+
+```
+@Entity
+public class Member implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToMany
+    @JoinTable(name = "member_roles",
+               joinColumns = @JoinColumn(name = "member_id"),
+               inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles = new ArrayList<>();
+}
+
+@Entity
+public class Role implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+}
+```
+
+► member_roles ဆိုသော join table ထဲတွင် member_id နှင့် role_id များဖြင့် ဆက်သွယ်ပါသည်။
+
+## Relationship သုံးစဉ် သတိပြုရန်
+
+Lazy loading၊ JSON serialization ပြုလုပ်ရာတွင် circular reference ပြဿနာ ရှိတတ်ပါသည်။ Jackson တွင် @JsonIgnore ထည့်၍ တစ်ဘက်ကို ဖျောက်နိုင်ပါသည်။
+
+```
+public class Member implements Serializable {
+
+    @OneToMany(mappedBy = "member")
+    @JsonIgnore
+    private List<PurchaseOrder> orders = new ArrayList<>();
+}
+```
+
+► @JsonIgnore ဖြင့် REST response များတွင် infinite recursion ကို ကာကွယ်ပါသည်။
+
+Relationships အမျိုးမျိုးကို မှန်ကန်စွာ mapping ပြုလုပ်ခြင်းသည် database design ကို အမှန်တကယ် ထင်ဟပ်စေပါသည်။ နောက် module တွင် JPQL ဖြင့် query မေးနည်းကို လေ့လာပါမည်။

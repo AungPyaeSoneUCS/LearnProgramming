@@ -1,0 +1,99 @@
+---
+title: "EJB Timers & Scheduling"
+description: "@Schedule annotation နှင့် TimerService ဖြင့် cron-like background tasks ရေးသားနည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+EJB များတွင် periodic tasks (inventory refresh, report generation, email notification) များကို လုပ်ရန် timer mechanism ပါဝင်ပါသည်။ @Schedule annotation ဖြင့် cron-like timing သတ်မှတ်နိုင်ပြီး TimerService ဖြင့် programmatically လည်း ဖန်တီးနိုင်ပါသည်။
+
+## @Schedule Annotation ဖြင့် Fixed Task
+
+@Schedule ၏ second, minute, hour နှင့် dayOfWeek စသည့် attributes များဖြင့် task ကို သတ်မှတ်ပါသည်။ ပြေးချိန် minute တိုင်း ဆိုပါက @Schedule(minute = "*", hour = "*") ဖြစ်ပါသည်။
+
+```
+@Singleton
+public class ReportSchedulerBean {
+
+    @Schedule(minute = "*/30", hour = "*", persistent = false)
+    public void generateReport() {
+        System.out.println("Generating hourly report at " + new Date());
+        // create and send report
+    }
+}
+```
+
+► နာရီတိုင်း 30 မိနစ် (0:00, 0:30, 1:00 ...) တွင်နေရာ schedule ပြုလုပ်ထားသော method ကို run ပါသည်။ persistent=false ထားသဖြင့် server restart ရှိလျှင် timer ကို ပြန်စရန် မလိုပါ။
+
+## Schedule ပုံစံ အမျိုးမျိုး
+
+| Expression | အဓိပ္ပာယ် |
+| --- | --- |
+| @Schedule(dayOfMonth = "1") | လစဉ် ၁ရက်နေ့ |
+| @Schedule(hour = "8") | နေ့စဉ် နံနက် 8 နာရီ |
+| @Schedule(dayOfWeek = "Mon-Fri") | တနင်္လာမှ သောကြာ |
+| @Schedule(second = "*/15") | 15 စက္ကန့်တစ်ကြိမ် |
+
+```
+@Singleton
+public class NotificationBean {
+
+    @Schedule(hour = "9", dayOfWeek = "Mon-Sat")
+    public void sendDailyDigest() {
+        System.out.println("Sending daily digest to subscribers");
+    }
+}
+```
+
+► ဤ timer သည် နံနက် 9 နာရီ (Mon–Sat) တိုင်း digest ကို ပို့ပေးပါသည်။
+
+## TimerService ဖြင့် Programmatic Timer
+
+@Schedule က static timing ဖြစ်ပြီး TimerService က runtime တွင် dynamic timer ဖန်တီးနိုင်ပါသည်။ ScheduleTimer method က timeout ဖြစ်သည့်အခါ ခေါ်ပါသည်။
+
+```
+@Singleton
+public class RetentionBean {
+
+    @Resource
+    private TimerService timerService;
+
+    public void startRetentionJob(long intervalMillis) {
+        timerService.createTimer(intervalMillis, "cleanup-old-records");
+    }
+
+    @Timeout
+    public void cleanup(Timer timer) {
+        System.out.println("Running retention job: " + timer.getInfo());
+        // delete old records
+    }
+
+    public void stopAll() {
+        for (Timer t : timerService.getTimers()) {
+            t.cancel();
+        }
+    }
+}
+```
+
+► createTimer() ဖြင့် interval သတ်မှတ်၍ timer စတင်ပြီး timeout ဖြစ်တိုင်း @Timeout method ကို ခေါ်ပါသည်။ getTimers() ဖြင့် ရှိသမျှ timer များကို ဖျက်နိုင်ပါသည်။
+
+## Timeout Events လက်ခံခြင်း
+
+Timer တစ်ခုခု timeout ရသည့်အခါ @Timeout၊ @Schedule သို့မဟုတ် @AroundTimeout interceptor ကဲ့သို့ callback များ ရှိပါသည်။ Transaction အတွင်းတွင် timeout method ကို ခေါ်ပြီး database update များကို atomic လုပ်ဆောင်ပါသည်။
+
+```
+@Singleton
+public class CleanupBean {
+
+    @Schedule(hour = "3")
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void runCleanup() {
+        // delete expired sessions
+        System.out.println("Standard cleanup done");
+    }
+}
+```
+
+► ည 3 နာရီတွင် expired data များကို ရှင်းသော task ကို run ပြီး ကိုယ်ပိုင် transaction အတွင်းတွင် execute လုပ်ပါသည်။
+
+EJB timers များဖြင့် စနစ်အတွက် background maintenance tasks များကို စိတ်ချရစွာ schedule ပြုလုပ်နိုင်ပါသည်။ နောက် section တွင် JPA ဖြင့် database ကို object-oriented နည်းဖြင့် ဆက်သွယ်နည်းကို လေ့လာပါမည်။

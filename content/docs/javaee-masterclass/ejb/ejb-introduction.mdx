@@ -1,0 +1,69 @@
+---
+title: "EJB Introduction"
+description: "EJB သည် ဆိုတာဘာလဲ၊ EJB Container ၏ အခန်းကဏ္ဍနှင့် အကျိုးကျေးဇူးများကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Enterprise JavaBeans (EJB) သည် business logic ကို ရေးသားရန် သုံးသော server-side component architecture တစ်ခု ဖြစ်ပါသည်။ EJB ကို application server (WildFly, GlassFish, Payara) အတွင်း deploy ပြုလုပ်ပြီး container က thread-safety, transaction, security ကဲ့သို့သော ရှုပ်ထွေးသော ဝန်ဆောင်မှုများကို အလိုအလျောက် စီမံပေးပါသည်။
+
+## EJB ကို ဘာလို့ သုံးတာလဲ
+
+Web application တစ်ခုတွင် ရိုးရိုး POJO ဖြင့် business logic ရေးနိုင်သော်လည်း enterprise scale တွင် transaction ထိန်းချုပ်ခြင်း၊ concurrency ၊ security စသည့် ပြဿနာများ ရှုပ်ထွေးလာပါသည်။ EJB container က ထို cross-cutting concerns များကို သင့်ကိုယ်စား စီမံပေးပါသည်။
+
+- Automatic transaction management (CMT)။
+- Thread-safety နှင့် pooling။
+- Declarative security (@RolesAllowed)။
+- Concurrency control နှင့် instance pooling။
+
+## EJB Container ၏ အခန်းကဏ္ဍ
+
+EJB container သည် bean များ၏ lifecycle ကို စီမံပေးပြီး client မှ ခေါ်သော method များကို intercept လုပ်၍ transaction, security, pooling များကို ထည့်ပေးပါသည်။ Client သည် remote interface (သို့) local interface မှတစ်ဆင့် bean ကို ခေါ်ပါသည်။
+
+```
+public interface GreetingService {
+    String greet(String name);
+}
+```
+
+## Session Bean တစ်ခု ဥပမာ
+
+Session bean သည် client အတွက် logic ကို run ပေးသော bean ဖြစ်ပြီး interface ကို implement ပြုလုပ်ပါသည်။
+
+```
+@Stateless
+public class GreetingServiceBean implements GreetingService {
+
+    @Override
+    public String greet(String name) {
+        return "Hello, " + name + "!";
+    }
+}
+```
+
+► @Stateless bean ကို Servlet ၏ @Inject ဖြင့် ခေါ်၍ greet() method ကို အသုံးပြုနိုင်ပါသည်။ Container သည် method call တစ်ခုစီအတွက် instance ကို ပြန်လည်အသုံးပြုပြီး state ကို မသိမ်းဆည်းပါ။
+
+## Client မှ EJB ခေါ်ခြင်း
+
+Servlet မှ EJB ကို @Inject ဖြင့် ထိုးသွင်း၍ method call ပြုလုပ်ပါသည်။
+
+```
+@WebServlet("/greet")
+public class GreetServlet extends HttpServlet {
+
+    @Inject
+    private GreetingService greeting;
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        resp.getWriter().println(greeting.greet(req.getParameter("name")));
+    }
+}
+```
+
+► Bean ကို container မှ manage ပြုလုပ်သောကြောင့် developer က instance ဖန်တီးရန် မလိုအပ်ပါ။
+
+## EJB ရှိသင့်သည် နေရာများ
+
+ငွေရေးကြေးရေး လွှဲပြောင်းခြင်း၊ order checkout စသည့် business-critical logic များကို EJB တွင် ထားရန်သင့်ပြီး web tier က controller အဖြစ်သာ ဆောင်ရွက်ရန် သင့်ပါသည်။
+
+EJB သည် Java EE ၏ business tier ၏ အဓိကကျောရိုး ဖြစ်ပါသည်။ နောက် module တွင် session bean အမျိုးအစားသုံးမျိုးကို လေ့လာပါမည်။

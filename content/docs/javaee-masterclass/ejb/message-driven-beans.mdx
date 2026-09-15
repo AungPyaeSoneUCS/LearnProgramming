@@ -1,0 +1,113 @@
+---
+title: "Message-Driven Beans"
+description: "JMS (Java Message Service) နှင့် Message-Driven Beans ဖြင့် asynchronous processing ပြုလုပ်နည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Message-Driven Bean (MDB) သည် JMS queue မှ message ကို စောင့်ကြည့်၍ ရောက်လာသောအခါ onMessage() method ကို အလိုအလျောက် ခေါ်ပေးသော asynchronous bean တစ်ခု ဖြစ်ပါသည်။ Client သည် bean ကို တိုက်ရိုက် မခေါ်ပဲ message သာလျှင် ပို့ပြီး processing ကို container က စီစဉ်ပေးပါသည်။
+
+## JMS ဆိုသည်မှာ ဘာလဲ
+
+JMS က producer နှင့် consumer နှစ်ဖက်ကို အချိန်မတိုက်ဆိုင်စေဘဲ message များကို ပို့ဆောင်ပေးပါသည်။ Queue သည် point-to-point (message တစ်ခုကို consumer တစ်ယောက်)၊ Topic သည် publish/subscribe (message တစ်ခုကို အများအပြား လက်ခံနိုင်) ပုံစံ ဖြစ်ပါသည်။
+
+```
+Producer --send--> [Queue: orders] --receive--> MDB (OrderProcessorBean)
+Producer --publish--> [Topic: news] --> MDB A, MDB B, ...
+```
+
+## Message-Driven Bean ဖန်တီးခြင်း
+
+MDB က MessageListener interface ကို implement ပြုလုပ်ပြီး activationConfig တွင် destination နှင့် message type ကို သတ်မှတ်ပါသည်။
+
+```
+@MessageDriven(
+    activationConfig = {
+        @ActivationConfigProperty(propertyName = "destination",
+            propertyValue = "java:/jms/queue/orders"),
+        @ActivationConfigProperty(propertyName = "destinationType",
+            propertyValue = "javax.jms.Queue")
+    }
+)
+public class OrderProcessorBean implements MessageListener {
+
+    @Override
+    public void onMessage(Message message) {
+        try {
+            TextMessage text = (TextMessage) message;
+            System.out.println("Order received: " + text.getText());
+            // process order asynchronously
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+► Queue ထဲသို့ message ရောက်သည်နှင့် container က onMessage() ကို ခေါ်ပေးပြီး order processing ကို ၎င်း thread တွင် run ပါသည်။ Client သည် စောင့်စရာမလို၍ asynchronous ဖြစ်ပါသည်။
+
+## Producer မှ Message ပို့ခြင်း
+
+Servlet တွင် JMS producer ကို သုံး၍ queue သို့ message ပို့နိုင်ပါသည်။ Message ပို့ခြင်းသည် မြန်ဆန်ပြီး processing ကို MDB က နောက်ကြောင်းတွင် ဆောင်ရွက်ပါသည်။
+
+```
+@WebServlet("/order")
+public class OrderServlet extends HttpServlet {
+
+    @Resource(mappedName = "java:/jms/queue/orders")
+    private ConnectionFactory connectionFactory;
+
+    @Resource(mappedName = "java:/jms/queue/orders")
+    private Queue ordersQueue;
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        try (Connection conn = connectionFactory.createConnection();
+             Session sess = conn.createSession(false, Session.AUTO_ACKNOWLEDGE)) {
+            MessageProducer producer = sess.createProducer(ordersQueue);
+            TextMessage msg = sess.createTextMessage(req.getParameter("orderId"));
+            producer.send(msg);
+            resp.getWriter().println("Order placed: " + req.getParameter("orderId"));
+        } catch (JMSException e) {
+            throw new IOException(e);
+        }
+    }
+}
+```
+
+► Client ကို "Order placed" ဟု ချက်ချင်း ပြန်ပြပြီး နောက်ခံတွင် MDB က order ကို processing ပြုလုပ်ပါသည်။
+
+## Message Properties — Topic ဥပမာ
+
+Topic subscription သည် သတင်းထုတ်လွှင့်မှုကဲ့သို့ broadcast scenario တွင် သုံးပါသည်။**Multiple subscribers** များက တစ်ပြိုင်နက် message ကို လက်ခံနိုင်ပါသည်။
+
+```
+@MessageDriven(
+    activationConfig = {
+        @ActivationConfigProperty(propertyName = "destination",
+            propertyValue = "java:/jms/topic/news"),
+        @ActivationConfigProperty(propertyName = "destinationType",
+            propertyValue = "javax.jms.Topic")
+    }
+)
+public class NewsListenerBean implements MessageListener {
+
+    public void onMessage(Message message) {
+        try {
+            System.out.println("News: " + ((TextMessage) message).getText());
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+► Topic သို့ publish လုပ်သော message တိုင်းကို subscribers အားလုံးက လက်ခံရရှိပါသည်။
+
+## MDB ၏ အကျိုးကျေးဇူးများ
+
+- Client ကို မစောင့်စေဘဲ background processing လုပ်နိုင်ခြင်း။
+- High volume များကို container ၏ thread pool ဖြင့် ကိုင်တွယ်ပေးခြင်း။
+- System failure ရှိခဲ့လျှင် message များကို queue တွင် ထားပေးခြင်း (reliability)။
+- Loose coupling — producer နှင့် consumer သီးခြား ဖွံ့ဖြိုးနိုင်ခြင်း။
+
+MDB ဖြင့် email ပို့ခြင်း၊ report generation စသည့် time-consuming အလုပ်များကို user ကို မစောင့်စေဘဲ ဆောင်ရွက်နိုင်ပါသည်။ နောက် module တွင် CDI dependency injection ကို လေ့လာပါမည်။

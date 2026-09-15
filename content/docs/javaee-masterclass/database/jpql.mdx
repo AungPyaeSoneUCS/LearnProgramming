@@ -1,0 +1,101 @@
+---
+title: "JPA Query Language (JPQL)"
+description: "Java Persistence Query Language ဖြင့် entity များကို retrieve/filter/order ပြုလုပ်နည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+JPQL သည် SQL နှင့် ဆင်တူသော်လည်း table များအစား entity names နှင့် fields များကို သုံးသော query language ဖြစ်ပါသည်။ SQL ၏ SELECT ၊ WHERE ၊ ORDER BY ၊ aggregate functions များကို entity-oriented ဖြင့် ပြန်ရေးပါသည်။
+
+## အခြေခံ SELECT Queries
+
+```
+@Stateless
+public class MemberQueries {
+
+    @PersistenceContext
+    private EntityManager em;
+
+    public List<Member> allMembers() {
+        return em.createQuery(
+            "SELECT m FROM Member m", Member.class)
+                 .getResultList();
+    }
+
+    public List<Member> findByName(String name) {
+        return em.createQuery(
+            "SELECT m FROM Member m WHERE m.name = :name",
+            Member.class)
+            .setParameter("name", name)
+            .getResultList();
+    }
+}
+```
+
+► :name သည် named parameter ဖြစ်ပြီး setParameter ဖြင့် value သတ်မှတ်ပါသည်။ SQL injection ကို ကာကွယ်ပေးပါသည်။
+
+## Filtering ၊ Ordering နှင့် Pagination
+
+```
+public List<Member> activeByCity(String city, int page, int size) {
+    return em.createQuery(
+        "SELECT m FROM Member m " +
+        "WHERE m.status = :status AND m.city = :city " +
+        "ORDER BY m.name ASC", Member.class)
+        .setParameter("status", MemberStatus.ACTIVE)
+        .setParameter("city", city)
+        .setFirstResult(page * size)   // offset
+        .setMaxResults(size)           // limit
+        .getResultList();
+}
+```
+
+► WHERE ထဲတွင် AND/OR ၊ LIKE များလည်း သုံးနိုင်ပြီး setFirstResult/setMaxResults ဖြင့် pagination ပြုလုပ်ပါသည်။
+
+## Joins (Relationships မှတစ်ဆင့်)
+
+Orders အားလုံးကို member.name နှင့် အတူ ဖတ်လိုပါက inner join ကို သုံးပါသည်။
+
+```
+public List<PurchaseOrder> ordersOf(String memberName) {
+    return em.createQuery(
+        "SELECT o FROM PurchaseOrder o " +
+        "WHERE o.member.name = :name", PurchaseOrder.class)
+        .setParameter("name", memberName)
+        .getResultList();
+}
+```
+
+► o.member.name ဖြင့် relationship path ကို လိုက်ပြီး implicit inner join ပြုလုပ်ပါသည်။ Explicit JOIN လည်း ရှိပါသည်။
+
+```
+public List<Object[]> memberOrderCounts() {
+    return em.createQuery(
+        "SELECT m.name, COUNT(o) FROM Member m " +
+        "LEFT JOIN m.orders o GROUP BY m.name", Object[].class)
+        .getResultList();
+}
+```
+
+► LEFT JOIN ဖြင့် order မရှိသော members ပါ ပါဝင်ပြီး COUNT(o) က order အရေအတွက်ကို ပေးပါသည်။ Result က Object[] ဖြစ်ပြီး (name, count) စုံ ပါဝင်ပါသည်။
+
+## Single Result ရယူခြင်း
+
+Result တစ်ခုတည်း ရမည်ဟု သေချာပါက getSingleResult() ကို သုံးပါသည်။ မတွေ့ပါက NoResultException ကို ဖမ်းရပါသည်။
+
+```
+public Member findByEmail(String email) {
+    try {
+        return em.createQuery(
+            "SELECT m FROM Member m WHERE m.email = :email",
+            Member.class)
+            .setParameter("email", email)
+            .getSingleResult();
+    } catch (NoResultException e) {
+        return null;
+    }
+}
+```
+
+► Email နှစ်ခုထပ်နေပါက NonUniqueResultException ထွက်နိုင်ပြီး @Column(unique=true) ဖြင့် ကြိုတင် ကာကွယ်ထားသင့်ပါသည်။
+
+JPQL သည် entity များကို object-oriented ဖြင့် query လုပ်နိုင်သော နည်းလမ်း ဖြစ်ပါသည်။ နောက် module တွင် type-safe criteria API ကို လေ့လာပါမည်။

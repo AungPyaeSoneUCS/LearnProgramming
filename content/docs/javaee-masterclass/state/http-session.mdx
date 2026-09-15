@@ -1,0 +1,87 @@
+---
+title: "The HttpSession API"
+description: "HttpSession ဖြင့် session ဖန်တီးခြင်း၊ attribute သိမ်းခြင်း၊ logout အတွက် invalidate ပြုလုပ်ခြင်းတို့ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+HttpSession သည် server ဘက်တွင် user တစ်ယောက်ချင်းအတွက် သီးသန့် data သိမ်းရန် သုံးသော object တစ်ခု ဖြစ်ပါသည်။ Server က session တစ်ခုကို ဖန်တီးသောအခါ unique session ID ကို ထုတ်၍ cookie (သို့) URL တစ်ဆင့် user ကို ပေးပြီး နောက် request များတွင် ထို ID ဖြင့် session data ကို ပြန်ရှာဖွေသည်။
+
+## Session ရယူခြင်း
+
+request.getSession() သည် session အသစ် ဖန်တီးပြီး getSession(false) သည် session ရှိမှသာ ပြန်ပေးပါသည်။ Login validation မလုပ်မီ session ကို စစ်ဆေးရန် getSession(false) ကို သုံးပါသည်။
+
+```
+HttpSession session = request.getSession(true);   // create if needed
+HttpSession existing = request.getSession(false); // null if none
+if (existing == null) {
+    response.sendRedirect("login.jsp");
+    return;
+}
+```
+
+► Session မရှိပါက login.jsp သို့ ပြောင်းပေးပြီး လုံခြုံသော pages များကို ကာကွယ်ပါသည်။
+
+## Attribute များ သိမ်းခြင်းနှင့် ပြန်ရယူခြင်း
+
+Session attribute ကို setAttribute() ဖြင့် သိမ်းပြီး getAttribute() ဖြင့် ပြန်ရယူပါသည်။ Shopping cart ကဲ့သို့ object များကို session တွင် သိမ်းနိုင်ပါသည်။
+
+```
+@WebServlet("/cart/add")
+public class AddToCartServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        HttpSession session = req.getSession(true);
+        @SuppressWarnings("unchecked")
+        List<String> cart = (List<String>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();
+        }
+        cart.add(req.getParameter("product"));
+        session.setAttribute("cart", cart);
+        resp.getWriter().println("Cart size: " + cart.size());
+    }
+}
+```
+
+► Session ထဲတွင် cart list ကို သိမ်းထားသောကြောင့် request အများအပြားတွင်မဆို ဆက်လက် ရရှိနိုင်ပါသည်။
+
+## Attribute ဖယ်ရှားခြင်း
+
+Attribute တစ်ခုချင်းကို removeAttribute() ဖြင့် ဖယ်ပြီး session တစ်ခုလုံးကို invalidate() ဖြင့် ဖျက်နိုင်ပါသည်။ Logout တွင် session ကို ချက်ချင်း invalidate လုပ်၍ data များ လုံခြုံအောင် ရှင်းပါသည်။
+
+```
+@WebServlet("/logout")
+public class LogoutServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        HttpSession session = req.getSession(false);
+        if (session != null) {
+            session.removeAttribute("user");
+            session.invalidate();
+        }
+        resp.sendRedirect("login.jsp");
+    }
+}
+```
+
+► Logout ပြီးနောက် နောက် request တိုင်းတွင် session ကို အသစ် ဖန်တီးရမည် ဖြစ်ပြီး ရှေးဟောင်း data များ ဆက်လက် မရှိတော့ပါ။
+
+## Session ID ဖတ်ခြင်းနှင့် စစ်ဆေးခြင်း
+
+Session သည် ဖန်တီးချိန် (getCreationTime) ၊ နောက်ဆုံး access ချိန် (getLastAccessedTime) နှင့် ID တို့ကို သိရှိနိုင်ပြီး authentication process အတွင်း ID ကို ပြောင်းလဲရန် အသုံးပြုနိုင်ပါသည်။
+
+```
+HttpSession session = request.getSession();
+String id = session.getId();
+long created = session.getCreationTime();
+System.out.println("Session " + id + " created at " + created);
+
+// After login success — prevent session fixation
+request.changeSessionId();
+```
+
+► changeSessionId() က attacker မှ ကြိုတင်သိထားသော session ID ကို ပြောင်းလဲပေးခြင်းဖြင့် session fixation attack ကို ကာကွယ်ပါသည်။
+
+HttpSession ကို ကျွမ်းကျင်စွာ သုံးပါက login state, shopping cart စသည့် user-specific data များကို လုံခြုံစွာ ထိန်းသိမ်းနိုင်မည် ဖြစ်ပါသည်။ နောက် module တွင် session timeout နှင့် events များအကြောင်း လေ့လာပါမည်။

@@ -1,0 +1,102 @@
+---
+title: "Session Beans"
+description: "@Stateless, @Stateful နှင့် @Singleton session beans သုံးမျိုး၏ ကွာခြားချက်နှင့် အသုံးပြုပုံ ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Session bean များသည် client (Servlet ၊ JSP) မှ ခေါ်သော business logic beans များ ဖြစ်ပြီး အဓိက အမျိုးအစားသုံးမျိုး ရှိပါသည်။ @Stateless သည် client-specific state ကို မသိမ်းပါ။ @Stateful သည် client တစ်ယောက်ချင်းစီအတွက် state သိမ်းပါသည်။ @Singleton က application တစ်ခုလုံးအတွက် instance တစ်ခုတည်း မျှဝေပါသည်။
+
+## @Stateless Bean
+
+Stateless bean သည် လက်ရှိ method call အတွက်သာ logic run ပေးပြီး conversation state ကို မထိန်းသိမ်းပါ။ Pool ပြုလုပ်ထားသော instance များကို အသုံးပြုပြီး တွက်ချက်မှု၊ database read/write ကဲ့သို့သော operation များအတွက် သင့်လျော်ပါသည်။
+
+```
+@Stateless
+public class CurrencyConverterBean {
+
+    public double convert(double amount, double rate) {
+        return amount * rate;
+    }
+}
+```
+
+► Rate ကို argument အဖြစ် ပေးသမျှ result တစ်ခုတည်း ရပြီး bean ၏ မည်သည့် instance တွင်မဆို run နိုင်ပါသည်။
+
+## @Stateful Bean
+
+Stateful bean က client (conversation) တစ်ခုနှင့် သီးသန့် binding ဖြစ်ပြီး instance variable များတွင် state သိမ်းပါသည်။ Shopping cart ကဲ့သို့ multi-step လုပ်ငန်းများအတွက် သင့်လျော်ပါသည်။
+
+```
+@Stateful
+public class ShoppingCartBean {
+
+    private final List<String> items = new ArrayList<>();
+
+    public void add(String product) {
+        items.add(product);
+    }
+
+    public List<String> getItems() {
+        return items;
+    }
+
+    public void checkout() {
+        // process order
+        items.clear();
+    }
+}
+```
+
+► Client တစ်ယောက်က bean ကို အသုံးပြုနေစဉ် items ကို instance variable တွင် သိမ်းထားပြီး နောက် call တွင် ဆက်လက် ရရှိနိုင်ပါသည်။
+
+## @Singleton Bean
+
+Singleton bean သည် application တစ်ခုလုံးတွင် instance တစ်ခုတည်း ရှိပြီး အားလုံး မျှဝေသုံးပါသည်။ Configuration values သို့မဟုတ် counters ကဲ့သို့ shared data များအတွက် သုံးပါသည်။ @Startup ထည့်ပါက server start ချိန်တွင် ချက်ချင်း initialize ဖြစ်ပါသည်။
+
+```
+@Singleton
+@Startup
+public class ConfigurationBean {
+
+    private Map<String, String> settings = new HashMap<>();
+
+    @PostConstruct
+    public void init() {
+        settings.put("currency", "USD");
+        settings.put("tax", "0.05");
+    }
+
+    public String get(String key) {
+        return settings.get(key);
+    }
+}
+```
+
+► အားလုံးက တစ်ခုတည်းသော instance မှ values များကို ဖတ်သောကြောင့် configuration ကို ဗဟိုချုပ်ကိုင်ခဲ့ ထားနိုင်ပါသည်။
+
+## Bean အမျိုးအစားသုံးမျိုး နှိုင်းယှဉ်ဇယား
+
+| Type | State သိမ်းခြင်း | Instance ရေတွက် | သင့်လျော်သော အသုံး |
+| --- | --- | --- | --- |
+| @Stateless | မသိမ်း | Pool အများအပြား | Utilities, services |
+| @Stateful | Client တစ်ယောက်ချင်း | Client တစ်ယောက်စီ | Cart, wizard |
+| @Singleton | Application အဆင့် | တစ်ခုတည်း | Config, cache |
+
+```
+// Locking control on singletons
+@Singleton
+public class CounterBean {
+
+    private long count = 0;
+
+    @Lock(LockType.WRITE)
+    public void increment() { count++; }
+
+    @Lock(LockType.READ)
+    public long getCount() { return count; }
+}
+```
+
+► @Lock က singleton တွင် concurrency behavior ကို သတ်မှတ်ပြီး WRITE သည် exclusive ၊ READ သည် parallel access ကို ပေးပါသည်။
+
+Session bean types များကို မှန်ကန်စွာ ရွေးချယ်ပါက scalability နှင့် state management ကို ဟန်ချက်ညီစွာ ထိန်းနိုင်ပါသည်။ နောက် module တွင် message-driven beans ဖြင့် asynchronous processing ကို လေ့လာပါမည်။

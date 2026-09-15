@@ -1,0 +1,81 @@
+---
+title: "Criteria API & Typed Queries"
+description: "Type-safe ၊ dynamic queries များ ရေးရန် JPA Criteria API ကို အသုံးပြုနည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Criteria API သည် Java code ဖြင့် တည်ဆောက်နိုင်သော type-safe query ဖြစ်ပြီး compile-time တွင် field ရှိမရှိ စစ်ဆေးနိုင်ပါသည်။ အခြေအနေပေါ်မူတည်၍ query ပြောင်းလဲသော dynamic search forms များအတွက် အထူးသင့်လျော်ပါသည်။
+
+## CriteriaBuilder နှင့် စတင်ခြင်း
+
+criteria query object ကို builder မှ ဖန်တီးပြီး root ကို select ပြုလုပ်ပါသည်။
+
+```
+public List<Member> findActive() {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<Member> cq = cb.createQuery(Member.class);
+    Root<Member> root = cq.from(Member.class);
+    cq.select(root)
+      .where(cb.equal(root.get("status"), MemberStatus.ACTIVE));
+    return em.createQuery(cq).getResultList();
+}
+```
+
+► root.get("status") ဖြင့် field ကို string name ဖြင့် ရည်ညွှန်းရသော်လည်း metamodel (Member_) ရှိပါက compile-time check ပြုလုပ်နိုင်ပါသည်။
+
+## Dynamic Filter (Optional Search)
+
+User input အလိုက် conditions ကို dynamically ထည့်သော search query ဖြစ်ပါသည်။
+
+```
+public List<Member> search(String name, String city, Boolean active) {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<Member> cq = cb.createQuery(Member.class);
+    Root<Member> root = cq.from(Member.class);
+
+    List<Predicate> predicates = new ArrayList<>();
+
+    if (name != null && !name.isEmpty()) {
+        predicates.add(cb.like(root.get("name"), "%" + name + "%"));
+    }
+    if (city != null && !city.isEmpty()) {
+        predicates.add(cb.equal(root.get("city"), city));
+    }
+    if (active != null) {
+        predicates.add(cb.equal(root.get("status"),
+            active ? MemberStatus.ACTIVE : MemberStatus.INACTIVE));
+    }
+
+    cq.where(predicates.toArray(new Predicate[0]));
+    cq.orderBy(cb.asc(root.get("name")));
+    return em.createQuery(cq).getResultList();
+}
+```
+
+► Input ထည့်ထားသော conditions များသာ predicate list ထဲတွင် ပါဝင်ပြီး ကြီးမားသော WHERE string ကို manual ဖြင့် ဆက်တည်ဆောက်ခြင်းကို ရှောင်ပါသည်။
+
+## Aggregate Functions များ
+
+Count ၊ sum ၊ average ကဲ့သို့သော aggregations များကို Criteria ဖြင့်လည်း ရေးနိုင်ပါသည်။
+
+```
+public Long countBuyers() {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+    Root<Member> root = cq.from(Member.class);
+    cq.select(cb.count(root));
+    return em.createQuery(cq).getSingleResult();
+}
+```
+
+► cb.count(root) ဖြင့် rows အရေအတွက်ကို ရယူပြီး result type က Long ဖြစ်ပါသည်။
+
+## TypedQuery နှင့် JPQL နှိုင်းယှဉ်
+
+| ရည်ရွယ်ချက် | JPQL (string) | Criteria API (code) |
+| --- | --- | --- |
+| Type safety | compile-time မရှိ | Metamodel ဖြင့် ရှိ |
+| Dynamic query | String ပေါင်းခြင်း မသန့် | Predicates စုခြင်း သန့် |
+| Readability | ရိုးရိုး SELECT များအတွက် ပိုရှင်း | ရှုပ်ထွေးသော query များအတွက် ပိုခိုင်မာ |
+
+အခြေခံကျသော static queries များအတွက် JPQL ကို သုံးပြီး dynamic၊ filter-heavy queries များအတွက် Criteria API ကို သုံးပါသည်။ နောက် module တွင် transactions နှင့် persistence context ကို လေ့လာပါမည်။

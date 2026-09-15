@@ -1,0 +1,107 @@
+---
+title: "JSON Processing & Binding (JSON-P & JSON-B)"
+description: "JSON-B ဖြင့် object mapping ပြုလုပ်နည်း နှင့် JSON-P ဖြင့် JSON documents များကို read/write ပြုလုပ်နည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Java EE တွင် JSON ကို ကိုင်တွယ်ရန် API နှစ်မျိုး ရှိပါသည်။ JSON-B (JSON Binding) က Java objects နှင့် JSON ကို တိုက်ရိုက် mapping ပြုလုပ်ပြီး JSON-P (JSON Processing) က JSON documents များကို streaming/tree model ဖြင့် လုပ်ဆောင်ပါသည်။
+
+## JSON-B ဖြင့် Object → JSON
+
+JSON-B ၏ ရိုးရှင်းသော Jsonb object ကို သုံး၍ serialize/deserialize ပြုလုပ်ပါသည်။
+
+```
+public class JsonbExample {
+
+    public static void main(String[] args) {
+        Jsonb jsonb = JsonbBuilder.create();
+
+        Product p = new Product("Laptop", 899.99);
+
+        String json = jsonb.toJson(p);
+        System.out.println(json);
+
+        Product back = jsonb.fromJson(json, Product.class);
+        System.out.println(back.getName());
+    }
+}
+```
+
+► toJson() က object ကို JSON string သို့ ပြောင်းပြီး fromJson() က JSON မှ object သို့ ပြန်ပြောင်းပါသည်။ Naming strategy ၊ null handling များကို @JsonbProperty annotation ဖြင့် configure ပြုလုပ်နိုင်ပါသည်။
+
+## JSON-B Annotations များ
+
+Field names ၊ date formats များကို ထိန်းချုပ်ရန် annotations များကို သုံးပါသည်။
+
+```
+public class Product {
+
+    @JsonbProperty("product_id")
+    private Long id;
+
+    private String name;
+
+    @JsonbDateFormat("yyyy-MM-dd")
+    private LocalDate releaseDate;
+
+    @JsonbTransient
+    private String secretNote;
+}
+```
+
+- @JsonbProperty — JSON ၏ field name ကို ပြောင်းပါသည်။
+- @JsonbDateFormat — date format ကို သတ်မှတ်ပါသည်။
+- @JsonbTransient — JSON မှ client ကို မပြစေလိုသော field၊ ဖျောက်ပါသည်။
+
+## JSON-P ဖြင့် Tree Model
+
+JsonObject ၊ JsonArray များကို builder pattern ဖြင့် ဖန်တီးပြီး ၎င်းများကို navigation ပြုလုပ်နိုင်ပါသည်။ JSON-P သည် JSON documents များကို structure level တွင် ကိုင်တွယ်ရန် သင့်လျော်ပါသည်။
+
+```
+public JsonObject buildReportJson() {
+    JsonObject report = Json.createObjectBuilder()
+        .add("title", "Monthly Sales")
+        .add("total", 1250000)
+        .add("currency", "MMK")
+        .add("isPublished", true)
+        .build();
+    return report;
+}
+```
+
+► Json.createObjectBuilder() ဖြင့် JSON structure ကို chain style ဖြင့် တည်ဆောက်ပြီး build() ဖြင့် JsonObject အဖြစ် ပြောင်းပါသည်။
+
+## JSON-P ဖြင့် ဖတ်ခြင်း
+
+JsonReader ဖြင့် document ကို parse ပြီး nested values များကို ရယူနိုင်ပါသည်။
+
+```
+public String readCity(InputStream in) {
+    try (JsonReader reader = Json.createReader(in)) {
+        JsonObject obj = reader.readObject();
+        JsonObject address = obj.getJsonObject("address");
+        return address.getString("city");
+    }
+}
+```
+
+► getJsonObject() ဖြင့် nested object ကို ရယူပြီး getString() ဖြင့် value ကို ဖတ်ပါသည်။ JsonArray ဆိုပါက getJsonArray() ကို သုံးပါသည်။
+
+## JsonArray Processing
+
+Array များကို လမ်းလျှောက်၍ items များကို စီစဉ်နိုင်ပါသည်။ forEach ၏ lambda က ပုံအောက်တွင်ပါသည်။
+
+```
+public List<String> getTagNames(InputStream in) {
+    try (JsonReader reader = Json.createReader(in)) {
+        JsonArray tags = reader.readObject().getJsonArray("tags");
+        List<String> names = new ArrayList<>();
+        tags.forEach(tag -> names.add(tag.asJsonObject().getString("name")));
+        return names;
+    }
+}
+```
+
+► JsonArray.forEach ဖြင့် elements တစ်ခုချင်းစီကို လမ်းလျှောက်ပြီး asJsonObject() ဖြင့် object အဖြစ် သုံးပါသည်။
+
+JSON-B နှင့် JSON-P တို့ကို ပေါင်းသုံးကာ REST services တွင် data serialization ကို သပ်ရပ် သန့်ရှင်းစွာ ကိုင်တွယ်နိုင်ပါသည်။ နောက် module တွင် WebSockets ဖြင့် realtime communication ကို လေ့လာပါမည်။

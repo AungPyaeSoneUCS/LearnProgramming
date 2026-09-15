@@ -1,0 +1,88 @@
+---
+title: "JSTL Core Tags"
+description: "JSTL ၏ c:forEach, c:if, c:choose/c:when/c:otherwise tags များဖြင့် loops နှင့် conditionals ရေးသားနည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+JSTL (JSP Standard Tag Library) သည် JSP တွင် ထပ်ခါတလဲလဲ သုံးနေသော logic (loop, condition, formatting) များကို tag ပုံစံဖြင့် ပြုလုပ်ပေးသော library တစ်ခု ဖြစ်ပါသည်။ နောက်ဆုံးဗားရှင်း Jakarta EE 10 အတွက် taglib uri မှာ jakarta.tags.core ဖြစ်ပါသည်။
+
+## Taglib Directive
+
+JSTL ကို သုံးရန် page ၏ ထိပ်တွင် taglib directive ဖြင့် library ကို import ပြုလုပ်ပြီး prefix ကို သတ်မှတ်ပါသည်။
+
+```
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+```
+
+► ဤ directive ဖြင့် page တစ်လျှောက် c: prefix ရှိသော tags များကို အသုံးပြုနိုင်ပါသည်။
+
+## c:forEach — Loop
+
+c:forEach က collecn များနှင့် arrays များကို iterate ပြုလုပ်ပါသည်။ items attribute နှင့် var attribute ကို သုံးပါသည်။
+
+```
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<html>
+<body>
+    <ul>
+        <c:forEach items="${products}" var="p">
+            <li>${p.name} — ${p.price}</li>
+        </c:forEach>
+    </ul>
+</body>
+</html>
+```
+
+► products list ထဲရှိ Product တစ်ခုချင်းစီအတွက် စာရင်း item တစ်ခုစီ ထွက်ပါသည်။
+
+## c:forEach — Index နှင့် Status
+
+varStatus attribute ဖြင့် loop ၏ index ၊ count ၊ first/last စတာတွေကို ရရှိနိုင်ပါသည်။
+
+```
+<table>
+    <c:forEach items="${products}" var="p" varStatus="st">
+        <tr class="${st.index % 2 == 0 ? 'even' : 'odd'}">
+            <td>${st.count}</td>
+            <td>${p.name}</td>
+            <td>${p.price}</td>
+        </tr>
+    </c:forEach>
+</table>
+```
+
+► st.index သည် 0 မှစပြီး st.count သည် 1 မှစပါသည်။ row ၏ အရောင်ကိုလည်း index အလိုက် ပြောင်းနိုင်ပါသည်။
+
+## c:if — Conditional
+
+c:if ၏ test attribute တွင် EL expression ထည့်၍ အကန့်တစ်ခုကို အခြေအနေအလိုက် ပြသနိုင်ပါသည်။
+
+```
+<c:if test="${not empty sessionScope.cart}">
+    <p>You have items in your cart.</p>
+</c:if>
+```
+
+► Cart ထဲတွင် item ရှိမှသာ အသိပေးစာ ပြပါသည်။
+
+## c:choose / c:when / c:otherwise
+
+If-else if-else ပုံစံကို c:choose အတွင်းတွင် c:when...c:otherwise ဖြင့် ရေးသားပါသည်။
+
+```
+<c:choose>
+    <c:when test="${user.age >= 18}">
+        <p>Adult</p>
+    </c:when>
+    <c:when test="${user.age >= 13}">
+        <p>Teenager</p>
+    </c:when>
+    <c:otherwise>
+        <p>Child</p>
+    </c:otherwise>
+</c:choose>
+```
+
+► Age 20 ဆိုလျှင် Adult ၊ 15 ဆိုလျှင် Teenager ၊ 10 ဆိုလျှင် Child ဟု ပြသမည် ဖြစ်ပါသည်။
+
+JSTL ဖြင့် JSP တွင် Java code မရေးပဲ control flow ပြုလုပ်နိုင်ပြီး view ကို သန့်ရှင်းစွာ ထားနိုင်ပါသည်။ နောက် module တွင် MVC pattern ဖြင့် controller-view ဆက်သွယ်ပုံကို လေ့လာပါမည်။

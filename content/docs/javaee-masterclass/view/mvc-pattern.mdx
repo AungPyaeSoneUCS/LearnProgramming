@@ -1,0 +1,112 @@
+---
+title: "The MVC Pattern"
+description: "Model-View-Controller pattern တွင် Servlet က Controller၊ JSP က View အဖြစ် အလုပ်လုပ်ပုံ ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+MVC (Model-View-Controller) သည် application ကို အပိုင်းသုံးပိုင်း ခွဲခြားသည့် design pattern တစ်ခု ဖြစ်ပါသည်။ Java EE တွင် Servlet က Controller ၊ JSP က View ၊ JavaBeans/EJB က Model အဖြစ် ဆောင်ရွက်ပါသည်။
+
+## MVC အပိုင်းသုံးပိုင်း
+
+- Model — Business data နှင့် logic။ JavaBeans၊ EJB များ။
+- View — User ကို ပြသရမည့် output။ JSP + EL/JSTL။
+- Controller — Request ကို လက်ခံ၍ Model ကို update လုပ်ပြီး View ကို ရွေးချယ်ပေးသည့် Servlet။
+
+```
+Browser (HTTP request)
+      |
+      v
+[Controller]  ---Servlet---
+      |  (reads params, calls service)
+      v
+[Model]       ---JavaBean / EJB / Service---
+      |  (business logic, data)
+      v
+[View]        ---JSP + JSTL---
+      |  (renders HTML)
+      v
+Browser (HTTP response)
+```
+
+## Model — JavaBean
+
+Model သည် data ကို သယ်ဆောင်ပြီး business logic များပါ ပြုလုပ်နိုင်ပါသည်။
+
+```
+public class Product {
+    private int id;
+    private String name;
+    private double price;
+
+    public Product() {}
+
+    public Product(int id, String name, double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
+}
+```
+
+► Bean ကို product list များ ပြသရန် view တွင် သုံးပါသည်။
+
+## Controller — Servlet
+
+Controller က request parameter များကို ဖတ်၍ model ကို ပြင်ဆင်ပြီး view သို့ forward ပြုလုပ်ပါသည်။
+
+```
+@WebServlet("/products")
+public class ProductController extends HttpServlet {
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        List<Product> products = List.of(
+            new Product(1, "Laptop", 1200.0),
+            new Product(2, "Mouse", 25.0)
+        );
+        req.setAttribute("products", products);
+        req.getRequestDispatcher("/WEB-INF/views/products.jsp").forward(req, resp);
+    }
+}
+```
+
+► Controller က data ကို request attribute တွင်ထည့်၍ view သို့ forward ပြုလုပ်ပါသည်။
+
+## View — JSP နှင့် JSTL
+
+View က attribute များကို JSTL ဖြင့် ဖတ်၍ HTML ထုတ်ပေးပါသည်။ View တွင် business logic မပါဝင်ပါသည်။
+
+```
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<html>
+<body>
+    <h1>Products</h1>
+    <table border="1">
+        <tr><th>Name</th><th>Price</th></tr>
+        <c:forEach items="${products}" var="p">
+            <tr>
+                <td>${p.name}</td>
+                <td>${p.price}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</body>
+</html>
+```
+
+► View သည် `${products}` attribute ကို ဖတ်၍ table အနေဖြင့် ပြသပါသည်။
+
+## MVC ၏ အကျိုးကျေးဇူးများ
+
+- Presentation ၊ logic ၊ data layers များ သီးခြားခွဲထားရပါသည်။
+- View ကို သဘာဝကျစွာ ပြုပြင်နိုင်ပါသည်။
+- Unit test ပြုလုပ်ရလွယ်ကူပါသည်။
+- Frontend developer နှင့် backend developer ခွဲခန့်နိုင်ပါသည်။
+
+MVC သည် Java EE ၏ အလယ်ဗဟို ဖြစ်၍ capstone project များတွင်လည်း ဤ pattern ကို မဖြစ်မနေ အသုံးပြုပါသည်။ နောက် section တွင် business logic အတွက် EJB များကို လေ့လာပါမည်။

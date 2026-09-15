@@ -1,0 +1,141 @@
+---
+title: "Capstone: Project Setup & Architecture"
+description: "Full-stack Java EE application ၏ project structure ၊ domain model နှင့် architecture ကို စနစ်တကျ စီစဉ်ခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Capstone project သည် ရှေ့ module များမှ သင်ယူခဲ့သမျှကို ပေါင်းစည်းရန် ရည်ရွယ်ပါသည်။ "Shop" application တစ်ခုကို ဖန်တီးပါမည်။ Products များကို ပြသနိုင်၊ cart ထဲသို့ ထည့်နိုင်ပြီး order များကို စီမံနိုင်သော application ဖြစ်ပါသည်။ Layer များခွဲ၍ maintainable architecture ဖြင့် ရေးပါမည်။
+
+## Project Structure
+
+Standard Maven WAR project တစ်ခု၏ အသုံးများသော layout ဖြစ်ပါသည်။
+
+```
+shop/
+├── pom.xml
+├── src/main/java/
+│   ├── com.shop.model/          (entities)
+│   ├── com.shop.service/        (EJB business logic)
+│   ├── com.shop.web/            (servlets, REST resources)
+│   └── com.shop.config/         (application config)
+├── src/main/resources/META-INF/
+│   └── persistence.xml
+└── src/main/webapp/
+    ├── WEB-INF/web.xml
+    ├── views/                   (JSP pages)
+    └── index.jsp
+```
+
+► Layered architecture ဖြစ်ပြီး model က entities ၊ service က business logic ၊ web က presentation layer ဖြစ်ပါသည်။ Dependency က web → service → model ဟု ဆက်၍ flow ကို ရှင်းရှင်းလင်းလင်း ထားပါသည်။
+
+## Maven Dependencies
+
+pom.xml တွင် Java EE APIs များကို provided scope ဖြင့် တပ်ဆင်ပြီး WildFly ရှိအတိုင်း အသုံးပြုပါသည်။
+
+```
+<dependencies>
+    <dependency>
+        <groupId>javax</groupId>
+        <artifactId>javaee-api</artifactId>
+        <version>8.0</version>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>2.1.214</version>
+        <scope>runtime</scope>
+    </dependency>
+</dependencies>
+```
+
+► javaee-api က compile-time တွင် API များကို ပေးပြီး runtime မှာ server က ပေးသောကြောင့် provided scope ဖြစ်ပါသည်။ H2 က development database အတွက် ဖြစ်ပါသည်။
+
+## Domain Model (Entities)
+
+အဓိက entity သုံးခု ရှိပါသည်။ Product ၊ CartItem ၊ Order ။ Relationships များကို ယခင်က လေ့လာခဲ့သည့်အတိုင်း mapping ပြုလုပ်ပါသည်။
+
+```
+@Entity
+@Table(name = "products")
+public class Product implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private double price;
+
+    private String category;
+
+    // getters and setters
+}
+```
+
+```
+@Entity
+@Table(name = "orders")
+public class Order implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String customerName;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "order_id")
+    private List<OrderItem> items = new ArrayList<>();
+
+    // getters and setters
+}
+```
+
+► Order တိုင်းတွင် items များပါဝင်ပြီး cascade ဖြင့် Order သိမ်းချိန်တွင် items များပါ အတူသိမ်းပါသည်။
+
+## Service (Business Logic) — cart လုပ်ဆောင်ချက်
+
+Business operations များကို @Stateless service အတွင်းတွင် transaction ဖြင့် ထားပါသည်။
+
+```
+@Stateless
+public class ShopService {
+
+    @PersistenceContext
+    private EntityManager em;
+
+    public List<Product> listProducts() {
+        return em.createQuery("select p from Product p order by p.name",
+                Product.class).getResultList();
+    }
+
+    public Product findProduct(Long id) {
+        return em.find(Product.class, id);
+    }
+
+    public void createProduct(Product p) {
+        em.persist(p);
+    }
+
+    public Order placeOrder(String customer, List<Long> productIds) {
+        Order order = new Order();
+        order.setCustomerName(customer);
+        for (Long id : productIds) {
+            OrderItem item = new OrderItem();
+            item.setProduct(findProduct(id));
+            item.setQuantity(1);
+            order.getItems().add(item);
+        }
+        em.persist(order);
+        return order;
+    }
+}
+```
+
+► ဤ service က products များကို ပြခြင်း၊ order ဖန်တီးခြင်း စသည့် business operations များကို container-managed transaction အတွင်းတွင် လုပ်ဆောင်ပါသည်။
+
+ဤကဲ့သို့ structure စီစဉ်ပါက နောက် modules တွင် presentation layer ကို ဆက်တည်ဆောက်ရန် အဆင်သင့်ဖြစ်ပါသည်။

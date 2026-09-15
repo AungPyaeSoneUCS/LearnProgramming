@@ -1,0 +1,78 @@
+---
+title: "The Servlet Lifecycle"
+description: "Servlet တစ်ခု၏ init(), service(), destroy() (lifecycle) နှင့် HTTP request methods (GET/POST) တို့ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Servlet သည် Java class တစ်ခုဖြစ်ပြီး HTTP request များကို လက်ခံ၍ HTTP response များ ထုတ်ပေးပါသည်။ Servlet တိုင်းတွင် lifecycle သုံးဆင့်ရှိပြီး container က ၎င်းတို့ကို အချိန်မှန် ခေါ်ပေးပါသည်။
+
+## Servlet Lifecycle အဆင့်သုံးဆင့်
+
+1. init() — Servlet ကို ပထမဆုံး load ပြုလုပ်သောအခါ တစ်ကြိမ်သာ ခေါ်သည်။ Database connection ကဲ့သို့ resource များကို ဤနေရာတွင် ပြင်ဆင်ပါသည်။
+2. service() — Request ရောက်လာတိုင်း ခေါ်သည်။ GET, POST စသည့် method များအလိုက် doGet() ၊ doPost() သို့ ခွဲပို့ပါသည်။
+3. destroy() — Servlet ကို ဖျက်ပစ်သောအခါ တစ်ကြိမ်သာ ခေါ်ပြီး resource များကို လွှတ်ပေးပါသည်။
+
+```
+@WebServlet("/welcome")
+public class WelcomeServlet extends HttpServlet {
+
+    @Override
+    public void init() throws ServletException {
+        System.out.println("Servlet init() — loading started");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        resp.setContentType("text/plain");
+        resp.getWriter().println("Hello from doGet()");
+    }
+
+    @Override
+    public void destroy() {
+        System.out.println("Servlet destroy() — unloading");
+    }
+}
+```
+
+► http://localhost:8080/mywebapp/welcome ကို browser မှ OPEN လုပ်သောအခါ "Hello from doGet()" ဟု ပြသမည် ဖြစ်ပြီး server console တွင် init နှင့် destroy messages များကို မြင်ရပါမည်။
+
+## HTTP Request Methods
+
+HTTP protocol တွင် request method များစွာရှိပြီး အသုံးအများဆုံးမှာ GET နှင့် POST ဖြစ်ပါသည်။ GET သည် server မှ data ရယူရန် သုံးပြီး URL တွင် query string ပါဝင်ပါသည်။ POST သည် server သို့ data ပို့ရန် သုံးပြီး payload ကို request body တွင် သယ်ဆောင်ပါသည်။
+
+```
+@WebServlet("/greet")
+public class GreetServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        resp.getWriter().println("GET request received");
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        String name = req.getParameter("name");
+        resp.getWriter().println("POST received — hello " + name);
+    }
+}
+```
+
+► GET ခေါ်ခြင်း (browser URL): http://localhost:8080/mywebapp/greet ဖွင့်လျှင် "GET request received" ပြပြီး curl ဖြင့် POST ပြုလုပ်လျှင် name ကို ပြန်ပြပါမည်။
+
+```
+curl -d "name=Alice" http://localhost:8080/mywebapp/greet
+```
+
+► Output:
+```
+POST received — hello Alice
+```
+
+## Request ရောက်တိုင်း Service ကို ခေါ်ခြင်း
+
+Servlet တစ်ခုသည် request တစ်ခုစီအတွက် instance အသစ် ဖန်တီးမပေးဘဲ request များကို thread ပေါင်းစုံဖြင့် service() မှတစ်ဆင့် တစ်ပြိုင်နက် ကိုင်တွယ်ပါသည်။ ထို့ကြောင့် instance variables များကို thread-safe ဖြစ်အောင် သတိထားရပါသည်။
+
+Servlet lifecycle ကို နားလည်ပြီးပါက နောက် module တွင် request မှ parameters ဖတ်ခြင်းနှင့် response ထိန်းချုပ်ခြင်းကို လေ့လာပါမည်။

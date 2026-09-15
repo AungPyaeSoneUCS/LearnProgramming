@@ -1,0 +1,103 @@
+---
+title: "JPA Introduction"
+description: "Java Persistence API ၏ သဘောတရား၊ EntityManager အကြောင်းနှင့် database ကို object-oriented နည်းဖြင့် ချိတ်ဆက်ခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Java Persistence API (JPA) သည် relational database များကို Java objects ဖြင့် ချိတ်ဆက်စီမံနိုင်ရန် သတ်မှတ်ထားသော specification တစ်ခု ဖြစ်ပါသည်။ JPA သည် implementation မဟုတ်ပဲ interface သတ်မှတ်ချက်များ ဖြစ်ပြီး Hibernate ကဲ့သို့သော provider များက implement ပြုလုပ်ပါသည်။
+
+## Object-Relational Mapping (ORM)
+
+ORM သည် database table နှင့် Java class ကို mapping ပြုလုပ်ပေးသော technique ဖြစ်ပါသည်။ Table ရှိ row တစ်ကြောင်းစီကို object instance တစ်ခုဖြင့် ကိုယ်စားပြုပြီး column ၊ နှင့် fields များကို mapping လုပ်ပါသည်။
+
+```
+Member table                       Member entity
+--------------------------------   --------------------
+id | name     | email              public class Member {
+1  | Aung     | aung@mail.com        @Id
+2  | Su       | su@mail.com          Long id;
+                                     String name;
+                                     String email;
+                                   }
+```
+
+► Developer က SQL ရေးစရာမလိုပဲ entity ရှိ fields များကိုသာ ကိုင်တွယ်ပါသည်။ JPA provider က SQL ကို အလိုအလျောက် ဖန်တီးပေးပါသည်။
+
+## EntityManager — JPA ၏ Core
+
+EntityManager က entity များကို persist (insert)၊ find (select) ၊ merge (update) ၊ remove (delete) ပြုလုပ်ပေးပြီး persistence context ဟုခေါ်သော first-level cache ကို စီမံပါသည်။
+
+```
+@PersistenceContext(unitName = "shopPU")
+private EntityManager em;
+
+public void createMember(Member m) {
+    em.persist(m);          // INSERT
+}
+
+public Member findMember(Long id) {
+    return em.find(Member.class, id);   // SELECT by PK
+}
+
+public void updateMember(Member m) {
+    em.merge(m);            // UPDATE
+}
+
+public void deleteMember(Long id) {
+    em.remove(em.find(Member.class, id));   // DELETE
+}
+```
+
+► An EntityManager သည် transaction scope အတွင်းတွင် လုပ်ဆောင်ပြီး persistence context က entity state များကို ခြေရာခံပါသည်။
+
+## Persistence Unit သတ်မှတ်ခြင်း
+
+Persistence unit သည် JPA provider ၊ database connection ကို persistence.xml တွင် သတ်မှတ်ပါသည်။ Application server တွင် deploy လုပ်သောအခါ JNDI datasource ကို သုံးပါသည်။
+
+```
+src/main/resources/META-INF/persistence.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             version="2.2">
+  <persistence-unit name="shopPU" transaction-type="JTA">
+    <jta-data-source>java:/shopDS</jta-data-source>
+    <properties>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.show_sql" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>
+```
+
+► transaction-type="JTA" က container-managed transactions ကို သုံးပြီး jta-data-source က server ရှိ datasource ကို ချိတ်ပါသည်။ hbm2ddl.auto=update ဖြင့် entity အတိုင်း table များကို အလိုအလျောက် ဖန်တီးပါသည်။
+
+## Provided ဥပမာ အပြည့်အစုံ
+
+Stateless EJB တွင် EntityManager ဖြင့် CRUD ပြုလုပ်သော example ဖြစ်ပါသည်။
+
+```
+@Stateless
+public class MemberService {
+
+    @PersistenceContext
+    private EntityManager em;
+
+    public List<Member> findAll() {
+        return em.createQuery("select m from Member m", Member.class)
+                 .getResultList();
+    }
+
+    public Member findById(Long id) {
+        return em.find(Member.class, id);
+    }
+
+    public void save(Member m) {
+        em.persist(m);
+    }
+}
+```
+
+► Container က transaction ကို စတင်ပြီး ဆုံးသတ်ပေးပါသည်။ JPA က SQL conversion များကို ကိုင်တွယ်ပါသည်။
+
+JPA သည် Java EE ၏ persistence အတွက် အဓိကနည်းပညာဖြစ်ပြီး နောက် module တွင် entity mapping annotations များကို အသေးစိတ် လေ့လာပါမည်။

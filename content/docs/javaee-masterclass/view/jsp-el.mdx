@@ -1,0 +1,110 @@
+---
+title: "Expression Language (EL)"
+description: "JSP အတွင်း Java Bean များကို el ဖြင့် သန့်ရှင်းစွာ access ပြုလုပ်နည်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Expression Language (EL) သည် JSP အတွင်းတွင် data ကို getter/setter ခေါ်စရာမလိုပဲ `${...}` syntax ဖြင့် သန့်ရှင်းစွာ ဖတ်နိုင်စေရန် သုံးသော နည်းလမ်း ဖြစ်ပါသည်။ EL ဖြင့် `${user.name}` ရေးသည်နှင့် user.getName() ကို ခေါ်သလို အလုပ်လုပ်ပါသည်။
+
+## Java Bean တစ်ခု ဖန်တီးခြင်း
+
+ပထမဆုံး properties နှင့် getters များပါသော POJO (bean) တစ်ခု လိုအပ်ပါသည်။ Servlet က ၎င်းကို request attribute အဖြစ် ထည့်ပေးမည် ဖြစ်ပါသည်။
+
+```
+public class User {
+    private String name;
+    private int age;
+
+    public User() {}
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
+}
+```
+
+► Bean ကို Servlet ဘက်မှ fill ပြုလုပ်ပြီး view သို့ ပို့ပါသည်။
+
+## Servlet မှ Bean ပို့ခြင်း
+
+Controller ၏ အလုပ်မှာ bean ကို ဖန်တီး၍ request attribute အဖြစ် သိမ်းပြီး JSP သို့ forward ပြုလုပ်ခြင်း ဖြစ်ပါသည်။
+
+```
+@WebServlet("/profile")
+public class ProfileServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        User user = new User();
+        user.setName("Alice");
+        user.setAge(30);
+        req.setAttribute("user", user);
+        req.getRequestDispatcher("/profile.jsp").forward(req, resp);
+    }
+}
+```
+
+► attribute name မှာ user ဖြစ်ပါသည်။ ထို name ကို EL တွင်တိုက်ရိုက် အသုံးပြုပါသည်။
+
+## JSP တွင် EL Access ပြုလုပ်ခြင်း
+
+```
+<%@ page contentType="text/html" %>
+<html>
+<body>
+    <h2>Profile</h2>
+    <p>Name: ${user.name}</p>
+    <p>Age: ${user.age}</p>
+</body>
+</html>
+```
+
+► Browser တွင် Name: Alice ၊ Age: 30 ဟု ပြသမည် ဖြစ်ပြီး getName() ကို ခေါ်ရန် မလိုအပ်တော့ပါ။
+
+## EL Operators နှင့် Implicit Objects
+
+EL တွင် arithmetic, comparison, logical operators များ ပါဝင်ပြီး empty operator ဖြင့် null/empty စစ်ဆေးနိုင်ပါသည်။
+
+```
+<%@ page contentType="text/html" %>
+<html>
+<body>
+    <p>Sum: ${10 + 5}</p>
+    <p>Is 30 greater than 18? ${30 > 18}</p>
+    <p>Logical AND: ${true && false}</p>
+    <p>Cart empty? ${empty cart}</p>
+    <p>User exists? ${not empty user}</p>
+</body>
+</html>
+```
+
+► Output:
+```
+Sum: 15
+Is 30 greater than 18? true
+Logical AND: false
+Cart empty? true
+User exists? true
+```
+
+## EL Implicit Objects များ
+
+EL တွင် scope များကို ရှာဖွေရန် implicit objects များ ရှိပါသည်။ `${param.name}` သည် request parameter ကို၊ `${sessionScope.user}` သည် session attribute ကို ရယူပါသည်။
+
+```
+<%@ page contentType="text/html" %>
+<html>
+<body>
+    <p>Query param: ${param.q}</p>
+    <p>Cookie: ${cookie.username.value}</p>
+    <p>Session user: ${sessionScope.user.name}</p>
+    <p>App name: ${applicationScope.appName}</p>
+</body>
+</html>
+```
+
+► `${param.q}` သည် ?q=search မှ q value ဖြစ်ပြီး `${cookie.username.value}` သည် username cookie ၏ value ကို ထုတ်ပေးပါသည်။
+
+EL သည် JSP ၏ scriptlet-less approach တွင် အရေးကြီးဆုံး အစိတ်အပိုင်း ဖြစ်ပါသည်။ နောက် module တွင် JSTL core tags များနှင့် control flow ပြုလုပ်နည်းကို လေ့လာပါမည်။

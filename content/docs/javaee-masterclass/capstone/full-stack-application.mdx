@@ -1,0 +1,139 @@
+---
+title: "Capstone: Full-Stack Application"
+description: "Backend services များကို Servlet/JSP ရှေ့ဆုံး frontend နှင့် ချိတ်ဆက်၍ complete flow တစ်ခုကို တည်ဆောက်ခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+ယခု module တွင် shop ၏ backend (servlet/resources) နှင့် frontend (JSP + JSTL) ကို ချိတ်ဆက်၍ complete features များကို တည်ဆောက်ပါမည်။ Cart ကို HTTP session တွင် သိမ်းပြီး JSTL ဖြင့် frontend မှာ ပြသပါသည်။
+
+## Cart Servlet — Session ဖြင့် ထိန်းချုပ်ခြင်း
+
+Product ထည့်ခြင်း၊ cart ကြည့်ခြင်း ကဲ့သို့သော actions များကို Servlet တစ်ခုတွင် စုစည်းပါသည်။ Cart ကို HttpSession ထဲတွင် attribute အဖြစ် သိမ်းပါသည်။
+
+```
+@WebServlet("/shop")
+public class ShopServlet extends HttpServlet {
+
+    @Inject
+    private ShopService shop;
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        req.setAttribute("products", shop.listProducts());
+        req.getRequestDispatcher("/views/shop.jsp")
+           .forward(req, resp);
+    }
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        Long productId = Long.valueOf(req.getParameter("productId"));
+        HttpSession session = req.getSession(true);
+        List<Long> cart = (List<Long>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();
+            session.setAttribute("cart", cart);
+        }
+        cart.add(productId);
+        resp.sendRedirect("shop");
+    }
+}
+```
+
+► Product Id ကို cart list ထဲသို့ ထည့်ပြီး session မှာသိမ်းပါသည်။ ဤကဲ့သို့ဆိုပါက မတူညီသော page များဆီး သွားသော်လည်း cart က မပျောက်ပါ။
+
+## Shop JSP — JSTL ဖြင့် Products ပြသခြင်း
+
+JSTL c:forEach ဖြင့် products များကို table အနေဖြင့် ပြသပါသည်။ EL expressions များက code block အတွင်း ဖြစ်၍ safe ဖြစ်ပါသည်။
+
+```
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
+<head><title>Shop</title></head>
+<body>
+    <h2>Product List</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th><th>Name</th><th>Price</th><th>Action</th>
+        </tr>
+        <c:forEach items="${products}" var="p">
+            <tr>
+                <td>${p.id}</td>
+                <td>${p.name}</td>
+                <td>${p.price} MMK</td>
+                <td>
+                    <form method="post" action="shop">
+                        <input type="hidden" name="productId" value="${p.id}">
+                        <input type="submit" value="Add to cart">
+                    </form>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</body>
+</html>
+```
+
+► `${p.name}` ကဲ့သို့ EL expressions များက JSP engine မှ evaluate ပြုလုပ်ပြီး page ထဲသို့ value များ ထည့်ပေးပါသည်။
+
+## Cart JSP — JSTL Conditional များ
+
+c:forEach + c:choose/c:when များကို သုံး၍ Cart ၏ items များနှင့် empty state ကို ပြသပါသည်။
+
+```
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
+<head><title>Your Cart</title></head>
+<body>
+    <h2>Shopping Cart</h2>
+
+    <c:choose>
+        <c:when test="${empty cart}">
+            <p>Your cart is empty.</p>
+        </c:when>
+        <c:otherwise>
+            <ul>
+                <c:forEach items="${cart}" var="productId">
+                    <li>Product #${productId}</li>
+                </c:forEach>
+            </ul>
+        </c:otherwise>
+    </c:choose>
+
+    <a href="shop">Continue shopping</a>
+</body>
+</html>
+```
+
+► `${empty cart}` က cart ထဲတွင် item မရှိလျှင် true ပြန်ပြီး သင့်လျော်သော message ကို ပြပါသည်။
+
+## Checkout — Order ဖန်တီးခြင်း
+
+Cart ပြီးလျှင် CheckoutServlet က order ကို ဖန်တီးပြီး order confirmation ကို ပြပါသည်။
+
+```
+@WebServlet("/checkout")
+public class CheckoutServlet extends HttpServlet {
+
+    @Inject
+    private ShopService shop;
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        @SuppressWarnings("unchecked")
+        List<Long> cart = (List<Long>) session.getAttribute("cart");
+        if (cart != null && !cart.isEmpty()) {
+            Order order = shop.placeOrder(
+                    req.getParameter("customerName"), cart);
+            session.removeAttribute("cart");
+            req.setAttribute("order", order);
+        }
+        req.getRequestDispatcher("/views/order-confirmation.jsp")
+           .forward(req, resp);
+    }
+}
+```
+
+► Cart ပြီးသောအခါ order ကို db ထဲသို့ သိမ်းပြီး session ၏ cart ကို ရှင်း၍ confirmation page သို့ ပို့ပါသည်။
+
+ဤဖွဲ့စည်းပုံဖြင့် backend services နှင့် frontend JSP များကို ချိတ်ဆက်၍ functional application တစ်ခုလုံး ပြီးမြောက်ပါသည်။ နောက်ဆုံး module တွင် testing နှင့် deployment ကို လေ့လာပါမည်။

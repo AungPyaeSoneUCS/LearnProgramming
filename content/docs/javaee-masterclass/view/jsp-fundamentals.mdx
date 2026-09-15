@@ -1,0 +1,64 @@
+---
+title: "JSP Fundamentals"
+description: "JSP ၏ lifecycle (translation), Directives နှင့် Declarations များအကြောင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+JavaServer Pages (JSP) သည် HTML code အတွင်းတွင် dynamic content ထည့်နိုင်ရန်အတွက် Java ကို အသုံးပြုသော template technology တစ်ခု ဖြစ်ပါသည်။ Servlet သည် Java code အတွင်းတွင် HTML ရေးရသော်လည်း JSP သည် HTML အတွင်းတွင် Java ရေးရပါသည်။
+
+## JSP Lifecycle — Translation
+
+JSP ကို ပထမဆုံး request တွင် container က Servlet class အဖြစ် ပြောင်းလဲ (translate) ပေးပြီး compile လုပ်ကာ execute ပြုလုပ်ပါသည်။ ထို့ကြောင့် JSP ၏ lifecycle မှာ compile လုပ်ထားသော Servlet ၏ lifecycle နှင့် အတူတူပင် ဖြစ်ပါသည်။
+
+```
+JSP file  -->  Generated Servlet (*_jsp.java)  -->  Class (*_jsp.class)  -->  Run
+```
+
+► ပထမဆုံး request သည် နှေးတတ်သော်လည်း နောက်ပိုင်း request များ မြန်ပါသည်။
+
+## JSP Directives
+
+Directive သည် JSP page ၏ အလုံးစုံ configuration များကို သတ်မှတ်ပေးပါသည်။ အသုံးအများဆုံးမှာ page directive ဖြစ်ပြီး content type ၊ import ၊ error page ၊ session စသည်တို့ကို သတ်မှတ်ပါသည်။
+
+```
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List, com.example.Product" %>
+<%@ page session="true" %>
+```
+
+► Page ကို HTML အနေဖြင့် UTF-8 encoding ဖြင့် ထုတ်ပြီး import များပါဝင်ပြီး session ရရှိနိုင်စေရန် သတ်မှတ်ထားပါသည်။
+
+## JSP Declarations
+
+Declaration က instance variables နှင့် methods များကို declare ပြုလုပ်ရန် `<%! %>` ကို သုံးပါသည်။ Declaration များသည် generated Servlet class ၏ အဖွဲ့ဝင်များ ဖြစ်လာပါသည်။
+
+```
+<%@ page language="java" %>
+<%!
+    private String formatPrice(double price) {
+        return "$" + String.format("%.2f", price);
+    }
+%>
+<html>
+<body>
+    <h1>Product</h1>
+    <p>Price: <%= formatPrice(199.5) %></p>
+</body>
+</html>
+```
+
+► Expression `<%= ... %>` က server ဘက်တွင် evaluate လုပ်၍ result ကို page အတွင်းသို့ ထည့်ပေးပါသည်။ Output: Price: $199.50
+
+## Include Directive
+
+Include directive က နောက်ထပ် file ကို compile time တွင် ထည့်သွင်းပေးပါသည်။ အမြဲ တူညီသော header ၊ footer များအတွက် အသုံးပြုပါသည်။
+
+```
+<%@ include file="header.jsp" %>
+<h1>Main Content</h1>
+<%@ include file="footer.jsp" %>
+```
+
+► Header နှင့် footer များကို page အားလုံးတွင် ထပ်ခါထည့်ရန် မလိုတော့ပါ။
+
+JSP ၏ mechanism ကို နားလည်ပြီးပါက နောက် module တွင် scriptlets ၏ ဆိုးကျိုးများနှင့် implicit objects များကို လေ့လာပါမည်။

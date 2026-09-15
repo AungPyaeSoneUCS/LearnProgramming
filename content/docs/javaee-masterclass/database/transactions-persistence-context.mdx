@@ -1,0 +1,89 @@
+---
+title: "Transactions & Persistence Context"
+description: "Container-managed transactions (CMT)၊ @Transactional နှင့် persistence context ၏ behavior များ ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Transaction သည် အောင်မြင်မှု/ကျရှုံးမှု တစ်ခုလုံးကို အတူတကွ commit သို့မဟုတ် rollback ပြုလုပ်သော unit ဖြစ်ပါသည်။ JPA နှင့်အတူ transactions ကို container (Java EE) သို့မဟုတ် programmatically (Spring/JSE) က စီမံပေးပါသည်။
+
+## ACID Properties များ
+
+Transaction တွင် properties လေးခုရှိပါသည်။ Atomicity (အားလုံးဖြစ်ရမည် သို့မဟုတ် တစ်ခုမျှမဖြစ်)၊ Consistency (data များ အမြဲမှန်)၊ Isolation (transactions တစ်ခုနှင့်တစ်ခု မရောခြင်း)၊ Durability (commit ပြီးသော data မပျောက်ခြင်း)။ ဤလေးရပ်ကို database engine နှင့် container က အာမခံပေးပါသည်။
+
+## Container-Managed Transactions (CMT)
+
+EJB method များအတွင်း transaction ကို container က အလိုအလျောက် manage ပြုလုပ်ပါသည်။ Method က စတင်သည်နှင့် transaction ဖွင့်ပြီး exception မရှိပါက commit ၊ ရှိပါက rollback ဖြစ်ပါသည်။
+
+```
+@Stateless
+public class TransferService {
+
+    @PersistenceContext
+    private EntityManager em;
+
+    public void transfer(Long fromId, Long toId, double amount) {
+        Account from = em.find(Account.class, fromId);
+        Account to = em.find(Account.class, toId);
+        from.setBalance(from.getBalance() - amount);
+        to.setBalance(to.getBalance() + amount);
+        // if success -> commit automatically
+    }
+}
+```
+
+► Container က client မှ method ကို ခေါ်သောအခါ transaction ကို ဖွင့်ပြီး method ပြီးကာ exception မရှိလျှင် commit ပြုလုပ်ပါသည်။
+
+## @TransactionAttribute ထိန်းချုပ်ခြင်း
+
+Method ၏ transaction behavior ကို @TransactionAttribute ဖြင့် အဆင့် (၆)မျိုး သတ်မှတ်နိုင်ပါသည်။ အသုံးအများဆုံး ၊ REQUIRED နှင့် REQUIRES_NEW ကို လေ့လာပါမည်။
+
+```
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+public void logAudit(String message) {
+    em.persist(new AuditLog(message));
+}
+```
+
+► REQUIRES_NEW က caller ၏ transaction ကို မမှီပဲ ကိုယ်ပိုင် transaction သစ် ဖွင့်ပါသည်။ Audit log ကို main transaction မအောင်မြင်လျှင်လည်း သိမ်းစေချင်သောအခါ သုံးပါသည်။
+
+```
+@Stateless
+public class OrmService {
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void placeOrder(Order o) {
+        em.persist(o);
+        logAudit("order placed");   // same transaction (REQUIRED)
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void logAudit(String msg) {
+        em.persist(new AuditLog(msg));   // new transaction
+    }
+}
+```
+
+► REQUIRED အတွင်းက method က caller ၏ transaction အတိုင်း ဆက်ပါပြီး REQUIRES_NEW က ခွဲထွက်ပါသည်။
+
+## Persistence Context ၏ Behavior
+
+Persistence context သည် transaction အတွင်း entity instance များကို သိမ်းဆည်းသော cache ၊ ဖြစ်ပါသည်။ တူညီသော entity id ကို နှစ်ကြိမ် find ပြုလုပ်ပါက context ထဲမှ instance တစ်ခုတည်း ပြန်ရပြီး SQL ကို ချွေတာပါသည်။
+
+```
+public Member findMember(Long id) {
+    Member a = em.find(Member.class, id);  // SELECT once
+    Member b = em.find(Member.class, id);  // cached instance
+    return a == b ? a : null;              // true (same object)
+}
+```
+
+► Persistence context အတွင်းတွင် entity identity ကို ထိန်းသိမ်းပြီး နောက် state changes များကို transaction commit ချိန်တွင် flush (UPDATE) ပြုလုပ်ပါသည်။
+
+## JTA Transactions နှင့် Application Server
+
+Java EE အတွင်းတွင် JTA (Java Transaction API) က transactions များကို manage ပြုလုပ်ပြီး database နှင့် JMS ကဲ့သို့သော resources အများအပြားတွင် atomicity ကို ပေးပါသည်။ ဤသည်မှာ enterprise applications များအတွက် မရှိမဖြစ် ဖြစ်ပါသည်။
+
+Transactions နှင့် persistence context ကို နားလည်ပါက data integrity ကို စိတ်ချစွာထိန်းသိမ်းနိုင်ပါသည်။ နောက် section တွင် REST services နှင့် advanced enterprise features များကို လေ့လာပါမည်။

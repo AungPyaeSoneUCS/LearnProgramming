@@ -1,0 +1,114 @@
+---
+title: "Entity Mapping Annotations"
+description: "@Entity, @Table, @Column, @Id, @GeneratedValue တို့ဖြင့် Java class ကို database table နှင့် mapping ပြုလုပ်ပုံ ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+JPA entity သည် database table တစ်ခုနှင့် ကိုက်ညီသော Java class တစ်ခု ဖြစ်ပြီး @Entity annotation ဖြင့် မှတ်သားပါသည်။ Entity တစ်ခုစီတွင် @Id ဖြင့် primary key ရှိရမည်ဖြစ်ပြီး implements Serializable လည်း လုပ်ရပါသည်။
+
+## Basic Entity တစ်ခု
+
+```
+@Entity
+@Table(name = "members")
+public class Member implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 100)
+    private String name;
+
+    @Column(unique = true)
+    private String email;
+
+    @Transient
+    private String temporaryToken;
+
+    // getters and setters
+}
+```
+
+- @Entity — class ကို entity အဖြစ် သတ်မှတ်ပါသည်။
+- @Table — table name ကို သတ်မှတ်ပြီး မပါပါက class name ကို သုံးပါသည်။
+- @Id — primary key ။
+- @GeneratedValue — DB မှ value ထုတ်ပေးသည် (IDENTITY = auto-increment)။
+- @Transient — database column မဖြစ်စေလိုသော field ။
+
+## Enum နှင့် Temporal (Date) များ
+
+Enum နှင့် date/time fields များကို mapping ပြုလုပ်ပါက EnumType ၊ TemporalType ကို သုံးပါသည်။
+
+```
+public enum MemberStatus { ACTIVE, INACTIVE, BANNED }
+
+@Entity
+public class MemberProfile implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private MemberStatus status = MemberStatus.ACTIVE;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date registeredAt = new Date();
+}
+```
+
+► EnumType.STRING သည် enum name ကို string အဖြစ် သိမ်းပြီး TemporalType.TIMESTAMP က date+time ကို သိမ်းပါသည်။
+
+## Compound Primary Keys
+
+Primary key နှစ်ခု ပေါင်းစပ်လိုပါက @Embeddable class ကို သုံး၍ @EmbeddedId ဖြင့် သတ်မှတ်ပါသည်။
+
+```
+@Embeddable
+public class OrderLineId implements Serializable {
+
+    private Long orderId;
+    private Long lineNo;
+
+    // constructors, equals, hashCode
+}
+```
+
+```
+@Entity
+public class OrderLine implements Serializable {
+
+    @EmbeddedId
+    private OrderLineId id;
+
+    @Column(nullable = false)
+    private int quantity;
+
+    private double unitPrice;
+}
+```
+
+► @Embeddable class က @EmbeddedId နေရာတွင် primary key အဖြစ် အသုံးပြုပြီး equals/hashCode ကို implement ရပါသည်။
+
+## Naming Strategy
+
+@Column name ကို မသတ်မှတ်ပဲ default naming strategy က camelCase ကို snake_case သို့ ပြောင်းပါသည်။ firstName → first_name စသဖြင့် ဖြစ်ပါသည်။ ချိန်ညှိရန် persistence.xml တွင် hibernate naming strategy ကို သတ်မှတ်နိုင်ပါသည်။
+
+```
+@Entity
+public class Product implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String productName;      // -> product_name
+    private double listPrice;        // -> list_price
+
+    @Column(name = "in_stock", nullable = false)
+    private boolean inStock = true;
+}
+```
+
+► Default အားဖြင့် productName သည် product_name column ဖြစ်သော်လည်း ရှင်းလင်းမှုအတွက် @Column name တွင် တိုက်ရိုက် သတ်မှတ်နိုင်ပါသည်။
+
+Entity mapping သည် JPA ၏ အခြေခံ ဖြစ်ပြီး နောက် module တွင် relationships (@OneToMany စသည်) ကို လေ့လာပါမည်။

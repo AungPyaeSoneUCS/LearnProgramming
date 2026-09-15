@@ -3,7 +3,7 @@
     "label": "SQL အခြေခံ",
     "items": [
       {
-        "label": "1. မိတ်ဆက်",
+        "label": "Introduction",
         "items": [
           {
             "label": "SQL ဆိုတာ ဘာလဲ?",
@@ -12,7 +12,7 @@
         ]
       },
       {
-        "label": "2. အခြေခံ Queries",
+        "label": "Module 1: အခြေခံ Queries",
         "items": [
           {
             "label": "SELECT နဲ့ FROM",
@@ -29,7 +29,7 @@
         ]
       },
       {
-        "label": "3. ဒေတာပြင်ဆင်ခြင်း (CRUD)",
+        "label": "Module 2: ဒေတာပြင်ဆင်ခြင်း (CRUD)",
         "items": [
           {
             "label": "INSERT, UPDATE, DELETE",
@@ -38,7 +38,7 @@
         ]
       },
       {
-        "label": "4. တွက်ချက်ခြင်းများ",
+        "label": "Module 3: တွက်ချက်ခြင်းများ",
         "items": [
           {
             "label": "Aggregations & GROUP BY",
@@ -47,7 +47,7 @@
         ]
       },
       {
-        "label": "5. ဇယားများ ချိတ်ဆက်ခြင်း",
+        "label": "Module 4: ဇယားများ ချိတ်ဆက်ခြင်း",
         "items": [
           {
             "label": "Understanding JOINs",
@@ -56,7 +56,7 @@
         ]
       },
       {
-        "label": "6. ဇယားများ ဖန်တီးခြင်း",
+        "label": "Module 5: ဇယားများ ဖန်တီးခြင်း",
         "items": [
           {
             "label": "CREATE, ALTER, DROP",
@@ -70,7 +70,7 @@
     "label": "MongoDB",
     "items": [
       {
-        "label": "1. MongoDB Tutorial",
+        "label": "Module 1: MongoDB Tutorial",
         "items": [
           {
             "label": "သင်တန်းကြိုဆိုခြင်း",
@@ -87,7 +87,7 @@
         ]
       },
       {
-        "label": "2. MongoDB Database Basics",
+        "label": "Module 2: MongoDB Database Basics",
         "items": [
           {
             "label": "Create Database",
@@ -100,7 +100,7 @@
         ]
       },
       {
-        "label": "3. MongoDB CRUD",
+        "label": "Module 3: MongoDB CRUD",
         "items": [
           {
             "label": "Insert",
@@ -121,7 +121,7 @@
         ]
       },
       {
-        "label": "4. MongoDB Operators",
+        "label": "Module 4: MongoDB Operators",
         "items": [
           {
             "label": "Query Operators",
@@ -134,7 +134,7 @@
         ]
       },
       {
-        "label": "5. MongoDB Aggregations",
+        "label": "Module 5: MongoDB Aggregations",
         "items": [
           {
             "label": "Aggregations",
@@ -143,7 +143,7 @@
         ]
       },
       {
-        "label": "6. MongoDB Indexing & Validation",
+        "label": "Module 6: MongoDB Indexing & Validation",
         "items": [
           {
             "label": "Indexing/Search",
@@ -156,7 +156,7 @@
         ]
       },
       {
-        "label": "7. MongoDB Data API & Drivers",
+        "label": "Module 7: MongoDB Data API & Drivers",
         "items": [
           {
             "label": "Data API",
@@ -177,7 +177,7 @@
         ]
       },
       {
-        "label": "8. MongoDB Examples",
+        "label": "Module 8: MongoDB Examples",
         "items": [
           {
             "label": "Editor",
@@ -215,7 +215,7 @@
     "label": "AI Proficiency",
     "items": [
       {
-        "label": "Introduction & Tools",
+        "label": "Introduction",
         "items": [
           {
             "label": "AI for Developers",
@@ -228,7 +228,7 @@
         ]
       },
       {
-        "label": "Core Skills",
+        "label": "Module 1: Core Skills",
         "items": [
           {
             "label": "Prompt Engineering for Code",
@@ -249,7 +249,7 @@
         ]
       },
       {
-        "label": "Best Practices",
+        "label": "Module 2: Best Practices",
         "items": [
           {
             "label": "AI-Assisted Testing",
@@ -270,7 +270,7 @@
         ]
       },
       {
-        "label": "Conclusion",
+        "label": "Module 3: Conclusion",
         "items": [
           {
             "label": "Real World Use Cases",
@@ -297,7 +297,7 @@
         ]
       },
       {
-        "label": "Module 0: Setup & Installation",
+        "label": "Module 1: Setup & Installation",
         "items": [
           {
             "label": "Python တပ်ဆင်ပြီး စတင်ခြင်း",
@@ -306,7 +306,7 @@
         ]
       },
       {
-        "label": "Module 1: Variables & Data Types",
+        "label": "Module 2: Variables & Data Types",
         "items": [
           {
             "label": "Variables, Types, Operators",
@@ -315,7 +315,7 @@
         ]
       },
       {
-        "label": "Module 1.5: String Methods",
+        "label": "Module 3: String Methods",
         "items": [
           {
             "label": "String Methods & f-strings",
@@ -324,7 +324,7 @@
         ]
       },
       {
-        "label": "Module 2: Control Flow",
+        "label": "Module 4: Control Flow",
         "items": [
           {
             "label": "If/Else, Loops & in Operator",
@@ -333,7 +333,7 @@
         ]
       },
       {
-        "label": "Module 3: Functions",
+        "label": "Module 5: Functions",
         "items": [
           {
             "label": "Functions, Lambda & Scope",
@@ -342,7 +342,7 @@
         ]
       },
       {
-        "label": "Module 4: Data Structures",
+        "label": "Module 6: Data Structures",
         "items": [
           {
             "label": "Lists, Dicts, Tuples, Sets",
@@ -351,7 +351,7 @@
         ]
       },
       {
-        "label": "Module 4.5: Comprehensions",
+        "label": "Module 7: Comprehensions",
         "items": [
           {
             "label": "Comprehensions & Built-ins",
@@ -360,7 +360,7 @@
         ]
       },
       {
-        "label": "Module 5: OOP",
+        "label": "Module 8: OOP",
         "items": [
           {
             "label": "Classes, Objects & Inheritance",
@@ -369,7 +369,7 @@
         ]
       },
       {
-        "label": "Module 6: File & Error Handling",
+        "label": "Module 9: File & Error Handling",
         "items": [
           {
             "label": "Files, JSON & Error Handling",
@@ -378,7 +378,7 @@
         ]
       },
       {
-        "label": "Module 6.5: Virtual Environments",
+        "label": "Module 10: Virtual Environments",
         "items": [
           {
             "label": "venv & pip",
@@ -387,7 +387,7 @@
         ]
       },
       {
-        "label": "Module 7: Modules & Packages",
+        "label": "Module 11: Modules & Packages",
         "items": [
           {
             "label": "Modules, Packages & ကိုယ်ပိုင် Module",
@@ -396,7 +396,7 @@
         ]
       },
       {
-        "label": "Module 8: Mini Project",
+        "label": "Module 12: Mini Project",
         "items": [
           {
             "label": "Number Guessing Game",
@@ -405,7 +405,7 @@
         ]
       },
       {
-        "label": "Module 9: Debugging",
+        "label": "Module 13: Debugging",
         "items": [
           {
             "label": "Error ဖတ်နည်း & Debugging",
@@ -414,7 +414,7 @@
         ]
       },
       {
-        "label": "Module 10: More Projects",
+        "label": "Module 14: More Projects",
         "items": [
           {
             "label": "To-do List, Calculator & Word Counter",
@@ -748,7 +748,7 @@
     "label": "WebSocket",
     "items": [
       {
-        "label": "Websocket Introduction",
+        "label": "Introduction",
         "items": [
           {
             "label": "What is WebSocket?",
@@ -765,7 +765,7 @@
         ]
       },
       {
-        "label": "About HTTP",
+        "label": "Module 1: About HTTP",
         "items": [
           {
             "label": "HTTP history and limitations",
@@ -782,7 +782,7 @@
         ]
       },
       {
-        "label": "About WebSocket",
+        "label": "Module 2: About WebSocket",
         "items": [
           {
             "label": "Birth of WebSocket",
@@ -803,7 +803,7 @@
         ]
       },
       {
-        "label": "Real World Example",
+        "label": "Module 3: Real World Example",
         "items": [
           {
             "label": "Simple Chat App - Client",
@@ -816,8 +816,13 @@
         ]
       },
       {
-        "label": "Latest Updates & Alternatives",
-        "slug": "websocket/latest-and-alternatives"
+        "label": "Module 4: Latest Updates & Alternatives",
+        "items": [
+          {
+            "label": "Latest Updates & Alternatives",
+            "slug": "websocket/latest-and-alternatives"
+          }
+        ]
       }
     ]
   },
@@ -825,7 +830,7 @@
     "label": "Advanced-Typescript",
     "items": [
       {
-        "label": "Why is needed?",
+        "label": "Module 1: Why is needed?",
         "items": [
           {
             "label": "why advanced typescript?",
@@ -846,7 +851,7 @@
         ]
       },
       {
-        "label": "Generics",
+        "label": "Module 2: Generics",
         "items": [
           {
             "label": "Generics Introduction",
@@ -871,7 +876,7 @@
         ]
       },
       {
-        "label": "Utility Types",
+        "label": "Module 3: Utility Types",
         "items": [
           {
             "label": "Utility Introduction",
@@ -912,7 +917,7 @@
         ]
       },
       {
-        "label": "Satisfies Keyword",
+        "label": "Module 4: Satisfies Keyword",
         "items": [
           {
             "label": "Before Satisfies",
@@ -937,7 +942,7 @@
         ]
       },
       {
-        "label": "Bringing it all together",
+        "label": "Module 5: Bringing it all together",
         "items": [
           {
             "label": "Generics + Utility Types",
@@ -959,7 +964,7 @@
     "label": "Git Version Control",
     "items": [
       {
-        "label": "Git Introduction",
+        "label": "Introduction",
         "items": [
           {
             "label": "Why Git?",
@@ -980,7 +985,7 @@
         ]
       },
       {
-        "label": "Branches",
+        "label": "Module 1: Branches",
         "items": [
           {
             "label": "Branches Introduction",
@@ -1001,7 +1006,7 @@
         ]
       },
       {
-        "label": "Remote Repository",
+        "label": "Module 2: Remote Repository",
         "items": [
           {
             "label": "Remote Repository Introduction",
@@ -1026,7 +1031,7 @@
         ]
       },
       {
-        "label": "Git Workflow",
+        "label": "Module 3: Git Workflow",
         "items": [
           {
             "label": "Git Workflow Introduction",
@@ -1047,7 +1052,7 @@
         ]
       },
       {
-        "label": "Advanced Techniques",
+        "label": "Module 4: Advanced Techniques",
         "items": [
           {
             "label": "Quick Fixes",
@@ -1102,7 +1107,7 @@
         ]
       },
       {
-        "label": "Measuring Web Performance",
+        "label": "Module 1: Measuring Web Performance",
         "items": [
           {
             "label": "Key Performance Metrics",
@@ -1115,7 +1120,7 @@
         ]
       },
       {
-        "label": "Mastering Core Web Vitals",
+        "label": "Module 2: Mastering Core Web Vitals",
         "items": [
           {
             "label": "LCP",
@@ -1136,7 +1141,7 @@
         ]
       },
       {
-        "label": "Image & Asset Optimization",
+        "label": "Module 3: Image & Asset Optimization",
         "items": [
           {
             "label": "Image Optimization",
@@ -1153,7 +1158,7 @@
         ]
       },
       {
-        "label": "Javascript & CSS Optimization",
+        "label": "Module 4: Javascript & CSS Optimization",
         "items": [
           {
             "label": "Javascript Optimization",
@@ -1170,7 +1175,7 @@
         ]
       },
       {
-        "label": "Server-Side & Delivery - Caching, CDNS",
+        "label": "Module 5: Server-Side & Delivery - Caching, CDNS",
         "items": [
           {
             "label": "Browser Caching",
@@ -1187,7 +1192,7 @@
         ]
       },
       {
-        "label": "Advanced Performance Techniques & Future Trends",
+        "label": "Module 6: Advanced Performance Techniques & Future Trends",
         "items": [
           {
             "label": "Rendering Architectures",
@@ -1204,8 +1209,13 @@
         ]
       },
       {
-        "label": "Course Summary",
-        "slug": "web-performance/summary"
+        "label": "Module 7: Course Summary",
+        "items": [
+          {
+            "label": "Course Summary",
+            "slug": "web-performance/summary"
+          }
+        ]
       }
     ]
   },
@@ -1213,7 +1223,7 @@
     "label": "Software Architecture",
     "items": [
       {
-        "label": "Foundations",
+        "label": "Module 1: Foundations",
         "items": [
           {
             "label": "Foundations of Software Architecture",
@@ -1226,7 +1236,7 @@
         ]
       },
       {
-        "label": "Monolithic Architecture",
+        "label": "Module 2: Monolithic Architecture",
         "items": [
           {
             "label": "Monolithic Architecture",
@@ -1243,7 +1253,7 @@
         ]
       },
       {
-        "label": "SOA & Microservices",
+        "label": "Module 3: SOA & Microservices",
         "items": [
           {
             "label": "Distributed Systems & SOA",
@@ -1260,7 +1270,7 @@
         ]
       },
       {
-        "label": "Designing Communication",
+        "label": "Module 4: Designing Communication",
         "items": [
           {
             "label": "Synchronous Communication",
@@ -1277,7 +1287,7 @@
         ]
       },
       {
-        "label": "Asynchronous Architectures",
+        "label": "Module 5: Asynchronous Architectures",
         "items": [
           {
             "label": "Asynchronous Communication",
@@ -1294,7 +1304,7 @@
         ]
       },
       {
-        "label": "The Architect's Craft",
+        "label": "Module 6: The Architect's Craft",
         "items": [
           {
             "label": "Trade-Off & Making Decisions",
@@ -1315,7 +1325,7 @@
         ]
       },
       {
-        "label": "Practical Architecture",
+        "label": "Module 7: Practical Architecture",
         "items": [
           {
             "label": "Designing a \"Ride-Sharing App\"",
@@ -1332,7 +1342,7 @@
         ]
       },
       {
-        "label": "The Future of Architecture",
+        "label": "Module 8: The Future of Architecture",
         "items": [
           {
             "label": "Current & Future Trends",
@@ -1371,7 +1381,7 @@
         ]
       },
       {
-        "label": "Terminology",
+        "label": "Module 1: Terminology",
         "items": [
           {
             "label": "Terminology",
@@ -1416,7 +1426,7 @@
         ]
       },
       {
-        "label": "Normalization",
+        "label": "Module 2: Normalization",
         "items": [
           {
             "label": "Normalization",
@@ -1449,7 +1459,7 @@
         ]
       },
       {
-        "label": "SQL",
+        "label": "Module 3: SQL",
         "items": [
           {
             "label": "SQL",
@@ -1548,7 +1558,7 @@
         ]
       },
       {
-        "label": "Monolithic Architecture",
+        "label": "Module 1: Monolithic Architecture",
         "items": [
           {
             "label": "What is Monolithic Architecture?",
@@ -1565,7 +1575,7 @@
         ]
       },
       {
-        "label": "Component-Based Architecture",
+        "label": "Module 2: Component-Based Architecture",
         "items": [
           {
             "label": "Component-Based Architecture",
@@ -1578,7 +1588,7 @@
         ]
       },
       {
-        "label": "MV* Architecture (MVC, MVVM, MVP)",
+        "label": "Module 3: MV* Architecture (MVC, MVVM, MVP)",
         "items": [
           {
             "label": "Introduction to MV*",
@@ -1591,7 +1601,7 @@
         ]
       },
       {
-        "label": "Flux/Redux Architecture",
+        "label": "Module 4: Flux/Redux Architecture",
         "items": [
           {
             "label": "Flux Architecture",
@@ -1604,7 +1614,7 @@
         ]
       },
       {
-        "label": "Micro-Frontend Architecture",
+        "label": "Module 5: Micro-Frontend Architecture",
         "items": [
           {
             "label": "Micro-Frontend Architecture",
@@ -1617,7 +1627,7 @@
         ]
       },
       {
-        "label": "Modular Architecture",
+        "label": "Module 6: Modular Architecture",
         "items": [
           {
             "label": "Modular Architecture",
@@ -1630,7 +1640,7 @@
         ]
       },
       {
-        "label": "Rendering Strategies (CSR, SSR, SSG, ISR)",
+        "label": "Module 7: Rendering Strategies (CSR, SSR, SSG, ISR)",
         "items": [
           {
             "label": "CSR, SSR, SSG, ISR",
@@ -1643,7 +1653,7 @@
         ]
       },
       {
-        "label": "Conclusion & Future Trends",
+        "label": "Module 8: Conclusion & Future Trends",
         "items": [
           {
             "label": "Conclusion",
@@ -1657,7 +1667,7 @@
     "label": "HTML",
     "items": [
       {
-        "label": "HTML Introduction",
+        "label": "Introduction",
         "items": [
           {
             "label": "What is HTML?",
@@ -1670,7 +1680,7 @@
         ]
       },
       {
-        "label": "Basic HTML Structure",
+        "label": "Module 1: Basic HTML Structure",
         "items": [
           {
             "label": "Simple HTML Document",
@@ -1687,7 +1697,7 @@
         ]
       },
       {
-        "label": "Text & Formatting",
+        "label": "Module 2: Text & Formatting",
         "items": [
           {
             "label": "Headings & Paragraphs",
@@ -1704,7 +1714,7 @@
         ]
       },
       {
-        "label": "Links & Navigation",
+        "label": "Module 3: Links & Navigation",
         "items": [
           {
             "label": "Links",
@@ -1717,7 +1727,7 @@
         ]
       },
       {
-        "label": "Images & Media",
+        "label": "Module 4: Images & Media",
         "items": [
           {
             "label": "Images",
@@ -1730,7 +1740,7 @@
         ]
       },
       {
-        "label": "Table",
+        "label": "Module 5: Table",
         "items": [
           {
             "label": "Table Introduction",
@@ -1743,7 +1753,7 @@
         ]
       },
       {
-        "label": "Forms & Input",
+        "label": "Module 6: Forms & Input",
         "items": [
           {
             "label": "Form Introduction",
@@ -1756,7 +1766,7 @@
         ]
       },
       {
-        "label": "Semantic HTML",
+        "label": "Module 7: Semantic HTML",
         "items": [
           {
             "label": "Semantic HTML Introduction",
@@ -1769,7 +1779,7 @@
         ]
       },
       {
-        "label": "HTML Attributes & Best Practices",
+        "label": "Module 8: HTML Attributes & Best Practices",
         "items": [
           {
             "label": "Attributes",
@@ -1782,7 +1792,7 @@
         ]
       },
       {
-        "label": "HTML 5 Features",
+        "label": "Module 9: HTML 5 Features",
         "items": [
           {
             "label": "New Input Types",
@@ -1795,7 +1805,7 @@
         ]
       },
       {
-        "label": "Putting It All Together",
+        "label": "Module 10: Putting It All Together",
         "items": [
           {
             "label": "Structure of a Webpage",
@@ -1804,7 +1814,7 @@
         ]
       },
       {
-        "label": "Next Steps",
+        "label": "Module 11: Next Steps",
         "items": [
           {
             "label": "Next Steps",
@@ -1839,7 +1849,7 @@
         ]
       },
       {
-        "label": "Visuals",
+        "label": "Module 1: Visuals",
         "items": [
           {
             "label": "Colors & Backgrounds",
@@ -1852,7 +1862,7 @@
         ]
       },
       {
-        "label": "Box Model",
+        "label": "Module 2: Box Model",
         "items": [
           {
             "label": "The Box Model",
@@ -1869,7 +1879,7 @@
         ]
       },
       {
-        "label": "Layout",
+        "label": "Module 3: Layout",
         "items": [
           {
             "label": "Display Property",
@@ -1886,7 +1896,7 @@
         ]
       },
       {
-        "label": "Responsive Design",
+        "label": "Module 4: Responsive Design",
         "items": [
           {
             "label": "Media Queries",
@@ -1895,7 +1905,7 @@
         ]
       },
       {
-        "label": "Positioning",
+        "label": "Module 5: Positioning",
         "items": [
           {
             "label": "Position Property",
@@ -1908,7 +1918,7 @@
         ]
       },
       {
-        "label": "Effects",
+        "label": "Module 6: Effects",
         "items": [
           {
             "label": "Shadows",
@@ -1921,7 +1931,7 @@
         ]
       },
       {
-        "label": "Interactivity",
+        "label": "Module 7: Interactivity",
         "items": [
           {
             "label": "Transitions",
@@ -1938,7 +1948,7 @@
         ]
       },
       {
-        "label": "Advanced Selectors",
+        "label": "Module 8: Advanced Selectors",
         "items": [
           {
             "label": "Pseudo-classes",
@@ -1951,7 +1961,7 @@
         ]
       },
       {
-        "label": "Modern Practices",
+        "label": "Module 9: Modern Practices",
         "items": [
           {
             "label": "CSS Variables",
@@ -1964,7 +1974,7 @@
         ]
       },
       {
-        "label": "Next Steps",
+        "label": "Module 10: Next Steps",
         "items": [
           {
             "label": "What is Next?",
@@ -1978,7 +1988,7 @@
     "label": "JavaScript",
     "items": [
       {
-        "label": "Introduction & Setup",
+        "label": "Introduction",
         "items": [
           {
             "label": "What This Course Covers",
@@ -1991,7 +2001,7 @@
         ]
       },
       {
-        "label": "Fundamentals",
+        "label": "Module 1: Fundamentals",
         "items": [
           {
             "label": "What Is JavaScript?",
@@ -2016,7 +2026,7 @@
         ]
       },
       {
-        "label": "Control Flow",
+        "label": "Module 2: Control Flow",
         "items": [
           {
             "label": "Conditional Statements",
@@ -2037,7 +2047,7 @@
         ]
       },
       {
-        "label": "Arrays & Objects",
+        "label": "Module 3: Arrays & Objects",
         "items": [
           {
             "label": "Arrays",
@@ -2058,7 +2068,7 @@
         ]
       },
       {
-        "label": "Functions",
+        "label": "Module 4: Functions",
         "items": [
           {
             "label": "What Are Functions?",
@@ -2079,7 +2089,7 @@
         ]
       },
       {
-        "label": "Introduction to the DOM",
+        "label": "Module 5: Introduction to the DOM",
         "items": [
           {
             "label": "What Is the DOM?",
@@ -2096,7 +2106,7 @@
         ]
       },
       {
-        "label": "DOM Manipulation Basics",
+        "label": "Module 6: DOM Manipulation Basics",
         "items": [
           {
             "label": "Changing Content",
@@ -2117,7 +2127,7 @@
         ]
       },
       {
-        "label": "Events & Event Handling",
+        "label": "Module 7: Events & Event Handling",
         "items": [
           {
             "label": "What Are Events?",
@@ -2138,7 +2148,7 @@
         ]
       },
       {
-        "label": "DOM Projects (Hands-On)",
+        "label": "Module 8: DOM Projects (Hands-On)",
         "items": [
           {
             "label": "Project 1: Interactive Counter",
@@ -2155,7 +2165,7 @@
         ]
       },
       {
-        "label": "Best Practices & Next Steps",
+        "label": "Module 9: Best Practices & Next Steps",
         "items": [
           {
             "label": "Writing Clean JavaScript",
@@ -2177,7 +2187,7 @@
     "label": "JavaScript ES6+ Essential",
     "items": [
       {
-        "label": "JS Tutorial",
+        "label": "Module 1: JS Tutorial",
         "items": [
           {
             "label": "JS Home",
@@ -2294,7 +2304,7 @@
         ]
       },
       {
-        "label": "JS HTML DOM",
+        "label": "Module 2: JS HTML DOM",
         "items": [
           {
             "label": "JS HTML Events",
@@ -2307,7 +2317,7 @@
         ]
       },
       {
-        "label": "JS Web API",
+        "label": "Module 3: JS Web API",
         "items": [
           {
             "label": "JS Window API",
@@ -2328,7 +2338,7 @@
         ]
       },
       {
-        "label": "JS Advanced",
+        "label": "Module 4: JS Advanced",
         "items": [
           {
             "label": "JS Advanced မိတ်ဆက်",
@@ -2377,7 +2387,7 @@
         ]
       },
       {
-        "label": "Old Technologies",
+        "label": "Module 5: Old Technologies",
         "items": [
           {
             "label": "JS AJAX",
@@ -2394,7 +2404,7 @@
         ]
       },
       {
-        "label": "JS Examples",
+        "label": "Module 6: JS Examples",
         "items": [
           {
             "label": "JS Examples",
@@ -2408,31 +2418,61 @@
     "label": "n8n Workflow Automation",
     "items": [
       {
-        "label": "EP0. Workflow vs AI Agent",
-        "slug": "n8n-course/introduction/workflow-vs-agent"
+        "label": "Module 1: Workflow vs AI Agent",
+        "items": [
+          {
+            "label": "Workflow vs AI Agent",
+            "slug": "n8n-course/introduction/workflow-vs-agent"
+          }
+        ]
       },
       {
-        "label": "EP1. n8n မိတ်ဆက်နှင့် Setup",
-        "slug": "n8n-course/introduction/what-is-n8n"
+        "label": "Module 2: n8n မိတ်ဆက်နှင့် Setup",
+        "items": [
+          {
+            "label": "n8n မိတ်ဆက်နှင့် Setup",
+            "slug": "n8n-course/introduction/what-is-n8n"
+          }
+        ]
       },
       {
-        "label": "EP2. Nodes, Triggers & Credentials",
-        "slug": "n8n-course/core-concepts/understanding-nodes"
+        "label": "Module 3: Nodes, Triggers & Credentials",
+        "items": [
+          {
+            "label": "Nodes, Triggers & Credentials",
+            "slug": "n8n-course/core-concepts/understanding-nodes"
+          }
+        ]
       },
       {
-        "label": "EP3. ပထမဆုံး AI Chatbot Workflow",
-        "slug": "n8n-course/first-workflow/hello-world-workflow"
+        "label": "Module 4: ပထမဆုံး AI Chatbot Workflow",
+        "items": [
+          {
+            "label": "ပထမဆုံး AI Chatbot Workflow",
+            "slug": "n8n-course/first-workflow/hello-world-workflow"
+          }
+        ]
       },
       {
-        "label": "EP4. Data Transformation",
-        "slug": "n8n-course/first-workflow/data-transformation"
+        "label": "Module 5: Data Transformation",
+        "items": [
+          {
+            "label": "Data Transformation",
+            "slug": "n8n-course/first-workflow/data-transformation"
+          }
+        ]
       },
       {
-        "label": "EP5. Telegram & API Automation",
-        "slug": "n8n-course/real-world/email-notifications"
+        "label": "Module 6: Telegram & API Automation",
+        "items": [
+          {
+            "label": "Telegram & API Automation",
+            "slug": "n8n-course/real-world/email-notifications"
+          }
+        ]
       },
       {
-        "label": "EP6. Error Handling & Sub-Workflows",
+        "label": "Module 7: Error Handling & Sub-Workflows",
         "items": [
           {
             "label": "Error Handling",
@@ -2445,11 +2485,16 @@
         ]
       },
       {
-        "label": "EP7. Loop နှင့် Batch Processing",
-        "slug": "n8n-course/loop-batch/loop-over-items"
+        "label": "Module 8: Loop နှင့် Batch Processing",
+        "items": [
+          {
+            "label": "Loop နှင့် Batch Processing",
+            "slug": "n8n-course/loop-batch/loop-over-items"
+          }
+        ]
       },
       {
-        "label": "EP8. AI Nodes & AI Agent (Hybrid)",
+        "label": "Module 9: AI Nodes & AI Agent (Hybrid)",
         "items": [
           {
             "label": "AI Nodes မိတ်ဆက်",
@@ -2462,20 +2507,40 @@
         ]
       },
       {
-        "label": "EP9. Database Operations",
-        "slug": "n8n-course/database/database-operations"
+        "label": "Module 10: Database Operations",
+        "items": [
+          {
+            "label": "Database Operations",
+            "slug": "n8n-course/database/database-operations"
+          }
+        ]
       },
       {
-        "label": "EP10. Production Self-Hosting",
-        "slug": "n8n-course/production/self-hosting"
+        "label": "Module 11: Production Self-Hosting",
+        "items": [
+          {
+            "label": "Production Self-Hosting",
+            "slug": "n8n-course/production/self-hosting"
+          }
+        ]
       },
       {
-        "label": "EP11. Capstone E-Commerce System",
-        "slug": "n8n-course/final-project/ecommerce-automation"
+        "label": "Module 12: Capstone E-Commerce System",
+        "items": [
+          {
+            "label": "Capstone E-Commerce System",
+            "slug": "n8n-course/final-project/ecommerce-automation"
+          }
+        ]
       },
       {
-        "label": "EP12. Messenger Auto-Reply AI Bot",
-        "slug": "n8n-course/special/facebook-messenger-bot"
+        "label": "Module 13: Messenger Auto-Reply AI Bot",
+        "items": [
+          {
+            "label": "Messenger Auto-Reply AI Bot",
+            "slug": "n8n-course/special/facebook-messenger-bot"
+          }
+        ]
       },
       {
         "label": "Credentials နဲ့ Security",
@@ -2503,24 +2568,49 @@
     "label": "Docker & Containerization",
     "items": [
       {
-        "label": "1. မိတ်ဆက်နှင့် Concept",
-        "slug": "docker/introduction/what-is-docker"
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Docker ဆိုတာ ဘာလဲ? (Containers vs Virtual Machines)",
+            "slug": "docker/introduction/what-is-docker"
+          }
+        ]
       },
       {
-        "label": "2. Containers & Images CLI",
-        "slug": "docker/core-concepts/containers-images"
+        "label": "Module 1: Containers & Images CLI",
+        "items": [
+          {
+            "label": "Containers & Images CLI",
+            "slug": "docker/core-concepts/containers-images"
+          }
+        ]
       },
       {
-        "label": "3. Dockerfile တည်ဆောက်ခြင်း",
-        "slug": "docker/dockerfile/building-images"
+        "label": "Module 2: Dockerfile တည်ဆောက်ခြင်း",
+        "items": [
+          {
+            "label": "Dockerfile တည်ဆောက်ခြင်း",
+            "slug": "docker/dockerfile/building-images"
+          }
+        ]
       },
       {
-        "label": "4. Docker Compose Multi-Container",
-        "slug": "docker/docker-compose/multi-container"
+        "label": "Module 3: Docker Compose Multi-Container",
+        "items": [
+          {
+            "label": "Docker Compose Multi-Container",
+            "slug": "docker/docker-compose/multi-container"
+          }
+        ]
       },
       {
-        "label": "5. Production Best Practices & Security",
-        "slug": "docker/production/best-practices"
+        "label": "Module 4: Production Best Practices & Security",
+        "items": [
+          {
+            "label": "Production Best Practices & Security",
+            "slug": "docker/production/best-practices"
+          }
+        ]
       }
     ]
   },
@@ -2528,24 +2618,49 @@
     "label": "Next.js Full-Stack Framework",
     "items": [
       {
-        "label": "1. Next.js မိတ်ဆက်",
-        "slug": "nextjs/introduction/what-is-nextjs"
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Next.js ဆိုတာ ဘာလဲ? (Full-Stack React Framework)",
+            "slug": "nextjs/introduction/what-is-nextjs"
+          }
+        ]
       },
       {
-        "label": "2. App Router & File-System Routing",
-        "slug": "nextjs/routing/app-router"
+        "label": "Module 1: App Router & File-System Routing",
+        "items": [
+          {
+            "label": "App Router & File-System Routing",
+            "slug": "nextjs/routing/app-router"
+          }
+        ]
       },
       {
-        "label": "3. React Server Components & Data Fetching",
-        "slug": "nextjs/data-fetching/server-components"
+        "label": "Module 2: React Server Components & Data Fetching",
+        "items": [
+          {
+            "label": "React Server Components & Data Fetching",
+            "slug": "nextjs/data-fetching/server-components"
+          }
+        ]
       },
       {
-        "label": "4. Server Actions & Form Mutations",
-        "slug": "nextjs/server-actions/mutations"
+        "label": "Module 3: Server Actions & Form Mutations",
+        "items": [
+          {
+            "label": "Server Actions & Form Mutations",
+            "slug": "nextjs/server-actions/mutations"
+          }
+        ]
       },
       {
-        "label": "5. Vercel Deployment, Env & SEO",
-        "slug": "nextjs/deployment/vercel-deployment"
+        "label": "Module 4: Vercel Deployment, Env & SEO",
+        "items": [
+          {
+            "label": "Vercel Deployment, Env & SEO",
+            "slug": "nextjs/deployment/vercel-deployment"
+          }
+        ]
       }
     ]
   },
@@ -2553,70 +2668,75 @@
     "label": "Linux & Cloud DevOps",
     "items": [
       {
-        "label": "မိတ်ဆက် (Course Overview)",
-        "slug": "linux-devops"
-      },
-      {
-        "label": "1. Linux CLI အခြေခံ",
+        "label": "Introduction",
         "items": [
           {
-            "label": "1. Navigation & File System",
+            "label": "Linux, Cloud VPS & DevOps မိတ်ဆက် (Course Overview)",
+            "slug": "linux-devops"
+          }
+        ]
+      },
+      {
+        "label": "Module 1: Linux CLI အခြေခံ",
+        "items": [
+          {
+            "label": "Navigation & File System",
             "slug": "linux-devops/01-cli-basics/01-navigation-and-files"
           },
           {
-            "label": "2. Permissions & Users Management",
+            "label": "Permissions & Users Management",
             "slug": "linux-devops/01-cli-basics/02-permissions-and-users"
           }
         ]
       },
       {
-        "label": "2. System Management",
+        "label": "Module 2: System Management",
         "items": [
           {
-            "label": "1. APT Package Manager",
+            "label": "APT Package Manager",
             "slug": "linux-devops/02-system-management/01-package-management"
           },
           {
-            "label": "2. Processes & Systemd Services",
+            "label": "Processes & Systemd Services",
             "slug": "linux-devops/02-system-management/02-processes-and-services"
           }
         ]
       },
       {
-        "label": "3. Server Security & Hardening",
+        "label": "Module 3: Server Security & Hardening",
         "items": [
           {
-            "label": "1. SSH Keys & Access Hardening",
+            "label": "SSH Keys & Access Hardening",
             "slug": "linux-devops/03-server-security/01-ssh-keys-and-access"
           },
           {
-            "label": "2. UFW Firewall & Fail2ban",
+            "label": "UFW Firewall & Fail2ban",
             "slug": "linux-devops/03-server-security/02-firewall-and-hardening"
           }
         ]
       },
       {
-        "label": "4. Nginx Web Server & SSL",
+        "label": "Module 4: Nginx Web Server & SSL",
         "items": [
           {
-            "label": "1. Nginx Fundamentals & Static Hosting",
+            "label": "Nginx Fundamentals & Static Hosting",
             "slug": "linux-devops/04-nginx-reverse-proxy/01-nginx-fundamentals"
           },
           {
-            "label": "2. Reverse Proxy & Let's Encrypt SSL",
+            "label": "Reverse Proxy & Let's Encrypt SSL",
             "slug": "linux-devops/04-nginx-reverse-proxy/02-reverse-proxy-and-ssl"
           }
         ]
       },
       {
-        "label": "5. CI/CD Pipeline Automation",
+        "label": "Module 5: CI/CD Pipeline Automation",
         "items": [
           {
-            "label": "1. GitHub Actions CI Basics",
+            "label": "GitHub Actions CI Basics",
             "slug": "linux-devops/05-cicd-automation/01-github-actions-basics"
           },
           {
-            "label": "2. Automated VPS Deployment",
+            "label": "Automated VPS Deployment",
             "slug": "linux-devops/05-cicd-automation/02-automated-vps-deployment"
           }
         ]
@@ -2631,7 +2751,7 @@
     "label": "SQL Tutorial",
     "items": [
       {
-        "label": "1. Introduction",
+        "label": "Introduction",
         "items": [
           {
             "label": "သင်တန်းကြိုဆိုခြင်း",
@@ -2652,7 +2772,7 @@
         ]
       },
       {
-        "label": "2. SELECT & Filter",
+        "label": "Module 1: SELECT & Filter",
         "items": [
           {
             "label": "sql-and",
@@ -2685,7 +2805,7 @@
         ]
       },
       {
-        "label": "3. Insert / Update / Delete",
+        "label": "Module 2: Insert / Update / Delete",
         "items": [
           {
             "label": "sql-delete",
@@ -2710,7 +2830,7 @@
         ]
       },
       {
-        "label": "4. Aggregate Functions",
+        "label": "Module 3: Aggregate Functions",
         "items": [
           {
             "label": "sql-aggregate-functions",
@@ -2739,7 +2859,7 @@
         ]
       },
       {
-        "label": "5. Pattern Matching",
+        "label": "Module 4: Pattern Matching",
         "items": [
           {
             "label": "sql-aliases",
@@ -2764,7 +2884,7 @@
         ]
       },
       {
-        "label": "6. Joins",
+        "label": "Module 5: Joins",
         "items": [
           {
             "label": "sql-full-join",
@@ -2793,7 +2913,7 @@
         ]
       },
       {
-        "label": "7. Grouping & Sets",
+        "label": "Module 6: Grouping & Sets",
         "items": [
           {
             "label": "sql-group-by",
@@ -2814,7 +2934,7 @@
         ]
       },
       {
-        "label": "8. Advanced SQL",
+        "label": "Module 7: Advanced SQL",
         "items": [
           {
             "label": "sql-all",
@@ -2859,7 +2979,7 @@
         ]
       },
       {
-        "label": "9. SQL Database",
+        "label": "Module 8: SQL Database",
         "items": [
           {
             "label": "sql-database-alter-table",
@@ -2948,7 +3068,7 @@
         ]
       },
       {
-        "label": "10. SQL References",
+        "label": "Module 9: SQL References",
         "items": [
           {
             "label": "sql-reference-access-functions",
@@ -2977,7 +3097,7 @@
         ]
       },
       {
-        "label": "11. Examples & Practice",
+        "label": "Module 10: Examples & Practice",
         "items": [
           {
             "label": "sql-editor",
@@ -3014,7 +3134,7 @@
         ]
       },
       {
-        "label": "12. Certification",
+        "label": "Module 11: Certification",
         "items": [
           {
             "label": "sql-cert-validation",
@@ -3028,7 +3148,7 @@
     "label": "React",
     "items": [
       {
-        "label": "1. React Tutorial",
+        "label": "Module 1: React Tutorial",
         "items": [
           {
             "label": "သင်တန်းကြိုဆိုခြင်း",
@@ -3061,7 +3181,7 @@
         ]
       },
       {
-        "label": "2. ES6 Syntax",
+        "label": "Module 2: ES6 Syntax",
         "items": [
           {
             "label": "ES6 Classes",
@@ -3102,7 +3222,7 @@
         ]
       },
       {
-        "label": "3. React JSX",
+        "label": "Module 3: React JSX",
         "items": [
           {
             "label": "JSX Intro",
@@ -3123,7 +3243,7 @@
         ]
       },
       {
-        "label": "4. React Components",
+        "label": "Module 4: React Components",
         "items": [
           {
             "label": "Class Components",
@@ -3144,7 +3264,7 @@
         ]
       },
       {
-        "label": "5. React Events",
+        "label": "Module 5: React Events",
         "items": [
           {
             "label": "Events",
@@ -3153,7 +3273,7 @@
         ]
       },
       {
-        "label": "6. React Conditionals",
+        "label": "Module 6: React Conditionals",
         "items": [
           {
             "label": "Conditionals",
@@ -3162,7 +3282,7 @@
         ]
       },
       {
-        "label": "7. React Lists",
+        "label": "Module 7: React Lists",
         "items": [
           {
             "label": "Lists",
@@ -3171,7 +3291,7 @@
         ]
       },
       {
-        "label": "8. React Forms",
+        "label": "Module 8: React Forms",
         "items": [
           {
             "label": "Forms",
@@ -3204,7 +3324,7 @@
         ]
       },
       {
-        "label": "9. React Portals",
+        "label": "Module 9: React Portals",
         "items": [
           {
             "label": "Portals",
@@ -3213,7 +3333,7 @@
         ]
       },
       {
-        "label": "10. React Suspense",
+        "label": "Module 10: React Suspense",
         "items": [
           {
             "label": "Suspense",
@@ -3222,7 +3342,7 @@
         ]
       },
       {
-        "label": "11. React Styling",
+        "label": "Module 11: React Styling",
         "items": [
           {
             "label": "CSS Styling",
@@ -3243,7 +3363,7 @@
         ]
       },
       {
-        "label": "12. Advanced Components",
+        "label": "Module 12: Advanced Components",
         "items": [
           {
             "label": "Forward Ref",
@@ -3256,7 +3376,7 @@
         ]
       },
       {
-        "label": "13. Router & Transitions",
+        "label": "Module 13: Router & Transitions",
         "items": [
           {
             "label": "React Router",
@@ -3269,7 +3389,7 @@
         ]
       },
       {
-        "label": "14. React Hooks",
+        "label": "Module 14: React Hooks",
         "items": [
           {
             "label": "What is a Hook?",
@@ -3310,7 +3430,7 @@
         ]
       },
       {
-        "label": "15. React Certification",
+        "label": "Module 15: React Certification",
         "items": [
           {
             "label": "Certificate",
@@ -3319,7 +3439,7 @@
         ]
       },
       {
-        "label": "16. React Practice & Review",
+        "label": "Module 16: React Practice & Review",
         "items": [
           {
             "label": "React Compiler",
@@ -3357,7 +3477,7 @@
     "label": "MySQL",
     "items": [
       {
-        "label": "1. MySQL Tutorial",
+        "label": "Module 1: MySQL Tutorial",
         "items": [
           {
             "label": "သင်တန်းကြိုဆိုခြင်း",
@@ -3378,7 +3498,7 @@
         ]
       },
       {
-        "label": "2. MySQL SQL",
+        "label": "Module 2: MySQL SQL",
         "items": [
           {
             "label": "SQL",
@@ -3555,7 +3675,7 @@
         ]
       },
       {
-        "label": "3. MySQL Database",
+        "label": "Module 3: MySQL Database",
         "items": [
           {
             "label": "Create DB",
@@ -3632,7 +3752,7 @@
         ]
       },
       {
-        "label": "4. MySQL Cert",
+        "label": "Module 4: MySQL Cert",
         "items": [
           {
             "label": "Certificate",
@@ -3641,7 +3761,7 @@
         ]
       },
       {
-        "label": "5. MySQL References",
+        "label": "Module 5: MySQL References",
         "items": [
           {
             "label": "Data Types",
@@ -3654,7 +3774,7 @@
         ]
       },
       {
-        "label": "6. MySQL Examples",
+        "label": "Module 6: MySQL Examples",
         "items": [
           {
             "label": "Examples",
@@ -3688,7 +3808,7 @@
     "label": "Node.js",
     "items": [
       {
-        "label": "1. Node.js Tutorial",
+        "label": "Module 1: Node.js Tutorial",
         "items": [
           {
             "label": "သင်တန်းကြိုဆိုခြင်း",
@@ -3733,7 +3853,7 @@
         ]
       },
       {
-        "label": "2. Asynchronous",
+        "label": "Module 2: Asynchronous",
         "items": [
           {
             "label": "Asynchronous",
@@ -3754,7 +3874,7 @@
         ]
       },
       {
-        "label": "3. Module Basics",
+        "label": "Module 3: Module Basics",
         "items": [
           {
             "label": "Modules",
@@ -3787,7 +3907,7 @@
         ]
       },
       {
-        "label": "4. Core Modules",
+        "label": "Module 4: Core Modules",
         "items": [
           {
             "label": "http",
@@ -3852,7 +3972,7 @@
         ]
       },
       {
-        "label": "5. JavaScript & TypeScript",
+        "label": "Module 5: JavaScript & TypeScript",
         "items": [
           {
             "label": "ES6+ Features",
@@ -3877,7 +3997,7 @@
         ]
       },
       {
-        "label": "6. Building Applications",
+        "label": "Module 6: Building Applications",
         "items": [
           {
             "label": "Frameworks",
@@ -3906,7 +4026,7 @@
         ]
       },
       {
-        "label": "7. MySQL Database",
+        "label": "Module 7: MySQL Database",
         "items": [
           {
             "label": "Get Started",
@@ -3959,7 +4079,7 @@
         ]
       },
       {
-        "label": "8. MongoDB Database",
+        "label": "Module 8: MongoDB Database",
         "items": [
           {
             "label": "Get Started",
@@ -4012,7 +4132,7 @@
         ]
       },
       {
-        "label": "9. Advanced Communication",
+        "label": "Module 9: Advanced Communication",
         "items": [
           {
             "label": "GraphQL",
@@ -4029,7 +4149,7 @@
         ]
       },
       {
-        "label": "10. Testing & Debugging",
+        "label": "Module 10: Testing & Debugging",
         "items": [
           {
             "label": "Debugging",
@@ -4050,7 +4170,7 @@
         ]
       },
       {
-        "label": "11. Deployment",
+        "label": "Module 11: Deployment",
         "items": [
           {
             "label": "Env Variables",
@@ -4075,7 +4195,7 @@
         ]
       },
       {
-        "label": "12. Performance & Scaling",
+        "label": "Module 12: Performance & Scaling",
         "items": [
           {
             "label": "Logging",
@@ -4104,7 +4224,7 @@
         ]
       },
       {
-        "label": "13. Node.js Advanced",
+        "label": "Module 13: Node.js Advanced",
         "items": [
           {
             "label": "Microservices",
@@ -4145,7 +4265,7 @@
         ]
       },
       {
-        "label": "14. Hardware & IoT",
+        "label": "Module 14: Hardware & IoT",
         "items": [
           {
             "label": "RPi Get Started",
@@ -4182,7 +4302,7 @@
         ]
       },
       {
-        "label": "15. Node.js Cert",
+        "label": "Module 15: Node.js Cert",
         "items": [
           {
             "label": "Certificate",
@@ -4191,7 +4311,7 @@
         ]
       },
       {
-        "label": "16. Node.js Reference",
+        "label": "Module 16: Node.js Reference",
         "items": [
           {
             "label": "Built-in Modules",
@@ -4276,7 +4396,7 @@
         ]
       },
       {
-        "label": "17. Resources & Tools",
+        "label": "Module 17: Resources & Tools",
         "items": [
           {
             "label": "Compiler",
@@ -4314,7 +4434,7 @@
     "label": "TypeScript",
     "items": [
       {
-        "label": "1. TypeScript Tutorial",
+        "label": "Module 1: TypeScript Tutorial",
         "items": [
           {
             "label": "သင်တန်းကြိုဆိုခြင်း",
@@ -4331,7 +4451,7 @@
         ]
       },
       {
-        "label": "2. TS Basic Types",
+        "label": "Module 2: TS Basic Types",
         "items": [
           {
             "label": "Simple Types",
@@ -4372,7 +4492,7 @@
         ]
       },
       {
-        "label": "3. TS Functions",
+        "label": "Module 3: TS Functions",
         "items": [
           {
             "label": "Functions",
@@ -4385,7 +4505,7 @@
         ]
       },
       {
-        "label": "4. TS OOP & Generics",
+        "label": "Module 4: TS OOP & Generics",
         "items": [
           {
             "label": "Classes",
@@ -4410,7 +4530,7 @@
         ]
       },
       {
-        "label": "5. TS Ecosystem & Tooling",
+        "label": "Module 5: TS Ecosystem & Tooling",
         "items": [
           {
             "label": "Definitely Typed",
@@ -4439,7 +4559,7 @@
         ]
       },
       {
-        "label": "6. TS Advanced Types",
+        "label": "Module 6: TS Advanced Types",
         "items": [
           {
             "label": "Advanced Types",
@@ -4480,7 +4600,7 @@
         ]
       },
       {
-        "label": "7. TS Features",
+        "label": "Module 7: TS Features",
         "items": [
           {
             "label": "Async Programming",
@@ -4509,7 +4629,7 @@
         ]
       },
       {
-        "label": "8. TypeScript Cert",
+        "label": "Module 8: TypeScript Cert",
         "items": [
           {
             "label": "Certificate",
@@ -4518,7 +4638,7 @@
         ]
       },
       {
-        "label": "9. TypeScript Examples",
+        "label": "Module 9: TypeScript Examples",
         "items": [
           {
             "label": "Editor",
@@ -4552,7 +4672,7 @@
     "label": "Machine Learning",
     "items": [
       {
-        "label": "1. Foundations & History",
+        "label": "Module 1: Foundations & History",
         "items": [
           {
             "label": "သင်တန်းကြိုဆိုခြင်း",
@@ -4601,7 +4721,7 @@
         ]
       },
       {
-        "label": "2. Mathematics & Statistics",
+        "label": "Module 2: Mathematics & Statistics",
         "items": [
           {
             "label": "Mathematics Intro",
@@ -4630,7 +4750,7 @@
         ]
       },
       {
-        "label": "3. Core Machine Learning",
+        "label": "Module 3: Core Machine Learning",
         "items": [
           {
             "label": "What is ML",
@@ -4675,7 +4795,7 @@
         ]
       },
       {
-        "label": "4. Building & Evaluating Models",
+        "label": "Module 4: Building & Evaluating Models",
         "items": [
           {
             "label": "Linear Graphs & Scatter Plots",
@@ -4708,7 +4828,7 @@
         ]
       },
       {
-        "label": "5. JavaScript AI & Visualization",
+        "label": "Module 5: JavaScript AI & Visualization",
         "items": [
           {
             "label": "ML JavaScript Intro",
@@ -4733,7 +4853,7 @@
         ]
       },
       {
-        "label": "6. Advanced Deep Learning & Modern AI",
+        "label": "Module 6: Advanced Deep Learning & Modern AI",
         "items": [
           {
             "label": "Deep Learning Intro",
@@ -4766,7 +4886,7 @@
         ]
       },
       {
-        "label": "7. Practical End-to-End Examples",
+        "label": "Module 7: Practical End-to-End Examples",
         "items": [
           {
             "label": "Basic Regression",
@@ -4787,7 +4907,7 @@
         ]
       },
       {
-        "label": "8. Deployment & Production",
+        "label": "Module 8: Deployment & Production",
         "items": [
           {
             "label": "Saving & Loading Models",
@@ -4808,7 +4928,7 @@
         ]
       },
       {
-        "label": "9. ML Examples",
+        "label": "Module 9: ML Examples",
         "items": [
           {
             "label": "ML Editor",
@@ -4846,7 +4966,7 @@
     "label": "Java Masterclass",
     "items": [
       {
-        "label": "1. Course Prerequisites & Environment Setup",
+        "label": "Module 1: Course Prerequisites & Environment Setup",
         "items": [
           {
             "label": "သင်တန်းကြိုဆိုခြင်း",
@@ -4871,7 +4991,7 @@
         ]
       },
       {
-        "label": "2. Core OOP Concepts",
+        "label": "Module 2: Core OOP Concepts",
         "items": [
           {
             "label": "Classes & Objects",
@@ -4900,7 +5020,7 @@
         ]
       },
       {
-        "label": "3. Modern Java Features (Java 8-21)",
+        "label": "Module 3: Modern Java Features (Java 8-21)",
         "items": [
           {
             "label": "Lambda Expressions & Functional Interfaces",
@@ -4925,103 +5045,103 @@
         ]
       },
       {
-        "label": "4. Phase 1: Java Mechanics & Syntax",
+        "label": "Module 4: Phase 1: Java Mechanics & Syntax",
         "items": [
           {
-            "label": "Module 1: The JVM & Execution Lifecycle",
+            "label": "The JVM & Execution Lifecycle",
             "slug": "java-masterclass/modules/01-jvm-execution-lifecycle"
           },
           {
-            "label": "Module 2: Environment Setup",
+            "label": "Environment Setup",
             "slug": "java-masterclass/modules/02-environment-setup"
           },
           {
-            "label": "Module 3: Basics & Variables",
+            "label": "Basics & Variables",
             "slug": "java-masterclass/modules/03-basics-variables"
           },
           {
-            "label": "Module 4: Operators & Control Flow",
+            "label": "Operators & Control Flow",
             "slug": "java-masterclass/modules/04-operators-control-flow"
           }
         ]
       },
       {
-        "label": "5. Phase 2: Object-Oriented Mastery",
+        "label": "Module 5: Phase 2: Object-Oriented Mastery",
         "items": [
           {
-            "label": "Module 5: Classes & Objects",
+            "label": "Classes & Objects",
             "slug": "java-masterclass/modules/05-classes-objects"
           },
           {
-            "label": "Module 6: Encapsulation",
+            "label": "Encapsulation",
             "slug": "java-masterclass/modules/06-encapsulation"
           },
           {
-            "label": "Module 7: Inheritance",
+            "label": "Inheritance",
             "slug": "java-masterclass/modules/07-inheritance"
           },
           {
-            "label": "Module 8: Polymorphism",
+            "label": "Polymorphism",
             "slug": "java-masterclass/modules/08-polymorphism"
           },
           {
-            "label": "Module 9: Abstraction",
+            "label": "Abstraction",
             "slug": "java-masterclass/modules/09-abstraction"
           }
         ]
       },
       {
-        "label": "6. Phase 3: Core Libraries & Memory",
+        "label": "Module 6: Phase 3: Core Libraries & Memory",
         "items": [
           {
-            "label": "Module 10: Arrays & Strings",
+            "label": "Arrays & Strings",
             "slug": "java-masterclass/modules/10-arrays-strings"
           },
           {
-            "label": "Module 11: Exception Handling",
+            "label": "Exception Handling",
             "slug": "java-masterclass/modules/11-exception-handling"
           },
           {
-            "label": "Module 12: Generics",
+            "label": "Generics",
             "slug": "java-masterclass/modules/12-generics"
           },
           {
-            "label": "Module 13: The Collections Framework",
+            "label": "The Collections Framework",
             "slug": "java-masterclass/modules/13-collections"
           }
         ]
       },
       {
-        "label": "7. Phase 4: Advanced Java & Modern Features",
+        "label": "Module 7: Phase 4: Advanced Java & Modern Features",
         "items": [
           {
-            "label": "Module 14: Multithreading",
+            "label": "Multithreading",
             "slug": "java-masterclass/modules/14-multithreading-concurrency"
           },
           {
-            "label": "Module 15: Functional Java (Java 8+)",
+            "label": "Functional Java (Java 8+)",
             "slug": "java-masterclass/modules/15-functional-java"
           },
           {
-            "label": "Module 16: The Stream API (Deep Dive)",
+            "label": "The Stream API (Deep Dive)",
             "slug": "java-masterclass/modules/16-stream-api-deep"
           },
           {
-            "label": "Module 17: File I/O & Networking",
+            "label": "File I/O & Networking",
             "slug": "java-masterclass/modules/17-file-io-networking"
           },
           {
-            "label": "Module 18: Modern Data Structures",
+            "label": "Modern Data Structures",
             "slug": "java-masterclass/modules/18-records-optional-data-structures"
           },
           {
-            "label": "Module 19: Database Connectivity (JDBC)",
+            "label": "Database Connectivity (JDBC)",
             "slug": "java-masterclass/modules/19-jdbc-database"
           }
         ]
       },
       {
-        "label": "8. Java Examples",
+        "label": "Module 8: Java Examples",
         "items": [
           {
             "label": "Java Code Editor",
@@ -5236,7 +5356,7 @@
         ]
       },
       {
-        "label": "Exercises & Quiz",
+        "label": "Module 5: Exercises & Quiz",
         "items": [
           {
             "label": "Git Exercises",
@@ -5993,6 +6113,195 @@
           {
             "label": "Python Examples: String",
             "slug": "python-masterclass/examples/python-examples-string"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Java EE Masterclass",
+    "items": [
+      {
+        "label": "Introduction",
+        "items": [
+          {
+            "label": "Java EE Masterclass Home",
+            "slug": "javaee-masterclass/index"
+          }
+        ]
+      },
+      {
+        "label": "Module 1: Core Web Technologies",
+        "items": [
+          {
+            "label": "Java EE Architecture",
+            "slug": "javaee-masterclass/web-tech/java-ee-architecture"
+          },
+          {
+            "label": "Environment Setup",
+            "slug": "javaee-masterclass/web-tech/environment-setup"
+          },
+          {
+            "label": "The Servlet Lifecycle",
+            "slug": "javaee-masterclass/web-tech/servlet-lifecycle"
+          },
+          {
+            "label": "Request & Response",
+            "slug": "javaee-masterclass/web-tech/request-and-response"
+          },
+          {
+            "label": "Routing & Annotations",
+            "slug": "javaee-masterclass/web-tech/routing-annotations"
+          },
+          {
+            "label": "Navigating Requests",
+            "slug": "javaee-masterclass/web-tech/forward-vs-redirect"
+          },
+          {
+            "label": "Filters & Listeners",
+            "slug": "javaee-masterclass/web-tech/filters-listeners"
+          }
+        ]
+      },
+      {
+        "label": "Module 2: State Management",
+        "items": [
+          {
+            "label": "Introduction to State",
+            "slug": "javaee-masterclass/state/state-introduction"
+          },
+          {
+            "label": "Working with Cookies",
+            "slug": "javaee-masterclass/state/cookies"
+          },
+          {
+            "label": "URL Rewriting",
+            "slug": "javaee-masterclass/state/url-rewriting"
+          },
+          {
+            "label": "The HttpSession API",
+            "slug": "javaee-masterclass/state/http-session"
+          },
+          {
+            "label": "Session Timeout & Events",
+            "slug": "javaee-masterclass/state/session-timeout-events"
+          }
+        ]
+      },
+      {
+        "label": "Module 3: The View Layer (JSP & JSTL)",
+        "items": [
+          {
+            "label": "JSP Fundamentals",
+            "slug": "javaee-masterclass/view/jsp-fundamentals"
+          },
+          {
+            "label": "Scriptlets ၏ ဆိုးကျိုးများနှင့် Implicit Objects",
+            "slug": "javaee-masterclass/view/jsp-scriptlets-implicit-objects"
+          },
+          {
+            "label": "Expression Language (EL)",
+            "slug": "javaee-masterclass/view/jsp-el"
+          },
+          {
+            "label": "JSTL Core Tags",
+            "slug": "javaee-masterclass/view/jstl-core-tags"
+          },
+          {
+            "label": "The MVC Pattern",
+            "slug": "javaee-masterclass/view/mvc-pattern"
+          }
+        ]
+      },
+      {
+        "label": "Module 4: Enterprise JavaBeans (EJB)",
+        "items": [
+          {
+            "label": "EJB Introduction",
+            "slug": "javaee-masterclass/ejb/ejb-introduction"
+          },
+          {
+            "label": "Session Beans",
+            "slug": "javaee-masterclass/ejb/session-beans"
+          },
+          {
+            "label": "Message-Driven Beans",
+            "slug": "javaee-masterclass/ejb/message-driven-beans"
+          },
+          {
+            "label": "Dependency Injection (CDI)",
+            "slug": "javaee-masterclass/ejb/cdi-dependency-injection"
+          },
+          {
+            "label": "EJB Timers & Scheduling",
+            "slug": "javaee-masterclass/ejb/ejb-timers"
+          }
+        ]
+      },
+      {
+        "label": "Module 5: Jakarta Persistence (JPA) & Database",
+        "items": [
+          {
+            "label": "JPA Introduction",
+            "slug": "javaee-masterclass/database/jpa-introduction"
+          },
+          {
+            "label": "Entity Mapping Annotations",
+            "slug": "javaee-masterclass/database/jpa-entity-mapping"
+          },
+          {
+            "label": "Entity Relationships",
+            "slug": "javaee-masterclass/database/entity-relationships"
+          },
+          {
+            "label": "JPA Query Language (JPQL)",
+            "slug": "javaee-masterclass/database/jpql"
+          },
+          {
+            "label": "Criteria API & Typed Queries",
+            "slug": "javaee-masterclass/database/criteria-api"
+          },
+          {
+            "label": "Transactions & Persistence Context",
+            "slug": "javaee-masterclass/database/transactions-persistence-context"
+          }
+        ]
+      },
+      {
+        "label": "Module 6: Advanced Enterprise Features",
+        "items": [
+          {
+            "label": "JAX-RS (RESTful Web Services)",
+            "slug": "javaee-masterclass/advanced/jax-rs"
+          },
+          {
+            "label": "JSON Processing & Binding (JSON-P & JSON-B)",
+            "slug": "javaee-masterclass/advanced/json-processing"
+          },
+          {
+            "label": "WebSockets (Real-time Communication)",
+            "slug": "javaee-masterclass/advanced/websockets"
+          },
+          {
+            "label": "Security & Authentication",
+            "slug": "javaee-masterclass/advanced/security"
+          }
+        ]
+      },
+      {
+        "label": "Module 7: Capstone Mini-Project",
+        "items": [
+          {
+            "label": "Capstone: Project Setup & Architecture",
+            "slug": "javaee-masterclass/capstone/project-setup"
+          },
+          {
+            "label": "Capstone: Full-Stack Application",
+            "slug": "javaee-masterclass/capstone/full-stack-application"
+          },
+          {
+            "label": "Capstone: Testing & Deployment",
+            "slug": "javaee-masterclass/capstone/testing-deployment"
           }
         ]
       }

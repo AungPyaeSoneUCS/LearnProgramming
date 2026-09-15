@@ -1,0 +1,70 @@
+---
+title: "Introduction to State"
+description: "HTTP သည် stateless protocol ဖြစ်ခြင်းနှင့် Page, Request, Session, Application ဟူသော scope လေးမျိုးတို့ကို သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+HTTP သည် stateless protocol တစ်ခု ဖြစ်ပါသည်။ Browser က request တစ်ခု ပို့ပြီး server က response ပြန်ပေးသည်နှင့်၎င်း ဆက်သွယ်မှု အဆုံးသတ်သွားပြီး နောက် request လာသည့်အခါ server က ရှေ့က လူတိုင်းကို မမှတ်မိတော့ပါ။ ထို့ကြောင့် login မှတ်ထားခြင်း၊ shopping cart သိမ်းထားခြင်းစသည့် state ကို ထိန်းသိမ်းရန် နည်းလမ်းများ လိုအပ်ပါသည်။
+
+## State ထိန်းသိမ်းနည်း လေးမျိုး
+
+Java web application တွင် data သိမ်းရန် scope လေးမျိုး ရှိပါသည်။ Scope တိုင်းတွင် lifetime နှင့် visibility ကွာခြားပါသည်။
+
+| Scope | Lifetime | သုံးသည့်နေရာ |
+| --- | --- | --- |
+| Page | Request တစ်ခုအတွင်း | JSP page တစ်ခု |
+| Request | Request တစ်ခု | forward လုပ်ထားသော components |
+| Session | Browser session တစ်ခုလုံး | User တစ်ယောက်၏ data |
+| Application | Server ဖွင့်ထားသမျှ | အားလုံး မျှဝေရန် |
+
+## Request Scope
+
+Request attribute သည် request တစ်ခုတည်းအတွင်းသာ သက်ရှည်ပြီး forward မှတစ်ဆင့် ဆက်သွယ်သော component များကြားတွင် data ပို့ရန် အသုံးပြုပါသည်။ MVC တွင် controller မှ view သို့ data ပို့ပုံကလည်း ဤနည်းပင် ဖြစ်ပါသည်။
+
+```
+@WebServlet("/items")
+public class ItemServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        List<String> items = List.of("Laptop", "Mouse", "Keyboard");
+        req.setAttribute("items", items);
+        req.getRequestDispatcher("/WEB-INF/views/items.jsp").forward(req, resp);
+    }
+}
+```
+
+► Servlet က items ကို request attribute အဖြစ် သိမ်းပြီး JSP သို့ forward ပြုလုပ်ပါသည်။ JSP အတွင်းမှ getAttribute("items") ဖြင့် ရယူနိုင်ပါသည်။
+
+## Session Scope
+
+Session attribute သည် user တစ်ယောက်၏ browser session တည်ရှိသမျှ ထိန်းသိမ်းပေးပြီး shopping cart ၊ login status စသည့် state များကို သိမ်းပါသည်။
+
+```
+HttpSession session = request.getSession();
+session.setAttribute("cart", cartList);
+session.setAttribute("user", "John");
+// နောက် request တစ်ခုတွင်
+HttpSession current = request.getSession(false);
+List<String> cart = (List<String>) current.getAttribute("cart");
+```
+
+► Session attribute များသည် request အမျိုးမျိုးတွင် ဆက်လက် မှတ်သားထားပြီး user တစ်ယောက်ချင်းစီအတွက် သီးသန့် ဖြစ်ပါသည်။
+
+## Application Scope
+
+Application (ServletContext) attribute သည် server ပေါ်ရှိ အားလုံး၏ shared data ဖြစ်ပြီး configuration values ၊ counters များကို သိမ်းရန် သုံးပါသည်။
+
+```
+ServletContext context = getServletContext();
+context.setAttribute("appName", "E-Shop");
+context.setAttribute("totalVisits", 100);
+
+// မည်သည့် servlet တွင်မဆို
+String app = (String) context.getAttribute("appName");
+```
+
+► Application attribute ကို context ရှိ servlet အားလုံးမှ မျှဝေ အသုံးပြုနိုင်သောကြောင့် settings များအတွက် အသုံးပြုပါသည်။
+
+Scope လေးမျိုး၏ lifetime ကို နားလည်ပါက state ထိန်းသိမ်းရာတွင် မှန်ကန်သော နေရာကို ရွေးချယ်နိုင်မည် ဖြစ်ပါသည်။ နောက် module တွင် cookie ကို အသုံးပြု၍ user ကို မှတ်သားနည်းကို လေ့လာပါမည်။

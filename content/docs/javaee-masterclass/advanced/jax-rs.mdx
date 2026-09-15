@@ -1,0 +1,114 @@
+---
+title: "JAX-RS (RESTful Web Services)"
+description: "@Path ၊ @GET စသော annotations များဖြင့် JAX-RS REST API ကို ရေးသားနည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+JAX-RS (Java API for RESTful Web Services) သည် REST architecture ပုံစံဖြင့် web services ရေးရန် သတ်မှတ်ထားသော Java specification တစ်ခု ဖြစ်ပါသည်။ Resources များသည် HTTP methods (GET, POST, PUT, DELETE) နှင့် architecture ပုံစံဖြစ်ပြီး JSON/XML response များကို ပေးပါသည်။
+
+## Resource Class တစ်ခု အခြေခံ
+
+Resource class ကို @Path annotation ဖြင့် URL အဆင့်ကို သတ်မှတ်ပြီး method များကို HTTP verb annotations ဖြင့် ခွဲပါသည်။
+
+```
+@Path("/members")
+public class MemberResource {
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Member> listAll() {
+        return memberService.findAll();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Member getById(@PathParam("id") Long id) {
+        return memberService.findById(id);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response create(Member member) {
+        memberService.save(member);
+        return Response.status(Response.Status.CREATED).build();
+    }
+}
+```
+
+- `@Path("/{id}")` — path parameter ကို ရယူပါသည်။
+- @Produces — response format ကို သတ်မှတ်ပါသည်။
+- @Consumes — request body format ကို သတ်မှတ်ပါသည်။
+- JAX-RS ရှိ JSON ကို အလိုအလျောက် Java object → JSON အဖြစ် ပြောင်းပေးပါသည်။
+
+## Query Parameters နှင့် Filtering
+
+@QueryParam ဖြင့် URL ရှိ query string ၏ value များကို ရယူနိုင်ပါသည်။
+
+```
+@GET
+@Path("/search")
+@Produces(MediaType.APPLICATION_JSON)
+public List<Member> search(
+        @QueryParam("q") String query,
+        @QueryParam("limit") @DefaultValue("20") int limit) {
+    return memberService.search(query, limit);
+}
+```
+
+► curl ဖြင့် /members/search?q=aung&limit=5 ဟု ခေါ်ပါက query=aung ၊ limit=5 ကို method ထဲသို့ ရောက်ရှိပါသည်။ limit ကို မပေးပါက default 20 ဖြစ်ပါသည်။
+
+## POST ဖြင့် Entity ဖန်တီးခြင်း
+
+JSON body ကို entity object အဖြစ် အလိုအလျောက် ပြောင်းလဲပြီး persist ပြုလုပ်ပါသည်။ Response က Created (201) ဖြင့် ပြန်ပို့ပါသည်။
+
+```
+@POST
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public Response createMember(Member member) {
+    memberService.save(member);
+    return Response
+        .status(Response.Status.CREATED)
+        .entity(member)
+        .build();
+}
+```
+
+► Client ဘက်မှ `{ "name": "Aung", "email": "aung@mail.com" }` JSON ကို ပို့လိုက်ပါက Jackson က Member object အဖြစ် ပြောင်းပြီး service သို့ ပို့ပါသည်။
+
+## DELETE နှင့် Status Codes
+
+Method တစ်ခုချင်းစီအတွက် သင့်လျော်သော HTTP status code ကို ပြန်ပို့သင့်ပါသည်။
+
+```
+@DELETE
+@Path("/{id}")
+public Response delete(@PathParam("id") Long id) {
+    memberService.delete(id);
+    return Response.noContent().build();   // 204
+}
+
+@POST
+@Path("/{id}/restore")
+public Response restore(@PathParam("id") Long id) {
+    memberService.restore(id);
+    return Response.ok().entity("restored").build();   // 200
+}
+```
+
+► No Content (204) က အောင်မြင်သော်လည်း body မညီဟု ဆိုပြီး OK (200) က body ပါ response ကို ပေးပါသည်။
+
+## JAX-RS ကို Application Config
+
+Application class တစ်ခုကို extends Application ပြုလုပ်ပြီး resources packages များကို သတ်မှတ်ပါသည်။
+
+```
+@ApplicationPath("/api")
+public class RestApplication extends Application {
+}
+```
+
+► @ApplicationPath("/api") ဖြင့် endpoint အားလုံးကို /api အောက်တွင် ထားပြီး /api/members စသဖြင့် access ပြုလုပ်နိုင်ပါသည်။ (Application extends မလုပ်ပဲ @ApplicationPath တစ်ခုတည်းဖြင့်လည်း ရပါသည်။)
+
+REST API များသည် frontend (Angular, React, mobile apps) အားလုံးနှင့် ဆက်သွယ်နိုင်သော standard interface ဖြစ်ပါသည်။ နောက် module တွင် JSON processing/binding ကို လေ့လာပါမည်။

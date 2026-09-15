@@ -1,0 +1,99 @@
+---
+title: "Capstone: Testing & Deployment"
+description: "Application ကို test လုပ်နည်း နှင့် WildFly application server သို့ deploy ပြုလုပ်နည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+ပြီးပြည့်စုံသော application တစ်ခုတွင် testing နှင့် deployment တို့သည် မဖြစ်မနေ လုပ်ရမည့် အဆင့်များ ဖြစ်ပါသည်။ TDD မ ကျင့်သုံးပြီး service logic ကို unit test လုပ်ကာ WAR file ကို application server ပေါ်တွင် deploy လုပ်ပါမည်။
+
+## Unit Testing Service Logic
+
+Business logic ကို JUnit ၊ Mockito ဖြင့် စမ်းသပ်၍ requirements များကို အာမခံနိုင်ပါသည်။ EntityManager ကို mock ပြုလုပ်ပြီး service method ကို test လုပ်ပါသည်။
+
+```
+@ExtendWith(MockitoExtension.class)
+public class ShopServiceTest {
+
+    @Mock
+    private EntityManager em;
+
+    @InjectMocks
+    private ShopService service;
+
+    @Test
+    void placeOrderShouldPersistOrder() {
+        List<Long> ids = List.of(1L, 2L);
+        when(em.find(Product.class, 1L))
+            .thenReturn(productWithName("Laptop"));
+        when(em.find(Product.class, 2L))
+            .thenReturn(productWithName("Mouse"));
+
+        Order order = service.placeOrder("Aung", ids);
+
+        verify(em).persist(any(Order.class));
+        assertEquals(2, order.getItems().size());
+        assertEquals("Aung", order.getCustomerName());
+    }
+}
+```
+
+► Mockito ဖြင့် database ကို မချိတ်ပဲ service logic ကို သီးခြား test ပြုလုပ်ပြီး behavior ကို စစ်ဆေးနိုင်ပါသည်။
+
+## REST Endpoint Testing
+
+REST endpoints များကို JAX-RS client သို့မဟုတ် REST Assured ဖြင့် test လုပ်နိုင်ပါသည်။ Deploy ပြီးသား server တွင် curl ဖြင့်လည်း လျင်မြန်စွာ manual test လုပ်နိုင်ပါသည်။
+
+```
+RequestSpecification given =
+    given()
+        .contentType(ContentType.JSON)
+        .body("{ "name": "Laptop", "price": 899 }");
+
+given()
+    .when()
+        .post("/api/products")
+    .then()
+        .statusCode(201);
+```
+
+► REST Assured ၏ fluent API ဖြင့် HTTP requests များကို ပို့ပြီး expected status code ကို စစ်ဆေးပါသည်။
+
+## WildFly သို့ Deploy ပြုလုပ်ခြင်း
+
+WAR file ကို WildFly ၏ deployments folder သို့ copy လုပ်ခြင်းဖြင့် deploy ပြုလုပ်ပါသည်။ Server က hot deployment ၊ ထောက်ပံ့ပေးပြီး context root ဖြင့် access ပြုလုပ်နိုင်ပါသည်။
+
+```
+mvn package
+# produces target/shop.war
+
+cp target/shop.war /opt/wildfly/standalone/deployments/
+
+# server logs:
+# DEPLOYMENTS IN USE: shop.war
+# http://localhost:8080/shop/
+```
+
+► Maven ဖြင့် build လုပ်၍ WAR file ကို deployments folder ထဲတွင် ထည့်လိုက်လျှင် WildFly က စစ်ဆေး၍ ချက်ချင်း deploy လုပ်ပါသည်။
+
+## Deploy ချိန် စစ်ဆေးရမည့် အချက်များ
+
+```
+# 1. Datasource နှင့် JNDI name ကိုက်ညီသလား
+/opt/wildfly/bin/jboss-cli.sh --connect
+  -> /subsystem=datasources/data-source=shopDS:read-resource
+  -> /subsystem=security/security-domain=shop-realm:read-resource
+
+# 2. Logs ကို ကြည့်ခြင်း
+tail -f /opt/wildfly/standalone/log/server.log
+
+# 3. Context root ကို စစ်ခြင်း
+curl -I http://localhost:8080/shop/
+```
+
+► Startup လုပ်ချိန်တွင် datasource သို့မဟုတ် realm ပြဿနာများဖြစ်ပါက server.log ထဲတွင် ERROR messages များ ပေါ်ပြီး တိုက်ရိုက် deploy မအောင်မြင်ကြောင်း တွေ့ရပါသည်။
+
+## Course Summary
+
+ယခု capstone project ဖြင့် Java EE ၏ core နည်းပညာများဖြစ်သော Servlet/JSP ၊ EL/JSTL ၊ EJB ၊ CDI ၊ JPA ၊ JTA ၊ JAX-RS ၊ JSON-B/P ၊ WebSockets နှင့် Security တို့ကို လက်တွေ့ application တစ်ခုတွင် ပေါင်းစည်းလေ့ကျင့်ခဲ့ပါသည်။
+
+Future steps များအနေဖြင့် MicroProfile ၊ Jakarta EE 9+ ၊ containerization (Docker) နှင့် cloud deployment များကို ဆက်လက်လေ့လာနိုင်ပါသည်။ Java EE ၏ ခိုင်မာသော standard-based ဗဟုသုတက ယနေ့ခေတ် enterprise stacks များအတွက် ခိုင်ခံ့သော အုတ်မြစ်ဖြစ်ပါသည်။

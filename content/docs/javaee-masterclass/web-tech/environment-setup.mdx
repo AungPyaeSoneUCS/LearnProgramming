@@ -1,0 +1,86 @@
+---
+title: "Environment Setup"
+description: "JDK, Apache Tomcat, IDE နှင့် Maven web application များကို တပ်ဆင် configure ပြုလုပ်နည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Java EE development စတင်ရန်အတွက် Java compiler, web server နှင့် project management tool တို့ကို ဦးစွာ တပ်ဆင်ရပါသည်။ ဤ module တွင် JDK, Apache Tomcat, IDE နှင့် Maven ကို step-by-step ပြင်ဆင်ပါမည်။
+
+## JDK (Java Development Kit) တပ်ဆင်ခြင်း
+
+JDK 17 သို့မဟုတ် JDK 21 ကို download လုပ်၍ install ပြုလုပ်ပါ။ Install ပြီးပါက JAVA_HOME environment variable ကို JDK ၏ path သို့ ထည့်သွင်းရပါမည်။ Terminal တွင် အောက်ပါအတိုင်း စစ်ဆေးနိုင်ပါသည်။
+
+```
+java -version
+javac -version
+echo %JAVA_HOME%   (Windows)
+echo $JAVA_HOME    (Linux/macOS)
+```
+
+► Output:
+```
+openjdk version "21.0.2" 2024-01-16
+OpenJDK Runtime Environment (build 21.0.2+13)
+javac 21.0.2
+```
+
+## Apache Tomcat Download နှင့် Extract ပြုလုပ်ခြင်း
+
+Tomcat သည် Servlet နှင့် JSP များကို run ပေးသော lightweight web container တစ်ခု ဖြစ်ပါသည်။ ZIP file ကို download လုပ်၍ folder နာမည်တွင် space မပါသော နေရာသို့ extract ပြုလုပ်ပါ။ ဥပမာ C:/tomcat9 (C:/Program Files နေရာတွင် မထားပါနှင့်)။ Extract ပြုလုပ်ပြီးပါက အောက်ပါအတိုင်း Tomcat ကို စတင်နိုင်ပါသည်။
+
+```
+C:/tomcat9/bin/startup.bat     (Windows)
+/opt/tomcat/bin/startup.sh     (Linux/macOS)
+```
+
+► Browser တွင် http://localhost:8080 ဖွင့်ပါက Tomcat welcome page ကို တွေ့ရပါမည်။ Server ၏ port ကို `server.xml` ၏ `<Connector port="8080">` ဆက်တင်တွင် ပြောင်းလဲနိုင်ပါသည်။
+
+## IDE ကို Configure ပြုလုပ်ခြင်း
+
+IntelliJ IDEA Ultimate သို့မဟုတ် Eclipse Enterprise ကို သုံးပါက Java Enterprise ပရောဂျက်များကို အလွယ်တကူ ဖန်တီးနိုင်ပါသည်။ IDE အတွင်းမှ Tomcat ကို run configuration (application server) အဖြစ် ထည့်သွင်း၍ start, stop, deploy ပြုလုပ်ခြင်းများကို editor မှတစ်ဆင့် လုပ်ဆောင်နိုင်ပါသည်။
+
+## Maven Web Application ဖန်တီးခြင်း
+
+Maven သည် build နှင့် dependency management tool တစ်ခု ဖြစ်ပါသည်။ maven-archetype-webapp ကို သုံး၍ Java EE project တစ်ခုကို ဖန်တီးပါသည်။
+
+```
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes   -DarchetypeArtifactId=maven-archetype-webapp -DgroupId=com.example   -DartifactId=mywebapp -Dversion=1.0-SNAPSHOT
+```
+
+► ဖန်တီးပြီးပါက အောက်ပါ directory structure ကို ရရှိမည် ဖြစ်ပါသည်။ `src/main/webapp` တွင် JSP ၊ `src/main/java` တွင် Servlet classes များ ထားရှိပါသည်။
+
+## pom.xml တွင် Dependency ထည့်သွင်းခြင်း
+
+Servlet API ကို သုံးရန် pom.xml တွင် jakarta.servlet-api dependency လိုအပ်ပါသည်။
+
+```
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example</groupId>
+  <artifactId>mywebapp</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <dependencies>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.0.0</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+</project>
+```
+
+► packaging ကို war (Web Application Archive) ဟု သတ်မှတ်ထားပြီး Servlet API ကို Tomcat က ပေးသောကြောင့် `provided` scope ဖြင့် ဖော်ပြပါသည်။ Deploy ပြုလုပ်ရန်မှာ အောက်ပါ command ကို run ပြီး ထွက်လာသော .war file ကို Tomcat ၏ webapps folder တွင် ထည့်ပါသည်။
+
+```
+mvn clean package
+```
+
+► Output:
+```
+[INFO] Building war: /mywebapp/target/mywebapp-1.0-SNAPSHOT.war
+[INFO] BUILD SUCCESS
+```
+
+Environment ပြင်ဆင်ပြီးသည်နှင့် နောက် module တွင် Servlet ၏ lifecycle ကို လေ့လာပါမည်။

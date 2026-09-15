@@ -1,0 +1,119 @@
+---
+title: "Dependency Injection (CDI)"
+description: "@Inject, @Named, qualifiers များဖြင့် Contexts and Dependency Injection (CDI) ကို အသုံးပြုနည်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Contexts and Dependency Injection (CDI) သည် Java EE ၏ dependency injection framework တစ်ခု ဖြစ်ပြီး object များကို developer က ဖန်တီးရန်မလိုပဲ container က တပ်ဆင်ပေးပါသည်။ @Inject ကို သုံး၍ dependency ကို ထိုးသွင်းပြီး decoupling ကို ရရှိပါသည်။
+
+## @Inject ဖြင့် Dependency ထိုးသွင်းခြင်း
+
+Servlet ၊ EJB ၊ managed beans များတွင် @Inject field ဖြင့် dependency ကို တပ်ဆင်နိုင်ပါသည်။ Container က bean ၏ lifecycle ကို manage ပြုလုပ်ပေးပါသည်။
+
+```
+@WebServlet("/checkout")
+public class CheckoutServlet extends HttpServlet {
+
+    @Inject
+    private PaymentService payment;
+
+    @Inject
+    private InventoryService inventory;
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        boolean inStock = inventory.hasStock(req.getParameter("sku"));
+        if (!inStock) {
+            resp.getWriter().println("Out of stock");
+            return;
+        }
+        resp.getWriter().println(payment.charge(req.getParameter("amount")));
+    }
+}
+```
+
+► new keyword သုံးစရာမလိုပဲ container က PaymentService နှင့် InventoryService ကို bean အတွင်းသို့ ထိုးသွင်းပေးပါသည်။
+
+## @Named — JSF/JSP တွင် သုံးရန်
+
+@Named ကို ထည့်ပါက bean ကို EL တွင်လည်း ရနိုင်ပြီး `@Named("cart")` ကဲ့သို့ name သတ်မှတ်နိုင်ပါသည်။ Default ဖြစ်ပါက class name ၏ camelCase ဖြစ်သည်။
+
+```
+@Named("cart")
+@SessionScoped
+public class CartBean implements Serializable {
+
+    private final List<String> items = new ArrayList<>();
+
+    public void add(String product) { items.add(product); }
+
+    public List<String> getItems() { return items; }
+}
+```
+
+► CartBean ကို @SessionScoped ထားသဖြင့် session တစ်ခုအတွင်း တစ်ခုတည်းသော instance ရှိပြီး JSP တွင် `${cart.items}` ဖြင့် access ပြုလုပ်နိုင်ပါသည်။
+
+## Qualifiers — Beans အများအပြား ခွဲခြားခြင်း
+
+Interface တစ်ခုကို implementation နှစ်မျိုးဖြင့်ရေးပါက qualifier annotation ကို သုံး၍ ဘယ်ဟာကို inject လုပ်မည်ကို ခွဲခြားရပါသည်။
+
+```
+@Qualifier
+@Retention(RUNTIME)
+@Target({FIELD, METHOD, PARAMETER})
+public @interface CreditPayment {}
+```
+
+```
+@Stateless
+public class CreditCardService implements PaymentService { ... }
+
+@Stateless
+public class PaypalService implements PaymentService { ... }
+```
+
+Qualifier ပါသော bean နှစ်ခုကို @Inject လုပ်ရန် qualifier ဖြင့် ရွေးချယ်ပါသည်။
+
+```
+public class OrderBean {
+
+    @Inject @CreditPayment
+    private PaymentService creditPayment;
+
+    @Inject
+    private PaymentService defaultPayment; // ambiguous without qualifier
+}
+```
+
+► Qualifier ထည့်ထားသော bean ကိုသာ type နှင့် qualifier နှစ်ခုလုံး ကိုက်ညီသော နေရာတွင် inject ပြုလုပ်ပါသည်။
+
+## @Produces နှင့် Resources
+
+@Produces က bean မဟုတ်သော object (Logger, DataSource) များကို injection ရရှိနိုင်ရန် ထုတ်ပေးပါသည်။
+
+```
+public class Resources {
+
+    @Produces
+    @RequestScoped
+    public Logger produceLogger() {
+        return Logger.getLogger("app");
+    }
+}
+```
+
+```
+public class AuditService {
+
+    @Inject
+    private Logger logger;
+
+    public void log(String msg) {
+        logger.info(msg);
+    }
+}
+```
+
+► Logger ကို @Produces method မှ ထုတ်ပြီး မည်သည့်နေရာတွင်မဆို @Inject ဖြင့် ရရှိနိုင်ပါသည်။
+
+CDI သည် beans များကြား ဆက်သွယ်မှုကို decoupled ဖြစ်အောင် ထားပေးပြီး testability ကို မြှင့်တင်ပါသည်။ နောက် module တွင် EJB timers ဖြင့် background task များကို လေ့လာပါမည်။

@@ -1,0 +1,81 @@
+---
+title: "Filters & Listeners"
+description: "Request များကို intercept လုပ်သော authentication filters နှင့် ServletContextListener အကြောင်း သင်ယူခြင်း ဖြစ်ပါသည်။"
+autoNumbering: true
+---
+
+Filter သည် Servlet သို့ request မရောက်မီ နှင့် response ပြန်မထွက်မီ ကြားဝင်စောင့်ကြည့်၍ အရေးယူနိုင်သော component တစ်ခု ဖြစ်ပါသည်။ Listener က ချိန်ခြင်း၊ user session စတင်ခြင်း ကဲ့သို့သော events များကို စောင့်ကြည့်ပါသည်။
+
+## Filter အကြောင်း
+
+Filter သည် javax/jakarta.servlet.Filter interface ကို implement ပြုလုပ်ပြီး doFilter() method တွင် logic ထည့်ပါသည်။ chain.doFilter() ကို ခေါ်မှသာ request သည် နောက်တစ်ဆင့် (Servlet) သို့ ဆက်သွားပါသည်။ ၎င်းကို မခေါ်ပဲ ရပ်ထားနိုင်သောကြောင့် authentication filter တွင် အသုံးဝင်ပါသည်။
+
+```
+@WebFilter("/admin/*")
+public class AuthFilter implements Filter {
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response,
+                         FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
+
+        HttpSession session = req.getSession(false);
+        if (session != null && session.getAttribute("user") != null) {
+            chain.doFilter(request, response);
+        } else {
+            resp.sendRedirect("login");
+        }
+    }
+}
+```
+
+► /admin အောက် URL အားလုံးကို ဖွင့်ရန် login ဝင်ထားရမည် ဖြစ်ပြီး မဝင်ထားပါက login page သို့ ပြောင်းပေးပါသည်။
+
+## Filter Chain အများအပြား
+
+Filter အများအပြား ထားနိုင်ပြီး စီစဉ်ထားသော အစီအစဉ်အတိုင်း chain.doFilter() မှတစ်ဆင့် တစ်ခုပြီးတစ်ခု အလုပ်လုပ်ပါသည်။ Logging filter ကို ရှေ့ဆုံးတွင် ထားကာ authentication filter ကို နောက်တွင် ထားလေ့ရှိပါသည်။
+
+```
+@WebFilter("/*")
+public class LoggingFilter implements Filter {
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response,
+                         FilterChain chain)
+            throws IOException, ServletException {
+        long start = System.currentTimeMillis();
+        chain.doFilter(request, response);
+        long elapsed = System.currentTimeMillis() - start;
+        System.out.println("Request took " + elapsed + " ms");
+    }
+}
+```
+
+► ဤ filter သည် request တိုင်းကို ဖြတ်သန်းစေပြီး execution ကြာချိန်ကို console တွင် မှတ်တမ်းတင်ပါသည်။
+
+## ServletContextListener
+
+ServletContextListener က application (context) စတင်သည့်အခါ contextInitialized() ၊ အဆုံးသတ်သည့်အခါ contextDestroyed() ကို ခေါ်ပါသည်။ Startup လုပ်ငန်းများ (database pool တည်ဆောက်ခြင်း၊ config ဖတ်ခြင်း) ကို ဤနေရာတွင် ပြုလုပ်ပါသည်။
+
+```
+@WebListener
+public class AppStartupListener implements ServletContextListener {
+
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        System.out.println("Application started");
+        sce.getServletContext().setAttribute("startTime", System.currentTimeMillis());
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        System.out.println("Application stopped");
+    }
+}
+```
+
+► Server start ချိန်တွင် "Application started" ဟု log တက်ပြီး startTime attribute ကို application-level သိမ်းထားပါသည်။ Servlet များက ၎င်းကို getServletContext().getAttribute("startTime") ဖြင့် ရယူနိုင်ပါသည်။
+
+Filters နှင့် listeners များဖြင့် cross-cutting concern များ (security, logging) ကို ဗဟိုချုပ်ကိုင်ရာမှ စီမံနိုင်ပါသည်။ နောက် section တွင် session နှင့် cookie ကို အသုံးပြု၍ state ထိန်းသိမ်းနည်းကို လေ့လာပါမည်။
