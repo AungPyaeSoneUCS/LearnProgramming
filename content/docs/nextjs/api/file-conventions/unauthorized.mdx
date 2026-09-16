@@ -1,0 +1,70 @@
+---
+title: "unauthorized.js — 401 Unauthorized UI"
+description: "Segment-level 401 UI for unauthenticated access, thrown via the unauthorized() function. — Authentication မရှိဘဲ Access ပြုလုပ်သောအခါ `unauthorized()` Function မှတစ်ဆင့် Segment-level 401 UI ကို ဖော်ပြပေးသည့် ဖိုင်ဖြစ်ပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Visitors များ Sign in မလုပ်ရသေးသောအခါ Scoped UI ဖြင့် 401 Semantics များကို ပြန်ပေးနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`unauthorized.tsx` သည် Login ဝင်ရောက်ခြင်းမရှိသေးသော (Unauthenticated) User များအား **401 Unauthorized** Status Code နှင့်အတူ Segment-level UI တစ်ခုကို ဖော်ပြပေးသော Next.js File Convention တစ်ခုဖြစ်ပါတယ်။ Server Component ၊ Server Action သို့မဟုတ် Route Handler တစ်ခုခုမှ `unauthorized()` Function ကို ခေါ်ယူသည်နှင့် Next.js သည် Request ကို HTTP 401 Response ဖြင့် ဖြတ်တောက်ပြီး အနီးဆုံး `unauthorized.tsx` ကို Render လုပ်ပေးပါတယ်။ ၎င်းသည် `forbidden.tsx` (403) နှင့်အတူ Auth-interrupt Family ၏ အစိတ်အပိုင်းတစ်ခုဖြစ်ပြီး Resource ရှိမရှိကိုလည်းကောင်း၊ Authentication ရှိမရှိကိုလည်းကောင်း ကွဲပြားစွာ ဖော်ပြပေးပါတယ်။ Area တစ်ခုလုံးအတွက်ဆိုလျှင် Layouts သို့မဟုတ် `proxy.ts` (Middleware) တွင် Auth Check ပြုလုပ်ခြင်းက ပိုမိုသင့်လျော်ပြီး ဤ Function ကို Route တစ်ခုချင်းစီအလိုက် Protection Granularity လိုအပ်သည့် နေရာများတွင် အသုံးပြုပါတယ်။
+
+## Definition
+
+အောက်ပါအတိုင်း `unauthorized.tsx` ဖိုင်ကို ရေးသားနိုင်ပါတယ်:
+
+```tsx
+// app/account/unauthorized.tsx
+export default function Unauthorized() {
+  return (
+    <div>
+      <h1>401 - Please sign in</h1>
+      <a href="/login">Continue to login</a>
+    </div>
+  );
+}
+```
+
+## Triggering
+
+Server Component တစ်ခုအတွင်းမှ အောက်ပါအတိုင်း Trigger လုပ်နိုင်ပါတယ်:
+
+```tsx
+import { unauthorized } from "next/navigation";
+
+export default async function AccountPage() {
+  const session = await auth();
+  if (!session) unauthorized();   // → 401 + unauthorized.tsx
+  return <Dashboard />;
+}
+```
+
+## Behavior
+
+- **401 Unauthorized** ဖြင့် Response ပြန်ပို့ပါတယ်
+- Server Components များ၊ Server Actions များနှင့် Route Handlers များတွင် အလုပ်လုပ်ပါတယ်
+- အနီးဆုံး `unauthorized.tsx` က Friendly UI ကို Render လုပ်ပြီး မရှိပါက Default Response ကို ရရှိပါတယ်
+
+## The auth-interrupt family
+
+Authentication/Authorization Error Types များကို အောက်ပါဇယားတွင် နှိုင်းယှဉ်ထားပါတယ်:
+
+| Function / file              | Meaning                          | Status |
+| ---------------------------- | -------------------------------- | ------ |
+| `notFound()` / `not-found.tsx` | Resource missing               | 404    |
+| `forbidden()` / `forbidden.tsx` | Authenticated but not allowed | 403    |
+| `unauthorized()` / `unauthorized.tsx` | Not authenticated       | 401    |
+
+User များ၏ ခံစားချက်သည်လည်း အရေးပါပါတယ်: Site အများစုသည် 401/403 နှစ်ခုလုံးကို "Sign in" Redirect အဖြစ် စုစည်းဖော်ပြလေ့ရှိသောကြောင့် ရည်ရွယ်ချက်ရှိရှိ ရွေးချယ်ပါ။
+
+## Guarding instead of handling
+
+Area တစ်ခုလုံးအတွက်ဆိုလျှင် Layouts သို့မဟုတ် Middleware တွင် Auth ကို စစ်ဆေးခြင်းက ပိုမိုသင့်လျော်ပြီး `unauthorized()` သည် Route တစ်ခုချင်းစီအလိုက် Protection Granularity ကို ပေးဆောင်ပါတယ်။
+
+## Activity
+
+`/account` ကို Session Check ဖြင့် ကာကွယ်ပြီး `unauthorized()` ကို ခေါ်ကာ Logged-out Visitor တစ်ဦးသည် Custom 401 UI ကို မြင်ရသည်ကို စစ်ဆေးပါ။ Logged-in သော်လည်း မှားယွင်းသော Role ရှိသူများအတွက်မူ `forbidden()` ကို ဆက်လက် အသုံးပြုနိုင်ပါတယ်။

@@ -1,0 +1,110 @@
+---
+title: "Error Handling — Error ကိုင်တွယ်ခြင်း"
+description: "Handle expected and unexpected errors in App Router: error.js boundaries, not-found.js, and global-error.js. — App Router တွင် Error Boundary များဖြင့် Error များကို ကိုင်တွယ်ပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Route segment တိုင်းတွင် per-route error boundaries, 404 pages နှင့် global fallbacks များဖြင့် errors များမှ ချောမွေ့စွာ ပြန်လည် ရှင်သန်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Application များတွင် errors များ ဖြစ်ပေါ်တတ်သောကြောင့် user များအား ချောမွေ့သော experience ပေးနိုင်ရန် error handling စနစ် ထားရှိရပါတယ်။ Next.js App Router တွင် route segment တစ်ခုစီအတွက် `error.tsx` file ကို ဖန်တီးနိုင်ပြီး ၎င်းသည် segment အတွင်း (layouts, pages နှင့် ၎င်းတို့အောက်) ဖြစ်ပေါ်သော errors များကို ဖမ်းယူပေးသော **Error Boundary** တစ်ခု ဖြစ်ပါတယ်။ `error.tsx` သည် Client Component ဖြစ်ရမည်ဖြစ်ပြီး `error` props နှင့် `reset()` function တို့ကို လက်ခံပါတယ်။ Resource မရှိသော data များအတွက် custom 404 UI ကို `not-found.tsx` file ဖြင့် ပြသနိုင်ပြီး app တစ်ခုလုံးအတွက် overall error fallback ကို `global-error.tsx` ဖြင့် သတ်မှတ်နိုင်ပါတယ်။ Error boundaries များသည် nesting ဖြစ်နိုင်ပြီး error ဖြစ်သောအခါ အနီးဆုံး `error.tsx` မှ ကိုင်တွယ်ပါတယ်။
+
+## The error.tsx boundary (error.tsx Boundary)
+
+Route segment တွင် `error.tsx` ကို ဖန်တီးပါ။ ၎င်းသည် segment အတွင်း (layouts, pages နှင့် ၎င်းတို့အောက်) ဖြစ်ပေါ်သော errors များကို ဖမ်းယူပေးသော **Error Boundary** ဖြစ်လာပါတယ်:
+
+```tsx
+// app/blog/error.tsx
+"use client";
+
+export default function BlogError({ error, reset }: { error: Error; reset: () => void }) {
+  return (
+    <div>
+      <h2>Something went wrong</h2>
+      <p>{error.message}</p>
+      <button onClick={reset}>Try again</button>
+    </div>
+  );
+}
+```
+
+- `error` - ပြန်လည် throw လုပ်ထားသော thrown error
+- `reset()` - segment ကို ပြန်လည် render လုပ်ကာ လုပ်ဆောင်ချက်ကို ပြန်ကြိုးစားပေးပါတယ်
+
+`error.tsx` သည် **Client Component တစ်ခု ဖြစ်ရမည်**။
+
+## Re-throwing expected errors (မျှော်လင့်ထားသော Errors များကို ပြန်လည်ထုတ်ခြင်း)
+
+Resource မရှိသော အချိန်တွင် crash ဖြစ်စေမည့်အစား `notFound()` ကို throw လုပ်ပါ:
+
+```tsx
+// app/blog/[slug]/page.tsx
+import { notFound } from "next/navigation";
+
+export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
+
+  if (!post) notFound(); // renders not-found UI → 404
+
+  return <article>{post.title}</article>;
+}
+```
+
+## Custom 404 UI (စိတ်ကြိုက် 404 UI)
+
+```tsx
+// app/blog/not-found.tsx
+export default function NotFound() {
+  return (
+    <div>
+      <h1>404 - Post not found</h1>
+      <a href="/blog">Back to blog</a>
+    </div>
+  );
+}
+```
+
+## Global error handling
+
+`app/global-error.tsx` သည် app **တစ်ခုလုံးကို** ပတ်ထားပြီး ကိုယ်ပိုင် `<html>`/`<body>` ပါဝင်ရမည်:
+
+```tsx
+"use client";
+
+export default function GlobalError({ error, reset }: { error: Error; reset: () => void }) {
+  return (
+    <html>
+      <body>
+        <h2>Global error</h2>
+        <button onClick={reset}>Reload app</button>
+      </body>
+    </html>
+  );
+}
+```
+
+## Nesting boundaries (Boundaries များ ဆင့်သုံးခြင်း)
+
+Boundaries များသည် nesting ဖြစ်ပါတယ် - error ဖြစ်သောအခါ tree ပေါ်ရှိ အနီးဆုံး `error.tsx` က ကိုင်တွယ်ပါတယ်။ နေရာလပ်များကို ဗျူဟာမြောက် ထားရှိပါ:
+
+```
+src/app
+├── error.tsx              # catches everything
+├── layout.tsx
+└── blog
+    ├── error.tsx          # catches blog segment only
+    └── page.tsx
+```
+
+## Logging and observability (Logging နှင့် Observability)
+
+Server Components နှင့် Server Actions တို့တွင် throw လုပ်ထားသော errors များကို `instrumentation.ts` ၏ `onRequestError` hook သို့ ပို့ပေးပြီး external services များသို့ stream လုပ်နိုင်ပါတယ်။
+
+## Activity
+
+သင့် blog segment တွင် reset button ပါသော `error.tsx` တစ်ခုကို ထည့်ပြီး slug မရှိသည့်အခါ `notFound()` ကို throw လုပ်ပါ။ UI နှစ်ခုစလုံး မှန်ကန်စွာ render ဖြစ်ကြောင်း စစ်ဆေးပါ။

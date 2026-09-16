@@ -1,0 +1,53 @@
+---
+title: "connection — ဆာဗာ ချိတ်ဆက်မှု စောင့်ဆိုင်းခြင်း"
+description: "Await the server connection in dynamic routes for accurate render behavior. — Dynamic routes များတွင် မှန်ကန်သော render အပြုအမူအတွက် server connection ကို await လုပ်ပေးသည့် API ဖြစ်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Static route တစ်ခုကို မှန်ကန်သော boundary တွင် dynamic အဖြစ် ပြောင်းလဲရန် `connection()` ကို သုံးနိုင်အောင် နားလည်စေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`connection()` သည် async API တစ်ခုဖြစ်ပြီး လက်ရှိ route သို့မဟုတ် scope အတွက် dynamic rendering လိုအပ်ကြောင်းကို Next.js အား အချက်ပြပေးပါတယ်။ Server Components, Route Handlers နှင့် Server Functions များမှ ခေါ်ဆို၍ရပြီး အထူးသဖြင့် DMA (dynamicIO) မော်ဒယ်တွင် cookies/headers ကဲ့သို့သော dynamic APIs များကို ရှင်းလင်းစွာ await လုပ်ရန် လိုအပ်သည့်အခါ `connection()` သည် deterministic ဖြစ်သော အချက်ပြမှုနေရာကို ပေးစွမ်းပါတယ်။ ဤ API ကို `"use cache"` boundary အတွင်းတွင် ခေါ်ဆိုပါက dynamic နှင့် cache ပဋိပက္ခဖြစ်၍ error တက်နိုင်ပြီး cached scope တွင် ခေါ်ဆိုခြင်းက use cache ၏ အဓိပ္ပာယ်ကို ဖျက်ဆီးစေပါတယ်။ အခြားရွေးချယ်စရာများနှင့် နှိုင်းယှဉ်ပါက headers/cookies ရယူရန် `cookies()`/`headers()`၊ လက်ရှိ URL ဖတ်ရန် `nextUrl`/`searchParams` ကို အသုံးပြုပြီး route ကို သက်သက် dynamic ဖြစ်စေလိုရုံသာဆိုလျှင် `connection()` ကို သုံးပါတယ်။
+
+## What it is
+
+`connection()` သည် လက်ရှိ route သို့မဟုတ် scope အတွက် dynamic rendering လိုအပ်ချက်များကို အချက်ပြပေးသော async API တစ်ခုဖြစ်ပါတယ်:
+
+```tsx
+import { connection } from "next/server";
+
+export default async function Page() {
+  // forces dynamic behavior from here down in Next 15+ semantics
+  void connection();
+  return <Dashboard />;
+}
+```
+
+- Server Components, Route Handlers, Server Functions များမှ ခေါ်ဆိုနိုင်ပါတယ်
+- ၎င်းကို await လုပ်ခြင်းဖြင့် scope ကို dynamic အဖြစ် သတ်မှတ်ပေးပြီး (cookies/headers ကဲ့သို့) dev/DMA friendly ဖြစ်စေပါတယ်
+
+## Why await (ဘာကြောင့် await လုပ်ရလဲ)
+
+Next ဗားရှင်းအသစ်များတွင် "DMA" (dynamicIO) မော်ဒယ်သည် dynamic APIs များကို အတိအကျ await လုပ်ရန် လိုအပ်ပြီး `connection` သည် dynamics များကို ကြေညာရာတွင် deterministic ဖြစ်သော နေရာတစ်ခုကို ပေးပါတယ်။
+
+## Compare with alternatives
+
+| Need                            | Use                        |
+| ------------------------------- | -------------------------- |
+| Access request headers/cookies  | `cookies()`/`headers()`    |
+| Just mark as dynamic            | `connection()`              |
+| Read current URL                | `nextUrl`/`searchParams`    |
+
+## Rules (စည်းကမ်းများ)
+
+- Await လုပ်ရပါမယ် (`await connection()`)
+- Cached scope တွင်းမှ ခေါ်ဆို၍မရပါ — use cache ကို ဖျက်ဆီးမိသောကြောင့်
+- `"use cache"` boundary အတွင်းတွင်ထားပါက error တက်ပါတယ် (dynamic vs cache conflict)
+
+## လေ့ကျင့်ခန်း (Activity)
+
+"last updated" page တစ်ခုတွင် `void connection()` ကို ထည့်သွင်းပြီး cookies မဖတ်ရဘဲ build report တွင် route သည် dynamic အဖြစ် ပြောင်းလဲကြောင်း အတည်ပြုပါ။

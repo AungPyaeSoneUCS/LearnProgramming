@@ -1,0 +1,76 @@
+---
+title: "Adapters & Standalone — Adapter များနှင့် Standalone Mode"
+description: "Next.js ကို နေရာတိုင်းတွင် Deploy လုပ်ရန်: standalone output, custom handlers နှင့် platform adapters များ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  ယူထားသော Build ကို Docker, Serverless သို့မဟုတ် Custom Node Server ကဲ့သို့ မည်သည့် Host တွင်မဆို သယ်ယူ၍ Run နိုင်ကြောင်း နားလည်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js သည် Default အားဖြင့် `next start` ဖြင့်သာ Run နိုင်သော Server Build ကိုသာ ထုတ်ပေးသော်လည်း `output: "standalone"` ကို ဖွင့်လိုက်ပါက Node Dependencies အနည်းဆုံး ပါဝင်သော Self-contained Folder တစ်ခု ရရှိပါတယ်။ ထို `.next/standalone` Folder ကို Docker Image ထဲသို့ဖြစ်စေ၊ Serverless Platform များသို့ဖြစ်စေ လွတ်လပ်စွာ ယူသွားနိုင်ပြီး `node server.js` တစ်ကြောင်းတည်းဖြင့် App ကို စတင်နိုင်ပါတယ်။ Custom Server များနှင့် Platform Adapter များကလည်း နေရာတိုင်း Deploy လုပ်နိုင်ရန် ကူညီပေးသော်လည်း Built-in Feature အချို့ ဆုံးရှုံးနိုင်သောကြောင့် လိုအပ်မှသာ ရွေးချယ်သင့်ပါတယ်။
+
+## Standalone output
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  output: "standalone",
+};
+```
+
+Minimal Dependencies များသာ ပါဝင်သော Self-contained Folder — **`.next/standalone`** — ကို ထုတ်ပေးပါတယ်:
+
+```bash
+node .next/standalone/server.js
+```
+
+`standalone` Folder ၊ `.next/static` နှင့် `public` တို့ကို မည်သည့် Host သို့မဟုတ် Docker Image တွင်မဆို ကူးယူ၍ Deploy လုပ်နိုင်ပါတယ်။
+
+## Docker example
+
+```dockerfile
+FROM node:22-alpine AS base
+WORKDIR /app
+COPY . .
+RUN npm ci && npm run build
+RUN cp public .next/standalone/public && \
+    cp -r .next/static .next/standalone/.next/static
+
+FROM node:22-alpine
+WORKDIR /app
+ENV NODE_ENV=production PORT=3000
+COPY --from=base /app/.next/standalone ./
+EXPOSE $PORT
+CMD ["node", "server.js"]
+```
+
+## Custom server (Node only)
+
+```js
+const { createServer } = require("http");
+const { parse } = require("url");
+const next = require("next");
+
+const app = next({ dev: process.env.NODE_ENV !== "production" });
+// handle routing, then app.handleRequest
+```
+
+## Serverless platforms
+
+- **Vercel**: Default Deploy Platform ဖြစ်၍ Config မလိုအပ်ပါ
+- **Netlify / AWS / Cloudflare**: ၎င်းတို့၏ Adapters သို့မဟုတ် Custom Functions ကို အသုံးပြုပါ
+- Edge runtime: Platform မရွေး အလုပ်လုပ်နိုင်သော Web APIs များ
+
+## Rules & gotchas
+
+- သုံးစွဲရန်အတွက် `public` နှင့် Static ဖိုင်များကို `Standalone` ထဲသို့ ကိုယ်တိုင် ကူးယူပေးရပါတယ်
+- Custom Server များသည် Built-in SSG/Prefetch Edge လုပ်ဆောင်ချက်များ ဆုံးရှုံးစေသဖြင့် လိုအပ်မှသာ အသုံးပြုပါ
+- `Standalone` ကို ရည်မှန်းပါက `output` ကို စတင်ကတည်းက သတ်မှတ်ထားပါ
+
+## Activity
+
+Temporary Project တစ်ခုတွင် `output: "standalone"` ဖြင့် Build လုပ်ကာ အထက်ပါ Dockerfile ဖြင့် Containerize လုပ်၍ Docker တွင် Run ပြီး Pages နှင့် Assets များ အလုပ်လုပ်ကြောင်း အတည်ပြုပါ။

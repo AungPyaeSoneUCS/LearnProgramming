@@ -1,0 +1,81 @@
+---
+title: "proxy.ts — Global Proxy File"
+description: "Define proxy/rewrite logic in project proxy.ts or root middleware.ts - global edge rewriting. — Project ၏ `proxy.ts` သို့မဟုတ် Root `middleware.ts` တွင် Proxy/Rewrite Logic များကို သတ်မှတ်နိုင်ပြီး Global Edge Rewriting ပြုလုပ်နိုင်ပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Requests များကို Global အနေဖြင့် Intercept လုပ်နိုင်စေရန် - Rewrites ၊ Headers ၊ Geo/UA Detection နှင့် A/B Routing များကို ကျွမ်းကျင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`proxy.ts` သည် Client တစ်ဦးထံမှ Request များကို Server က တုံ့ပြန်မှု (Response) မပြန်မီ Intercept လုပ်ပြီး Rewrite၊ Redirect စသည့် Logic များကို ရေးသားနိုင်သော Next.js ၏ File Convention တစ်ခုဖြစ်ပါတယ်။ ၎င်းသည် ပုံမှန်အားဖြင့် **Edge Runtime** တွင် Run လုပ်ပြီး Global အနေဖြင့် Requests များကို လျင်မြန်စွာ ကိုင်တွယ်နိုင်ကာ `export const runtime = "nodejs"` ဖြင့် Node Runtime သို့လည်း ပြောင်းလဲနိုင်ပါတယ်။ Bot Traffic ကို Block လုပ်ခြင်း၊ User-Agent/Geo Data/Headers/Cookies များကို ဖတ်ယူခြင်း၊ Response Headers များသတ်မှတ်ခြင်း သို့မဟုတ် Authentication နောက်ကွယ်တွင် ချုပ်ကိုင်ထားခြင်းစသည့် အလုပ်များကို လုပ်ဆောင်နိုင်ပါတယ်။ `config.matcher` ဖြင့် မည်သည့် Paths များတွင်သာ Run လုပ်မည်ကို ကန့်သတ်နိုင်ပြီး Edge Runtime ဖြစ်သောကြောင့် Heavy Node.js APIs များ အသုံးပြုခြင်းကို ရှောင်ရှားသင့်ပါတယ်။ Dynamic Logic များအတွက် ဤဖိုင်ကို အသုံးပြုပြီး Static Rules (Rewrite/Redirect/Headers) များအတွက် `next.config.ts` ကို အသုံးပြုရန် အကြံပြုပါတယ်။
+
+## Where it lives
+
+ညီမျှသော Entry Points နှစ်ခု (Project Root တွင် ထားရှိပြီး နှစ်မျိုးလုံး Supported ဖြစ်ပါတယ်):
+
+```
+proxy.ts          # preferred, project root
+middleware.ts     # legacy name, still works
+```
+
+```ts
+// proxy.ts
+import type { NextRequest } from "next/server";
+
+export function proxy(request: NextRequest) { }
+```
+
+## What it can do
+
+- Routes များကို Rewrite/Redirect လုပ်ခြင်း
+- Geo Data ၊ UA ၊ Headers နှင့် Cookies များကို ဖတ်ယူခြင်း
+- Response Headers များကို သတ်မှတ်ခြင်း
+- Authentication နောက်ကွယ်တွင် ချုပ်ကိုင်ထားခြင်း (Gate)
+
+## Reference implementation
+
+```ts
+// proxy.ts
+import { NextRequest, NextResponse } from "next/server";
+
+export function proxy(request: NextRequest) {
+  const isApi = request.nextUrl.pathname.startsWith("/api");
+  const isBot = request.headers.get("user-agent")?.includes("bot");
+
+  if (isApi && isBot) {
+    return new NextResponse("Not allowed", { status: 403 });
+  }
+
+  if (request.nextUrl.pathname === "/home") {
+    return NextResponse.rewrite(new URL("/", request.url));
+  }
+
+  return NextResponse.next();
+}
+```
+
+## Config matcher
+
+```ts
+export const config = {
+  matcher: ["/dashboard/:path*", "/api/auth/:path*"],
+};
+```
+
+သို့မဟုတ် Full Control ရရှိရန် Function Body အတွင်းတွင် Conditions များကို ကိုယ်တိုင်စစ်ဆေးနိုင်ပါတယ်။
+
+## Proxy vs config-based
+
+**Runtime Logic** (Auth ၊ Geo) များအတွက် `proxy.ts` ကို အသုံးပြုပြီး **Static Rules** များအတွက် `next.config.ts` ရှိ `rewrites`/`redirects`/`headers` Configurations များကို အသုံးပြုပါ။
+
+## Runtime
+
+ပုံမှန်အားဖြင့် **Edge Runtime** တွင် Run လုပ်ပါတယ် (`export const runtime = "nodejs"` ဖြင့် Opt-out လုပ်နိုင်ပါတယ်)။ Code ကို တိုတောင်းစွာထားပြီး Heavy Node.js APIs များကို ရှောင်ရှားပါ။
+
+## Activity
+
+`/api` ပေါ်ရှိ Bots များကို Block လုပ်ကာ `/home → /` သို့ Rewrite လုပ်ပြီး `X-Frame-Options` Header ကို သတ်မှတ်သည့် `proxy.ts` တစ်ခုကို ထည့်သွင်းပါ။ Dev Server ကို curl အသုံးပြု၍ စစ်ဆေးပါ။

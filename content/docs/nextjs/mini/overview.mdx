@@ -1,0 +1,50 @@
+﻿---
+title: "Mini Project: Overview & Requirements"
+description: "Full-Stack Blog တည်ဆောက်ရေး Mini Project ၏ ရည်ရွယ်ချက်၊ Features နှင့် Requirements များ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  ဤ Mini Project တစ်ခုလုံးတွင် သင်ယူခဲ့သော သဘောတရားအားလုံးကို ပေါင်းစပ်ကာ Full-Stack Blog တစ်ခုအား စနစ်တကျ တည်ဆောက်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+ဤ Project သည် Next.js 16 (Cache Components) ၏ သဘောတရားအားလုံး — File-based Routing၊ Server & Client Components၊ Data Fetching၊ Caching၊ Server Actions & Forms၊ Route Handlers၊ Metadata & OG Images၊ Auth နှင့် Deployment — တို့ကို လက်တွေ့အသုံးချ၍ "Full-Stack Blog" တစ်ခုကို အဆင့်ဆင့် တည်ဆောက်ပြသမည့် Capstone ဖြစ်ပါတယ်။ Blog တွင် သုံးစွဲသူများအား Public Post များ ဖတ်ရှုနိုင်ရန်၊ အက်မင်န်အား Post များ ရေးသား/တည်းဖြတ်/ဖျက်နိုင်ရန်နှင့် SEO ကောင်းမွန်စေရန် Metadata များ ပါဝင်ရပါမယ်။ Next Step 1 မှ Step 7 အထိ လိုက်လုပ်ပြီး ပြီးဆုံးပါက Production-grade ဆန်သည့် Blog ကို ပိုင်ဆိုင်နိုင်မည်ဖြစ်ပါတယ်။ Code များကို မျက်စိစုံမှိတ် ကူးယူမည့်အစား ကိုယ်တိုင်စဉ်းစားပြီး တိုးချဲ့လေ့ကျင့်ရန် အထူးအားပေးပါတယ်။
+
+## Project Requirements (လိုအပ်ချက်များ)
+
+1. **Public Pages** — `/` (Home/Hero), `/blog` (Post List), `/blog/[slug]` (Post Detail)
+2. **Admin** — `/admin` တွင် Auth လိုအပ်ပြီး Post Create/Edit/Delete လုပ်နိုင်ရမည်
+3. **Data Layer** — SQLite + Prisma ဖြင့် Post များ သိမ်းဆည်း
+4. **Caching** — `"use cache"` + `cacheLife` + `cacheTag` များဖြင့် Host လုပ်ပြီး Mutation များတွင် `revalidateTag` လုပ်ရန်
+5. **Metadata** — Title/Description, Sitemap, OG Image များ ပါဝင်ရန်
+6. **Security** — Secret များ `.env` တွင်ထား၊ `<form>` Action များတွင် Auth စစ်ရန်
+
+## Folder Structure Target (ဖိုလ်ဒါ ဖွဲ့စည်းပုံ)
+
+```txt
+blog/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── blog/[slug]/page.tsx
+│   ├── admin/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── posts/[id]/edit/page.tsx
+│   └── api/og/route.tsx
+├── components/
+├── lib/
+├── prisma/schema.prisma
+└── next.config.ts
+```
+
+## Expected Finish Line (အဆုံးသတ် ရလဒ်)
+
+Step 7 ပြီးပါက: Deployed ဖြစ်နေသော, Caching မှန်ကန်သော, SEO-ready ဖြစ်သည့် Blog တစ်ခု ရရှိပြီး တိုးတက်မှု Roadmap လည်း ရှိသင့်ပါတယ်။
+
+## Activity — လေ့ကျင့်ခန်း
+
+ဤ Project အတွက် `npx create-next-app@latest blog --ts --tailwind --app --src-dir` ဖြင့် Scaffold လုပ်ပြီး GitHub Repository အသစ်တစ်ခု ဖန်တီးပါ။ ထို့နောက် Post တစ်ခုအတွက် လိုအပ်သော Database Schema (Post: id, title, slug, content, publishedAt) ကို စဉ်းစား ရေးဆွဲကြည့်ပါ။

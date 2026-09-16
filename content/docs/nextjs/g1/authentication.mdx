@@ -1,0 +1,99 @@
+---
+title: "Authentication — အသုံးပြုသူ စစ်ဆေးခြင်း"
+description: "Standard authentication patterns in App Router: sessions, middleware-free checks, protecting pages and actions. — App Router တွင် စံအသုံးပြုသော authentication patterns များ၊ sessions၊ middleware မလိုသော စစ်ဆေးမှုများ၊ page နှင့် actions ကာကွယ်ခြင်းတို့ ဖြစ်ပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="caution" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Client-side redirect များတင်မဟုတ်ဘဲ server ဘက်တွင်ပါ sessions နှင့် authorization များဖြင့် routes, data နှင့် mutations များကို ကာကွယ်နိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Authentication ဆိုသည်မှာ application တစ်ခုသို့ ဝင်ရောက်သူသည် မည်သူမည်ဝါ ဖြစ်သည်ကို စစ်ဆေးခြင်း ဖြစ်ပါတယ်။ App Router တွင် ၎င်းအား cookie, JWT သို့မဟုတ် database ပေါ် အခြေခံ၍ server ဘက်တွင် session အဖြစ် မှတ်သားထားပါတယ်။ Authorization ဆိုသည်မှာမူ ထို user သည် မည်သည့် လုပ်ဆောင်ချက်များ လုပ်ပိုင်သည်ကို sensitive operation တိုင်းတွင် စစ်ဆေးခြင်း ဖြစ်ပါတယ်။ Client ကို ဘယ်တော့မှ ယုံကြည်မရလှသောကြောင့် Server Action နှင့် Route Handler တိုင်းသည် auth ကို ပြန်လည် စစ်ဆေးရန် လိုအပ်ပါတယ်။ Session checks များကို Server Components / Server Functions များအတွင်းတွင် ထားရှိပြီး requireUser ကဲ့သို့သော helper များဖြင့် page များနှင့် actions များကို server ဘက်တွင် ကာကွယ်ပါတယ်။
+
+## The core ideas
+
+- **Session** - Server သည် သင်မည်သူဖြစ်သည်ကို မှတ်သားထားခြင်း (cookie / JWT / database)
+- **Authorization** - sensitive operation တိုင်းတွင် user တစ်ဦး ဘာလုပ်နိုင်သည် ကို စစ်ဆေးခြင်း
+- **Client ကို ဘယ်တော့မှ မယုံကြည်ရ** - Server Action နှင့် Route Handler တိုင်းသည် auth ကို ပြန်လည် စစ်ဆေးပါတယ်
+
+## Recommended pattern
+
+Session checks များကို server code (Server Components / Server Functions) တွင်ထားပါ:
+
+```ts
+// app/lib/session.ts
+import { auth } from "@/lib/auth";
+
+export async function requireUser() {
+  const session = await auth();
+  if (!session?.user) {
+    throw new Error("Unauthenticated");
+  }
+  return session.user;
+}
+```
+
+Server Component တစ်ခုကို ကာကွယ်ပါ:
+
+```tsx
+// app/dashboard/page.tsx
+export default async function Dashboard() {
+  const user = await requireUser();
+  return <h1>Welcome, {user.name}</h1>;
+}
+```
+
+## Protecting Server Actions
+
+Action တိုင်း၏ အတွင်းတွင် ပြန်လည် စစ်ဆေးပါ (actions များသည် direct POST ဖြင့် ဝင်ရောက်နိုင်ပါတယ်):
+
+```ts
+"use server";
+
+import { auth } from "@/lib/auth";
+import { db } from "@/lib/db";
+
+export async function deletePost(id: string) {
+  const session = await auth();
+  if (!session?.user) throw new Error("Unauthorized");
+
+  const post = await db.post.findUnique({ where: { id } });
+  if (!post || post.authorId !== session.user.id) throw new Error("Forbidden");
+
+  await db.post.delete({ where: { id } });
+}
+```
+
+## Redirect unauthorized users
+
+```tsx
+import { redirect } from "next/navigation";
+
+export default async function AccountPage() {
+  const session = await auth();
+  if (!session?.user) redirect("/login");
+  return <main>…</main>;
+}
+```
+
+## Common providers
+
+| Approach   | When                          |
+| ---------- | ----------------------------- |
+| Auth.js (NextAuth) | Full session + providers, fast start |
+| Custom JWT | You control the flow, small apps |
+| OAuth / social login | Delegated auth (Google, GitHub) |
+
+## Hardening checklist
+
+- Session cookies များတွင် `HttpOnly`, `Secure`, `SameSite` သတ်မှတ်ပါ
+- Session expiry ကို တိုတောင်းစေပြီး rotation ပြုလုပ်ပါ
+- `authInterrupts` နှင့် security headers များမှတစ်ဆင့် cookie access ကို ကန့်သတ်ပါ
+- Passwords များကို plain text တွင် ဘယ်တော့မှ မသိမ်းပါနှင့်; `bcrypt`/`argon2` ဖြင့် hash လုပ်ပါ
+
+## Activity — လေ့ကျင့်ခန်း
+
+`requireUser()` helper တစ်ခု ထည့်ပါ၊ dashboard page တစ်ခုနှင့် Server Action တစ်ခုကို ကာကွယ်ပါ၊ ထို့နောက် action သို့ anonymous `POST` တစ်ခုကို ငြင်းပယ်ကြောင်း အတည်ပြုပါ။

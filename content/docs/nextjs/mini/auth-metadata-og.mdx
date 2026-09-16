@@ -1,0 +1,159 @@
+﻿---
+title: "Step 6: Auth, Metadata & OG Images"
+description: "Blog တွင် ရိုးရှင်းသော Auth၊ Metadata နှင့် OG Images များ ထည့်သွင်းခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Admin အတွက် Auth စနစ်၊ SEO-မိတ်ဆွေဖြစ်သော Metadata များနှင့် လူမှုမီဒီယာ Sharing အတွက် OG Image များ ထည့်သွင်းနိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Blog ၏ Admin Area ကို ကာကွယ်ရန် ရိုးရှင်းပြီး လုံခြုံသော Auth စနစ်တစ်ခု လိုအပ်ပါတယ်။ ဤ Step တွင် Password Hashing နှင့် Cookie-based Session များကို အခြေခံ၍ အနည်းဆုံး လုံခြုံမှု ရရှိစေရန် အာရုံစိုက်ပါမည် — Full-featured Auth အတွက်မူ Auth.js သို့မဟုတ် Clerk ကဲ့သို့ Provider များကို အသုံးပြုသင့်ပါတယ်။ Metadata များအတွက်မူ App Router ၏ `metadata` Export များဖြင့် Page တစ်ခုချင်းစီအား `title`, `description`, `keywords` စသည်တို့ကို သတ်မှတ်နိုင်ပြီး `generateMetadata` ဖြင့် Dynamic Posts များအတွက် DB မှ Metadata ထုတ်ယူနိုင်ပါတယ်။ `ImageResponse` ဖြင့် OG Image များကို Code ဖြင့် ထုတ်လုပ်နိုင်သဖြင့် Design Tool မလိုဘဲ Dynamic/Static OG Images များကို ရရှိစေပါတယ်။ ထို့အပြင် `sitemap.ts` ဖြင့် XML Sitemap ကို အလိုအလျောက် Generate လုပ်၍ SEO Crawlers များအတွက် ချောမွေ့စေပါတယ်။
+
+## Password + Session
+
+```bash
+npm install bcryptjs jose
+```
+
+```ts
+// lib/auth.ts
+import { cookies } from "next/headers";
+import { SignJWT, jwtVerify } from "jose";
+
+const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
+const COOKIE = "blog_session";
+
+export async function signin(username: string, password: string) {
+  const ok =
+    username === process.env.ADMIN_USER &&
+    (await bcrypt.compare(password, process.env.ADMIN_HASH!));
+
+  if (!ok) return false;
+
+  const token = await new SignJWT({ role: "admin" })
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("7d")
+    .sign(secret);
+
+  (await cookies()).set(COOKIE, token, { httpOnly: true, sameSite: "lax", secure: true });
+  return true;
+}
+
+export async function requireAdmin() {
+  const token = (await cookies()).get(COOKIE)?.value;
+  if (!token) throw new Error("Unauthorized");
+  await jwtVerify(token, secret);
+}
+```
+
+## Login Form + Server Function
+
+```ts
+// app/admin/login-form.tsx
+"use client";
+import { useActionState } from "react";
+import { login } from "@/app/admin/actions";
+
+export function LoginForm() {
+  const [error, action] = useActionState(login, null);
+
+  return (
+    <form action={action} className="space-y-4">
+      <input name="username" placeholder="Username" required className="w-full rounded border p-2" />
+      <input name="password" type="password" placeholder="Password" required className="w-full rounded border p-2" />
+      {error && <p className="text-red-600">{error}</p>}
+      <button className="rounded bg-blue-600 px-4 py-2 text-white">Sign in</button>
+    </form>
+  );
+}
+```
+
+```ts
+"use server";
+import { redirect } from "next/navigation";
+import { signin } from "@/lib/auth";
+
+export async function login(_prev: unknown, formData: FormData) {
+  const ok = await signin(String(formData.get("username")), String(formData.get("password")));
+  if (!ok) return "Invalid credentials";
+  redirect("/admin");
+}
+```
+
+## Dynamic Metadata
+
+```tsx
+// app/blog/[slug]/page.tsx
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getPostBySlug } from "@/lib/posts";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+  if (!post) return {};
+  return {
+    title: post.title,
+    description: post.content.slice(0, 160),
+    openGraph: {
+      title: post.title,
+      type: "article",
+      images: [`/api/og?title=${encodeURIComponent(post.title)}`],
+    },
+  };
+}
+```
+
+## OG Image via ImageResponse
+
+```tsx
+// app/api/og/route.tsx
+import { ImageResponse } from "next/og";
+
+export const runtime = "edge";
+
+export async function GET(request: NextRequest) {
+  const title = request.nextUrl.searchParams.get("title") ?? "My Blog";
+
+  return new ImageResponse(
+    (
+      <div style={{ background: "#0f172a", width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, padding: 40 }}>
+        {title}
+      </div>
+    ),
+    { width: 1200, height: 630 },
+  );
+}
+```
+
+## Sitemap
+
+```ts
+// app/sitemap.ts
+import type { MetadataRoute } from "next";
+import { prisma } from "@/lib/prisma";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await prisma.post.findMany({ where: { published: true }, select: { slug: true, updatedAt: true } });
+
+  return [
+    { url: "https://yourblog.dev", lastModified: new Date() },
+    { url: "https://yourblog.dev/blog", lastModified: new Date() },
+    ...posts.map((p) => ({ url: `https://yourblog.dev/blog/${p.slug}`, lastModified: p.updatedAt })),
+  ];
+}
+```
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Session Cookie ကို `httpOnly + secure + sameSite=lax` ဖြင့် သတ်မှတ်ပါ
+- Server Functions တွင် Admin Check ကို Client Components ပေါ်တွင် မမှီခိုဘဲ လုပ်ရမည်
+- Route Handler များတွင် Auth မလိုသော Data များကိုသာ Public ဖြစ်စေပါ
+
+## Activity — လေ့ကျင့်ခန်း
+
+`ADMIN_USER` + `ADMIN_HASH` (bcrypt) ကို `.env` ထဲထည့်၍ Login + Session စနစ်ကို ပြီးစီးပါ။ Post တစ်ခု၏ OG Image ဖြစ်သော `/api/og?title=…` ကို မျက်လုံးနှင့် ကြည့်ရှု၍ Social Preview ကိုလည်း စစ်ဆေးပါ။

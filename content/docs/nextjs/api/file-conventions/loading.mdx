@@ -1,0 +1,55 @@
+---
+title: "loading.js — Streaming Fallback UI"
+description: "Streaming fallback UI shown while the segment loads - instant feedback, no blank screens. — Segment များ Load ဖြစ်နေစဉ် Streaming Fallback UI ကို ဖော်ပြပေးပြီး Instant Feedback ပေးကာ Blank Screens များ ရှောင်ရှားပေးပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  `loading.tsx` နှင့် Instant Streaming တို့မှတစ်ဆင့် နှေးကွေးသော Segments များအတွက် လှပသော Fallbacks များကို ဖော်ပြနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`loading.tsx` သည် Data Fetch ကြောင့် Page တစ်ခု Load ဖြစ်နေစဉ်အတွင်း User များအား ချက်ချင်းတွေ့မြင်ရစေရန် Fallback UI တစ်ခုကို သတ်မှတ်ပေးသော File Convention တစ်ခုဖြစ်ပါတယ်။ Next.js App Router သည် Streaming Feature ကို အသုံးပြု၍ Page ၏ အပေါ်ပိုင်း (Shell) အပိုင်းများကို ဦးစားပေး ဖော်ပြပြီး နှေးကွေးသော Data များကို နောက်မှ ဆက်လက် Stream လုပ်ပေးပါတယ်။ ၎င်းသည် Server Components များကို React Suspense အတွင်းသို့ အလိုအလျောက် Wrap လုပ်ပေးသောကြောင့် Page တစ်ခုလုံးကို မစောင့်ဘဲ Loading State ကို ဖော်ပြနိုင်ပါတယ်။ Skeleton Screens များကို Page ၏ Dimensions များနှင့် တူညီအောင် ပြုလုပ်ခြင်းဖြင့် Layout Shift (CLS) ကို ကာကွယ်နိုင်ပြီး Header ကို ဦးစားဖော်ပြလျှင် User များအတွက် ပိုမိုလျင်မြန်သည်ဟု ခံစားစေပါတယ်။ Inner Segments များရှိလျှင် ထို Segment ၏ Loading UI က Outer Loading ထက် ဦးစားပေးပြီး `<Suspense>` နှင့် တွဲဖက်ကာ Sub-section အလိုက်လည်း Granularity သတ်မှတ်နိုင်ပါတယ်။
+
+## Definition
+
+```tsx
+// app/blog/loading.tsx
+export default function Loading() {
+  return (
+    <div className="grid gap-4">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <div key={i} className="h-24 animate-pulse rounded-xl bg-muted" />
+      ))}
+    </div>
+  );
+}
+```
+
+Route ၏ `loading.tsx` သည် ထို Segment အတွက် Suspense Fallback ဖြစ်လာပြီး Data များ ရရှိသောအခါ ကျန်အပိုင်းများကို **Streaming** လုပ်ပေးပါတယ်။
+
+## Placement rules
+
+- ၎င်းကာကွယ်ပေးသော Page ရှိသည့် Folder တစ်ခုတည်းတွင် ထားရပါတယ်
+- Sibling Segments များကို သုံးသပ်ပါ: အတွင်းပိုင်း `loading` က အပြင်ဘက်ထက် ဦးစားရပါတယ်
+- Layout Level ၏ Loading UI သည် Nested Fetches များပြုလုပ်နေစဉ် ဖော်ပြပေးပါတယ်
+
+## Design guidance
+
+- Skeletons များကို Layout-stable ဖြစ်အောင်ထားပါ (CLS ရှောင်ရန်!) - Page Dimensions များနှင့် ကိုက်ညီအောင်ပြုလုပ်ပါ
+- Minimal ဖြစ်အောင်: Header ကို ဦးစားဖော်ပြပြီး ကျန်အပိုင်းများကို Stream လုပ်ပါ
+- Sub-section Granularity ရရှိရန် Page အတွင်း `<Suspense>` နှင့် တွဲဖက်သုံးပါ
+
+## Advanced: focus on fetch counts
+
+Slow Queries ၅ ခုပါသော Page တစ်ခုတွင် Suspense Bounds များကို အသုံးပြု၍ Section တစ်ခုစီအတွက် `loading.tsx` တစ်ခုစီကို Stream လုပ်နိုင်ပါတယ်။
+
+## Relationship with error/notFound
+
+`loading` ၏ နောက်တွင် `page` ကို Resolve လုပ်ပြီး Error ဖြစ်ခဲ့လျှင် `error.tsx` က ကိုင်တွယ်ပါတယ်; `notFound()` ဖြစ်ခဲ့လျှင် `not-found.tsx` ကို Render လုပ်ပါတယ်။
+
+## Activity
+
+Blog Feed တွင် Skeleton `loading.tsx` တစ်ခုကို ထည့်သွင်းပြီး Network Throttling ကို Slow 3G သို့ပြောင်းကာ Shell သည် ချက်ချင်းပေါ်လာပြီး Load ချိန်တွင် CLS မရှိသည်ကို စစ်ဆေးပါ။

@@ -1,0 +1,92 @@
+---
+title: "Metadata and OG Images — Metadata နှင့် OG Images"
+description: "Set title, description, Open Graph, and dynamic metadata via the Metadata API in both static config and async functions. — Metadata API ဖြင့် SEO နှင့် Social Preview များအတွက် Metadata သတ်မှတ်ပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  သင့် pages များသည် search results နှင့် social previews တွင် မည်သို့ပေါ်သည်ကို Metadata API ဖြင့် ထိန်းချုပ်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Metadata ဆိုသည်မှာ page အကြောင်းကို ဖော်ပြသော data ဖြစ်ပြီး search engines နှင့် social media platforms များက page ၏ title, description နှင့် preview image များကို ပြသရန် အသုံးပြုပါတယ်။ Next.js Metadata API တွင် layout သို့မဟုတ် page တစ်ခုမှ `metadata` object ကို export လုပ်ခြင်းဖြင့် static metadata ကို သတ်မှတ်နိုင်ပြီး `title` ကို template (`%s | My Store`) ဖြင့်လည်း သတ်မှတ်နိုင်ကာ child pages ၏ title ကိုလိုက်၍ အလိုအလျောက် ဖြည့်ပေးပါတယ်။ ခေါင်းစဉ်များ params (ဥပမာ `[slug]`) ပေါ်မူတည်၍ ပြောင်းလဲသည့်အခါ `generateMetadata` async function ကို export လုပ်ပြီး dynamic metadata များကို ရယူနိုင်ပါတယ်။ `icon.png`, `opengraph-image.png`, `robots.txt`, `sitemap.xml` ကဲ့သို့ file-based metadata များကို app folder တွင်းထည့်ခြင်းဖြင့်လည်း သတ်မှတ်နိုင်ပါတယ်။ Viewport ဆိုင်ရာ settings (themeColor စသည်) တို့ကိုမူ `viewport` export သို့မဟုတ် `generateViewport` ဖြင့် သီးခြားသတ်မှတ်ရပါတယ်။
+
+## Static metadata (Static Metadata)
+
+Layout သို့မဟုတ် page တစ်ခုမှ `metadata` object ကို export လုပ်ပါ:
+
+```tsx
+// app/about/page.tsx
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description: "Learn everything about our team",
+  openGraph: {
+    title: "About Us",
+    images: ["/og/about.png"],
+  },
+};
+```
+
+`title` ကို parent layout တွင် template အဖြစ် သတ်မှတ်နိုင်ပါတယ်:
+
+```tsx
+// app/layout.tsx
+export const metadata: Metadata = {
+  title: {
+    default: "My Store",
+    template: "%s | My Store", // children titles fill the %s
+  },
+};
+```
+
+## Dynamic metadata with generateMetadata (generateMetadata ဖြင့် Dynamic Metadata)
+
+Params ပေါ်မူတည်သော pages များအတွက်:
+
+```tsx
+// app/blog/[slug]/page.tsx
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPost(slug);
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      images: [post.cover],
+    },
+  };
+}
+```
+
+## File-based metadata (File အခြေခံ Metadata)
+
+အချို့သော metadata များကို config မဟုတ်ဘဲ files အဖြစ် ပေးပို့ပါတယ်:
+
+| File            | Purpose                               |
+| --------------- | ------------------------------------- |
+| `icon.png`      | favicon / app icon                    |
+| `opengraph-image.png` | social share preview            |
+| `robots.txt`    | search engine crawling rules          |
+| `sitemap.xml`   | page index for crawlers               |
+
+## Viewport metadata (Viewport Metadata)
+
+`viewport` ကို `generateViewport` သို့မဟုတ် static export ဖြင့် သီးခြားသတ်မှတ်ပါ:
+
+```tsx
+export const viewport: Viewport = {
+  themeColor: "#18181b",
+};
+```
+
+## Activity
+
+Blog post page တစ်ခုတွင် post title ကို ဖတ်သော `generateMetadata` ကို ထည့်ပြီး app folder တွင်း `opengraph-image.png` တစ်ခုကို ထည့်ပါ။ Build ပြီးနောက် `<head>` output ကို စစ်ဆေးပါ။

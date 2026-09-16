@@ -1,0 +1,59 @@
+---
+title: "catchError — ဆာဗာဘက် error ဖမ်းခြင်း"
+description: "Catch errors thrown in Server Functions and route request handlers. — Server Functions နှင့် route request handlers များအတွင်း ဖြစ်ပေါ်သော errors များကို ဖမ်းယူပေးသည့် function ဖြစ်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Async handlers များ၏ အစွန်းတွင် ဖြစ်ပေါ်သော ပျက်ကွက်မှုများကို typed error context ဖြင့် သပ်ရပ်စွာ ကိုင်တွယ်နိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`catchError` သည် server-side ရှိ function များကို ထုပ်ပိုး (wrap) လုပ်ပြီး စတင်လုပ်ဆောင်စဉ်အတွင်း ဖြစ်ပေါ်လာသော error များကို try/catch block ရှုပ်ထွေးမှုမရှိဘဲ သန့်ရှင်းစွာ ဖမ်းယူပေးသော utility တစ်ခုဖြစ်ပါတယ်။ ခေါ်ဆိုမှုတိုင်းသည် `[error, data]` ပုံစံ tuple ကို ပြန်ပေးတာကြောင့် error ရှိမရှိကို condition တစ်ခုဖြင့် အလွယ်တကူ စစ်ဆေးကာ Route Handler မှာ structured JSON error ကို ပြန်ပို့နိုင်ပါတယ်။ Form မှ ခေါ်ဆိုသော Server Functions များတွင် mutation ကို wrap လုပ်ပြီး error state ပြန်ပို့ရန်အတွက် အထူးသင့်လျော်ပြီး `Promise.all` ဖြင့် parallel orchestration မျိုးတွင်လည်း multiple `catchError` ရလဒ်များကို သုံးနိုင်ပါတယ်။ try/catch နှင့် နှိုင်းယှဉ်ပါက `catchError` သည် tuple result ကို ပေးသောကြောင့် "return error shape" ဟုခေါ်သော တုံ့ပြန်မှုပုံစံများအတွက် ပိုမိုသပ်ရပ်ပါတယ်။ Client side တွင်မူ error handling ကို boundary သို့မဟုတ် `useActionState` ပုံစံများဖြင့်သာ ဆက်လက် လုပ်ဆောင်ရပါတယ်။
+
+## What it is
+
+`catchError` သည် server-side execution များကို ထုပ်ပိုးပြီး ဖြစ်ပေါ်လာသော errors များကို သန့်ရှင်းစွာ ဖမ်းယူပေးပါတယ်:
+
+```tsx
+import { catchError } from "next/server";
+
+const [error, data] = await catchError(
+  async () => createUser(input)
+);
+
+if (error) {
+  return NextResponse.json({ error: error.message }, { status: 400 });
+}
+return NextResponse.json(data);
+```
+
+## Signature
+
+```ts
+function catchError<T>(
+  execution: () => Promise<T> | T
+): Promise<[Error | null, Awaited<T> | undefined]>;
+```
+
+## Where it shines (ဘယ်နေရာမှာ အသုံးဝင်လဲ)
+
+- Route Handlers: try/catch soup မလိုဘဲ structured errors များကို ပြန်ပို့နိုင်ခြင်း
+- Form များမှ ခေါ်ဆိုသော Server Functions: mutation ကို wrap လုပ်ပြီး error state ကို ပြန်ပို့နိုင်ခြင်း
+- Parallel orchestrations: `catchError` ရလဒ်များစွာကို `Promise.all` ဖြင့် စုစည်းသုံးနိုင်ခြင်း
+
+## Compare with try/catch (try/catch နှင့် နှိုင်းယှဉ်ချက်)
+
+- try/catch: လွတ်လပ်စွာ ကိုင်တွယ်နိုင်သော်လည်း boilerplate ပိုများပါတယ်
+- `catchError`: tuple result ကို ပေးပြီး "return error shape" ပုံစံ API များအတွက် ပိုမိုသန့်ရှင်းပါတယ်
+
+## Rules (စည်းကမ်းများ)
+
+- Server scope (Route Handlers, Server Actions) များတွင် အလုပ်လုပ်ပါတယ်
+- Client error handling အတွက်မူ boundary / `useActionState` ပုံစံများကို ဆက်သုံးရပါတယ်
+
+## လေ့ကျင့်ခန်း (Activity)
+
+POST handler ၏ mutation တစ်ခုကို `catchError` ဖြင့် ထုပ်ပိုးပြီး DB errors များကို 409/400 responses အဖြစ် ပြောင်းလဲကာ handler မပျက်စီးဘဲ thrown rejects များ structured JSON အဖြစ် ပြောင်းလဲကြောင်း စစ်ဆေးပါ။

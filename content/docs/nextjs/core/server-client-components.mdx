@@ -1,0 +1,93 @@
+---
+title: "Server and Client Components — Server နှင့် Client Components"
+description: "The Server/Client Component model: when each runs, how to pass data across the boundary, and the rules you must follow. — Component တစ်ခုစီသည် Server သို့မဟုတ် Client တွင် မည်သည့်အခါ run လုပ်သည်နှင့် Data ဖြတ်သန်းပုံ စည်းမျဉ်းများ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Component တိုင်းအတွက် Server သို့မဟုတ် Client တွင် မည်သူက render လုပ်သင့်သည်ကို မှန်ကန်စွာ ဆုံးဖြတ်နိုင်စေရန်နှင့် boundary rules များကို လိုက်နာနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js ရှိ Components များကို Server Components နှင့် Client Components ဟု နှစ်မျိုးခွဲခြားထားပြီး ၎င်းတို့ကြား **Server/Client Component boundary** ဟုခေါ်သည်။ Server Components များသည် server တွင် run လုပ်ပြီး default အနေဖြင့် ဖြစ်ကာ database ကို တိုက်ရိုက်ဖတ်နိုင်ပြီး secrets များကို client မှ ဖုံးကွယ်ပေးပါတယ်။ Client Components များကို `"use client"` directive ဖြင့်သာ ဖွင့်နိုင်ပြီး browser တွင် hydration နှင့်အထွတ်တွင် run ကာ hooks, effects, event handlers စသည့် interactivity များကို ပံ့ပိုးပါတယ်။ Server Component သည် serializable props များကို Client Component သို့ ပေးပို့နိုင်ပြီး functions သို့မဟုတ် class instances ကဲ့သို့ serializable မဟုတ်သော တန်ဖိုးများကို မပို့နိုင်ပါ။ Client Components များသည် Server Components များကို import လုပ်၍မရသော်လည်း Server Components များသည် Client Components များကို children/props အဖြစ် import လုပ်ကာ render လုပ်နိုင်ပါတယ်။ Server-only libraries များကို `server-only` package ဖြင့် ကာကွယ်ထားပြီး Client Component မှ import လုပ်လျှင် build-time error ဖြစ်၍ safety net အဖြစ် ဆောင်ရွက်ပါတယ်။
+
+## The two component models (Component Models နှစ်ခု)
+
+|              | Server Components                     | Client Components                     |
+| ------------ | ------------------------------------- | ------------------------------------- |
+| Run on       | Server (prerender / request)          | Browser during hydration + afterwards |
+| Default      | Yes - unless marked                  | Only with `"use client"`              |
+| Can read DB  | ✅ directly                           | ❌ (via API / Server Actions)         |
+| Secrecy      | Hides secrets from the client         | Never put secrets here                |
+| Interactivity | ❌ no hooks/events                   | ✅ hooks, effects, events             |
+
+## The `"use client"` directive (`"use client"` Directive)
+
+File ၏ ထိပ်ဆုံးတွင် ၎င်းကို ထည့်ပါက export လုပ်ထားသည်အားလုံးကို Client Component အဖြစ် ပြောင်းလဲပေးပါတယ်:
+
+```tsx
+"use client";
+
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Count: {count}
+    </button>
+  );
+}
+```
+
+## Passing data across the boundary (Boundary ဖြတ်၍ Data ပေးပို့ခြင်း)
+
+Server Component တစ်ခုသည် serializable props များကို Client Component တစ်ခုသို့ render လုပ်ပို့ဆောင်နိုင်ပါတယ်:
+
+```tsx
+// page.tsx (Server Component)
+import LikesButton from "./likes-button";
+
+export default async function Page() {
+  const post = await getPost(); // DB read - server only
+  return <LikesButton likes={post.likes} postId={post.id} />;
+}
+```
+
+```tsx
+// likes-button.tsx (Client Component)
+"use client";
+
+export default function LikesButton({ likes, postId }: { likes: number; postId: string }) {
+  return <button onClick={async () => {
+    await fetch(`/api/posts/${postId}/like`, { method: "POST" });
+  }}>❤️ {likes}</button>;
+}
+```
+
+## Rules that are not optional (ရွေးချယ်စရာမဟုတ်သော စည်းမျဉ်းများ)
+
+1. Client Components များသည် Server Components သို့မဟုတ် server-only code များကို **import လုပ်နိုင်ခြင်းမရှိပါ**။
+2. Server Components များသည် Client Components များကို **import လုပ်ပြီး (children/props အဖြစ်) render လုပ်နိုင်ပါတယ်**။
+3. Boundary ဖြတ်၍ လွှဲပြောင်းသော props များသည် **serializable ဖြစ်ရမည်** (functions, class instances တို့ကို မလုပ်နိုင်ပါ)။
+4. Context, hooks နှင့် event handlers တို့သည် Client Components တွင်သာ တည်ရှိပါတယ်။
+5. Server-only libraries များကို `server-only` ဖြင့် ကာကွယ်ထားသင့်ပါတယ်:
+
+```tsx
+// lib/db.ts
+import "server-only";
+export async function getPosts() { /* DB access */ }
+```
+
+Client Component တစ်ခုမှ `server-only` ကို import လုပ်ပါက **build-time error** ဖြစ်ပါမည် - ထိုသို့ဖြင့် safety net အဖြစ်ဆောင်ရွက်ပါတယ်။
+
+## When to use which (မည်သည့်အချိန်တွင် မည်သည့်ကို သုံးမည်)
+
+- **Server Components** များကို default အနေဖြင့် သုံးပါ - data fetching, rendering, layout နှင့် browser state မလိုအပ်သော မည်သည့်အရာ။
+- **Client Components** များကို interactivity အတွက်သာ သုံးပါ - handlers, effects, hooks, browser APIs တို့ ဖြစ်ပါတယ်။
+
+## Activity
+
+Server Component တစ်ခုတွင် posts list ကို fetch လုပ်သည့် page တစ်ခုကို တည်ဆောက်ပြီး post တစ်ခုစီအတွက် Client `CommentBox` component တစ်ခုကို render လုပ်ပါ။ Server သည် database call ကို browser သို့ မပို့ကြောင်း စစ်ဆေးပါ။

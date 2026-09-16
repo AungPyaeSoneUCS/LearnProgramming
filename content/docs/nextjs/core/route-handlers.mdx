@@ -1,0 +1,90 @@
+---
+title: "Route Handlers — Route Handlers API Endpoints"
+description: "Create API endpoints with route.js: GET/POST handlers, dynamic segments, streaming responses, and caching behavior. — route.js ဖြင့် API Endpoints များကို GET/POST Handlers နှင့် ဖန်တီးပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  သင့် Next.js App အတွင်း၌ပင် first-class API endpoints များကို `route.ts` ဖြင့် တည်ဆောက်နိုင်စေရန် - separate server မလိုအပ်ဘဲ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Route Handlers ဆိုသည်မှာ Next.js App Router တွင် API endpoints များကို ဖန်တီးရန် အသုံးပြုသော feature ဖြစ်ပြီး separate backend server တစ်ခု လိုအပ်ပါတယ်။ `app/api/posts/route.ts` ကဲ့သို့ `route.ts` file တစ်ခုကို ဖန်တီးပြီး HTTP method (GET, POST စသည်) တစ်ခုစီအတွက် function တစ်ခုစီ export လုပ်ခြင်းဖြင့် API endpoint ကို ရရှိပါတယ်။ Route Handlers များသည် dynamic route segments များကိုလည်း ပံ့ပိုးပြီး `params` မှ path parameter များကို လက်ခံရယူနိုင်ပါတယ်။ Chat-like သို့မဟုတ် ကြာမြင့်သော responses များအတွက် `ReadableStream` နှင့် `TextEncoder` ကို သုံး၍ response ကို streaming ပြုလုပ်နိုင်ပါတယ်။ **Cache Components** enabled ဖြစ်ပါက GET Route Handlers များကို pages များကဲ့သို့ `use cache` ဖြင့် cacheable အဖြစ် သတ်မှတ်နိုင်ပြီး အမြဲတမ်းအားထားရမည့် dynamic responses များအတွက်မူ cache directive မထည့်ဘဲ ထားနိုင်ပါတယ်။ Streaming များကို default အနေဖြင့် ပံ့ပိုးပြီး body size နှင့် streaming limits များကို `next.config.ts` တွင် configure လုပ်နိုင်ပါတယ်။
+
+## A basic GET Route Handler (Basic GET Route Handler)
+
+`app/api/posts/route.ts` ကို ဖန်တီးပါ။ Default export မလိုအပ်ပါ - HTTP method တစ်ခုစီအတွက် function တစ်ခုစီ export လုပ်ပါ:
+
+```ts
+// app/api/posts/route.ts
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  const posts = await db.post.findMany();
+  return NextResponse.json({ posts }, { status: 200 });
+}
+
+export async function POST(request: Request) {
+  const body = await request.json();
+  const post = await db.post.create({ data: body });
+  return NextResponse.json({ post }, { status: 201 });
+}
+```
+
+## Params and dynamic route segments (Params နှင့် Dynamic Route Segments)
+
+```ts
+// app/api/posts/[id]/route.ts
+export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const post = await db.post.findUnique({ where: { id } });
+  if (!post) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  return NextResponse.json({ post });
+}
+```
+
+## Streaming responses (Streaming Responses)
+
+Chat-like သို့မဟုတ် အချိန်ကြာမြင့်သော responses များအတွက်:
+
+```ts
+export async function GET() {
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      controller.enqueue(encoder.encode("chunk 1\n"));
+      await new Promise((r) => setTimeout(r, 500));
+      controller.enqueue(encoder.encode("chunk 2\n"));
+      controller.close();
+    },
+  });
+  return new Response(stream, { headers: { "Content-Type": "text/plain" } });
+}
+```
+
+## Caching Route Handlers (Route Handlers များကို Caching)
+
+**Cache Components enabled** ဖြစ်ပါက `GET` Route Handlers များသည် pages များကဲ့သို့ pruning model ကို လိုက်နာပြီး `use cache` ဖြင့် cacheable အဖြစ် မှတ်သားနိုင်ပါတယ်:
+
+```ts
+import { cacheLife } from "next/cache";
+
+export async function GET() {
+  "use cache";
+  cacheLife("minutes");
+  return NextResponse.json({ now: Date.now() });
+}
+```
+
+အမြဲတမ်း dynamic responses များအတွက်မူ cache directive ကို မထည့်ပါနှင့်။
+
+## Body size and streaming limits (Body Size နှင့် Streaming ကန့်သတ်ချက်များ)
+
+- Route Handlers များသည် streaming ကို default အနေဖြင့် ပံ့ပိုးပါတယ်
+- `proxyClientMaxBodySize` နှင့် HTML/JSON streaming limits များကို `next.config.ts` တွင် configure လုပ်နိုင်ပါတယ်
+
+## Activity
+
+`GET` (list) နှင့် `POST` (create) ပါသော `app/api/products/route.ts` ကို ထည့်ပါ။ Terminal မှ `curl -X POST` ဖြင့် ခေါ်ပြီး JSON responses များ ရကြောင်း စစ်ဆေးပါ။

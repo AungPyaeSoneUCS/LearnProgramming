@@ -1,0 +1,70 @@
+---
+title: "sitemap.ts (Sitemap.xml ထုတ်လုပ်ခြင်း)"
+description: "Generate the sitemap.xml for better SEO - including dynamic routes and lastModified. — dynamic routes နှင့် lastModified အပါအဝင် SEO ပိုမိုကောင်းမွန်ရန် sitemap.xml ထုတ်လုပ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Generated sitemap မှတစ်ဆင့် public URL တိုင်းကို search engines များ သိရှိစေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`sitemap.xml` သည် site ပေါ်ရှိ crawl လုပ်သင့်သော URL များ၏ စာရင်းကို search engines များအား အသိပေးသော ဖိုင်တစ်ခုဖြစ်ပြီး SEO တွင် အရေးပါသော အခန်းကဏ္ဍမှ ပါဝင်ပါတယ်။ Next.js တွင် `app/sitemap.ts` ဖိုင်ကို ရေးသားထားပါက build ချိန်တွင် `/sitemap.xml` အဖြစ် အလိုအလျောက် ထုတ်ပေးပါတယ်။ Function သည် async ဖြစ်နိုင်သောကြောင့် database မှ posts များကို ပြန်လည် ရယူပြီး URL စာရင်းကို အလိုအလျောက် ဖန်တီးနိုင်ပါတယ်။ URL တစ်ခုစီတွင် `lastModified`, `changeFrequency`, `priority` စသည့် optional field များ ထည့်နိုင်ပြီး `url` သည် absolute ဖြစ်ရန် လိုအပ်ပါတယ်။
+
+## The convention (ပုံစံသတ်မှတ်ချက်)
+
+`app/sitemap.ts` ဖိုင်သည် `/sitemap.xml` အဖြစ် ထုတ်ပေးပါတယ်:
+
+```
+app/sitemap.ts   →   /sitemap.xml
+```
+
+## Static + dynamic (Static နှင့် Dynamic ပေါင်းစပ်ခြင်း)
+
+အောက်ပါ ဥပမာသည် static URL များနှင့် DB-driven dynamic URL များကို ပေါင်းစပ်၍ ထုတ်ပေးပါတယ်:
+
+```ts
+// app/sitemap.ts
+import type { MetadataRoute } from "next";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await getAllPosts();
+
+  return [
+    { url: "https://example.com", lastModified: new Date(), changeFrequency: "yearly", priority: 1 },
+    { url: "https://example.com/blog", changeFrequency: "weekly", priority: 0.8 },
+    ...posts.map((post) => ({
+      url: `https://example.com/blog/${post.slug}`,
+      lastModified: post.updatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+    })),
+  ];
+}
+```
+
+## Supported fields (ပံ့ပိုးထားသော Field များ)
+
+Sitemap entry တွင် အသုံးပြုနိုင်သော field များကို အောက်ပါဇယားတွင် ဖော်ပြပါတယ်:
+
+| Field              | Type           |
+| ------------------ | -------------- |
+| `url`              | required       |
+| `lastModified`     | Date/string    |
+| `changeFrequency`  | enum           |
+| `alternates`       | languages      |
+| `images`           | SEO images     |
+| `priority`         | 0-1            |
+
+## Rules & gotchas (စည်းမျဉ်းများနှင့် သတိထားရမည့်အချက်များ)
+
+- `url` သည် absolute ဖြစ်ရပါမယ်
+- Async ခွင့်ပြုပါတယ် — DB-driven routes များအတွက် အကောင်းဆုံး ဖြစ်ပါတယ်
+- Blocked (`robots`) သို့မဟုတ် canonical-looped URL များ ထည့်သွင်းခြင်းကို ရှောင်ပါ
+- Config မှတစ်ဆင့် static export ကို ပံ့ပိုးပါတယ်
+
+## Activity (လေ့ကျင့်ခန်း)
+
+DB query မှ `sitemap.ts` ကို ထုတ်လုပ်ပြီး route တစ်ခုအတွက် language alternates များ ထည့်ကာ build လုပ်ပြီး `/sitemap.xml` ကို curl လုပ်၍ structure မှန်ကန်ကြောင်း စစ်ဆေးပါ။

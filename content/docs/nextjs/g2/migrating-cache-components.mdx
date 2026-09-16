@@ -1,0 +1,93 @@
+---
+title: "Migrating to Cache Components — Cache Components သို့ ပြောင်းရွှေ့ခြင်း"
+description: "The upgrade path from the previous caching model to Cache Components: directives, config, and step list. — ယခင် caching model မှ Cache Components အသစ်သို့ ပြောင်းရွှေ့ပုံ၊ directives နှင့် config များ"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Legacy caching စနစ်ကို Cache Components model သို့ feature တစ်ခုချင်းစီ အဆင့်ဆင့် စစ်ဆေးကာ ဘေးကင်းစွာ ပြောင်းရွှေ့နည်းကို နားလည်စေရန် ဖြစ်ပါတယ် — **`use cache`**, **`cacheLife`** နှင့် **`cacheTag`** တို့ဆီသို့ အသွင်ပြောင်းပုံကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+ယခင် Next.js caching model တွင် `fetch` options များ၊ `unstable_cache` နှင့် `revalidate` exports များကို ရောနှော အသုံးပြုရသော်လည်း Cache Components model တွင် ထို logic အားလုံးကို `use cache` directive အောက်တွင် စုစည်း ဖော်ပြပါတယ်။ ပထမအဆင့်တွင် `next.config.ts` ၌ `cacheComponents: true` ကို ဖွင့်ပြီး optional `cacheLife` profiles များကို သတ်မှတ်ပါတယ်။ ဒုတိယအဆင့်တွင် ယခင် pattern များဖြစ်သော `fetch(url, { next: { revalidate, tags } })` ကို `use cache` function + `cacheLife`/`cacheTag` သို့ ပြောင်းပြီး `unstable_cache(fn, keys, opts)` ကို function-level `use cache` ဖြင့် အစားထိုးကာ `export const revalidate = N` နှင့် `dynamic = "force-static"` များကိုလည်း component-level `use cache` အသွင်သို့ ပြောင်းရပါတယ်။ တတိယအဆင့်တွင် `revalidateTag` ကို ဆက်လက် ထားပြီး ရှိပြီးသား fresh data ရှိပါက surgical ပြောင်းလဲမှုအတွက် `updateTag` ကို ထပ်ဖြည့်နိုင်ပါတယ်။ Edge cases အနေဖြင့် short-lived caches များသည် dynamic holes အဖြစ် အလိုအလျောက် ပြောင်းလဲကာ cached scopes အတွင်းမှ ဖတ်သော cookies/headers များကို arguments သို့မဟုတ် `use cache: private` ဖြင့် ကိုင်တွယ်ရပါမယ်။ နောက်ဆုံးတွင် `next build` route report ၏ ○/ƒ classifications များကို နှိုင်းယှဉ်ပြီး မျှော်မှန်းထားသည့် static/dynamic အခြေအနေ ဖြစ်ကြောင်း စစ်ဆေးရန် လိုပါတယ်။
+
+## 1. Enable the feature
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+  // optional profiles you extend
+  cacheLife: {
+    product: { stale: 300, revalidate: 900, expire: 3600 },
+  },
+};
+```
+
+## 2. Convert the patterns
+
+| Old                                  | New                              |
+| ------------------------------------ | -------------------------------- |
+| `fetch(url, { next: { revalidate, tags } })` | `use cache` function + `cacheLife`/`cacheTag` |
+| `unstable_cache(fn, keys, opts)`     | `use cache` at function level    |
+| `export const revalidate = N`        | `use cache` on the component + `cacheLife` |
+| `export const dynamic = "force-static"` | `use cache` version of that route |
+| `generateStaticParams` (keep)        | still valid                       |
+
+## 3. Example migration
+
+```ts
+// Before
+export const getProducts = unstable_cache(
+  async () => db.product.findMany(),
+  ["products"],
+  { revalidate: 3600, tags: ["products"] },
+);
+```
+
+```tsx
+// After
+import { cacheLife, cacheTag } from "next/cache";
+
+export async function getProducts(sellerId: symbol | undefined) {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("products");
+
+  if (!sellerId) return db.product.findMany();
+  return fetch(`https://api.example.com/products?seller=${String(sellerId)}`).then((r) => r.json());
+}
+```
+
+## 4. Rework revalidation
+
+```ts
+// Before
+revalidateTag("products");
+
+// After - keep this, optionally upgrade to surgical
+revalidateTag("products");
+updateTag("products"); // when you already hold fresh data
+```
+
+## 5. Handle edge cases
+
+- `cacheLife` profiles + **short-lived** caches များသည် dynamic holes အဖြစ် အလိုအလျောက် ပြောင်းလဲပါတယ်
+- Cached scopes အတွင်းမှ ဖတ်သော cookies/headers များကို arguments (သို့) `use cache: private` သို့ ပြောင်းပါ
+- Route Handlers — `GET` သည် ယခု page prerendering rules ကို လိုက်နာပါတယ်
+- **prerender → static shell** vs **dynamic** အခြေအနေကို `next build` report ဖြင့် စမ်းသပ်ပါ
+
+## Validation checklist
+
+```bash
+npm run build
+# compare route report: ○/ƒ statuses as expected
+# verify revalidation works after mutations
+npm run start
+```
+
+## Activity
+
+လေ့ကျင့်ခန်း: Endpoint တစ်ခုကို ဤ checklist ကို သုံး၍ အစမှအဆုံး ပြောင်းရွှေ့ကာ မျှော်မှန်းထားသည့် static/dynamic classifications ဖြစ်ကြောင်း `next build` report ကို before/after diff လုပ်ပြီး အတည်ပြုပါ။

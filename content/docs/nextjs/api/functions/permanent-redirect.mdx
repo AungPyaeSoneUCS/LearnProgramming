@@ -1,0 +1,55 @@
+---
+title: "permanentRedirect (308 အမြဲတမ်း Redirect)"
+description: "Issue a 308 permanent redirect from server code. — Server ကုဒ်မှ 308 Permanent Redirect ထုတ်ပေးခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Crawler များနှင့် Client များက ၎င်းတို့၏ Link များကို အလိုအလျောက် အဆင့်မြှင့်တင်နိုင်ရန် 308 Permanent Redirect ဖြင့် အမြဲတမ်း ပြောင်းရွှေ့ပေးနိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`permanentRedirect()` သည် Server ဘက်မှ Path တစ်ခုကို အခြား URL တစ်ခုသို့ 308 Status Code ဖြင့် **အမြဲတမ်း** ပြောင်းရွှေ့ပေးသော Function တစ်ခုဖြစ်ပါတယ်။ 308 သည် HTTP Method (POST/GET စသည်) နှင့် Request Body ကို ထိန်းသိမ်းပေးသဖြင့် Form Data တင်သွင်းခြင်းကဲ့သို့ ကိစ္စများတွင် 301 ထက် ပိုမိုလုံခြုံပါတယ်။ ၎င်းကို Server Component၊ Server Action သို့မဟုတ် Route Handler များတွင် ခေါ်ယူနိုင်ပြီး ခေါ်ယူလိုက်သည်နှင့် နောက်မှ Code များ ဆက်လက် လည်ပတ်မည် မဟုတ်ပါ။ URL သည် Absolute (Full URL) သို့မဟုတ် App အတွင်းရှိ Path ဖြစ်ရန် လိုအပ်ပြီး Next.js က ၎င်း Redirect ကို Browser နှင့် Search Engine နှစ်ဘက်လုံးအတွက် Header အဖြစ် အလိုအလျောက် ထုတ်ပေးပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```tsx
+import { permanentRedirect } from "next/navigation";
+
+export default async function LegacyPage() {
+  permanentRedirect("/new-home");
+}
+```
+
+## Distinctions (ကွဲပြားချက်များ)
+
+| Function              | Status | Use case                       |
+| --------------------- | ------ | ------------------------------ |
+| `redirect()`          | 307    | Temporary (auth, flow)         |
+| `permanentRedirect()` | 308    | Moved permanently (SEO)        |
+
+308 သည် Method နှင့် Body ကို ထိန်းသိမ်းပေးပါတယ် (301 မှာ POST→GET ပြောင်းလဲနိုင်ခြေ ရှိပါတယ်)။
+
+## Rules (စည်းမျဉ်းများ)
+
+- Server Scope — Server Components များ၊ Server Actions များနှင့် Route Handlers များတွင် အသုံးပြုနိုင်
+- Return Type သည် `NEVER` ဖြစ်သောကြောင့် ၎င်းနောက်တွင် Code များ မရေးသားနိုင်
+- URL သည် Absolute သို့မဟုတ် App အတွင်းသို့ညွှန်းသော Path ဖြစ်ရမည် — Relative Path ကိုလည်း ခွင့်ပြုပါတယ်
+
+## With SearchParams Preservation (SearchParams ထိန်းသိမ်းခြင်း)
+
+```tsx
+const q = searchParams?.q;
+permanentRedirect(`/search?q=${q}`);
+```
+
+## Compare with next.config Redirects (next.config redirects များနှင့် နှိုင်းယှဉ်ခြင်း)
+
+- Static Rule ဖြစ်ပါက Config တွင် `redirects` ကို သုံးပါ (Runtime Cost မရှိ)
+- Dynamic (Runtime) ဖြစ်ပါက `permanentRedirect` ကို သုံးပါ
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Legacy Route `/old` ကို `permanentRedirect` ဖြင့် `/new` သို့ ရွှေ့ပြောင်းပြီး curl ဖြင့် 308 Status ကို အတည်ပြုပါ။ နောက်ပိုင်းတွင် Runtime Cost သုညဖြစ်စေရန် Config-based Redirect တစ်ခုဖြင့် အစားထိုးပါ။

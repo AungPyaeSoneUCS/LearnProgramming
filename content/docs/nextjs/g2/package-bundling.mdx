@@ -1,0 +1,70 @@
+---
+title: "Package Bundling — Package များ Bundle ပြုလုပ်ခြင်း"
+description: "Control what goes into your server and client bundles with serverExternalPackages, transpilePackages, and optimizePackageImports. — serverExternalPackages, transpilePackages နှင့် optimizePackageImports တို့ဖြင့် server/client bundles ထဲသို့ ဘာတွေ ဝင်ရမည်ကို ထိန်းချုပ်နည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  မည်သည့် packages များ compile ဖြစ်မည်၊ external အဖြစ် ဆက်ထားမည်၊ tree-shaken လုပ်မည်ကို ရွေးချယ်၍ bundles များကို ပေါ့ပါးပြီး မှန်ကန်အောင် ထိန်းသိမ်းနည်းကို နားလည်စေရန် ဖြစ်ပါတယ် — **`serverExternalPackages`**, **`transpilePackages`** နှင့် **`optimizePackageImports`** တို့၏ အခန်းကဏ္ဍများကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js bundle ကို ထိန်းချုပ်ရန် config options သုံးခု ရှိပါတယ်။ `serverExternalPackages` သည် native binaries သို့မဟုတ် ကြီးမားသော modules များ ပါဝင်သော Node packages များ (ဥပမာ `pg`, `sharp`, `bcrypt`, `@prisma/client`) ကို bundle လုပ်မည့်အစား external အဖြစ် တိုက်ရိုက် load လုပ်စေပါတယ်။ `transpilePackages` သည် workspaces သို့မဟုတ် pre-transpiled dependencies များမှ imports များအတွက် node_modules အတွင်းရှိ packages များကို compile လုပ်ပေးပါတယ်။ `optimizePackageImports` မှာမူ barrel imports အပြည့်အဝကို သုံးသော libraries များ (ဥပမာ `lucide-react`, `@mui/material`, `date-fns`) ကို tree-shake လုပ်ပြီး deep imports များဖြင့် အလိုအလျောက် အစားထိုးပေးပါတယ်။ Server bundle ကောင်းတစ်ခုတွင် server-only code များသာ ပါဝင်သင့်ပြီး `server-only` import ဖြင့် သေချာစေနိုင်ကာ client bundle မှာမူ သင်တကယ် သုံးသော client component modules များ၏ ပေါင်းလဒ်သာ ဖြစ်သင့်ပါတယ်။ `next build` route report ၏ sizes များကို စောင့်ကြည့်ခြင်းဖြင့် bundle ပြောင်းလဲမှုများ၏ သက်ရောက်မှုကို အကဲဖြတ်နိုင်ပြီး bundler analyzer ကို သုံး၍ duplication များကိုလည်း စစ်ဆေးနိုင်ပါတယ်။
+
+## Three levers
+
+| Config                     | Effect                                   |
+| -------------------------- | ---------------------------------------- |
+| `serverExternalPackages`   | Keep native/server packages external (Node) |
+| `transpilePackages`        | Compile node_modules packages (imports from monorepo) |
+| `optimizePackageImports`   | Tree-shake big multi-part libraries      |
+
+## serverExternalPackages
+
+Bundle လုပ်ရန် မသင့်လျော်သော Node packages များ (native binaries, huge modules) ကို **external** အဖြစ် ထားပြီး တိုက်ရိုက် load လုပ်သင့်ပါတယ်:
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  serverExternalPackages: ["pg", "sharp", "bcrypt", "@prisma/client"],
+};
+```
+
+## transpilePackages
+
+Workspaces သို့မဟုတ် pre-transpiled dependencies များမှ imports များအတွက်:
+
+```ts
+transpilePackages: ["@acme/ui", "some-esm-only-lib"],
+```
+
+## optimizePackageImports
+
+အချို့ libraries များသည် barrel တစ်ခုလုံးကို နဂိုအတိုင်း import လုပ်တတ်ပါတယ်:
+
+```ts
+optimizePackageImports: ["lucide-react", "@mui/material", "date-fns"],
+```
+
+Next.js သည် barrel imports များကို deep imports များဖြင့် အလိုအလျောက် အစားထိုးပါတယ်။
+
+## What's a good bundle?
+
+- Server bundle — server-only code များသာ ထားပါ (`server-only` import သုံးပါ)
+- Client bundle — သင်တကယ် သုံးသော client component modules များ၏ ပေါင်းလဒ်
+- ပြောင်းလဲမှုများပြီးနောက် route report sizes များကို စောင့်ကြည့်ပါ
+
+## Duping detection
+
+```ts
+logging: {
+  fetches: { fullUrl: true },
+  // or use "next build" output + a bundler analyzer
+}
+```
+
+## Activity
+
+လေ့ကျင့်ခန်း: `next build` ကို run ပြီး အကြီးဆုံး route ကို ရှာပါ။ Node native dependency တစ်ခုအတွက် `serverExternalPackages` နှင့် icon library အတွက် `optimizePackageImports` ကို ထည့်ကာ first-load sizes များကို နှိုင်းယှဉ်ကြည့်ပါ။

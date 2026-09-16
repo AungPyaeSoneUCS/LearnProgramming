@@ -1,0 +1,56 @@
+---
+title: "src Directory — သပ်ရပ်သော Root အတွက်"
+description: "Optionally colocate app, pages, components, and lib under src/ for tidier roots. — `src/` အောက်တွင် App ၊ Pages ၊ Components နှင့် Lib များကို စုစည်းထားနိုင်ပြီး Project Root ကို သပ်ရပ်စေပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Optional `src/` Layout ဖြင့် Project Root များကို သပ်ရပ်စွာ ထားရှိနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`src/` Directory သည် Project Root နေရာတွင် အခြား Code Files များနှင့် မရောထွေးဘဲ App Router Files များ၊ Components များ၊ Utils များနှင့် Libraries များကို စုစည်းထားရန် Optional Convention တစ်ခုဖြစ်ပါတယ်။ App Router ကို `src/app` အောက်တွင် အသုံးပြုလျှင် Root ရှိ `app/` Folder ကို လုံးဝ လျစ်လျူရှုထားပြီး `src/app` ကိုသာ အသုံးပြုပါတယ်။ `public/` Folder သည် Project Root တွင်သာ တည်ရှိရမည်ဖြစ်ပြီး `proxy.ts`/`middleware.ts` အထူးဖိုင်များကိုလည်း Root တွင်သာ ထားရှိရပါတယ်။ `git mv` ကဲ့သို့သော Commands များဖြင့် Folder များကို ရွှေ့ပြောင်းပါက ကျန်ရှိသော Import Paths များကို ထပ်မံ မပြင်ရဘဲ ပြောင်းရွှေ့နိုင်ပါတယ်။ အဓိကအားသာချက်မှာ Root နေရာလွတ် သန့်ရှင်းခြင်းဖြစ်ပြီး Paths များ ပိုရှည်လာနိုင်ခြင်းမှာ Team ၏ Preferences ပေါ်မူတည်၍ ဆုံးဖြတ်သင့်ပါတယ်။
+
+## Layout
+
+```
+├── src/
+│   ├── app/            # routes (App Router)
+│   ├── pages/          # legacy Pages Router (if any)
+│   ├── components/
+│   └── lib/
+└── public/
+```
+
+- App Router သည် `src/app` မှ တူညီစွာ အလုပ်လုပ်ပါတယ်
+- `src` အောက်တွင် `components`၊ `lib`၊ `utils` များကို လွတ်လပ်စွာ စုစည်းနိုင်ပါတယ်
+- `public/` သည် Project Root တွင် ကျန်ရှိနေပါတယ် (Root-served Assets ‌အတွက်)
+
+## Rules
+
+- `src/app` အတွင်းရှိပါက Route Files များကို **`src/app`** အောက်တွင် ထားရပြီး Root ရှိ `app/` ကို လျစ်လျူရှုပါတယ်
+- Root `app/` နှင့် `src/app` ကို ရောနှောအသုံးပြုခြင်း မပြုလုပ်နိုင်ပါဘူး
+- Special Files ဖြစ်သော `proxy.ts`/`middleware.ts` များသည် Project Root တွင်သာ ရှိရပြီး (`src` အောက်တွင် မထားရပါဘူး)
+
+## Migrating
+
+ရိုးရှင်းသော ပြန်လည်ဖွဲ့စည်းခြင်း:
+
+```bash
+mkdir src
+git mv app src/app
+git mv components src/components
+```
+
+Dev Server ကို ပြန်လည်စတင်ပြီး Route တစ်ခုကို ဖွင့်ကြည့်ခြင်းဖြင့် App Router က ၎င်းကို အသိအမှတ်ပြုသည်ကို စစ်ဆေးပါ။
+
+## Worth it?
+
+- Pros: Root နေရာလွတ် သန့်ရှင်းခြင်း (Config များ၊ Public ၊ CI များသာ)
+- Cons: Paths များ ပိုရှည်ခြင်း; Team ၏ Preferences ပေါ်မူတည်ပါတယ်
+
+## Activity
+
+Lesson-project တစ်ခုကို `src/app` + `src/components` သို့ ပြောင်းရွှေ့ပြီး `public/` ကို Root တွင် ထားကာ Dev + Build နှစ်ခုစလုံးတွင် `/journal-error` အောက်ရှိ Routes များ မှန်ကန်စွာ Resolve ဖြစ်သည်ကို စစ်ဆေးပါ။

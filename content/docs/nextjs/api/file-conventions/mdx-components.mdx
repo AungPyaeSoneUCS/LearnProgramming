@@ -1,0 +1,62 @@
+---
+title: "mdx-components.jsx — Custom MDX Components Mapping"
+description: "Extend MDX with your own components map in the special mdx-components file. — Special `mdx-components` ဖိုင်တွင် မိမိကိုယ်ပိုင် Components Map များဖြင့် MDX ကို တိုးချဲ့ အသုံးပြုနိုင်စေပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Code Blocks မှ Custom Callouts အထိ MDX Tag တိုင်းအတွက် Custom Component တစ်ခု သတ်မှတ်ပေးနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`mdx-components.tsx` သည် MDX Files များအတွင်းရှိ HTML Tags များ (`h1`၊ `p`၊ `a`၊ `pre` စသည်) ကို မိမိသတ်မှတ်ထားသော React Components များဖြင့် အစားထိုး (Override) လုပ်နိုင်ရန် Global Component Map တစ်ခုကို ပေးအပ်သော Next.js File Convention တစ်ခုဖြစ်ပါတယ်။ Root Directory (သို့မဟုတ် `src/`) တွင် `mdx-components.tsx`/`mdx-components.jsx` ဟု အမည်ပေးထားသော ဤဖိုင်မှ `useMDXComponents()` Function ကို Export လုပ်လျှင် App အတွင်းရှိ `.mdx` Files အားလုံးက ၎င်းကို အလိုအလျောက် အသုံးပြုကြပါတယ်။ ဥပမာအားဖြင့် Code Block (`pre`) ကို Styled Container အဖြစ် ပြောင်းလဲခြင်း၊ Link (`a`) များကို Custom Styling ပေးခြင်း သို့မဟုတ် Callout Components များ ထည့်သွင်းခြင်းစသည့် အလုပ်များကို လုပ်ဆောင်နိုင်ပါတယ်။ Per-file Imports များ မလိုအပ်ဘဲ တစ်နေရာတည်းမှ Documentation တစ်ခုလုံး၏ UI ကို တစ်ပုံစံတည်း ထိန်းချုပ်နိုင်သောကြောင့် Design System တစ်ခုကို တည်ဆောက်ရာတွင် အလွန်အသုံးဝင်ပါတယ်။
+
+## The contract
+
+**Root ရှိ `mdx-components.tsx`** (သို့မဟုတ် `src/` အတွင်း) သည် `.mdx` Files များက အလိုအလျောက် အသုံးပြုမည့် Global Component Map တစ်ခုကို ပေးအပ်ပါတယ်:
+
+```tsx
+// mdx-components.tsx
+import type { MDXComponents } from "mdx/types";
+
+export function useMDXComponents(components: MDXComponents): MDXComponents {
+  return {
+    h2: ({ children }) => <h2 className="font-display">{children}</h2>,
+    ...components,
+  };
+}
+```
+
+## Matching what the docs ship
+
+ကျွန်ုပ်တို့၏ Documentation များနှင့် ကိုက်ညီစေရန် အောက်ပါအတိုင်း Custom Styles များကို သတ်မှတ်နိုင်ပါတယ်:
+
+```tsx
+import type { MDXComponents } from "mdx/types";
+
+export function useMDXComponents(components: MDXComponents): MDXComponents {
+  return {
+    pre: ({ children }: React.HTMLProps<HTMLPreElement>) => (
+      <pre className="my-4 overflow-x-auto rounded-lg border p-3">{children}</pre>
+    ),
+    a: ({ children, href }) => <a href={href} className="underline">{children}</a>,
+    ...components,
+  };
+}
+```
+
+## Requirements
+
+- File ကို Root သို့မဟုတ် `src/` တွင် `mdx-components.tsx`/`mdx-components.jsx` ဟု အမည်မှည့်ရပါမယ်
+- Import Path သည် သုံးစွဲသော MDX Files များမှ ရောက်ရှိနိုင်ရပါမယ်
+- သင်က Override မလုပ်လျှင် Framework မှ ပေးထားသော `code`/`pre` Styles များကိုသာ အသုံးပြုပါတယ်
+
+## Scoping
+
+Directory တစ်ခုစီအလိုက် Override လုပ်နိုင်ပါသလား။ မလုပ်နိုင်ပါဘူး - Root ရှိ Component Map သည် Global ဖြစ်ပြီး Local Scope များအတွက် MDX အတွင်းရှိ Regular React Composition များကိုသာ အသုံးပြုပါတယ်။
+
+## Activity
+
+Root `mdx-components.tsx` တွင် Custom `pre`၊ `a` နှင့် `h1` များကို သတ်မှတ်ပြီး Test `.mdx` တစ်ခုကို ရေးကာ Per-file Imports မပါဘဲ သင့် Styling များ အလုပ်လုပ်သည်ကို စစ်ဆေးပါ။

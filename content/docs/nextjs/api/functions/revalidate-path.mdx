@@ -1,0 +1,63 @@
+---
+title: "revalidatePath (Path/Route Tree Cache ပြန်တည်ဆောက်ခြင်း)"
+description: "Invalidate cached content for a specific path or segment tree. — သတ်မှတ်ထားသော Path သို့မဟုတ် Segment Tree တစ်ခုအတွက် Cache ဒေတာများကို Invalidate ပြုလုပ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Mutation တစ်ခု ပြုလုပ်ပြီးနောက် မှန်ကန်သော Route Tree ကို တိတိကျကျ Invalidate ပြုလုပ်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`revalidatePath()` သည် Next.js ၏ Cache Layer အတွင်းမှ သတ်မှတ်ထားသော Path တစ်ခုနှင့် သက်ဆိုင်သည့် Cached အချက်အလက်များကို ဖျက်ပြီး နောက်လာမည့် Request မှစ၍ ပြန်လည် Fetch လုပ်ရန် သတ်မှတ်ပေးသော Function တစ်ခုဖြစ်ပါတယ်။ ၎င်းကို Server Actions သို့မဟုတ် Route Handlers ကဲ့သို့ Server Scope များတွင်သာ ခေါ်ယူနိုင်ပြီး Invalidate လုပ်ပြီးနောက် **နောက်တစ်ကြိမ်** Request က Re-fetch လုပ်ကာ Cache Scopes များကို ပြန်တည်ဆောက်ပေးပါတယ်။ `type` Parameter ဖြင့် `page` (ထို Path ၏ Page နှင့် သက်ရောက်သော Cached Data) အတွက်သာ ဖြစ်စေ၊ `layout` (Layout Subtree တစ်ခုလုံး) အတွက်ဖြစ်စေ Scope ကို ရွေးချယ်နိုင်ပါတယ်။ ၎င်းသည် Tag-based Cache ထိန်းချုပ်မှု မဟုတ်ဘဲ Path-based ထိန်းချုပ်မှုဖြစ်သောကြောင့် Tag ပေးထားသော Scope များအတွက်မူ `revalidateTag` ကို သီးခြား အသုံးပြုရန် လိုအပ်ပါတယ်။ ဝင်လာသော Path မမှန်ပါက Silent No-op ဖြစ်နေနိုင်သောကြောင့် Path ဒေတာ မှန်ကန်ရန် အရေးကြီးပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+`revalidatePath` သည် Path တစ်ခုအတွက် Cache လုပ်ထားသော ဒေတာများကို Purge/ပြန်တည်ဆောက်ပေးပါတယ်:
+
+```ts
+import { revalidatePath } from "next/cache";
+
+export async function updatePost() {
+  "use server";
+  await savePost();
+  revalidatePath("/blog");             // whole blog listing
+  revalidatePath(`/blog/${slug}`);     // a specific post
+}
+```
+
+## Signature & Types (ပုံစံနှင့် အမျိုးအစားများ)
+
+```ts
+revalidatePath(path: string, type?: 'page' | 'layout'): void
+```
+
+| Type    | Scope                              |
+| ------- | ---------------------------------- |
+| `page`  | Path's page + affected cached data |
+| `layout` | The layout subtree (wider)        |
+
+## Behavior (လုပ်ဆောင်ပုံ)
+
+- Invalidate လုပ်ပြီးနောက် **နောက်တစ်ကြိမ်** Request သည် Re-fetch လုပ်ပြီး Cache Scopes များကို ပြန်တည်ဆောက်ပါမယ်
+- မရှိသော Path များ: Build Time တွင် တည်ဆောက်နိုင်မလား? မတွေ့ပါက Graceful ဖြင့် No-op (Logging သာ) ပြုလုပ်ပေးပါတယ်
+- Cache Hierarchy တစ်လျှောက်လုံး (fetch + `use cache` Scopes) တွင် လုပ်ဆောင်နိုင်ပါတယ်
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Server Scope (Actions/Handlers) တွင်သာ အသုံးပြုနိုင်
+- **သက်ဆိုင်သော Cache Scopes များကိုသာ** Invalidate လုပ်ပါတယ် — "အားလုံးဖျက်ပစ်ခြင်း" မဟုတ်ပါဘူး — Tag-driven Invalidation အတွက် `revalidateTag` ကို သုံးပါ
+- Path ဒေတာ မှန်ကန်ရမည် — လွဲမှားသော Path တစ်ခုသည် Silent No-op ဖြစ်နေပါမည်
+
+## revalidateTag နှင့် နှိုင်းယှဉ်ခြင်း (Compare with revalidateTag)
+
+| Function          | Unit       | Example                |
+| ----------------- | ---------- | ---------------------- |
+| `revalidatePath`  | by tree/path | after post publish   |
+| `revalidateTag`   | by tag     | all data tagged "posts" |
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Post တစ်ခုကို တည်းဖြတ်ပြီးသည့်နောက်တွင် `revalidatePath("/blog", "page")` နှင့် `revalidatePath(/blog/${slug})` ကို ခေါ်ယူ၍ နောက် Fetch တွင် Listing နှင့် Detail Cache များ Refresh ဖြစ်ကြောင်း စစ်ဆေးပါ။

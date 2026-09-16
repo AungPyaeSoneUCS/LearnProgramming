@@ -1,0 +1,62 @@
+---
+title: "template.js — Re-mounting Layout"
+description: "A layout that re-mounts on every navigation - for state that must reset between pages. — Navigation တိုင်းတွင် ပြန်လည် Re-mount ဖြစ်စေသော Layout တစ်ခုဖြစ်ပြီး Pages များကြားတွင် Reset ရမည့် States များအတွက် အသုံးပြုပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Navigation တိုင်းတွင် UI ကို ပြန်လည်ဖန်တီးရမည့်အခါ (Flip Animations များ၊ Session Counters များ) `template.js` ကို ရွေးချယ်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`template.tsx` သည် `layout.tsx` နှင့် ဆင်တူသော်လည်း Navigation တစ်ခုစီတွင် Children များကို **ပြန်လည် Re-mount** လုပ်ပေးသောကြောင့် Layout ၏ Persistence ကို မလိုဘဲ State များ ပြန်လည်စတင်ရမည့် UI များအတွက် သင့်တော်သော Next.js File Convention တစ်ခုဖြစ်ပါတယ်။ `layout.tsx` သည် State ကို ထိန်းသိမ်းထားသော်လည်း `template.tsx` သည် Navigation တိုင်းတွင် Internal State များကို Reset လုပ်ပြီး Enter/Exit Animations များကို ပြန်လည် Play ဖြစ်စေပါတယ်။ ထို့ကြောင့် Page တစ်ခုစီအတွက် Animation ပြန်လည်ဖွင့်စေရန်၊ Session-based Counters များ သို့မဟုတ် Fresh Instances လိုအပ်သော Features များအတွက် Template ကို အသုံးပြုပါတယ်။ နှစ်မျိုးလုံးကို တစ်ပြိုင်နက်လည်း အသုံးပြုနိုင်ပြီး Layout က Render လုပ်ပြီးနောက် Template က Children အတွင်း၌ ပြန်လည်တပ်ဆင်ပေးကာ ၎င်းနောက်တွင် Page ကို ဖော်ပြပါတယ်။ Default Shells များ၊ Navigation Bars များနှင့် Persistent Filters များအတွက်မူ Layout ကိုသာ အသုံးပြုသင့်ပါတယ်။
+
+## Why a template
+
+`layout.tsx` နှင့် မတူဘဲ `template.tsx` သည် Navigation တိုင်းတွင် ၎င်း၏ Children များကို **Re-mount** လုပ်ပေးပါတယ်။ အသုံးပြုရာ ကိစ္စရပ်များ:
+
+- ပြန်လည် Play ဖြစ်ရမည့် Enter/Exit Animations များ
+- Page တစ်ခုစီတွင် Internal State များ Reset ဖြစ်ရမည့် Components များ
+- Fresh Instances ပေါ်တွင် မူတည်သော Features များ (ဥပမာ Analytics Scopes)
+
+## Example
+
+ဥပမာအားဖြင့် အောက်ပါအတိုင်း Template နှင့် ၎င်း၏ Enter Animation CSS ကို ရေးသားနိုင်ပါတယ်:
+
+```tsx
+// app/blog/template.tsx
+export default function BlogTemplate({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="template-enter">
+      {children}
+    </div>
+  );
+}
+```
+
+```css
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.template-enter { animation: slide-up 300ms ease; }
+```
+
+## When NOT to use
+
+- Default Shells များ၊ Navigation နှင့် Persistent Filters များဆိုလျှင် `layout.tsx` ကို အသုံးပြုပါ
+- State ထိန်းသိမ်းရမည့် မည်သည့်အရာမဆို → Layout ကိုသုံးပါ
+
+## How it composes
+
+နှစ်မျိုးလုံး ယှဉ်တွဲသုံးနိုင်ပါတယ်: Layout က Render လုပ်ပြီး Template က Navigation တိုင်းတွင် Re-mount ဖြစ်ကာ ၎င်းနောက်တွင် Page ကို ဖော်ပြပါတယ်။
+
+## Coexistence note
+
+`template.tsx` နှင့် `layout.tsx` တို့ကို Folder တစ်ခုတည်းတွင် ထားနိုင်ပြီး Template သည် Layout ၏ `children` အတွင်းတွင် Render လုပ်ပေးပါတယ်။
+
+## Activity
+
+Enter Animation ပါသော `blog/template.tsx` တစ်ခုကို ထည့်သွင်းပြီး Posts များကြား သွားလာကာ Animation ပြန်လည် Play ဖြစ်သည်ကို စစ်ဆေးပါ (Blog Layout ၏ Sidebar သည် နေရာတကျ ရှိနေပါမည်)။

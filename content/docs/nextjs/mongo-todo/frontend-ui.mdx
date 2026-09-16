@@ -1,0 +1,317 @@
+﻿---
+title: "Part 4: Frontend UI & API ချိတ်ဆက်ခြင်း"
+description: "Tailwind CSS ဖြင့် Input Form, Todo List, Filter (All/Active/Completed) UI များ တည်ဆောက်၍ API သို့ ချိတ်ဆက်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  အသုံးပြုသူ မြင်တွေ့ရမယ့် UI (Input form, Todo item list, Filter buttons) များကို Tailwind CSS ဖြင့် တည်ဆောက်ပြီး Backend API နဲ့ React Hooks (State/Effect) များဖြင့် ချိတ်ဆက်ကာ Data များကို Real-time အပြန်အလှန် ပေးပို့ရယူနိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+ဤ Part 4 တွင် Application ၏ Frontend UI နှင့် Backend ကို ချိတ်ဆက်ပါမယ်။ To-Do App သည် Input Form (Task ထည့်ရန်), Todo List (Task များပြသရန်) နှင့် Filter Buttons (All/Active/Completed) များ ပါဝင်ပါမည်။ UI ကို Next.js ‌ပါ၀င်သော **Tailwind CSS** ဖြင့် လှပအောင် ပြုလုပ်ပြီး React Hooks (`useState`, `useEffect`) များကို Client Component (`"use client"`) များတွင် အသုံးပြု၍ `fetch` ဖြင့် API သို့ CRUD Requests များ ပို့ရယူပါမယ်။ Filter လုပ်ဆောင်ချက်ကို Client-side State ဖြင့် ခွဲခြားပြသပြီး Toggle/Delete လုပ်ဆောင်မှုများကို API Call ပြီးနောက် List ‌ပြန်လည် ဆွဲထုတ်ခြင်း (Refetch) ဖြင့် UI ကို နောက်ဆုံးရ ဒေတာအရ ထင်ဟပ်စေပါတယ်။
+
+## Project Structure
+
+```txt
+src/
+├── app/
+│   ├── layout.tsx          // Global Layout
+│   ├── page.tsx            // Main Page (Server Component)
+│   └── globals.css         // Tailwind Imports
+├── components/
+│   ├── TodoForm.tsx        // Client Component - ထည့်ရန် Form
+│   ├── TodoList.tsx        // Client Component - List + Filter
+│   └── TodoItem.tsx        // Client Component - Toggle/Delete
+```
+
+## Step 1: Root Layout (app/layout.tsx)
+
+```tsx
+// app/layout.tsx
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "Next.js + MongoDB ToDo App",
+  description: "A full-stack to-do list built with Next.js & mongoose",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body className="min-h-screen bg-slate-100 antialiased">{children}</body>
+    </html>
+  );
+}
+```
+
+## Step 2: Main Page (app/page.tsx) — Server Component
+
+Server Component တွင် Initial Data ကို Database မှ တိုက်ရိုက် ဆွဲထုတ်၍ Client Components များထံ Props အဖြစ် ပေးပို့ပါမယ်:
+
+```tsx
+// app/page.tsx
+import { connectToDatabase } from "@/lib/mongodb";
+import Todo from "@/models/Todo";
+import TodoForm from "@/components/TodoForm";
+import TodoList from "@/components/TodoList";
+
+export const dynamic = "force-dynamic"; // DB ဒေတာ အမြဲ Latest ဖြစ်ရန်
+
+export default async function HomePage() {
+  await connectToDatabase();
+  const todos = await Todo.find().sort({ createdAt: -1 }).lean();
+
+  // _id ‌တွင် ObjectId ဖြစ်နေသောကြောင့် String သို့ ပြောင်း
+  const serialized = todos.map((t) => ({
+    _id: t._id.toString(),
+    title: t.title,
+    isCompleted: t.isCompleted,
+  }));
+
+  return (
+    <main className="mx-auto max-w-xl px-4 py-10">
+      <h1 className="text-2xl font-bold text-slate-800">My To-Do List</h1>
+      <TodoForm />
+      <TodoList initialTodos={serialized} />
+    </main>
+  );
+}
+```
+
+### အသေးစိတ် ရှင်းလင်းချက် (Deep Explanation)
+
+- **Server Component**: Page သည် Default အနေဖြင့် Server Component ဖြစ်ပြီး Database ကို တိုက်ရိုက်ခေါ်နိုင်ပါတယ် — API Layer မလိုဘဲ Data Fetching လုပ်နိုင်ပါသည်။
+- **`export const dynamic = "force-dynamic"`**: Page ကို Static Prerender မလုပ်ဘဲ Request တိုင်း Server တွင် Render လုပ်ရန် ညွှန်ကြားပါတယ် — DB ‌ဒေတာကို အမြဲ Latest ဖြစ်စေပါသည်။
+- **Serialization**: Mongoose Document ၏ `_id` သည် ObjectId Object ဖြစ်သောကြောင့် Client Component ထံ Props ပို့မည်ဆိုပါက String (`toString()`) အဖြစ် ပြောင်းရမည် (Next.js Warning)။ `.lean()` နှင့်တွဲ၍ `habit` မဖြစ်စေရန် သေချာ Convert လုပ်ပါ။
+
+## Step 3: TodoForm — Task အသစ် ထည့်ခြင်း (Client Component)
+
+```tsx
+// components/TodoForm.tsx
+"use client";
+
+import { useState } from "react";
+
+export default function TodoForm() {
+  const [title, setTitle] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!title.trim()) return;
+
+    setLoading(true);
+    try {
+      await fetch("/api/todos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title }),
+      });
+      setTitle("");
+      window.location.reload(); // Page ကို Refresh → Server Component ‌ဒေတာ အသစ်ဆွဲ
+    } catch (err) {
+      console.error("Failed to add todo", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="mt-4 flex gap-2">
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Add a new task…"
+        className="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-800 outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <button
+        type="submit"
+        disabled={loading}
+        className="rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+      >
+        {loading ? "Adding…" : "Add"}
+      </button>
+    </form>
+  );
+}
+```
+
+### အသေးစိတ် ရှင်းလင်းချက် (Deep Explanation)
+
+- **`"use client"`**: Component သည် Client ‌တွင်း State (`useState`) နှင့် Event Handlers များ သုံးသောကြောင့် Directive ထည့်ရပါတယ်။ အကယ်၍ Form ကို Server Action ဖြင့်သာ လုပ်လျှင် Client Component မလိုပါ။
+- **Controlled Input**: `value` + `onChange` ကြောင့် Input ‌ရှိ စာသားသည် React State အတွင်း သိမ်းခြင်းဖြင့် Submit ‌တွင် `body` ထဲတွင် ထည့်ပို့နိုင်ပါသည်။
+- **`fetch` POST**: `/api/todos` သို့ JSON Body ပို့၍ Server Route Handler မှ Database ‌ထဲသို့ ထည့်ပါတယ်။
+- **`window.location.reload()`**: Server Component Page ကို ပြန်ဖတ်ရန် အလွယ်ဆုံး နည်းလမ်းဖြစ်ပါတယ်။ Router Refresh (`router.refresh()`) ဖြင့်လည်း SPA-smooth ဖြစ်အောင် လုပ်နိုင်ပါတယ်။
+
+## Step 4: TodoList — List + Filter (Client Component)
+
+```tsx
+// components/TodoList.tsx
+"use client";
+
+import { useState } from "react";
+import TodoItem from "./TodoItem";
+
+type Todo = {
+  _id: string;
+  title: string;
+  isCompleted: boolean;
+};
+
+type Filter = "all" | "active" | "completed";
+
+export default function TodoList({ initialTodos }: { initialTodos: Todo[] }) {
+  const [todos, setTodos] = useState<Todo[]>(initialTodos);
+  const [filter, setFilter] = useState<Filter>("all");
+
+  // Fliters ၏ လုပ်ဆောင်မှု — All / Active / Completed
+  const visibleTodos = todos.filter((t) => {
+    if (filter === "active") return !t.isCompleted;
+    if (filter === "completed") return t.isCompleted;
+    return true;
+  });
+
+  async function toggleTodo(id: string) {
+    await fetch(`/api/todos/${id}`, { method: "PUT" });
+    setTodos((prev) =>
+      prev.map((t) => (t._id === id ? { ...t, isCompleted: !t.isCompleted } : t))
+    );
+  }
+
+  async function deleteTodo(id: string) {
+    await fetch(`/api/todos/${id}`, { method: "DELETE" });
+    setTodos((prev) => prev.filter((t) => t._id !== id));
+  }
+
+  return (
+    <div className="mt-6">
+      {/* Filter Buttons */}
+      <div className="flex gap-2">
+        {(["all", "active", "completed"] as Filter[]).map((f) => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            className={`rounded-lg px-3 py-1 text-sm font-medium capitalize transition ${
+              filter === f
+                ? "bg-blue-600 text-white"
+                : "bg-white text-slate-600 hover:bg-slate-200"
+            }`}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+
+      {/* List */}
+      <ul className="mt-4 space-y-2">
+        {visibleTodos.length === 0 ? (
+          <li className="rounded-lg bg-white p-4 text-center text-slate-400">No tasks.</li>
+        ) : (
+          visibleTodos.map((t) => (
+            <TodoItem key={t._id} todo={t} onToggle={toggleTodo} onDelete={deleteTodo} />
+          ))
+        )}
+      </ul>
+    </div>
+  );
+}
+```
+
+### အသေးစိတ် ရှင်းလင်းချက် (Deep Explanation)
+
+- **State Lifting**: `todos` State ‌ကို List ‌တွင် ထားသောကြောင့် Toggle/Delete ပြီးတိုင်း In-memory ပြောင်းလဲမှု ကို UI ထဲတွင် ချက်ချင်း ထင်ဟပ်စေပါတယ် (No Full Reload — Optimistic UI)။
+- **Client-side Filter**: `visibleTodos` ကို `filter` State ပေါ်တွင် မူတည်၍ Compute ‌လုပ်ပါတယ်။ "Active" က `isCompleted === false`, "Completed" က `isCompleted === true` များသာကို ပြပါတယ်။
+- **`setTodos(prev => ...)`**: Functional Updates သုံးသောကြောင့် Stale State (Race Condition) များ ရှောင်ရှားပါတယ်။
+
+## Step 5: TodoItem — Each Task (Client Component)
+
+```tsx
+// components/TodoItem.tsx
+"use client";
+
+type Todo = {
+  _id: string;
+  title: string;
+  isCompleted: boolean;
+};
+
+export default function TodoItem({
+  todo,
+  onToggle,
+  onDelete,
+}: {
+  todo: Todo;
+  onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
+}) {
+  return (
+    <li className="flex items-center justify-between gap-3 rounded-lg bg-white p-4 shadow-sm">
+      {/* Checkbox — Update (Toggle Status) */}
+      <label className="flex cursor-pointer items-center gap-3">
+        <input
+          type="checkbox"
+          checked={todo.isCompleted}
+          onChange={() => onToggle(todo._id)}
+          className="h-5 w-5 accent-blue-600"
+        />
+        <span
+          className={
+            todo.isCompleted
+              ? "text-slate-400 line-through"
+              : "text-slate-800"
+          }
+        >
+          {todo.title}
+        </span>
+      </label>
+
+      {/* Delete Button */}
+      <button
+        onClick={() => onDelete(todo._id)}
+        className="rounded-md px-2 py-1 text-sm font-medium text-red-600 transition hover:bg-red-50"
+      >
+        Delete
+      </button>
+    </li>
+  );
+}
+```
+
+### အသေးစိတ် ရှင်းလင်းချက် (Deep Explanation)
+
+- **Checkbox → PUT**: Checkbox နှိပ်သည်နှင့် `onToggle(todo._id)` ကို ခေါ်ပြီး `PUT /api/todos/:id` ဖြင့် `isCompleted` ကို လှန်ပါတယ် (DB ‌ပြောင်း + UI ‌ပြောင်း)။
+- **Line-through**: Completed Task ‌၏ Title ကို `line-through` (အကာလိုင်း) + မှိန်ဖျော့အောင် Conditional Class ‌များဖြင့် ပြသပါတယ်။
+- **Delete Button → DELETE**: Button နှိပ်သည်နှင့် `DELETE /api/todos/:id` ဖြင့် DB ‌မှ ဖျက်၍ State ‌မှလည်း ဖယ်ရှားပါသည်။
+
+## Alternative: Server Actions ဖြင့် Version
+
+API ‌သုံးမည့်အစား Server Components ‌တည်ဆောက်ပြီး `<form action={createTodo}>` စသည့် Forms ‌များဖြင့်လည်း ရေးနိုင်ပါတယ်။ ထိုအခါ `app/actions.ts` ရှိ Functions များသည်ပဲ CRUD ‌များကို ကိုင်တွယ်ပြီး `revalidatePath("/")` အားဖြင့် Page ‌ပြန်လည် ဆွဲထုတ်ပါမည်။ ဤနည်းတွင် Client Hooks မလို၍ Code ပိုတိုပြီး JavaScript ‌မရှိသော Browser များတွင်ပင် သုံးနိုင်ပါတယ်။
+
+## ပြီးဆုံးသည့်အခါ စမ်းသပ်မှုများ
+
+1. Task အသစ် Add လုပ်ပါ → List ‌ထဲတွင် ချက်ချင်း ပေါ်ပါစေ။
+2. Checkbox နှိပ်၍ Completed ဖြစ်ခြင်း → Strikethrough ‌ထွက်ပါစေ။
+3. Filter Buttons: All / Active / Completed လှည့်ပတ် ကြည့်ပြီး Filter ‌များ မှန်ကန်စွာ ပြောင်းပါစေ။
+4. Delete နှိပ်ထားသော Task များ ပျောက်သွားပါစေ။
+5. `MongoDB Atlas → Collections → todos` ‌တွင် Document များ Create/Update/Delete ဖြစ်နေပါစေ။
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Client Component ‌ထဲသို့ Mongoose Document ‌ကို Props အနေဖြင့် တိုက်ရိုက် မပို့ပါနှင့် — `_id` ကို String ‌ပြောင်းပြီးမှ ပို့ပါ ("Only plain objects can be passed to Client Components")။
+- API Calls ‌တွင် Always `try/catch` + Loading State များ ထည့်ပါ။
+- Toggle/Delete ‌လုပ်ချိန်တွင် Network Error ဖြစ်ခဲ့လျှင် UI ‌ပြောင်းလဲမှုနှင့် DB မတူညီသွားနိုင်သည် — Mutation ‌ပြီးမှသာ `setTodos` ကို Run ‌လုပ်ခြင်းက ပိုလုံခြုံပါသည်။
+- `window.location.reload()` ‌အစား `useRouter().refresh()` သုံးလျှင် Page Transitions ပိုချောမွေ့ပါသည် (Server Components ‌ဒေတာကိုသာ Refresh ‌လုပ်သည်)။
+
+## Activity — လေ့ကျင့်ခန်း
+
+1. Layout, Page (Server Component), TodoForm, TodoList, TodoItem ‌တို့ကို Tailwind ‌ဖြင့် တည်ဆောက်ပါ။
+2. Full CRUD — Create, Read, Toggle, Delete — ‌ကို Browser ‌တွင်း ကစား စမ်းပါ။
+3. Filter (All/Active/Completed) ‌ကို Test ‌လုပ်ပါ။
+4. MongoDB Atlas ‌တွင် Data ‌ပြောင်းလဲမှုများကို ကြည့်ရှုပါ။
+5. Advanced: Server Actions ‌သုံးသော Version ‌ကိုပါ ရေးပြီး `revalidatePath` + `<form action>` နည်းဖြင့် အလုပ်လုပ်ကြောင်း စစ်ဆေးပါ။
+6. Bonus: ဥပမာ `priority`, `dueDate` ကဲ့သို့ Field များ ထပ်ထည့်၍ Schema ‌ကို တိုးချဲ့ပါ။

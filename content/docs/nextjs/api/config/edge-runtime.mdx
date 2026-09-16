@@ -1,0 +1,63 @@
+---
+title: "Edge Runtime — Edge Runtime ဆိုတာ"
+description: "Edge Runtime ၏ ကမ္ဘာတစ်ဝှမ်း လည်ပတ်မှုနှင့် Web APIs အသုံးပြု၍ မြန်ဆန်စွာ Expand လုပ်နိုင်သော Routes များအကြောင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Edge Runtime သည် မည်သည့်နေရာတွင် သာလွန်ကောင်းမွန်ပြီး မည်သည့် ကန့်သတ်ချက်များ ရှိသည်ကို နားလည်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Edge Runtime သည် V8 Engine ပေါ်တွင် အခြေခံထားသော Runtime တစ်ခုဖြစ်ပြီး ကမ္ဘာတစ်ဝှမ်းရှိ Server များ (Nearest POP) တွင် Code ကို Run လုပ်ပေးပါတယ်။ ၎င်းကြောင့် Cold Start နီးပါးမရှိဘဲ Fast Response ရရှိကာ သုံးစွဲသူ၏ တည်နေရာအလိုက် Personalization လုပ်ရန်လည်း သင့်တော်ပါတယ်။ သို့သော် Web Standard APIs များကိုသာ သုံးနိုင်ပြီး `fs` ကဲ့သို့သော Node Modules များကို အသုံးမပြုနိုင်ပါ။ Database သို့မဟုတ် Native Dependencies လိုအပ်သော Workload များအတွက် Default Node Runtime ကို ရွေးချယ်ခြင်းက ပိုမို သင့်လျော်ပါတယ်။
+
+## What Edge Runtime is
+
+A V8-based runtime that runs **globally at the edge** (nearest POP), enabling:
+
+- Cold Start နီးပါးမရှိခြင်း
+- Geographic personalization
+- Web-standard APIs only
+
+## Enable per route
+
+```ts
+export const runtime = "edge";
+
+export function GET() {
+  return new Response("Hello from edge");
+}
+```
+
+## Available APIs
+
+- `fetch`, `Request`/`Response`, `Headers`, `crypto`, `TextEncoder`
+- `atob`/`btoa`, readable streams
+- Platform: geo, IP, waitUntil (if exposed)
+
+## NOT available
+
+- Node modules (`fs`, `path`, `stream`)
+- `process` (only env whitelist) — use `process.env` sparingly
+- Heavy ORMs/SDKs needing native bindings
+- `node-sqlite3`, Prisma engines etc.
+
+## Choose wisely
+
+| Use Edge                     | Prefer Node runtime             |
+| ---------------------------- | ------------------------------- |
+| UA/geo redirects             | DB/ORM, files, native deps      |
+| Auth checks (JWT only)       | Long-running compute            |
+| Personalization on cache     | Anything with atypical Node I/O |
+
+## Rules & gotchas
+
+- Function Bundle များပိုမိုသေးငယ်ခြင်း (Cold Start ပိုကောင်းစေခြင်း)
+- `serverExternalPackages` ဆက်တင်များကို Edge Runtime တွင် သက်ရောက်မှုမရှိပါ
+- Proxy/Middleware များသည် Default အားဖြင့် Edge Runtime ကို အသုံးပြုပါတယ်
+
+## Activity
+
+Weather Endpoint တစ်ခုကို Edge Runtime သို့ ပြောင်းလဲပါ၊ Node Import များမပါဘဲ အလုပ်လုပ်ကြောင်း စစ်ဆေးပြီး `fs` ကို Import လုပ်ကြည့်ကာ ကန့်သတ်ချက်ကို ရှင်းပြသော Build Error ကို ကြည့်ရှုပါ။

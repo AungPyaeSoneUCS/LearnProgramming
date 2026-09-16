@@ -1,0 +1,83 @@
+---
+title: "CSS-in-JS — CSS-in-JS"
+description: "Use CSS-in-JS libraries like styled-components in the App Router with the registry pattern. — App Router တွင် styled-components ကဲ့သို့သော CSS-in-JS libraries များကို registry pattern ဖြင့် အသုံးပြုခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  SSR ကာလအတွင်း server ပေါ်တွင် styles များကို register လုပ်ခြင်းဖြင့် first-load flash မရှိဘဲ CSS-in-JS ကို ပေါင်းစပ်နိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+CSS-in-JS ဆိုသည်မှာ CSS styles များကို JavaScript code အတွင်းတွင် component နှင့်တွဲ၍ ရေးသားသည့် နည်းလမ်းတစ်ခု ဖြစ်ပါတယ်။ Next.js ၏ App Router တွင် Server Components များသည် hooks များကို အသုံးမပြုနိုင်သောကြောင့် CSS-in-JS styles များကို "registry" ပုံစံဖြင့် server ပေါ်တွင် စုဆောင်းပြီး HTML နှင့်အတူ render လုပ်ခြင်းအားဖြင့် client ၌ hydration တွင် unstyled flash မဖြစ်အောင် ကာကွယ်ရပါတယ်။ `useServerInsertedHTML` hook ကို Client Component တစ်ခုတွင် အသုံးပြု၍ styled-components ၏ ServerStyleSheet မှ styles များကို HTML သို့ ထည့်သွင်းပေးနိုင်ပါတယ်။ Root layout တွင် registry ကို app တစ်ခုလုံးကို ပတ်ရစ်ထားနိုင်ပြီး ထိုအခါ Server Components နှင့် Client Components နှစ်မျိုးလုံးအတွင်း styled-components များကို အသုံးပြုနိုင်ပါတယ်။ Emotion အတွက်မူ `cacheProvider` ဖြင့် ဆင်တူသော registry လိုအပ်ပြီး vanilla-extract ကဲ့သို့ static extraction နည်းလမ်းများက flash မရှိသောကြောင့် ရွေးချယ်နိုင်ပါက ဦးစားပေးသင့်ပါတယ်။
+
+## The problem with CSS-in-JS in SSR
+
+SSR နှင့်အတူ server သည် HTML ကို render လုပ်ပြီး client က hydration လုပ်ပါတယ်။ CSS-in-JS styles များကို client-side မှာသာ ထည့်သွင်းထားပါက သုံးစွဲသူများသည် hydration မလုပ်မီ **unstyled flash** — style မပါသော ပုံစံ — ကို တွေ့မြင်ရပါတယ်။
+
+## The registry pattern
+
+Server Components များသည် hooks များကို အသုံးမပြုနိုင်သောကြောင့် styles များကို server ပေါ်တွင် "registry" တစ်ခုထဲတွင် စုဆောင်းပြီး HTML နှင့်အတူ render လုပ်ပါ:
+
+```tsx
+// lib/registry.tsx
+"use client";
+
+import { useServerInsertedHTML } from "next/navigation";
+import { useState } from "react";
+import { ServerStyleSheet, StyleSheetManager } from "styled-components";
+
+export default function StyledComponentsRegistry({ children }: { children: React.ReactNode }) {
+  const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet());
+
+  useServerInsertedHTML(() => {
+    const styles = styledComponentsStyleSheet.getStyleElement();
+    return <>{styles}</>;
+  });
+
+  if (typeof window !== "undefined") {
+    return <>{children}</>;
+  }
+
+  return (
+    <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
+      {children}
+    </StyleSheetManager>
+  );
+}
+```
+
+Root layout တွင် registry ကို app တစ်ခုလုံးကို ပတ်ရစ်ထားပါ:
+
+```tsx
+// app/layout.tsx
+import StyledComponentsRegistry from "@/lib/registry";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body><StyledComponentsRegistry>{children}</StyledComponentsRegistry></body>
+    </html>
+  );
+}
+```
+
+ယခုအခါ styled-components ကို Server နှင့် Client Components နှစ်မျိုးလုံးအတွင်းတွင် အသုံးပြုနိုင်ပါပြီ။
+
+## Config for supported libraries
+
+- **styled-components** - config တွင် `serverComponents` လိုအပ်သည် (registry ပါဝင်သည်)
+- **Emotion (`@emotion/react`)** - အလားတူ registry တစ်ခုမှတစ်ဆင့် `cacheProvider` ကို ပေးရသည်
+- **Vanilla-extract** - static extraction ဖြစ်ကာ flash မရှိ — ရွေးချယ်နိုင်ပါက ဦးစားပေးသင့်သည်
+
+## Rules to respect
+
+- Hooks (`useServerInsertedHTML`) များသည် **Client Components** များတွင်သာ ရှိသည်
+- RSC-first: styling အများစုအတွက် static CSS, CSS Modules (သို့) vanilla-extract ကို ဦးစားပေးပါ
+- Runtime CSS-in-JS ကို dynamic styles အမှန်တကယ် လိုအပ်သော components များအတွက်သာ ကန့်သတ်ထားပါ
+
+## Activity — လေ့ကျင့်ခန်း
+
+`styled-components` ကို install လုပ်ပါ၊ အထက်ပါ registry ကို ထည့်ပါ၊ styled button တစ်ခု သုံးသော Server Component တစ်ခုကို render လုပ်ပါ၊ ထို့နောက် first paint တွင် unstyled flash မရှိကြောင်း အတည်ပြုပါ။

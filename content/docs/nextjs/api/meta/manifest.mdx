@@ -1,0 +1,77 @@
+---
+title: "manifest.ts (PWA Web App Manifest ထုတ်လုပ်ခြင်း)"
+description: "Generate a PWA Web App Manifest from app/manifest.ts with MetadataRoute.Manifest. — `app/manifest.ts` မှ MetadataRoute.Manifest ဖြင့် PWA Web App Manifest ထုတ်လုပ်နည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  `app/manifest.ts` ဖိုင်ဖြင့် installable PWA အတွက် လိုအပ်သော Web App Manifest metadata ကို ထုတ်လုပ်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Web App Manifest ဆိုသည်မှာ browser အား ဝဘ်ဆိုက်ကို app တစ်ခုကဲ့သို့ install လုပ်နိုင်ရန် ညွှန်ကြားသည့် JSON metadata ဖိုင်တစ်ခု ဖြစ်ပါတယ်။ Next.js တွင် `app/manifest.ts` ဖိုင်ကို ရေးသားထားပါက build ချိန်တွင် `/manifest.webmanifest` အဖြစ် အလိုအလျောက် ထုတ်ပေးပါတယ်။ ၎င်းထဲတွင် app ၏ အမည်၊ theme color, start URL, display mode နှင့် home-screen icon များကို သတ်မှတ်နိုင်ပါတယ်။ ရလဒ်အနေနှင့် သုံးစွဲသူများသည် site ကို native app သဖွယ် ထည့်သွင်းနိုင်ပြီး full-screen standalone experience ကို ရရှိပါတယ်။
+
+## The convention (ပုံစံသတ်မှတ်ချက်)
+
+`app/manifest.ts` ဖိုင်ကို ထည့်လိုက်လျှင် `/manifest.webmanifest` သို့ အလိုအလျောက် ပြောင်းလဲ ထုတ်ပေးပါတယ်:
+
+```
+app/manifest.ts   →   /manifest.webmanifest
+```
+
+## Generator (ထုတ်လုပ်ပေးသော ကုဒ်)
+
+အောက်ပါအတိုင်း `manifest()` function ကို default export လုပ်ပြီး Manifest data ကို ပြန်ပေးရပါတယ်:
+
+```ts
+// app/manifest.ts
+import type { MetadataRoute } from "next";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "My Blog",
+    short_name: "Blog",
+    description: "A Next.js course blog",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#ffffff",
+    theme_color: "#0f172a",
+    icons: [
+      { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+  };
+}
+```
+
+## Key fields (အဓိက Field များ)
+
+အရေးကြီးဆုံး field များနှင့် ၎င်းတို့၏ အခန်းကဏ္ဍကို အောက်ပါဇယားတွင် ဖော်ပြပါတယ်:
+
+| Field               | Why it matters                       |
+| ------------------- | ------------------------------------ |
+| `name`/`short_name` | App identity install prompt          |
+| `display`           | `standalone` for full-screen app feel |
+| `start_url`         | Where the app opens                  |
+| `theme_color`       | Browser chrome/title bar color       |
+| `icons`             | Home-screen icon art                 |
+
+## Linking it (ချိတ်ဆက်ပုံ)
+
+Next.js သည် `/app/manifest.ts` အတွက် `<link rel="manifest" href="/manifest.webmanifest">` tag ကို အလိုအလျောက် ထည့်ပေးပါတယ်။ လိုအပ်ပါက manually လည်း ကြေညာနိုင်ပါတယ်:
+
+```ts
+export const metadata = { manifest: "/manifest.webmanifest" };
+```
+
+## Rules (စည်းမျဉ်းများ)
+
+- app directory ၏ root-level တွင်သာ ထားရပါတယ်
+- Static exports များတွင်လည်း အလုပ်လုပ်ပါတယ် (build ချိန်တွင် ထုတ်ပေးပါတယ်)
+- Server-inferred metadata ဖြစ်ပြီး JSON serializable ဖြစ်ရပါတယ်
+
+## Activity (လေ့ကျင့်ခန်း)
+
+`manifest.ts` တွင် name/theme/icons တို့ ထည့်ပြီး build လုပ်ကာ `/manifest.webmanifest` သည် sizes ပါဝင်သော install-ready manifest အဖြစ် မှန်ကန်စွာ load ကြောင်း စစ်ဆေးပါ။

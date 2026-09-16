@@ -1,0 +1,61 @@
+---
+title: "app-icons (App Icon Metadata ဖိုင်အစုအဝေး)"
+description: "Total icon story: favicon, icon, apple-icon, and file-based icons working together. — favicon, icon, apple-icon စသည့် file-based icons များ တစ်စုတည်း ပေါင်းစပ် အလုပ်လုပ်ပုံ အကြောင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Browser tab, iOS home screen နှင့် Social media platform များပေါ်တွင် ပြသမည့် icon အသွင်အပြင်အားလုံးကို တစ်စုတစ်ဝေးတည်းဖြစ်နေသော coherent icon set တစ်ခုဖြင့် ချိတ်ဆက်သတ်မှတ်နိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+App Icon metadata ဆိုသည်မှာ browser tab, iOS home screen နှင့် social media link preview များတွင် ပြသမည့် icon များကို file-based convention ဖြင့် သတ်မှတ်ပေးသည့် Next.js ၏ စနစ်တစ်ခု ဖြစ်ပါတယ်။ `app/` folder အတွင်းတွင် `favicon.ico`, `icon.tsx`, `apple-icon.png`, `opengraph-image.png`, `twitter-image.png` စသည့် special file များ ထည့်ရုံဖြင့် Next.js သည် သင့်လျော်သော `<link>`/`<meta>` tag များကို အလိုအလျောက် ထုတ်ပေးပါတယ်။ ဤဖိုင်များကို `ImageResponse` ဖြင့် dynamic ထုတ်လုပ်နိုင်ပြီး static ဖြစ်စေ build-time ဖြစ်စေ သတ်မှတ်နိုင်ပါတယ်။ ရလဒ်အနေနှင့် browser, mobile နှင့် social platform အားလုံးတွင် brand ပုံရိပ် တစ်သမတ်တည်း ပေါ်လာစေပါတယ်။
+
+## The complete file set (File အစုအဝေး အပြည့်အစုံ)
+
+```
+app/
+├── favicon.ico            # legacy browsers
+├── icon.tsx               # modern SVG favicon
+├── apple-icon.png         # iOS touch
+├── opengraph-image.png    # social share (1200x630)
+└── twitter-image.png      # tweet card
+```
+
+## Coherence checklist (စစ်ဆေးရမည့် အချက် စာရင်း)
+
+1. **favicon.ico** — browser tab အတွက် ဂန္ထဝင် icon (16/32px)
+2. **icon.(svg|png)** — ခေတ်မီပြီး vector ဖြစ်ကာ ကြည်လင်ပြတ်သားသော icon
+3. **apple-icon.png** — iOS အတွက် 180x180
+4. **opengraph-image + twitter-image** — link sharing အတွက် 1200x630
+
+## Programmatic equivalents (ကုဒ်ဖြင့် ထုတ်လုပ်နည်း)
+
+အထက်ပါ ဖိုင်တိုင်းတွင် `next/og` မှ `ImageResponse` ကို အသုံးပြု၍ ရေးသားနိုင်သော `*.tsx` generator twin ရှိပါတယ် — design system တစ်ခုတည်းမှ output အမျိုးမျိုး ထုတ်နိုင်သည်:
+
+```tsx
+const brand = { background: "#0f172a", color: "#38bdf8" };
+```
+
+## Testing surface (စမ်းသပ်စစ်ဆေးရမည့် နေရာများ)
+
+Surface တစ်ခုချင်းစီကို မည်သို့ စစ်ဆေးရမည်ကို အောက်ပါဇယားတွင် ဖော်ပြပါတယ်:
+
+| Surface               | How to verify                       |
+| --------------------- | ----------------------------------- |
+| Browser tab           | Inspect `<link rel="icon">`         |
+| iOS bookmark          | Add to home screen                  |
+| Twitter/X             | Tweet the URL                       |
+| Facebook/LinkedIn     | Post the URL                        |
+
+## Rules (စည်းမျဉ်းများ)
+
+- File-based metadata ရှိနေပါက `metadata.icons` ထက် ဦးစားပေး အသုံးပြုပါတယ်
+- Art assets (icon ပုံများ) ကို တူညီသော segment root အတွင်းတွင် ထားရှိပါ
+- Icon generation တိုင်းသည် deterministic ဖြစ်ရမည် (ဆိုလိုသည်မှာ statically cacheable ဖြစ်ရပါမယ်)
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Unified icon set တစ်ခု ဖန်တီးပါ: `favicon.ico` + `icon.tsx` + `apple-icon.png` + 1200x630 OG။ ထို့နောက် built HTML တွင် `<link>`/`<meta>` tag လေးခုစလုံး ပါဝင်ကြောင်း စစ်ဆေးပါ။

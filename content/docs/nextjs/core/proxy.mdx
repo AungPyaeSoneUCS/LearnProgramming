@@ -1,0 +1,74 @@
+---
+title: "Proxy — Proxy အသုံးပြုခြင်း"
+description: "Rewrite and forward requests (and stream responses) between the client and upstream servers with proxy.ts. — client နှင့် upstream servers ကြား Request များကို proxy.ts ဖြင့် ထပ်ဆင့်ပို့ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Client requests များကို backend services များသို့ tunnel လုပ်နိုင်စေရန် - CORS ပြဿနာများ ရှောင်ရှားခြင်း, secrets များ ဖုံးကွယ်ခြင်းနှင့် requests/responses များကို ပြောင်းလဲခြင်း စသည်တို့ကို နားလည်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Proxy ဆိုသည်မှာ browser နှင့် backend အကြားတွင်ရှိ၍ client မှ local, same-origin URL သို့ ပို့သော requests များကို လက်ခံပြီး upstream service တစ်ခုသို့ ထပ်ဆင့်ပို့ပေးသော အလယ်အလတ်အလွှာ ဖြစ်ပါတယ်။ Next.js တွင် `src` folder (သို့မဟုတ် project root) ၌ `proxy.ts` file ကို ဖန်တီးပြီး `next/server` မှ `proxy` helper ကို အသုံးပြု၍ requests များကို forwarding လုပ်နိုင်ပါတယ်။ Proxy ကို အသုံးပြုခြင်းဖြင့် client နှင့်အထူးဆက်သွယ်နေသော URLs များတွင် CORS ပြဿနာများ မဖြစ်တော့ပဲ API secrets များကို server-side တွင်သာ ထားရှိနိုင်ပြီး payload များကိုလည်း ပြောင်းလဲနိုင်ပါတယ်။ `matcher` config ဖြင့် မည်သည့် paths များကို forward လုပ်မည်ကို ထိန်းချုပ်နိုင်ပြီး `rewrites()` နှင့် မတူညီကာ proxy သည် client request ကို အခြား origin သို့ အမှန်တကယ် forward လုပ်ကာ response ကို stream လုပ်ပါတယ်။ BFF (backend-for-frontend) pattern များတွင် အသုံးဝင်ပြီး body size နှင့် streaming ဆိုင်ရာသတ်မှတ်ချက်များကို `next.config.ts` တွင် configure လုပ်နိုင်ပါတယ်။
+
+## What is a Proxy? (Proxy ဆိုတာ ဘာလဲ?)
+
+**Proxy** သည် browser နှင့် သင့် backend အကြားတွင် တည်ရှိပါတယ်။ Client သည် local, same-origin URL တစ်ခုနှင့် စကားပြောပြီး proxy က upstream service သို့ forward လုပ်ပေးပါတယ်။
+
+```
+Browser ──▶ /api/bff/*  ──>  Proxy (Next.js)  ──>  Backend service
+```
+
+အကျိုးကျေးဇူးများ - CORS ပြဿနာမရှိခြင်း, API secrets များကို server-side တွင်သာ ထားရှိခြင်း နှင့် payload များကို ပြောင်းလဲနိုင်ခြင်း တို့ ဖြစ်ပါတယ်။
+
+## Defining a proxy (Proxy သတ်မှတ်ခြင်း)
+
+သင့် `src` folder (သို့မဟုတ် project root) တွင် `proxy.ts` ကို ဖန်တီးပါ။ Route segments များဘေးတွင် colocate လုပ်ထားသော proxies များကို `proxy.js` ဖြင့် သုံးပြီး အနီးအနားရှိ location တစ်ခုကို target လုပ်ပါတယ်:
+
+```ts
+// proxy.ts
+import { proxy } from 'next/server';
+
+export const config = {
+  matcher: '/api/:path*',
+}
+
+export default async function Proxy(request: NextRequest) {
+  return proxy(request, { url: 'https://api.example.com/' + path })
+}
+```
+
+`next/server` မှ `proxy` helper သည် method, body, headers များကို forward လုပ်ပြီး response ကို ပြန်လည် stream လုပ်ပေးပါတယ်။
+
+## Proxy matchers (Proxy Matchers များ)
+
+ထို့နောက် မည်သည့် paths များကို forward လုပ်မည်ကို ထိန်းချုပ်ပါ:
+
+```ts
+export const config = {
+  matcher: ['/api/:path*', '/graphql/:path*'],
+}
+```
+
+## Rewriting vs proxying (Rewriting နှင့် Proxying နှိုင်းယှဉ်ခြင်း)
+
+- Config တွင် `rewrites()` သည် route တစ်ခုကို အတွင်းပိုင်းမှ *မည်သည့်နေရာမှ serve လုပ်မည်ကို* ပြောင်းလဲပေးပါတယ်
+- **Proxy** သည် client request ကို အခြား origin တစ်ခုသို့ အမှန်တကယ် forward လုပ်ပြီး response ကို stream လုပ်ပါတယ် - BFF (backend-for-frontend) patterns များအတွက် အသုံးဝင်ပါတယ်
+
+## Configuration ties (Configuration ဆက်စပ် သတ်မှန်ချက်များ)
+
+Proxies နှင့် ဆက်စပ်သော tuning များ (body size, streaming):
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  proxyClientMaxBodySize: '4mb', // client → proxy limit
+  skipProxyUrlNormalize: true,
+}
+```
+
+## Activity
+
+`/api/prices/*` ကို public mock API တစ်ခုသို့ forward လုပ်ရန် `proxy.ts` ကို ဖန်တီးပါ။ Browser မှ `fetch('/api/prices/...')` သည် upstream data ကို ပြန်ပို့ကြောင်း စစ်ဆေးပါ။

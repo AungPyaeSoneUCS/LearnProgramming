@@ -1,0 +1,61 @@
+---
+title: "ISR (Incremental Static Regeneration) — ISR (Incremental Static Regeneration)"
+description: "Combine static prerendering with background regeneration using staticGeneration and cacheLife in the previous model. — Previous model တွင် staticGeneration နှင့် cacheLife များဖြင့် static prerendering ကို background regeneration နှင့် ပေါင်းစပ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  မိမိဘာသာ ပြန်လည် refresh လုပ်သော ချက်ချင်း cached pages များကို ဝန်ဆောင်မှုပေးနိုင်ရန် — indexable, မြန်ဆန်ပြီး နောက်ဆုံးတွင် အမြဲ fresh ဖြစ်သော pages များ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+ISR (Incremental Static Regeneration) ဆိုသည်မှာ static-generated pages များကို build time တွင် ကြိုတင် prerender လုပ်ပြီး background တွင် ပြန်လည် generate လုပ်ကာ နောက်ဆုံးတွင် fresh ဖြစ်စေသည့် နည်းလမ်း ဖြစ်ပါတယ်။ Previous model တွင် `export const revalidate` ဖြင့် page တစ်ခုချင်းစီအတွက် အသက်တမ်း သတ်မှတ်ပြီး `generateStaticParams` ဖြင့် prerender လုပ်မည့် paths များကို သတ်မှတ်ပါတယ်။ Readers များသည် cached page ကို ချက်ချင်း ရရှိပြီး နောက်ထပ် background hit က ၎င်းကို ပြန်လည် build လုပ်ပါတယ်။ သို့သော် ဤ previous model သည် `fetch` နှင့် segment `revalidate` တို့ကို ရောနှောထားသောကြောင့် per-page freshness ဖော်ပြရန် ခက်ခဲပါတယ်။ Cache Components များနှင့်အတူမူ `use cache` + `cacheLife` သည် ပိုမို မြန်ဆန်သော နည်းလမ်းဖြစ်ပြီး staticGeneration config ဖြင့် compilerId, expires စသည့် settings များကို ထိန်းချုပ်နိုင်ပါတယ်။
+
+## The old ISR recipe
+
+ISR သည် pages များကို build time တွင် prerender လုပ်ပြီး background တွင် ပြန်လည် generate လုပ်ပါတယ်:
+
+```ts
+// app/blog/page.tsx (previous model)
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const posts = await db.post.findMany();
+  return posts.map((p) => ({ slug: p.slug }));
+}
+```
+
+Readers များသည် cached page ကို ချက်ချင်း ရရှိပြီး နောက်ထပ် background hit က ၎င်းကို ပြန်လည် build လုပ်ပါတယ်။
+
+## Why the model changed
+
+Previous model သည် `fetch` + segment `revalidate` တို့ကို ရောနှောထားသောကြောင့် per-page freshness ဖော်ပြရန် ခက်ခဲပါတယ်။ **Cache Components** များနှင့်အတူ ပိုမို မြန်ဆန်သော လမ်းကြောင်းမှာ `use cache` + `cacheLife` ဖြစ်ပြီး *ISR with Cache Components* lesson ကို ကြည့်ပါ။
+
+## API evolution
+
+| Task                  | Previous model                    | Cache Components                          |
+| --------------------- | --------------------------------- | ----------------------------------------- |
+| Prerender pages       | `generateStaticParams`            | `generateStaticParams` + `dynamicParams`  |
+| Time-based refresh    | `export const revalidate`         | `use cache` + `cacheLife`                 |
+| On-demand refresh     | `revalidatePath`/`revalidateTag`  | `revalidatePath`/`revalidateTag`/`updateTag` |
+
+## Tuning with staticGeneration config
+
+Shell/dynamic ခွဲဝေမှုကို ထိန်းချုပ်ပါ:
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  staticGeneration: {
+    compilerId: "my-compiler",     // isolate between deployments
+    expires: 1000 * 60 * 60 * 24,  // default expiration for generated pages
+    exitTimeoutMs: 10_000,
+  },
+};
+```
+
+## Activity — လေ့ကျင့်ခန်း
+
+Post route တစ်ခုကို `use cache` + `cacheLife("hours")` နှင့် `generateStaticParams` အဖြစ် ပြောင်းပါ၊ ထို့နောက် အမည်မသိ slug တစ်ခုအတွက် 404 page ကို ဝင်ကြည့်ပြီး ၎င်းသည် ချက်ချင်း အဖြေပေးကြောင်း (rebuild မဟုတ်ဘဲ) အတည်ပြုပါ။

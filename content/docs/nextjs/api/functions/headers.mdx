@@ -1,0 +1,56 @@
+---
+title: "headers — HTTP Request Headers ဖတ်ခြင်း"
+description: "Read HTTP request headers server-side with the headers() API. — Headers() API ဖြင့် server ဘက်တွင် HTTP request headers များကို ဖတ်ရှုနိုင်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Incoming headers (locale, auth, UA) များမှ request တစ်ခုချင်းစီအတွက် UX ကို တည်ဆောက်နိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`headers()` သည် `next/headers` မှ import လုပ်ရသော server-side API တစ်ခုဖြစ်ပြီး request ၏ HTTP headers များကို အဖတ်သက်သက် (read-only) ပြန်ပေးပါတယ်။ ၎င်းကိုသုံး၍ `accept-language` မှ locale/currency ကို သိရှိနိုင်ပြီး `authorization` token ကို internal API များသို့ ဆက်ပို့နိုင်ကာ `user-agent` မှ bot/device ခွဲခြားသတ်မှတ်နိုင်ပါတယ်။ Headers ဖတ်လိုက်သည်နှင့် route သည် dynamic (per-request) ဖြစ်သွားသောကြောင့် request အလိုက် မှန်ကန်သော အကြောင်းအရာများ ပေးအပ်နိုင်ပါတယ်။ မှတ်သားရန် အရေးကြီးသည်မှာ `headers()` ကို `set` ပြုလုပ်၍မရဘဲ response headers များကို Route Handlers သို့မဟုတ် config `headers` မှသာ သတ်မှတ်ရပြီး Node runtime တွင်သာ အလုပ်လုပ်ပါတယ်။ Edge runtime / middleware တွင်မူ Web `Request` ၏ `request.headers` ကို တိုက်ရိုက်သုံးရပါတယ်။
+
+## What it is
+
+`headers()` သည် request headers များကို ပြန်ပေးပါတယ် (server-side တွင် read-only):
+
+```tsx
+import { headers } from "next/headers";
+
+export default async function Page() {
+  const h = await headers();
+  const lang = h.get("accept-language");
+  const token = h.get("authorization");
+  return <div>{lang}</div>;
+}
+```
+
+## Common uses (အသုံးများသော နေရာများ)
+
+- `accept-language` မှ locale/currency ကို သိရှိခြင်း
+- Auth tokens များကို internal APIs များသို့ ဖြတ်သန်းပို့ဆောင်ခြင်း
+- Bot / device logic အတွက် `user-agent` ကို ဖတ်ခြင်း
+
+## Rules & gotchas (စည်းကမ်းနှင့် သတိပြုအချက်များ)
+
+- `await headers()` — Next 16 တွင် Promise ဖြစ်ပါတယ်
+- Headers ဖတ်ခြင်းသည် route ကို **dynamic** (per-request) ဖြစ်စေပါတယ်
+- `set` မလုပ်နိုင်ပါ — response headers များကို Route Handlers သို့မဟုတ် config `headers` မှသာ သတ်မှတ်ပါ
+- `"use cache"` cached scopes တွင်း တိုက်ရိုက်မရနိုင်ပါ (values များ ပို့ပါ သို့မဟုတ် `use cache: private` သုံးပါ)
+- Node runtime တွင်သာ အလုပ်လုပ်ပါတယ် (Edge တွင် `request.headers` ရှိပါတယ်)
+
+## In Edge / middleware (proxy)
+
+```ts
+export function proxy(request: NextRequest) {
+  const ua = request.headers.get("user-agent");
+  // …
+}
+```
+
+## လေ့ကျင့်ခန်း (Activity)
+
+`accept-language` ကိုဖတ်၍ greeting တစ်ခုကို ဒေသအလိုက် (localize) ပြောင်းလဲပြီး report တွင် route သည် dynamic ဖြစ်သွားကြောင်းနှင့် cached siblings များ static ဖြစ်နေကြောင်း အတည်ပြုပါ။

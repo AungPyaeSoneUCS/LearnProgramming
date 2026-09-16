@@ -1,0 +1,57 @@
+---
+title: "useLinkStatus (Link Loading Status)"
+description: "Hooks into Link pending status for loading indicators. — Loading Indicators များအတွက် Link ၏ Pending Status ကို ချိတ်ဆက် အသုံးပြုခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  သင့်ကိုယ်ပိုင် Links များဖြင့် Navigation များအတွင် Loading UX ကို ပြသနိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`useLinkStatus` သည် React 19+ တွင် ရရှိနိုင်သော Client Hook တစ်ခုဖြစ်ပြီး `Link`၊ `next/form` သို့မဟုတ် Action တစ်ခုကြောင့် ဖြစ်ပေါ်နေသော Navigation ၏ **Pending သို့မဟုတ် Error အနေအထား** ကို ဖော်ပြပေးပါတယ်။ ၎င်း၏ Return Value သည် `pending` (boolean) နှင့် `error` (unknown) ဟူသော Property နှစ်ခုပါသော Object တစ်ခုဖြစ်ပြီး `pending` သည် Navigation တစ်ခု In-flight ဖြစ်နေစဉ် true ဖြစ်ပါတယ်။ ဤ Hook ကို `Link` ၏ Descendants အတွင်းမှ ခေါ်ယူပါက ထို Link တစ်ခုတည်း၏ Status ကို ရရှိပြီး Top-level မှ ခေါ်ယူပါက Application တစ်ခုလုံး၏ Global Navigation Status ကို ရရှိပါတယ်။ ထို့ကြောင့် Top Progress Bar များ၊ နှေးကွေးသော Transition များအတွက် Fallback Indicators များနှင့် Layout Shift (CLS) မဖြစ်အောင် Placeholder များ တည်ငြိမ်စေရန် တို့တွင် အသုံးဝင်ပါတယ်။ Plain Anchor Tags များသည် ဤ Hook ကို မပံ့ပိုးသောကြောင့် `next/link` နှင့် `next/form` တို့နှင့်သာ တွဲဖက် အသုံးပြုရမှာ ဖြစ်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+`useLinkStatus` သည် လက်ရှိ Navigation ၏ **Pending/Error State** ကို ဖော်ပြပေးပါတယ်:
+
+```tsx
+"use client";
+import { useLinkStatus } from "react";
+
+export function NavLink() {
+  const status = useLinkStatus();
+  return (
+    <a href="/blog" aria-busy={status.pending}>
+      Blog {status.pending && <Spinner />}
+    </a>
+  );
+}
+```
+
+## Return Values (ပြန်ပေးသည့် တန်ဖိုးများ)
+
+```ts
+{ pending: boolean, error: unknown }
+```
+
+- `pending`: `Link`/`<Form>`/`action` မှ စတင်သော Navigation တစ်ခု In-flight ဖြစ်နေစဉ် true ဖြစ်ပါတယ်
+- `error`: Navigation Error တစ်ခုခု ရှိပါက ၎င်း Error ကို ပြန်ပေးပါတယ်
+
+## Use Cases (အသုံးပြုပုံများ)
+
+- Nav Status နှင့် ချိတ်ဆက်ထားသော Global Top Progress Bars များ
+- နှေးကွေးသော Transition များကို ဖမ်းယူ၍ Fallback Indicators ပြသရန်
+- Placeholders များကို တည်ငြိမ်ထားရန် (CLS-safe)
+
+## Rules (စည်းမျဉ်းများ)
+
+- Client-only Component ဖြစ်သည်
+- ထို Link တစ်ခုကို စောင့်ကြည့်ရန် `Link` Descendants အတွင်း သုံးပါ — Global Scope အတွက်မူ Top-level မှ သုံးနိုင်ပါတယ်
+- `next/link` + `next/form` နှင့်သာ အလုပ်လုပ်ပြီး Plain Anchors များသည် Status ကို ပြန်မပေးပါ
+
+## Activity (လေ့ကျင့်ခန်း)
+
+`useLinkStatus().pending` ကို ချိတ်ဆက်ထားသော Slim Progress Bar တစ်ခု ထိပ်ဆုံးတွင် ထည့်သွင်းပြီး နှေးကွေးသော Link တစ်ခုကို Trigger လုပ်ကာ ရောက်ရှိသည်အထိ Smooth Visible Indicator ပေါ်ကြောင်း အတည်ပြုပါ။

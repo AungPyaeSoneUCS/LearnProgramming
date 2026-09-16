@@ -1,0 +1,64 @@
+---
+title: "Route Segment Config: dynamicParams (မသိရသေးသော Dynamic Segment များ အပြုအမူ)"
+description: "Control how unknown dynamic segments behave with the dynamicParams export. — `dynamicParams` export ဖြင့် မသိရသေးသော dynamic segments များကို မည်သို့ ပြုမူမည်ကို ထိန်းချုပ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  `generateStaticParams` တွင် မပါဝင်သော dynamic URL များကို on demand ထုတ်လုပ်မည်လား သို့မဟုတ် 404 ပြန်မည်လားကို static နှင့် predictable ဖြစ်စွာ ဆုံးဖြတ်နိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`dynamicParams` သည် App Router ၏ Route Segment Config တစ်ခုဖြစ်ပြီး `generateStaticParams` တွင် စာရင်းမပါဝင်သော dynamic segment (ဥပမာ `/blog/[slug]` ၏ မသိရသေးသည့် slug) ကို မည်သို့ ကိုင်တွယ်မည်ကို သတ်မှတ်ပေးပါတယ်။ ပုံမှန်အားဖြင့် `true` ဖြစ်ကာ မသိသော path များကို on demand ထုတ်လုပ်ပြီး cache လုပ်ပါတယ်။ `false` သတ်မှတ်ထားပါက မသိသော path အားလုံးသည် 404 အဖြစ် ပြန်လှည့်ကာ build ချိန်တွင် သိရှိပြီးသား params များသာ pre-render လုပ်ပါတယ်။ ဤနည်းဖြင့် site ၏ ရလဒ်ကို 100% ကြိုတင် ခန့်မှန်းနိုင်ပြီး စာရင်းအပြင်ဘက်ရှိ URL များအတွက် server အလုပ် မလိုအပ်တော့ပါ။
+
+## What it controls
+
+`dynamicParams` (App Router) သည် `generateStaticParams` ဖြင့် လွှမ်းခြုံမထားသော **dynamic segments** များအတွက် အပြုအမူကို သတ်မှတ်ပေးပါတယ်:
+
+```ts
+// app/blog/[slug]/page.tsx
+export const dynamicParams = false;
+```
+
+- `true` (default): မသိသော path များကို **on demand** ထုတ်လုပ်ပြီး cache လုပ်ပါတယ်
+- `false`: မသိသော path များသည် `404` ဖြစ်သွားပြီး (`not-found` handling ပါဝင်), production တွင် သိရှိပြီးသား params များကိုသာ pre-render လုပ်ပါတယ်
+
+## Full static pattern
+
+```tsx
+export const dynamicParams = false;
+
+export const generateStaticParams = async () => {
+  const posts = await getAllPosts();
+  return posts.map((p) => ({ slug: p.slug }));
+};
+```
+
+ရလဒ်: 100% ကြိုတင် ခန့်မှန်းနိုင်သော static pages များ ဖြစ်ပြီး စာရင်းအပြင်ဘက်ရှိ URL တိုင်းသည် computation မလုပ်ဘဲ 404 ဖြစ်သွားပါတယ်။
+
+## When to use false (မည်သည့်အခါ `false` သုံးမည်)
+
+- အကြောင်းအရာ အားလုံး ကြိုတင်သိရှိပြီးသား content (sitemap ဖြင့် အကုန် သတ်မှတ်ထားခြင်း)
+- Compliance: phantom URL များ မရှိစေရန်
+- Performance: သတ်မှတ်စာရင်း အပြင်ဘက်တွင် on-demand အလုပ်များ မလုပ်မိစေရန်
+
+## When to keep true (မည်သည့်အခါ `true` ထားမည်)
+
+- UGC/real-time content (သုံးစွဲသူများ ဖန်တီးသော slugs)
+- Hybrid: လူကြိုက်များသော posts များ static, ကျန်ရှိသော long-tail များ on demand
+
+## Interaction with caching (Caching နှင့် ဆက်စပ်ပုံ)
+
+`dynamicParams=false` + on-demand revalidation (`revalidatePath`/`revalidateTag`) ပေါင်းစပ်လျှင် build ချိန်တွင် `generateStaticParams` ပြန်လည် လည်ပတ်ပါက page အသစ်များ ထပ်ထည့်နိုင်ပြီး per-route ရှိ `dynamic` override များက runtime အပြုအမူကို လွှမ်းမိုးနိုင်ပါတယ်။
+
+## Rules (စည်းမျဉ်းများ)
+
+- `generateStaticParams` နှင့်တွဲလျက် **dynamic segments** များတွင်သာ အဓိပ္ပာယ်ရှိပါတယ်
+- `force-static` နှင့် ပေါင်းလျှင် non-prerendered များအတွက် warning ထွက်နိုင်ပါတယ်
+- Lower-bound caching: hybrid ဖြစ်ပါက `cacheLife` ဖြင့် profile လုပ်ပြီး `revalidate` သတ်မှတ်ပါ
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Blog တစ်ခုတွင် `generateStaticParams` နှင့်အတူ `dynamicParams = false` သတ်မှတ်ပြီး build လုပ်ပါ၊ ထို့နောက် စာရင်းမပါဝင်သော slug တစ်ခုကို fetch လုပ်ကာ server အလုပ် မလုပ်ဘဲ 404 ရကြောင်း အတည်ပြုပါ။

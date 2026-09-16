@@ -1,0 +1,74 @@
+---
+title: "cacheLife — ကက် သက်တမ်း ပရိုဖိုင်များ သတ်မှတ်ခြင်း"
+description: "Set cache freshness profiles (stale/revalidate/expire) for a cached scope. — ကက်ရှလုပ်ထားသော scope အတွက် stale, revalidate, expire စသည့် cache သက်တမ်း ပရိုဖိုင်များ သတ်မှတ်ပေးသည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Profile name တစ်ခုတည်းဖြင့် cached data များ ဘယ်လောက်ကြာကြာ fresh ဖြစ်နေစေမည်ကို ချိန်ညှိနိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`cacheLife` သည် `"use cache"` ဖြင့် မှတ်သားထားသော scope များအတွက် cache သက်တမ်း ပရိုဖိုင်များကို code ထဲတွင် သတ်မှတ်ပေးသော function တစ်ခုဖြစ်ပြီး `cacheLife("minutes")` ကဲ့သို့ profile name တစ်ခုကိုသာ ပြပါက လုံလောက်ပါတယ်။ စနစ်ထဲတွင် seconds, minutes, hours, days, weeks, max, default ဆိုသော built-in profiles များ ပါဝင်ပြီး တစ်ခုချင်းစီတွင် stale, revalidate, expire တန်ဖိုးများ သတ်မှတ်ပေးထားပါတယ်။ ထို့ပြင် `next.config.ts` ထဲရှိ `cacheLifeProfiles` ဖြင့် ကိုယ်ပိုင် custom profile များကိုလည်း ဖန်တီးနိုင်ပြီး inline value များကို object အဖြစ်လည်း တိုက်ရိုက် ပေးနိုင်ပါတယ်။ ဤတန်ဖိုးများသည် ISR အသုံးပြုမှုပုံစံနှင့် ဆင်တူပြီး stale ဆိုသည်မှာ revalidation လုပ်နေစဉ် ဟောင်းနွမ်းသော data ကို ဆက်ထုတ်ပေးနိုင်သည့်အချိန်၊ revalidate ဆိုသည်မှာ ပြန်လည်လန်းဆန်းစေရမည့် အသက်၊ expire ဆိုသည်မှာ ထိုအချိန်နောက်ပိုင်း cache မှ တင်းကြပ်စွာ ပြန်ထုတ်ရမည့် အချိန်တို့ကို ဆိုလိုပါတယ်။
+
+## What it is
+
+`cacheLife` သည် `"use cache"` မှတ်သားထားသော scope များအတွက် lifetime profiles များကို သတ်မှတ်ပေးပါတယ်:
+
+```tsx
+import { cacheLife } from "next/cache";
+
+export async function getLatest() {
+  "use cache";
+  cacheLife("minutes");   // convenience profile
+  return getPosts();
+}
+```
+
+## Built-in profiles
+
+| Profile    | stale   | revalidate | expire   |
+| ---------- | ------- | ---------- | -------- |
+| seconds    | 0       | 1s         | 10s      |
+| minutes    | 0       | 5m         | 1h       |
+| hours      | 0       | 1h         | 24h      |
+| days       | 0       | 1d         | 7d       |
+| weeks      | 0       | 1w         | 30d      |
+| max        | 0       | 100y       | 100y     |
+| default    | 0       | 1s         | 10s      |
+
+## Custom profiles
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  cacheLifeProfiles: {
+    newsletter: { stale: 60, revalidate: 600, expire: 86400 },
+  },
+};
+```
+
+```ts
+await getNewsletter();
+// call cacheLife("newsletter") inside the scope
+```
+
+## Inline values
+
+```ts
+cacheLife({ stale: 60, revalidate: 600, expire: 86400 });
+```
+
+## How the numbers work (ISR model) (တန်ဖိုးများ အလုပ်လုပ်ပုံ)
+
+- **stale**: revalidation လုပ်ဆောင်နေစဉ် function မှ ဟောင်းနွမ်းသော (stale) data ကို ဆက်သုံး၍ ထုတ်ပေးနိုင်သည့် အချိန်
+- **revalidate**: ထိုအသက်ထက်ကျော်လွန်ပါက refresh ပြုလုပ်ပေးမည့် သက်တမ်း
+- **expire**: ထိုအချိန်နောက်ပိုင်း cache မှ တင်းကြပ်စွာ ပြန်ထုတ်ရမည့် (no stale serve)
+
+Max `expire` = +30d (platform cap အများအားဖြင့်) ဖြစ်ပြီး profile caps များလည်း အကျုံးဝင်ပါတယ်။
+
+## လေ့ကျင့်ခန်း (Activity)
+
+Stats endpoint တစ်ခုတွင် `cacheLife("hours")` ထည့်သွင်းပြီး ထို window အတွင်း ဒုတိယအကြိမ် build/fetch က cached output ကို ပြန်လည်သုံးစွဲကြောင်းနှင့် headers ထဲရှိ expiry ကို လိုက်နာကြောင်း စစ်ဆေးပါ။

@@ -1,0 +1,59 @@
+---
+title: "Route Segment Config: runtime (Node.js သို့မဟုတ် Edge Runtime ရွေးချယ်ခြင်း)"
+description: "Choose the Node.js or Edge runtime per route segment. — route segment တစ်ခုချင်းစီအတွက် Node.js သို့မဟုတ် Edge runtime ရွေးချယ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Route တစ်ခုချင်းစီအတွက် သင့်လျော်သော execution environment ကို ရွေးချယ်နိုင်ရန် ရည်ရွယ်ပါတယ် — အမြန်ဆုံးဖြစ်စေရန်နှင့် သင့်လျော်သော APIs များ ရရှိစေရန် ရွေးပါ။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`runtime` သည် route တစ်ခု လည်ပတ်မည့် execution environment ကို ရွေးချယ်ပေးသည့် Route Segment Config တစ်ခု ဖြစ်ပါတယ်။ `"nodejs"` (default) သည် full Node.js runtime ဖြစ်ပြီး `fs`, streams, `process` စသည့် Node APIs အားလုံးကို အသုံးပြုနိုင်ပါတယ်။ `"edge"` သည် global edge POP များပေါ်တွင် လည်ပတ်ကာ cold start နီးပါးမရှိသော်လည်း Web APIs များသာ ကန့်သတ်ရရှိပြီး Node modules များကို အသုံးမပြုနိုင်ပါ။ ORM, heavy compute, files ကဲ့သို့သော အလုပ်များအတွက် Node runtime ကို ရွေးပြီး geo-personalization, simple transforms, auth ကဲ့သို့ latency-sensitive အလုပ်များအတွက် Edge ကို ရွေးသင့်ပါတယ်။ Route တစ်ခုချင်းစီအလိုက် runtime မတူညီနိုင်သဖြင့် ပြောင်းလွယ်ပြင်လွယ် ရှိပါတယ်။
+
+## What it is
+
+`runtime` သည် route လည်ပတ်မည့်နေရာကို ရွေးချယ်ပေးပါတယ်:
+
+```ts
+// app/vendor-api/page.tsx
+export const runtime = "edge";
+// app/admin/page.tsx
+export const runtime = "nodejs";
+```
+
+Options: `"nodejs"` (default) သို့မဟုတ် `"edge"` ဖြစ်ပါတယ်။
+
+## Runtime comparison (Runtime နှိုင်းယှဉ်ချက်)
+
+Runtime နှစ်ခုကို အောက်ပါဇယားဖြင့် နှိုင်းယှဉ်ကြည့်နိုင်ပါတယ်:
+
+| Aspect         | Nodejs runtime                | Edge runtime                 |
+| -------------- | ----------------------------- | ---------------------------- |
+| APIs           | Full Node (fs, streams, process) | Limited Web APIs, no Node modules |
+| Deploy        | Node containers               | Global edge POPs/V8 isolate |
+| Startup/scale  | Cold starts per instance      | Near-zero cold start        |
+| Best for       | ORM, heavy compute, files     | Geo-personalization, simple transforms, auth |
+
+## Edge restrictions (Edge ၏ ကန့်သတ်ချက်များ)
+
+- `fs` မရှိပါ၊ `edge`-compatible မဟုတ်သော runtime deps များကို အသုံးမပြုနိုင်ပါ
+- `serverExternalPackages` ကို လျစ်လျူရှုပါတယ်
+- OTel/DB SDK အချို့သည် Node runtime လိုအပ်ပါတယ်
+- Web-standard APIs: `fetch`, `Request`/`Response`, `crypto` တို့ကို ရရှိနိုင်ပါတယ်
+
+## Mixed runtimes (Runtime များ ရောနှောသုံးခြင်း)
+
+Segment အသီးသီးတွင် runtime မတူညီနိုင်ပြီး Next.js သည် route အလိုက် သင့်လျော်အောင် bundle လုပ်ပေးပါတယ်။ Route Handlers များသည် `edge` ဟု မသတ်မှတ်ထားလျှင် Node ကို default အသုံးပြုပါတယ်။
+
+## Choosing (ရွေးချယ်နည်း)
+
+1. DB/prisma/files လိုအပ်လျှင် → `nodejs` သုံးပါ
+2. Per-user, latency-sensitive, tiny logic → `edge` သုံးပါ
+3. သံသယရှိလျှင် Node ကို သုံးပါ — isolated hot paths များအတွက်သာ edge ကို အသုံးပြုပါ
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Small API တစ်ခု (geo သို့မဟုတ် UA-specific) ကို `runtime = "edge"` သို့ ပြောင်းလဲပြီး သင့် DB route ကို Node ဖြင့် ထားကာ build route report တွင် runtime မှန်ကန်ကြောင်း အတည်ပြုပါ။

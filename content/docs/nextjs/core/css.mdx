@@ -1,0 +1,117 @@
+---
+title: "CSS — CSS Styling ဖြင့် အသွင်ပြင်ခြင်း"
+description: "Style Next.js apps with CSS Modules, Tailwind CSS, global styles, preprocessors, and inline styles in the App Router. — Next.js App တွင် CSS Modules, Tailwind စသည့် styling နည်းလမ်းများကို အသုံးပြုပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  အခြေအနေတစ်ခုစီအတွက် သင့်လျော်သော styling approach ကို ရွေးချယ်နိုင်စေရန် - component styles တွင် scoped ဖြစ်စေရန် CSS Modules, utility-first အမြန်နှုန်းအတွက် Tailwind, base rules အတွက် global styles တို့ကို နားလည်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+CSS သည် web page ၏ အသွင်အပြင်ကို သတ်မှတ်ပေးသော style language ဖြစ်ပြီး Next.js တွင် global CSS, CSS Modules, Tailwind CSS, Sass, CSS-in-JS နှင့် inline styles စသည့် နည်းလမ်းများစွာဖြင့် အသုံးပြုနိုင်ပါတယ်။ Global CSS ကို **root layout** တွင်သာ import လုပ်နိုင်ပြီး pages သို့မဟုတ် components များတွင် import မလုပ်နိုင်ပါ။ CSS Modules က `.module.css` extension ဖြင့် ရေးသားရပြီး class name များကို အလိုအလျောက် hash လုပ်ပေးသောကြောင့် component များအကြား name conflict ဖြစ်နိုင်ခြေမရှိပါ။ Tailwind CSS သည် utility class များကို အသုံးပြုကာ အမြန်ဆုံး styling ပြုလုပ်နိုင်သည့် approach ဖြစ်ပြီး root layout ၏ global stylesheet တွင် တစ်ကြိမ်သာ configure လုပ်ရပါတယ်။ Production build ပြုလုပ်သောအခါ CSS ကို ညှစ်ချုပ် (minify) လုပ်ပေးပြီး route-level code splitting ဖြင့် segment တစ်ခုစီအတွက် လိုအပ်သော CSS သာလျှင် တင်ပေးပါတယ်။
+
+## Supported styling approaches (ပံ့ပိုးပေးသော Styling နည်းလမ်းများ)
+
+Next.js သည် global CSS, CSS Modules, Tailwind CSS, Sass, CSS-in-JS နှင့် inline styles တို့ကို ပံ့ပိုးပေးပါတယ်။
+
+## Global CSS
+
+Global styles များကို **root layout** တွင် import လုပ်ပါ:
+
+```tsx
+// src/app/layout.tsx
+import "./globals.css";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+> **စည်းကမ်း:** Global CSS ကို App Router ၏ layout files များတွင်သာ import လုပ်နိုင်ပြီး pages သို့မဟုတ် components များတွင် မရနိုင်ပါ။
+
+## CSS Modules
+
+အလိုအလျောက် ထုတ်ပေးသော unique class names (`.module.css`) ဖြင့် scoped styles များ:
+
+```css
+/* src/components/button.module.css */
+.btn {
+  background: #18181b;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+```
+
+```tsx
+// src/components/button.tsx
+import styles from "./button.module.css";
+
+export default function Button({ children }) {
+  return <button className={styles.btn}>{children}</button>;
+}
+```
+
+Class names များကို hash လုပ်ထားသောကြောင့် အခြား components များနှင့် conflict ဖြစ်မှု မရှိပါဘူး။
+
+## Tailwind CSS
+
+Tailwind v3/v4 ကို install လုပ်ပြီး root layout တွင် ထည့်သွင်းပါ:
+
+```css
+/* src/app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+```tsx
+export default function Badge({ label }: { label: string }) {
+  return (
+    <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800">
+      {label}
+    </span>
+  );
+}
+```
+
+## Sass support
+
+`sass` ကို install လုပ်ပြီး `.scss` files များကို import လုပ်ပါ:
+
+```bash
+npm install sass
+```
+
+```tsx
+import "./card.module.scss"; // CSS Modules + Sass syntax
+```
+
+## Inline styles and CSS variables (Inline Styles နှင့် CSS Variables)
+
+```tsx
+export default function Accent({ color }: { color: string }) {
+  return (
+    <div style={{ "--accent": color } as React.CSSProperties}>
+      Accent text
+    </div>
+  );
+}
+```
+
+## Performance notes (စွမ်းဆောင်ရည် မှတ်ချက်များ)
+
+- CSS ကို အလိုအလျောက် **minify** လုပ်ပေးပြီး production တွင် အသုံးမပြုသော dev-time rules များကို ဖယ်ရှားပေးပါတယ်
+- Segments များသည် route-level code splitting ဖြင့် မိမိတို့လိုအပ်သော CSS သာလျှင် တင်ပါတယ်
+- Bundle tuning အတွက် `next.config.ts` ၏ `cssChunking` သို့မဟုတ် `inlineCss` ကို သုံးပါ
+
+## Activity
+
+သင့် home page တွင် card component တစ်ခုကို နည်းလမ်းသုံးမျိုးဖြင့် ပြုလုပ်ပါ - Tailwind utilities, CSS Module နှင့် inline style။ သုံးခုလုံး တူညီစွာ render ဖြစ်ကြောင်း စစ်ဆေးပါ။

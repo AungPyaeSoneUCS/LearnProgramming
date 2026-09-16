@@ -1,0 +1,74 @@
+---
+title: "Third Party Libraries — Third Party Libraries (ပြင်ပ Library များ)"
+description: "Integrate any browser or Node library safely with dynamic import, client wrappers, and SSR guards. — Dynamic import, client wrapper နဲ့ SSR guard တွေသုံးပြီး browser ဒါမှမဟုတ် Node library မှန်သမျှကို ဘေးကင်းစွာ ပေါင်းစပ်နည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  SSR မပျက်စေဘဲ bundle တွေ မဖောင်းစေဘဲ charts, maps, WYSIWYG, ORM စတဲ့ ecosystem ရဲ့ library တွေကို အသုံးပြုတတ်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Third-party library တွေက client-only (charts, maps, WYSIWYG) တွေလည်း ရှိ၊ server-side (DB/ORM/auth) တွေလည်း ရှိပြီး တစ်ခုချင်းစီကို သင့်နေရာမှာ ထည့်သွင်းရပါတယ်။ Client-only library ကိုတော့ "use client" + mounted guard (useEffect ပြီးမှ ပြတဲ့ pattern) နဲ့ SSR မှာ မှားမပြရအောင် ကာကွယ်ပါတယ်။ ကြီးပြီး ချက်ချင်း မလိုတဲ့ library တွေကိုတော့ next/dynamic + ssr: false နဲ့ load on demand လုပ်ပြီး Suspense fallback ပါ ချိတ်ပေးနိုင်ပါတယ်။ Server-side library တွေကတော့ Server Module / Server Function / Route Handler ထဲမှာပဲ နေရပြီး heavy node package တွေကို serverExternalPackages ထဲ freeze လုပ်ထားနိုင်ပါတယ်။ Bundle size ထိန်းဖို့ optimizePackageImports နဲ့ transpilePackages ကိုလည်း သုံးနိုင်ပါတယ်။ Provider လို vendor-provided hooks တွေကတော့ app-level client provider (ThemeProvider, QueryClientProvider) အဖြစ် root layout မှာ ထုပ်ပေးပါတယ်။
+
+## The integration toolkit
+
+| Need                          | Tool                          |
+| ----------------------------- | ----------------------------- |
+| Client-only lib               | `"use client"` + mounted guard |
+| Big lib not needed upfront    | `next/dynamic` + Suspense     |
+| Beautify imports              | `optimizePackageImports`      |
+| Server-side package           | keep in Server Module / `serverExternalPackages` |
+
+## Client-only third-party
+
+```tsx
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+
+const Chart = dynamic(() => import("recharts").then((m) => m.LineChart), {
+  ssr: false,
+  loading: () => <div className="h-64 animate-pulse bg-muted" />,
+});
+
+export default function Analytics({ series }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return <div className="h-64 animate-pulse bg-muted" />;
+  return <Chart data={series} />;
+}
+```
+
+## Server-side libraries
+
+DB/ORM/auth တွေကို server မှာပဲ ထားပါ:
+
+```ts
+import { Prisma } from "@prisma/client";
+// runs only in Server Components / Server Functions / Route Handlers
+```
+
+Heavy node package တွေကို external အဖြစ် freeze လုပ်ပါ:
+
+```ts
+serverExternalPackages: ["sharp", "pg", "@prisma/client"],
+```
+
+## Bundle control
+
+```ts
+optimizePackageImports: ["lucide-react", "@mui/icons-material", "date-fns"],
+transpilePackages: ["@my-monorepo/ui"],
+```
+
+## Vendor-provided providers
+
+Provider hooks တွေကို app-level client providers (ThemeProvider, QueryClientProvider စသည်) အဖြစ် ထုပ်ပေးပါ။
+
+## Activity
+
+Chart library တစ်ခုကို `dynamic(...)` နောက်မှာ client-only အဖြစ် ပေါင်းစပ်ပြီး ORM ကို server-only ဖြစ်အောင် ထားပါ။ `next build` ရဲ့ route sizes တွေကနေတစ်ဆင့် chart chunks တွေ on demand load ဖြစ်တာကို စစ်ဆေးပါ။

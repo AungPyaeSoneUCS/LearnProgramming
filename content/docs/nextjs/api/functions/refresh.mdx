@@ -1,0 +1,60 @@
+---
+title: "refresh (router.refresh — Route ဒေတာ ပြန်ဆွဲခြင်း)"
+description: "Programmatically refresh the current route data via router.refresh(). — router.refresh() ဖြင့် လက်ရှိ Route ၏ ဒေတာကို Programmatically ပြန်ဆွဲခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Client State မဆုံးရှုံးဘဲ Server Data များကို `router.refresh()` ဖြင့် ပြန်ယူနိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`router.refresh()` သည် Client Component တစ်ခုမှ လက်ရှိ Route ၏ Server Components များကို ပြန်လည် Execution လုပ်ပြီး **Page Reload အပြည့်အစုံ မပြုလုပ်ဘဲ** Fresh ဒေတာများကို ပေါင်းစည်းပေးသော Hook Method တစ်ခုဖြစ်ပါတယ်။ ဤနည်းဖြင့် `useState` ကဲ့သို့ Client-side State များ၊ Scroll Position နှင့် Client Components များကို ထိန်းသိမ်းထားနိုင်ပါတယ်။ ကိုယ်တိုင် Re-fetch Button တစ်ခု ဖန်တီးရန် သို့မဟုတ် Client-side Action တစ်ခုပြီးနောက် Server နှင့် Round-trip လိုအပ်သောအခါ အသုံးပြုပါတယ်။ Next.js သည် RSC Payload ကို စောင့်ဆိုင်းပြီး အဆိုပါဒေတာဖြင့် Component Tree ကို အပ်ဒိတ်လုပ်ပေးပါတယ်။ သို့သော် Mutation များပြုလုပ်ရာတွင် `revalidatePath` သို့မဟုတ် `revalidateTag` ကို ဦးစားပေးသင့်ပြီး `refresh` မှာ View-controlled Update များအတွက်သာ ဖြစ်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+`router.refresh()` သည် လက်ရှိ Route ၏ Server Components များကို ပြန်လည် Run လုပ်စေပြီး **Page Reload အပြည့်အစုံ မလိုဘဲ** Fresh ဒေတာများကို ပေါင်းစည်းပေးပါတယ်:
+
+```tsx
+"use client";
+import { useRouter } from "next/navigation";
+
+export function RefreshButton() {
+  const router = useRouter();
+
+  return (
+    <button
+      onClick={() => {
+        router.refresh();
+        // Server state updates; client state (inputs) preserved
+      }}
+    >
+      Refresh data
+    </button>
+  );
+}
+```
+
+## What It Preserves & Updates (Preserve လုပ်သည့် အရာများနှင့် Update လုပ်သည့် အရာများ)
+
+- ✅ Server Components များ၊ Cache လုပ်ထားသော Props များနှင့် Metadata များကို Refresh လုပ်ပေး
+- ✅ SPA State, Scroll Position နှင့် Client Components များကို ထိန်းသိမ်းပေး
+- ❌ အခြား Client Components များအတွင်းရှိ `useState` ကို Reset လုပ်မပေး
+- RSC Payload ကို စောင့်ဆိုင်းပြီးမှ Component Tree ကို Update လုပ်ပေး
+
+## When to Use (ဘယ်အချိန် သုံးမလဲ)
+
+- Server Round-trip လိုအပ်သော Client-side Action တစ်ခု ပြုလုပ်ပြီးနောက်တွင်
+- လက်ဖြင့် နှိပ်ရသည့် "Re-fetch" Button များနှင့် Pull-to-Refresh Patterns များတွင်
+- React `startTransition` Batching ဖြင့် — `startTransition(() => router.refresh())` အတွင်း Run လုပ်ပါ
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- `useRouter` သည် Client-only Hook ဖြစ်ပါတယ်
+- Mutation များအတွက် Actions တွင် `revalidatePath`/`revalidateTag` ကို ဦးစားပေးပြီး View-controlled Updates များအတွက်သာ `refresh` ကို သုံးပါ
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Optimistic Updates ပြီးနောက် `startTransition` အတွင်း `router.refresh()` ခေါ်ယူသည့် "Refresh" Button တစ်ခုကို ထည့်သွင်းပြီး Typed Text များ တည်မြဲနေစဉ် ဒေတာများ Update ဖြစ်ကြောင်း အတည်ပြုပါ။

@@ -1,0 +1,64 @@
+---
+title: "Route Segment Config: instant (Instant Mode ဖြင့် ချက်ချင်းပို့ဆောင်ခြင်း)"
+description: "Serve static-instantly, dynamic-later with the Instant Mode config per segment. — Route segment အလိုက် Instant Mode config ဖြင့် static အပိုင်းကို ချက်ချင်း၊ dynamic အပိုင်းကို နောက်မှ ပို့ဆောင်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Page ၏ static အပိုင်းကို ချက်ချင်း ပို့ဆောင်ပြီး dynamic အလုပ်များ ပြီးဆုံးချိန်တွင် ထည့်ဖြည့်ခြင်းဖြင့် page များကို ချက်ချင်း ပေါ်လာစေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`instant` သည် static (cached) route များအတွက် သတ်မှတ်သော Route Segment Config တစ်ခုဖြစ်ကာ cached shell ကို ချက်ချင်း ပြန်ပို့ပြီး နောက်တွင် dynamic content ကို streaming ဖြင့် ဖြည့်သွင်းပေးပါတယ်။ `minimumDuration` (milliseconds) သည် သတ်မှတ်ထားသော ပမာဏထက် ပိုမြန်စွာ render နိုင်သော page များအတွက် static cache မှ တိုက်ရိုက် ပို့ဆောင်ခွင့် ပေးပါတယ်။ ထို့ကြောင့် time-to-first-byte သည် အလွန် နည်းသွားပြီး dynamic dependencies များ ရှိနေလျှင်ပင် full dynamic cost ကို မခံရပါ။ ဤ config သည် advisory သဘောသာ ဖြစ်၍ host အချို့တွင် မထောက်ပံ့နိုင်ပါ၊ ထို့ပြင် cache နှင့် streaming logic နှစ်ခုကို နားလည်ထားရန် လိုအပ်ပါတယ်။
+
+## What Instant Mode does
+
+`instant` သည် **static route** တစ်ခုကို cached shell ဖြင့် ချက်ချင်း ပြန်ကြားစေပြီး dynamic content အသင့်ဖြစ်ချိန်တွင် stream/ဖြည့်သွင်းပါတယ်:
+
+```ts
+// app/page.tsx
+export const instant = {
+  minimumDuration: 250,
+};
+```
+
+- `minimumDuration` (ms): ဤပမာဏထက် ပိုမြန်စွာ render နိုင်သော pages များကို static cache မှ ချက်ချင်း ပို့ဆောင်နိုင်ပါတယ်
+- Threshold ထက် နှေးသော pages များမှာ ပုံမှန်အတိုင်းသာ render လုပ်ပါတယ် (ထိခိုက်မှု မရှိပါ)
+
+## Benefits (အကျိုးကျေးဇူးများ)
+
+- Cached pages များအတွက် time-to-first-byte နီးပါး သုည ဖြစ်ခြင်း
+- Full dynamic cost ကို မခံရဘဲ dynamic dependencies များကို ခံနိုင်ရည်ရှိခြင်း
+- Progressive: hot public routes များတွင် တစ်ဆင့်ချင်း ထည့်သုံးနိုင်ခြင်း
+
+## Configuration shape
+
+```ts
+export const instant: InstantConfig = {
+  minimumDuration: 250, // threshold ms
+};
+```
+
+တန်ဖိုးအားလုံးသည် advisory သဘော ဖြစ်ပြီး platform သည် static response ကို pre-warmed ထားပေးပါတယ်။
+
+## Requirements / limits (လိုအပ်ချက်များနှင့် ကန့်သတ်ချက်များ)
+
+- **static** (cached) routes များအတွက်သာ ဖြစ်ပါတယ် — dynamic routes များမှာ မတူညီသော logic ကို သုံးပါတယ်
+- Streaming နှင့် ပေါင်းစပ်နိုင်ပြီး static shell ကို ဦးစွာ stream လုပ်၍ Suspense fills များက နောက်မှ ဖြည့်ပေးပါတယ်
+- Host အားလုံးတွင် မထောက်ပံ့နိုင်ပါ — platform docs ကို စစ်ဆေးပါ
+
+## When to use (မည်သည့်အခါ သုံးမည်)
+
+- Mostly-static ဖြစ်ပြီး dynamic personalization widget တစ်ခုပါသော Marketing/landing pages
+- Sub-100ms shell လိုချင်သော content sites
+
+## Trade-offs (ရောင်းဝယ်ဖောက်ကားချက် / ချိန်ညှိချက်များ)
+
+- ရှုပ်ထွေးမှု အနည်းငယ် ရှိနိုင်: cache + streaming ဟူသော နှစ်ပိုင်းကို နားလည်ထားရမည်
+- မထောက်ပံ့သော hosts များတွင် သာမာန် rendering သို့ ပြန်ကျသွားပါတယ်
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Mostly-static landing page တစ်ခုတွင် dynamic widget တစ်ခုနှင့်အတူ `instant: { minimumDuration: 150 }` ကို ထည့်ပြီး ထပ်ခါထပ်ခါ လည်ပတ်ချိန် (repeat visits) တွင် shell TTFB ကို တိုင်းတာပါ။

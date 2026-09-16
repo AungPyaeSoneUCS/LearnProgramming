@@ -1,0 +1,56 @@
+---
+title: "useSelectedLayoutSegments"
+description: "Read all active layout segments for full breadcrumb paths. — Active Layout Segments အားလုံးကို ဖတ်ရှုပြီး Breadcrumb Path အပြည့်အစုံ တည်ဆောက်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Layout Segments များအားလုံးကို ဖတ်ရှု၍ Breadcrumbs အပြည့်အစုံနှင့် Deep Navigation ကို နားလည်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`useSelectedLayoutSegments` သည် `useSelectedLayoutSegment` ၏ Extension တစ်ခုဖြစ်ပြီး သုံးသည့် Layout မှ အောက်သို့ ဆင်းသက်လာသော **Active Route Segments အားလုံး** ကို Array အဖြစ် ပြန်ပေးပါတယ်။ ဥပမာ `/blog/my-post` တွင် Root Layout အတွင်း ဤ Hook ကို သုံးပါက `["blog", "my-post"]` ဆိုသည့် Array ကို ရရှိမည်ဖြစ်ပြီး ထို Array ကို အသုံးပြု၍ URL အတိုင်း တည့်တည့် Mirror လုပ်သော Breadcrumbs များ တည်ဆောက်နိုင်ပါတယ်။ Route ပြောင်းလဲတိုင်း ၎င်းသည် Re-render ဖြစ်သဖြင့် Breadcrumb Nav ၏ Trail များသည် လိုက်လံ ပြောင်းလဲပါတယ်။ ထို့အပြင် Sidebar ၏ "you are here" လမ်းကြောင်း ဖော်ပြချက် သို့မဟုတ် Debugging Panel အတွက် လက်ရှိ Route Segments များကို ပြသရန်လည်း အသုံးပြုနိုင်ပါတယ်။ Parallel Routes များတွင် ၎င်းတို့၏ Segments များသည်လည်း ဤ Array အတွင်းသို့ ထည့်သွင်း ပါဝင်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```tsx
+"use client";
+import { useSelectedLayoutSegments } from "next/navigation";
+
+export function Breadcrumbs({ staticSegments }: { staticSegments: string[] }) {
+  const segments = useSelectedLayoutSegments();
+
+  return (
+    <nav>
+      {[...staticSegments, ...segments].map((s, i) => (
+        <span key={i}>{s}</span>
+      ))}
+    </nav>
+  );
+}
+```
+
+## Returns (ပြန်ပေးသော Value)
+
+**ဤ Layout မှ အောက်သို့** Active Segments အားလုံး၏ Array ကို ပြန်ပေးပါတယ်:
+
+- `/blog/my-post` အတွက် `["blog", "my-post"]`
+- Parallel Slots များ၏ Segments များလည်း ပါဝင်ပါတယ်
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Client-only Hook ဖြစ်ပါတယ်
+- Navigation တွင် Re-render ဖြစ်၍ Breadcrumb Nav Updates များကို မောင်းနှင်ပေးပါတယ်
+- Dynamic Segment များ၏ Value များကို String အနေဖြင့် ပါဝင်ပါတယ်
+
+## Use Case (အသုံးပြုပုံ)
+
+- URL Structure ကို Mirror လုပ်သော Breadcrumbs
+- Sidebar "you are here" လမ်းကြောင်းဖော်ပြချက်
+- Current Route Segments များကို ပြသသော Debugging Panel
+
+## Activity — လေ့ကျင့်ခန်း
+
+`useSelectedLayoutSegments` နှင့် Static Segments များမှ Docs Breadcrumb တစ်ခုကို တည်ဆောက်ပြီး `/docs/api/functions/use-router` သည် Home / Docs / API / Functions / use-router အတိုင်း Render ဖြစ်ကြောင်း စစ်ဆေးပါ။

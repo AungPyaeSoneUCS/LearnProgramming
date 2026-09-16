@@ -1,0 +1,63 @@
+---
+title: "NextRequest — ချဲ့ထွင်ထားသော Request"
+description: "The extended Request with helpers like nextUrl, geo, and cookie parsing. — NextUrl, geo, cookie parsing ကဲ့သို့သော helpers များပါဝင်သည့် ချဲ့ထွင်ထားသော Request class ဖြစ်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Route Handlers နှင့် proxy များတွင် NextRequest ကိုသုံး၍ request access ကို အဆင်ပြေသက်တောင့်သက်သာရှိစွာ ပြုလုပ်နိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`NextRequest` သည် Web ပုံမှန် `Request` class ကို Next.js အတွက် အသုံးဝင်သော helpers များနှင့်အတူ ချဲ့ထွင်ထားသော class တစ်ခုဖြစ်ပါတယ်။ `request.nextUrl` ဖြင့် pathname, searchParams, basePath, locale စသည့်အချက်များကို အလွယ်တကူ ရယူနိုင်ပြီး `.cookies` ဖြင့် request ဘက်ရှိ cookies များကို get/set လုပ်နိုင်ပါတယ်။ Proxy/middleware နေရာတွင် `request.geo?.country` နှင့် `request.ip` ကဲ့သို့ host မှ ပေးသော geo/IP data များကို ဖတ်၍ ဒေသအလိုက် redirect ကဲ့သို့သော logic များကို ဆောင်ရွက်နိုင်ပါတယ်။ Server-side request ကို ဖတ်ရှုရန် နေရာတိုင်းတွင် ဤ class ကို အသုံးပြုရန် အကြံပြုပြီး client side အတွက်မူ သင့်တော်မှုမရှိပါ။ မှတ်သားရန် မှာ NextRequest ၏ cookies သည် request cookies ဖြစ်ပြီး response cookies များကို `NextResponse` ပေါ်တွင်သာ သတ်မှတ်ရပါတယ်။
+
+## What it is
+
+`NextRequest` သည် Web `Request` class ကို Next.js-specific helpers များဖြင့် ချဲ့ထွင်ထားပါတယ်:
+
+```ts
+import { NextRequest, NextResponse } from "next/server";
+
+export async function GET(request: NextRequest) {
+  const path = request.nextUrl.pathname;   // route pathname
+  const search = request.nextUrl.searchParams.get("q");
+  return NextResponse.json({ path, search });
+}
+```
+
+## Extended members (ချဲ့ထွင်ထားသော အဖွဲ့ဝင်များ)
+
+| Property/helper      | Purpose                            |
+| -------------------- | ---------------------------------- |
+| `nextUrl`            | NextUrl: pathname, searchParams, basePath, locale |
+| `.cookies`           | cookie get/set (Request side)     |
+| `geo` (proxy)        | geo info when provided by host     |
+| `ip` (proxy)         | request IP if signaled             |
+| `.headers`           | standard Request headers           |
+
+## In proxy/middleware
+
+```ts
+// proxy.ts
+import { NextRequest, NextResponse } from "next/server";
+
+export function proxy(request: NextRequest) {
+  const country = request.geo?.country;
+  if (country === "DE" && request.nextUrl.pathname === "/pricing") {
+    return NextResponse.redirect(new URL("/pricing/de", request.url));
+  }
+  return NextResponse.next();
+}
+```
+
+## Rules (စည်းကမ်းများ)
+
+- Server-side တွင် request ဖတ်ရှုရန်နေရာတိုင်း၌ ဤ class ကို သုံးပါ
+- Client side တွင် `NextRequest` ကို မသုံးပါနှင့်
+- NextRequest ပေါ်ရှိ `cookies` = request cookies; response cookies များကို NextResponse ပေါ်တွင် သတ်မှတ်ပါ
+
+## လေ့ကျင့်ခန်း (Activity)
+
+သင့် API GET ကို `NextRequest` အဖြစ် အဆင့်မြှင့်ပြီး `nextUrl.searchParams` ကိုဖတ်ကာ `proxy.ts` ထဲတွင် `request.geo` သုံး၍ geo-based redirect တစ်ခု ထည့်သွင်းပါ။

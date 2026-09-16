@@ -1,0 +1,71 @@
+---
+title: "not-found.js — Custom 404 UI"
+description: "Custom 404 UI per segment, triggered by notFound() or unknown dynamic routes. — `notFound()` သို့မဟုတ် Unknown Dynamic Routes များကို Trigger လုပ်ခြင်းဖြင့် Segment တစ်ခုစီအတွက် Custom 404 UI များကို သတ်မှတ်ပေးပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Section တိုင်းအတွက် မိမိပိုင် Missing-content Page များ ရှိစေပြီး Global Error တစ်ခုတည်းအစား Scoped 404 UI များကို ဖော်ပြနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`not-found.tsx` သည် URL နှင့် ကိုက်ညီသော Content မရှိသည့်အခါ (Resource Not Found) User များအား ဖော်ပြရန် **Custom 404 UI** တစ်ခုကို Segment တစ်ခုစီအလိုက် သတ်မှတ်ပေးသော File Convention တစ်ခုဖြစ်ပါတယ်။ Route တစ်ခုအတွင်း `notFound()` Function ကို Throw လုပ်သောအခါ သို့မဟုတ် `dynamicParams = false` ဖြစ်ပြီး Unknown Dynamic Segment တစ်ခုကို တောင်းဆိုသောအခါ Next.js သည် အလိုအလျောက် 404 Status ဖြင့် အနီးဆုံး `not-found.tsx` ကို Render လုပ်ပေးပါတယ်။ ဤ UI သည် Segment ၏ Layout အတွင်းတွင် Render ဖြစ်သောကြောင့် Site ၏ Navigation နှင့် Chrome များကို ဆက်လက်ထိန်းသိမ်းနိုင်ပါတယ်။ Blog Posts များ၊ Product Pages များနှင့် အခြားသော Dynamic Content များတွင် Generic Error Page တစ်ခုတည်းအစား Section နှင့် သင့်လျော်သော Messages များ၊ ဆက်စပ် Links များဖြင့် User Experience ကို ပိုမိုကောင်းမွန်စေပါတယ်။
+
+## Definition
+
+```tsx
+// app/blog/not-found.tsx
+export default function NotFound() {
+  return (
+    <div>
+      <h1>404 - Post not found</h1>
+      <a href="/blog">Browse all posts</a>
+    </div>
+  );
+}
+```
+
+အောက်ပါကိစ္စရပ်များတွင် Render လုပ်ပေးပါတယ်:
+
+- Route အတွင်းတွင် `notFound()` ကို Throw လုပ်ထားခြင်း
+- `dynamicParams = false` ဖြစ်ပြီး Dynamic Segment တွင် `generateStaticParams` Entry မရှိခြင်း
+
+## Scoping
+
+Segments တစ်ခုစီတွင် မိမိပိုင် `not-found.tsx` ရှိနိုင်ပြီး **အနီးဆုံးတစ်ခု** က အနိုင်ရပါတယ်။
+
+```
+app/
+├── not-found.tsx        # global
+└── blog/[slug]/
+    └── not-found.tsx    # blog-specific 404
+```
+
+## Triggering manually
+
+`notFound()` ကို အောက်ပါအတိုင်း Manual အနေဖြင့် ခေါ်ယူနိုင်ပါတယ်:
+
+```tsx
+import { notFound } from "next/navigation";
+
+export default async function PostPage({ params }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
+  if (!post) notFound();
+  return <article>{post.title}</article>;
+}
+```
+
+## Status codes
+
+`notFound()` သည် 404 Status ကို အလိုအလျောက် သတ်မှတ်ပေးပါတယ်။ Custom Status လိုချင်ပါသလား။ `redirect()` သို့မဟုတ် Route Handler ၏ `NextResponse` ကို အသုံးပြုပါ။
+
+## Layout consideration
+
+`not-found.tsx` သည် Segment ၏ Layout ၏ **အတွင်းတွင်** Render ဖြစ်သောကြောင့် Site ၏ Chrome (Navigation စသည်) တို့မှာ ဆက်လက် ထိန်းသိမ်းနေပါတယ်။
+
+## Activity
+
+Scoped `blog/not-found.tsx` တစ်ခုကို ထည့်သွင်းပြီး Missing Slug တစ်ခုအတွက် `notFound()` ကို Throw လုပ်ကာ Blog Section သာလျှင် Custom 404 ကို Blog Layout နှင့်အတူ ဖော်ပြသည်ကို စစ်ဆေးပါ။

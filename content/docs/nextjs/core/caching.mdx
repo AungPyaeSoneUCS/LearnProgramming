@@ -1,0 +1,112 @@
+---
+title: "Caching — Cache ဆိုသည်မှာ"
+description: "Cache data and UI with Cache Components and the use cache directive - lifetimes, cache keys, and prerendering. — Cache သည် Data နှင့် UI များကို သိုလှောင်ပြီး လျင်မြန်စွာ ပြန်လည်သုံးစွဲနိုင်စေသည့် သဘောတရား ဖြစ်ပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  မည်သည့် async function သို့မဟုတ် component ၏ ရလဒ်ကိုမဆို `use cache` ဖြင့် cache lifetime သတ်မှတ်နိုင်ပုံနှင့် cached results များသည် static shell ၏ အစိတ်အပိုင်း ဖြစ်လာပုံကို နားလည်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Caching ဆိုသည်မှာ data fetching သို့မဟုတ် computation ၏ ရလဒ်ကို သိုလှောင်ထားခြင်း ဖြစ်ပြီး တူညီသော input ဖြင့် နောက်ထပ် request များ လာသောအခါ အလုပ်ကို ပြန်မလုပ်ရတော့ဘဲ လျင်မြန်စွာ ဖြေကြားနိုင်ပါတယ်။ Next.js 16 တွင် Cache Components ဟုခေါ်သော စနစ်အသစ်ကို အသုံးပြုပြီး `next.config.ts` ထဲတွင် `cacheComponents: true` ဖြင့် ဖွင့်ပေးရပါတယ်။ `"use cache"` directive ကို async function သို့မဟုတ် component အတွင်းထည့်ပေးလျှင် ထို function ၏ ရလဒ်ကို cache လုပ်နိုင်ပြီး `cacheLife` profile ဖြင့် stale, revalidate, expire စသည့် အချိန်များကို သတ်မှတ်နိုင်ပါတယ်။ Cache entry ၏ key တွင် build ID, function location/signature ၏ secure hash နှင့် arguments များ ပါဝင်သောကြောင့် input မတူညီပါက cache entries များ သီးခြားစီ ဖြစ်သွားပါတယ်။ Request တိုင်းတွင် fresh ဖြစ်ရမည့် data များအတွက်မူ `use cache` ကို မထည့်ဘဲ `<Suspense>` ဖြင့် streaming လုပ်ခြင်းက ပိုမိုသင့်လျော်ပါတယ်။
+
+## Caching ဆိုတာ ဘာလဲ? (What is caching?)
+
+Caching သည် data fetching သို့မဟုတ် computation ၏ ရလဒ်ကို သိုလှောင်ထားပြီး တူညီသော input ဖြင့် လာမည့် request များကို အလုပ်ပြန်မလုပ်ဘဲ ပိုမိုလျင်မြန်စွာ ဖြေကြားပေးပါတယ်။
+
+## Enable Cache Components
+
+Next.js 16 သည် **Cache Components** ကို အသုံးပြုပါတယ်။ Config တွင် အောက်ပါအတိုင်း ဖွင့်ပေးပါ:
+
+```ts
+// next.config.ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+};
+
+export default nextConfig;
+```
+
+> **သိထားသင့်သည်:** Cache Components မရှိပါက ယခင် caching model ကို အသုံးပြုပါမည် - *Caching (Previous Model)* guide ကို ကြည့်ပါ။
+
+## The `use cache` directive
+
+မည်သည့် **async** function သို့မဟုတ် component ကိုမဆို cacheable အဖြစ် သတ်မှတ်နိုင်ပါတယ်:
+
+```tsx
+// app/lib/data.ts - data-level caching
+import { cacheLife } from "next/cache";
+
+export async function getUsers() {
+  "use cache";
+  cacheLife("hours");
+  return db.query("SELECT * FROM users");
+}
+```
+
+```tsx
+// app/page.tsx - UI-level caching
+import { cacheLife } from "next/cache";
+
+export default async function Page() {
+  "use cache";
+  cacheLife("hours");
+
+  const users = await db.query("SELECT * FROM users");
+  return (
+    <ul>
+      {users.map((u) => <li key={u.id}>{u.name}</li>)}
+    </ul>
+  );
+}
+```
+
+`"use cache"` ကို file ၏ **ထိပ်ဆုံးတွင်** ထည့်ထားပါက ထို file မှ export လုပ်ထားသော function အားလုံးကို cache လုပ်ပေးပါတယ်။
+
+## Cache lifetimes (Cache သက်တမ်း)
+
+`use cache` ကို `cacheLife` profile တစ်ခုနှင့် အမြဲတွဲသုံးပါ:
+
+| Profile   | stale  | revalidate | expire |
+| --------- | ------ | ---------- | ------ |
+| `default` | 5m     | 15m        | never  |
+| `seconds` | 30s    | 1s         | 60s    |
+| `minutes` | 5m     | 1m         | 1h     |
+| `hours`   | 5m     | 1h         | 1d     |
+| `days`    | 5m     | 1d         | 1w     |
+| `weeks`   | 5m     | 1w         | 30d    |
+| `max`     | 5m     | 30d        | 1y     |
+
+## How cache keys work (Cache Key များ မည်သို့အလုပ်လုပ်သည်)
+
+Cache entry key တစ်ခုတွင် **build ID**, function location/signature (function ID) ၏ secure hash နှင့် **serializable arguments** (သို့မဟုတ် outer-scope variables) တို့ ပါဝင်ပါတယ်။ Input မတူညီပါက cache entries များကို အလိုအလျောက် သီးခြားစီ သိမ်းဆည်းပေးပါတယ်။
+
+## Streaming uncached data (Cache မရှိသော Data ကို Streaming)
+
+Request တိုင်းတွင် fresh ဖြစ်ရမည့် data အတွက်မူ `use cache` ကို **မထည့်ပါနှင့်**။ ယင်းအစား component ကို `<Suspense>` ဖြင့် ပတ်ထားပါ:
+
+```tsx
+import { Suspense } from "react";
+
+async function LatestPosts() {
+  const data = await fetch("https://api.example.com/posts").then((r) => r.json());
+  return <ul>{data.map((p) => <li key={p.id}>{p.title}</li>)}</ul>;
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading…</div>}>
+      <LatestPosts />
+    </Suspense>
+  );
+}
+```
+
+## Activity
+
+နှေးကွေးသော data function တစ်ခုတွင် `use cache` နှင့် `cacheLife("minutes")` ကို ထည့်၍ ဒုတိယ request သည် အလုပ်ကို ကျော်သွားကြောင်း စစ်ဆေးပါ။ ထို့နောက် fetch တစ်ခုကို `<Suspense>` ဖြင့် ခဏပတ်ကြည့်ပြီး skeleton သည် streaming ဝင်လာသည်ကို ကြည့်ပါ။

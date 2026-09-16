@@ -1,0 +1,90 @@
+---
+title: "Installation — Installation ပြုလုပ်ခြင်း"
+description: "Create a Next.js 16 app with create-next-app or manually, system requirements, and the app your scaffold produces. — create-next-app ဖြင့် Next.js 16 App အသစ်တစ်ခုကို ဖန်တီးခြင်းနှင့် လိုအပ်ချက်များ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Next.js Application အသစ်တစ်ခုကို local တွင် run နိုင်စေရန်နှင့် `create-next-app` မှ ထုတ်ပေးသော scaffold ကို နားလည်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js ကို စတင်အသုံးပြုရန် system requirements များကို ကြိုတင်စစ်ဆေးရပြီး Node.js 20.9 သို့မဟုတ် ထိုထက်မြင့်သော Node.js version (Node 22+ ကို အကြံပြုသည်) လိုအပ်ပါတယ်။ Project အသစ်တစ်ခုကို ဖန်တီးရန် အလွယ်ဆုံးနည်းလမ်းမှာ official CLI ဖြစ်သော `npx create-next-app@latest` ကို အသုံးပြုခြင်းဖြစ်ပြီး TypeScript, Tailwind, ESLint, App Router စသည့် option များကို ရွေးချယ်နိုင်ပါတယ်။ CLI ကို run သောအခါ guided questions အနည်းငယ် မေးပြီး App Router, Turbopack နှင့် TypeScript ကို ရွေးချယ်ပါက modern default setup ကို ရရှိပါတယ်။ ဖန်တီးပြီးသော project တွင် `src/app` directory အတွင်း `layout.tsx` နှင့် `page.tsx` တို့ပါဝင်ပြီး `next.config.ts`, `tsconfig.json`, `package.json` စသည့် config files များ ပါလာပါတယ်။ `npm run dev` ဖြင့် development server ကို run လျှင် `http://localhost:3000` တွင် စတင် ကြည့်ရှုနိုင်ပြီး CLI မသုံးဘဲ manual setup ဖြင့်လည်း packages များကို install လုပ်ကာ scripts များကို ကိုယ်တိုင်ထည့်သွင်း၍ အသုံးပြုနိုင်ပါတယ်။
+
+## System Requirements (System လိုအပ်ချက်များ)
+
+Next.js 16 သည် အောက်ပါတို့ လိုအပ်ပါတယ်:
+
+- **Node.js 20.9 သို့မဟုတ် နောက်ပိုင်း** (Node 22+ ကို အကြံပြုသည်)
+- **macOS, Windows, Linux** — Windows တွင် PowerShell နှင့် Git Bash နှစ်မျိုးလုံး အလုပ်လုပ်ပါတယ်
+- ရွေးချယ်နိုင်သည်: `npm` အစား `yarn`, `pnpm` သို့မဟုတ် `bun`
+
+ဦးစွာ version ကို စစ်ဆေးပါ:
+
+```bash
+node --version   # v22.x.x
+```
+
+## Create a project with create-next-app (create-next-app ဖြင့် Project ဖန်တီးခြင်း)
+
+အမြန်ဆုံးနည်းလမ်းမှာ official CLI ဖြစ်ပါတယ်:
+
+```bash
+npx create-next-app@latest my-next-app --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
+```
+
+CLI သည် guided questions အနည်းငယ်ကို မေးပါတယ်။ **App Router**, **Turbopack** နှင့် **TypeScript** ကို ရွေးချယ်ပါက modern default setup ကို ရရှိပါတယ်။
+
+## What you get (သင်ရရှိသော အရာများ)
+
+```
+my-next-app
+├── public/          # static assets (favicon, images)
+├── src/
+│   └── app/        # App Router routes, layouts, pages
+│       ├── layout.tsx
+│       └── page.tsx
+├── next.config.ts  # Next.js configuration
+├── tsconfig.json
+├── package.json
+└── ...
+```
+
+## Run the dev server (Dev Server ကို Run ရန်)
+
+```bash
+cd my-next-app
+npm run dev
+```
+
+`http://localhost:3000` ကို ဖွင့်ပါ။ Default page တွင် Next.js starter UI ကို တွေ့ရပါမည်။
+
+## Manual setup (without the CLI) (Manual Setup - CLI မပါပဲ)
+
+Files များကို ဖန်တီးပြီး install လုပ်ပါ:
+
+```bash
+npm install next@latest react@latest react-dom@latest
+npm install -D typescript @types/node @types/react @types/react-dom tailwindcss
+```
+
+`package.json` တွင် scripts များကို ထည့်ပါ:
+
+```json
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
+}
+```
+
+## Activity
+
+1. `create-next-app` ဖြင့် App အသစ်တစ်ခုကို ဖန်တီးပါ။
+2. `src/app/page.tsx` ကို ပြင်ဆင်ပြီး page သည် hot-reload ဖြစ်သည်ကို ကြည့်ပါ။
+3. `src/app/about/page.tsx` တွင် ဒုတိယ page တစ်ခု ထည့်ပြီး `/about` သို့ သွားပါ။

@@ -1,0 +1,67 @@
+---
+title: "Migrating from Create React App — Create React App မှ ပြောင်းရွှေ့ခြင်း"
+description: "Move a CRA project to Next.js: routing, images, env vars, and the differences to watch. — CRA project ကို Next.js သို့ ပြောင်းခြင်း — routing, images, env vars နှင့် သတိထားရမည့် ကွဲပြားချက်များ"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  CRA SPA တစ်ခုကို App Router သို့ ပြောင်းရွှေ့ပြီး လက်ရှိ အပြုအမူကို ထိန်းသိမ်းထားကာ SSR, routing နှင့် optimizations များကို ထပ်မံ ရရှိစေရန် နားလည်စေရန် ဖြစ်ပါတယ် — **`react-router`** မှ file-system routing သို့ ပြောင်းပုံနှင့် hydration-safe components ပြုလုပ်ပုံကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Create React App (CRA) သည် React application များအတွက် webpack-based build tool တစ်ခုသာ ဖြစ်ပြီး routing, SSR သို့မဟုတ် image optimization ကဲ့သို့သော framework features များ မပါဝင်ပါဘူး။ Next.js သို့ ပြောင်းရွှေ့ခြင်းဖြင့် file-system routing, SSG/SSR/ISR options များနှင့် built-in optimizations များကို ရရှိပါတယ်။ ပြောင်းရွှေ့ရန် ပထမဆုံး `npx create-next-app@latest` ဖြင့် project အသစ်ကို scaffold လုပ်ပြီး ယခင် `src/` အတွင်းမှ code များကို ကူးယူပါတယ်။ `react-router` ၏ `<Route path="/about">` ကဲ့သို့ route များကို `app/about/page.tsx` folder structure သို့ ပြောင်းပြီး `<Link to>` ကို `next/link` ၏ `<Link href>` ဖြင့် အစားထိုးကာ `<img>` ကို `next/image` ၏ `<Image>` ဖြင့် အစားထိုးရပါတယ်။ Env vars များကိုလည်း `REACT_APP_*` မှ `NEXT_PUBLIC_*` သို့ အမည် ပြောင်းလဲရပြီး browser APIs ကို သုံးသော third-party libraries များအတွက် `"use client"` နှင့် mounted guards များကို ထည့်၍ hydration mismatch errors များကို ရှောင်ကြဉ်ရပါတယ်။ အဆုံးတွင် `npm run build` နှင့် `npm run lint` တို့ကို run ၍ SSR/hydration ပြဿနာများ ရှိက စစ်ဆေး ပြုပြင်ရန် လိုပါတယ်။
+
+## CRA vs Next.js at a glance
+
+| CRA                     | Next.js                          |
+| ----------------------- | -------------------------------- |
+| React + webpack CLI     | Framework: routing, SSR, image   |
+| `react-router`          | File-system routing              |
+| `import.meta.env.*`/`REACT_APP_*` | `NEXT_PUBLIC_*` env vars |
+| Manual code-splitting   | Automatic per-route splitting    |
+| Static SPA               | SSG/SSR/ISR options              |
+
+## Migration steps
+
+1. **Scaffold** — `npx create-next-app@latest` ဖြင့် တည်ဆောက်ပြီး `src/` အတွင်းရှိ code များကို ကူးထည့်ပါ
+2. **Convert routing** — `react-router` routes များကို folders များနှင့် map လုပ်ပါ:
+
+```
+<Route path="/" element={<Home/>}>            →  app/page.tsx
+<Route path="/about" element={<About/>}>      →  app/about/page.tsx
+<Route path="/users/:id" element={<User/>}>   →  app/users/[id]/page.tsx
+```
+
+3. **Fix navigation** — `<Link to>` ကို `next/link` ၏ `<Link href>` အဖြစ် ပြောင်းပါ
+4. **Move images** — `<img>` ကို `next/image` ၏ `<Image>` အဖြစ် ပြောင်းပါ
+5. **Rename env vars** — `REACT_APP_*` ကို `NEXT_PUBLIC_*` အဖြစ် ပြောင်းပါ
+
+## Hydration-safe components
+
+Browser APIs ကို သုံးသော third-party libraries များအတွက် client components + guards များ လိုအပ်ပါတယ်:
+
+```tsx
+"use client";
+
+import { useEffect, useState } from "react";
+
+export default function SafeComponent() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;            // avoid SSR mismatch
+  return <BrowserOnlyFeature />;
+}
+```
+
+## After moving
+
+```bash
+npm run build   # surfaces SSR/hydration issues
+npm run lint
+```
+
+## Activity
+
+လေ့ကျင့်ခန်း: CRA page အသေးတစ်ခုကို `app/` ထဲသို့ ကူးပြီး ၎င်း၏ `react-router` links များကို folder structure + `next/link` သို့ ပြောင်းကာ `window is not defined` errors များကို client guards များဖြင့် ပြုပြင်ပါ။

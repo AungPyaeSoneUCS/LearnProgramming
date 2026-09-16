@@ -1,0 +1,55 @@
+---
+title: "Optimizing Prefetching — Prefetching ကို ပိုမို ကောင်းမွန်အောင် ပြုလုပ်ခြင်း"
+description: "Tune prefetch behavior: what to prefetch, what to skip, and per-link overrides. — prefetch လုပ်သင့်သည့် အရာများကို ရွေးချယ်ပြီး per-link overrides ပြုလုပ်နည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  အကျိုးရှိသည့် prefetch လုပ်ငန်းများကိုသာ ပို့ဆောင်စေပြီး heavy runtime data နှင့် stale-heavy routes များကို ရှောင်ကျော်နည်းကို နားလည်စေရန် ဖြစ်ပါတယ် — **`prefetch` prop** နှင့် **segment config** တို့မှ ထိန်းချုပ်ပုံကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Prefetching သည် link တစ်ခု hover/focus/appear ဖြစ်သည့်အခါတိုင်း server work နှင့် bandwidth ကို သုံး၍ payload များကို ကြိုတင် ဆွဲယူခြင်း ဖြစ်ပါတယ်။ လိုအပ်သည်ထက် ပိုသော over-prefetching သည် resources များကို အလဟသ ကုန်ဆုံးစေပြီး under-prefetching ကလည်း click ပြုလုပ်ချိန်တွင် နှေးကွေးစေပါတယ်။ Per-link အဆင့်တွင် `next/link` ၏ `prefetch` prop ကို သုံး၍ full prefetch (default) သို့မဟုတ် `prefetch={false}` (click မလုပ်မချင်း မဆွဲဘဲ) ဟု ရွေးချယ်နိုင်ပါတယ်။ Route-level အနေဖြင့် segment config သို့မဟုတ် instant model မှ activation preference ကို သတ်မှတ်နိုင်ပြီး partial prefetching ဖွင့်ထားပါက Next.js သည် static shell ကို ကျယ်ကျယ်ပြန့်ပြန့် prefetch လုပ်ကာ click ပြုလုပ်သည့်အခါ dynamic holes များကို ဆွဲပါတယ်။ Marketing pages, docs နှင့် cached data ရှိသော dashboards များကို prefetch စာရင်းတွင် ထည့်ပြီး admin panels, authed feeds နှင့် live queries များနှင့် ချိတ်ဆက်ထားသော pages များကို skip လုပ်သင့်ပါတယ်။ နောက်ဆုံးတွင် Network panel ၏ Route Loads section ဖြင့် prefetch အပြုအမူကို audit လုပ်ပြီး Lighthouse ဖြင့် page loads များကို နှိုင်းယှဉ်နိုင်ပါတယ်။
+
+## The cost of prefetching
+
+Route တစ်ခုကို prefetch လုပ်ခြင်းသည် payload အတွက် server work + bandwidth ကို hover/focus/appear တိုင်းတွင် သုံးစွဲပါတယ်။ Over-prefetching သည် resources များကို အလဟသ ကုန်စေပြီး under-prefetching သည် clicks များကို နှေးကွေးစေပါတယ်။
+
+## Controlling per-link
+
+```tsx
+import Link from "next/link";
+
+<Link href="/dashboard" prefetch>            // full prefetch (default behavior)
+<Link href="/dashboard" prefetch={false}>    // nothing until click
+```
+
+## Route-level policy
+
+Segment config / instant model ကို သုံး၍ *activation* preference ကို မှတ်သားပါ:
+
+```ts
+// app/heavy-live/instant.ts  or config
+export const config = {
+  // controls whether this route joins the static shell on hover
+};
+```
+
+## Grouping with partial prefetching
+
+ဖွင့်ထားပါက Next.js သည် **static shell** ကို ကျယ်ကျယ်ပြန့်ပြန့် prefetch လုပ်ပြီး click ပြုလုပ်မှသာ holes များကို ဆွဲပါတယ်။ Shell များထဲသို့ ဝင်ရောက်မည့် routes များကို ရွေးချယ်ပါ:
+
+- **Prefetch** — cached data ရှိသော marketing pages, docs, dashboards
+- **Skip** — admin panels, authed feeds, live queries များနှင့် ချိတ်ဆက်ထားသော pages
+
+## Rules of thumb
+
+- Modal/on-demand routes များအတွက် `prefetch={false}` သုံးပါ
+- Hero + primary CTAs paths များကို prefetch ပြုလုပ်ပါ
+- Audit ပြုလုပ်ရန် Network panel အတွင်းရှိ **Route Loads** section ကို စောင့်ကြည့်ပါ
+
+## Activity
+
+လေ့ကျင့်ခန်း: သင့် nav ကို audit လုပ်ပါ — admin/dynamic links များတွင် `prefetch={false}` မှတ်သားပြီး အသုံးအများဆုံး destination pages ၃ ခုတွင် full prefetch ထားကာ Lighthouse page loads များကို နှိုင်းယှဉ်ကြည့်ပါ။

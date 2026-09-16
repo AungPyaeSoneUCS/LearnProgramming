@@ -1,0 +1,57 @@
+---
+title: "Production Checklist — Production အဆင်သင့် စစ်ဆေးချက်စာရင်း"
+description: "Before you ship: performance, SEO, security, and reliability checks for a production Next.js app. — Production Next.js app တစ်ခု မလွှတ်မီ Performance, SEO, Security နဲ့ Reliability စစ်ဆေးရမယ့် အချက်စာရင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="caution" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Production release တွေကို performant, secure နဲ့ observable ဖြစ်အောင် ထပ်ခါတလဲလဲ သုံးနိုင်တဲ့ launch checklist တစ်ခုကို ရနိုင်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Production ဆိုတာ code ပြီးရုံနဲ့ မလုံလောက်ပါဘူး — ship မလုပ်ခင် app တစ်ခုလုံးကို performance, SEO, security, reliability, observability ဆိုတဲ့ ထောင့်တွေကနေ စံနစ်တကျ စစ်ဆေးဖို့ လိုပါတယ်။ Performance ဘက်မှာ `next build` ရဲ့ route report ကို ကြည့်ပြီး image/font optimization, partial prefetching, lazy-loading တွေ ပြည့်စုံမှုနဲ့ Core Web Vitals (LCP, CLS, INP) ကို Lighthouse နဲ့ တိုင်းတာပါ။ SEO ဘက်မှာ metadata, canonical URL, sitemap, robots, structured data (JSON-LD) တွေ နေရာတိုင်းမှာ ပါမှပဲ crawler တွေအတွက် website ရဲ့ မြင်ကွင်း ပြည့်စုံပါတယ်။ Security က မဖြစ်မနေပါ — client bundle ထဲ secret မစိမ့်ဝင်စေဖို့ `NEXT_PUBLIC_` audit, CSP header, Server Action/Route Handler တိုင်းထဲ authentication, Zod validation, rate limiting, signed cookie အားလုံး လိုပါတယ်။ ဒီအပြင် Observability အတွက် error monitoring (instrumentation.onRequestError), logging, Request IDs, health check, OpenTelemetry traces တွေပါမှ trouble တစ်ခုကို ချက်ချင်း ဖမ်းမိနိုင်ပါတယ်။
+
+## Performance
+
+- [ ] `next build` ကို run ပြီး route report ကို ပြန်သုံးသပ်ပါ (sizes, ○/ƒ)
+- [ ] Image တွေကို optimize လုပ်ပါ (`next/image` ထဲ `priority`, `fill`, `sizes` သုံးခြင်း)
+- [ ] `font optimization` ကို enable လုပ်ပြီး layout shift ရှောင်ပါ
+- [ ] Heavy chunk တွေကို `next/dynamic` နဲ့ lazy-load လုပ်ပါ
+- [ ] Navigation အတွက် `partialPrefetching`/prefetch policy သတ်မှတ်ပါ
+- [ ] Lighthouse ထဲက Core Web Vitals ကို စစ်ပါ: LCP < 2.5s, CLS < 0.1, INP < 200ms
+
+## SEO
+
+- [ ] Page တိုင်းမှာ `metadata` (title template, description) ထားပါ
+- [ ] `metadataBase` + canonical URL တွေ ထားပါ
+- [ ] `sitemap.ts` + `robots.ts` ထည့်ပါ
+- [ ] အဓိက page တွေအတွက် structured data (JSON-LD) ထည့်ပါ
+- [ ] Rich Results Test + Google Search Console နဲ့ verify လုပ်ပါ
+
+## Security
+
+- [ ] Client bundle ထဲ secret တွေမပါအောင် (`NEXT_PUBLIC_` audit + `server-only`)
+- [ ] CSP + security headers ချိန်ထားပါ (CSP guide ကို ကြည့်ပါ)
+- [ ] Server Action / Route Handler တိုင်းထဲ auth ထည့်ပါ
+- [ ] Input တိုင်းကို Zod validation လုပ်ပါ
+- [ ] Auth/form တွေမှာ rate limiting လုပ်ပါ
+- [ ] Signed cookie: `HttpOnly`, `Secure`, `SameSite`
+
+## Reliability & ops
+
+- [ ] `instrumentation.onRequestError` ကနေ error monitoring လုပ်ပါ (Sentry စသဖြင့်)
+- [ ] Debug လုပ်ဖို့ `logging` + Request IDs ပါအောင် ထားပါ
+- [ ] Health check route (ဥပမာ `GET /api/health` → 200)
+- [ ] `NODE_ENV` နဲ့ `standalone` output, CI cache တွေ မှန်အောင် ထားပါ
+- [ ] Env var တွေကို validate လုပ်ပါ (boot မှာ fail fast ဖြစ်အောင်)
+
+## Observability
+
+- [ ] OpenTelemetry traces တွေကို collector ဆီ export လုပ်ပါ
+- [ ] Core Web Vitals reporting (*Analytics* lesson ကို ကြည့်ပါ)
+
+## Activity
+
+ဒီ checklist ကို သင့် project မှာ စမ်းပြီး အကြီးဆုံး gap ၃ ခုကို ဖြေရှင်းပါ။ `next build` ကို ပြန် run ပြီး production ပေါ်မှာ Lighthouse ပြန်ဖွင့်၊ score delta ကို နှိုင်းယှဉ်ပါ။

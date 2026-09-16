@@ -1,0 +1,71 @@
+---
+title: "Preventing Flash Before Hydration — Hydration မတိုင်ခင် Flash တားဆီးခြင်း"
+description: "Avoid flickering default vs hydrated UI with theme-aware and SSG-safe rendering. — Server နဲ့ Client ပေါ်မှာ တသမတ်တည်း render ဖြစ်အောင် လုပ်ပြီး default UI နဲ့ hydrated UI ကြားက flicker (FOUC) ကို ရှောင်ကြဉ်နည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Server နဲ့ Client နှစ်ဖက်စလုံးမှာ UI ကို တသမတ်တည်း render ဖြစ်အောင် လုပ်ပြီး user တွေ မှားယွင်းတဲ့ state ရဲ့ flash ကို မမြင်ရအောင် ရှောင်ရှားဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Client-only ဖြစ်တဲ့ code တွေက SSR ပြုလုပ်တုန်းမှာ တစ်မျိုး၊ hydration ပြီးတဲ့အချိန်မှာ နောက်တစ်မျိုး ဖြစ်ပြီး render လုပ်တတ်ပါတယ် — ဥပမာ theme toggle က server ပေါ်မှာ light အဖြစ်ပြပြီး `useEffect` ပြီးတဲ့နောက်မှာ dark အဖြစ် ပြောင်းသွားတာမျိုး ဖြစ်ပါတယ်။ ဒီလိုကွာဟချက်ရှိရင် user က ခဏတာ flicker ကို မြင်ရပါတယ် — ဒါကို FOUC (flash of unstyled content) လို့ ခေါ်ပါတယ်။ အဖြေကတော့ mounted gate ဆိုတဲ့ pattern ပဲ ဖြစ်ပါတယ် — browser-specific အလုပ်တွေကို `useEffect` ထဲမှာ စောင့်ပြီး အဲဒီအချိန်မတိုင်ခင် ဘာမှ render မလုပ်ဘဲ null ပြန်တာပါ။ ဒါမှမဟုတ် theme လို pre-paint ဖြစ်စေချင်တဲ့အရာကို layout ထဲက tiny inline script နဲ့ SSR markup မပေါ်ခင် ဆုံးဖြတ်ပေးလို့လည်း ရပါတယ်။ RSC ခေတ်မှာတော့ interactive piece တိုင်းကို Suspense နဲ့ defer လုပ်ထားမယ်ဆိုရင် static shell တွေ flash ပိုနည်းပြီး authed UI မှာတော့ token loading ဖြစ်နေချိန် logged out မျက်နှာကို ဘယ်တော့မှ မပြသင့်ပါဘူး။
+
+## The flash problem
+
+Client-only code က SSR လုပ်တုန်းမှာ တစ်မျိုး၊ hydration ပြီးတဲ့အခါ နောက်တစ်မျိုး render လုပ်ပါတယ် — ဥပမာ theme toggle က server မှာ light ပြပြီး `useEffect` ပြီးတဲ့နောက် dark ဖြစ်သွားတာမျိုး ဖြစ်ပါတယ်။ ဒါဆို user က flicker (FOUC - flash of unstyled content) ကို မြင်ရပါတယ်။
+
+## Theme-safe pattern
+
+```tsx
+"use client";
+
+import { useEffect, useState } from "react";
+
+export default function ThemeSwitcher() {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const saved = window.localStorage.getItem("theme") as "light" | "dark";
+    if (saved) setTheme(saved);
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;   // nothing until we know - no flash
+  return (
+    <button onClick={() => setTheme(...)}>
+      {theme}
+    </button>
+  );
+}
+```
+
+## Or: set the theme before paint
+
+Theme ကို SSR markup မပြောင်းလဲခင်မှာ ဆုံးဖြတ်ဖို့ layout ထဲမှာ inline script ငယ်လေးတစ်ခု ထည့်ပါ:
+
+```tsx
+<script
+  dangerouslySetInnerHTML={{
+    __html: `document.documentElement.dataset.theme = localStorage.getItem('theme') ?? 'light'`,
+  }}
+/>
+```
+
+## Why this matters more than ever
+
+- **RSC**: interactive piece တိုင်းကို Suspense နဲ့ defer လုပ်ထားရင် static shell တွေက flash ပိုနည်းပါတယ်
+- **Authed UI**: token တစ်ခု loading ဖြစ်နေချိန်မှာ logged out မျက်နှာကို ဘယ်တော့မှ render မလုပ်ပါဘူး
+
+## Rules
+
+- Hydration-sensitive UI အတွက် server နဲ့ client ပေါ်မှာ မတူတဲ့ content တွေကို ဘယ်တော့မှ render မလုပ်ပါနဲ့
+- Browser-only effect တွေကို `mounted` နောက်မှာ gate လုပ်ပါ
+- Server output ထဲမှာ deterministic rendering (`Array.length`, IDs) တွေကို ဦးစားပေးပါ
+
+## Activity
+
+အပေါ်က `mounted` gate ကိုသုံးပြီး theme toggle တစ်ခု လုပ်ပါ၊ DevTools မှာ CPU ကို throttle လုပ်ပြီး load လုပ်တဲ့အခါ white/dark flicker မဖြစ်တာကို စစ်ဆေးပါ။

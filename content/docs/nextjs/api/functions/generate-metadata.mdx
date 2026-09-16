@@ -1,0 +1,64 @@
+---
+title: "generateMetadata — Dynamic SEO Metadata ထုတ်လုပ်ခြင်း"
+description: "Dynamic SEO metadata per route with async generateMetadata. — Async generateMetadata ဖြင့် route တစ်ခုအလိုက် dynamic SEO metadata များ သတ်မှတ်ပေးသော function ဖြစ်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Data သို့မဟုတ် params များမှ page တစ်ခုချင်းစီအတွက် title, description, OG နှင့် အခြားသော metadata အချက်များကို သတ်မှတ်နိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`generateMetadata` သည် page ကို render လုပ်နေစဉ်အတွင်း `Metadata` object တစ်ခုကို တွက်ချက်ထုတ်ပေးသော async function တစ်ခုဖြစ်ပါတယ်။ `params` (ဥပမာ slug) မှ ရယူပြီး post ကို fetch လုပ်ကာ title, description, openGraph စသည့် SEO metadata များကို data အလိုက် ပြောင်းလဲပေးနိုင်ပါတယ်။ ဤနည်းဖြင့် blog post တစ်ခုချင်းစီတိုင်းသည် သူ့ကိုယ်ပိုင် အမည်၊ ဖော်ပြချက်နှင့် share image များကို ရရှိပြီး social media နှင့် search engines တို့တွင် မှန်မှန်ကန်ကန် ပြသနိုင်ပါတယ်။ Child segments များသည် parent fields များကို override လုပ်နိုင်ပြီး `title.template` က parent template နှင့် child title ကို ပေါင်းစပ်ပေးသောကြောင့် site တစ်ခုလုံးတွင် တစ်ပြေးညီသော title ပုံစံကို ထိန်းသိမ်းနိုင်ပါတယ်။ Static `export const metadata` နှင့် မတူဘဲ dynamic route များအတွက် ဒေတာအလိုက် metadata လိုအပ်မှုကို ဖြေရှင်းပေးပါတယ်။
+
+## What it is
+
+`generateMetadata` သည် render လုပ်နေစဉ်တွင် `Metadata` object ကို တွက်ချက်ပေးပါတယ်:
+
+```tsx
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPost(slug);
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      images: [{ url: post.ogImage }],
+    },
+  };
+}
+```
+
+## The big Metadata fields (အဓိက Metadata နေရာများ)
+
+| Field         | Example                                    |
+| ------------- | ------------------------------------------ |
+| `title`/`description` | basic                                 |
+| `title.template`      | `"%s | My Blog"` in root layout     |
+| `openGraph`   | title, type, url, images                  |
+| `twitter`     | card + image                              |
+| `icons`       | favicons / apple                         |
+| `alternates`  | canonical, languages                      |
+| `robots`      | index/noindex                           |
+
+## Merging (ပေါင်းစည်းမှု)
+
+- Child segments များသည် parent fields များကို **override** လုပ်ပါတယ်
+- `title.template` သည် parent template + child title ကို ပေါင်းစပ်ပေးပါတယ်
+- Partial objects များသည် အတိအကျ override မလုပ်ထားသရွေ့ merge ဖြစ်ပါတယ်
+
+## Rules (စည်းကမ်းများ)
+
+- Server-only ဖြစ်ပြီး async ကို ထောက်ပံ့ပါတယ်
+- Dynamic routes များအတွက် static `export const metadata` နေရာကို အစားထိုးပါတယ်
+- Next 16 တွင် `await params` လိုအပ်ပါတယ်
+
+## လေ့ကျင့်ခန်း (Activity)
+
+Blog တွင် title template + OG ပါသော `generateMetadata` ကို ထည့်သွင်းပြီး browser tab နှင့် share-preview တို့တွင် post တစ်ခုချင်းစီ၏ title များ ပေါ်လာကြောင်းနှင့် parent defaults များ merge ဖြစ်ကြောင်း စစ်ဆေးပါ။

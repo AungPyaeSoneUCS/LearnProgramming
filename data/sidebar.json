@@ -2551,38 +2551,836 @@
         ]
       },
       {
-        "label": "Module 1: App Router & File-System Routing",
+        "label": "Module 1: Core Getting Started",
         "items": [
           {
-            "label": "App Router & File-System Routing",
-            "slug": "nextjs/routing/app-router"
+            "label": "Installation",
+            "slug": "nextjs/core/installation"
+          },
+          {
+            "label": "Project Structure",
+            "slug": "nextjs/core/project-structure"
+          },
+          {
+            "label": "Layouts and Pages",
+            "slug": "nextjs/core/layouts-and-pages"
+          },
+          {
+            "label": "Linking and Navigating",
+            "slug": "nextjs/core/linking-navigating"
+          },
+          {
+            "label": "Server and Client Components",
+            "slug": "nextjs/core/server-client-components"
+          },
+          {
+            "label": "Fetching Data",
+            "slug": "nextjs/core/fetching-data"
+          },
+          {
+            "label": "Mutating Data",
+            "slug": "nextjs/core/mutating-data"
+          },
+          {
+            "label": "Caching",
+            "slug": "nextjs/core/caching"
+          },
+          {
+            "label": "Revalidating",
+            "slug": "nextjs/core/revalidating"
+          },
+          {
+            "label": "Error Handling",
+            "slug": "nextjs/core/error-handling"
+          },
+          {
+            "label": "CSS",
+            "slug": "nextjs/core/css"
+          },
+          {
+            "label": "Image Optimization",
+            "slug": "nextjs/core/image-optimization"
+          },
+          {
+            "label": "Font Optimization",
+            "slug": "nextjs/core/font-optimization"
+          },
+          {
+            "label": "Metadata and OG Images",
+            "slug": "nextjs/core/metadata-og-images"
+          },
+          {
+            "label": "Route Handlers",
+            "slug": "nextjs/core/route-handlers"
+          },
+          {
+            "label": "Proxy",
+            "slug": "nextjs/core/proxy"
+          },
+          {
+            "label": "Deploying",
+            "slug": "nextjs/core/deploying"
+          },
+          {
+            "label": "Upgrading",
+            "slug": "nextjs/core/upgrading"
           }
         ]
       },
       {
-        "label": "Module 2: React Server Components & Data Fetching",
+        "label": "Module 2: Practical Guides (Part 1)",
         "items": [
           {
-            "label": "React Server Components & Data Fetching",
-            "slug": "nextjs/data-fetching/server-components"
+            "label": "Adopting Partial Prefetching",
+            "slug": "nextjs/g1/adopting-partial-prefetching"
+          },
+          {
+            "label": "AI Coding Agents",
+            "slug": "nextjs/g1/ai-coding-agents"
+          },
+          {
+            "label": "Analytics",
+            "slug": "nextjs/g1/analytics"
+          },
+          {
+            "label": "Authentication",
+            "slug": "nextjs/g1/authentication"
+          },
+          {
+            "label": "Authentication with Cache Components",
+            "slug": "nextjs/g1/authentication-cache-components"
+          },
+          {
+            "label": "Backend for Frontend",
+            "slug": "nextjs/g1/backend-for-frontend"
+          },
+          {
+            "label": "Building",
+            "slug": "nextjs/g1/building"
+          },
+          {
+            "label": "Caching (Previous Model)",
+            "slug": "nextjs/g1/caching-previous-model"
+          },
+          {
+            "label": "CDN Caching",
+            "slug": "nextjs/g1/cdn-caching"
+          },
+          {
+            "label": "CI Build Caching",
+            "slug": "nextjs/g1/ci-build-caching"
+          },
+          {
+            "label": "Client-side Data Fetching",
+            "slug": "nextjs/g1/client-side-data-fetching"
+          },
+          {
+            "label": "Content Security Policy",
+            "slug": "nextjs/g1/content-security-policy"
+          },
+          {
+            "label": "CSS-in-JS",
+            "slug": "nextjs/g1/css-in-js"
+          },
+          {
+            "label": "Custom Server",
+            "slug": "nextjs/g1/custom-server"
+          },
+          {
+            "label": "Data Security",
+            "slug": "nextjs/g1/data-security"
+          },
+          {
+            "label": "Debugging",
+            "slug": "nextjs/g1/debugging"
+          },
+          {
+            "label": "Deploying to Platforms",
+            "slug": "nextjs/g1/deploying-to-platforms"
+          },
+          {
+            "label": "Draft Mode",
+            "slug": "nextjs/g1/draft-mode"
+          },
+          {
+            "label": "Environment Variables",
+            "slug": "nextjs/g1/environment-variables"
+          },
+          {
+            "label": "Forms",
+            "slug": "nextjs/g1/forms"
+          },
+          {
+            "label": "How Revalidation Works",
+            "slug": "nextjs/g1/how-revalidation-works"
+          },
+          {
+            "label": "ISR (Incremental Static Regeneration)",
+            "slug": "nextjs/g1/isr"
           }
         ]
       },
       {
-        "label": "Module 3: Server Actions & Form Mutations",
+        "label": "Module 3: Practical Guides (Part 2)",
         "items": [
           {
-            "label": "Server Actions & Form Mutations",
-            "slug": "nextjs/server-actions/mutations"
+            "label": "ISR with Cache Components",
+            "slug": "nextjs/g2/isr-cache-components"
+          },
+          {
+            "label": "Instant Navigation",
+            "slug": "nextjs/g2/instant-navigation"
+          },
+          {
+            "label": "Instrumentation",
+            "slug": "nextjs/g2/instrumentation"
+          },
+          {
+            "label": "Interactive Apps",
+            "slug": "nextjs/g2/interactive-apps"
+          },
+          {
+            "label": "Internationalization",
+            "slug": "nextjs/g2/internationalization"
+          },
+          {
+            "label": "JSON-LD",
+            "slug": "nextjs/g2/json-ld"
+          },
+          {
+            "label": "Lazy Loading",
+            "slug": "nextjs/g2/lazy-loading"
+          },
+          {
+            "label": "Development Environment",
+            "slug": "nextjs/g2/local-development"
+          },
+          {
+            "label": "Next.js MCP Server",
+            "slug": "nextjs/g2/mcp-server"
+          },
+          {
+            "label": "MDX",
+            "slug": "nextjs/g2/mdx"
+          },
+          {
+            "label": "Memory Usage",
+            "slug": "nextjs/g2/memory-usage"
+          },
+          {
+            "label": "Migrating from Pages Router to App Router",
+            "slug": "nextjs/g2/migrating-app-router"
+          },
+          {
+            "label": "Migrating from Create React App",
+            "slug": "nextjs/g2/migrating-cra"
+          },
+          {
+            "label": "Migrating from Vite",
+            "slug": "nextjs/g2/migrating-vite"
+          },
+          {
+            "label": "Migrating to Cache Components",
+            "slug": "nextjs/g2/migrating-cache-components"
+          },
+          {
+            "label": "Multi-tenant",
+            "slug": "nextjs/g2/multi-tenant"
+          },
+          {
+            "label": "Multi-zones",
+            "slug": "nextjs/g2/multi-zones"
+          },
+          {
+            "label": "Offline Support",
+            "slug": "nextjs/g2/offline-support"
+          },
+          {
+            "label": "OpenTelemetry",
+            "slug": "nextjs/g2/opentelemetry"
+          },
+          {
+            "label": "Optimizing Prefetching",
+            "slug": "nextjs/g2/optimizing-prefetching"
+          },
+          {
+            "label": "Package Bundling",
+            "slug": "nextjs/g2/package-bundling"
+          },
+          {
+            "label": "PPR Platform Guide",
+            "slug": "nextjs/g2/ppr-platform-guide"
           }
         ]
       },
       {
-        "label": "Module 4: Vercel Deployment, Env & SEO",
+        "label": "Module 4: Practical Guides (Part 3)",
         "items": [
           {
-            "label": "Vercel Deployment, Env & SEO",
-            "slug": "nextjs/deployment/vercel-deployment"
+            "label": "Prefetching",
+            "slug": "nextjs/g3/prefetching"
+          },
+          {
+            "label": "Preserving UI State",
+            "slug": "nextjs/g3/preserving-ui-state"
+          },
+          {
+            "label": "Preventing Flash Before Hydration",
+            "slug": "nextjs/g3/preventing-flash"
+          },
+          {
+            "label": "Production Checklist",
+            "slug": "nextjs/g3/production"
+          },
+          {
+            "label": "Progressive Web Apps (PWAs)",
+            "slug": "nextjs/g3/progressive-web-apps"
+          },
+          {
+            "label": "Public Pages",
+            "slug": "nextjs/g3/public-pages"
+          },
+          {
+            "label": "Redirecting",
+            "slug": "nextjs/g3/redirecting"
+          },
+          {
+            "label": "Rendering Philosophy",
+            "slug": "nextjs/g3/rendering-philosophy"
+          },
+          {
+            "label": "Sass",
+            "slug": "nextjs/g3/sass"
+          },
+          {
+            "label": "Scripts",
+            "slug": "nextjs/g3/scripts"
+          },
+          {
+            "label": "Self-Hosting",
+            "slug": "nextjs/g3/self-hosting"
+          },
+          {
+            "label": "Server Actions",
+            "slug": "nextjs/g3/server-actions"
+          },
+          {
+            "label": "Server and Client Boundary",
+            "slug": "nextjs/g3/server-client-boundary"
+          },
+          {
+            "label": "Single-Page Applications (SPAs)",
+            "slug": "nextjs/g3/spas"
+          },
+          {
+            "label": "Static Exports",
+            "slug": "nextjs/g3/static-exports"
+          },
+          {
+            "label": "Streaming",
+            "slug": "nextjs/g3/streaming"
+          },
+          {
+            "label": "Tailwind CSS v3",
+            "slug": "nextjs/g3/tailwind-css"
+          },
+          {
+            "label": "Testing",
+            "slug": "nextjs/g3/testing"
+          },
+          {
+            "label": "Third Party Libraries",
+            "slug": "nextjs/g3/third-party-libraries"
+          },
+          {
+            "label": "Upgrading Guides",
+            "slug": "nextjs/g3/upgrading-guides"
+          },
+          {
+            "label": "Videos",
+            "slug": "nextjs/g3/videos"
+          },
+          {
+            "label": "View Transitions",
+            "slug": "nextjs/g3/view-transitions"
+          }
+        ]
+      },
+      {
+        "label": "Module 5: API Reference - Directives",
+        "items": [
+          {
+            "label": "use cache",
+            "slug": "nextjs/api/directives/use-cache"
+          },
+          {
+            "label": "use cache: private",
+            "slug": "nextjs/api/directives/use-cache-private"
+          },
+          {
+            "label": "use cache: remote",
+            "slug": "nextjs/api/directives/use-cache-remote"
+          },
+          {
+            "label": "use client",
+            "slug": "nextjs/api/directives/use-client"
+          },
+          {
+            "label": "use server",
+            "slug": "nextjs/api/directives/use-server"
+          }
+        ]
+      },
+      {
+        "label": "Module 6: API Reference - Components",
+        "items": [
+          {
+            "label": "Font",
+            "slug": "nextjs/api/components/font"
+          },
+          {
+            "label": "Form",
+            "slug": "nextjs/api/components/form"
+          },
+          {
+            "label": "Image",
+            "slug": "nextjs/api/components/image"
+          },
+          {
+            "label": "Link",
+            "slug": "nextjs/api/components/link"
+          },
+          {
+            "label": "Script",
+            "slug": "nextjs/api/components/script"
+          }
+        ]
+      },
+      {
+        "label": "Module 7: API Reference - File Conventions",
+        "items": [
+          {
+            "label": "page.js",
+            "slug": "nextjs/api/file-conventions/page"
+          },
+          {
+            "label": "layout.js",
+            "slug": "nextjs/api/file-conventions/layout"
+          },
+          {
+            "label": "template.js",
+            "slug": "nextjs/api/file-conventions/template"
+          },
+          {
+            "label": "loading.js",
+            "slug": "nextjs/api/file-conventions/loading"
+          },
+          {
+            "label": "error.js",
+            "slug": "nextjs/api/file-conventions/error"
+          },
+          {
+            "label": "not-found.js",
+            "slug": "nextjs/api/file-conventions/not-found"
+          },
+          {
+            "label": "forbidden.js",
+            "slug": "nextjs/api/file-conventions/forbidden"
+          },
+          {
+            "label": "unauthorized.js",
+            "slug": "nextjs/api/file-conventions/unauthorized"
+          },
+          {
+            "label": "default.js",
+            "slug": "nextjs/api/file-conventions/default"
+          },
+          {
+            "label": "Dynamic Segments",
+            "slug": "nextjs/api/file-conventions/dynamic-routes"
+          },
+          {
+            "label": "Route Groups",
+            "slug": "nextjs/api/file-conventions/route-groups"
+          },
+          {
+            "label": "Parallel Routes",
+            "slug": "nextjs/api/file-conventions/parallel-routes"
+          },
+          {
+            "label": "Intercepting Routes",
+            "slug": "nextjs/api/file-conventions/intercepting-routes"
+          },
+          {
+            "label": "route.js",
+            "slug": "nextjs/api/file-conventions/route"
+          },
+          {
+            "label": "proxy.js",
+            "slug": "nextjs/api/file-conventions/proxy"
+          },
+          {
+            "label": "public Folder",
+            "slug": "nextjs/api/file-conventions/public-folder"
+          },
+          {
+            "label": "src Folder",
+            "slug": "nextjs/api/file-conventions/src-folder"
+          },
+          {
+            "label": "mdx-components.js",
+            "slug": "nextjs/api/file-conventions/mdx-components"
+          },
+          {
+            "label": "instrumentation.js",
+            "slug": "nextjs/api/file-conventions/instrumentation"
+          },
+          {
+            "label": "instrumentation-client.js",
+            "slug": "nextjs/api/file-conventions/instrumentation-client"
+          }
+        ]
+      },
+      {
+        "label": "Module 8: Metadata Files & Route Segment Config",
+        "items": [
+          {
+            "label": "Metadata: App Icons",
+            "slug": "nextjs/api/meta/app-icons"
+          },
+          {
+            "label": "Metadata: Manifest",
+            "slug": "nextjs/api/meta/manifest"
+          },
+          {
+            "label": "Metadata: OpenGraph Images",
+            "slug": "nextjs/api/meta/opengraph-image"
+          },
+          {
+            "label": "Metadata: Robots",
+            "slug": "nextjs/api/meta/robots"
+          },
+          {
+            "label": "Metadata: Sitemap",
+            "slug": "nextjs/api/meta/sitemap"
+          },
+          {
+            "label": "Route Segment Config: dynamicParams",
+            "slug": "nextjs/api/meta/dynamic-params"
+          },
+          {
+            "label": "Route Segment Config: instant",
+            "slug": "nextjs/api/meta/instant"
+          },
+          {
+            "label": "Route Segment Config: maxDuration",
+            "slug": "nextjs/api/meta/max-duration"
+          },
+          {
+            "label": "Route Segment Config: preferredRegion",
+            "slug": "nextjs/api/meta/preferred-region"
+          },
+          {
+            "label": "Route Segment Config: prefetch",
+            "slug": "nextjs/api/meta/prefetch"
+          },
+          {
+            "label": "Route Segment Config: runtime",
+            "slug": "nextjs/api/meta/runtime"
+          }
+        ]
+      },
+      {
+        "label": "Module 9: API Reference - Functions (Part 1)",
+        "items": [
+          {
+            "label": "after",
+            "slug": "nextjs/api/functions/after"
+          },
+          {
+            "label": "cacheLife",
+            "slug": "nextjs/api/functions/cache-life"
+          },
+          {
+            "label": "cacheTag",
+            "slug": "nextjs/api/functions/cache-tag"
+          },
+          {
+            "label": "catchError",
+            "slug": "nextjs/api/functions/catch-error"
+          },
+          {
+            "label": "connection",
+            "slug": "nextjs/api/functions/connection"
+          },
+          {
+            "label": "cookies",
+            "slug": "nextjs/api/functions/cookies"
+          },
+          {
+            "label": "draftMode",
+            "slug": "nextjs/api/functions/draft-mode"
+          },
+          {
+            "label": "fetch",
+            "slug": "nextjs/api/functions/fetch"
+          },
+          {
+            "label": "forbidden",
+            "slug": "nextjs/api/functions/forbidden"
+          },
+          {
+            "label": "generateImageMetadata",
+            "slug": "nextjs/api/functions/generate-image-metadata"
+          },
+          {
+            "label": "generateMetadata",
+            "slug": "nextjs/api/functions/generate-metadata"
+          },
+          {
+            "label": "generateSitemaps",
+            "slug": "nextjs/api/functions/generate-sitemaps"
+          },
+          {
+            "label": "generateStaticParams",
+            "slug": "nextjs/api/functions/generate-static-params"
+          },
+          {
+            "label": "generateViewport",
+            "slug": "nextjs/api/functions/generate-viewport"
+          },
+          {
+            "label": "headers",
+            "slug": "nextjs/api/functions/headers"
+          },
+          {
+            "label": "ImageResponse",
+            "slug": "nextjs/api/functions/image-response"
+          },
+          {
+            "label": "io",
+            "slug": "nextjs/api/functions/io"
+          },
+          {
+            "label": "NextRequest",
+            "slug": "nextjs/api/functions/next-request"
+          },
+          {
+            "label": "NextResponse",
+            "slug": "nextjs/api/functions/next-response"
+          },
+          {
+            "label": "root-params",
+            "slug": "nextjs/api/functions/root-params"
+          },
+          {
+            "label": "notFound",
+            "slug": "nextjs/api/functions/not-found"
+          }
+        ]
+      },
+      {
+        "label": "Module 10: API Reference - Functions (Part 2)",
+        "items": [
+          {
+            "label": "permanentRedirect",
+            "slug": "nextjs/api/functions/permanent-redirect"
+          },
+          {
+            "label": "redirect",
+            "slug": "nextjs/api/functions/redirect"
+          },
+          {
+            "label": "refresh",
+            "slug": "nextjs/api/functions/refresh"
+          },
+          {
+            "label": "revalidatePath",
+            "slug": "nextjs/api/functions/revalidate-path"
+          },
+          {
+            "label": "revalidateTag",
+            "slug": "nextjs/api/functions/revalidate-tag"
+          },
+          {
+            "label": "unauthorized",
+            "slug": "nextjs/api/functions/unauthorized"
+          },
+          {
+            "label": "unstable_cache",
+            "slug": "nextjs/api/functions/unstable-cache"
+          },
+          {
+            "label": "unstable_noStore",
+            "slug": "nextjs/api/functions/unstable-nostore"
+          },
+          {
+            "label": "unstable_rethrow",
+            "slug": "nextjs/api/functions/unstable-rethrow"
+          },
+          {
+            "label": "updateTag",
+            "slug": "nextjs/api/functions/update-tag"
+          },
+          {
+            "label": "useLinkStatus",
+            "slug": "nextjs/api/functions/use-link-status"
+          },
+          {
+            "label": "useOffline",
+            "slug": "nextjs/api/functions/use-offline"
+          },
+          {
+            "label": "useParams",
+            "slug": "nextjs/api/functions/use-params"
+          },
+          {
+            "label": "usePathname",
+            "slug": "nextjs/api/functions/use-pathname"
+          },
+          {
+            "label": "useReportWebVitals",
+            "slug": "nextjs/api/functions/use-report-web-vitals"
+          },
+          {
+            "label": "useRouter",
+            "slug": "nextjs/api/functions/use-router"
+          },
+          {
+            "label": "useSearchParams",
+            "slug": "nextjs/api/functions/use-search-params"
+          },
+          {
+            "label": "useSelectedLayoutSegment",
+            "slug": "nextjs/api/functions/use-selected-layout-segment"
+          },
+          {
+            "label": "useSelectedLayoutSegments",
+            "slug": "nextjs/api/functions/use-selected-layout-segments"
+          },
+          {
+            "label": "userAgent",
+            "slug": "nextjs/api/functions/user-agent"
+          }
+        ]
+      },
+      {
+        "label": "Module 11: Configuration, TypeScript & Tooling",
+        "items": [
+          {
+            "label": "next.config.js",
+            "slug": "nextjs/api/config/next-config"
+          },
+          {
+            "label": "TypeScript",
+            "slug": "nextjs/api/config/typescript"
+          },
+          {
+            "label": "ESLint",
+            "slug": "nextjs/api/config/eslint"
+          },
+          {
+            "label": "create-next-app CLI",
+            "slug": "nextjs/api/config/create-next-app"
+          },
+          {
+            "label": "next CLI",
+            "slug": "nextjs/api/config/next-cli"
+          },
+          {
+            "label": "Adapters",
+            "slug": "nextjs/api/config/adapters"
+          },
+          {
+            "label": "Edge Runtime",
+            "slug": "nextjs/api/config/edge-runtime"
+          },
+          {
+            "label": "Turbopack",
+            "slug": "nextjs/api/config/turbopack"
+          }
+        ]
+      },
+      {
+        "label": "Module 12: Architecture & Glossary",
+        "items": [
+          {
+            "label": "Glossary",
+            "slug": "nextjs/arch/glossary"
+          },
+          {
+            "label": "Architecture: Accessibility",
+            "slug": "nextjs/arch/accessibility"
+          },
+          {
+            "label": "Architecture: Fast Refresh",
+            "slug": "nextjs/arch/fast-refresh"
+          },
+          {
+            "label": "Architecture: Next.js Compiler",
+            "slug": "nextjs/arch/nextjs-compiler"
+          },
+          {
+            "label": "Architecture: Supported Browsers",
+            "slug": "nextjs/arch/supported-browsers"
+          }
+        ]
+      },
+      {
+        "label": "Module 13: Mini Project - Full-Stack Blog",
+        "items": [
+          {
+            "label": "Mini Project: Overview & Requirements",
+            "slug": "nextjs/mini/overview"
+          },
+          {
+            "label": "Step 1: Setup & Data Layer",
+            "slug": "nextjs/mini/setup-data-layer"
+          },
+          {
+            "label": "Step 2: Layouts, Routing & Navigation",
+            "slug": "nextjs/mini/layouts-routing-navigation"
+          },
+          {
+            "label": "Step 3: Data Fetching with Cache Components",
+            "slug": "nextjs/mini/data-fetching-caching"
+          },
+          {
+            "label": "Step 4: Server Actions & Forms",
+            "slug": "nextjs/mini/server-actions-forms"
+          },
+          {
+            "label": "Step 5: Route Handlers (API)",
+            "slug": "nextjs/mini/route-handlers"
+          },
+          {
+            "label": "Step 6: Auth, Metadata & OG Images",
+            "slug": "nextjs/mini/auth-metadata-og"
+          },
+          {
+            "label": "Step 7: Deployment & Security Checklist",
+            "slug": "nextjs/mini/deploy-security"
+          }
+        ]
+      },
+      {
+        "label": "Module 14: Next.js + MongoDB ToDo Project",
+        "items": [
+          {
+            "label": "Part 1: Project Setup & MongoDB ချိတ်ဆက်ခြင်း",
+            "slug": "nextjs/mongo-todo/setup-mongodb"
+          },
+          {
+            "label": "Part 2: Mongoose Schema & Model",
+            "slug": "nextjs/mongo-todo/mongoose-schema-model"
+          },
+          {
+            "label": "Part 3: API Routes & Server Actions",
+            "slug": "nextjs/mongo-todo/api-routes-server-actions"
+          },
+          {
+            "label": "Part 4: Frontend UI & API ချိတ်ဆက်ခြင်း",
+            "slug": "nextjs/mongo-todo/frontend-ui"
           }
         ]
       }

@@ -1,0 +1,79 @@
+---
+title: "Dynamic Routes — Dynamic Segments များနှင့် Params"
+description: "Dynamic segments, catch-all and optional catch-all routes, and the params contract. — Dynamic Segments များ၊ Catch-all နှင့် Optional Catch-all Routes များနှင့် Params Contract အကြောင်းကို ရှင်းပြထားပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  `[slug]`၊ `[...slug]` နှင့် `[[...slug]]` ကဲ့သို့သော URL Patterns များနှင့် ၎င်းတို့၏ `params` Semantics များကို ကျွမ်းကျင်စွာ နားလည်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Dynamic Routes ဆိုသည်မှာ Folder အမည်များတွင် `[slug]` ကဲ့သို့သော Square Bracket Syntax ကို အသုံးပြု၍ URL ၏ အစိတ်အပိုင်းတစ်ခုစီကို Dynamic Value အဖြစ် လက်ခံနိုင်သော Routes များ ဖြစ်ပါတယ်။ ဥပမာ `app/blog/[slug]/page.tsx` ရှိလျှင် `/blog/hello` နှင့် `/blog/welcome` ကဲ့သို့သော URL များအားလုံးကို Page တစ်ခုတည်းက ကိုင်တွယ်နိုင်မှာ ဖြစ်ပါတယ်။ Dynamic Segment ၏တန်ဖိုးများကို Page ၏ `params` Prop မှ ဖတ်ယူရပြီး Next 16 တွင် `params` သည် `Promise` ဖြစ်သောကြောင့် အမြဲ `await` ပြုလုပ်ရပါတယ်။ Catch-all (`[...slug]`) သည် Nested Segments အများအပြားကို Array တစ်ခုအနေဖြင့် လက်ခံပြီး Optional Catch-all (`[[...slug]]`) သည် Segment လုံးဝမပါသည့် URL ကိုပါ လက်ခံပေးပါတယ်။ ဤ Patterns များကို Blogging Platforms များ၊ E-commerce Categories များနှင့် Documentation Hierarchies များတွင် မကြာခဏ အသုံးပြုလေ့ရှိပါတယ်။
+
+## Dynamic segment `[slug]`
+
+```
+app/blog/[slug]/page.tsx
+```
+
+Segment တစ်ခုသာ ပါဝင်သော `/blog/hello`၊ `/blog/my-post` စသည့် URL များကို ကိုက်ညီပေးပါတယ်။
+
+```tsx
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  return <h1>{slug}</h1>;
+}
+```
+
+## Catch-all `[...slug]`
+
+```
+app/shop/[...slug]/page.tsx
+```
+
+`/shop/a`၊ `/shop/a/b`၊ `/shop/a/b/c` ကဲ့သို့သော Segments အများအပြားပါဝင်သော URL များကို ကိုက်ညီပေးပါတယ်။
+
+```tsx
+// params.slug = ["a", "b", "c"]
+const { slug } = await params;   // slug: string[]
+```
+
+## Optional catch-all `[[...slug]]`
+
+```
+app/posts/[[...slug]]/page.tsx
+```
+
+`/posts` **နှင့်** `/posts/a/b` နှစ်မျိုးလုံးကို ကိုက်ညီပေးပါတယ်။ `slug` တန်ဖိုးသည် `undefined` ဖြစ်နိုင်ပါတယ်:
+
+```tsx
+const { slug = [] } = await params;
+```
+
+## With generateStaticParams
+
+```tsx
+export async function generateStaticParams() {
+  return [{ slug: "welcome" }, { slug: "tips" }];
+}
+```
+
+`dynamicParams` နှင့် တွဲဖက် အသုံးပြုနိုင်ပါတယ်:
+
+- `true` (default): Unknown Paths များကို လိုအပ်သည့်အချိန်တွင် (On Demand) Render လုပ်ပေးပါတယ်
+- `false`: Unknown Paths များကို 404 ပြန်ပေးပါတယ်
+
+## Segment precedence
+
+Static Segments များသည် Dynamic Segments များထက် ဦးစားပေး ရရှိပြီး ပိုမို Specific ဖြစ်သော Segments များသည် Catch-all ထက် ဦးစားပေးပါတယ်။
+
+## Types & TS
+
+`NextPageProps` သို့မဟုတ် မိမိကိုယ်ပိုင် Literal Types များမှ Type များကို မှန်းဆယူနိုင်ပြီး Next 16 တွင် `params`/`searchParams` များကို `Promise<>` အဖြစ် ထားရှိပေးရပါမယ်။
+
+## Activity
+
+`params.slug` မှ Breadcrumbs များကို Render လုပ်သည့် `/docs/[...slug]` နှင့် `/about` ကိုပါ ကိုက်ညီသည့် `/about/[[...page]]` တို့ကို တည်ဆောက်ပါ။

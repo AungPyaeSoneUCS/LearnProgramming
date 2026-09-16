@@ -1,0 +1,69 @@
+---
+title: "Deploying to Platforms — Platforms သို့ Deploy လုပ်ခြင်း"
+description: "Deploy Next.js to any platform: managed services, static hosts, containers, and edge providers. — Managed services, static hosts, containers နှင့် edge providers စသည့် မည်သည့် platform သို့မဆို Next.js ကို deploy လုပ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  သင့် app ၏ features (server code? static?) များနှင့် ကိုက်ညီသော မှန်ကန်သည့် platform နှင့် output mode ကို ရွေးချယ်နိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Deploying Next.js ဆိုသည်မှာ application တစ်ခုကို production အတွက် အင်တာနက်ပေါ်တွင် ရရှိနိုင်စေရန် နေရာချထားခြင်း ဖြစ်ပါတယ်။ ပထမဆုံး ဆုံးဖြတ်ရမည့်အချက်မှာ သင့် app သည် server code (Route Handlers, Server Actions, SSR) လိုအပ်သလား သို့မဟုတ် အားလုံးကို prerender လုပ်နိုင်ပြီး static output ဖြင့် ရနိုင်သလား ဆိုသည်ပင်ဖြစ်ပါတယ်။ Server code ရှိပါက default server output ဖြင့် Vercel, Netlify, Render ကဲ့သို့သော managed hosting များတွင် deploy လုပ်နိုင်ပြီး static ဖြစ်ပါက `output: "export"` ဖြင့် S3, Cloudflare Pages, GitHub Pages စသည့် မည်သည့် CDN သို့မဆို ပို့နိုင်ပါတယ်။ Edge/serverless platforms များအတွက်မူ Adapters များမှတစ်ဆင့် App Router ကို platform internals အဖြစ် ပြောင်းလဲ deploy လုပ်နိုင်ပါတယ်။ Docker ကို အသုံးပြုပါက container service မည်သည့်ခုသို့မဆို တွန်းတင်နိုင်ပါတယ်။ Deploy မလုပ်မီ env vars များ၊ basePath/assetPrefix နှင့် production build ကို local တွင် စမ်းသပ်ရန် မမေ့ပါနှင့်။
+
+## The key question: server or static?
+
+| App needs                                | Output mode                      |
+| ---------------------------------------- | -------------------------------- |
+| Route Handlers, Server Actions, SSR      | **Server output** (default)      |
+| Everything prerenderable, no server APIs | **Static export** (`output: "export"`) |
+
+## Managed hosting
+
+| Platform         | Setup                                                        |
+| ---------------- | ------------------------------------------------------------ |
+| Vercel           | Git push → fully managed, previews, edge + functions         |
+| Netlify          | `@netlify/plugin-nextjs`, server output via adapter          |
+| Render           | Server output with Node on port 3000, `npm start`            |
+| Railway / Fly.io | Docker container or `npm start`                              |
+| AWS Amplify      | Amplify Next.js preset                                       |
+
+## Edge / serverless platforms
+
+Next.js သည် App Router ကို platform internals များအဖြစ် ပြောင်းလဲပေးသော **Adapters** များမှတစ်ဆင့် CDN-shaped deployment ကို ပံ့ပိုးပေးပါတယ် (*Adapters* lesson ကို ကြည့်ပါ)။ Deploy လုပ်ပါ:
+
+```bash
+# Example (conceptual): a platform adapter
+npx @acme/nextjs-adapter deploy ./ --project myapp
+```
+
+## Docker to any cloud
+
+*Deploying* lesson မှ container ကို build လုပ်ပြီး မည်သည့် container service သို့မဆို push လုပ်ပါ:
+
+```bash
+docker build -t myapp .
+docker push registry.example.com/myapp
+```
+
+## Static export to any CDN
+
+```bash
+npm run build   # → out/
+aws s3 sync out/ s3://my-site --delete
+```
+
+Static output သည် စင်ကြယ်သော HTML/JS/CSS များကို ထုတ်ပေးပြီး S3, Cloudflare Pages, GitHub Pages များတွင် လည်ပတ်နိုင်ပါတယ်။
+
+## Platform checklist
+
+- စတင်ခြင်းမပြုမီ မှန်ကန်သော `NODE_ENV` နှင့် env vars များကို သတ်မှတ်ပါ
+- Sub-path တစ်ခုအောက်တွင် hosted လုပ်ပါက `basePath`/`assetPrefix` ကို configure လုပ်ပါ
+- Platform အလိုက် logging (Sentry, OpenTelemetry) ကို enable လုပ်ပါ
+- Production build ကို local တွင် ဦးစွာ စမ်းသပ်ပါ: `npm run build && npm start`
+
+## Activity — လေ့ကျင့်ခန်း
+
+သင့် static blog ကို platforms နှစ်ခု (e.g. Vercel နှင့် Netlify) သို့ deploy လုပ်ပါ၊ ထို့နောက် ၎င်းတို့၏ server outputs များအကြား features ကွာခြားချက်ကို မှတ်သားပါ။

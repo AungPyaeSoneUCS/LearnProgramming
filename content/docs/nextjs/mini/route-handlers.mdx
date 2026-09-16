@@ -1,0 +1,99 @@
+﻿---
+title: "Step 5: Route Handlers (API)"
+description: "Blog အတွက် API Endpoints များကို Route Handlers ဖြင့် တည်ဆောက်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Blog ၏ API Layer ဖြစ်သော Route Handlers များကို JSON Responses၊ Streaming နှင့် Route Cache များနှင့် တည်ဆောက်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Route Handlers များသည် `app/**/route.ts` ဖိုင်များတွင် `GET`/`POST`/`PUT`/`PATCH`/`DELETE` Function Exports များအနေဖြင့် API Endpoints များကို တည်ဆောက်ပေးပါတယ်။ Server Components များတွင် Database ကို တိုက်ရိုက်ခေါ်နိုင်သောကြောင့် Blog ၏ Page များအတွက် API မလိုအပ်သော်လည်း Third-party များ၊ Mobile Apps သို့မဟုတ် JS Client များအတွက် JSON API များကို ဤ Route Handlers များဖြင့် ထုတ်ပေးနိုင်ပါတယ်။ Next.js 15+ တွင် `params` များသည် `Promise` များဖြစ်သောကြောင့် `await params` လုပ်ရမည်ဖြစ်ပြီး Cache Components ဖွင့်ထားပါက GET Handler များတွင် `"use cache"` ဖြင့် Cache လုပ်နိုင်ပါတယ်။ Dynamic APIs (cookies/headers) သုံးပါက ၎င်း Handler များသည် အလိုအလျောက် Cache မလုပ်တော့ပါ။ ထို့အပြင် `NextResponse` သည် JSON၊ Redirect နှင့် Cookies များကို ကိုင်တွယ်ရန် လွယ်ကူသော Helper များ ပေးပါသည်။
+
+## JSON API: GET + POST
+
+```ts
+// app/api/posts/route.ts
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+
+export async function GET() {
+  "use cache";
+  cacheLife("minutes");
+
+  const posts = await prisma.post.findMany({
+    where: { published: true },
+    orderBy: { createdAt: "desc" },
+    select: { id: true, title: true, slug: true, createdAt: true },
+  });
+
+  return NextResponse.json(posts);
+}
+
+export async function POST(request: Request) {
+  const body = await request.json();   // { title, slug, content }
+  const post = await prisma.post.create({
+    data: { ...body, published: true },
+  });
+  revalidateTag("posts");
+  return NextResponse.json(post, { status: 201 });
+}
+```
+
+## Dynamic Segment Handler
+
+```ts
+// app/api/posts/[slug]/route.ts
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+
+export async function GET(_req: Request, { params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await prisma.post.findUnique({ where: { slug } });
+
+  if (!post) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  return NextResponse.json(post);
+}
+```
+
+## Streaming Responses
+
+```ts
+export async function GET() {
+  const stream = new ReadableStream({
+    async start(controller) {
+      controller.enqueue(new TextEncoder().encode("hello"));
+      await new Promise((r) => setTimeout(r, 300));
+      controller.enqueue(new TextEncoder().encode(" world"));
+      controller.close();
+    },
+  });
+  return new Response(stream, { headers: { "Content-Type": "text/plain" } });
+}
+```
+
+## Cookies & Redirect
+
+```ts
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  const res = NextResponse.json({ ok: true });
+  res.cookies.set("visited", "true", { path: "/" });
+  return res;
+}
+```
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- `page.tsx` နှင့် `route.ts` သည် တူညီသော Segment တွင် တွဲမထားနိုင်
+- `params` ကို `await` လုပ်ရမည် (Next 15+)
+- POST/DELETE ကဲ့သို့ Mutating Methods များကို Cache မလုပ်ပါ
+- Route Handlers များသည် Node Runtime ကို Default သုံးပါသည် (`export const runtime = "edge"` ဖြင့် Edge ပြောင်းနိုင်)
+
+## Activity — လေ့ကျင့်ခန်း
+
+`api/posts/route.ts` (GET+POST) နှင့် `api/posts/[slug]/route.ts` (GET) ကို တည်ဆောက်ပါ။ `curl http://localhost:3000/api/posts` ဖြင့် JSON List ရကြောင်း စစ်ဆေးပြီး 404 Case ကိုလည်း စမ်းကြည့်ပါ။

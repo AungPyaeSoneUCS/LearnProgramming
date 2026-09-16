@@ -1,0 +1,76 @@
+---
+title: "Analytics — အသုံးပြုမှု စာရင်းအင်း"
+description: "Collect and report web vitals and custom events with instrumentation, the WebVitals component, and third-party tools. — Instrumentation, WebVitals component နှင့် third-party tools များဖြင့် web vitals နှင့် custom events များကို စုဆောင်း အစီရင်ခံခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Client bundle ကို မကြီးမားစေဘဲ Core Web Vitals (performance) နှင့် custom events များကို ခြေရာခံ တိုင်းတာနိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Analytics ဆိုသည်မှာ application တစ်ခုအပေါ် user များ မည်သို့ သုံးစွဲနေသည်နှင့် page များ မည်မျှ မြန်ဆန်စွာ load ဖြစ်နေသည်ကို တိုင်းတာ မှတ်တမ်းပြုသည့် လုပ်ငန်းစဉ် ဖြစ်ပါတယ်။ Next.js တွင် `next/web-vitals` မှ `useReportWebVitals` hook ကို root layout ၏ Client Component တစ်ခုတွင် သုံး၍ Core Web Vitals (LCP, FCP, INP, CLS, TTFB) များကို စုဆောင်းနိုင်ပါတယ်။ Metric တစ်ခုစီတွင် name, value, id, page, attribution စသည့် အချက်အလက်များ ပါဝင်ပါတယ်။ ထို့အပြင် window.gtag သို့မဟုတ် third-party libraries များဖြင့် purchase, signup စသည့် custom events များကိုလည်း ခြေရာခံနိုင်ပါတယ်။ ဤနည်းဖြင့် client bundle မကြီးမားဘဲ အသုံးပြုမှု ဒေတာများကို ထိရောက်စွာ ရရှိနိုင်ပါတယ်။
+
+## useReportWebVitals
+
+Root layout ရှိ Client Component တစ်ခုမှ Core Web Vitals များကို report လုပ်ပါ:
+
+```tsx
+// app/_analytics/web-vitals.tsx
+"use client";
+
+import { useReportWebVitals } from "next/web-vitals";
+
+export function WebVitals() {
+  useReportWebVitals((metric) => {
+    console.log(metric); // name, value, id, ...
+    fetch("/api/vitals", { method: "POST", body: JSON.stringify(metric) });
+  });
+  return null;
+}
+```
+
+```tsx
+// app/layout.tsx
+import { WebVitals } from "@/app/_analytics/web-vitals";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}<WebVitals /></body>
+    </html>
+  );
+}
+```
+
+## Vitals collected
+
+Metric တွင် LCP, FCP, FID (`INP`), CLS, TTFB များ ပါဝင်ပြီး တစ်ခုစီတွင် `name`, `value`, `page`, `attribution` များ အသီးသီး ပါရှိပါတယ်။
+
+## Custom events
+
+သင်စိတ်ဝင်စားသော interactions များကို instrument လုပ်ပါ:
+
+```tsx
+<button onClick={() => window.gtag?.("event", "purchase", { value: 42 })}>
+  Buy
+</button>
+```
+
+## Third-party analytics patterns
+
+- **Vercel Analytics** - configuration မလိုအပ်ဘဲ အသုံးပြုနိုင်သော dashboard
+- **Plausible / Umami** - privacy ကို ဦးစားပေးသော သေးငယ်သည့် script
+- **Google Analytics** - component တစ်ခုမှတစ်ဆင့် သို့မဟုတ် `afterInteractive` strategy ဖြင့် `Script` component ကို သုံး၍ ထည့်သွင်းပါ
+
+```tsx
+import Script from "next/script";
+
+<Script src="https://www.googletagmanager.com/gtag/js?id=G-XXXX" strategy="afterInteractive" />;
+```
+
+## Activity — လေ့ကျင့်ခန်း
+
+`useReportWebVitals` ၏ metrics များကို Route Handler သို့ ပို့ဆောင်ပါ၊ ထို့နောက် page အချို့ load ဖြစ်သည်နှင့် dashboard ကို စစ်ဆေးပါ။ သင့် auth form တွင် custom "signup" event တစ်ခု ထည့်ပါ။

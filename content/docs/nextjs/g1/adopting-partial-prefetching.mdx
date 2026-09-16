@@ -1,0 +1,68 @@
+---
+title: "Adopting Partial Prefetching — Partial Prefetching လက်ခံ အသုံးပြုခြင်း"
+description: "Speed up navigations with partial prefetching - ship route metadata early with only the data pages need. — Partial prefetching ဖြင့် navigation မြန်ဆန်စေပြီး page များလိုအပ်သော data ကိုသား ကြိုတင် route metadata ပို့ပေးခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Route ၏ ကနဦး (static) အပိုင်းကို ကြိုတင် prefetch လုပ်ပြီး ကျန် dynamic အပိုင်းများကို click လုပ်မှသာ load လုပ်နိုင်အောင် ပြုလုပ်ခြင်းဖြင့် အလွန်နီးစပ်သော ချက်ချင်း navigation ကို ရရှိစေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Partial Prefetching ဆိုသည်မှာ Next.js ၏ navigation များကို မြန်ဆန်စေရန်အတွက် route တစ်ခု၏ သေးငယ်သော static shell ကို ကြိုတင် ယူဆောင်ပြီး ကျန်ရှိသည့် dynamic data များကို user click လုပ်သည့်အခါမှသာ fetch လုပ်သည့် mechanism တစ်ခု ဖြစ်ပါတယ်။ ပုံမှန် `<Link>` သည် target route တစ်ခုလုံးကို prefetch လုပ်သော်လည်း partial prefetching သည် shell ကိုသာ ကြိုတင် ပို့ပေးသဖြင့် bandwidth နှင့် initial load နှစ်ခုစလုံး သက်သာပါတယ်။ Cache Components များ enable လုပ်ထားလျှင် cached (prerendered) အပိုင်းများကို prefetch လုပ်နိုင်ပြီး dynamic အပိုင်းများမှာ click ချိန်အထိ စောင့်ဆိုင်းနေပါတယ်။ `use cache` ဖြင့် အမှတ်အသားပြုထားသော data များသည် static shell ၏ အစိတ်အပိုင်း ဖြစ်လာပြီး uncached data များမှာ navigation လုပ်ချိန်တွင် ဖြည့်စွက်သည့် dynamic hole ဖြစ်လာပါတယ်။
+
+## What is Partial Prefetching?
+
+ပုံမှန်အားဖြင့် `<Link>` တစ်ခုသည် target route **တစ်ခုလုံး**ကို prefetch လုပ်ပါတယ်။ Partial prefetching နှင့်အတူမူ Next.js သည် route ၏ သေးငယ်သော static shell ကို ကြိုတင် ပို့ပြီး ကျန်ရှိသော dynamic data ကို user click လုပ်မှသာ fetch လုပ်ပါတယ်။
+
+```
+BEFORE (full prefetch)          AFTER (partial prefetch)
+[click] ── fetch RSC payload    [hover] ── fetch static shell (tiny)
+          ── render all          [click] ── fetch dynamic RSC chunks
+```
+
+## Enabling it
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  partialPrefetching: true,
+};
+```
+
+Cache Components များ enable လုပ်ထားသောအခါ route တစ်ခု၏ cached (prerendered) အပိုင်းများမှာ prefetch လုပ်နိုင်ပြီး dynamic အပိုင်းများမှာ စောင့်ဆိုင်းနေပါတယ်။
+
+## Interop with Cache Components
+
+`use cache` ဖြင့် data ကို အမှတ်အသားပြုမှသာ ၎င်းသည် static shell ၏ အစိတ်အပိုင်း ဖြစ်လာပြီး prefetch လုပ်နိုင်ပါတယ်:
+
+```tsx
+export async function getProducts() {
+  "use cache";
+  cacheLife("minutes");
+  return db.query("SELECT * FROM products");
+}
+```
+
+Uncached data များမှာ navigation လုပ်ချိန်တွင် ဖြည့်စွက်ရသည့် "dynamic hole" အဖြစ် ဆောင်ရွက်ပါတယ်။
+
+## Per-link control
+
+```tsx
+import Link from "next/link";
+
+<Link href="/blog" prefetch>            {/* default / partial */}
+<Link href="/blog" prefetch={false}>    {/* fetch only on click */}
+```
+
+## When to use it
+
+- **Data များသော ကြီးမားသည့် page များ** (list pages, dashboards) မှာ အကျိုးအများဆုံး ရရှိပါတယ်
+- **Above-the-fold ဖြစ်သော အရေးကြီး page များ**ကိုမူ အားလုံး full prefetch လုပ်ထားပါ
+- Tuning အတွက် `Optimizing prefetching` နှင့် `Instant navigation` guide များကို စောင့်ကြည့်ပါ
+
+## Activity — လေ့ကျင့်ခန်း
+
+`partialPrefetching: true` ကို enable လုပ်ပါ၊ သင့် အနှေးဆုံး page ၏ data တွင် `use cache` ထည့်ပါ၊ ထို့နောက် full နှင့် partial prefetch route များအကြား DevTools network timings များကို နှိုင်းယှဉ်ကြည့်ပါ။

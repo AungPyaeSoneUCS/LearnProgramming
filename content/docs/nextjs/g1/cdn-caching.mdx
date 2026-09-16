@@ -1,0 +1,79 @@
+---
+title: "CDN Caching — CDN Caching လုပ်ခြင်း"
+description: "Cache responses at the edge with Cache-Control headers so users worldwide hit the CDN, not your origin. — Cache-Control headers များဖြင့် edge တွင် responses များကို cache လုပ်ကာ ကမ္ဘာအနှံ့ သုံးစွဲသူများသည် origin မဟုတ်ဘဲ CDN ကို ဝင်ရောက်စေခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Dynamic responses များတွင် `Cache-Control` headers များ ထည့်ကာ CDNs များက ၎င်းတို့ကို cache လုပ်နိုင်အောင် ပြုလုပ်ပြီး time-to-first-byte ကို သိသိသာသာ လျှော့ချနိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+CDN Caching ဆိုသည်မှာ အကြောင်းအရာများကို user ၏ အနီးဆုံး edge location တွင် ကြိုတင်သိမ်းဆည်း (cache) ထားခြင်းဖြင့် origin server သို့ မရောက်ဘဲ မြန်ဆန်စွာ ဝန်ဆောင်မှုပေးသည့် နည်းလမ်း ဖြစ်ပါတယ်။ Static assets နှင့် prerendered pages များသည် edge တွင် အလိုအလျောက် cache ခံရပြီး Route Handlers များအတွက်မူ `Cache-Control` response headers များဖြင့် ထိန်းချုပ်ရပါတယ်။ `s-maxage` သည် CDN မှ စက္ကန့်အလိုက် သက်တမ်းရှိသော copies များကို ဝန်ဆောင်မှုပေးနိုင်သည့် အချိန်ကို သတ်မှတ်ပြီး `stale-while-revalidate` က background refresh ကာလအတွင်း stale content ကို ဆက်လက် ပေးပါတယ်။ `use cache` နှင့် CDN revalidation ကို ပေါင်းစပ်ပါက page ၏ HTML ကိုပါ stale window အတွင်း CDN တွင် cache လုပ်နိုင်ပါတယ်။ User-specific ဖြစ်သော private data များကိုမူ `public` ဖြင့် ဘယ်တော့မှ cache မလုပ်ဘဲ `private, no-store` ကို အသုံးပြုသင့်ပါတယ်။
+
+## What the CDN caches
+
+Static assets နှင့် prerendered pages များသည် edge တွင် အလိုအလျောက် cache ခံရပါတယ်။ **Route Handlers** များအတွက်မူ response headers များဖြင့် ထိန်းချုပ်နိုင်ပါတယ်:
+
+```ts
+// app/api/products/route.ts
+export async function GET() {
+  const products = await fetchProducts();
+  return NextResponse.json(products, {
+    headers: {
+      "Cache-Control": "public, s-maxage=60, stale-while-revalidate=600",
+    },
+  });
+}
+```
+
+- `s-maxage=60` - CDN သည် ၆၀ စက္ကန့် သက်တမ်းရှိသော copies များကို ဝန်ဆောင်မှုပေးနိုင်သည်
+- `stale-while-revalidate` - background refresh ကာလအတွင်း stale content ကို ဆက်လက် ပေးသည်
+
+## Caching the HTML shell
+
+`use cache` ကို CDN revalidation နှင့် ပေါင်းစပ်ပါ။ ပုံမှန်အားဖြင့် fresh content ပြန်လည် generate လုပ်နေချိန်တွင် `stale` content ကို ဝန်ဆောင်မှုပေးပါတယ်:
+
+```tsx
+async function getProducts() {
+  "use cache";
+  cacheLife("hours");
+  return db.query("SELECT * FROM products");
+}
+```
+
+Page ၏ HTML ကို `stale` window အတွက် CDN တွင် cache လုပ်နိုင်ပါတယ်။
+
+## Recommended header sets
+
+| Content                       | Header                                                      |
+| ----------------------------- | ----------------------------------------------------------- |
+| Public, rarely changes        | `public, max-age=31536000, immutable`                       |
+| Public, changing daily        | `public, s-maxage=86400, stale-while-revalidate=86400`      |
+| User-specific / private       | `private, no-store` (or `private, max-age=0`)               |
+
+## Applying to static assets
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  async headers() {
+    return [
+      {
+        source: "/images/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+    ];
+  },
+};
+```
+
+## Avoid caching private data
+
+Auth-cached responses များအတွက် `public` ကို ဘယ်တော့မှ မပို့ပါနှင့်။ User နှင့် သက်ဆိုင်သော အရာများအတွက် `private, no-store` ကို အသုံးပြုပါ။
+
+## Activity — လေ့ကျင့်ခန်း
+
+သင့် products API တွင် `Cache-Control: public, s-maxage=60, stale-while-revalidate=300` ကို ထည့်ပြီး `curl -I` ဖြင့် CDN header ရှိကြောင်း အတည်ပြုပါ။

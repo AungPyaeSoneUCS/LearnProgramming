@@ -1,0 +1,64 @@
+---
+title: "userAgent"
+description: "Parse the User-Agent header with the userAgent() helper. — User-Agent Header ကို ဖတ်ရှုပြီး Browser, OS, Device အမျိုးအစားများကို ဖော်ထုတ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  User-Agent (UA) ဒေတာမှ Browser, OS, Device အမျိုးအစားနှင့် Bot ဟုတ်/မဟုတ်ကို ဖော်ထုတ်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`userAgent()` သည် `Request` သို့မဟုတ် `NextRequest` တစ်ခုကို လက်ခံ၍ ထို Request ၏ `User-Agent` Header ကို ခွဲခြမ်းစိတ်ဖြာပြီး Browser အမည်/ဗားရှင်း၊ OS အမည်/ဗားရှင်း၊ Device Type (mobile/desktop/tablet) နှင့် Bot ဟုတ်/မဟုတ် စသည့် အချက်အလက်များကို အသုံးပြုရလွယ်ကူသော Object အဖြစ် ပြန်ပေးသော Helper ဖြစ်ပါတယ်။ UA String တစ်ခုလုံးကို Regular Expression များဖြင့် ကိုယ်တိုင် ရှာဖွေ Parse လုပ်ရန် မလိုတော့ဘဲ Next.js ၏ Built-in Parsing ကို အသုံးပြုနိုင်ပါတယ်။ Route Handler များတွင် Request နှင့်အတူ သုံးနိုင်ပြီး `proxy.ts` (Middleware) တွင် `NextRequest` ဖြင့် သုံးနိုင်ပါသည်။ ၎င်းကို Bot Defense၊ Device-based Content Hints သို့မဟုတ် Mobile Flow သို့ Redirect လုပ်ရန် အသုံးပြုနိုင်သော်လည်း SEO ထိခိုက်စေနိုင်သဖြင့် Redirect ဆုံးဖြတ်ချက်များတွင် သတိထားရပါမယ်။ UA Parsing သည် Heuristic မျှသာ ဖြစ်သောကြောင့် ဖြစ်နိုင်လျှင် Device ဆုံးဖြတ်ရန် Client-side Feature Detection ကို ဦးစားပေးသင့်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```ts
+import { userAgent } from "next/server";
+
+export async function GET(request: NextRequest) {
+  const ua = userAgent(request);
+  return NextResponse.json({
+    isBot: ua.isBot,
+    browser: ua.browser.name,
+    device: ua.device.type,      // mobile/desktop/tablet
+    os: ua.os.name,
+  });
+}
+```
+
+## Return Shape (ပြန်ပေးသော ပုံစံ)
+
+```ts
+{
+  ua: string,
+  isBot: boolean,
+  browser: { name, version, major, ... },
+  device: { type?, vendor?, model? },
+  engine: { name, version },
+  os: { name, version },
+  cpu,
+}
+```
+
+## Where it works (အသုံးပြုနိုင်သည့် နေရာများ)
+
+- `request` ပါသော Route Handlers (ထို့အပြင် `proxy.ts` ရှိ `NextRequest` များ)
+- `Request | NextRequest` ရှိသည့် မည်သည့်နေရာတွင်မဆို
+
+## Use Cases (အသုံးပြုပုံ နမူနာများ)
+
+- Previews/API များတွင် Bot Defense
+- Device အလိုက် Content Hints ပေးခြင်း
+- Mobile Flow သို့ Redirect ပြုလုပ်ခြင်း (SEO သတိထား)
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- UA Parsing သည် Heuristic ဖြစ်သောကြောင့် ဖြစ်နိုင်လျှင် Client-side Feature Detection ကို ဦးစားပေးပါ
+- App Router Server Code တွင် Manual Header Reg-ex များထက် `userAgent(request)` ကို သုံးပါ
+
+## Activity — လေ့ကျင့်ခန်း
+
+`userAgent` မှ Device Class နှင့် Bot Flag တို့ကို ပြန်ပေးသော `/api/visit` Route Handler တစ်ခုကို တည်ဆောက်ပါ။ ထို့နောက် Mobile UA String တစ်ခုဖြင့် `curl` လုပ်ကြည့်၍ Output မှန်ကန်စွာ ပြောင်းလဲကြောင်း စစ်ဆေးပါ။

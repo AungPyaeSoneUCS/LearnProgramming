@@ -1,0 +1,94 @@
+---
+title: "Lazy Loading — လိုအပ်မှသာ တင်ခြင်း"
+description: "Defer non-critical JavaScript with next/dynamic and React lazy - smaller initial bundles, faster first load. — `next/dynamic` နှင့် React lazy ကို သုံး၍ မလိုအပ်သော JavaScript များကို နောက်မှ တင်စေကာ initial bundles သေးငယ်စေနည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Heavy, off-screen သို့မဟုတ် မကြာခဏ သုံးလေ့မရှိသော components များကို code splitting ပြုလုပ်ပြီး လိုအပ်သည့်အချိန်မှသာ ဆွဲတင်စေရန် နားလည်စေရန် ဖြစ်ပါတယ် — **`next/dynamic`** နှင့် **`React.lazy`** တို့၏ အသုံးပြုပုံများကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Web page တစ်ခုသည် JavaScript bundle ကြီးများကို တစ်ခါတည်း ဆွဲတင်ပါက ပထမဆုံး load ချိန်တွင် နှေးကွေးတတ်ပါတယ်။ ထို့ကြောင့် စာမျက်နှာပေါ်တွင် ချက်ချင်း မလိုအပ်သော heavy components များ (ဥပမာ PDF viewer, chart, modal) ကို code splitting ဖြင့် သီးခြား chunk အဖြစ် ခွဲထုတ်ပြီး လိုအပ်သည့်အချိန်၌သာ ဆွဲတင်စေရန် lazy loading ကို အသုံးပြုပါတယ်။ Client Components အတွက် `next/dynamic` မှ `dynamic()` ကို သုံးပြီး `ssr: false` ဖြင့် client-only ဖြစ်စေကာ `loading` option ဖြင့် fallback UI ကို ပေးနိုင်ပါတယ်။ React ဘက်မှာမူ `React.lazy` နှင့် `<Suspense>` တို့ကို တွဲသုံး၍ client subtrees များကို နောက်မှ ဆွဲတင်နိုင်ပါတယ်။ Modal ကဲ့သို့ on-interaction ဖြစ်သော components များအတွက် user က button ကို နှိပ်မှသာလျှင် chunk ကို ဆွဲတင်ပြီး Server Components များအတွက်လည်း `import()` ဖြင့် server-side helper များကို lazy-load လုပ်နိုင်ပါတယ်။ `<Suspense>` fallbacks များကို နေရာတိုင်းတွင် တွဲသုံးကာ `next/link` prefetch ဖြင့် hover targets များကို ကြိုတင် ဆွဲထားပြီး `next build` route report ဖြင့် bundle size ကို စစ်ဆေးသင့်ပါတယ်။
+
+## Why lazy load?
+
+Page ပေါ်တွင် ဘယ်သောအခါမှ မပြသည့် 500 KB PDF viewer ကို shipping လုပ်ခြင်းသည် bandwidth ကို အလဟသ ကုန်ဆုံးစေပါတယ်။ **Code splitting** သည် ထို bundle ကို on demand တွင် ဆွဲတင်ရမည့် သီးခြား chunk အဖြစ် ရွှေ့ပေးပါတယ်။
+
+## next/dynamic for Client Components
+
+```tsx
+"use client";
+
+import dynamic from "next/dynamic";
+
+// Heavy component in its own chunk
+const HeavyChart = dynamic(() => import("./heavy-chart"), {
+  loading: () => <div className="h-64 animate-pulse bg-muted" />,
+  ssr: false,
+});
+
+export default () => <HeavyChart data={dashboardData} />;
+```
+
+- `ssr: false` — client-only ဖြစ်စေပြီး browser APIs အတွက် ကောင်းမွန်ပါတယ်
+- `loading` — chunk တင်နေစဉ်အတွင်း fallback (optional)
+
+## React lazy()
+
+`React.lazy` + `<Suspense>` ကို client subtrees များအတွက် သုံးပါ:
+
+```tsx
+const Editor = React.lazy(() => import("./editor"));
+
+<Suspense fallback={<EditorSkeleton />}>
+  <Editor />
+</Suspense>
+```
+
+## Conditional / on-interaction loading
+
+```tsx
+"use client";
+
+import { useState } from "react";
+import dynamic from "next/dynamic";
+
+const Modal = dynamic(() => import("./modal"));
+
+export default function Page() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button onClick={() => setOpen(true)}>Open modal</button>
+      {open && <Modal onClose={() => setOpen(false)} />}
+    </>
+  );
+}
+```
+
+Modal chunk သည် user က click လုပ်ပြီးမှသာလျှင် ဆွဲတင်ပါတယ်။
+
+## Server Component data lazy-loading
+
+Server-side helpers များအတွက်လည်း `import()` ကို သုံးနိုင်ပါတယ်:
+
+```tsx
+export default async function Page() {
+  const { renderRichContent } = await import("./rich-renderer");
+  return renderRichContent((await getBody()));
+}
+```
+
+## Tips
+
+- နေရာတိုင်းတွင် `<Suspense>` fallbacks များနှင့် တွဲသုံးပါ
+- Link hover targets များကို `next/link` prefetch ဖြင့် ကြိုတင် ဆွဲထားပါ
+- `next build` route report ဖြင့် size ၏ သက်ရောက်မှုကို စစ်ဆေးပါ
+
+## Activity
+
+လေ့ကျင့်ခန်း: Chart component တစ်ခုကို `dynamic(...)` + skeleton fallback ဖြင့် lazy-load လုပ်ပြီး button ဖြင့် trigger လုပ်ကာ chunk သည် click ပြီးမှသာ Network တွင် ပေါ်သည်ကို အတည်ပြုပါ။

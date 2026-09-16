@@ -87,16 +87,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
             {lesson.description && (
               <p className="mt-3 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground">
                 {lesson.description}
-              </p>
-            )}
-            {course && (
-              <a
-                href={toUrl(course.introSlug)}
-                className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-amber-600 no-underline transition-colors hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                {course.label} သင်ရိုးသို့ ပြန်သွားရန်
-              </a>
+</p>
             )}
           </header>
 

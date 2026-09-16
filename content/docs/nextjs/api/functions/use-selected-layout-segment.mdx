@@ -1,0 +1,45 @@
+---
+title: "useSelectedLayoutSegment"
+description: "Read the active layout segment for breadcrumbs and nav. — Active Layout Segment ကို ဖတ်ရှုပြီး Breadcrumb နှင့် Navigation အတွက် အသုံးပြုခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Layout Branch အနေဖြင့် မည်သည့် Segment က Active ဖြစ်နေသည်ကို တုံ့ပြန်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`useSelectedLayoutSegment` သည် Client Component အတွင်းမှ လက်ရှိ Render ဖြစ်နေသော Route ၏ **Active Child Segment** အမည်ကို ပြန်ပေးသော Hook တစ်ခုဖြစ်ပါတယ်။ ဥပမာ `/blog/my-post` Route တွင် ဤ Hook ကို Root Layout အတွင်း သုံးပါက `"blog"` ဆိုသည့် String ကို ပြန်ရမည်ဖြစ်ပြီး Root (`/`) တွင်မူ `null` ကို ပြန်ပေးပါတယ်။ ၎င်းသည် မည်သည့် Section က လက်ရှိ မြင်နေရသည်ကို သိရှိစေသဖြင့် Nav Styling၊ Tab Labels များ သို့မဟုတ် conditional UI များ တည်ဆောက်ရာတွင် အဓိက အသုံးဝင်ပါတယ်။ Dynamic Routes များတွင်လည်း Path ရှိ Segment အမည်အတိုင်း ပြန်ပေးပြီး Parallel Routes ၏ Segment များကိုပါ ထည့်သွင်း ထင်ဟပ်ပါတယ်။ အပြည့်အစုံ Breadcrumb Trail လိုအပ်ပါက `useSelectedLayoutSegments` ကို သုံးသင့်ပြီး ဤ Hook သည် Immediate Child ကိုသာ ပြန်ပေးတတ်ကြောင်း သတိပြုရပါမယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```tsx
+"use client";
+import { useSelectedLayoutSegment } from "next/navigation";
+
+export function Breadcrumb() {
+  const segment = useSelectedLayoutSegment();
+  return <span>{segment ?? "home"}</span>;
+}
+```
+
+## Returns (ပြန်ပေးသော Value)
+
+Current Branch တွင် **Active Child Segment** ၏ အမည် (`"blog"`, `"about"` စသည်) သို့မဟုတ် Root အတွက်မူ `null` ကို ပြန်ပေးပါတယ်။
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Client-only Hook ဖြစ်ပါတယ်
+- သုံးသည့် Layout ၏ *Immediate Child* ကိုသာ ပြန်ပေးပြီး Layout Context အလိုက် ကွဲပြားနိုင်ပါတယ် (Parallel Routes များတွင်လည်း သက်ဆိုင်ပါတယ်)
+- Dynamic Routes အတွက်လည်း Path ရှိ Segment အမည်အတိုင်း ပြန်ပေးပါတယ်
+
+## Use Case (အသုံးပြုပုံ)
+
+- Breadcrumbs: အပြည့်အစုံ Trail အတွက် `useSelectedLayoutSegments` ကို သုံးပါ
+- Highlighting: Section မည်သည့်ဟာ Render ဖြစ်နေသည် (Nav Styling) သို့မဟုတ် Segment များအတိုင်း Tab Labels သတ်မှတ်ခြင်း
+
+## Activity — လေ့ကျင့်ခန်း
+
+Docs Layout တစ်ခုတွင် `useSelectedLayoutSegment` မှ Docs Section အမည် (ဥပမာ "Guide") ကို ပြသပြီး `/docs/guide/…` တွင် Navigate လုပ်သည်နှင့် အလိုအလျောက် ပြောင်းလဲကြောင်း စမ်းသပ်ပါ။

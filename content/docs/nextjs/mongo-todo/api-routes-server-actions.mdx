@@ -1,0 +1,203 @@
+---
+title: "Part 3: API Routes & Server Actions"
+description: "app/api/todos ၌ CRUD Route Handlers (GET, POST, PUT, DELETE) များနှင့် Advanced Server Actions များ ရေးသားခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  To-Do App ၏ Backend Logic ဖြစ်သော CRUD Route Handlers (GET, POST, PUT, DELETE) များကို App Router တွင် ရေးသားနိုင်ရန်နှင့် Advanced အနေဖြင့် Server Actions များပါ တည်ဆောက်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+To-Do App ၏ Backend ပိုင်းကို Next.js App Router ဖြင့် ရေးသားပါမယ်။ App Router တွင် `app/api/**/route.ts` ဖိုင်များထဲ၌ Route Handlers Function Exports (`GET`, `POST`, `PUT`, `DELETE`) များကို ရေးခြင်းအားဖြင့် JSON API Endpoints များကို တည်ဆောက်နိုင်ပါတယ်။ ဤ Lesson တွင် `app/api/todos/route.ts` ၌ `GET` (ဒေတာဆွဲထုတ်ရန်) နှင့် `POST` (အသစ်ထည့်ရန်) request များကို လည်းကောင်း၊ `app/api/todos/[id]/route.ts` ၌ `PUT` (Task Status Update ရန်) နှင့် `DELETE` (ဖျက်ရန်) request များကို လည်းကောင်း ဖန်တီးပါမယ်။ Next.js 15+ တွင် Dynamic Route ရှိ `params` သည် Promise ဖြစ်သောကြောင့် `await params` လုပ်ရပြီး `NextResponse` ကို JSON Response များပြန်ရန် အသုံးပြုပါမယ်။ Advanced အနေဖြင့် API Route မလိုအပ်ဘဲ `<form action>` များနှင့် Server Components များမှ တိုက်ရိုက်ခေါ်နိုင်သည့် **Server Actions** (`"use server"` Functions) များကိုပါ ထည့်သွင်း လေ့လာပါမယ်။ CRUD Operation တိုင်းတွင် ဦးစွာ `connectToDatabase()` ကို ခေါ်ပြီးမှ Model ကို သုံးရမည် ဖြစ်ပါတယ်။
+
+## Route 1: GET + POST — app/api/todos/route.ts
+
+```ts
+// app/api/todos/route.ts
+import { NextResponse } from "next/server";
+import { connectToDatabase } from "@/lib/mongodb";
+import Todo from "@/models/Todo";
+
+// GET /api/todos — ဒေတာဆွဲထုတ်ခြင်း
+export async function GET() {
+  try {
+    await connectToDatabase();
+    const todos = await Todo.find().sort({ createdAt: -1 }).lean();
+    return NextResponse.json(todos);
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to fetch todos" }, { status: 500 });
+  }
+}
+
+// POST /api/todos — Task အသစ် ထည့်ခြင်း
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+
+    // Server-side Validation
+    const title = typeof body.title === "string" ? body.title.trim() : "";
+
+    if (!title) {
+      return NextResponse.json({ error: "Title is required" }, { status: 400 });
+    }
+    if (title.length > 200) {
+      return NextResponse.json({ error: "Title must be less than 200 characters" }, { status: 400 });
+    }
+
+    await connectToDatabase();
+    const todo = await Todo.create({ title });
+    return NextResponse.json(todo, { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to create todo" }, { status: 500 });
+  }
+}
+```
+
+## Route 2: PUT + DELETE — app/api/todos/[id]/route.ts
+
+```ts
+// app/api/todos/[id]/route.ts
+import { NextResponse } from "next/server";
+import { connectToDatabase } from "@/lib/mongodb";
+import Todo from "@/models/Todo";
+
+type Params = { params: Promise<{ id: string }> };
+
+// PUT /api/todos/:id — Status Toggle / Update ခြင်း
+export async function PUT(_request: Request, { params }: Params) {
+  try {
+    const { id } = await params;
+    await connectToDatabase();
+
+    // Toggle: isCompleted ကို လှန်ပေးသည်
+    const existing = await Todo.findById(id);
+    if (!existing) {
+      return NextResponse.json({ error: "Todo not found" }, { status: 404 });
+    }
+
+    existing.isCompleted = !existing.isCompleted;
+    await existing.save();
+
+    return NextResponse.json(existing);
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to update todo" }, { status: 500 });
+  }
+}
+
+// DELETE /api/todos/:id — Task ဖျက်ခြင်း
+export async function DELETE(_request: Request, { params }: Params) {
+  try {
+    const { id } = await params;
+    await connectToDatabase();
+
+    const deleted = await Todo.findByIdAndDelete(id);
+    if (!deleted) {
+      return NextResponse.json({ error: "Todo not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ success: true, id });
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to delete todo" }, { status: 500 });
+  }
+}
+```
+
+## API Routes အသေးစိတ် ရှင်းလင်းချက် (Deep Explanation)
+
+- **`await connectToDatabase()`**: Helper ‌Function တိုင်းအစတွင် Database ချိတ်ဆက်မှု ရှိကြောင်း သေချာစေရန် ခေါ်ပါတယ်။ Cache ရှိနေလျှင် Instant ဖြစ်ပါတယ်။
+- **`.lean()`**: Plain Object များကို ပြန်ပေးသဖြင့် JSON Serialization မြန်ဆန်၍ Client သို့ ပို့ရန် လွယ်ကူပါတယ်။
+- **Server-side Validation**: Client Form ကိုသာ အားကိုးရုံမဟုတ်ဘဲ `title` ကို String ဟုတ်မဟုတ်, Empty မဟုတ်ခြင်း, အရှည် ကန့်သတ်ချက် စသည်တို့ကို Server ‌တွင် ပြန်စစ်ပါတယ်။ "Never trust the client" ဖြစ်ပါတယ်။
+- **`await params`**: Next.js 15+ တွင် `params` သည် `Promise<{ id }>` ဖြစ်လာပါပြီ။ Dynamic Segment ကို အသုံးပြုလိုပါက `await` လုပ်ရမည် ဖြစ်ပါတယ်။
+- **`{ new: true }`**: `findByIdAndUpdate` မှ Updated Document ပြန်လိုချင်သောအခါ ထည့်ရပါတယ်။ ဤနေရာတွင် `existing.save()` ကို သုံးထားသောကြောင့် Toggle လုပ်နည်းကို သရုပ်ပြထားပါသည်။
+- **Status Codes**: Success (200 / 201), Bad Request (400), Not Found (404), Server Error (500) များကို သင့်လျော်စွာ ဖော်ပြပါတယ်။
+
+## Advanced: Server Actions နည်းလမ်း
+
+Route Handlers မလိုအပ်ဘဲ Server Components / Forms များမှ တိုက်ရိုက် Database သို့ ရေးနိုင်သော Server Functions များကိုလည်း ဤ App တွင် သုံးနိုင်ပါတယ်။ `"use server"` Directive ပါသောဖိုင်တွင် CRUD Actions အားလုံးကို ရေးပါမယ်:
+
+```ts
+// app/actions.ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { connectToDatabase } from "@/lib/mongodb";
+import Todo from "@/models/Todo";
+
+// Server Action များသည် Requird Auth/Validation ရှိရမည် (production တွင် True Auth ထည့်ရန်)
+
+export async function createTodo(formData: FormData) {
+  const title = String(formData.get("title") ?? "").trim();
+
+  if (!title) throw new Error("Title is required");
+  if (title.length > 200) throw new Error("Title too long");
+
+  await connectToDatabase();
+  await Todo.create({ title });
+
+  revalidatePath("/"); // List ကို ပြန်မွမ်းမံ
+}
+
+export async function toggleTodo(formData: FormData) {
+  const id = String(formData.get("id") ?? "");
+
+  await connectToDatabase();
+  const todo = await Todo.findById(id);
+  if (!todo) throw new Error("Todo not found");
+
+  todo.isCompleted = !todo.isCompleted;
+  await todo.save();
+
+  revalidatePath("/");
+}
+
+export async function deleteTodo(formData: FormData) {
+  const id = String(formData.get("id") ?? "");
+
+  await connectToDatabase();
+  await Todo.findByIdAndDelete(id);
+
+  revalidatePath("/");
+}
+```
+
+Server Components များသည် `<form>` များဖြင့် ဤ Actions များကို တိုက်ရိုက် ခေါ်နိုင်ပါတယ်:
+
+```tsx
+// app/page.tsx (Server Component အပိုင်း)
+import { createTodo } from "@/app/actions";
+
+export default function TodoForm() {
+  return (
+    <form action={createTodo} className="flex gap-2">
+      <input name="title" required placeholder="Add a new task…" />
+      <button type="submit">Add</button>
+    </form>
+  );
+}
+```
+
+## Server Actions အသေးစိတ် ရှင်းလင်းချက် (Deep Explanation)
+
+- **`"use server"`**: ဤ Directive ပါသော Functions များသည် Server-side တွင်သာ လုပ်ဆောင်ပြီး Form / Event Handlers များမှ ခေါ်နိုင်ပါတယ်။ Client ‌တွင် JS Fetch ‌အစား Direct Call ဖြစ်သောကြောင့် API Routes ရေးစရာ မလိုပါ။
+- **`revalidatePath("/")`**: Mutation ပြီးတိုင်း Page Cache ကို Invalidates လုပ်၍ Server Component မှ ဒေတာကို ပြန်လည် ဆွဲထုတ်ပေးပါတယ်။ Without this, Page သည် Old Data ပေါ်တွင် ရှိနေနိုင်ပါတယ်။
+- **Hydration/No-JS**: Forms များသည် JavaScript မရှိဘဲပင် လုပ်ဆောင်နိုင်သောကြောင့် Progressive Enhancement ရရှိပါတယ်။
+- **API Routes နှင့် နှိုင်းယှဉ်**: API Routes ကို Third-party / Mobile Client များ အတွက် သုံးသင့်ပြီး Server Actions ကို App ‌အတွင်းရှိ UI Mutations များအတွက် သုံးသင့်ပါတယ်။
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- `page.tsx` နှင့် `route.ts` ကို တူညီသော Folder အတွင်း တွဲထားခွင့် မရှိပါ — Segments ကို ခွဲထားပါ။
+- Route Handlers များတွင် Body ပါသော Request ဖြစ်ပါက `await request.json()` ဖြင့် Parse လုပ်၍ `try/catch` ထဲထည့်ပါ — Invalid JSON ဖြစ်လျှင် `400` ပြန်ပါ။
+- Dynamic API သုံးပါက Route ‌တွင် React Cache / Static Prerender များ မလုပ်ပါနှင့် — `export const dynamic = "force-dynamic"` ကို Route File ‌တွင် ထည့်နိုင်ပါတယ် (သို့) dynamic Functions များ (cookies/headers) ကိုသုံးပါက အလိုအလျောက် Dynamic ဖြစ်ပါတယ်။
+- Server Actions များတွင် Server-side Validation လုပ်ရမည် — Client Forms ကိုသာ မယုံပါနှင့်။
+- Production တွင် Actions ‌တိုင်းကို Authentication/Authorization ဖြင့် ကာကွယ်ပါ။
+
+## Activity — လေ့ကျင့်ခန်း
+
+1. `app/api/todos/route.ts` (GET + POST) နှင့် `app/api/todos/[id]/route.ts` (PUT + DELETE) ကို ရေးပါ။
+2. `npm run dev` ဖွင့်၍ `curl http://localhost:3000/api/todos` တွင် List ရကြောင်း စစ်ပါ။
+3. `curl -X POST http://localhost:3000/api/todos -H "Content-Type: application/json" -d '{"title":"Task One"}'` ဖြင့် Task တစ်ခု ထည့်ပါ။
+4. PUT (toggle) နှင့် DELETE တို့ကို ID ဖြင့် စမ်းသပ်ပါ။
+5. Advanced အနေဖြင့် Server Actions နည်းလမ်းကိုပါ ရေးကြည့်ပြီး `revalidatePath` ၏ လုပ်ဆောင်ပုံကို လေ့လာပါ။

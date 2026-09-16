@@ -1,0 +1,55 @@
+---
+title: "Upgrading Guides — Upgrading Guides (ဗားရှင်း အဆင့်မြှင့်ခြင်း လမ်းညွှန်)"
+description: "Version upgrade guides, codemod usage, and the 15→16 changes you'll actually hit. — Version upgrade guide တွေ၊ codemod သုံးပုံ နဲ့ 15→16 မှာ တကယ် ကြုံရမယ့် အပြောင်းအလဲတွေ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="caution" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Major version တစ်ခုချင်းအတွက် official upgrade path အတိုင်း လိုက်နာနိုင်ဖို့ — codemod အရင်တင်၊ ပြီးတော့ manual fixes — 15→16 ရဲ့ အဓိကအချက်တွေနဲ့အတူ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js ကို major version (v14 → v15 → v16) အဆင့်တစ်ခုချင်းစီမှာ upgrade လုပ်တဲ့အခါ အရင်ဆုံး version guide ကို ဖတ်၊ ပြီးတော့ npx @next/codemod@canary upgrade target နဲ့ automated upgrade ကို run ပြီး type/compile errors တွေကို ပြင်ရပြီး npm run build နဲ့ verify လုပ်ရပါတယ်။ 15 → 16 ရဲ့ အဓိက အပြောင်းအလဲတွေကတော့ — params/searchParams တွေက Promise (await params လို့ ရေးရတော့တယ်), Request APIs တွေက async (await cookies() / await headers()), caching default model က ပြောင်းလို့ use cache, cacheLife, cacheTag တွေကို မွေးစားရမယ် ဆိုတာတွေ ဖြစ်ပါတယ်။ Config key တွေက version အလိုက် ပြောင်းနိုင်လို့ next.config ကို diff လုပ်ပြီး Turbopack က build/dev အတွက် default bundler ဖြစ်လာပါတယ်။ Codemod တွေကိုတော့ next-request-headers-cookies, async-request-api စသည်ဖြင့် run နိုင်ပြီး --list နဲ့ script တစ်ခုချင်းစီက ဘာတွေကို ထိလဲ ကြိုကြည့်နိုင်ပါတယ်။ Safeguard အနေနဲ့ codemod ကို clean branch ပေါ်မှာ run ပြီး diff ပြန်သုံးသပ်၊ step ကြားတိုင်း next build ကို gate အဖြစ်ထားပြီး giant jump တစ်ခါတည်း မဟုတ်ဘဲ သေးငယ်တဲ့ upgrade PR တွေ အပိုင်းလိုက် ship လုပ်ပါ။
+
+## The workflow
+
+```bash
+# 1. read the version guide (v14, v15, v16)
+# 2. run the automated upgrade
+npx @next/codemod@canary upgrade <target>
+# 3. fix type/compile errors, then verify
+npm run build
+```
+
+## 15 → 16 highlights (Cache Components era)
+
+- **`params`, `searchParams` တွေက `Promise`s** — `await params`
+- **Async Request APIs** — `await cookies()` / `await headers()`
+- **Caching default model ပြောင်းသွားပြီ** → `use cache`, `cacheLife`, `cacheTag` တွေကို မွေးစားပါ
+- Config key တွေက version အလိုက် ပြောင်းခဲ့တယ် — `next.config` ကို diff ကြည့်ပါ
+- **Turbopack** က build/dev ရဲ့ default bundler ဖြစ်လာပါတယ်
+
+## Running codemods on a codebase
+
+```bash
+npx @next/codemod@canary next-request-headers-cookies   # convert cookies()/headers()
+npx @next/codemod@canary async-request-api              # await params
+```
+
+Codemod တစ်ခုချင်းစီက ဘာတွေကို ထိမိမလဲ အရင်ဆုံး စစ်ကြည့်ပါ:
+
+```bash
+npx @next/codemod@canary --list
+```
+
+## Safeguards
+
+- Clean branch ပေါ်မှာ codemods ကို run ပြီး diffs ပြန်သုံးသပ်ပါ
+- Step တစ်ခုနဲ့တစ်ခုကြားမှာ `next build` ကို gate အဖြစ် ထားပါ
+- Giant jump တစ်ခါတည်း မဟုတ်ဘဲ သေးငယ်တဲ့ upgrade PR တွေကို ship လုပ်ပါ
+
+## Activity
+
+သင့် version ကို သိဖို့ (`node -e "console.log(require('next/package.json').version)"`) run ပါ။ 16 ထက် ဟောင်းနေရင် သင့်တော်တဲ့ codemods တွေကို run ပြီး ထွက်လာတဲ့ type error ပထမ ၅ ခုကို ဖြေရှင်းပြီးမှ rebuild လုပ်ပါ။

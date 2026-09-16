@@ -1,0 +1,70 @@
+---
+title: "View Transitions — View Transitions (မျက်နှာကူးပြောင်း အန်နီမေးရှင်း)"
+description: "Animate route transitions with the View Transitions API in the App Router. — App Router ထဲမှာ View Transitions API နဲ့ route transition တွေကို အန်နီမေးရှင်း လုပ်နည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  ချောမွေ့တဲ့ page-transition animations တွေကို native View Transitions API နဲ့ NamedViews တွေကို သုံးပြီး ထည့်သွင်းနိုင်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+View Transitions ဆိုတာ browser-native ဖြစ်တဲ့ **View Transitions API** (document.startViewTransition) ကို သုံးပြီး page အဟောင်းနဲ့ အသစ်ရဲ့ state ကြားမှာ cross-fade လိုမျိုး အန်နီမေးရှင်းဖြင့် ကူးပြောင်းပေးတဲ့ ယန္တရား ဖြစ်ပါတယ်။ Client-side router ဖြစ်တဲ့ Next.js မှာတော့ navigation မလုပ်ခင် document.startViewTransition(callback) ထဲမှာ router.push() ကို ခြုံပြီး animate လုပ်နိုင်ပါတယ် — browser မှာ API မရှိရင် (fallback) ပုံမှန် navigation လုပ်နိုင်အောင်လည်း condition လုပ်ထားရပါတယ်။ ပိုပြီး fine-grained လိုချင်ရင် CSS ရဲ့ ::view-transition-old(root) / ::view-transition-new(root) pseudo-element တွေနဲ့ animation ကို ချိန်နိုင်ပြီး element တစ်ခုချင်းစီကို view-transition-name property နဲ့ နာမည်ပေးလို့ shared header လို နေရာမှာ cross-fade လိုမျိုး အထူးအန်နီမေးရှင်း လုပ်နိုင်ပါတယ်။ ထားရမယ့် အချက်တွေကတော့ animation ကို 300ms အောက် တိုတောင်းထားဖို့ (INP budget), layout-heavy section တွေကို အန်နီမေးရှင်း မလုပ်ဖို့ (CLS risk), prefers-reduced-motion: reduce ရှိတဲ့ user တွေအတွက် opt-out လုပ်ပေးဖို့ တို့ ဖြစ်ပါတယ်။
+
+## What View Transitions are
+
+Browser-native **View Transitions API** (`document.startViewTransition`) က page အဟောင်းနဲ့အသစ်ရဲ့ state ကြားမှာ cross-fade လုပ်ပေးပါတယ်။ Next.js လို client-side router မှာတော့ navigation မလုပ်ခင် အဲဒါကို trigger လုပ်နိုင်ပါတယ်။
+
+## Basic client transition
+
+```tsx
+"use client";
+
+import { useRouter } from "next/navigation";
+
+export default function TransitionLink({ href, children }) {
+  const router = useRouter();
+
+  const navigate = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        router.push(href);
+      });
+    } else {
+      router.push(href);
+    }
+  };
+
+  return <a href={href} onClick={navigate}>{children}</a>;
+}
+```
+
+## Named views for custom animation
+
+```css
+::view-transition-old(root) { animation: fade-out 200ms; }
+::view-transition-new(root) { animation: fade-in 300ms; }
+```
+
+Shared header ရဲ့ cross-fade ကို ထင်ရှားစေချင်ရင် navigation မလုပ်ခင် element ပေါ်မှာ `view-transition-name` property နဲ့ နာမည်ပေးပါ။
+
+## Best practices
+
+- `document.startViewTransition` ရှိမရှိ gate လုပ်ပါ (မရှိရင် normal nav ကို fall back လုပ်ပါ)
+- INP budget ထဲ ရှိနေဖို့ animation တွေကို တိုတောင်းအောင် (< 300 ms) ထားပါ
+- Layout-heavy section တွေကို ဘယ်တော့မှ animate မလုပ်ပါနဲ့ (CLS risk)
+- `prefers-reduced-motion: reduce` ရှိတဲ့ user တွေအတွက် opt out လုပ်ပေးပါ
+
+## Guarding reduced motion
+
+```tsx
+const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (document.startViewTransition && !prefersReduced) { … } else { router.push(href); }
+```
+
+## Activity
+
+သင့် nav links တွေကို `startViewTransition`-aware component တစ်ခုနဲ့ အစားထိုးပြီး shared header မှာ `view-transition-name` ထည့်ပါ။ Reduced-motion fallback နဲ့အတူ animated transitions အလုပ်လုပ်တာကို စစ်ဆေးပါ။

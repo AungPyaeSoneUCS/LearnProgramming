@@ -1,0 +1,72 @@
+---
+title: "NextResponse — ချဲ့ထွင်ထားသော Response"
+description: "The extended Response with cookies, redirects, rewrites, and JSON. — Cookies, redirects, rewrites နှင့် JSON များပါဝင်သည့် ချဲ့ထွင်ထားသော Response class ဖြစ်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Route Handlers နှင့် proxy များမှ NextResponse ဖြင့် HTTP response အပြည့်အစုံကို တည်ဆောက်နိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`NextResponse` သည် Web ပုံမှန် `Response` class ကို cookies, redirects, rewrites နှင့် JSON ကဲ့သို့သော လွယ်ကူသည့် helpers များနှင့်အတူ ချဲ့ထွင်ထားသော class တစ်ခုဖြစ်ပါတယ်။ `NextResponse.json(body)` ဖြင့် content-type ပါဝင်သော JSON response ကို ပြန်ပို့နိုင်ပြီး `NextResponse.redirect(url)` ဖြင့် 307/303 redirect ပြုလုပ်ကာ `NextResponse.rewrite(url)` ဖြင့် URL မပြောင်းဘဲ အခြား route ကို render လုပ်နိုင်ပါတယ်။ `NextResponse.next()` ကို proxy တွင် pass-through အဖြစ် သုံးနိုင်ပြီး `response.cookies.set(...)` ဖြင့် response cookie များကို သတ်မှတ်ဖျက်သိမ်းနိုင်ပါတယ်။ Route Handler တစ်ခုတွင် `NextResponse.json` ဖြင့် JSON ထုတ်ပေးကာ session cookie ကို `httpOnly` ဖြင့် သတ်မှတ်ပြီး return လုပ်နိုင်ပါတယ်။ Server-only ဖြစ်သောကြောင့် client အတွက် မသုံးရဘဲ app code အတွင်းတွင် `redirect()`/`permanentRedirect()` ကို ဦးစားပေးအသုံးပြုကာ handlers များအတွက်မူ `NextResponse` ကို သုံးပါတယ်။
+
+## What it is
+
+`NextResponse` သည် Web `Response` class ကို helpers များဖြင့် ချဲ့ထွင်ထားပါတယ်:
+
+```ts
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  return NextResponse.json({ ok: true });
+}
+```
+
+## Core helpers (အဓိက helpers များ)
+
+| Method / member            | Purpose                    |
+| -------------------------- | -------------------------- |
+| `NextResponse.json(body)`  | JSON response (sets content-type) |
+| `NextResponse.redirect(url)` | 307/303 redirect         |
+| `NextResponse.rewrite(url)`  | render another route (URL unchanged) |
+| `NextResponse.next()`      | pass through (proxy)       |
+| `response.cookies`         | set/delete cookies on response |
+
+## Route Handler sample
+
+```ts
+export async function POST(request: Request) {
+  const body = await request.json();
+
+  const res = NextResponse.json({ created: true }, { status: 201 });
+  res.cookies.set("session", crypto.randomUUID(), { httpOnly: true });
+  return res;
+}
+```
+
+## Redirect pattern
+
+```ts
+return NextResponse.redirect(new URL("/login", request.url));
+```
+
+## Proxy rewrite
+
+```ts
+if (request.nextUrl.pathname.startsWith("/_next/data")) {
+  return NextResponse.rewrite(new URL("/", request.url));
+}
+```
+
+## Rules (စည်းကမ်းများ)
+
+- Server-only ဖြစ်ပြီး client အတွက် မသုံးရပါ
+- App code အတွင်းတွင် `redirect()`/`permanentRedirect()` ကိုသုံးပြီး handlers များအတွက် NextResponse ကို သုံးပါ
+- Return မလုပ်မီ instance ပေါ်တွင် headers/cookies များကို သတ်မှတ်ပါ
+
+## လေ့ကျင့်ခန်း (Activity)
+
+POST မှ session cookie ပါသော `NextResponse.json` ကို ပြန်ပို့ပြီး authenticated မဟုတ်သော requests များကို `/login` သို့ redirect လုပ်ကာ curl ဖြင့် status codes များကို စစ်ဆေးပါ။

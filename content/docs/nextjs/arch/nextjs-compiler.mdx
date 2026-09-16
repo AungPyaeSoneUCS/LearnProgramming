@@ -1,0 +1,55 @@
+---
+title: "Architecture: Next.js Compiler — SWC နှင့် Turbopack"
+description: "Internal Compilers အကြောင်း: JS/TS အတွက် SWC ၊ Rust-based Transform များ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Transpile, Minify နှင့် Optimization များကို လုပ်ဆောင်ပေးသော Toolchain ကို နားလည်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js သည် JavaScript/TypeScript Code ၏ Transformation များကို Rust-based Toolchain များဖြင့် လုပ်ဆောင်ပြီး Babel နှင့် webpack ခေတ်ဟောင်းများကို အစားထိုးလာပါတယ်။ SWC သည် TypeScript/JSX များကို JS အဖြစ် Transpile လုပ်ခြင်း၊ Minify လုပ်ခြင်းနှင့် `process.env` ကို လုံခြုံစွာ Inline လုပ်ခြင်းတို့ကို စွမ်းဆောင်ပါတယ်။ Turbopack သည် Module Bundling ကို လုပ်ဆောင်ပြီး နှစ်ခုစလုံးသည် Native Code ဖြစ်၍ Cached ဖြစ်ကာ အလွန် မြန်ဆန်ပါတယ်။ Babel Plugin များကို ထည့်လိုက်ပါက SWC Pipeline ကို ပိတ်လိုက်ရာရောက်သဖြင့် Config မထည့်မီ သေချာ စဉ်းစားရပါတယ်။
+
+## The compiler stack
+
+- **SWC** (Rust) သည် TypeScript/JSX→JS ပြောင်းလဲခြင်း၊ Minification နှင့် Tree Shaking များကို လုပ်ဆောင်ပါတယ်
+- **Turbopack** (Rust) သည် Dev/Build များအတွက် Module များကို Bundle လုပ်ပါတယ်
+- Modern Pipelines များတွင် Babel + webpack ကို အစားထိုးပါတယ် (ပိုမြန်ဆန်ပြီး Cached ဖြစ်ပါတယ်)
+
+## What SWC does
+
+| Job             | Notes                            |
+| --------------- | -------------------------------- |
+| Transpile       | TS, JSX, ESNext → runnable       |
+| Minify          | smaller production JS            |
+| Optimize env    | inlines `process.env` safely     |
+| React refresh   | Fast Refresh transform           |
+| Next transforms | `next/dynamic`, metadata helpers |
+
+## Config escapes
+
+```ts
+// next.config.ts - usually unnecessary
+experimental: { swcMinify } // default on
+```
+
+Project အများစုသည် Compiler ကို တိုက်ရိုက် Config လုပ်ရန် မလိုအပ်ပါဘူး။
+
+## Why it matters
+
+- Build နှင့် Dev မြန်ဆန်ခြင်း (Native နှင့် Cached ဖြစ်ခြင်း)
+- Consistency: Types နှင့် Transforms များအတွက် Tool တစ်ခုတည်း
+- Babel Customization သည် အကန့်အသတ်ရှိပြီး Custom Plugin များအတွက် `experimental.babel` Escape လိုအပ်ပါတယ်
+
+## Rules & gotchas
+
+- Babel Config ကို မလိုအပ်ဘဲ မထည့်ပါနှင့် (SWC Pipeline ကို ပိတ်လိုက်ရာရောက်ပါတယ်)
+- Custom SWC Plugins များကို `experimental.swcPlugins` ဖြင့် ထည့်နိုင်ပါတယ်
+- Legacy Webpack-only Feature အချို့အတွက် Explicit Opt-in လိုအပ်ပါတယ်
+
+## Activity
+
+`.next/static` အတွင်းရှိ Minified Chunks နှင့် Sourcemap များကို စစ်ဆေးကာ Build အချိန်ကို တိုင်းတာပါ; ယာယီ Babel `babel.config.js` တစ်ခု ထည့်၍ Bundle Pipeline တွင် မည်သို့ ပြောင်းလဲသည်ကို ကြည့်ရှုပါ။

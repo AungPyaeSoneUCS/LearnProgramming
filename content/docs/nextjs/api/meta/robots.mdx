@@ -1,0 +1,82 @@
+---
+title: "robots.txt (Search Engine Robots ဖိုင်)"
+description: "Serve search-engine directives from app/robots.txt (or generate them in robots.ts). — `app/robots.txt` (သို့မဟုတ် `robots.ts` တွင် generate လုပ်) မှ search-engine directives များ ပို့ဆောင်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Route root မှ ပို့ဆောင်သော မှန်ကန်သည့် `robots.txt` ဖိုင်ဖြင့် crawling ကို ထိန်းချုပ်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`robots.txt` သည် search engine crawler များအား site ၏ မည်သည့် URL ကို crawl လုပ်ရန်/မလုပ်ရန် ညွှန်ကြားသော စံသတ်မှတ်ထားသည့် ဖိုင်တစ်ခု ဖြစ်ပါတယ်။ Next.js တွင် `app/robots.txt` static ဖိုင်ဖြင့်ဖြစ်စေ `app/robots.ts` ဖြင့် programmatically ဖြစ်စေ ဖန်တီးနိုင်ပြီး build ချိန်တွင် `/robots.txt` အဖြစ် အလိုအလျောက် ပို့ဆောင်ပေးပါတယ်။ `rules` ထဲတွင် user agent တစ်ခုချင်းစီအတွက် allow/disallow ကို သတ်မှတ်နိုင်ကာ `sitemap`, `host` စသည့် field များလည်း ထည့်သွင်းနိုင်ပါတယ်။ Environment အလိုက် rules ပြောင်းလဲရန် လိုအပ်ပါက `robots.ts` ကို ဦးစားပေး အသုံးပြုသင့်ပါတယ်။
+
+## The convention (ပုံစံသတ်မှတ်ချက်)
+
+`app/robots.txt` ဖိုင်သည် `/robots.txt` အဖြစ် ထုတ်ပေးပါတယ်:
+
+```
+app/robots.txt   →   /robots.txt
+```
+
+## Better: generate it (ပိုမိုကောင်းသည်: Generate လုပ်ခြင်း)
+
+အောက်ပါအတိုင်း `robots()` function ကို default export လုပ်ခြင်းဖြင့် rules များကို programmatically ဖန်တီးနိုင်ပါတယ်:
+
+```ts
+// app/robots.ts
+import type { MetadataRoute } from "next";
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: [
+      { userAgent: "*", allow: "/", disallow: "/admin" },
+      { userAgent: "GPTBot", disallow: "/" },
+    ],
+    sitemap: "https://example.com/sitemap.xml",
+  };
+}
+```
+
+## What it emits (ထွက်လာသော ရလဒ်)
+
+အထက်ပါ ဥပမာသည် အောက်ပါ output ကို ထုတ်ပေးပါတယ်:
+
+```
+User-agent: *
+Allow: /
+Disallow: /admin
+
+User-agent: GPTBot
+Disallow: /
+
+Sitemap: https://example.com/sitemap.xml
+```
+
+## Props & values (Field များနှင့် တန်ဖိုးများ)
+
+`robots()` ၏ အဓိက field များကို အောက်ပါဇယားတွင် ဖော်ပြပါတယ်:
+
+| Field      | Type                     | Purpose                    |
+| ---------- | ------------------------ | -------------------------- |
+| `rules`    | single or array          | per-agent allow/disallow  |
+| `sitemap`  | string or array          | sitemap URLs               |
+| `host`     | string                   | canonical host hint        |
+
+`allow`/`disallow` တို့သည် `string` သို့မဟုတ် `string[]` ကို လက်ခံပါတယ်။
+
+## Static file fallback (Static ဖိုင် အရန်နည်းလမ်း)
+
+Plain `app/robots.txt` static ဖိုင်ဖြင့်လည်း အလုပ်လုပ်ပါတယ်။ Environment အလိုက် rules ပြောင်းလဲရန် လိုအပ်ပါက `robots.ts` ကို ဦးစားပေး အသုံးပြုပါ။
+
+## Rules (စည်းမျဉ်းများ)
+
+- App တစ်ခုလျှင် ဖိုင်တစ်ခုသာ ဖြစ်သည် (root-level)
+- Server-side သက်သက်သာ — globals မလိုအပ်ပါ
+- Static export တွင်လည်း အလုပ်လုပ်သည် (build ချိန်တွင် ထုတ်ပေးသည်)
+
+## Activity (လေ့ကျင့်ခန်း)
+
+`app/robots.ts` ကို GPT agent block + sitemap URL နှင့်အတူ ဖန်တီးပြီး build လုပ်ကာ `/robots.txt` ကို curl လုပ်၍ ထွက်လာသော text ကို စစ်ဆေးပါ။

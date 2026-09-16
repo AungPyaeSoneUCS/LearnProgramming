@@ -1,0 +1,98 @@
+---
+title: "Preserving UI State — UI State ထိန်းသိမ်းခြင်း"
+description: "Keep scroll position, form input, and component state across client-side navigations in the App Router. — Client-side navigation လုပ်ရင်း scroll position, form input နဲ့ component state တွေ မပျက်စေအောင် ထိန်းသိမ်းနည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  အသုံးပြုသူဖတ်နေတဲ့ အခြေအနေ (user progress) ကို navigation တစ်လျှောက် ထိန်းသိမ်းနိုင်ဖို့ — user က link တစ်ခုကို နှိပ်လိုက်တာနဲ့ page တစ်ခုလုံး ပြန် reset မဖြစ်စေရပါဘူး။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Client-side navigation လုပ်တိုင်း Next.js က ပြောင်းလဲသွားတဲ့ route segment တွေကိုပဲ ပြန် re-render လုပ်ပါတယ် — Layout တွေက mounted အဖြစ် ဆက်ပြီး သူတို့ထဲက component state တွေ ရှင်သန်နေပါတယ်။ ဒါပေမဲ့ မဂရုစိုက်ရင် scroll position တွေ၊ form input ထဲက ရိုက်ထားတဲ့ စာတွေ နဲ့ ယာယီ UI state တွေ navigation တစ်ခါလုပ်တိုင်း ပြန်လည် reset ဖြစ်နိုင်ပါတယ်။ အဓိက က ဘယ် state က ဘယ်နေရာမှာ အသက်ရှင်သင့်လဲဆိုတာကို ဆုံးဖြတ်ဖို့ ဖြစ်ပါတယ် — Filter တွေလို shared state ကို URL (searchParams) ထဲ သိမ်းရင် navigation ကို ရှင်သန်ကျော်ဖြတ်ပြီး လိပ်စာ share လည်း လုပ်လို့ရပါတယ်။ Persistent UI (ဥပမာ filter panel) ကို layout ထဲ ထည့်ထားရင် Layout က ဆက် mounted ဖြစ်နေလို့ သူ့ state မပျက်ပါဘူး။ Browser native `defaultValue` နဲ့ sessionStorage ကို သုံးရင် form draft နဲ့ ရိုက်ထားပြီးသား value တွေကိုလည်း ဆက်ထားနိုင်ပါတယ်။
+
+## Why re-renders happen
+
+Navigation လုပ်တိုင်း ပြောင်းလဲသွားတဲ့ route segment တွေကို re-render လုပ်ပါတယ်။ မဂရုစိုက်ရင် scroll position သို့မဟုတ် input state က ပြောင်းတိုင်း reset ဖြစ်သွားနိုင်ပါတယ်။
+
+## Scroll position
+
+Next.js က route တစ်ခုချင်းစီအလိုက် scroll position ကို ပြန်ပြီး restore လုပ်ပေးပါတယ်။ ကိုယ်တိုင် ချိန်ညှိချင်ရင်:
+
+```tsx
+"use client";
+
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+
+export default function ScrollSync() {
+  const pathname = usePathname();
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [pathname]);
+  return null;
+}
+```
+
+## Preserving search filters
+
+Filter တွေကို URL ထဲမှာ ထားပါ — navigation ဖြတ်သန်းပြီး link ကတစ်ဆင့် share လုပ်လို့ ရပါတယ်:
+
+```tsx
+"use client";
+
+import { useSearchParams, useRouter } from "next/navigation";
+
+export default function SortBar() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const sort = searchParams.get("sort") ?? "new";
+
+  const setSort = (value: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("sort", value);
+    router.replace(`?${params.toString()}`);  // replace keeps history clean
+  };
+
+  return (
+    <select value={sort} onChange={(e) => setSort(e.target.value)}>
+      <option value="new">Newest</option>
+      <option value="popular">Popular</option>
+    </select>
+  );
+}
+```
+
+## Preserving component state across navigation
+
+ခဏခဏ မပြောင်းတဲ့ UI တွေကို **layout** ထဲ ထည့်ပါ (ဆက် mounted ဖြစ်နေမှာ):
+
+```tsx
+// app/shop/layout.tsx
+export default function ShopLayout({ children }) {
+  return (
+    <div className="grid grid-cols-2 gap-6">
+      <aside className="sticky top-16">
+        <FilterPanel />        {/* stays mounted, keeps its state */}
+      </aside>
+      <main>{children}</main>  {/* only this changes */}
+    </div>
+  );
+}
+```
+
+Layouts တွေက children ကို re-render လုပ်ပေမဲ့ သူတို့ရဲ့ ကိုယ်ပိုင် state ကို ထိန်းသိမ်းထားပါတယ်။
+
+## Form drafts
+
+Input တွေမှာ `defaultValue` ကို ထားထားရင် browser က ရိုက်ထားတဲ့ value တွေ ပြန် restore လုပ်ပါတယ်၊ ဒါမှမဟုတ် draft တွေကို pathname အလိုက် key ခွဲပြီး sessionStorage ထဲ သိမ်းနိုင်ပါတယ်။
+
+## Preventing flash of layout
+
+Static shell တွေနဲ့ Suspense က blank flash တွေကို ရှောင်ရှားနိုင်ပါတယ် (*Preventing Flash* guide ကို ကြည့်ပါ)။
+
+## Activity
+
+URL ထဲ ရေးတဲ့ `SortBar` တစ်ခုကို ထည့်ပါ၊ filter panel တစ်ခုကို layout ထဲ ထားပါ၊ ပြီးတော့ scroll reset နဲ့ filter ရွေးချယ်မှု navigation သွားပြန်လာမှာတောင် အသက်ရှင်နေတာကို စစ်ဆေးပါ။

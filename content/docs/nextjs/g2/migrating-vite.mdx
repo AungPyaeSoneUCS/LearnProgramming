@@ -1,0 +1,80 @@
+---
+title: "Migrating from Vite — Vite မှ ပြောင်းရွှေ့ခြင်း"
+description: "Convert a Vite React SPA to Next.js with SSR, routing, and unified data fetching. — Vite React SPA ကို SSR, routing နှင့် unified data fetching များဖြင့် Next.js သို့ ပြောင်းလဲနည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Vite project တစ်ခုကို ပြန်လည်ရေးစရာ အနည်းဆုံးဖြင့် အများဆုံး အကျိုးရှိအောင် full-stack Next.js app အဖြစ် ပြောင်းလဲနည်းကို နားလည်စေရန် ဖြစ်ပါတယ် — **data fetching ကို Server Components သို့ ရွှေ့ပုံ** နှင့် **client-only code ကို ကိုင်တွယ်ပုံ** တို့ကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Vite React SPA သည် dev server နှင့် build tool တစ်ခုကို ပေးသော်လည်း Next.js ကဲ့သို့ unified build + dev (Turbopack), file-based routing နှင့် SSR စသော features များ ပါရှိလာမှု မရှိပါဘူး။ ပြောင်းရွှေ့ရန် ပထမအဆင့်တွင် `create-next-app` ဖြင့် scaffold လုပ်ပြီး components/utils များကို ကူးယူကာ `react-router` ၏ `<Route>` tree များကို `app/**/page.tsx` folder structure သို့ ပြောင်းရပါတယ်။ Data fetching နှင့် ပတ်သက်၍ page-level data များကို `useEffect` အတွင်းမှ `fetch` ဖြင့် ဆွဲနေမည့်အစား Server Components သို့ ရွှေ့နိုင်ပြီး images များအတွက် `next/image` ကို သုံးနိုင်ပါတယ်။ Vite apps များသည် browser ရှိသည်ဟု အမြဲ ယူဆထားသောကြောင့် `window` ကဲ့သို့ browser APIs ကို သုံးသည့် code များတွင် `"use client"` နှင့် mounted guards များကို ထည့်ရန် လိုအပ်ပါတယ်။ PostCSS/Tailwind အတွက် Vite plugins များကို ဖျက်နိုင်ပြီး Next.js ၏ native support ဖြင့် အစားထိုးကာ CSS Modules များကိုလည်း ဆက်လက် သုံးနိုင်ပါတယ်။ Content အတွက် `import.meta.glob` ကို သုံးနေလျှင် `use cache` + file reads ကဲ့သို့သော Next-native data method များဖြင့် အစားထိုးရန် အကြံပြုပါတယ်။
+
+## Key differences
+
+| Vite                  | Next.js                          |
+| --------------------- | -------------------------------- |
+| Dev server + build    | Unified build + dev (Turbopack)  |
+| `react-router`        | File routing                     |
+| Env from `import.meta.env` (client) | `NEXT_PUBLIC_*` env vars |
+| SPA with `index.html` | Root layout + pages              |
+
+## Step-by-step
+
+1. **Scaffold** — `create-next-app` ဖြင့် တည်ဆောက်ပြီး components/utils များကို ကူးယူပါ
+2. **Routes → folders** — `<Route>` trees များကို `app/**/page.tsx` သို့ ပြောင်းပါ
+3. **Data fetching** — data သည် page-level ဖြစ်ပါက `useEffect` အတွင်းမှ `fetch` ကို Server Components သို့ ရွှေ့ပါ
+4. **Images** — `next/image` ကို သုံးပါ
+
+## Example: moving a route
+
+```tsx
+// Before (Vite + react-router)
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/docs/:slug" element={<DocsPage />} />
+    </Routes>
+  );
+}
+```
+
+```tsx
+// After (App Router)
+// app/page.tsx → Home
+// app/docs/[slug]/page.tsx
+export default async function DocsPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  return <DocsView slug={slug} />;
+}
+```
+
+## Client-only code
+
+Vite apps များသည် browser ရှိသည်ဟု ယူဆထားကြပါတယ်။ လိုအပ်သော နေရာများတွင် guards (သို့) `"use client"` ကို ထည့်ပါ:
+
+```tsx
+"use client";
+
+const useLocalStorage = (key: string) => {
+  const [value, setValue] = useState<string | null>(null);
+  useEffect(() => {
+    setValue(window.localStorage.getItem(key));
+  }, [key]);
+  return value;
+};
+```
+
+## Vite-specific tooling
+
+- PostCSS/Tailwind အတွက် Vite plugins များကို ဖျက်လိုက်ပါ — Next.js က ၎င်းတို့ကို natively ပံ့ပိုးပေးပါတယ်
+- CSS Modules များသည် compatible ဖြစ်ပါတယ်
+- Content အတွက် `import.meta.glob` ကို Next-native data (ဥပမာ `use cache` + file reads) ဖြင့် အစားထိုးပါ
+
+## Activity
+
+လေ့ကျင့်ခန်း: Docs mini-site တစ်ခုကို Vite → Next ပြောင်းပါ — route နှစ်ခုကို ပြောင်းကာ data fetching ကို Server Component ထဲသို့ ရွှေ့ပြီး build report တွင် static prerendering ပြသသည်ကို အတည်ပြုပါ။

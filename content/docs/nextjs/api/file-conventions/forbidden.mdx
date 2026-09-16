@@ -1,0 +1,73 @@
+---
+title: "forbidden.js — 403 Forbidden UI"
+description: "Segment-level 403 UI for authorization failures, thrown via the forbidden() function. — Authorization မအောင်မြင်သောအခါ `forbidden()` Function မှတစ်ဆင့် Segment-level 403 UI ကို ပြသပေးသည့် ဖိုင်ဖြစ်ပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  User များတွင် Permission မရှိသောအခါ Scoped UI နှင့်အတူ မှန်ကန်သော HTTP 403 Semantics များကို ပြန်ပေးနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`forbidden.tsx` သည် Authentication အောင်မြင်ပြီးသော်လည်း Authorization (Permission) မရှိသည့် User များကို ရင်ဆိုင်ရသောအခါ **403 Forbidden** Status Code နှင့်အတူ Segment-level UI တစ်ခုကို ဖော်ပြပေးသော File Convention တစ်ခုဖြစ်ပါတယ်။ Server Component တစ်ခုမှ `forbidden()` Function ကို ခေါ်ယူပြီးသည်နှင့် Next.js သည် Request ကို HTTP 403 Response ဖြင့် ချက်ချင်း ဖြတ်တောက်ကာ အနီးဆုံး `forbidden.tsx` ကို Render လုပ်ပေးပါတယ်။ `next.config.ts` တွင် `authInterrupts: true` သတ်မှတ်ထားလျှင် `forbidden()` နှင့် `unauthorized()` တို့ကို First-class Features အဖြစ် အသုံးပြုနိုင်ပြီး `AuthInterruptFlags` များဖြင့် Behavior များကိုပါ ထိန်းချုပ်နိုင်ပါတယ်။ `notFound()` (404) နှင့်မတူဘဲ ဤ Feature သည် Resource မရှိခြင်းကို ဆိုလိုသည်မဟုတ်ဘဲ User ၏ ခွင့်ပြုချက်မရှိခြင်းကို ကိုယ်စားပြုပြီး Admin Panels သို့မဟုတ် Pro-only Sections များကဲ့သို့သော နေရာများတွင် အသုံးပြုလေ့ရှိပါတယ်။
+
+## Definition
+
+```tsx
+// app/account/forbidden.tsx
+export default function Forbidden() {
+  return (
+    <div>
+      <h1>403 - Access denied</h1>
+      <p>You don't have permission to view this page.</p>
+    </div>
+  );
+}
+```
+
+## Triggering
+
+Server Component၊ Server Action သို့မဟုတ် Route Handler တစ်ခုခုမှ `forbidden()` ကို Throw လုပ်နိုင်ပါတယ်:
+
+```tsx
+import { forbidden } from "next/navigation";
+
+export default async function AccountPage() {
+  const plan = await getPlan();
+  if (plan !== "pro") forbidden();   // → 403 + forbidden.tsx
+  return <Dashboard />;
+}
+```
+
+## Behavior
+
+- **403 Forbidden** ဖြင့် Response ပြန်ပို့ပါတယ်
+- Config ရှိ `AuthInterruptFlags` က Default နှင့် Render Behavior များကို ထိန်းချုပ်ပေးပါတယ် (`forbidden()` Metadata)
+- အနီးဆုံး `forbidden.tsx` ကို Render လုပ်ပြီး မရှိပါက Default Response တစ်ခုကို ရရှိပါတယ်
+
+## Distinctions
+
+ဤဇယားသည် Authentication/Authorization Errors အမျိုးအစားသုံးမျိုးကို နှိုင်းယှဉ် ဖော်ပြထားပါတယ်:
+
+| Function / file             | Meaning                          | Status |
+| --------------------------- | -------------------------------- | ------ |
+| `notFound()` / `not-found.tsx` | Resource missing               | 404    |
+| `forbidden()` / `forbidden.tsx` | Authenticated but not allowed | 403    |
+| `unauthorized()` / `unauthorized.tsx` | Not authenticated       | 401    |
+
+## Configuration tie-ins
+
+Auth Interrupt Features များကို ဖွင့်ရန် `next.config.ts` တွင် အောက်ပါအတိုင်း သတ်မှတ်ပေးရပါတယ်:
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  authInterrupts: true, // enables forbidden/unauthorized as first-class
+};
+```
+
+## Activity
+
+`forbidden.tsx` တစ်ခုကို ထည့်သွင်းပြီး Admin Page တစ်ခုကို `forbidden()` ဖြင့် ကာကွယ်ကာ Admin မဟုတ်သော User တစ်ဦးက သင့် Custom UI ဖြင့် 403 ကို ရရှိသည်ကို စစ်ဆေးပါ။

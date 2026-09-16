@@ -1,0 +1,58 @@
+---
+title: "io — Asynchronous I/O အမှတ်အသား"
+description: "Mark server code as asynchronous I/O with the io() indicator. — Io() ဖြင့် server code များကို asynchronous I/O အဖြစ် မှတ်သားပေးနိုင်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Blocking awaits များကို မျှော်လင့်ထားသော boundaries များအဖြစ် runtime အား သိစေနိုင်အောင် နားလည်စေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`io` သည် Server scope အတွင်းရှိ **I/O boundaries** များကို အချက်ပြပေးသော utility တစ်ခုဖြစ်ပြီး optimizer (ဥပမာ DMA / partial prerender) အား awaited async work များကို နားလည်စေရန် ကူညီပေးပါတယ်။ `await io()` ကို ခေါ်ဆိုလိုက်ချိန်မှစ၍ ထိုနေရာ၌ dynamic I/O boundary တစ်ခု စတင်ကြောင်း compiler က သိရှိပြီး ထိုအချက်မှ စတင်ကာ data ရယူမှုများကို စီစဉ်ဆောင်ရွက်ပေးပါတယ်။ ၎င်းသည် fine-grained rendering boundaries များကို ရှင်းလင်းစေပြီး static/dynamic ရောထွေးသော code များအတွက် deterministic အပြုအမူကို ပေးကာ compiler အား ရှေ့ပိုင်း chunks များကို ကြိုတင် prerender လုပ်စေနိုင်ပါတယ်။ သို့သော် `"use cache"` scope အတွင်းတွင် ဤ function သည် cache ၏ async သဘောသဘာဝနှင့် ပဋိပက္ခဖြစ်သောကြောင့် မသုံးသင့်ပါ။ `connection` နှင့် နှိုင်းယှဉ်ပါက `connection` သည် route က dynamic ဖြစ်ကြောင်းကို ဖော်ပြပြီး `io` မှာ ဤနေရာတွင် I/O ကို စောင့်ဆိုင်းနေကြောင်းကို အတိအကျ ဖော်ပြပါတယ်။
+
+## What it is
+
+`io` သည် Server scope အတွင်းရှိ **I/O boundaries** များကို အချက်ပြပေးသော utility ဖြစ်ပြီး optimizer (ဥပမာ DMA/partial prerender) က awaited async work များကို နားလည်စေရန် ကူညီပါတယ်:
+
+```tsx
+import { io } from "next/server";
+
+export default async function Page() {
+  await io();
+  const data = await fetchFromCms();   // dynamic I/O boundary
+  return <div>{data}</div>;
+}
+```
+
+## Why use it (ဘာကြောင့် သုံးသင့်လဲ)
+
+- Fine-grained rendering boundaries များကို ရှင်းလင်းစေနိုင်ခြင်း
+- Static/dynamic ရောထွေးသော code များအတွက် deterministic အပြုအမူ
+- Compiler အား ရှေ့ပိုင်း chunks များကို prerender လုပ်စေနိုင်ခြင်း
+
+## When NOT to use (ဘယ်အခါ မသုံးသင့်လဲ)
+
+- `"use cache"` scopes အတွင်း — ပဋိပက္ခဖြစ်တတ်ပါတယ် (cache သည် async by design ဖြစ်သောကြောင့်)
+- Cache လုပ်ထားလိုသော သာမန် data များအတွက် — ၎င်းတို့ကို cached အဖြစ်သာ ထားပါ
+
+## Signature & semantics
+
+```ts
+function io(): Promise<void>
+```
+
+`io()` ကို ခေါ်ဆိုလိုက်ခြင်းသည် dynamic work ဆက်လာမည်ဟု မှတ်သားပေးပြီး အချို့နေရာများတွင် `connection()` ၏ အကျိုးသက်ရောက်မှုနှင့် တူညီသော်လည်း I/O အဓိပ္ပာယ်ကို အတိအကျ ဖော်ပြပါတယ်။
+
+## Compare with connection (connection နှင့် နှိုင်းယှဉ်ချက်)
+
+| Function     | Meaning                  |
+| ------------ | ------------------------ |
+| `connection` | "This route is dynamic"  |
+| `io`         | "Awaiting I/O here"      |
+
+## လေ့ကျင့်ခန်း (Activity)
+
+CMS fetch မလုပ်မီ page တစ်ခုတွင် `await io()` ဖြင့် မှတ်သားပြီး rebuild လုပ်ကာ unannotated page နှင့် route report ကို နှိုင်းယှဉ်၍ streamed boundary ကို ကြည့်ရှုပါ။

@@ -1,0 +1,73 @@
+---
+title: "use cache — Cache Directive"
+description: "The use cache directive: cache async functions, components, and files with explicit lifetimes — Async Functions၊ Components နှင့် Files များကို Explicit Lifetimes ဖြင့် Cache လုပ်ပေးသော Directive။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Next.js 16 ၏ Core Caching Primitive ဖြစ်သော `use cache` — Directive ထားရှိရမည့် နေရာနှင့် ၎င်း၏ လုပ်ဆောင်ချက်များ — ကို ကျွမ်းကျင်စွာ နားလည်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`"use cache"` သည် Next.js ၏ Cache Primitive တစ်ခုဖြစ်ပြီး Route၊ Component သို့မဟုတ် Function များကို Cacheable အဖြစ် သတ်မှတ်ပေးပါတယ်။ Cached scopes များသည် **async** မဖြစ်မနေ ဖြစ်ရပြီး `next.config.ts` တွင် `cacheComponents: true` လိုအပ်ပါတယ်။ Cache key တစ်ခုကို **Build ID** ၊ **Function ID** နှင့် Serializable Arguments (သို့မဟုတ် Captured outer-scope values) များပေါင်းစပ်၍ တွက်ချက်သောကြောင့် Input မတူညီပါက Cache entry အသစ်များ အလိုအလျောက် ဖြစ်ပေါ်ပါတယ်။ `cacheLife(profile)` နှင့် တွဲသုံးခြင်းဖြင့် Cache ၏ Lifetime ကို Explicit သတ်မှတ်နိုင်ပြီး မသတ်မှတ်ပါက Default profile ကို အလိုအလျောက် အသုံးပြုပါတယ်။ သို့သော် Server ၏ Request/Response Streams များတွင် မသုံးသင့်ဘဲ Short-lived cache များသည် Dynamic holes များ ဖြစ်လာနိုင်ကြောင်း သတိပြုရပါမယ်။
+
+## Signature
+
+`"use cache"` သည် Route၊ Component သို့မဟုတ် Function တစ်ခုကို Cacheable အဖြစ် သတ်မှတ်ပေးပါတယ်။ Cached scopes များသည် **async မဖြစ်မနေ ဖြစ်ရပါတယ်**။
+
+```tsx
+// Function level
+export async function getData() {
+  "use cache";
+  const res = await fetch("https://api.example.com/data");
+  return res.json();
+}
+
+// Component level
+export async function MyComponent() {
+  "use cache";
+  return <div>cached UI</div>;
+}
+
+// File level - every export becomes cached
+"use cache";
+export default async function Page() { … }
+```
+
+## Requirements
+
+- `next.config.ts` တွင် `cacheComponents: true` လိုအပ်ပါတယ်
+- Async သာလျှင် အသုံးပြုနိုင်ပါတယ်
+- Lifetime အတွက် `cacheLife(profile)` နှင့် ပေါင်းစပ်သုံးပါ (မသုံးပါက Default profile အလိုအလျောက် အကျုံးဝင်သည်)
+
+## How caching works
+
+Cache key တစ်ခု = **Build ID** (သို့မဟုတ် `deploymentId`) + **Function ID** (function + signature ၏ Hash) + **Serializable arguments** (သို့မဟုတ် Captured outer-scope values) + Dev HMR hash များဖြင့် ဖွဲ့စည်းထားပါတယ်။
+
+Input မတူညီပါက Cache entries အသစ်များကို အလိုအလျောက် ဖန်တီးပေးပါတယ်။
+
+## Nesting & decryption
+
+Cached scopes များသည် အခြား Cached scopes များကို ခေါ်ဆိုနိုင်ပါတယ်။ Cached function တစ်ခုတွင် `cookies()`/`headers()` များကို ဖတ်ရန် လိုအပ်ပါက Values များကို (Shared class) ဖြင့် ထည့်ပေးခြင်းကို ဦးစားပေးပါ — သို့မဟုတ် `use cache: private` ကို အသုံးပြုပါ။
+
+## Route Handler usage
+
+```ts
+export async function GET() {
+  "use cache";
+  cacheLife("seconds");
+  return Response.json({ hello: "world" });
+}
+```
+
+## Gotchas
+
+- Server ၏ Request/Response Streams များတွင် `"use cache"` ကို ဘယ်တော့မှ မသုံးပါနှင့်
+- Short-lived caches (Seconds profile) များသည် Dynamic holes များ ဖြစ်လာနိုင်ပါတယ်
+- `Date.now()` ကဲ့သို့ Output များကို စစ်ဆေးခြင်း — ၎င်းတို့သည် ဒီဇိုင်းအရ Cache လုပ်ထားခြင်း ခံရပါတယ်
+
+## Activity
+
+Components အများအပြားမှ ဖိဝင်ရောက်နေသော Data function တစ်ခုတွင် `use cache` + `cacheLife("minutes")` ကို ထည့်သွင်းပြီး ထပ်ခါတလဲလဲ ခေါ်ဆိုမှုများသည် Cache entry တစ်ခုတည်းကိုသာ ထိမှန်ကြောင်း အတည်ပြုပါ။

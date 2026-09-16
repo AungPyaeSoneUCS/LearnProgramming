@@ -1,0 +1,70 @@
+---
+title: "error.js — Segment Error Boundary"
+description: "Client error boundary per segment: catch render errors, show retry UI, keep the app alive. — Segment တစ်ခုစီအတွက် Client Error Boundary ဖြစ်ပြီး Render Errors များကို ဖမ်းယူကာ Retry UI ပြသပြီး App ကို အသက်ရှင်နေစေပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Segment တစ်ခုစီအလိုက် Error Boundaries များဖြင့် မမျှော်လင့်ထားသော Errors များကို ချောမွေ့စွာ ကိုင်တွယ်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`error.tsx` သည် Next.js App Router တွင် Segment တစ်ခုစီအတွက် **Error Boundary** တစ်ခုကို ဖန်တီးပေးသော File Convention တစ်ခုဖြစ်ပါတယ်။ Render ပြုလုပ်စဉ် Error များဖြစ်သောအခါ App တစ်ခုလုံးကို ရပ်တန့်စေမည့်အစား ထို Segment ၏ UI ကိုသာ ထိခိုက်စေပြီး ကျန်သော Pages များမှာ ပုံမှန်အတိုင်း ဆက်လက် အလုပ်လုပ်နေပါတယ်။ ၎င်းသည် **Client Component** တစ်ခုဖြစ်ရမည်ဖြစ်ပြီး Error Message ဖော်ပြခြင်း၊ Retry Link ပြသခြင်းနှင့် Support Link များထည့်ခြင်းစသည့် User Experience ကောင်းများကို ရေးသားနိုင်ပါတယ်။ `reset()` Function ကို ခေါ်ယူခြင်းဖြင့် Error ဖြစ်နေသော အပိုင်းကို ပြန်လည် Render လုပ်နိုင်ပြီး Server-side Errors များကို `instrumentation.onRequestError` မှတစ်ဆင့် Monitoring လုပ်နိုင်ပါတယ်။ ဤ Convention သည် Production-ready App များအတွက် Error ဖြစ်ခဲ့သော်လည်း User များအား ရှင်းလင်းသော UI ဖြင့် လမ်းညွှန်ပေးနိုင်သောကြောင့် အလွန်အရေးကြီးပါတယ်။
+
+## Definition
+
+`error` နှင့် `reset` Props များပါသော **Client Component** တစ်ခု ဖြစ်ရပါမယ်:
+
+```tsx
+"use client";
+
+export default function BlogError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+  return (
+    <div>
+      <h2>Something went wrong</h2>
+      <p>{error.message}</p>
+      <button onClick={reset}>Try again</button>
+    </div>
+  );
+}
+```
+
+## How to use reset
+
+`reset()` သည် Error Boundary ၏ Children များကို ပြန်လည် Render လုပ်ပေးပြီး မအောင်မြင်ခဲ့သော Operation ကို ပြန်လည် ကြိုးစားရန် အသုံးပြုပါတယ်:
+
+```tsx
+<button onClick={reset}>Try again</button>
+```
+
+## Nesting
+
+အနီးဆုံး `error.tsx` က အနိုင်ရပါတယ်:
+
+```
+app/
+├── error.tsx            # app-wide
+└── blog/
+    ├── error.tsx        # blog-specific
+    └── page.tsx
+```
+
+## Logging server errors
+
+Server Errors (Component/Server Action/Route Handler များ) သည် Monitoring အတွက် `instrumentation.onRequestError` သို့ အလိုအလျောက် ပို့ဆောင်ပေးပါတယ်။
+
+## Global fallback
+
+`global-error.tsx` (Root) သည် မိမိပိုင် `<html>`/`<body>` များကို ကိုယ်တိုင် Render လုပ်ပေးရပါမယ်။
+
+## Rules
+
+- `"use client"` Directive မဖြစ်မနေ လိုအပ်ပါတယ်
+- တူညီသော Folder ၏ Layout-level Errors များကို ကိုင်တွယ်ရန် မသုံးနိုင်ပါဘူး (Parent `error.tsx` ကိုသုံးပါ)
+- ရိုးရှင်းစွာထားပါ: Message + Retry + Support Link
+
+## Activity
+
+Blog `error.tsx` တစ်ခုကို ထည့်သွင်းပြီး Page ၏ Data Fetch တွင် ရည်ရွယ်ချက်ရှိရှိ Throw လုပ်ကာ Segment သည် Retry UI ကို ဖော်ပြနေပြီး အခြား Pages များ ဆက်လက် အလုပ်လုပ်သည်ကို စစ်ဆေးပါ။

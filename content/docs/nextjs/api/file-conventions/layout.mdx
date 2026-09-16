@@ -1,0 +1,75 @@
+---
+title: "layout.js — Shared Persistent UI Shell"
+description: "Shared, persistent UI shell per segment - nesting, coexistence with templates, and the root layout. — Segment တစ်ခုစီအတွက် Shared နှင့် Persistent UI Shell များ၊ Nesting များ၊ Templates များနှင့် ယှဉ်တွဲသုံးခြင်းနှင့် Root Layout အကြောင်း ဖြစ်ပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Nested Layouts များဖြင့် Persistent UI (Navbars များ၊ Footers များ၊ Sidebars များ) ကို ဖွဲ့စည်းတည်ဆောက်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`layout.tsx` သည် Segment တစ်ခု၏ Routes များအားလုံးအတွက် မျှဝေသုံးစွဲနိုင်သော **Shared (Persistent) UI Shell** တစ်ခုကို သတ်မှတ်ပေးသော Next.js App Router ၏ အခြေခံ File Convention တစ်ခုဖြစ်ပါတယ်။ Layout အတွင်းတွင် Navigation Bar၊ Footer၊ Sidebar စသည့် Page တိုင်းတွင် တသမတ်တည်း ရှိနေစေလိုသော Elements များကို ထားရှိနိုင်ပြီး `children` Prop မှတစ်ဆင့် Nested Segment ၏ UI များကို ဖော်ပြပေးပါတယ်။ Routes အကြား သွားလာသည့်အခါ Layout သည် ပြန်လည် Mount မဖြစ်ဘဲ State ကို ထိန်းသိမ်းထားသောကြောင့် Navigations များကြားတွင် ချောမွေ့စေပါတယ်။ Root Layout (`app/layout.tsx`) သည် App တိုင်းအတွက် **မဖြစ်မနေလိုအပ်** သော ဖိုင်ဖြစ်ပြီး `<html>` နှင့် `<body>` Tags များကို သတ်မှတ်ရပါတယ်။ Layouts များသည် Nested ဖြစ်နိုင်ပြီး Parent Layout ၏ အတွင်းတွင် Child Layouts များက ဆက်လက် ဖြည့်စွက်ကာ Downstream `metadata` များကို Merge လုပ်ပေးပါတယ်။
+
+## Definition
+
+```tsx
+// app/dashboard/layout.tsx
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex gap-6">
+      <aside>Dashboard nav</aside>
+      <main>{children}</main>
+    </div>
+  );
+}
+```
+
+- `children` (Page သို့မဟုတ် Nested Segment UI) ကို လက်ခံရယူပါတယ်
+- Segment အတွင်း Navigations များကြားတွင် **Persist** ဖြစ်နေပါတယ် (State များ ထိန်းသိမ်းထားပါတယ်)
+
+## Root layout
+
+```tsx
+// app/layout.tsx
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+Root Layout သည် **မဖြစ်မနေ လိုအပ်** ပြီး `<html>` + `<body>` များကို သတ်မှတ်ပေးပါတယ်။
+
+## Nesting & merges
+
+Layouts အများအပြားသည် Nested ဖြစ်နိုင်ပါတယ်:
+
+```
+/layout.tsx (html/body) → /blog/layout.tsx (blog chrome) → page.tsx
+```
+
+Downstream ရှိ `metadata` များကို Merge လုပ်ပေးပါတယ်: Title/Description/Template များ။
+
+## Layout vs template
+
+Layout နှင့် Template ကွာခြားချက်များကို အောက်ပါဇယားတွင် ဖော်ပြထားပါတယ်:
+
+|                 | Layout            | Template            |
+| --------------- | ----------------- | ------------------- |
+| Persistence     | Persists          | Re-mounts each nav  |
+| State retention | ✅                | ❌                  |
+| Use             | Default shell     | Counters/embeds that must reset |
+
+## Rules
+
+- Layout သည် Client Tree ၏ Imported Server Components အတွင်းတွင် မရှိနိုင်ပါဘူး (Server File အဖြစ် ထားပါ သို့မဟုတ် လိုအပ်သလို Mark လုပ်ပါ)
+- Folder တစ်ခုစီတွင် Layout တစ်ခုသာ ရှိနိုင်ပြီး `children` ကို လက်ခံရယူရပါမယ်
+
+## Activity
+
+Header/Footer ပါသော Root Layout နှင့် Category Sidebar ပါသော `blog/layout.tsx` တစ်ခုကို ထည့်သွင်းပြီး Posts များကြား သွားလာကာ Sidebar ၏ State ထိန်းသိမ်းထားသည်ကို စစ်ဆေးပါ။

@@ -1,0 +1,92 @@
+---
+title: "Interactive Apps — အပြန်အလှန် အသုံးပြုနိုင်သော Apps"
+description: "Build interactive Next.js apps: client components, event handlers, hooks, and streaming with suspense. — client components နှင့် hooks များကို သုံး၍ interactive Next.js apps တည်ဆောက်နည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  မြန်ဆန်သော server-rendered shell ပေါ်တွင် performance မထိခိုက်စေဘဲ client-side interactivity ကို ထည့်သွင်းနည်းကို နားလည်စေရန် ဖြစ်ပါတယ် — **`"use client"`**, **Client Components** နှင့် **`<Suspense>` streaming** တို့၏ အခန်းကဏ္ဍများကို လက်တွေ့ ကျင့်သုံးတတ်လာမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js ၏ App Router သည် Server Components နှင့် Client Components ဟူ၍ component အမျိုးအစား နှစ်မျိုး ခွဲထားပါတယ်။ Server Components များသည် data များကို server ဘက်တွင် ဖတ်ပြီး HTML နှင့် RSC payload ကို မြန်မြန်ဆန်ဆန် render ပေးကာ Client Components မှာမူ hydration ဖြစ်ပြီးနောက် state, event handlers နှင့် effects များကို စီမံပါတယ်။ Component တစ်ခုကို client ဘက်သို့ ပြောင်းရန် ဖိုင်၏ အပေါ်ဆုံးတွင် `"use client"` directive ကို ထည့်ရပြီး page shell တစ်ခုလုံးကို client မဖြစ်စေဘဲ interactive လိုသည့် island အသေးစားများကိုသာ client component အဖြစ် ခွဲကာ data များကို props ဖြင့် ပေးပို့ခြင်းက ပိုမို ကောင်းမွန်ပါတယ်။ `useRouter` သို့မဟုတ် `Link` ကို သုံးခြင်းဖြင့် page reload မလိုဘဲ client-side navigation ဖြစ်ကာ app state ကို ထိန်းသိမ်းနိုင်ပြီး နှေးကွေးသော section များကို `<Suspense>` ဖြင့် streaming ပြုလုပ်နိုင်ပါတယ်။ Performance ကောင်းမွန်စေရန် interactive islands များကိုသာ client အဖြစ် မှတ်သားပြီး ကြီးမားသော global client providers များကို ရှောင်ရှားကာ effects များကို သန့်ရှင်းအောင် ထား၍ SWR/Query ဖြင့် duplicate fetches များကို ဖယ်ရှားသင့်ပါတယ်။
+
+## စိတ်ပိုင်းဆိုင်ရာ ပုံစံ (Mental Model)
+
+- **Server** သည် HTML နှင့် RSC payload ကို မြန်မြန် render လုပ်ပေးပါတယ်
+- **Client** သည် hydration ပြီးနောက် state, events, effects များကို တာဝန်ယူပါတယ်
+
+## Interactivity via "use client"
+
+```tsx
+"use client";
+
+import { useState, useEffect } from "react";
+
+export default function ThemeToggle() {
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
+  return (
+    <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+      {theme}
+    </button>
+  );
+}
+```
+
+## Composing interactive islands
+
+Client Components များကို သေးငယ်အောင် ထားပြီး page shell ကို Server Component အဖြစ် ဆက်လက် ထားပါ:
+
+```tsx
+// page.tsx (server)
+import ProductGrid from "./product-grid"; // client
+import PriceBadge from "./price-badge"; // client
+
+export default async function ShopPage() {
+  const products = await getProducts();
+  return (
+    <main>
+      <h1>Shop</h1>
+      <ProductGrid products={products}>
+        {products.map((p) => <PriceBadge key={p.id} price={p.price} />)}
+      </ProductGrid>
+    </main>
+  );
+}
+```
+
+## Client navigation without reload
+
+App state မပျောက်စေရန် `useRouter`/`Link` ကို သုံးပါ:
+
+```tsx
+const router = useRouter();
+const applyFilter = () => router.push(`/shop?tag=${tag}`);
+```
+
+## Streaming progressively
+
+Interactive shell က အသုံးပြုနေချိန်တွင် နှေးကွေးသော sections များကို `<Suspense>` ဖြင့် streaming ဝင်လာစေပါ:
+
+```tsx
+<Suspense fallback={<ProductSkeleton />}>
+  <Results />
+</Suspense>
+```
+
+## Performance guardrails
+
+- Interactive islands များကိုသာ client အဖြစ် မှတ်သားပြီး data များကို props အဖြစ် ပေးပို့ပါ
+- ကြီးမားသော global client providers များကို ရှောင်ကြဉ်ပါ
+- Effects များကို သန့်ရှင်းအောင် ထားပြီး SWR/Query ဖြင့် fetch များကို dedupe လုပ်ပါ
+
+## Activity
+
+လေ့ကျင့်ခန်း: Server မှ ဆွဲသော products များ၊ client-only filter panel တစ်ခုနှင့် `<Suspense>` ဖြင့် ထုပ်ထားသော streaming results များ ပါဝင်သည့် "filter + sort" shelf တစ်ခုကို တည်ဆောက်ပါ။

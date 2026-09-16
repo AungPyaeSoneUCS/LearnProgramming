@@ -1,0 +1,53 @@
+---
+title: "public Folder — Static Assets အကြောင်း"
+description: "Serving unprocessed static assets from public/ - with all its rules and gotchas. — `public/` Folder မှ Processing မလုပ်ရသေးသော Static Assets များကို ဖော်ပြပေးခြင်းနှင့် ၎င်း၏ Rules နှင့် Gotchas များအကြောင်း ဖြစ်ပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  `public/` Folder ၏ အသုံးပြုမှု ရည်ရွယ်ချက်နှင့် Assets များကို ဘေးကင်းစွာ Reference လုပ်ပုံကို အတိအကျ နားလည်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`public/` Folder သည် Browser သို့ တိုက်ရိုက်ဖော်ပြရန် ရည်ရွယ်ထားသော Static Assets များ (Favicons၊ `robots.txt`၊ `sitemap.xml`၊ PDF များ၊ Pre-built Images နှင့် Service Worker ဖိုင်များ) ကို သိမ်းဆည်းရန် Next.js ၏ Convention Folder တစ်ခုဖြစ်ပါတယ်။ ဤ Folder အတွင်းရှိ Files များကို Bundler က Processing မလုပ်ဘဲ Root URL မှ တိုက်ရိုက် ဖော်ပြပေးပါတယ် - ဥပမာ `public/favicon.ico` ကို `/favicon.ico` အဖြစ် Browser တွင် ဖွင့်နိုင်ပါတယ်။ သို့သော် Optimization ၊ Compression သို့မဟုတ် Content Hashing များ ပြုလုပ်ပေးခြင်း မရှိသောကြောင့် `next/image` ဖြင့် Optimize လိုသော Images များကို ဤနေရာတွင် ထားရှိရန် မသင့်ဘဲ Bundler မှတစ်ဆင့် Import လုပ်ပြီး အသုံးပြုသင့်ပါတယ်။ Secrets (API Keys စသည်) များကို ဤ Folder တွင် လုံးဝ မထားသင့်ပါဘူး - ဖိုင်များအားလုံးသည် Publicly Accessible ဖြစ်နေသောကြောင့် ဖြစ်ပါတယ်။ Assets များကို Root-relative URLs (`/img/logo.svg`) ဖြင့် Reference လုပ်ရပြီး Cache Headers များကို Host ပေါ်မူတည်၍ ပြုပြင်နိုင်ပါတယ်။
+
+## What lives there
+
+Bundler က Processing မလုပ်သင့်သော အရာအားလုံး: Favicons၊ `robots.txt`၊ `sitemap.xml`၊ PDF များ၊ Pre-built Images များနှင့် Service Workers များ။
+
+## Referencing
+
+Assets များကို Root URL တွင် Resolve လုပ်ပေးပါတယ်:
+
+```txt
+public/favicon.ico   →   /favicon.ico
+public/img/logo.svg  →   /img/logo.svg
+```
+
+```tsx
+<img src="/img/logo.svg" alt="Logo" />
+```
+
+## Rules & gotchas
+
+- **Read-only**: ထိုနေရာရှိ Files များကို မထိမခိုက်ဘဲ တိုက်ရိုက် ဖြတ်သွားပါတယ် (Compression/Optimization မရှိ၊ Content Hash မရှိ)
+- `special` Filename: `public/favicon.ico` သည် Metadata များတွင် အလိုအလျောက် ပါဝင်နိုင်ပါတယ်
+- `public/` အတွက် မသင့်တော်သော အရာများ: `next/image` ဖြင့် Optimize လိုသော Source Images များ (၎င်းတို့ကို Repo တွင် ထားပြီး Import လုပ်ပါ); Processing လိုအပ်သော အရာများကို Bundler မှတစ်ဆင့် သွားရပါတယ်
+- Cache Headers များသည် Host အလိုက် ကွာခြားပြီး Hashed CI Artifacts များအတွက် Immutable CDN Rules များကို လိုအပ်လျှင် ထည့်သွင်းပါ
+
+## Performance notes
+
+- ကြီးမားသော `public/` သည် Bundles များကို မလေးစေဘဲ ရှိသမျှ Files တိုင်းကို Request ဝင်တိုင်း Serve လုပ်သောကြောင့် Stale Files များကို သန့်ရှင်းပေးပါ
+- Heavy Images များအတွက် `Image` Component ကိုသုံးပြီး Optimizer က Responsive Sizes များကို ကိုင်တွယ်စေခြင်းက ပိုမိုသင့်လျော်ပါတယ်
+
+## Rules summary
+
+1. Static စစ်စစ်၊ Pre-processed Files များသာ
+2. URL သည် `public/` မှ Path နှင့် တူညီသည်
+3. Secrets များအတွက် `public/` ကို ဘယ်တော့မှ မသုံးပါနဲ့ (အားလုံး Public ဖြစ်နေပါတယ်!)
+
+## Activity
+
+Favicon နှင့် `robots.txt` တစ်ခုကို `public/` သို့ ရွှေ့ပြောင်းပြီး Metadata မှတစ်ဆင့် Favicon ကို Reference လုပ်ကာ `/robots.txt` ကို Root တွင် ဖွင့်၍ရသည်ကို စစ်ဆေးပါ။

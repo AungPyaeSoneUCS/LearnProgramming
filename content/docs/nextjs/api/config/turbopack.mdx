@@ -1,0 +1,56 @@
+---
+title: "Turbopack — Rust-based Bundler"
+description: "Rust-based Bundler အကြောင်း: Dev, Build နှင့် ၎င်းကို ထိန်းချုပ်သော Flags များ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Turbopack ကို အသုံးပြု၍ Dev နှင့် Build များကို ပိုမိုမြန်ဆန်စေပုံနှင့် မည်သည့် Feature များကို စိတ်ချရစွာ သုံးနိုင်သည်ကို သိစေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Turbopack သည် Rust Language ဖြင့် ရေးသားထားသော Incremental Bundler ဖြစ်ပြီး Next 16 တွင် `next dev` ၏ Default Engine အဖြစ် အလုပ်လုပ်ပါတယ်။ Module တစ်ခုချင်းစီကို Cache လုပ်ကာ Built-in Native I/O ဖြင့် HMR နှင့် Production Build နှစ်ခုလုံးကို ပိုမိုမြန်ဆန်စေပါတယ်။ Server Components များအတွက် FlatModuleGraph ဖြင့် Unified Module Graph တစ်ခုတည်း ထိန်းသိမ်းထားပြီး Server အတွက် CJS ၊ Client အတွက် ESM Output များကို ထုတ်ပေးပါတယ်။ အသုံးများသော Next.js Feature များကို ထောက်ပံ့သော်လည်း Webpack-only Plugin အဟောင်းအချို့အတွက် `transpilePackages` လိုအပ်နိုင်ပါတယ်။
+
+## What it is
+
+Turbopack is Next.js's **incremental bundler written in Rust**, default for `dev` (and available for `build`) in Next 16.
+
+```bash
+next dev --turbopack
+next build --turbopack      # opt-in for faster production builds
+```
+
+## What it accelerates
+
+- **Dev**: HMR ချက်ချင်းနီးပါး မြန်ဆန်ခြင်း၊ File တစ်ခုချင်းစီအတွက် Compiled Cache ပြုလုပ်ခြင်း
+- **Build**: Native I/O ဖြင့် Asset နှင့် Pages Build ပိုမြန်ဆန်ခြင်း
+- **FlatModuleGraph**: Server Components များအတွက် Unified Module Graph တစ်ခုတည်း ထုတ်ပေးခြင်း
+
+## Config knobs
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  turbopack: {
+    // resolveAlias, rules, treeShaking, memoryLimit…
+  },
+};
+```
+
+## Behavior notes
+
+- Server အတွက် CJS ၊ Client အတွက် ESM Output ဖြစ်ပါတယ် (Config လုပ်နိုင်ပါတယ်)
+- Next.js Feature များ (CSS, Fonts, MDX) ကို ထောက်ပံ့ပြီး Legacy Pages Feature များအတွက် `experimental` ကို စစ်ဆေးပါ
+- Webpack-only Plugin အဟောင်းအချို့အတွက် `transpilePackages` လိုအပ်ပါတယ်
+
+## Rules & gotchas
+
+- တိကျသော ပြဿနာမရှိလျှင် Turbopack Default များကိုသာ ဆက်လက်အသုံးပြုပါ
+- `next build` အချိန်ကို `--turbopack` ပါ/မပါ နှိုင်းယှဉ်ကြည့်ပါ
+- File Caps များ: HMR မြန်ဆန်စေရန် Default `maxAssetSize` သည် Dev တွင် 4KB ၌ Warning ပေးပါတယ်
+
+## Activity
+
+`next build` ၏ အချိန်ကို `--turbopack` ပါ/မပါ တိုင်းတာပါ၊ Dev တွင် Hot Module Replacement Edit တစ်ခု ပြုလုပ်ကာ 100ms အောက် Module Swap ကို မှတ်တမ်းတင်ပါ။

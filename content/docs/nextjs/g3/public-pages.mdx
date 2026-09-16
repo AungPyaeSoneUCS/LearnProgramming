@@ -1,0 +1,75 @@
+---
+title: "Public Pages — လူထု မျက်နှာများ (Public Pages)"
+description: "Build pages that are safe to cache and index at the edge: fully static, no request-time secrets. — Edge မှာ cache လုပ်ပြီး index လုပ်လို့လုံခြုံတဲ့ page တွေကို ဆောက်နည်း — အပြည့် static၊ request-time secret တွေ မပါဘူး။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  ဘယ် route တွေက တကယ် public ဖြစ်လဲ ခွဲခြားသိနိုင်ဖို့၊ ဒါမှသာ maximum cache, edge serving နဲ့ index လုပ်နိုင်မှာ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Public page ဆိုတာ **every visitor အတွက် အတူတူပဲ** ဖြစ်ပြီး auth gating မရှိ၊ request တစ်ခုချင်းအလိုက် personalization မပါတဲ့ page ကို ဆိုလိုပါတယ် — ဥပမာ marketing page, docs, blog post, product page တွေပဲ ဖြစ်ပါတယ်။ ဒီလို page တွေက request-scoped input (cookies()/headers() ဖတ်တာ စသည်) တွေ ကင်းစင်လို့ statically render လုပ်နိုင်ပြီး CDN ရဲ့ cache မှာ ထည့်ထားလို့ မြန်ဆန်တဲ့ edge serving ရပါတယ်။ Data ထည့်ချင်ရင်တော့ `use cache` + `cacheLife` ကို သုံးပြီး slug အလိုက် cache entry တွေ ခွဲထားရင် visitor တိုင်း ဘယ်အပိုင်းကိုမဆို ရောက်နိုင်ဆဲဖြစ်လို့ page က public အဖြစ် ဆက်ရှိနေပါတယ်။ ပြောင်းပြန်အနေနဲ့ cookies()/headers() ဖတ်ခြင်း၊ session-dependent prefetch များ၊ dynamic segment render တွေကတော့ page ကို public မဖြစ်အောင် တားဆီးပါတယ် — ဒါတွေလိုအပ်ရင် အတွင်းမှာ မဖတ်ဘဲ value ကို ပြင်ပကနေ pass လုပ်တာ ပိုကောင်းပါတယ်။ Public page pipeline ကတော့ Public page → static shell → edge cache → SEO indexation အဆင့်ဆင့် ဖြစ်ပါတယ်။
+
+## What a public page is
+
+**Visitor တိုင်းအတွက် အတူတူဖြစ်တဲ့** page — auth gate မရှိ၊ request တစ်ခုချင်းအလိုက် personalization မပါဘူး:
+
+- Marketing, docs, blog post, product page တွေ
+- Request အလိုက် မဟုတ်ဘဲ revalidation ဖြင့် ပြောင်းလဲတဲ့ content တွေ
+
+## Making a page public
+
+Request-scoped input တွေ ကင်းအောင် ထားပါ:
+
+```tsx
+// app/about/page.tsx - public
+export default async function AboutPage() {
+  return (
+    <main>
+      <Hero />
+      <Features />
+      <Footer />
+    </main>
+  );
+}
+```
+
+အောက်က အရာအားလုံး statically render လုပ်လို့ရတာမို့ cached shell ရဲ့ အစိတ်အပိုင်း ဖြစ်သွားပါတယ်။
+
+## Adding data safely
+
+```tsx
+import { cacheLife } from "next/cache";
+
+async function getProduct(slug: string) {
+  "use cache";
+  cacheLife("hours");
+  return db.product.findUnique({ where: { slug } });
+}
+```
+
+`slug` input တစ်ခုချင်းစီ → cache entry တစ်ခုချင်းစီ — page က "public" အနေနဲ့ ဆက်ရှိပါတယ် (visitor တိုင်း entry မှန်သမျှ ရောက်နိုင်ပါတယ်)။
+
+## What stops a page being public
+
+- `cookies()`/`headers()` ကို ဖတ်ခြင်း
+- Session အပေါ်မူတည်တဲ့ `prefetch={false}` data
+- Cache မပါတဲ့ dynamic segment render (`getServerSideProps` ပုံစံ)
+
+Request state ဖတ်ကို အတင်းဖတ်ရမယ်ဆိုရင် ပြင်ပကနေ ဖတ်ပြီး value ကို pass လုပ်ပါ (*Auth with Cache Components* ကို ကြည့်ပါ)။
+
+## Benefits pipeline
+
+```mermaid
+graph LR
+    Public[Public page] -->|[use cache]| Shell[Static shell]
+    Shell -->|CDN| Edge[Edge cache]
+    Edge --> SEO[Full SEO indexation]
+```
+
+## Activity
+
+သင့် page တွေထဲက ဘယ်ဟာက "everyone အတွက် အတူတူ" test ကို ကျော်လဲ audit လုပ်ပါ။ ပြီးရင် တစ်ခုကို အပြည့် public cached route အဖြစ် ပြောင်း (`cacheLife` ထည့်၊ cookie read ဖယ်) ပြီး build ထဲမှာ static အဖြစ် မှတ်မိမလဲ စစ်ဆေးပါ။

@@ -1,0 +1,96 @@
+---
+title: "Client-side Data Fetching — Client ဘက်တွင် Data Fetching လုပ်ခြင်း"
+description: "Fetch data in the browser with swr and TanStack Query for caching, stale-while-revalidate, and optimistic updates. — Browser တွင် swr နှင့် TanStack Query များဖြင့် caching, stale-while-revalidate နှင့် optimistic updates အတွက် data fetching လုပ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Dynamic data များအတွက် fetch + `useEffect` ကို ကိုယ်တိုင် ရေးမည့်အစား SWR / TanStack Query ကဲ့သို့သော သီးသန့် client data libraries များကို အသုံးပြုနိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Client-side Data Fetching ဆိုသည်မှာ data များကို server မှ မဟုတ်ဘဲ browser (client) အတွင်းတွင် fetch လုပ်သည့် နည်းလမ်း ဖြစ်ပါတယ်။ ဤချဉ်းကပ်မှုသည် real-time ဖြစ်ပြီး user interaction ပေါ် အခြေခံသော dynamic data များအတွက် သင့်လျော်ပါတယ်။ SWR နှင့် TanStack Query ကဲ့သို့သော data-fetching libraries များသည် automatic caching, deduplication, stale-while-revalidate background refreshes, loading/error states နှင့် refetch on focus စသည့် လုပ်ဆောင်ချက်များကို အသင့်ထည့်သွင်းထားပေးပါတယ်။ ဤ functions များကို hand-rolled fetch + `useEffect` ဖြင့် ကိုယ်တိုင် ပြန်လည် ရေးသားရမည်ဆိုပါက ရှုပ်ထွေးပြီး bug ဖြစ်နိုင်ခြေ များပါတယ်။ SWR သည် သေးငယ်သော API ကို ပေးပြီး TanStack Query မှာမူ infinite queries, mutations, devtools စသည့် richer features များကို ပေးပါတယ်။ Server Components + `use cache` ဖြင့် အစောပိုင်းတွင် render လုပ်နိုင်ပါက ၎င်းတို့ကို ဦးစားပေးသင့်ပြီး ဤ libraries များက client-managed data များအတွက်သာ သင့်လျော်ပါတယ်။
+
+## Why a data-fetching library?
+
+- Automatic **caching** နှင့် deduplication
+- **stale-while-revalidate** background refreshes (နောက်ခံတွင် ပြန်လည် refresh လုပ်ခြင်း)
+- Loading/error states များ အသင့်ပါဝင်ခြင်း
+- Focus / reconnection ပြုလုပ်ချိန်တွင် refetch လုပ်ခြင်း
+
+## SWR
+
+```bash
+npm install swr
+```
+
+```tsx
+"use client";
+
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
+export default function Posts() {
+  const { data, error, isLoading, mutate } = useSWR("/api/posts", fetcher);
+
+  if (isLoading) return <p>Loading…</p>;
+  if (error) return <p>Error loading posts</p>;
+
+  return (
+    <>
+      <ul>{data.map((p) => <li key={p.id}>{p.title}</li>)}</ul>
+      <button onClick={() => mutate()}>Refresh</button>
+    </>
+  );
+}
+```
+
+## TanStack Query
+
+```bash
+npm install @tanstack/react-query
+```
+
+```tsx
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+
+export default function Posts() {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["posts"],
+    queryFn: () => fetch("/api/posts").then((r) => r.json()),
+  });
+
+  if (isLoading) return <p>Loading…</p>;
+  if (error) return <p>Error</p>;
+  return <ul>{data.map((p) => <li key={p.id}>{p.title}</li>)}</ul>;
+}
+```
+
+`QueryClientProvider` တစ်ခုကို client layout wrapper တစ်ခုတွင် ထည့်ပါ။
+
+## Optimistic updates
+
+TanStack Query ၏ `useMutation`:
+
+```tsx
+const mutation = useMutation({
+  mutationFn: (title: string) => fetch("/api/posts", { method: "POST", body: JSON.stringify({ title }) }),
+  onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
+});
+```
+
+## When to prefer which
+
+- **SWR** - API ငယ်ဆုံး၊ server-rendered-first apps များအတွက် ကောင်းမွန်သည့် default behaviors
+- **TanStack Query** - ပိုမိုကြွယ်ဝသော features များ: infinite queries, mutations, devtools
+
+နှစ်ခုလုံးသည် **client-managed** data အတွက် ဖြစ်ပါတယ်; စောစောစီးစီး render လုပ်နိုင်ပါက Server Components + `use cache` ကို ဦးစားပေးပါ။
+
+## Activity — လေ့ကျင့်ခန်း
+
+`useEffect`-based fetch တစ်ခုကို SWR ၏ `useSWR` ဖြင့် အစားထိုးပါ၊ dashboard widget ငယ်တစ်ခုတွင် focus-refresh ထည့်ပါ။

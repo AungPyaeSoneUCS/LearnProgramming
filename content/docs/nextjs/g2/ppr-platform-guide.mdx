@@ -1,0 +1,72 @@
+---
+title: "PPR Platform Guide — Platform အလိုက် Partial Prerendering"
+description: "Use Adapters + Partial Prerendering to serve cached shells at the edge with dynamic holes filled live. — Adapters နှင့် Partial Prerendering ကို သုံး၍ edge တွင် cached shells များ ဖြန့်ဝေကာ dynamic holes များကို live ဖြည့်စွမ်းသည့် နည်းလမ်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  PPR (Static Shells) ကို ပံ့ပိုးသော platforms များပေါ်တွင် စတင် အသုံးပြုတတ်စေရန် ဖြစ်ပါတယ် — ဧည့်သည်တိုင်း အတွက် cached HTML ကို မြန်မြန် ရရှိစေပြီး dynamic အစိတ်အပိုင်းများကို နောက်မှ ဖြည့်ပေးသည့် နည်းလမ်းကို နားလည်မည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Partial Prerendering (PPR) သည် static shell (html + placeholders) များကို edge cache တွင် ကြိုတင် သိမ်းဆည်းထားပြီး dynamic data (holes) များကို origin မှ ဆွဲကာ stream ပြုလုပ်၍ ဖြည့်ပေးသည့် နည်းလမ်း ဖြစ်ပါတယ်။ PPR ကို အသုံးပြုရန် ၎င်းကို implement ထားသော Adapter တစ်ခု လိုအပ်ပြီး `next.config.ts` တွင် `staticGeneration` config (ဥပမာ `compilerId`) ကို ဖွင့်ကာ shell ကို cache လုပ်နိုင်သော CDN သို့ deploy ရပါတယ်။ Routes များတွင် `use cache` + non-short-lived `cacheLife` profile ရှိသော cached data များသည် shell အဖြစ် ပြောင်းသွားပြီး uncached async အပိုင်းများသည် request အလိုက် stream လုပ်သည့် dynamic holes အဖြစ် ကျန်ရစ်ပါတယ်။ Validation အတွက် `curl -H "Accept: text/html"` ဖြင့် shell က edge-cached ဖြစ်ကာ ချက်ချင်း ရရှိကြောင်း စစ်ဆေးနိုင်ပြီး `curl -N` (stream) ဖြင့် dynamic sections များ မရောက်မီ shell bytes များ ဦးစွာ ရောက်ကြောင်း အတည်ပြုနိုင်ပါတယ်။ Fully real-time UI (dashboard) များနှင့် edge budget ကို ကျော်လွန်သော function sizes များအတွက်မူ PPR ကို မသုံးသင့်ပါဘူး။
+
+## PPR in one diagram
+
+```
+Client ── request
+   Edge cache: serves PRE-RENDERED static shell (shell + placeholders)
+   Dynamic holes (data) fetched from origin, streamed in
+```
+
+## Enabling on a platform
+
+PPR အတွက် platform/Adapter ပံ့ပိုးမှု လိုအပ်ပါတယ်:
+
+1. PPR ကို implement ထားသော **Adapter** တစ်ခုကို သုံးပါ (Adapters lesson ကို ကြည့်ပါ)
+2. Static shell config ကို ဖွင့်ပါ:
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  staticGeneration: {
+    // shell rendering flags for adapters
+    compilerId: "my-app",
+  },
+};
+```
+
+3. Shell ကို cache လုပ်နိုင်သော CDN သို့ deploy လုပ်ပါ။
+
+## Which routes get PPR
+
+Cached data ရှိသော routes (`use cache` + non-short-lived `cacheLife`) များသည် shells အဖြစ် ပြောင်းသွားပြီး uncached async အပိုင်းများသည် request အလိုက် stream လုပ်သော dynamic holes အဖြစ် ကျန်ရစ်ပါတယ်။
+
+```tsx
+export default async function Page() {
+  return (
+    <main>
+      <Header />                {/* static → in shell — cached at edge */}
+      <ProductList />           {/* hero route; can be shelled */}
+      <PersonalizedFeed />      {/* uncached → dynamic hole */}
+    </main>
+  );
+}
+```
+
+## Validating on the platform
+
+- `curl -H "Accept: text/html"` သည် shell ကို ချက်ချင်း ပြန်ပေးသင့်ပါတယ် (edge-cached)
+- Stream test — `curl -N` သည် dynamic sections များ မရောက်လာမီ shell bytes များကို ဦးစွာ ပြသသင့်ပါတယ်
+- Origin ၌သာ မဟုတ်ဘဲ CDN တွင် caching ဖြစ်ကြောင်း အတည်ပြုပါ
+
+## When NOT to use
+
+- Fully real-time UI (dashboards) — dynamic serving ကို ဦးစားပေးပါ
+- သင့် function size constraints ထက် edge budget က ပိုများနေသည့် ကိစ္စများ
+
+## Activity
+
+လေ့ကျင့်ခန်း: သင့် platform က ပံ့ပိုးပါက `staticGeneration` + Adapter တစ်ခုကို ဖွင့်ပြီး dynamic feed မတိုင်မီ shell streaming ဖြစ်သည်ကို ကြည့်ရန် `curl -N` ကို ပြန် run ကာ cache hit ratios များကို audit လုပ်ပါ။

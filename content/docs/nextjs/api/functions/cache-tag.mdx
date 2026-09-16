@@ -1,0 +1,73 @@
+---
+title: "cacheTag — အကြောင်းအရာအလိုက် ကက်တဂ်ခြင်း"
+description: "Tag cached data by topic to revalidate it precisely with revalidateTag. — Cache လုပ်ထားသော data များကို အကြောင်းအရာအလိုက် tag သတ်မှတ်ပြီး revalidateTag ဖြင့် တိကျစွာ ပြန်လန်းဆန်းစေနိုင်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Cache entry များကို semantic tags အောက်တွင် စုစည်းပြီး လိုအပ်သည့်နေရာကိုသာ တိကျစွာ (surgical) invalidation ပြုလုပ်နိုင်အောင် နားလည်စေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`cacheTag` သည် `"use cache"` ဖြင့် မှတ်သားထားသော cached scope များသို့ string tag များကို ချိတ်ဆွဲပေးသော function တစ်ခုဖြစ်ပါတယ်။ ဥပမာအားဖြင့် posts နှင့်ဆိုင်သော data များကို `cacheTag("posts")` ဟု tag လုပ်ထားလျှင် နောက်ပိုင်းတွင် `revalidateTag("posts")` ကို ခေါ်ဆိုလိုက်သည်နှင့် ထို tag ပါသော cache entries အားလုံးကို ပြန်လန်းဆန်းစေနိုင်ပါတယ်။ Tag အများအပြားကိုလည်း template string အသုံးပြု၍ တစ်ကြိမ်တည်း သတ်မှတ်နိုင်ပြီး system သည် tag → entries index ကို ထိန်းသိမ်းထားသောကြောင့် O(1) invalidation နှုန်းဖြင့် မြန်ဆန်စွာ လုပ်ဆောင်ပေးပါတယ်။ Server Action တစ်ခုအတွင်း mutation (ဥပမာ createPost) လုပ်ပြီးနောက် `revalidateTag("posts")` ကို ခေါ်ဆိုခြင်းဖြင့် user များ နောက်ဆုံးရ data ကို အမြင်မြင်ရစေနိုင်ပါတယ်။ မှတ်သားရန် အရေးကြီးသည်မှာ `revalidateTag` ကို မရှိသော tag ဖြင့် ခေါ်ဆိုလျှင် error မဖြစ်ဘဲ (no-op) ဖြစ်တတ်ပါတယ်။
+
+## What it is
+
+`cacheTag` သည် cached scope များသို့ string tags များကို ချိတ်ဆွဲပေးပါတယ်:
+
+```tsx
+import { cacheTag } from "next/cache";
+
+export async function getPosts() {
+  "use cache";
+  cacheTag("posts");
+  return db.posts.findMany();
+}
+```
+
+## Revalidate later
+
+```ts
+import { revalidateTag } from "next/cache";
+await revalidateTag("posts");
+```
+
+`posts` ဟု tag မှတ်ထားသော cached scopes အားလုံးသည် နောက် fetch တွင် purged / refreshed ဖြစ်သွားပါတယ်။
+
+## Multiple tags
+
+```ts
+cacheTag("posts", `user-${userId}`);
+```
+
+Tag → entries index ကို ထိန်းသိမ်းထားသောကြောင့် O(1) ဖြင့် invalidation လုပ်နိုင်ပါတယ်။
+
+## Rules (စည်းကမ်းများ)
+
+- `"use cache"` scope အတွင်းမှသာ ခေါ်ဆိုရပါမယ်
+- Tags များသည် lowercase / simple strings ဖြစ်ရပြီး platform မှ tag အရေအတွက်ကို ကန့်သတ်ထားပါတယ်
+- မရှိသော tag ဖြင့် `revalidateTag` ခေါ်ဆိုလျှင် no-op သာဖြစ်ပြီး error မရှိပါ
+
+## Using with Server Actions
+
+```ts
+"use server";
+export async function createPost(input: FormData) {
+  …
+  revalidateTag("posts");
+}
+```
+
+## Distinguish from `updateTag` / `revalidatePath`
+
+| Function       | Scope            | Replaces            |
+| -------------- | ---------------- | ------------------- |
+| `revalidateTag` | tagged caches    | full purges (selective) |
+| `updateTag`    | tagged caches    | stale-serve while updating |
+| `revalidatePath` | path/page tree | full HTML invalidation |
+
+## လေ့ကျင့်ခန်း (Activity)
+
+Product data များကို tag လုပ်ပြီး admin action တွင် mutation လုပ်ကာ `revalidateTag("products")` ဖြင့် ပြန်လန်းဆန်းစေပြီး product များသာ refresh ဖြစ်ကာ အခြား caches များ hot ဖြစ်နေကြောင်း စစ်ဆေးပါ။

@@ -1,0 +1,71 @@
+---
+title: "Upgrading — Version Update ပြုလုပ်ခြင်း"
+description: "Upgrade an existing Next.js app safely: automate with codemods, follow version guides, and run the upgrade CLI. — Codemods များဖြင့် Next.js App ကို လုံခြုံစွာ Upgrade ပြုလုပ်ပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Next.js Major Version အများကြား codemods နှင့် version upgrade guides များကို အသုံးပြု၍ breakdown အနည်းဆုံးဖြင့် Upgrade ပြုလုပ်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js အား major version အသစ်များသို့ Upgrade ပြုလုပ်ရာတွင် code ပျက်စီးမှု အနည်းဆုံးဖြစ်စေရန် စနစ်ကျသော လမ်းစဉ်ကို လိုက်နာရပါတယ်။ ပထမဦးစွာ target version အတွက် (ဥပမာ 15 → 16) upgrade guide ကို ဖတ်ရပြီး codemods များကို run ၍ code patterns များကို အလိုအလျောက် update လုပ်ပါတယ်။ Next.js တွင် interactive upgrade CLI `npx @next/codemod@canary upgrade latest` ကို ပေးထားပြီး ၎င်းသည် ရွေးထားသော major version အတွက် သင့်လျော်သော codemod အားလုံးကို run ပေးပါတယ်။ Major version အကြား breaking changes များတွင် `params`/`searchParams` တို့ကို `Promise` အဖြစ်ပြောင်းခြင်း, deprecated APIs များ ဖယ်ရှားခြင်း, Cache Components model အသစ်နှင့် config keys များ ပြောင်းလဲခြင်း စသည်တို့ ပါဝင်ပါတယ်။ Upgrade အပြီးတွင် config နှင့် import names များကို update လုပ်ပြီး `npm run build`, `npm run lint`, `npx tsc --noEmit` စသည့် checks များဖြင့် type errors များကို တစ်ခုချင်း ပြုပြင်ရပါတယ်။
+
+## The safe upgrade path (လုံခြုံသော Upgrade လမ်းစဉ်)
+
+1. Target version အတွက် **upgrade guide ကို ဖတ်ပါ** (ဥပမာ 15 → 16)။
+2. Code patterns များကို auto-update ရန် **codemods များကို run ပါ**။
+3. **Config နှင့် path names များကို update လုပ်ပါ**။
+4. **ပြန်လည် build လုပ်ပြီး** type errors များကို ပြုပြင်ပါ။
+
+## The automatic upgrade command (အလိုအလျောက် Upgrade Command)
+
+Next.js သည် interactive upgrade CLI တစ်ခု ပေးထားပါတယ်:
+
+```bash
+npx @next/codemod@canary upgrade latest
+```
+
+ဤအမိန့်သည် ရွေးထားသော major version အတွက် သက်ဆိုင်သော codemod အားလုံးကို run ပေးပါတယ်။
+
+## Running upgrade codemods (Upgrade Codemods များကို Run လုပ်ခြင်း)
+
+```bash
+npx @next/codemod@canary migration:motion-imports   # example codemod
+npx @next/codemod@canary next-async-request-api     # params/headers now async
+```
+
+Codemods များကို migration တစ်ခုချင်းစီအလိုက် အမည်ပေးထားပြီး upgrade guide တွင် သင့် version အတွက် စာရင်း ဖော်ပြထားပါတယ်။
+
+## What breaks between majors (Major Versions အကြား ပျက်စီးနိုင်သည့် အရာများ)
+
+ပုံမှန် breaking changes များ (15 → 16 style):
+
+| Change                      | Migration                                    |
+| --------------------------- | -------------------------------------------- |
+| `params` / `searchParams` are now `Promise`s | `const { id } = await params` |
+| Deprecated APIs removed     | Search the codebase for the old names         |
+| New Cache Components model  | See the *Migrating to Cache Components* guide |
+| Config keys renamed         | Update `next.config` per the guide            |
+
+## Using the version upgrade guides (Version Upgrade Guides များကို အသုံးပြုခြင်း)
+
+Docs တွင် per-version guides များ (v14, v15, v16) ပါဝင်ပါတယ်။ တစ်ခုစီတွင် အောက်ပါတို့ ဖော်ပြပါတယ်:
+
+- New features များနှင့် ၎င်းတို့ကို စတင်သုံးပုံ adoption steps
+- Before/after code ပါသော breaking changes များ
+- အလိုအလျောက် အသုံးပြုရမည့် codemods များ
+
+## After upgrading: verify (Upgrade ပြီးနောက် စစ်ဆေးခြင်း)
+
+```bash
+npm run build      # must compile cleanly
+npm run lint
+npx tsc --noEmit   # or rely on next build's type check
+```
+
+## Activity
+
+သင့် project သည် ယခင် Next.js version များတွင်ရှိပါက `next.config.ts` နှင့် သင့် imports များကို snapshot ကူးယူထားပြီး `npx @next/codemod@canary upgrade latest` ကို run ပါ။ ပြန်လည် build လုပ်ပြီး ဖော်ပြလာသော type errors များကို တစ်ခုချင်း ပြုပြင်ပါ။

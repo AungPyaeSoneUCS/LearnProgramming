@@ -1,0 +1,86 @@
+---
+title: "Self-Hosting — ကိုယ်တိုင် ဆာဗာတင်ခြင်း"
+description: "Run Next.js yourself - Node, Docker, standalone, background-relative env - away from managed platforms. — Managed platform တွေ မလိုဘဲ Node, Docker, standalone output နဲ့ ကိုယ်ပိုင် infrastructure ပေါ်မှာ Next.js ကို run နည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Predictable config နဲ့ artifacts အနည်းဆုံး အသုံးပြုပြီး ကိုယ်ပိုင် infrastructure ပေါ်ကို Next.js ကို deploy လုပ်နိုင်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Self-hosting ဆိုတာ Vercel လို managed platform တွေ မလိုဘဲ Node server, `.next/standalone`, Docker image စတဲ့ mode တွေနဲ့ ကိုယ်ပိုင် server ပေါ်မှာ Next.js ကို run လုပ်တာပဲ ဖြစ်ပါတယ်။ အရိုးရှင်းဆုံးက npm run build ပြီး `next start` (default port 3000) နဲ့ ဖွင့်တာပါ။ ပိုပေါ့ပါးချင်ရင် output: standalone သတ်မှတ်ပြီး .next/standalone ကို static + public နဲ့အတူ ကူးယူပြီး PORT/HOSTNAME env တွေနဲ့ node server.js လို့ run နိုင်ပါတယ်။ Docker ဆိုရင်တော့ node:22-alpine base image ပေါ်မှာ standalone output ကို ကူးထည့်ပြီး CMD နဲ့ server.js ကို စတင်ပါတယ်။ Production မှာ reverse proxy (Nginx/traefik) နောက်ကွယ်မှာ gzip + TLS နဲ့ run တာ၊ GET /api/health လို health endpoint ထားတာ၊ maxDuration/timeout တွေ သင့်တင့်အောင် သတ်မှတ်တာ၊ horizontal scaling မှာ shared in-memory cache အကြောင်း သတိထားရတာတွေ (use cache: remote သို့မဟုတ် cacheMaxMemorySize ထားခြင်း) ပါဝင်ပါတယ်။ Function-based platform တွေအတွက်ကတော့ Adapters တွေက app ကို အဲဒီ platform ရဲ့ deploy unit အဖြစ် ပြောင်းပေးပါတယ်။
+
+## Modes
+
+| Mode                 | Description                            |
+| -------------------- | -------------------------------------- |
+| Node server          | `next start` on the Node runtime       |
+| Standalone           | `.next/standalone` minimal bundle      |
+| Docker               | Self-contained image                   |
+| Edge/Adapters        | Serverless-function targets            |
+
+## Node server
+
+```bash
+npm run build
+npm start   # → next start (port 3000)
+```
+
+## Standalone output
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  output: "standalone",
+};
+```
+
+`.next/standalone` ကိုတင် (`.next/static` + `public/` နဲ့အတူ) ကူးယူပါ:
+
+```bash
+cd .next/standalone
+PORT=3000 HOSTNAME=0.0.0.0 node server.js
+```
+
+## Docker
+
+```dockerfile
+FROM node:22-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+## Config for self-hosting
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  output: "standalone",
+  poweredByHeader: false,
+  compressed: true,
+  logging: { fetches: { fullUrl: true } },
+};
+```
+
+## Reflection from adapters
+
+Function-based host တွေအတွက်တော့ **Adapters** တွေက app ကို အဲဒီ platform ရဲ့ deployed unit အဖြစ် ပြောင်းလဲပေးပါတယ် — *Adapters* lesson ကို ကြည့်ပါ။ ရှုပ်ထွေးတဲ့ server feature တွေအတွက်တော့ Self-hosting Node path က အရိုးရှင်းဆုံး ဖြစ်နေဆဲပါ။
+
+## Healthy ops
+
+- Reverse proxy (Nginx/traefik) နောက်ကွယ်မှာ gzip + TLS နဲ့ run ပါ
+- Health endpoint: `GET /api/health`
+- `maxDuration`/timeouts တွေကို limit ထဲမှာ သင့်တင့်တဲ့အတိုင်း သတ်မှတ်ပါ
+- Horizontal scale လုပ်ရင် shared in-memory cache အကြောင်း သတိထားပါ (`use cache: remote` သို့မဟုတ် `cacheMaxMemorySize` တိုတောင်းအောင် ထားပါ)
+
+## Activity
+
+`standalone` build တစ်ခု ထုတ်ပြီး default port မှာ `server.js` ကို run ပါ၊ `/api/health` route ထည့်ပြီး `next start` အပြင်ကနေ response လာတာကို စစ်ဆေးပါ။

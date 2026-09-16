@@ -1,0 +1,59 @@
+---
+title: "instrumentation.ts — Server Startup Code"
+description: "Run server startup code (and error hooks) in instrumentation.ts to wire monitoring and DB. — Server Startup Code (နှင့် Error Hooks) များကို `instrumentation.ts` တွင် Run လုပ်စေပြီး Monitoring နှင့် Database ကို ချိတ်ဆက်ပေးပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Lifecycle Events များကို တစ်ကြိမ်သာ Hook လုပ်ပြီး Boot ချိန်တွင် Logger၊ Telemetry နှင့် Database ကို Register လုပ်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`instrumentation.ts` သည် Server တစ်ခု စတင်ဖွင့်သောအခါ (Boot) တစ်ကြိမ်သာ Run လုပ်ပေးသော Code များကို ရေးသားရန်အတွက် သုံးသော Next.js File Convention တစ်ခုဖြစ်ပါတယ်။ Project Root (သို့မဟုတ် `src/`) တွင် တည်ရှိရမည်ဖြစ်ပြီး `register()` Function မှတစ်ဆင့် Database Connection ဖွင့်ခြင်း၊ Sentry/OpenTelemetry ကဲ့သို့သော Observability SDK များကို Initialize လုပ်ခြင်းစသည့် Startup Work များကို ဆောင်ရွက်နိုင်ပါတယ်။ `NEXT_RUNTIME` Variable ကို စစ်ဆေး၍ Node နှင့် Edge Runtimes တို့အတွက် သီးခြား Branching လုပ်နိုင်ပါတယ်။ ထို့အပြင် `onRequestError()` Hook ကို သတ်မှတ်ထားလျှင် Server Component သို့မဟုတ် Route Handler တစ်ခုခုတွင် Error ဖြစ်တိုင်း အလိုအလျောက် ခေါ်ယူပြီး Error Monitoring ပြုလုပ်နိုင်ပါတယ်။ ဤဖိုင်သည် First Request မဖြန့်ဝေမီ လည်ပတ်ရသောကြောင့် လျှင်မြန်အောင်ထားရန် သို့မဟုတ် Heavy Work များကို Defer လုပ်ရန် အကြံပြုပါတယ်။
+
+## The file
+
+Project Root (သို့မဟုတ် `src/`) တွင် `instrumentation.ts` ကို ထားရှိပါတယ်:
+
+```ts
+// instrumentation.ts
+export async function register() {
+  if (process.env.NEXT_RUNTIME === "nodejs") {
+    await import("./server/db");
+    // connect Sentry, init caches, etc.
+  }
+}
+```
+
+- `register()` သည် Server စတင်ချိန်တွင် တစ်ကြိမ်သာ Run လုပ်ပေးပါတယ်
+- Node vs Edge ကြား Branch လုပ်ရန် `NEXT_RUNTIME` ကို စစ်ဆေးပါ
+- Observability SDK များ (Sentry/OpenTelemetry) က Auto-init ပြုလုပ်ရန် မကြာခဏ အသုံးပြုပါတယ်
+
+## Error reporting hook
+
+```ts
+export async function onRequestError(err: unknown, request: { path: string; method: string; headers: Headers }, context: { routerKind; routeType; route: string; renderSource }) {
+  await reportError(err, request);
+}
+```
+
+- Server Component၊ Server Action သို့မဟုတ် Route Handler တစ်ခုခုတွင် Error ဖြစ်သောအခါ အလိုအလျောက် ခေါ်ယူပေးပါတယ်
+- UI Boundary မထွက်မီ Error Alerts များအတွက် ဗဟိုပြုနေရာ တစ်ခုအဖြစ် သင့်တော်ပါတယ်
+
+## Placement & timing
+
+- `register`/`onRequestError` Export များတွင်သာ ရေးသားရမည်ဖြစ်ပြီး အခြား Code များ မပါဝင်ရပါဘူး
+- First Request မဖြန့်ဝေမီ Run လုပ်ပြီး လျှင်မြန်အောင်ထားပါ (သို့မဟုတ် Heavy Work ကို Defer လုပ်ပါ)
+- Root File ဖြစ်ပြီး Node နှင့် Edge Runtimes နှစ်ခုလုံးက ဖတ်နိုင်ပါတယ်
+
+## Rules
+
+- ဤနေရာတွင် `register` နှင့် `onRequestError` ကိုသာ Export ပြုလုပ်ပါ
+- `app/` အတွင်းမဟုတ်ဘဲ Root Level တွင် ထားရှိပါ
+- `once` File ဖြစ်ကာ Runtime တစ်ခုစီအတွက် တစ်ကြိမ်သာ Invoke လုပ်ပေးပါတယ်
+
+## Activity
+
+Boot တွင် Local Logger တစ်ခုကို ချိတ်ဆက်သည့် `instrumentation.ts` ကို ထည့်သွင်းပြီး Page တစ်ခုတွင် Test Error ကို Throw လုပ်ကာ `onRequestError` က ၎င်းကို လက်ခံရရှိသည်ကို စစ်ဆေးပါ။

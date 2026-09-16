@@ -1,0 +1,53 @@
+---
+title: "AI Coding Agents — AI Coding Agents များအတွက် လမ်းညွှန်"
+description: "A guide for AI coding agents (and humans reviewing their output) building Next.js apps correctly. — Next.js application များကို မှန်ကန်စွာ တည်ဆောက်ရန် AI coding agents (နှင့် ၎င်းတို့၏ အထွက်ကို ပြန်စစ်သူများ) အတွက် လမ်းညွှန်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  AI coding agent တစ်ခုကို လက်ရှိ Next.js model ၏ အတွင်းတွင်သာ ရှိနေစေမည့် system prompt သို့မဟုတ် checklist တစ်ခု ရေးသားနိုင်ရန် ဖြစ်ပါတယ်။ ခေတ်မမီတော့သော stale patterns များကို ရှောင်ရှားခြင်းကို အလေးထားပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+AI Coding Agent ဆိုသည်မှာ source code များကို ရေးသား၊ ပြင်ဆင်ပြီး debugging လုပ်နိုင်သည့် AI စနစ်တစ်ခု ဖြစ်ပါတယ်။ ဤ lesson သည် agent များသာမက လူသားများပါ Next.js project များကို လက်ရှိ App Router ပုံစံဖြင့် မှန်ကန်စွာ တည်ဆောက်နိုင်ရန် ရည်ရွယ်ပါတယ်။ ခေတ်ဟောင်း version များဖြင့် လေ့ကျင့်ထားသော agent များသည် Pages Router, `getStaticProps` စသည့် legacy patterns များကို ထုတ်လုပ်တတ်သောကြောင့် ရှောင်ရှားရန် လိုအပ်ပါတယ်။ ထို့ကြောင့် agent prompt အတွင်း App Router ကို ဦးစားပေးခြင်း၊ Server Components များကို default ပြုလုပ်ခြင်း၊ `use cache` + `cacheLife` ကို အသုံးပြုခြင်းကဲ့သို့သော rules များ ထည့်သွင်းရန် လိုအပ်ပါတယ်။ AGENTS.md ဖိုင်ထဲတွင် ယင်းစည်းမျဉ်းများ ထားရှိခြင်းအားဖြင့် agent ၏ အထွက်အား စစ်ဆေးရာတွင်လည်း လွယ်ကူစေပါတယ်။
+
+## Why a guide for agents?
+
+ခေတ်ဟောင်း version များဖြင့် လေ့ကျင့်ထားသော AI agents များသည် legacy patterns (Pages Router, `getStaticProps`, server/client imports ရောထွေးခြင်း) များကို ထုတ်လုပ်တတ်ပါတယ်။ Next.js သည် agents များ မှန်ကန်ပြီး လက်ရှိဖြစ်သော code များ ထုတ်လုပ်နိုင်ရန် ဤလမ်းညွှန်ကို ထုတ်ဝေထားပါတယ်။
+
+## Rules to include in your agent prompt
+
+1. **App Router ကို ဦးစားပေးပါ** - `app/…` ကိုသာ output လုပ်ပြီး `pages/…` ကို လုံးဝ မသုံးပါနှင့်။
+2. **Server Components များကို default ပြုလုပ်ပါ** - interactivity လိုအပ်မှသာ `"use client"` ထည့်ပါ။
+3. **Server Components များတွင် fetch လုပ်ပါ** - မလိုအပ်ဘဲ `useEffect` data fetching ကို မသုံးပါနှင့်။
+4. **လက်ရှိ model ဖြင့် cache လုပ်ပါ** - `unstable_cache` အစား `use cache` + `cacheLife`/`cacheTag` ကို အသုံးပြုပါ (migrating လုပ်နေလျှင်သာ `unstable_cache`)
+5. **`params` နှင့် `searchParams` များသည် async promises များ ဖြစ်ပါတယ်** - အမြဲတမ်း `await params` လုပ်ပါ။
+6. Internal navigation အားလုံးအတွက် **`next/link`** သုံးပါ။
+7. **Server Components / Server Functions အတွင်းတွင် secrets များကို ထားပါ** - client bundles တွင် ဘယ်တော့မှ မထားပါနှင့်။
+
+## Place these constraints in AGENTS.md
+
+```markdown
+# Next.js rules for this repo
+- Use App Router: routes live in src/app
+- Async Server Components for data fetching
+- "use client" only for interactive components
+- "use cache" + cacheLife for caching (Next 16)
+- params is a Promise: const { id } = await params
+- Internal links use next/link
+```
+
+## Verifying agent output
+
+- Agent edit တိုင်းပြီးနောက် `next build` နှင့် `next lint` ကို run ပါ
+- Banned patterns များအတွက် grep လုပ်ပါ:
+
+```bash
+rg "getServerSideProps|getStaticProps|pages/" src
+```
+
+## Activity — လေ့ကျင့်ခန်း
+
+အထက်ပါ rules များကို သင့် project ၏ `AGENTS.md` တွင် ထည့်ပါ၊ feature ငယ်တစ်ခုကို AI agent သို့ လွှဲအပ်ပါ၊ ထို့နောက် merge မလုပ်မီ checklist နှင့် ၎င်း၏ output ကို သုံးသပ်ပါ။

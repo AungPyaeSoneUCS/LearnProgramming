@@ -17,10 +17,10 @@ function isLeaf(item: NavLeaf | NavGroup): item is NavLeaf {
 function collectLeaves(nodes: NavCourse["items"]): NavLeaf[] {
   const out: NavLeaf[] = [];
   for (const node of nodes) {
-    if ("slug" in node && typeof node.slug === "string") {
-      out.push({ label: node.label, slug: node.slug });
-    } else if ("items" in node) {
-      out.push(...collectLeaves(node.items as NavCourse["items"]));
+    if (isLeaf(node)) {
+      out.push(node);
+    } else {
+      out.push(...collectLeaves((node as NavGroup).items));
     }
   }
   return out;
@@ -30,14 +30,10 @@ function collectLeaves(nodes: NavCourse["items"]): NavLeaf[] {
 function groupPathOf(nodes: NavCourse["items"], slug: string, prefix = ""): string | null {
   for (let i = 0; i < nodes.length; i++) {
     const node = nodes[i];
-    if ("slug" in node) {
+    if (isLeaf(node)) {
       if (node.slug === slug) return prefix;
     } else {
-      const childPath = groupPathOf(
-        (node as NavGroup).items as NavCourse["items"],
-        slug,
-        prefix ? `${prefix}.${i}` : `${i}`,
-      );
+      const childPath = groupPathOf((node as NavGroup).items, slug, prefix ? `${prefix}.${i}` : `${i}`);
       if (childPath !== null) return childPath;
     }
   }
@@ -48,7 +44,43 @@ function toLessonHref(slug: string): string {
   return "/courses/" + slug.split("/").map(encodeURIComponent).join("/");
 }
 
-function NavLeafLink({ slug, label, activeSlug, indent }: { slug: string; label: string; activeSlug: string; indent: number }) {
+function stripModule(label: string): string {
+  return label.replace(/^Module\s+\d+\s*:\s*/i, "").trim();
+}
+
+/** A group that holds a single lesson whose label just repeats the Module title. */
+function shouldFlatten(group: NavGroup): boolean {
+  if (group.items.length !== 1 || !isLeaf(group.items[0])) return false;
+  const norm = stripModule(group.label);
+  return norm !== "" && norm === stripModule(group.items[0].label);
+}
+
+const GROUP_PAD = 6;
+const LEVEL_STEP = 12;
+const CHEVRON_SPACE = 18; // chevron 14px + gap 4px
+const LEAF_GAP = 10; // nesting gap of a lesson under its Module
+
+function groupPad(level: number): number {
+  return GROUP_PAD + (level - 1) * LEVEL_STEP;
+}
+
+function leafPad(level: number): number {
+  if (level <= 1) return GROUP_PAD + CHEVRON_SPACE + 2;
+  return groupPad(level - 1) + CHEVRON_SPACE + LEAF_GAP;
+}
+
+function NavLeafLink({
+  slug,
+  label,
+  activeSlug,
+  level,
+}: {
+  slug: string;
+  label: string;
+  activeSlug: string;
+  level: number;
+}) {
+  const pad = leafPad(level);
   const active = slug === activeSlug;
   return (
     <a
@@ -60,12 +92,13 @@ function NavLeafLink({ slug, label, activeSlug, indent }: { slug: string; label:
           ? "bg-amber-500/10 font-bold text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
           : "text-muted-foreground hover:bg-muted/60 hover:text-foreground")
       }
-      style={{ paddingLeft: `${12 + indent}px` }}
+      style={{ paddingLeft: `${pad}px` }}
     >
       {active && (
         <span
           aria-hidden="true"
-          className="absolute left-2 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-amber-500"
+          className="absolute top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-amber-500"
+          style={{ left: `${pad - 4}px` }}
         />
       )}
       {label}
@@ -75,15 +108,15 @@ function NavLeafLink({ slug, label, activeSlug, indent }: { slug: string; label:
 
 interface GroupSectionProps {
   label: string;
-  items: NavCourse["items"];
+  items: NavLeaf[];
   path: string;
-  indent: number;
+  level: number;
   openSet: Set<string>;
   onToggle: (path: string) => void;
   activeSlug: string;
 }
 
-function GroupSection({ label, items, path, indent, openSet, onToggle, activeSlug }: GroupSectionProps) {
+function GroupSection({ label, items, path, level, openSet, onToggle, activeSlug }: GroupSectionProps) {
   const open = openSet.has(path);
   return (
     <li>
@@ -92,8 +125,8 @@ function GroupSection({ label, items, path, indent, openSet, onToggle, activeSlu
         onClick={() => onToggle(path)}
         aria-expanded={open}
         aria-controls={`sidebar-group-${path.replaceAll(".", "-")}`}
-        className="group flex w-full items-center gap-1 rounded-lg px-2 py-1.5 text-left text-[11px] font-bold uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
-        style={{ paddingLeft: `${10 + indent}px` }}
+        className="group flex w-full items-center gap-1 rounded-lg py-1.5 pr-2 text-left text-[11px] font-bold uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
+        style={{ paddingLeft: `${groupPad(level)}px` }}
       >
         <ChevronRight
           aria-hidden="true"
@@ -110,18 +143,27 @@ function GroupSection({ label, items, path, indent, openSet, onToggle, activeSlu
         }`}
       >
         <ul className="min-h-0 space-y-0.5 overflow-hidden">
-          {items.map((item, i) =>
+          {items.map((item) =>
             isLeaf(item) ? (
               <li key={item.slug}>
-                <NavLeafLink slug={item.slug} label={item.label} activeSlug={activeSlug} indent={indent + 4} />
+                <NavLeafLink slug={item.slug} label={item.label} activeSlug={activeSlug} level={level + 1} />
+              </li>
+            ) : shouldFlatten(item as NavGroup) ? (
+              <li key={"flat-" + (item as NavGroup).items[0].slug}>
+                <NavLeafLink
+                  slug={(item as NavGroup).items[0].slug}
+                  label={(item as NavGroup).label}
+                  activeSlug={activeSlug}
+                  level={level + 1}
+                />
               </li>
             ) : (
               <GroupSection
-                key={(item as NavGroup).label + "-" + i}
+                key={"group-" + path + "." + items.indexOf(item)}
                 label={(item as NavGroup).label}
-                items={(item as NavGroup).items as NavCourse["items"]}
-                path={path + "." + i}
-                indent={indent + 2}
+                items={(item as NavGroup).items}
+                path={path + "." + items.indexOf(item)}
+                level={level + 1}
                 openSet={openSet}
                 onToggle={onToggle}
                 activeSlug={activeSlug}
@@ -189,15 +231,24 @@ export default function CoursesSidebar({ courses }: CoursesSidebarProps) {
           {activeCourse.items.map((item, i) =>
             isLeaf(item) ? (
               <li key={item.slug}>
-                <NavLeafLink slug={item.slug} label={item.label} activeSlug={activeSlug} indent={8} />
+                <NavLeafLink slug={item.slug} label={item.label} activeSlug={activeSlug} level={1} />
+              </li>
+            ) : shouldFlatten(item as NavGroup) ? (
+              <li key={"flat-" + (item as NavGroup).items[0].slug}>
+                <NavLeafLink
+                  slug={(item as NavGroup).items[0].slug}
+                  label={(item as NavGroup).label}
+                  activeSlug={activeSlug}
+                  level={1}
+                />
               </li>
             ) : (
               <GroupSection
-                key={(item as NavGroup).label + "-" + i}
+                key={"group-" + i}
                 label={(item as NavGroup).label}
-                items={(item as NavGroup).items as NavCourse["items"]}
+                items={(item as NavGroup).items}
                 path={`${i}`}
-                indent={0}
+                level={1}
                 openSet={openSet}
                 onToggle={toggle}
                 activeSlug={activeSlug}

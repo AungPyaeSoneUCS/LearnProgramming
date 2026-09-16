@@ -1,0 +1,56 @@
+---
+title: "useSearchParams"
+description: "Read and react to URL search params on the client. — URL ၏ Search Params များကို Client ဘက်မှ ဖတ်ရှုပြီး တုံ့ပြန်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  URL Search Params များကို အခြေခံသော Filters နှင့် Pagination ကဲ့သို့ UI များ တည်ဆောက်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`useSearchParams` သည် Client Component အတွင်းမှ URL ၏ Query String (Search Params) များကို ဖတ်ရှုနိုင်စေရန် React Hook တစ်ခုအဖြစ် Next.js မှ ပံ့ပိုးပေးပါတယ်။ ဥပမာ `/shop?tag=nextjs` ကဲ့သို့ Link တစ်ခု၏ `tag` Parameter ကို `searchParams.get("tag")` ဖြင့် ရယူပြီး ထို Value အားဖြင့် Filter Bar ၏ အခြေအနေကို သတ်မှတ်နိုင်ပါတယ်။ ၎င်းသည် `useState` ကဲ့သို့ internal state ထိန်းမထားဘဲ URL ကိုယ်တိုင်ကို Source of Truth အနေဖြင့် မှီခိုခြင်းကြောင့် Deep-link များ (URL ကို တိုက်ရိုက်မျှဝေခြင်း) များတွင် တူညီသော View ကို ပြန်လည်ရရှိစေနိုင်ပါတယ်။ အရေးကြီးသည်မှာ Static Page များတွင် Hydration Mismatch ကာကွယ်ရန် ဤ Hook ကို အသုံးပြုသော Component များကို `<Suspense>` Boundary အတွင်း ထည့်ရန် လိုအပ်ပြီး Search Params ပြောင်းလဲရန်အတွက်မူ `useRouter` သို့မဟုတ် `Link` များမှတစ်ဆင့်သာ ပြုလုပ်နိုင်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```tsx
+"use client";
+import { useSearchParams } from "next/navigation";
+
+export function FilterCount() {
+  const searchParams = useSearchParams();
+  const tag = searchParams.get("tag") ?? "all";
+
+  return <div>Filtering: {tag}</div>;
+}
+```
+
+## Returns (ပြန်ပေးသော Object)
+
+Read-only ဖြစ်သည့် `URLSearchParams` နှင့် ဆင်တူသော Object (`ReadonlyURLSearchParams`) တစ်ခုကို ပြန်ပေးပါတယ်။
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Client-only Hook ဖြစ်ပါတယ်
+- SSR: Initial Render တွင် Server မှ သိရှိသော Params များကို ပြန်ပေးသဖြင့် Static Page များတွင် Hydration Mismatch မဖြစ်ပါ
+- **Static** Page တွင် `Suspense` Boundary မပါဘဲ သုံးပါက Build Error "missing Suspense" တက်ပါတယ်။ ထို့ကြောင့် Consumer များကို အောက်ပါအတိုင်း Wrap လုပ်ရပါတယ်:
+
+```tsx
+<Suspense fallback={<div>…</div>}>
+  <FilterCount />
+</Suspense>
+```
+
+- Current URL ကိုသာ ထင်ဟပ်ပြီး Mutation များကို `useRouter`/`Link` Updates များမှတစ်ဆင့် ပြုလုပ်ရပါတယ်
+
+## Patterns (အသုံးပြုပုံ နမူနာများ)
+
+- `router.replace` ဖြင့် Filter Bar မှ Params ကို ပြောင်းခြင်းနှင့် ပြန်ဖတ်ခြင်း
+- Success Callback (`?status=ok`) တွင် Code တစ်ခုကို ဖတ်ခြင်း
+- Link Href များ တည်ဆောက်ရန် `.toString()` ကို အသုံးပြုခြင်း
+
+## Activity — လေ့ကျင့်ခန်း
+
+`useSearchParams` ကို Product List ၏ Tag Filter တွင် ထည့်သွင်း၍ ၎င်း Consumer ကို `Suspense` ဖြင့် Wrap လုပ်ပါ။ ထို့နောက် `/shop?tag=nextjs` ကဲ့သို့ Deep Link များ Server-side မှ မှန်ကန်စွာ Render ဖြစ်ကြောင်း စစ်ဆေးပါ။

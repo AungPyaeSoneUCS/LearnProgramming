@@ -1,0 +1,53 @@
+---
+title: "Glossary — အသုံးအနှုန်း အဘိဓာန်"
+description: "အဓိက Next.js Terms များ၏ ရှင်းလင်းချက် — PPR, RSC, ISR, DMA နှင့် အခြားအရာများ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  အဓိပ္ပာယ်ဖွင့်ဆိုချက်များကို စိတ်ချလက်ချဖြင့် Vocabulary များကို ပြောဆိုနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Glossary သည် Next.js Programming တွင် မြင်တွေ့ရလေ့ရှိသော Terms များကို တိုတိုတုတ်တုတ် အဓိပ္ပာယ်ဖွင့်ဆိုပေးသော အခန်းဖြစ်ပါတယ်။ App Router, RSC နှင့် ISR ကဲ့သို့သော Terms များသည် Documentation နှင့် Code Review များတွင် မကြာခဏ ပေါ်လာတတ်ပြီး ၎င်းတို့၏ အဓိပ္ပာယ်များကို တိကျစွာ သိရှိထားရန် လိုအပ်ပါတယ်။ Cache Components ၏ `stale`, `revalidate`, `expire` ကဲ့သို့သော Lifetime Terms များနှင့် `cacheTag` ကဲ့သို့သော Invalidation Primitives များကိုလည်း ဤစာရင်းတွင် ဖော်ပြထားပါတယ်။ Rules ကဏ္ဍပါ အကြံပြုချက်များအတိုင်း သုံးခြင်းဖြင့် Code Review နှင့် Docs များတွင် စိတ်ရှုပ်ထွေးမှုများကို ရှောင်ရှားနိုင်ပါတယ်။
+
+## Core terms
+
+| Term                    | Meaning                                     |
+| ----------------------- | ------------------------------------------- |
+| **App Router**          | New file-based routing under `app/` (layouts, RSC) |
+| **Pages Router**        | Legacy `pages/` routing                     |
+| **RSC / Server Components** | Components rendered on the server, streamed as RSC payload |
+| **PPR (Partial Prerendering)** | Static shell + dynamic islands streaming |
+| **ISR (Incremental Static Regeneration)** | Prerender + on-demand updates |
+| **Cache Components**    | `"use cache"` model: lifetimes via `cacheLife`, tags, dedup |
+| **DMA**                 | Dynamic I/O model: awaited dynamic APIs make routes per-request |
+| **Route Handler**       | Server endpoint via `route.ts`              |
+| **Server Action / Server Function** | Server code invoked from the client |
+| **Prefetch**            | Warming the RSC payload for a Link          |
+
+## Others
+
+| Term              | Meaning                                  |
+| ----------------- | ---------------------------------------- |
+| **Rewrites**      | Serve another URL without URL change     |
+| **Redirects**     | 307/308 moves                           |
+| **Dynamic segments** | `[slug]` URL placeholders              |
+| **Catch-all**     | `[...slug]` matches many segments        |
+| **BasePath**      | Prefix all routes (e.g. blog)            |
+
+## Cache Components specifics
+
+- `stale`/`revalidate`/`expire` — Cached Scopes များအတွက် Lifetime Value သုံးခုစုံ တွဲဖက်ချက် ဖြစ်ပါတယ်
+- `cacheTag`/`revalidateTag`/`updateTag` — Cache Invalidation ပြုလုပ်ရန် အခြေခံ Primitive များ ဖြစ်ပါတယ်
+
+## Rules
+
+- စိတ်ရှုပ်ထွေးမှု မဖြစ်စေရန် Code Review နှင့် Docs များတွင် ဤ Terms များကို အတိအကျ အသုံးပြုပါ
+- မသေချာပါက Canonical Sentence ကို Next.js Overview Pages များတွင် စစ်ဆေးပါ
+
+## Activity
+
+အထက်ဖော်ပြပါ Terms ၁၂ ခုအတွက် Flashcards များ ဖန်တီးကာ မိမိ၏ ဥပမာ Apps များကို အသုံးပြု၍ Terms ၅ ခုကို သူငယ်ချင်းအား ရှင်းပြပါ။

@@ -1,0 +1,100 @@
+﻿---
+title: "Step 4: Server Actions & Forms"
+description: "Post ဖန်တီး/တည်းဖြတ်ရန် Server Actions နှင့် Amplified Forms တည်ဆောက်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Server Functions (`"use server"`) များဖြင့် Blog ၏ Create/Edit/Delete Forms များကို Client JavaScript သက်သက်မပါဘဲ တည်ဆောက်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Server Actions များသည် `"use server"` Directive ဖြင့် သတ်မှတ်လိုက်သော Async Server Functions များဖြစ်ပြီး `<form action={action}>` ဖြင့် ခေါ်ယူနိုင်ပါတယ်။ ထို့ကြောင့် Client-side State Management နှင့် API Layer ရေးစရာမလိုဘဲ Form Submission တစ်ခုလုံးကို Server ဘက်တွင် ကိုင်တွယ်နိုင်ပါတယ်။ Form Data ကို `FormData` Object အနေဖြင့် Action ထဲသို့ ရောက်ရှိလာပြီး Pure Function ပုံစံဖြင့် စစ်ဆေးခြင်း (Validation) လုပ်နိုင်ပါတယ်။ ပျက်ကွက်မှုများကိုမူ `useActionState` Hook ဖြင့် လှပစွာ UI တွင် ပြသနိုင်ပြီး Server ဘက်တွင် Input Validation မဖြစ်မနေ လုပ်ရမည်ဖြစ်ပါတယ်။ Mutation ပြီးဆုံးပါက Cache Invalidation (`revalidateTag`) လုပ်ခြင်းဖြင့် Listing/Tag များ နောက်ဆုံးရ ဒေတာဖြင့် ပြန်လည် ထွက်ပေါ်စေရပါမယ်။ Security အနေဖြင့် ဤ Action များအားလုံးတွင် Auth စစ်ဆေးခြင်းကို ဦးဆုံး လုပ်ဆောင်ရန် အရေးကြီးပါတယ်။
+
+## Create Post Form
+
+```tsx
+// app/admin/page.tsx
+import { createPost } from "@/app/admin/actions";
+
+export default function AdminPage() {
+  return (
+    <form action={createPost} className="space-y-4">
+      <input name="title" placeholder="Title" required className="w-full rounded border p-2" />
+      <input name="slug" placeholder="slug (my-first-post)" required className="w-full rounded border p-2" />
+      <textarea name="content" placeholder="Content…" rows={10} required className="w-full rounded border p-2" />
+      <button className="rounded bg-blue-600 px-4 py-2 text-white">Create</button>
+    </form>
+  );
+}
+```
+
+## The Server Function
+
+```ts
+// app/admin/actions.ts
+"use server";
+import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+
+function isAdmin() {
+  // TODO: real auth from Step 6
+  return true;
+}
+
+export async function createPost(formData: FormData) {
+  if (!isAdmin()) throw new Error("Unauthorized");
+
+  const title = String(formData.get("title") ?? "").trim();
+  const slug = String(formData.get("slug") ?? "").trim();
+  const content = String(formData.get("content") ?? "").trim();
+
+  if (!title || !slug || !content) return { error: "All fields are required." };
+
+  const post = await prisma.post.create({ data: { title, slug, content, published: true } });
+  revalidateTag("posts");
+  revalidateTag(`post:${post.slug}`);
+  redirect(`/blog/${post.slug}`);
+}
+```
+
+## Delete with bind
+
+```tsx
+"use client";
+import { useTransition } from "react";
+import { deletePost } from "@/app/admin/actions";
+
+export function DeleteButton({ id }: { id: string }) {
+  const [pending, startTransition] = useTransition();
+  const action = deletePost.bind(null, id);
+
+  return (
+    <button onClick={() => startTransition(action)} disabled={pending} className="text-red-600">
+      {pending ? "Deleting…" : "Delete"}
+    </button>
+  );
+}
+```
+
+```ts
+// Action
+export async function deletePost(id: string) {
+  if (!isAdmin()) throw new Error("Unauthorized");
+  await prisma.post.delete({ where: { id } });
+  revalidateTag("posts");
+}
+```
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Action တိုင်းတွင် Auth Check **ပထမဆုံး** လုပ်ရမည်
+- Server-side Validation — Form ၁ ခုတည်းကို မယုံပါနှင့်
+- `redirect` ကို try/catch ဖြင့် မဖမ်းပါနှင့် (Server Action မှမှန်ကန်စွာ ကိုင်တွယ်ပေးသည်)
+
+## Activity — လေ့ကျင့်ခန်း
+
+`createPost` နှင့် `deletePost` Actions များကို ရေးပြီး Admin Page တွင် Create Form + Delete Buttons များ တပ်ဆင်ပါ။ Post ဖန်တီးပြီးနောက် Blog Listing တွင် ချက်ချင်း ပေါ်လာကြောင်း စစ်ဆေးပါ။

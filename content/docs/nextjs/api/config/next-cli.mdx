@@ -1,0 +1,71 @@
+---
+title: "next CLI — Next.js Command Line Tool"
+description: "`next` Command များ: dev, build, start, lint နှင့် env Options များအကြောင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Terminal မှ Development Lifecycle တစ်ခုလုံးကို တိကျစွာ ထိန်းချုပ်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`next` Command သည် Next.js Project ကို Terminal မှ လည်ပတ်စေရန် အသုံးပြုသော Central CLI Tool ဖြစ်ပါတယ်။ `next dev` ဖြင့် Development Server ကို စတင်ပြီး `next build` ဖြင့် Production Bundle ကို တည်ဆောက်ကာ `next start` ဖြင့် ထို Build ကို ဆာပေးနိုင်ပါတယ်။ Environment Variables များကို NODE_ENV အလိုက် `.env` ဖိုင်များမှ အလိုအလျောက် ဖတ်ယူပြီး Flag များဖြင့် Port, Host နှင့် Turbopack ကဲ့သို့သော Option များကို ပြောင်းလဲနိုင်ပါတယ်။ `next start` သည် ယခင်က Run လုပ်ထားသော `build` ရှိမှသာ အလုပ်လုပ်သောကြောင့် Command အစဉ်ကို မှန်ကန်စွာ လိုက်နာရန် အရေးကြီးပါတယ်။
+
+## Core commands
+
+```bash
+next dev        # dev server (Turbopack default)
+next build      # production build
+next start      # serve production build
+next lint       # lint
+next info       # environment debug info
+```
+
+## Flags worth knowing
+
+```bash
+next dev -p 4000              # custom port
+next dev -H 0.0.0.0           # host
+next build --turbopack        # force Turbopack build
+next info                     # prints versions/env
+next lint --file app/page.tsx # single file
+```
+
+## Environment variables
+
+```bash
+NODE_ENV=production next build
+```
+
+NODE_ENV အလိုက် `.env`, `.env.production`, `.env.local` တို့ကို အစဉ်လိုက် Load လုပ်ပါတယ်။
+
+## Debug / profiling
+
+```bash
+next dev --experimental-https      # https locally
+```
+
+## Scripts convention
+
+```json
+{
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
+}
+```
+
+## Rules & gotchas
+
+- `next start` ကို အသုံးမပြုမီ တူညီသော Directory တွင် `build` ပြုလုပ်ထားရပါတယ်
+- `start` ကို Production နှင့်ဆင်တူသော Environment များတွင်သာ အသုံးပြုပါ
+- CI တွင် `dev` အစား `build` ကို Run လုပ်ပါ (Validate နှင့် Prerender လုပ်ပေးပါတယ်)
+
+## Activity
+
+Full Loop ကို လေ့ကျင့်ပါ: `next dev -p 3333` ဖြင့် စတင်ကာ Code ကို ပြောင်းလဲပြီး `npm run build` ဖြင့် Build လုပ်ပါ၊ `next start -p 8080` ဖြင့် Run လုပ်ကာ Pages များသို့ ဝင်ရောက်၍ Production Bundle ကို စစ်ဆေးပါ။

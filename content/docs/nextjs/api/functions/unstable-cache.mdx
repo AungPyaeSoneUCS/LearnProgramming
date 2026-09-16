@@ -1,0 +1,62 @@
+---
+title: "unstable_cache (Legacy Cache Helper)"
+description: "The legacy memoization/fetch-level caching helper - know when to use it. — 'use cache' ခေတ်မတိုင်မီက Legacy Caching Helper ဖြစ်ပြီး မည်သည့်အချိန် သုံးရမည်ကို နားလည်ရန်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="caution" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  'use cache' မပေါ်မီခေတ်က Caching Pattern ဖြစ်သည့် `unstable_cache` ကို နားလည်ပြီး မည်သည့်အချိန်၌ ဆက်လက် လိုအပ်နေသေးသည်ကို သိရှိစေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`unstable_cache` သည် Arbitrary (မည်သည့်) Async Function တစ်ခု၏ ရလဒ်ကို Requests များအကြား Cache လုပ်ထားရန် ရည်ရွယ်သည့် Legacy Helper Function တစ်ခုဖြစ်ပါတယ်။ Function ၏ ရလဒ်ကို `keyParts` ဟုခေါ်သည့် Custom Cache Keys များဖြင့် လက်ဖြင့် သတ်မှတ်ပေးရပြီး `revalidate` (စက္ကန့်ပိုင်း) သို့မဟုတ် `tags` များဖြင့် Cache သက်တမ်းနှင့် Invalidation ကို ထိန်းချုပ်နိုင်ပါတယ်။ ၎င်းသည် 'use cache' ခေတ် မရောက်မီက Memoization နှင့် Fetch-level Caching များတွင် အဓိကအသုံးပြုခဲ့ပြီး ယခုအခါ ရေးသားနေဆဲ Library များ သို့မဟုတ် သီးခြား Fine-grained Caching လိုအပ်ချက်များတွင်သာ အသုံးဝင်နေပါသေးတယ်။ Function ၏ Arguments များကို ကိုယ်တိုင် `keyParts` တွင် ထည့်သွင်းမှသာ Cache Key ၏ အစိတ်အပိုင်း ဖြစ်လာသောကြောင့် မေ့လျော့ပါက Key Collisions များနှင့် မှားယွင်းသော Cache Sharing များ ဖြစ်ပွားနိုင်ပါတယ်။ ထို့ကြောင့် ခေတ်မီ Code များတွင် 'use cache' + `cacheLife`/`cacheTag` ကို ဦးစားပေးအသုံးပြုသင့်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+`unstable_cache` သည် Explicit Revalidation ဖြင့် Requests များအကြား Arbitrary Async Functions များ၏ ရလဒ်ကို Cache လုပ်ပေးပါတယ်:
+
+```ts
+import { unstable_cache } from "next/cache";
+
+const getCachedUser = unstable_cache(
+  async (id: string) => db.users.findUnique(id),
+  ["user-by-id"],      // custom cache key parts
+  { revalidate: 3600, tags: ["users"] }
+);
+```
+
+## Signature (ပုံစံ)
+
+```ts
+unstable_cache<T>(fn, keyParts?, options?): (...args) => Promise<T>
+```
+
+Option များ: `revalidate` (စက္ကန့်) သို့မဟုတ် `tags` (Invalidation အတွက်)။
+
+## "unstable" ဟု ဘာကြောင့် ခေါ်သလဲ (Why "unstable")
+
+- Cache Components ခေတ် မတိုင်မီကမှ Legacy ဖြစ်
+- `params` များကို Cache Keys တွင် အလိုအလျောက် ထည့်သွင်းပေးခြင်း မရှိ
+- မှန်ကန်မှုအတွက် `keyParts` ကို လက်ဖြင့် သတ်မှတ်ရသောကြောင့် Key Collisions ဖြစ်လွယ်
+
+## ဘယ်အခါ ဆက်သုံးနေသေးလဲ (When Still Useful)
+
+- ခေတ်ဟောင်း Pattern များဖြင့် ချိတ်ဆက်နေသော Library များ
+- `"use cache"` Scope များ၏ အပြင်ဘက်တွင် သီးသန့် Fine-grained Caching လိုအပ်ချက်များ
+- `cacheLife` Profiles များကို ရည်ရွယ်ချက်ရှိရှိ ရှောင်ရှားလိုသောအခါ
+
+## ခေတ်မီနည်းကို ဘယ်အခါ ဦးစားပေးမလဲ (When to Prefer Modern)
+
+- Code အသစ်များတွင် `"use cache"` + `cacheLife`/`cacheTag` ကို သုံးပါ — ရိုးရှင်းပြီး Keys များကို အလိုအလျောက် ရယူပေးကာ `cacheComponents: true` လိုအပ်ပါတယ်
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Server ဘက်တွင်သာ အသုံးပြုနိုင်
+- Function သည် Async ဖြစ်ရမည် — `keyParts` တွင် ထည့်သွင်းမှသာလျှင် Arguments များကို Cache Key တွင် ထည့်ပေးမည်
+- `unstable_cache` ကို Cache Scopes အတွင်း/နှင့် ပေါင်းစပ်၍ သုံးနိုင်သော်လည်း Freshness Semantics ကို ရှုပ်ထွေးစေနိုင်
+
+## Activity (လေ့ကျင့်ခန်း)
+
+`unstable_cache` အသုံးပြုမှုတစ်ခုကို `"use cache"` + `cacheLife("hours")` ဖြင့် Refactor လုပ်ပြီး Cache Key ခွဲခြားမှု (Args Separation) ၏ ကွာခြားချက်ကို မှတ်သားပါ။

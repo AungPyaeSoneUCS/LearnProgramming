@@ -1,0 +1,90 @@
+---
+title: "Testing — Testing (စမ်းသပ်ခြင်း)"
+description: "Test Next.js apps with Vitest, Jest, Playwright, and Cypress: unit, component, and e2e. — Vitest, Jest, Playwright, Cypress တွေနဲ့ Next.js app တွေကို unit, component, e2e အဆင့်ဆင့် စမ်းသပ်နည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Test တွေကို အလွှာလိုက် စီစဉ်နိုင်ဖို့ — မြန်ဆန်တဲ့ unit/component tests တွေအပြင် browser e2e တွေနဲ့ routing, hydration, Server Actions တွေကို အကာအကွယ်ပေးနိုင်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Testing မှာ pyramid (ပိရမစ်) တစ်ခုလို အလွှာသုံးလွှာ စဉ်းစားပါတယ် — အောက်ခြေမှာ unit test (logic, utils, pure components တွေကို Vitest/Jest နဲ့), အလယ်မှာ component test (React Testing Library နဲ့ isolated React rendering), ထောက်ဦးမှာ e2e test (Playwright/Cypress တွေနဲ့ app တစ်ခုလုံးကို real browser ထဲမှာ စမ်းသပ်တာ) ဖြစ်ပါတယ်။ Unit test တွေက အမြန်ဆုံး၊ ဈေးအသက်သာဆုံး ဖြစ်လို့ အများဆုံး ထားရပြီး e2e ကတော့ routing, hydration, Server Actions လို cross-cutting ပြဿနာတွေကိုပဲ ဖမ်းဖို့ အသုံးပြုပါတယ်။ Component test မှာ render, screen, fireEvent လို Testing Library API တွေနဲ့ click လုပ်ပြီး UI state ကို စစ်ဆေးနိုင်ပြီး e2e မှာတော့ page.goto(), getByRole() တွေနဲ့ real navigation flow ကို စမ်းနိုင်ပါတယ်။ Server feature တွေအတွက်ကတော့ Route Handlers ကို exported function ခေါ်တာ ဒါမှမဟုတ် fetch("/api/...") နဲ့ စမ်းနိုင်ပြီး Server Actions ကို FormData/plain input နဲ့ invoke လုပ်ပြီး returned state နဲ့ DB effect တွေ (in-memory fakes နဲ့) ကို စစ်နိုင်ပါတယ်။ CI မှာတော့ lint → vitest run → playwright test ဆိုပြီး fail fast အောင် စဉ်ဆက် လုပ်ပါ။
+
+## The testing pyramid
+
+1. **Unit** — logic, utils, pure components (Vitest/Jest)
+2. **Component** — isolated React rendering (React Testing Library)
+3. **E2E** — running app နဲ့ real browser ထဲမှာ စမ်းသပ်ခြင်း (Playwright/Cypress)
+
+## Vitest + React Testing Library
+
+```bash
+npm install -D vitest @vitejs/plugin-react jsdom @testing-library/react
+```
+
+```tsx
+// components/counter.test.tsx
+import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import Counter from "./counter";
+
+describe("Counter", () => {
+  it("increments on click", () => {
+    render(<Counter />);
+    fireEvent.click(screen.getByRole("button"));
+    expect(screen.getByText("1")).toBeTruthy();
+  });
+});
+```
+
+## Playwright e2e
+
+```bash
+npm init playwright@latest
+```
+
+```ts
+// e2e/home.spec.ts
+import { test, expect } from "@playwright/test";
+
+test("home page to blog navigation", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "Blog" }).click();
+  await expect(page).toHaveURL(/\/blog/);
+});
+```
+
+```bash
+npx playwright test
+```
+
+## Cypress e2e
+
+```bash
+npm install -D cypress
+npx cypress open
+```
+
+RSC-oriented tips လေးတွေ: forced route တွေ မဟုတ်ဘဲ `cy.visit()` နဲ့ real navigation ကို ဦးစားပေးပါ; streaming content ပေါ်လာတာကို `cy.intercept` ကနေတစ်ဆင့် assert လုပ်ပါ။
+
+## Testing Server Features
+
+- **Route Handlers** — exported functions တွေကို တိုက်ရိုက်ခေါ်ပြီး ဒါမှမဟုတ် dev server ကို `fetch("/api/...")` နဲ့ စမ်းပါ
+- **Server Actions** — FormData/plain input နဲ့ invoke လုပ်ပြီး returned state နဲ့ DB effect တွေကို assert လုပ်ပါ (DB ကို in-memory fakes နဲ့ mock လုပ်ပါ)
+
+## CI config
+
+Fail fast ဖြစ်အောင် အောက်ပါအတိုင်း စဉ်ဆက် လုပ်ပါ:
+
+```bash
+npm run lint
+npx vitest run
+npx playwright test
+```
+
+## Activity
+
+Vitest component test တစ်ခုနဲ့ home → blog → post ကို လည်ပတ်တဲ့ Playwright e2e တစ်ခု ထည့်ပါ။ နှစ်ခုလုံးကို CI pipeline ထဲ ချိတ်ပြီး run ပါ။

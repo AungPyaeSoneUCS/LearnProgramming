@@ -1,0 +1,118 @@
+---
+title: "Internationalization — ဘာသာစကားမျိုးစုံ ပံ့ပိုးမှု"
+description: "Localize Next.js apps: routing, dictionaries, locales, metadata, and client-side translations. — locale routing, dictionaries နှင့် metadata များဖြင့် Next.js apps ကို ဘာသာပြန် စနစ် တည်ဆောက်နည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Locale-based routing နှင့် per-request translations များကို သုံး၍ မှန်ကန်သော ပရိသတ်ထံသို့ မှန်ကန်သော ဘာသာစကားဖြင့် ဖော်ပြနိုင်ရန် ဖြစ်ပါတယ် — **`[lang]` dynamic segment**, **dictionaries** နှင့် **`generateMetadata`** တို့၏ အလုပ်လုပ်ပုံကို နားလည်မည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Website တစ်ခုကို ဘာသာစကား အမျိုးမျိုးဖြင့် ပြသရန် locale ကို URL တွင် ထည့်သွင်းသော routing strategy တစ်ခုကို ရွေးချယ်ရန် လိုပါတယ်။ Sub-path locales (`/en/blog`, `/my/blog`) သည် လူကြိုက်အများဆုံး ရွေးချယ်မှုဖြစ်ပြီး SEO အကျိုးကျေးဇူးလည်း ရှိပြီး subdomain locales နှင့် query/header သုံးနည်းတို့လည်း ရှိပါတယ်။ Next.js တွင် `app/[lang]` ကဲ့သို့ dynamic segment တစ်ခုကို ဖန်တီးပြီး params မှ လက်ရှိ locale ကို ဖတ်ကာ `<html lang>` attribute တွင် သတ်မှတ်နိုင်ပါတယ်။ Middleware သို့မဟုတ် proxy ကို သုံး၍ user ၏ request ကို စစ်ဆေးပြီး သင့်လျော်သော locale route သို့ rewrite လုပ်နိုင်ပါတယ်။ ဘာသာပြန်စာသားများကို JSON dictionary files (`messages/en.json`, `messages/my.json`) တွင် သိမ်းဆည်းပြီး မည်သည့် function တစ်ခုမှ ခေါ်ယူနိုင်ကာ metadata တွင် locale အလိုက် title ပြောင်းခြင်းနှင့် `alternates.languages` သတ်မှတ်ခြင်းဖြင့် SEO ကို မြှင့်တင်နိုင်ပါတယ်။ Client-side အတွက်မူ dictionary lookup ပြုလုပ်ပေးသော provider တစ်ခုကို တည်ဆောက်ပြီး component များတွင် အသုံးပြုနိုင်ပါတယ်။
+
+## Locale routing strategies
+
+| Strategy            | URL example                |
+| ------------------- | -------------------------- |
+| Sub-path locales    | `/en/blog`, `/my/blog`     |
+| Subdomain locales   | `en.site.com`, `my.site.com` |
+| Query/header only   | `?hl=en` (no SEO benefit)  |
+
+## The `[lang]` dynamic segment
+
+`app/[lang]/…` ကို ဖန်တီးပြီး params မှ locale ကို ဖတ်ပါ:
+
+```tsx
+// app/[lang]/layout.tsx
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  return (
+    <html lang={lang}>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+Locale ကို စစ်ဆေးပြီး rewrite လုပ်ရန် middleware/proxy ကို သုံးပါ:
+
+```ts
+// proxy.ts
+import { NextRequest, NextResponse } from "next/server";
+
+const LOCALES = ["en", "my"] as const;
+
+export function proxyMiddleware(request: NextRequest) {
+  const locale = LOCALES.includes(request.nextUrl.pathname.split("/")[1] as never)
+    ? request.nextUrl.pathname.split("/")[1]
+    : "en";
+  // rewrite English /blog → /en/blog
+  return NextResponse.rewrite(`/en/${request.nextUrl.pathname}`);
+}
+```
+
+## Dictionaries
+
+```ts
+// messages/en.json
+{ "hello": "Hello", "buy": "Buy now" }
+// messages/my.json
+{ "hello": "မင်္ဂလာပါ", "buy": "ဝယ်ယူမည်" }
+```
+
+```ts
+// lib/i18n.ts
+import "server-only";
+
+export async function getDictionary(lang: string) {
+  return (await import(`../messages/${lang}.json`)).default;
+}
+```
+
+```tsx
+// app/[lang]/page.tsx
+export default async function Page({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
+  return <h1>{dict.hello}</h1>;
+}
+```
+
+## Localized metadata
+
+```tsx
+export async function generateMetadata({ params }) {
+  const { lang } = await params;
+  return { title: lang === "my" ? "ကျွန်ုပ်တို့အကြောင်း" : "About Us" };
+}
+```
+
+SEO အတွက် `alternates.languages` ကို သတ်မှတ်ပါ:
+
+```tsx
+metadata: {
+  alternates: { languages: { "en-US": "/en", "my-MM": "/my" } }
+}
+```
+
+## Client-side translations
+
+Client provider ထဲတွင် dictionaries များကို အသုံးပြုပါ:
+
+```tsx
+"use client";
+const { t } = useI18n(); // wraps dictionary lookup
+```
+
+## Activity
+
+လေ့ကျင့်ခန်း: `/en` နှင့် `/my` locale routes များ၊ JSON dictionaries များနှင့် locale အလိုက် `html lang` နှင့် titles များကို ပြောင်းပေးသည့် `generateMetadata` တစ်ခုကို ထည့်သွင်းပါ။

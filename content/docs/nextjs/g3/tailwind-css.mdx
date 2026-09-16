@@ -1,0 +1,88 @@
+---
+title: "Tailwind CSS v3 — Tailwind CSS v3"
+description: "Install and use Tailwind CSS v3 with Next.js: PostCSS config, globals, jit mode, and content scanning. — Next.js နဲ့ Tailwind CSS v3 တပ်ဆင်သုံးနည်း — PostCSS config, globals, JIT mode, content scanning တွေ အပါအဝင်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  PostCSS + content configuration မှန်ကန်စွာ သတ်မှတ်ပြီး Tailwind v3 styling ကို Next.js မှာ အလုပ်လုပ်အောင် လုပ်နိုင်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Tailwind CSS ဆိုတာ utility-first ဖြစ်တဲ့ CSS framework တစ်ခု ဖြစ်ပြီး class name တွေကို ပေါင်းစပ်ရေးသုံးရုံနဲ့ style တွေ ဖြစ်ပေါ်စေပါတယ်။ Next.js မှာ install လုပ်ဖို့က tailwindcss@3, postcss, autoprefixer တွေကို devDependencies အနေနဲ့ ထည့်ပြီး `npx tailwindcss init -p` ကနေ postcss.config.js နဲ့ tailwind.config.js ဖိုင်တွေ ထုတ်ရပါတယ်။ Content scanning က အဓိကပါ — tailwind.config.js ထဲက content array ထဲမှာ app/, components/ ရဲ့ source file တွေကို ထည့်ထားမှသာ သုံးထားတဲ့ class တွေကို စကင်ဖတ်ပြီး production build ထဲ marginal class တွေကိုပဲ ထည့်ပေးပါတယ် (JIT mode)။ Global style တွေကတော့ app/globals.css ထဲမှာ @tailwind base/components/utilities directive တွေသုံးပြီး root layout မှာ import လုပ်ပါတယ်။ darkMode: "class" နဲ့ဆိုရင် .dark class ရှိတဲ့ root ပေါ်မူတည်ပြီး dark styling ပြောင်းနိုင်ပြီး w-[420px] လို arbitrary value တွေလည်း ထောက်ပံ့ပါတယ်။
+
+## Install
+
+```bash
+npm install -D tailwindcss@3 postcss autoprefixer
+npx tailwindcss init -p
+```
+
+## Configure PostCSS
+
+```js
+// postcss.config.js
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+```
+
+## Content scanning
+
+```js
+// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./app/**/*.{ts,tsx,mdx}", "./components/**/*.{ts,tsx}"],
+  theme: {
+    extend: {
+      colors: { brand: "#f59e0b" },
+    },
+  },
+  plugins: [],
+};
+```
+
+## Global styles
+
+```css
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply rounded-lg bg-brand px-4 py-2 font-semibold text-white hover:opacity-90;
+  }
+}
+```
+
+Root layout မှာ import လုပ်ပါ။
+
+## Using utilities
+
+```tsx
+export default function Badge({ label }: { label: string }) {
+  return (
+    <span className="rounded-full bg-emerald-100 px-3 text-xs font-bold text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
+      {label}
+    </span>
+  );
+}
+```
+
+## JIT and production
+
+- v3 က build မှာ content ကို စကင်ဖတ်ပြီး သုံးတဲ့ class တွေကိုပဲ ထည့်ပါတယ်
+- `.dark` root class ရှိရင် `darkMode: "class"` toggle ပြောင်းပါတယ်
+- Arbitrary values: `w-[420px]`, `grid-cols-[auto_1fr]`
+
+## Activity
+
+`@apply` components + dark-mode class တွေနဲ့ card တစ်ခု ဖန်တီးပါ၊ `npm run build` မှာ မသုံးတဲ့ class တွေ purged ဖြစ်တာကို စစ်ပြီး `.dark` class နဲ့ dark styling ပြောင်းတာကို confirm လုပ်ပါ။

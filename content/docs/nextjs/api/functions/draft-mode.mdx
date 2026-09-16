@@ -1,0 +1,67 @@
+---
+title: "draftMode — Draft အစမ်းကြည့်ရှုမှု"
+description: "Enable/disable draft preview content with the draftMode() API. — DraftMode() API ဖြင့် draft preview content များကို ဖွင့်/ပိတ် ပြုလုပ်နိုင်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Draft mode ကို server ဘက်တွင် toggle လုပ်ပြီး မဖြန့်ချိရသေးသော (unpublished) content များကို အစမ်းကြည့်ရှု (preview) နိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`draftMode` သည် `next/headers` မှရယူရသော API ဖြစ်ပြီး ပုံမှန်အားဖြင့် cached/static ဖြစ်နေမည့် draft content များကို on-demand ရယူကြည့်ရှုနိုင်စေရန် ဖွင့်ပေးပါတယ်။ Route Handler ထဲမှ `enable()` ကို ခေါ်ဆိုလိုက်ပါက draft token cookie တစ်ခုကို သတ်မှတ်ပေးပြီး `disable()` ကမူ ၎င်း cookie ကို ဖယ်ရှားပေးပါတယ်။ Content editor များသည် publish မလုပ်မီ post များကို preview လုပ်နိုင်ပြီး cached static pages များကို ကျော်ကာ live data ဖြင့် render လုပ်နိုင်ပါတယ်။ `isEnabled` ကို ဖတ်လိုက်သည့်အခါ route သည် per-request အလိုက် render ဖြစ်သွားသောကြောင့် draft ကြည့်ရှုသူတိုင်း နောက်ဆုံး version ကို မြင်ရပါတယ်။ လုံခြုံရေးအတွက် `enable()` မခေါ်မီ CMS secret/token ဖြင့် စစ်ဆေးရန် အလွန်အရေးကြီးပြီး ခွင့်ပြုချက်မဲ့ toggle လုပ်ခြင်းသည် draft data ပေါက်ကြားနိုင်ခြေ (leak risk) ကို ဖြစ်စေနိုင်ပါတယ်။
+
+## What it is
+
+`draftMode` သည် ပုံမှန်အားဖြင့် cached/static ဖြစ်နေမည့် draft content များကို on-demand ရယူနိုင်ရန် ဖွင့်ပေးပါတယ်:
+
+```tsx
+import { draftMode } from "next/headers";
+
+export default async function Page() {
+  const { isEnabled } = await draftMode();
+  const post = isEnabled ? await getDraft() : await getPublished();
+  return <Article post={post} />;
+}
+```
+
+## Enable from a Route Handler
+
+```ts
+import { draftMode } from "next/headers";
+
+export async function GET() {
+  const { enable } = await draftMode();
+  enable();
+  return new Response("Draft mode enabled");
+}
+```
+
+Draft token cookie ကို သတ်မှတ်ပေးပြီး `disable()` သည် ၎င်းကို ဖယ်ရှားပေးပါတယ်။
+
+## Use cases (အသုံးပြုမှုများ)
+
+- Publish မလုပ်မီ content editors များ post များကို ပြန်လည်သုံးသပ်ခြင်း
+- Cached static pages များကို ကျော်လွှားပြီး live data ဖြင့် preview render လုပ်ခြင်း
+- CMS မှ ထိန်းချုပ်သော preview URLs များ
+
+## Rules (စည်းကမ်းများ)
+
+- Route Handlers များတွင်သာ (`enable`/`disable`) ခေါ်ဆိုနိုင်ပါတယ်
+- ဖတ်ရှုခြင်း (reads) ကိုမူ server-side နေရာတိုင်းတွင် လုပ်နိုင်ပါတယ်
+- `isEnabled` + dynamic semantics: draft route သည် per-request (cached မဟုတ်) အဖြစ် render ဖြစ်ပါတယ်
+
+## Security (လုံခြုံရေး)
+
+- `enable()` မခေါ်ဆိုမီ CMS secret/token ဖြင့် gate လုပ်ပါ
+- ခွင့်ပြုချက်မရှိဘဲ toggle လုပ်ခြင်း = draft data leak risk
+
+## Compare with Caching (Caching နှင့် နှိုင်းယှဉ်ချက်)
+
+Draft mode သည် preview ကို အဓိကထားပြီး `cacheLife` နှင့် orthogonal ဖြစ်ပါတယ်။ Next 16 တွင် Document Draft သည် cache components များနှင့်တွဲဖက်၍ အလုပ်လုပ်ပါတယ်။
+
+## လေ့ကျင့်ခန်း (Activity)
+
+`/api/preview?secret=s3cr3t` ကို တည်ဆောက်ကာ draft mode ဖွင့်ပြီး page ထဲတွင် `isEnabled` ကိုဖတ်၍ published/draft content များကို လဲလှယ်ကာ logout action ဖြင့် disable ပြုလုပ်ပါ။

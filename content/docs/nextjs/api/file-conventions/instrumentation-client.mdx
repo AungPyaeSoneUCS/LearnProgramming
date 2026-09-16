@@ -1,0 +1,63 @@
+---
+title: "instrumentation-client.ts — Client-side Startup Code"
+description: "Client-side counterpart of instrumentation - browser startup code for client bundles. — `instrumentation` ၏ Client-side အတွဲဖြစ်ပြီး Client Bundles များအတွက် Browser Startup Code ကို ရေးသားပေးသည့် ဖိုင်ဖြစ်ပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Browser Errors များ၊ Performance နှင့် Init Work များအတွက် Client-side Instrumentation ကို ထည့်သွင်းနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`instrumentation-client.ts` သည် Next.js App ကို Browser ထဲတွင် စတင်ဖွင့်သောအခါ (Client Boot/Hydration ပြုလုပ်သောအခါ) တစ်ကြိမ်သာ အလိုအလျောက် Run လုပ်ပေးသော Startup Code ကို ရေးသားရန်အတွက် သုံးသည့် File Convention တစ်ခုဖြစ်ပါတယ်။ ၎င်းတွင် Export ပြုလုပ်ရမည့် `register()` Function မှတစ်ဆင့် Window-level Event Listeners များ တပ်ဆင်ခြင်း၊ LCP/INP ကဲ့သို့သော Web Vitals များကို တိုင်းတာခြင်း သို့မဟုတ် Client-only Analytics SDK များကို Initialize လုပ်ခြင်းစသည့် အလုပ်များကို ဆောင်ရွက်နိုင်ပါတယ်။ Server-side `instrumentation.ts` နှင့်မတူဘဲ ဤဖိုင်သည် Node.js/Edge Runtime တွင်မဟုတ်ဘဲ Browser တွင်သာ Run လုပ်ပြီး SSR အတွက်မလိုတော့သည့် Client-specific Code များကို ထားရှိရန် သင့်တော်ပါတယ်။ Full Observability ရရှိရန်အတွက် Server-side File နှင့် တွဲဖက်၍ ဖိုင်နှစ်ခုလုံးကို အသုံးပြုလေ့ရှိပြီး Sentry ကဲ့သို့သော Monitoring Tools များက ဤ Convention ကို အလိုအလျောက် အသုံးပြုကြပါတယ်။
+
+## The file
+
+Project Root (သို့မဟုတ် `src/`) တွင် `instrumentation-client.ts` ကို ထားရှိပါတယ်:
+
+```ts
+// instrumentation-client.ts
+export async function register() {
+  if (typeof window === "undefined") return;
+  // attach global error handler, init client SDK
+  window.addEventListener("error", (e) => report(e));
+}
+```
+
+- App Startup တွင် **Browser** ထဲ၌ တစ်ကြိမ်သာ Run လုပ်ပေးပါတယ်
+- Client Error Monitoring၊ Hydration Telemetry သို့မဟုတ် On-load Setup များအတွက် သင့်တော်ပါတယ်
+
+## What you can do
+
+- Window-level Event Listeners နှင့် Observers များ (LCP/INP Reporting)
+- Client-only Analytics များကို Initialize လုပ်ခြင်း
+- SSR ကို ကာကွယ်ရန်: `typeof window === "undefined"` ဖြင့် Early-return လုပ်ခြင်း
+
+## Difference from server file
+
+|                        | `instrumentation.ts`   | `instrumentation-client.ts` |
+| ---------------------- | ---------------------- | --------------------------- |
+| Runtime                | Node / Edge            | Browser                     |
+| Trigger                | Server boot            | Client boot/hydration       |
+| Typical job            | Server SDKs, DB        | Client APM, event capture   |
+
+## Rules & gotchas
+
+- Client-side တွင် `register` Export သာ ပြုလုပ်နိုင်ပါတယ်
+- Root File ဖြစ်ပြီး `instrumentation-client.ts` ဟုသာ အတိအကျ အမည်ပေးရပါတယ်
+- Synchronous-friendly နှင့် Idempotent ဖြစ်အောင် ထားပါ (Dev တွင် Replays ပြုလုပ်နိုင်သောကြောင့်)
+
+## Structure preference
+
+Full Observability ရရှိရန် အဖွဲ့အများစုသည် ဖိုင်နှစ်ခုလုံးကို ထည့်သွင်းလေ့ရှိပါတယ်:
+
+```txt
+/instrumentation.ts          # server: connect Sentry server-side
+/instrumentation-client.ts   # client: Sentry browser, error collection
+```
+
+## Activity
+
+`window.onerror` ကို Dev Console Logger တွင် ဖမ်းယူသည့် `instrumentation-client.ts` ကို ထည့်သွင်းပြီး Client Error တစ်ခုကို Trigger လုပ်ကာ Server Boot ကို မထိဘဲ Report ဖြစ်သည်ကို စစ်ဆေးပါ။

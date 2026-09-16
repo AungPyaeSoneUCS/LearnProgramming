@@ -1,0 +1,87 @@
+---
+title: "route.js — Route Handlers"
+description: "Route Handlers via route.js: GET/POST methods, dynamic segments, caching, and the NextResponse contract. — `route.js` မှတစ်ဆင့် Route Handlers များ - GET/POST Methods များ၊ Dynamic Segments များ၊ Caching နှင့် `NextResponse` Contract အကြောင်း ဖြစ်ပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  `route.ts` ဖြင့် API Endpoints များကို တည်ဆောက်နိုင်စေရန် - Typed Request/Params များ၊ Streaming နှင့် Cache Semantics များကို ကျွမ်းကျင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`route.ts` သည် Folder တစ်ခုစီအတွက် **API Endpoint (Route Handler)** တစ်ခုကို သတ်မှတ်ပေးသော Next.js App Router ၏ File Convention တစ်ခုဖြစ်ပြီး Framework နှင့်တွဲဖက်၍ Backend API များကို တိုက်ရိုက်ရေးသားနိုင်ပါတယ်။ File ထဲတွင် `GET`၊ `POST`၊ `PUT`၊ `PATCH`၊ `DELETE`၊ `HEAD` နှင့် `OPTIONS` Functions များကို Export လုပ်ခြင်းဖြင့် HTTP Methods တစ်ခုစီအတွက် Handlers များကို သတ်မှတ်နိုင်ပါတယ်။ `Request` Object မှ Body နှင့် Query Parameters များကို ဖတ်ယူနိုင်ပြီး Dynamic Segments ၏ `params` Props များကိုလည်း `await` ပြုလုပ်၍ ရယူနိုင်ပါတယ်။ Next 16 ၏ Cache Components Model တွင် Route Handlers များကို ပုံမှန်အားဖြင့် Cached လုပ်ပြီး `"use cache"` Declaration ဖြင့် Cache Lifetime များကို သတ်မှတ်နိုင်ကာ Dynamic APIs များနှင့် Non-GET Methods များမှာ အလိုအလျောက် Opt-out ဖြစ်ပါတယ်။ Redirects များအတွက် `redirect()` ကို သုံးနိုင်ပြီး Streaming Responses များကို `ReadableStream` နှင့် ပြန်ပို့နိုင်ပါတယ်။ Page Files များနှင့်မတူဘဲ Route Handlers များသည် Server-only ဖြစ်ပြီး Browser Code များ လုံးဝ မပါဝင်သင့်ပါဘူး။
+
+## Signature
+
+```ts
+// app/api/items/[id]/route.ts
+import { NextResponse } from "next/server";
+
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  return NextResponse.json({ id, ok: true });
+}
+```
+
+## Supported exports
+
+- `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`
+- `dynamic`, `revalidate` (legacy), `runtime` segment config
+
+## Reading the request
+
+Request Body နှင့် Query Parameters များကို ဖတ်ယူပုံ:
+
+```ts
+export async function POST(request: Request) {
+  const body = await request.json();
+  const search = new URL(request.url).searchParams.get("q");
+  return NextResponse.json({ received: body, q: search });
+}
+```
+
+## Caching (Next 16 / Cache Components)
+
+- Route Handlers များကို ပုံမှန်အားဖြင့် Cached လုပ်ပေးပြီး အတွင်းတွင် `"use cache"` ကို Declare လုပ်ရပါတယ်:
+
+```ts
+export async function GET() {
+  "use cache";
+  cacheLife("seconds");
+  return NextResponse.json({ hello: "world" });
+}
+```
+
+- Dynamic APIs (Cookies/Headers) များ၊ Non-GET Methods များနှင့် Streaming များသည် Cache မှ အလိုအလျောက် Opt-out ဖြစ်ပါတယ်
+- Writes များပြုလုပ်ပြီးနောက် `revalidateTag`/`revalidatePath` ဖြင့် Revalidate လုပ်ပါ
+
+## Streaming responses
+
+```ts
+export async function GET() {
+  const stream = new ReadableStream({
+    start(controller) { controller.enqueue("chunk"); controller.close(); },
+  });
+  return new Response(stream);
+}
+```
+
+## Redirects & helpers
+
+Routes များသို့ ပြန်လမ်းညွှန်ရန် အောက်ပါအတိုင်း အသုံးပြုနိုင်ပါတယ်:
+
+```ts
+import { redirect } from "next/navigation";
+redirect("/login");
+```
+
+## Rules
+
+- `route.ts` သာရှိရမည်ဖြစ်ပြီး Segment တစ်ခုတည်းတွင် `page.tsx` နှင့်အတူ မရှိရပါဘူး
+- Server-only ဖြစ်ပါတယ်: Browser Code မပါဝင်ရဘဲ `"use client"` Directive ကို အသုံးမပြုရပါဘူး
+
+## Activity
+
+`api/items` အတွက် Params ပါသော GET+POST များကို ဖန်တီးပြီး `api/events` အတွက် Streaming ကို အသုံးပြုကာ POST Mutations များက `revalidateTag` ဖြင့် Cached GETs များကို Invalidate လုပ်သည်ကို စစ်ဆေးပါ။

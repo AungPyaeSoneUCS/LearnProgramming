@@ -1,0 +1,93 @@
+---
+title: "Image Optimization — ပုံများကို ပိုမိုကောင်းမွန်အောင် ပြုလုပ်ခြင်း"
+description: "Use next/image to optimize images automatically: formats, dimensions, lazy loading, and priority hints. — next/image ဖြင့် ပုံများကို အလိုအလျောက် Optimize ပြုလုပ်ပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Component တစ်ခုတည်းဖြင့် resized, modern formats သို့ ပြောင်းလဲထားသော, lazy-loaded နှင့် layout shift ကင်းသော ပုံများကို ပို့ဆောင်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Web pages များတွင် ပုံများသည် payload ပမာဏ၏ ကြီးမားသော အစိတ်အပိုင်း ဖြစ်တတ်ပြီး ပုံကြီးများကို အရွယ်အစား မပြောင်းဘဲ တင်သောအခါ loading နှေးကွေးခြင်းနှင့် layout shift တို့ ဖြစ်တတ်ပါတယ်။ Next.js ၏ built-in `<Image>` component သည် ပုံများကို WebP/AVIF ကဲ့သို့ modern formats သို့ အလိုအလျောက် ပြောင်းလဲပြီး resize လုပ်ပေးပါတယ်။ပုံများကို viewport ထဲဝင်မှသာ load ဖြစ်သော **lazy loading** ကို default အနေဖြင့် ပြုလုပ်ပေးပြီး width/height သို့မဟုတ် fill ကို သတ်မှတ်ပေးရုံဖြင့် layout shift မဖြစ်စေပါဘူး။ Local ပုံများကို import လုပ်သောအခါ intrinsic dimensions များကို အလိုအလျောက် ရရှိပြီး remote ပုံများအတွက်မူ `next.config.ts` တွင် domain များကို `remotePatterns` ဖြင့် ကြိုတင်ခွင့်ပြုပေးရပါတယ်။ LCP (largest contentful paint) တိုးတက်စေရန် `priority` prop ဖြင့် ပုံကို preload လုပ်နိုင်ပြီး CDN သုံးသည့်အခါ `loader` prop သို့မဟုတ် config ဖြင့် custom loader ကို သုံးနိုင်ပါတယ်။
+
+## Why the Image component? (Image Component ကို အဘယ်ကြောင့် သုံးသနည်း)
+
+Built-in `<Image>` component သည် အောက်ပါတို့ကို ပေးဆောင်ပါတယ်:
+
+- **အလိုအလျောက် format conversion** (WebP/AVIF) နှင့် resizing
+- **Lazy loading** ကို default အနေဖြင့် (ပုံများကို viewport ထဲဝင်မှသာ load လုပ်မည်)
+- **Layout shift မရှိခြင်း** - width/height သို့မဟုတ် fill ကို ပေးထားရန် လိုပါတယ်
+- **Caching** နှင့် အကောင်းဆုံး serving
+
+## Local images (Local ပုံများ)
+
+```tsx
+// app/page.tsx
+import Image from "next/image";
+import profilePic from "../public/profile.png";
+
+export default function Page() {
+  return <Image src={profilePic} alt="Profile" width={400} height={400} />;
+}
+```
+
+ပုံကို import လုပ်လိုက်သောအခါ ၎င်း၏ intrinsic dimensions များကို အလိုအလျောက် ရရှိပါတယ်။
+
+## Remote images (Remote ပုံများ)
+
+Remote URLs များအတွက် config တွင် domain ကို ခွင့်ပြုပြီး dimensions များကို ပေးပါ:
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "images.unsplash.com" },
+    ],
+  },
+};
+```
+
+```tsx
+<Image
+  src="https://images.unsplash.com/photo-1"
+  alt="Photo"
+  width={800}
+  height={600}
+/>
+```
+
+## Responsive and fixed sizing (Responsive နှင့် Fixed အရွယ်အစားသတ်မှတ်ခြင်း)
+
+```tsx
+// Fill the parent container proportionally
+<div className="relative h-64 w-full">
+  <Image src={photo} alt="Banner" fill sizes="100vw" />
+</div>
+```
+
+```tsx
+// Fixed sizes with priority for above-the-fold hero
+<Image src={hero} alt="Hero" width={1200} height={630} priority />
+```
+
+`priority` သည် ပုံကို preload လုပ်ပေးသောကြောင့် LCP (largest contentful paint) ပိုမိုကောင်းမွန်လာပါတယ်။
+
+## Using a custom loader (Custom Loader အသုံးပြုခြင်း)
+
+`loader` prop သို့မဟုတ် config ဖြင့် Image ကို သင့် CDN သို့ ညွှန်ပြပါ:
+
+```ts
+// next.config.ts
+images: {
+  loader: "custom",
+  loaderFile: "./lib/image-loader.ts",
+}
+```
+
+## Activity
+
+Page တစ်ခုတွင် raw `<img>` အားလုံးကို `<Image />` ဖြင့် အစားထိုးပါ။ Hero image တွင် `priority`, banner တွင် `fill` ကို ထည့်ပြီး external images များအတွက် `remotePatterns` entry တစ်ခု ထည့်ပါ။

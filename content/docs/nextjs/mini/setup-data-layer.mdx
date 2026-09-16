@@ -1,0 +1,104 @@
+﻿---
+title: "Step 1: Setup & Data Layer"
+description: "Prisma + SQLite ဒေတာဘေ့စ် Setup နှင့် Post Model တည်ဆောက်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Blog ၏ Database Layer ကို Prisma + SQLite ဖြင့် တည်ဆောက်၍ Post Model သတ်မှတ်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+ဤ Step တွင် Blog ၏ Data Layer ကို တည်ဆောက်ပါမည်။ Prisma သည် Node.js အတွက် လူကြိုက်အများဆုံး ORM တစ်ခုဖြစ်ပြီး Schema တစ်ခုမှ Database Migration နှင့် Type-safe Client Generator များကို အလိုအလျောက် ထုတ်ပေးပါတယ်။ Development အတွက် File-based Database ဖြစ်သည့် SQLite ကိုခွင့်ပြုပေးသောကြောင့် Serverless Deployment များတွင် Database ချိတ်ဆက်ပုံကို နောက်မှ တိုးချဲ့ရလွယ်ပါတယ်။ Prisma Client သည် Query များတွင် Compile-time Type Checking ပေးသဖြင့် Post များအား မှားယွင်းသော Field ဖြင့် Query လုပ်ခြင်းကို ကြိုတင် ကာကွယ်ပေးပါတယ်။ Database ဒေတာများသည် Server Runtime တစ်ခုတည်း (Node.js) တွင်သာ Access လုပ်နိုင်ပြီး Edge Runtime တွင်မူ တိုက်ရိုက်သုံး၍ မရနိုင်ကြောင်းကိုလည်း သတိပြုရပါမယ်။
+
+## Install Prisma
+
+```bash
+npm install -D prisma
+npm install @prisma/client
+npx prisma init --datasource-provider sqlite
+```
+
+## schema.prisma
+
+```prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  content   String
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+```
+
+## Migrate
+
+```bash
+npx prisma migrate dev --name init
+npx prisma generate
+```
+
+`.env` တွင် အောက်ပါအတိုင်း ထည့်ပါ:
+
+```env
+DATABASE_URL="file:./dev.db"
+```
+
+## Client Factory (lib/prisma.ts)
+
+```ts
+import { PrismaClient } from "@prisma/client";
+
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+
+export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+```
+
+Hot Reload တွင် Client Instance များ အမြောက်အမြား မဖြစ်စေရန် Global Cache ပုံစံဖြင့် ထားပါတယ်။
+
+## Seed Script (Sample Data)
+
+```ts
+// prisma/seed.ts
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+
+async function main() {
+  await prisma.post.deleteMany();
+  await prisma.post.create({
+    data: {
+      title: "Hello Next.js Blog",
+      slug: "hello-nextjs-blog",
+      content: "Welcome to my first post!",
+      published: true,
+    },
+  });
+}
+
+main();
+```
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- `DATABASE_URL` ကို `.env` တွင်သာ ထားရမည် (Commit မလုပ်ရ)
+- Schema ပြောင်းတိုင်း `npx prisma migrate dev` လုပ်ရမည်
+- Server Module များတွင်သာ Prisma သုံးပါ — Client Component များတွင် တိုက်ရိုက် Import မလုပ်ရ
+
+## Activity — လေ့ကျင့်ခန်း
+
+Prisma Setup ပြီးသောအခါ `prisma studio` ကို ဖွင့်၍ Seed Post ကို ကြည့်ပါ။ ထို့နောက် Post Model တွင် `tags String[]` Field တစ်ခု ထပ်ထည့်ပြီး Migration လုပ်ကြည့်ပါ။

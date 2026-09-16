@@ -1,0 +1,117 @@
+---
+title: "Deploying — Deploy ပြုလုပ်ခြင်း"
+description: "Deploy Next.js to Vercel, Node.js servers, Docker, and static hosting - plus the production checklist. — Next.js App ကို Vercel, Node.js Server, Docker နှင့် Static Hosting တို့သို့ Deploy ပြုလုပ်ပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Next.js App တစ်ခုကို ယုံကြည်စိတ်ချစွာ ထုတ်ဝေနိုင်စေရန် - မည်သည့် output mode လိုအပ်ပြီး မည်သည့်နေရာတွင် deploy လုပ်ရမည်ကို နားလည်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Deploy ဆိုသည်မှာ သင်ရေးသားပြီးသော Next.js Application ကို server ပေါ်တွင် အသုံးပြုသူများအတွက် အမြဲတမ်းတင်ပေးခြင်း ဖြစ်ပါတယ်။ Deploy လုပ်သည့်နေရာပေါ်မူတည်၍ appropriate output mode ကို ရွေးချယ်ရပြီး Vercel နှင့် Node.js server တို့တွင် default Server mode ဖြင့် deploy လုပ်နိုင်ပါတယ်။ Static hosting (CDN, S3) အတွက်မူ `output: "export"` ကို သတ်မှတ်ပြီး build လုပ်သောအခါ ထွက်လာသော `out/` folder ကို တင်ရပါတယ်။ Docker ဖြင့် deploy လုပ်ရန် multi-stage Dockerfile ကို ရေးသားပြီး `standalone` output ကို အသုံးပြုပါက `node_modules` အပါအဝင်မလိုဘဲ နည်းပါးသော artifacts များသာလိုအပ်ပါတယ်။ Deploy မလုပ်မီ `NODE_ENV=production`, environment variables, image optimization, analytics နှင့် lint/type checks တို့ကို စစ်ဆေးပြီး build လုပ်ရန် အရေးကြီးပါတယ်။
+
+## Deployment targets at a glance (Deploy လုပ်နိုင်သော နေရာများ)
+
+| Target                           | Output mode       |
+| -------------------------------- | ----------------- |
+| Vercel                           | Server (default)  |
+| Node.js server (`next start`)    | Server            |
+| Docker                           | Server            |
+| Static hosting (CDN, S3)         | `output: "export"`|
+| Self-hosted serverless           | Platform adapter  |
+
+## Build locally first (ဦးစွာ Local တွင် Build လုပ်ပါ)
+
+```bash
+npm run build   # produces .next/
+npm run start   # serves the production build on :3000
+```
+
+Next.js သည် build ကို optimize လုပ်ပြီး route များကို တတ်နိုင်သမျှ prerender လုပ်ကာ code ကို route အလိုက် ခွဲခြားပေးပါတယ်။
+
+## Deploying to Vercel
+
+Git သို့ push လုပ်ပြီး vercel.com တွင် repo ကို import လုပ်ပါက အလိုအလျောက် deploy ဖြစ်ပါတယ်။ Environment variables နှင့် preview deployments တို့ကို အလိုအလျောက် စီမံပေးပါတယ်:
+
+```bash
+git add . && git commit -m "ship it"
+git push origin main
+```
+
+Branch တစ်ခုစီအတွက် **preview URL** ရရှိပြီး main branch တွင် production ဖြစ်ပါတယ်။
+
+## Deploying to a Node.js server (Node.js Server တွင် Deploy လုပ်ခြင်း)
+
+```bash
+npm run build
+npm start   # script: "start": "next start"
+```
+
+Deployment artifacts အနည်းဆုံးဖြစ်စေရန် `standalone` output ကို သေချာသတ်မှတ်ပါ:
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  output: "standalone",
+};
+```
+
+ဤသို့သတ်မှတ်ခြင်းဖြင့် `node_modules` နှင့် static files များမှလွဲ၍ လိုအပ်သမျှပါဝင်သော `.next/standalone` ကို ထုတ်ပေးပါတယ်။
+
+## Deploying to static hosts (Static Hosts တွင် Deploy လုပ်ခြင်း)
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  output: "export",
+};
+```
+
+Then:
+
+```bash
+npm run build   # writes to out/
+```
+
+`out/` folder ကို မည်သည့် static host သို့မဆို upload လုပ်ပါ။ Static export တွင် dynamic capabilities (Route Handlers, Server Actions, streaming) များ အလုပ်မလုပ်ကြောင်း သတိပြုပါ။
+
+## Deploying with Docker (Docker ဖြင့် Deploy လုပ်ခြင်း)
+
+```dockerfile
+FROM node:22-alpine AS base
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+USER nextjs
+ENV PORT=3000
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+## Production checklist (Production Checklist)
+
+- `NODE_ENV=production` ကို သတ်မှတ်ပါ
+- Environment variables အားလုံးကို configure လုပ်ပါ
+- `next/image` ဖြင့် images များကို optimize လုပ်ပါ
+- Analytics နှင့် error monitoring များကို ထည့်ပါ
+- Deploy မလုပ်မီ `npm run lint` နှင့် TypeScript checks များကို run ပါ
+
+## Activity
+
+သင့် blog ကို တစ်နေရာရာတွင် deploy လုပ်ပါ - local တွင် `npm run build` run ပြီး GitHub repo သို့ push ကာ Vercel နှင့် ချိတ်ဆက်ပါ။ ထို့နောက် ထွက်လာသော optimization report (`next build` output) ကို ကြည့်ပါ။

@@ -1,0 +1,64 @@
+---
+title: "Form — ဖောင်အတွက် Component"
+description: "The experimental Form component: progressive navigation for GET and POST forms — GET နှင့် POST forms များအတွက် Progressive Navigation ပြုလုပ်ပေးသော Experimental Form Component။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  HTML forms များကို Client-side `Link` များကဲ့သို့ navigate နှင့် submit ပြုလုပ်နိုင်စေပြီး Accessibility ကို ထိန်းသိမ်းကာ JavaScript မလိုအပ်ဘဲ ဦးစွာ အလုပ်လုပ်နိုင်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`next/form` ၏ `<Form>` component သည် Native HTML `<form>` element ကို Next.js Router နှင့် ပေါင်းစပ်ထားသည့် အဆင့်မြှင့်တင်ထားသော ဗားရှင်းတစ်ခုဖြစ်ပါတယ်။ Form ကို submit လုပ်လိုက်သောအခါ GET method အတွက်မူ URL ကို Client-side မှ Sync လုပ်ပြီး Navigate ပြုလုပ်ပေးပါတယ်။ POST method အတွက်မူ Submission ကို Server Action တစ်ခုလိုပင် ကိုင်တွယ်ပြီး Router refresh မှတစ်ဆင့် UI ကို အပ်ဒိတ်လုပ်ပေးပါတယ်။ JavaScript မရှိသည့် အခြေအနေတွင်လည်း Normal HTML form navigation အဖြစ် ပြန်ကျဆင်းသွားတာကြောင့် Progressive Enhancement ကို အမြဲတမ်း ထိန်းသိမ်းထားနိုင်ပါတယ်။ ထို့အပြင် `scroll` ကဲ့သို့ `Link` အတွက်သုံးသော Props အချို့ကိုလည်း အမွေဆက်ခံနိုင်သည့်အတွက် Existing Form များကို Client-side Speed ရရှိစေရန် အလွယ်တကူ မြှင့်တင်နိုင်ပါတယ်။
+
+## What it is
+
+`<Form>` သည် Native HTML `<form>` ကို Router နှင့် ပေါင်းစပ်ထားသဖြင့် submit လုပ်သည့်အခါ:
+
+- **GET** form များ → ရလဒ်များကို Client-side မှ Navigate ပြုလုပ်ပေးသည် (URL ကို Sync ထားပေးခြင်း)
+- **POST** form များ → Submission ကို ကိုင်တွယ်ပြီး Router refresh မှတစ်ဆင့် UI အပ်ဒိတ် ပြုလုပ်ပေးခြင်း
+
+## Basic usage
+
+```tsx
+import Form from "next/form";
+
+// GET - updates the URL and navigates (client-side)
+<Form action="/search">
+  <input name="q" placeholder="Search…" />
+  <button type="submit">Search</button>
+</Form>
+
+// POST - submits like a Server Action but with more control
+<Form action="/api/apply" method="POST">
+  <input name="email" />
+  <button>Apply</button>
+</Form>
+```
+
+## Navigation props
+
+`Link` ကဲ့သို့ Props များကို အမွေဆက်ခံပါတယ်:
+
+```tsx
+<Form action="/search" scroll={false}>
+</Form>
+```
+
+`scroll` ကို ထိန်းချုပ်နိုင်ပြီး Destination ပေါ်ရှိ Prefetching ကိုလည်း သတ်မှတ်ချက်အတိုင်း လိုက်နာပေးပါတယ်။
+
+## When to use
+
+- `/search?q=…` ပေါ်တွင် ရောက်ရှိရမည့် Search forms များ
+- Deep-linkable filter များ (Submit ကို Intercept လုပ်ခြင်းထက် ပိုမိုကောင်းမွန်သည်)
+- JS-total conversion မပြုလုပ်ဘဲ Client-side Speed ကို ပိုမိုရလိုသော ရှိပြီးသား HTML forms များ
+
+## Fallbacks
+
+JavaScript မရှိသည့်အခါ `Form` သည် Normal HTML form navigation အဖြစ် ပြန်ကျဆင်းသွားပြီး Progressive Enhancement ကို ထိန်းသိမ်းပေးပါတယ်။
+
+## Activity
+
+ရှိပြီးသား Search `<form>` တစ်ခုကို `next/form` ၏ `<Form action="/search">` ဖြင့် အစားထိုးပြီး JavaScript အလုပ်လုပ်နေစဉ် Full page load မလိုဘဲ URL က Client-side မှ Update ဖြစ်ကြောင်း အတည်ပြုပါ။

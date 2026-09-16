@@ -1,0 +1,61 @@
+---
+title: "generateViewport — Viewport Metadata ထုတ်လုပ်ခြင်း"
+description: "Generate the viewport metadata dynamically per route. — Route တစ်ခုအလိုက် viewport metadata များကို dynamically ထုတ်လုပ်ပေးသော function ဖြစ်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Async data များဖြင့် segment တစ်ခုချင်းစီအတွက် viewport-related metadata များကို သတ်မှတ်နိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`generateViewport` သည် `Viewport` metadata (view state, colorScheme, themeColor) ကို dynamically ထုတ်လုပ်ပေးသော function တစ်ခုဖြစ်ပါတယ်။ ဥပမာအားဖြင့် CMS သို့မဟုတ် site config မှ brand color ကို ဆွဲယူပြီး `themeColor` အဖြစ် အသုံးပြုနိုင်ပြီး `width: "device-width"` နှင့် `initialScale: 1` ကဲ့သို့သော mobile-friendly viewport settings များကိုလည်း သတ်မှတ်နိုင်ပါတယ်။ Data အလိုက် ပြောင်းလဲနေသော themeColor ကို သုံးလိုလျှင် static `export const viewport` ထက် ဤ function က ပိုမို လိုက်လျောညီထွေစွာ ပေးနိုင်ပါတယ်။ Segment တစ်ခုတည်းတွင် `generateViewport` က static `viewport` ကို override လုပ်ပြီး child segments များက parent များအပေါ် merge ဖြစ်ကာ themeColor ကို media-constrained ပြုလုပ်နိုင်ပါတယ်။ Design tokens များနှင့် theme-color ချိန်ညှိခြင်း၊ per-language/tenant viewport overrides များအတွက် အသုံးဝင်ပါတယ်။
+
+## What it is
+
+`generateViewport` သည် `Viewport` metadata (view state, colorScheme, themeColor) ကို ထုတ်လုပ်ပေးပါတယ်:
+
+```tsx
+export async function generateViewport(): Promise<Viewport> {
+  const config = await getSiteConfig();
+  return {
+    themeColor: config.brandColor,
+    width: "device-width",
+    initialScale: 1,
+  };
+}
+```
+
+## Static alternative
+
+```ts
+export const viewport: Viewport = {
+  themeColor: "#0f172a",
+  colorScheme: "dark",
+};
+```
+
+## Supported fields (ထောက်ပံ့သော နေရာများ)
+
+| Field         | Purpose                       |
+| ------------- | ----------------------------- |
+| `themeColor`  | browser chrome color          |
+| `colorScheme` | light/dark hint               |
+| `width`/`initialScale` | viewport meta        |
+| `interactiveWidget` | resize behavior      |
+
+## Merging & precedence (ပေါင်းစည်းမှုနှင့် ဦးစားပေးမှု)
+
+- Segment တစ်ခုတည်းအတွင်း `generateViewport` သည် static `viewport` ကို override လုပ်ပါတယ်
+- Child များသည် parent အပေါ် merge ဖြစ်ပြီး themeColor ကို media-constrained ပြုလုပ်နိုင်ပါတယ်
+
+## Use case (အသုံးပြုမှုများ)
+
+- Design tokens နှင့် theme-color ချိန်ညှိခြင်း
+- Per-language/tenant viewport overrides များ
+
+## လေ့ကျင့်ခန်း (Activity)
+
+`generateViewport` အတွင်းတွင် CMS မှ brand color ကို ဖတ်ပြီး pages အားလုံးတွင် အသုံးပြုကာ `<meta name="theme-color">` သည် dynamic value ဖြင့် ပေါ်လာကြောင်း စစ်ဆေးပါ။

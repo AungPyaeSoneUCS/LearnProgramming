@@ -1,0 +1,53 @@
+---
+title: "Intercepting Routes — Route Interception"
+description: "Load one route inside another on ('...'), while keeping the deep link real on refresh. — `(.)` Pattern များဖြင့် Route တစ်ခုကို အခြား Route အတွင်း၌ Load လုပ်နိုင်ပြီး Refresh ပြုလုပ်သောအခါ Deep Link ကို မှန်ကန်နေစေပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Reload ပြုလုပ်သောအခါ Full Route ကို မဆုံးရှုံးဘဲ လက်ရှိ Page ပေါ်တွင် Preview များကို Overlay အဖြစ် ဖော်ပြနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Intercepting Routes သည် Folder အမည်ရှေ့တွင် `(.)`၊ `(..)`၊ `(..)(..)` သို့မဟုတ် `(...)` စသည့် Round-Bracket Prefix များကို တပ်ဆင်ခြင်းဖြင့် Route တစ်ခုကို အခြား Route ၏ အတွင်းအဆင့်တွင် ဖမ်းယူ (Intercept) ဖော်ပြနိုင်သော Next.js App Router ၏ အစွမ်းထက်မြက်သော File Convention တစ်ခုဖြစ်ပါတယ်။ ဥပမာအားဖြင့် Feed List မှ Photo တစ်ပုံကို နှိပ်လိုက်လျှင် ထို Photo ၏ Detail ကို သီးခြား Page တစ်ခုအနေဖြင့်မဟုတ်ဘဲ လက်ရှိ Feed ပေါ်တွင် Modal Overlay အဖြစ် ဖော်ပြနိုင်ပါတယ်။ သို့သော် Refresh လုပ်ခြင်း သို့မဟုတ် Deep Link ကို တိုက်ရိုက်ဖွင့်ပါက မူရင်း Standalone Page ကို ပြန်လည် ဖော်ပြပြီး SEO နှင့် Shareability ကို ထိန်းသိမ်းပေးပါတယ်။ ဤ Pattern သည် Modal-based UI များ၊ Login-in-place Dialog များနှင့် Inline Edit Overlays များတွင် အသုံးပြုရန် သင့်တော်ပြီး Parallel Routes နှင့် တွဲဖက်လျှင် URL State ကို ဆက်လက်မှန်ကန်စေပါတယ်။
+
+## The pattern
+
+Folder ၏ အမည်ရှေ့တွင် Route Matcher တစ်ခုကို Prefix လုပ်ခြင်းဖြင့် Sibling Context အတွင်းမှ ထို Segment သို့ Navigation ကို Intercept လုပ်နိုင်ပါတယ်:
+
+| Prefix | Matches navigations to |
+| ------ | ---------------------- |
+| `(.)`  | Same level            |
+| `(..)` | One level up          |
+| `(..)(..)` | Two levels up      |
+| `(...)` | From the app root     |
+
+## Example: modal feed
+
+```txt
+app/feed/
+├── layout.tsx
+├── page.tsx                 # feed list
+└── (.)photo/[id]/page.tsx   # intercepted preview
+app/photo/[id]/page.tsx      # real, standalone page
+```
+
+`/feed` မှ Photo တစ်ပုံကို နှိပ်ပါက `(.)photo/[id]` သည် Feed ၏ အပေါ်တွင် **(Modal)** အနေဖြင့် Render လုပ်ပေးပါတယ်။ `/photo/123` URL ကို Refresh လုပ်ခြင်း သို့မဟုတ် Share လုပ်ခြင်းဖြင့် မူရင်း Real Page ကို Load လုပ်ပေးပါတယ်။
+
+## Technical trail
+
+- Matched Path သို့ Client Soft-navigation ပြုလုပ်ပါက Interception စတင် အလုပ်လုပ်ပါတယ် (Slot ကို Overlay အဖြစ် Render လုပ်ပေးပါတယ်)
+- Hard Reload / Direct URL ဖြစ်ပါက Standard Route က အနိုင်ရပါတယ်
+- Parallel Routes နှင့် တွဲဖက်၍ "Overlay" Rendering Model ကို ဖော်ဆောင်ပါတယ်
+
+## When to use
+
+- Photo/Preview Modals များ
+- Login-in-place Modals များ
+- နောက်ခံ List ကို ထိန်းသိမ်းထားသော Inline Edit Overlays များ
+
+## Activity
+
+Photo Page နှင့် Feed တစ်ခုကို တည်ဆောက်ပြီး `(.)photo/[id]` ဖြင့် ဖမ်းယူကာ Feed မှ "Modal" ကို ဖွင့်ပါ။ ထို့နောက် Deep URL ကို Hard-reload လုပ်၍ Real Page ကို Render လုပ်သည်ကို စစ်ဆေးပါ။

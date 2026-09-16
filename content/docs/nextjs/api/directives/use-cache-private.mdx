@@ -1,0 +1,56 @@
+---
+title: "use cache: private — Private Cache"
+description: "The private cache variant - request-scoped isolation for runtime context like cookies and headers — cookies နှင့် headers ကဲ့သို့ Runtime context များအတွက် Request-scoped Isolation ပြုလုပ်ပေးသော Cache အမျိုးအစား။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="caution" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Cache entry တစ်ခုသည် Request နယ်နိမိတ်ကို ဘယ်တော့မှ မဖြတ်ကျော်သင့်ကြောင်း သိရှိကာ Private variant ကို ဘေးကင်းစွာ အသုံးပြုတတ်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`"use cache: private"` သည် Cache entry များကို တစ်ကမ္ဘာလုံးအတိုင်းအတာဖြင့် မျှဝေမည့်အစား Request တစ်ခုတည်း၏ အတွင်းတွင်သာ ထိန်းသိမ်းထားရန် ပြုလုပ်ပေးသော Directive တစ်ခုဖြစ်ပါတယ်။ `cookies()` သို့မဟုတ် `headers()` ကဲ့သို့ Request-scoped Data များကို ဖတ်ရှုနေရသည့် Function များတွင် ၎င်းကို သုံးခြင်းဖြင့် User တစ်ဦးအတွက် Render လုပ်ထားသော Output သည် အခြားသူတစ်ဦးထံသို့ မပေါက်ကြားအောင် ကာကွယ်ပေးပါတယ်။ ဥပမာ Login ပြုလုပ်ထားသူ၏ Profile စာမျက်နှာ၊ Per-user Config ကဲ့သို့ User-specific Output များကို Global Cache သို့ ရောက်ရှိခြင်းမရှိဘဲ ထားရှိနိုင်ပါတယ်။ Cache Key ကို တွက်ချက်ထားဆဲဖြစ်သော်လည်း Storage မှာ လက်ရှိ Request Context အတွင်းကသာ သက်ဆိုင်သောကြောင့် Cross-request Reuse မဖြစ်နိုင်ပါဘူး။ ထို့အပြင် `cacheLife` ၏ Lifetime စီမံခန့်ခွဲမှု လွယ်ကူခြင်း အားသာချက်ကိုလည်း ဆက်လက် ခံစားနိုင်ပါတယ်။
+
+## What it does
+
+`"use cache: private"` သည် Cache entry တစ်ခုကို Global မျှဝေမည့်အစား **Request တစ်ခုတည်းအတွင်းသာ** ထိန်းသိမ်းထားပါတယ်။ Request-scoped data (ဥပမာ `cookies()`) မှ ဆင်းသက်သော Values များသည် Request တစ်ခုစီအလိုက် Render ဖြစ်ပြီး User များအကြား မပေါက်ကြားပါဘူး။
+
+```tsx
+export async function getMyProfile() {
+  "use cache: private";
+  cacheLife(180);
+
+  const session = cookies().get("session");
+  if (!session) return null;
+
+  return db.profile.findFirst({ where: { sessionId: session.value } });
+}
+```
+
+## When to use
+
+- Cached scope အတွင်း Runtime context (cookies/headers) များကို ဖတ်ရန် လိုအပ်ပြီး Arguments အဖြစ် Refactor လုပ်နိုင်ခြင်း မရှိသည့်အခါ
+- Compliance: User-specific Output သည် Request ကျော်လွန်၍ မတည်မြဲသင့်သည့်အခါ
+- `cacheLife` Lifetimes များ၏ Developer Ergonomics ကို ဆက်လက် ထားရှိလိုသည့်အခါ
+
+## When NOT to use
+
+- အမှန်တကယ် မျှဝေသုံးစွဲသည့် အရာများအားလုံး (Catalogs၊ Public lists) — Plain `use cache` ကို သုံးပါ
+- CDN/Global အတိုင်းအတာထိ ရောက်ရှိသင့်သော အရာများ — Private variant သည် Per-request အတွက်သာ ပို့ဆောင်ပေးနိုင်ပါတယ်
+
+## Cache key differences
+
+Private entries များသည် Request နှင့် သဘောသက်ဆိုင်ပါတယ်: Key ကို တွက်ချက်ထားဆဲဖြစ်သော်လည်း Storage သည် လက်ရှိ Request Context နှင့်သာ သက်ဆိုင်သောကြောင့် Cross-request Reuse မဖြစ်နိုင်ပါဘူး။
+
+## Compare
+
+| Variant            | Scope         | Example                          |
+| ------------------ | ------------- | -------------------------------- |
+| `use cache`        | Global/shared | product listings, blog posts     |
+| `use cache: private` | Per request | authed profile, toasts, per-user config |
+
+## Activity
+
+သင့် "my profile" function ကို `"use cache: private"` အဖြစ် ပြောင်းလဲပြီး User နှစ်ဦး တူညီသော Function ကို ဖတ်သည့်အခါ Output မျှဝေမှု မရှိကြောင်း အတည်ပြုပါ။

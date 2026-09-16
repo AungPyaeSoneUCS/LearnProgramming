@@ -1,0 +1,70 @@
+---
+title: "Font — ဖောင့် API"
+description: "The next/font API: google(), local(), and FontProps for self-hosted, subsetted fonts — ကိုယ်တိုင် Host လုပ်ထားသော ဖောင့်များကို Subset ခွဲ၍ အသုံးပြုနိုင်ရန်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Font API ၏ Source ရွေးချယ်မှု၊ `subsets`၊ CSS `variable` နှင့် `weight` ထိန်းချုပ်မှုများကို တိကျစွာ အသုံးပြုတတ်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`next/font` သည် Next.js တွင် Web font များကို စီမံခန့်ခွဲရန် Built-in API တစ်ခုဖြစ်ပြီး Google Fonts နှင့် Local font များကို Server ပေါ်တွင် ဒေါင်းလုဒ်လုပ်ကာ Self-hosted ပြုလုပ်ပေးသဖြင့် Third-party CDN request များ မလိုအပ်တော့ပါဘူး။ ဖောင့်တစ်ခုစီကို `variable` ဖြင့် CSS Custom Property အဖြစ် ထုတ်ပေးနိုင်ပြီး Tailwind ကဲ့သို့ Utility များတွင် တိုက်ရိုက် အသုံးပြုနိုင်ပါတယ်။ ထို့အပြင် Built-in `size-adjust` metrics ကြောင့် Fallback font နှင့် Final font များ၏ အကျယ်အတူညီဖြစ်စေပြီး Layout shift ဖြစ်စဉ်ကို ကာကွယ်ပေးပါတယ်။ `subsets` ဖြင့် လိုအပ်သော Character Sets များကိုသာ ရွေးချယ်နိုင်သည့်အတွက် Font file အရွယ်အစားကိုလည်း လျှော့ချနိုင်ပါတယ်။
+
+## Import sources
+
+```ts
+import { Inter, Roboto_Mono } from "next/font/google";
+import localFont from "next/font/local";
+```
+
+## Google fonts
+
+```ts
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
+```
+
+CSS variables များက ဖောင့်များကို Tailwind မှ အသုံးပြုနိုင်စေရန် ဖန်တီးပေးပါတယ်:
+
+```tsx
+<html lang="en" className={inter.variable}>
+  <body className="font-[family-name:var(--font-sans)]">
+```
+
+## Local fonts
+
+```ts
+const pixel = localFont({
+  src: [
+    { path: "./pixel.woff2", weight: "400", style: "normal" },
+    { path: "./pixel-bold.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--font-pixel",
+});
+```
+
+## Key props
+
+| Prop                  | Effect                                  |
+| --------------------- | --------------------------------------- |
+| `subsets`             | Included character subsets              |
+| `weight` / `style`    | Requested variants                      |
+| `variable`            | CSS custom property name                |
+| `display`             | `font-display` behavior (`swap`, `auto`) |
+| `preload`             | Whether to preload the font             |
+| `adjustFontFallback`  | Metrics fallback to avoid layout shift  |
+
+## Layout-shift protection
+
+`next/font` တွင် `size-adjust` metrics ပါဝင်သဖြင့် Fallback font သည် Final font ၏ အကျယ်နှင့် ကိုက်ညီစေပြီး Default အနေဖြင့် **zero CLS** ဖြစ်စေပါတယ်။
+
+## Activity
+
+`Montserrat(…, { variable: "--font-heading" })` မှ `--font-heading` variable တစ်ခုကို ထည့်သွင်းပြီး Tailwind မှတစ်ဆင့် သင့် h1–h3 များသို့ အသုံးချကာ Lighthouse တွင် CLS မရှိကြောင်း အတည်ပြုပါ။

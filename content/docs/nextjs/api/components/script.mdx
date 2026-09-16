@@ -1,0 +1,60 @@
+---
+title: "Script — စကရစ်တ် Component"
+description: "The next/script component: loading strategies, inline scripts, and events — Loading strategies များ၊ Inline scripts နှင့် Events များအကြောင်း Component။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Third-party scripts များကို မှန်ကန်သော Loading strategy နှင့် Lifecycle Events များဖြင့် စီမံခန့်ခွဲတတ်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`next/script` ၏ `<Script>` component သည် Third-party Scripts များကို Next.js App ထဲတွင် စည်းကမ်းတကျ ထည့်သွင်းနိုင်ရန် ဒီဇိုင်းထားသော Component တစ်ခုဖြစ်ပါတယ်။ Raw `<script>` tag များသည် Rendering ကို ပိတ်ဆို့နိုင်ပြီး Loading Timing ကို ထိန်းချုပ်နိုင်ခြင်း မရှိသော်လည်း ၎င်းကို အသုံးပြုခြင်းဖြင့် Script များကို Hydration ပြီးနောက်၊ SSR အချိန် သို့မဟုတ် Browser အားနေချိန်တွင် စသည့် Strategy များဖြင့် ထည့်သွင်းနိုင်ပါတယ်။ Inline scripts များကိုလည်း `id` assignment လိုအပ်လျက် ထည့်သွင်းနိုင်ပြီး `onLoad`၊ `onReady`၊ `onError` ကဲ့သို့ Events များမှတစ်ဆင့် Script ၏ Lifecycle ကို ခြေရာခံနိုင်ပါတယ်။ Deduplication နှင့် Hydration ကို `next/script` က အလိုအလျောက် ကိုင်တွယ်ပေးသည့်အတွက် Script ကို ထပ်ခါထပ်ခါ ထည့်သွင်းမိခြင်းကိုလည်း ကာကွယ်ပေးပါတယ်။
+
+## The component
+
+```tsx
+import Script from "next/script";
+
+<Script src="https://example.com/sdk.js" />
+```
+
+## Strategy reference
+
+| Strategy              | Load timing                             |
+| --------------------- | --------------------------------------- |
+| `afterInteractive`    | Immediately after hydration (default)   |
+| `beforeInteractive`   | During SSR, in `<head>` (first-party critical) |
+| `lazyOnload`          | When the browser is idle                |
+| `service-worker`      | For `/sw.js`                            |
+
+## Inline scripts need an id
+
+```tsx
+<Script id="theme" strategy="beforeInteractive">
+  {`document.documentElement.dataset.theme = localStorage.theme ?? "light";`}
+</Script>
+```
+
+## Events
+
+```tsx
+<Script
+  src="/vendor.js"
+  onLoad={() => console.log("loaded")}
+  onReady={() => window.Vendor?.init()}
+  onError={() => console.error("script failed")}
+/>
+```
+
+`onReady` အတွင်း `window`/globals များကို ဘေးကင်းစွာ အသုံးပြုနိုင်ရန် Client Component တစ်ခုတွင် ထုပ်ပိုးပါ။
+
+## Why not raw `<script>`?
+
+Raw scripts များသည် Rendering ကို ပိတ်ဆို့နိုင်ကာ Strategy ထိန်းချုပ်မှု မရှိသည့်အပြင် အချို့ SSR/Streaming Context များတွင် အလုပ်မလုပ်နိုင်ပါဘူး။ `next/script` သည် Deduplication နှင့် Hydration ကို ကိုင်တွယ်ပေးပါတယ်။
+
+## Activity
+
+GA ကို `afterInteractive` ဖြင့်လည်းကောင်း၊ Pre-hydration theme script ကို `beforeInteractive` ဖြင့်လည်းကောင်း၊ PWA worker ကို `service-worker` Strategy ဖြင့်လည်းကောင်း ထည့်သွင်းပြီး Network/Element Panels တွင် Ordering မှန်ကန်ကြောင်း စစ်ဆေးပါ။

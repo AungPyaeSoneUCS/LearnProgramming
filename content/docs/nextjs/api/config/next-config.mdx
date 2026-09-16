@@ -1,0 +1,67 @@
+---
+title: "next.config.js — ဗဟို Configuration File"
+description: "Central Configuration File အကြောင်း: `next.config.ts` တွင် Typed Config ရေးသားနည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Next.js ကို App Level တွင် Typed ၊ Documented နှင့် Validated ဖြစ်စွာ ပြင်ဆင်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`next.config.ts` သည် Next.js App ၏ Central Configuration File ဖြစ်ပြီး Run Time အပြုအမူများကို နေရာတစ်ခုတည်းမှ ထိန်းချုပ်နိုင်ပါတယ်။ Image Optimization, Output Mode, Cache Lifecycle နှင့် Server External Packages ကဲ့သို့သော Key များကို TypeScript Type ဖြင့် သတ်မှတ်နိုင်ပြီး Server စတင်ချိန်တွင် ၎င်း Key များကို Validate လုပ်ပေးပါတယ်။ Config ကို ပြောင်းလဲပါက Server ကို ပြန်လည် စတင်ရန် လိုအပ်ပြီး Secrets များကို ဤဖိုင်တွင် မရေးသင့်ပါ။
+
+## The file
+
+```ts
+// next.config.ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  output: "standalone",
+  images: {
+    remotePatterns: [{ hostname: "cdn.example.com" }],
+  },
+  cacheLifeProfiles: {
+    newsletter: { stale: 60, revalidate: 600, expire: 86400 },
+  },
+  serverExternalPackages: ["sqlite3"],
+  experimental: {},
+};
+
+export default nextConfig;
+```
+
+## Common keys (Next 16)
+
+| Key                    | Purpose                            |
+| ---------------------- | ---------------------------------- |
+| `output`               | `standalone`, `export`             |
+| `images`               | image optimizer config             |
+| `cacheComponents`      | enable Cache Components (needed for `use cache`) |
+| `cacheLifeProfiles`    | custom cache lifetimes             |
+| `serverExternalPackages` | keep packages outside the server bundle |
+| `experimental`         | unstable flags                    |
+| `redirects`/`rewrites`/`headers` | static URL rules      |
+| `turbopack`            | Turbopack options                  |
+
+## Environment-based switching
+
+```ts
+const isProd = process.env.NODE_ENV === "production";
+const basePath = isProd ? "/prod" : "";
+```
+
+## Rules & gotchas
+
+- Server စတင်ချိန်တွင် Validate လုပ်ပြီး Invalid Key များကို Warning သို့မဟုတ် Error ပြပါတယ်
+- Config ပြောင်းလဲပါက Server ကို ပြန်လည်စတင်ပါ (Config သည် Hot-reload မလုပ်ပါ)
+- Secrets များကို ထည့်မရေးပါနှင့် — Config သည် Server-side ဖြစ်သော်လည်း Version Control ထဲသို့ ပါဝင်သွားတတ်ပါတယ်
+- `next.config.mjs`/`.js` ကိုလည်း သုံးနိုင်ပါတယ်; TypeScript က Autocomplete ကို ပေးပါတယ်
+
+## Activity
+
+Typed `next.config.ts` တစ်ခုကို Image Remote Pattern နှင့် Custom CacheLife Profile ပါအောင် ရေးသားကာ Dev Server ကို ပြန်လည်စတင်ပြီး နှစ်ခုလုံး အလုပ်လုပ်ကြောင်း အတည်ပြုပါ (Cached Image ကို Fetch လုပ်ခြင်းနှင့် Lifecycle Warnings များကို ကြည့်ရှုပါ)။

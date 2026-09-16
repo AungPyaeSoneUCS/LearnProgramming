@@ -1,0 +1,50 @@
+---
+title: "Route Segment Config: prefetch (Link Prefetch မူလတန်ဖိုး သတ်မှတ်ခြင်း)"
+description: "Segment-level default for Link prefetching via the prefetch export. — `prefetch` export ဖြင့် Link prefetching အတွက် segment-level default သတ်မှတ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Link တစ်ခုချင်းစီအတွက် မဟုတ်ဘဲ route subtree တစ်ခုလုံးအတွက် default prefetch behavior ကို သတ်မှတ်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`prefetch` သည် App Router 13.3 တွင် ထည့်သွင်းခဲ့သော Route Segment Config တစ်ခုဖြစ်ကာ segment subtree အတွင်းရှိ Link အားလုံး၏ default prefetch behavior ကို သတ်မှတ်ပေးပါတယ်။ prefetch ဆိုသည်မှာ user က link ကို မနှိပ်မီ viewport အတွင်းရောက်လာသည်နှင့် route ၏ RSC payload ကို ကြိုတင် ဆွဲယူထားခြင်းဖြစ်ပြီး navigation ကို ပိုမို မြန်ဆန်စေပါတယ်။ `true` သတ်မှတ်ထားလျှင် မြန်ဆန်သော navigation ကို ရရှိပြီး `false` ဖြစ်လျှင် ကြီးမားသော subtree များတွင် data payload ကြီးထွားမှုကို တားဆီးနိုင်ပါတယ်။ per-`<Link>` ဖြင့် တစ်ချင်းစီ override လုပ်နိုင်သဖြင့် အခြေအနေအလိုက် ပြောင်းလဲသုံးစွဲနိုင်ပါတယ်။
+
+## What it is
+
+`prefetch` (Route Segment Config — App Router 13.3 တွင် ထည့်သွင်းခဲ့သည်) သည် segment subtree အတွင်းရှိ Link အားလုံး၏ default prefetch behavior ကို သတ်မှတ်ပြီး per-`<Link prefetch={…}>` နှင့် မတူပါ:
+
+```ts
+// app/dashboard/layout.tsx
+export const prefetch = true;
+// or
+export const prefetch = false;
+```
+
+| Value   | Effect                                    |
+| ------- | ----------------------------------------- |
+| `true`  | Links prefetch (RSC payload) on viewport  |
+| `false` | No automatic prefetching in this subtree  |
+
+## Typical usage (အသုံးများသော အခြေအနေများ)
+
+- Heavy/dynamic areas → data ကြီးထွားမှု ရှောင်ရန် `false` သုံးပါ
+- Public marketing pages → instant navigation အတွက် `true` သုံးပါ
+- `pages/index` caching နှင့်ဆိုလျှင် links များသည် buffers + RSC ကို prefetch လုပ်ပါတယ်
+
+## Relationship with Link (Link နှင့် ဆက်စပ်ပုံ)
+
+- `<Link prefetch={true|false}>` သည် link level တွင် override လုပ်ပါတယ်
+- Route Segment ၏ `prefetch` သည် **default** ကိုသာ သတ်မှတ်ပေးပါတယ်
+- `true` ဖြစ်လျှင် per-viewport intersection သည် prefetch ကို စတင်စေပါတယ်
+
+## Combine with Instant/HMR (Instant/HMR နှင့် ပေါင်းစပ်ခြင်း)
+
+Dev ပတ်ဝန်းကျင်တွင် prefetch က error များကို စောစီးစွာ တွေ့မြင်နိုင်ရန် ကူညီပြီး production တွင် nav time ကို လျှော့ချပေးပါတယ်။ ကြီးမားသော trees များတွင် payload cost ကို ချိန်ဆရန် လိုအပ်ပါတယ်။
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Dashboard layout တွင် `prefetch = false`, home page တွင် `true` သတ်မှတ်ပြီး network tab မှတစ်ဆင့် home links များသာ prefetch ဖြစ်ကြောင်း အတည်ပြုပါ။

@@ -1,0 +1,57 @@
+---
+title: "redirect (307 Temporary Redirect)"
+description: "Issue a temporary 307 redirect from server code. — Server ကုဒ်မှ 307 Temporary Redirect ထုတ်ပေးခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Login, Post-auth, Guardrail ကဲ့သို့ Flow ပြောင်းလဲမှုများကို 307 Redirect ဖြင့် ကိုင်တွယ်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`redirect()` သည် Server ဘက်မှ အသုံးပြုသူကို အခြား Route တစ်ခုသို့ 307 Temporary Redirect ဖြင့် ပို့ဆောင်ပေးသော Function ဖြစ်ပါတယ်။ ဤ Function သည် `notFound()` ကဲ့သို့ပင် Exception တစ်ခုကို Throw လုပ်ပြီး Next.js က ထို Exception ကို ဖမ်းယူ၍ Response ကို ကိုယ်တိုင် ထုတ်ပေးပါတယ်။ ထို့ကြောင့် `redirect()` ပြီးနောက်ရှိ Code များသည် ဆက်လက် လည်ပတ်မည် မဟုတ်ပါဘူး။ Server Component များ၊ Server Actions များနှင့် Route Handlers အားလုံးတွင် အသုံးပြုနိုင်ပြီး Auth Flow များ၌ Login မရှိသူများကို Login Page သို့ ပို့ဆောင်ရာတွင် အသုံးအများဆုံး ဖြစ်ပါတယ်။ Server Action တစ်ခုမှ Redirect ပြုလုပ်သောအခါ Target Page ကို Client-side တွင် Render လုပ်ပေးပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```tsx
+import { redirect } from "next/navigation";
+
+export default async function DashboardPage() {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  return <Dashboard />;
+}
+```
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Server Component များ၊ Server Actions များနှင့် Route Handlers များတွင် အသုံးပြုနိုင်
+- `notFound` ကဲ့သို့ Internal Exception ကို Throw လုပ်ပါတယ် — Catch လုပ်ရန် မလိုအပ်ဘဲ Next.js က Response အဖြစ် အလိုအလျောက် ဖြေရှင်းပေးပါတယ်
+- `redirect` ပြီးနောက် Code များ ဆက်လက် လည်ပတ်မည် မဟုတ်ပါ
+
+## Server Actions များတွင် (In Server Actions)
+
+```ts
+"use server";
+export async function handleApply() {
+  redirect("/thank-you");
+}
+```
+
+Server Actions မှ Redirect ပြုလုပ်ပါက Target Page ကို Client-side တွင် Render လုပ်ပေးပါတယ်။
+
+## Status / Config (အခြေအနေနှင့် သတ်မှတ်ချက်)
+
+- ပုံမှန် Status သည် 307 (Temporary) ဖြစ်ပါတယ်
+- `RedirectType.push` ကဲ့သို့ Type Variants များကို ထပ်ဆောင်း ပံ့ပိုးပေးပါတယ်
+- လိုအပ်ပါက Route Handlers တွင် `Response` ဖြင့် Custom Status သတ်မှတ်နိုင်
+
+## With basePath (basePath နှင့် တွဲဖက် အသုံးပြုခြင်း)
+
+`import.meta` နှင့် `basePath`: Redirect များသည် `basePath` Config ကို အလိုအလျောက် လိုက်နာပါတယ်။
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Login မရှိပါက `redirect("/login?from=dashboard")` ဖြင့် Dashboard ကို ကာကွယ်ပြီး Action တစ်ခုဖြင့် Logout ပြုလုပ်စေကာ (Auth မရှိပါက Redirect) Network Tab တွင် 307 Status ကို မှတ်သားပါ။

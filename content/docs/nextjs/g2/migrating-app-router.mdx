@@ -1,0 +1,80 @@
+---
+title: "Migrating from Pages Router to App Router — Pages Router မှ App Router သို့ ပြောင်းရွှေ့ခြင်း"
+description: "Incremental migration from pages/ to app/: coexist, convert layouts and data fetching, and flip to App Router. — `pages/` မှ `app/` သို့ အဆင့်ဆင့် ပြောင်းခြင်း၊ အတူတကွ သုံးခြင်းနှင့် layouts/data fetching များ ပြောင်းလဲနည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Routers နှစ်ခုလုံးကို ဘေးချင်းယှဉ် run နိုင်စေကာ အပြည့်အဝ ပြောင်းရွှေ့ပြီးသည်အထိ page များကို incremental ပြောင်းရွှေ့နည်းကို နားလည်စေရန် ဖြစ်ပါတယ် — **route mapping** နှင့် **gotchas** များကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Pages Router မှ App Router သို့ ပြောင်းရွှေ့ခြင်းသည် တစ်ကြိမ်တည်းဖြင့် အားလုံး ပြောင်းရမည့် ကိစ္စမဟုတ်ပါ။ Next.js သည် `pages/` နှင့် `app/` folder နှစ်ခုစလုံးကို တစ်ပြိုင်နက် လက်ခံနိုင်ပြီး URL ၏ path နှင့် ကိုက်ညီသော folder မှ route ကို ရွေးချယ် ဖြန့်ဝေပေးပါတယ်။ ထို့ကြောင့် သင်သည် route တစ်ခုချင်းစီကို လိုသလောက် ပြောင်းနိုင်ပြီး ကျန်ရှိသော routes များကို Pages Router ဖြင့် ဆက်လက် လည်ပတ်နိုင်ပါတယ်။ `pages/about.tsx` ကို `app/about/page.tsx` သို့ ပြောင်းခြင်း၊ `_app.tsx` ကို root `layout.tsx` ဖြင့် အစားထိုးခြင်း၊ `getStaticProps`/`getServerSideProps` များကို Server Component (သို့ `use cache`) ဖြင့် အစားထိုးခြင်း စသော mapping များကို စနစ်တကျ လိုက်နာရပါတယ်။ အကြံပြုထားသော လုပ်ဆောင်ရမည့် အစီအစဉ်မှာ root layout ကို အရင်ဖန်တီးပြီး leaf routes များကို ဦးစွာ ပြောင်းကာ layouts များကို နောက်ဆုံး ပြောင်းပြီး `pages/` ဗလာဖြစ်သွားမှသာ ဖျက်ပစ်ရန် ဖြစ်ပါတယ်။ `_document` head logic၊ client-only logic နှင့် nested layouts vs `_app` စသော semantics ကွဲပြားမှုများကိုလည်း route တစ်ခုချင်းစီတွင် စစ်ဆေးရန် လိုပါတယ်။
+
+## The coexistence strategy
+
+`pages/` နှင့် `app/` သည် project တစ်ခုတည်းတွင် အတူတကွ နေထိုင်နိုင်ပါတယ်။ Next.js သည် လမ်းကြောင်းနှင့် ကိုက်ညီသော folder မှ route ကို ရွေးချယ်ပါတယ်:
+
+```
+pages/about.tsx       → /about (Pages Router)
+app/blog/page.tsx     → /blog (App Router)
+```
+
+Route တစ်ခုချင်းစီကို တစ်ကြိမ်မှ တစ်ခုစီသာ ပြောင်းပါ။
+
+## Route mapping cheat sheet
+
+| Pages Router                   | App Router                    |
+| ------------------------------ | ----------------------------- |
+| `pages/about.tsx`              | `app/about/page.tsx`          |
+| `pages/_app.tsx`               | `app/layout.tsx`              |
+| `pages/_document.tsx`          | root layout `<html>`/`<body>` |
+| `pages/[id].tsx`               | `app/[id]/page.tsx`           |
+| `getStaticProps`               | fetch in Server Component or `use cache` |
+| `getServerSideProps`           | Server Component (dynamic)    |
+| `getStaticPaths`               | `generateStaticParams`        |
+| `next/router` `useRouter()`    | `next/navigation` `useRouter()` |
+
+## A quick conversion
+
+```tsx
+// Before: pages/blog/[slug].tsx
+export async function getStaticProps({ params }) {
+  const post = await getPost(params.slug);
+  return { props: { post } };
+}
+export default function Post({ post }) { return <h1>{post.title}</h1>; }
+```
+
+```tsx
+// After: app/blog/[slug]/page.tsx
+export async function generateStaticParams() {
+  return (await getPostsSlugs()).map((slug) => ({ slug }));
+}
+
+export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
+  return <h1>{post.title}</h1>;
+}
+```
+
+## Order of operations
+
+1. `pages/` ဘေးတွင် `src/app/layout.tsx` (root layout) ကို ဖန်တီးပါ
+2. `next.config` တွင် `appDir` ပံ့ပိုးမှု ထည့်ပါ (version 16 တွင် default ဖွင့်ထား)
+3. Leaf routes များကို ဦးစွာ ပြောင်းပြီး layouts များကို နောက်ဆုံး ပြောင်းပါ
+4. `pages/` ဗလာဖြစ်သွားသည့်အခါ ၎င်းကို ဖျက်လိုက်ပါ
+
+## Gotchas
+
+- `getServerSideProps` သုံးနေသူများသည် Server Components (dynamic) သို့ ပြောင်းရပါမည်
+- Client-only logic များအတွက် `"use client"` လိုအပ်ပါတယ်
+- `_document` head logic များကို layout `<head>` (သို့) metadata API သို့ ပြောင်းပါ
+- Nested Layouts နှင့် `_app` ၏ semantics ကွဲပြားပါသည် — route တစ်ခုချင်းစီကို စစ်ဆေးပါ
+
+## Activity
+
+လေ့ကျင့်ခန်း: Pages app တစ်ခုမှ route နှစ်ခုကို ရွေးပြီး အထက်ပါ map ဖြင့် ပြောင်းကာ routers နှစ်ခုလုံးကို တစ်ပြိုင်နက် run ပြီး URLs ကိုက်ညီကြောင်း အတည်ပြုပါ။

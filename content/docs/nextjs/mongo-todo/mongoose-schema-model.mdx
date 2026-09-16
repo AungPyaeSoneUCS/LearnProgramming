@@ -1,0 +1,120 @@
+---
+title: "Part 2: Mongoose Schema & Model"
+description: "Task တစ်ခုချင်းစီ၏ Data ပုံစံ (Schema) နှင့် Todo Model ကို models/Todo.ts တွင် တည်ဆောက်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Task တစ်ခုချင်းစီအတွက် သိမ်းဆည်းမယ့် Data ပုံစံ (Schema) ကို သတ်မှတ်ပြီး `models/Todo.ts` တွင် Mongoose Model တည်ဆောက်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+MongoDB သည် NoSQL (Document) Database ဖြစ်သောကြောင့် Table/Rows များအစား Collections (Folder) နှင့် Documents (Files) များဖြင့် ဒေတာ သိမ်းဆည်းပါတယ်။ Mongoose ကို သုံးသောအခါ Collection တစ်ခုထဲတွင် အဘယ် Field များ ပါဝင်မည်၊ Field တစ်ခုချင်းစီသည် မည်သည့် Type ဖြစ်မည်၊ Required လား၊ Default Value ရှိမလား စသည့် **Schema (Data Structure)** ကို ဦးစွာ သတ်မှတ်ပါတယ်။ ထို Schema မှ Database Collection နှင့် ချိတ်ဆက်ထားသော **Model** ကို ထုတ်လုပ်ပါတယ်။ Model များသည် Document များကို Create, Read, Update, Delete လုပ်ရန် Method များ (`.create()`, `.find()`, `.findByIdAndUpdate()`, `.findByIdAndDelete()`) ပေးပါတယ်။ ဤ Lesson တွင် Task တစ်ခုစီအတွက် `title` (String, Required), `isCompleted` (Boolean, Default: false) နှင့် `createdAt` (Date, Default: now) Field များပါဝင်သော `Todo` Model ကို တည်ဆောက်ပါမယ်။ Next.js Hot Reload ကြောင့် Model Register ပြန်ဖြစ်တိုင်း Error (OverwriteModelError) မဖြစ်စေရန် Model ကို Singleton Pattern ဖြင့် ရေးရမည်ဖြစ်ပါတယ်။
+
+## Todo Model — Models ဖိုင် တည်ဆောက်ခြင်း
+
+Project ၏အမြစ်တွင် `models/Todo.ts` ဖိုင်ကို ဖန်တီးပါမယ် (Source ‌Folder pattern `src/models/Todo.ts` ကို သုံးလျှင် ထိုနေရာတွင် ထားနိုင်ပါတယ်):
+
+```ts
+// models/Todo.ts
+import mongoose, { Schema, model, models } from "mongoose";
+
+// 1) Schema သတ်မှတ်ခြင်း
+const TodoSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "Title is required"], // False တွင် အမှား Message ပြန်ပေးသည်
+      trim: true,                            // အစ/အဆုံး Space များ ဖယ်ရှားသည်
+      maxlength: [200, "Title must be less than 200 characters"],
+    },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    timestamps: true, // createdAt + updatedAt ကို အလိုအလျောက် ထည့်ပေးသည်
+  }
+);
+
+// 2) Model ထုတ်လုပ်ခြင်း (Singleton Pattern)
+const Todo = models.Todo || model("Todo", TodoSchema);
+
+export default Todo;
+```
+
+## အသေးစိတ် ရှင်းလင်းချက် (Deep Explanation)
+
+- **`title` Field**: Task ၏ အမည်ဖြစ်ပြီး Type ‌String သတ်မှတ်ပါတယ်။ `required: [true, "..."]` ဖြင့် Empty Title ကို Database ၌ သိမ်းခြင်း မပြုနိုင်အောင် Validation လုပ်ပါတယ်။ `trim: true` သည် စာသား၏ ရှေ့/နောက် Space များကို ဖယ်ရှားပေးပါတယ်။ `maxlength` သည် စာသားအရှည်ကို ကန့်သတ်ပေးပါတယ်။
+- **`isCompleted` Field**: Task ပြီးပြီလား မပြီးဘူးလားကို Boolean အနေဖြင့် သိမ်းပါတယ်။ `default: false` ကြောင့် Task အသစ်တိုင်း ပြီးစီးမှုမရှိသေးဟု အလိုအလျောက် သတ်မှတ်ပါတယ်။
+- **`timestamps: true`**: `createdAt` နှင့် `updatedAt` Fields နှစ်ခုကို Mongoose မှ အလိုအလျောက် စီမံပေးပါတယ် — Document ဖန်တီးတိုင်း `createdAt` ကို နှင့် ပြင်ဆင်မွမ်းမံတိုင်း `updatedAt` ကို Update လုပ်ပေးပါတယ်။
+- **`models.Todo || model("Todo", TodoSchema)`**: Next.js Development Mode တွင် Module များ Hot Reload ဖြစ်တတ်သောကြောင့် `model("Todo", ...)` ကို ပြန်ပြန် ခေါ်မိပါက error **"OverwriteModelError: Cannot overwrite `Todo` model once compiled."** တက်ပါတယ်။ ထို့ကြောင့် `mongoose.models` တွင် Model ရှိပြီးသားဆိုလျှင် ထိုဟာကိုသာ ပြန်သုံး၍ မရှိမှသာ အသစ် Compile လုပ်ပါတယ်။
+
+## Model ကို အသုံးပြု၍ Data တည်ဆောက်ခြင်း
+
+```ts
+import Todo from "@/models/Todo";
+
+// Create
+const task = await Todo.create({ title: "Learn Next.js with MongoDB" });
+// → { _id: "...", title: "...", isCompleted: false, createdAt: "...", updatedAt: "..." }
+
+// Read (all)
+const allTodos = await Todo.find().sort({ createdAt: -1 });
+
+// Read (by id)
+const one = await Todo.findById(id);
+
+// Update status
+await Todo.findByIdAndUpdate(id, { isCompleted: true }, { new: true });
+
+// Delete
+await Todo.findByIdAndDelete(id);
+```
+
+`.sort({ createdAt: -1 })` ဖြင့် အသစ်ဆုံး Task များကို ရှေ့ဆုံးတွင် ပြသပါတယ် (`-1` = descending, `1` = ascending)။
+
+## Lean Query (စွမ်းဆောင်ရည် မြှင့်တင်ခြင်း)
+
+Server Component / API များတွင် Mongoose Document များအစား Plain JavaScript Object များသာ လိုအပ်ပါက `.lean()` ကို သုံးနိုင်ပါတယ်:
+
+```ts
+const todos = await Todo.find().sort({ createdAt: -1 }).lean();
+// → Plain objects — Serialization ပိုမြန်၊ Memory ပိုသက်သာ
+```
+
+## TypeScript Types (ရေးသားသူ-Friendly)
+
+TypeScript ဖြင့် Model အတွက် Infer Interface ကို `InferSchemaType` သုံး၍ ထုတ်နိုင်ပါတယ်:
+
+```ts
+import mongoose, { Schema, model, models, InferSchemaType } from "mongoose";
+
+const TodoSchema = new Schema({
+  title: { type: String, required: true, trim: true },
+  isCompleted: { type: Boolean, default: false },
+}, { timestamps: true });
+
+type TodoType = InferSchemaType<typeof TodoSchema>;
+// → { title: string; isCompleted: boolean | undefined; createdAt: ...; updatedAt: ... }
+
+const Todo = models.Todo || model("Todo", TodoSchema);
+export default Todo;
+export type { TodoType };
+```
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Schema ပြောင်းလဲပါက Model ကို **မဖျက်ပါနှင့်** — MongoDB တွင် Schema-less တည်ဆောင်မှုကြောင့် သင်လိုအပ်သည့် Validation များကို Mongoose Schema တွင် ထားရှိပါ။
+- Model Name ("Todo") သည် Pluralized ဖြစ်ကာ Collection Name `todos` အဖြစ် Database တွင် ဖြစ်ပေါ်ပါတယ်။
+- `findByIdAndUpdate` သည် Default အနေဖြင့် Old Document ကို ပြန်ပေးပါတယ်။ Updated Document လိုပါက `{ new: true }` option ထည့်ရပါတယ်။
+- `required` Rule တွင် အမှားအားလုံးကို Schema Level တွင် သတ်မှတ်နိုင်သော်လည်း User Input ကို API Route / Server Action **ရှေ့ဆုံး** တွင်လည်း စစ်ဆေးသင့်ပါတယ်။
+
+## Activity — လေ့ကျင့်ခန်း
+
+1. `models/Todo.ts` ကို တည်ဆောက်ပါ။
+2. ယခင် Lesson ၏ `connectToDatabase` ကို သုံး၍ Route Handler (သို့) Script တစ်ခုတွင် `Todo.create({ title: "First task" })` ဖြင့် Task တစ်ခု ထည့်ပါ။
+3. MongoDB Atlas ‌Dashboard (Collections) တွင် `todos` Collection အတွင်း Document ကို ကြည့်ရှုပြီး `createdAt`/`updatedAt` ပါဝင်ကြောင်း စစ်ဆေးပါ။

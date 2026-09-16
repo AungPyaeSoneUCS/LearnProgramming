@@ -1,0 +1,62 @@
+---
+title: "useRouter (Client Router Object)"
+description: "The client router object: push, replace, refresh, prefetch, back. — Client Router Object ဖြစ်ပြီး push, replace, refresh, prefetch, back များကို ပံ့ပိုးပေးခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Client Components များမှ Navigation ကို Programmatically (Code ဖြင့်) မောင်းနှင်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`useRouter` သည် Client Components များအတွင်း Navigation ကို Code ဖြင့် တိုက်ရိုက် ထိန်းချုပ်နိုင်စေရန် Next.js မှ ပံ့ပိုးပေးသော Router Object တစ်ခုဖြစ်ပါတယ်။ ၎င်းတွင် `router.push()` ဖြင့် History ထဲထည့်၍ Navigate လုပ်ခြင်း၊ `router.replace()` ဖြင့် History ကို အစားထိုး၍ Navigate လုပ်ခြင်း၊ `router.refresh()` ဖြင့် Route ဒေတာများကို Refresh လုပ်ခြင်း၊ `router.prefetch()` ဖြင့် Route ကို ကြိုတင် Warm လုပ်ခြင်းနှင့် `router.back()`/`router.forward()` ဖြင့် History လမ်းကြောင်းအတိုင်း သွားလာခြင်း စသည့် Method များ ပါဝင်ပါတယ်။ Button Click ကဲ့သို့ Event Handler များအတွင်း Navigation များသည် `router` Object အားဖြင့်သာ ဖြစ်နိုင်သောကြောင့် User-input-driven Flows များအတွက် အဓိက အသုံးဝင်ပါတယ်။ Declarative Links များအတွက်မူ Prefetch-friendly ဖြစ်သော `next/link` ကို ဦးစားပေးသင့်ပြီး Server ဘက်မှ Redirect များအတွက်မှာ `router` ကို လုံးဝ မသုံးဘဲ `redirect()` Function ကို အသုံးပြုရမှာ ဖြစ်ပါတယ်။ ထို့အပြင် Pending-link Status သို့မဟုတ် Loading Indicator လိုအပ်ပါက `router.push` ကို `startTransition` အတွင်းမှ ခေါ်ယူရန် လိုအပ်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```tsx
+"use client";
+import { useRouter } from "next/navigation";
+
+export function GoButton() {
+  const router = useRouter();
+
+  return (
+    <button onClick={() => router.push("/about")}>Go</button>
+  );
+}
+```
+
+## API Surface (Method များ စာရင်း)
+
+| Method           | Purpose                             |
+| ---------------- | ----------------------------------- |
+| `router.push(href)` | Navigate, add to history       |
+| `router.replace(href)` | Navigate, replace history     |
+| `router.refresh()` | Refresh server data for route     |
+| `router.prefetch(href)` | Warm the route     |
+| `router.back()`  | history back                        |
+| `router.forward()` | history forward                  |
+
+## Query Updates (Query ပြောင်းလဲခြင်း)
+
+```tsx
+router.replace(`/shop?page=${n}`, { scroll: false });
+```
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Client-only Hook ဖြစ်သည်
+- `router.push` ကို `startTransition` အပြင်ဘက်တွင် သုံးနိုင်သော်လည်း Pending-link Status သို့မဟုတ် Loading Indicator လိုချင်ပါက `startTransition` ဖြင့် Wrap လုပ်ပါ
+- `next/router` သည် App Router တွင် Server Redirect ဖြစ်လာပြီး Server-side တွင် `redirect()` ကို သုံးပါ
+- Async Navigations — Version အချို့တွင် Promise ကို ပြန်ပေးနိုင်သဖြင့် လိုအပ်သလို Await လုပ်ပါ
+
+## ဘယ်အချိန် ရှောင်ကြဉ်ရမလဲ (When to Avoid)
+
+- Declarative Links များအတွက် `next/link` ကို သုံးပါ (Prefetch-friendly)
+- Server Redirects များအတွက် `redirect()` ကို သုံးပါ — Router ကို ဘယ်တော့မှ မသုံးပါနှင့်
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Paginated List တစ်ခုတွင် "Next" Button မှ `router.replace("/shop?page=2", { scroll: false })` ကို အသုံးပြု၍ Filters များနှင့် State များကို ထိန်းသိမ်းထားနိုင်ကြောင်း တည်ဆောက်ပြသပါ။

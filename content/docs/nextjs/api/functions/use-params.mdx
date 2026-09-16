@@ -1,0 +1,49 @@
+---
+title: "useParams (Route Params ဖတ်ခြင်း)"
+description: "Read route params from any client component. — Client Component မည်သည့်နေရာမှမဆို Route Params များကို ဖတ်နိုင်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Prop Drilling မလုပ်ဘဲ Dynamic Route Segments များကို ဝင်ရောက် ကြည့်ရှုနိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`useParams` သည် Client Components များအတွင်းမှ လက်ရှိ Route ၏ Dynamic Segments များကို ဖတ်ယူပေးသော Next.js Client Hook တစ်ခုဖြစ်ပါတယ်။ ၎င်းသည် Segment Name များကို Key များအဖြစ် ထား၍ `Readonly<Record<string, string | string[]>>` Object တစ်ခုကို ပြန်ပေးပြီး Catch-all Segments များ (Array များ) ကိုလည်း ထည့်သွင်းပါတယ်။ Server Components တွင် `params` Prop ကို တိုက်ရိုက် ရရှိနိုင်သော်လည်း Nested Client Components များတွင်မူ Parameter များကို Prop အနေဖြင့် အဆင့်ဆင့် ပို့ပေးခြင်း (Prop Drilling) မလုပ်ဘဲ ဤ Hook အားဖြင့် တစ်နေရာတည်းမှ ဖတ်ယူနိုင်ပါတယ်။ Navigation ပြောင်းလဲသည့်အခါ Hook သည် ပြန်လည် Render ဖြစ်ပြီး လက်ရှိ Segment များကို အမြဲ အပ်ဒိတ်ပြုပေးပါတယ်။ ဤအချက်ကြောင့် Nav Item တစ်ခုကို Segment နှင့်အညီ Highlight လုပ်ခြင်း၊ Param IDs များနှင့် ချိတ်ဆက်ထားသော Editable Forms များ တည်ဆောက်ခြင်းတို့တွင် အသုံးဝင်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```tsx
+"use client";
+import { useParams } from "next/navigation";
+
+export function SlugLabel() {
+  const params = useParams<{ slug: string }>();
+  return <span>slug: {params.slug}</span>;
+}
+```
+
+## Returns (ပြန်ပေးချက်)
+
+`Readonly<Record<string, string | string[]>>` — Keys များသည် Catch-all (Arrays) အပါအဝင် Dynamic Segments များနှင့် Map လုပ်ပါတယ်။
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Client-only Hook ဖြစ်သည် (Server Version မရှိပါ)
+- **လက်ရှိ** Params များကို ပြန်ပေးပြီး Nav ပြောင်းလဲချိန်တွင် ပြန်လည် Render ဖြစ်ပါတယ်
+- `app/` တွင် Component ၏ Segment နေရာ၌ URL မှ Params များကို ရရှိပါတယ်
+
+## Page Props များနှင့် နှိုင်းယှဉ်ခြင်း (Compare with Page Props)
+
+Pages/Layouts များသည် `await params` ကို ရရှိသော်လည်း Nested Client Components များမှာမူ တူညီသော Shape ကို ဖတ်ရန် `useParams` ကို အသုံးပြုပါတယ်။
+
+## Use Case (အသုံးပြုပုံ)
+
+- Segment နှင့်အညီ လက်ရှိ Nav Item ကို Highlight လုပ်ရန်
+- Param IDs များနှင့် ချိတ်ဆက်ထားသော Editable Forms များကို ပေါင်းစပ် ဖန်တီးရန်
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Shared Header တစ်ခုတွင် `/[category]/…` မှ လက်ရှိ Product Category ကို `useParams` ဖြင့် Prop Drilling မလုပ်ဘဲ ပြသပြီး Nav ပြောင်းလဲချိန်တွင် Update ဖြစ်ကြောင်း ကြည့်ပါ။

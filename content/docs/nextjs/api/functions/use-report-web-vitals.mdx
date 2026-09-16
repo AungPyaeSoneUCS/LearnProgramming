@@ -1,0 +1,57 @@
+---
+title: "useReportWebVitals (Core Web Vitals စုဆောင်းခြင်း)"
+description: "Collect Core Web Vitals in client components with the hook. — Hook ဖြင့် Client Components တွင် Core Web Vitals များကို စုဆောင်းခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  သင့် Analytics ကို အမှန်တကယ်သော Performance ဒေတာများနှင့် ချိတ်ဆက်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`useReportWebVitals` သည် Browser မှ စုဆောင်းထားသော Web Vitals Metrics များကို Client Components အတွင်းမှ Callback Function တစ်ခုသို့ ပို့ဆောင်ပေးသော Next.js Hook တစ်ခုဖြစ်ပါတယ်။ ၎င်းသည် Core Web Vitals များဖြစ်သည့် `LCP`၊ `FCP`၊ `TTFB`၊ `CLS`၊ `FID`/`INP` အပါအဝင် Metric အချက်အလက်များ (id, name, value စသည်) ကို Callback အတွင်းမှ Server သို့ ပို့ရန် အသုံးပြုနိုင်ပါတယ်။ ဤ Hook ကို Root Layout အတွင်းတွင် တစ်ကြိမ်သာ ထားရှိ၍ Mount လုပ်စေခြင်းဖြင့် Application တစ်ခုလုံး၏ Performance ကို ခြေရာခံနိုင်ပါတယ်။ Metric များပို့ရာတွင် `navigator.sendBeacon` ကို အသုံးပြုပါက Performance ကိုယ်နှိုက်ကို ထိခိုက်မှု မရှိဘဲ ပို့ဆောင်နိုင်ပြီး Privacy ကို လေးစားရန် URL အပြည့်အစုံများကို ပုံမှန် Log မလုပ်မိစေရန် သတိထားရမှာ ဖြစ်ပါတယ်။ Hook သည် Client-only ဖြစ်သောကြောင့် Client Component Tree တစ်ခုတည်း အတွင်းမှသာ အသုံးပြုရမည် ဖြစ်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```tsx
+"use client";
+import { useReportWebVitals } from "next/web-vitals";
+
+export function WebVitalsReporter() {
+  useReportWebVitals((metric) => {
+    // post to your analytics endpoint
+    console.log(metric);
+  });
+
+  return null;
+}
+```
+
+## Metric Payloads (Metric အချက်အလက်များ)
+
+Core Web Vitals များဖြစ်သော `LCP`, `FCP`, `TTFB`, `CLS`, `FID`/`INP` နှင့် အခြားအရာများ ပါဝင်ပါတယ်။
+
+```ts
+{ id, name, value, startTime, delta, rating, navigationType }
+```
+
+## မည်သည့်နေရာတွင် ထားရမလဲ (Where to Place)
+
+Root Layout (Parent Wrapper) အတွင်းတွင် ထားရှိခြင်းဖြင့် One-time Mount ဖြစ်စေပါတယ်:
+
+```tsx
+// app/layout.tsx
+<WebVitalsReporter />
+```
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Client-only ဖြစ်ပြီး Tree အတွင်း တစ်ကြိမ်သာ ခေါ်ယူပါ
+- Metrics များ ထိခိုက်မှု မရှိစေရန် `navigator.sendBeacon` ဖြင့် Dispatch လုပ်ပါ
+- Privacy ကို လေးစားပါ — URL အပြည့်အစုံကို ပုံမှန် Log မလုပ်ပါနှင့်
+
+## Activity (လေ့ကျင့်ခန်း)
+
+INP/LCP/CLS များကို `/api/vitals` Route Handler သို့ `sendBeacon` ပို့ပေးသော `useReportWebVitals` တစ်ခုကို အကောင်အထည်ဖော်ပြီး Throttling ဖြင့် Page များသို့ သွားရောက်ကာ တန်ဖိုးများကို Graph ဆွဲကြည့်ပါ။

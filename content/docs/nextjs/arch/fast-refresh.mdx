@@ -1,0 +1,53 @@
+---
+title: "Architecture: Fast Refresh — ပြောင်းလဲမှုကို ချက်ချင်း ပြသခြင်း"
+description: "Next.js သည် ပြောင်းလဲမှုများကို State ထိန်းသိမ်းထားစဉ် Hot-reload လုပ်ပေးပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  ဖြစ်နိုင်သမျှနေရာတိုင်းတွင် State ကို ထိန်းသိမ်းထားနိုင်သော Edit Loop များကို အသုံးပြုစေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Fast Refresh သည် Code ပြောင်းလဲမှုများကို Page တစ်ခုလုံး ပြန်လည် Load မလုပ်ဘဲ Component ၏ Local State ကို ဆက်ထိန်းထားစဉ် ချက်ချင်း ပြန်လည်ပြသပေးသော Feature ဖြစ်ပါတယ်။ Component ကို ပြုပြင်ပါက ၎င်း Component တစ်ခုတည်းသာ Re-render ဖြစ်ပြီး CSS သို့မဟုတ် Lib ကဲ့သို့သော ဖိုင်များကို ပြောင်းလျှင် Module Graph ကို ပြန်လည် Refresh လုပ်ပါတယ်။ Module-level State များကို ရှောင်ကြဉ်ပြီး Component တစ်ခုကို File တစ်ခုတွင် ရေးသားခြင်းဖြင့် HMR ၏ အကျိုးကျေးဇူးကို အပြည့်အဝ ရရှိနိုင်ပါတယ်။
+
+## What it is
+
+Fast Refresh gives instant feedback on edits while preserving local component state:
+
+- **Component edit** → ၎င်း Component တစ်ခုတည်းကိုသာ Re-render လုပ်ကာ State ကို ထိန်းသိမ်းပါ
+- **Non-component file (CSS, lib)** → Module Graph ကို Refresh လုပ်ပါ
+- **Full reload** — Config/Global ကဲ့သို့သော အခြေအနေများတွင်သာ လိုအပ်ပါတယ်
+
+## What triggers a full reload
+
+| Change                 | Behavior           |
+| ---------------------- | ------------------ |
+| Component body         | Fast Refresh       |
+| useState/useEffect signature | Fast Refresh* |
+| New export (named)     | Full reload        |
+| `next.config` / env    | Full reload        |
+
+## How to write hot-friendly code
+
+- React State များကို Component အတွင်းတွင်သာ ထားပါ (Module-level တွင် မထားပါနှင့်)
+- Component များကိုသာ Export လုပ်ပါ — Identity ပြောင်းလဲစေသော Hooks သို့မဟုတ် Constants များကို Export မလုပ်ပါနှင့်
+- State များ မှန်ကန်စွာ ချိတ်ဆက်နိုင်ရန် Stable `key` ကို အသုံးပြုပါ
+
+## Gotchas
+
+- Module အများအပြားတွင် သုံးသော `export const` Value ကို ပြောင်းပါက Cascade Refresh ဖြစ်စေနိုင်ပါတယ်
+- Anonymous Component များသည် State Mapping ကို ပျက်စီးစေနိုင်သဖြင့် Function Component များကို အမည်ပေးပါ
+- Turbopack တွင် HMR သည် ပိုမိုမြန်ဆန်ပါတယ် (Keystroke တစ်ချက်တိုင်းနီးပါး)
+
+## Best practices
+
+- Targeted Reload ဖြစ်စေရန် File တစ်ခုတွင် Component တစ်ခုစီ ရေးပါ
+- ကြီးမားသော File များကို ခွဲထားပါ; CSS-in-JS File များသည် သီးခြား Refresh ဖြစ်ပါတယ်
+- Overlay ကို သတိပြုပါ: Compile/Runtime Error များသည် Page အလုံးမဟုတ်ဘဲ Module အလိုက် ပေါ်လာပါတယ်
+
+## Activity
+
+State ပါသော Counter တစ်ခုကို ဖန်တီးကာ ၎င်း၏ JSX ကိုသာ ပြောင်းလဲပြီး State ကို ဆက်ထိန်းထားလားဆိုသည်ကို စစ်ဆေးပါ; ထို့နောက် `const` Export တစ်ခုကို ပြောင်းလဲကာ Full Reload ဖြစ်သည်ကို ကြည့်ရှုပါ။

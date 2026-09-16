@@ -1,0 +1,78 @@
+---
+title: "Debugging — Debugging လုပ်ခြင်း"
+description: "Debug Next.js apps with console, breakpoints, DevTools integration, error logs, and the performance overlay. — Console, breakpoints, DevTools integration, error logs နှင့် performance overlay များဖြင့် Next.js apps များကို debugging လုပ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Layer တစ်ခုချင်းစီအတွက် သင့်လျော်သော tools များဖြင့် UI, server နှင့် performance ပြဿနာများကို လျင်မြန်စွာ စစ်ဆေး ဖြေရှင်းနိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Debugging ဆိုသည်မှာ application တစ်ခုတွင် ဖြစ်ပေါ်သော ပြဿနာများ၏ အရင်းအမြစ်ကို ရှာဖွေ ဖြေရှင်းသည့် လုပ်ငန်းစဉ် ဖြစ်ပါတယ်။ Next.js သည် server-side နှင့် client-side နှစ်ဘက်စလုံးတွင် လည်ပတ်သောကြောင့် server ဘက်မှ log များသည် `next dev` run လုပ်ထားသည့် terminal တွင် ပေါ်ပြီး client ဘက်မှ log များမှာ browser DevTools console တွင် ပေါ်ပါတယ်။ ပြဿနာကို မစစ်ဆေးမီ layer ကို ဦးစွာ ခွဲခြားသတ်မှတ်ရန် လိုအပ်ပါတယ်။ Node.js breakpoint debugging အတွက် `node --inspect` ဖြင့် run ပြီး Chrome ၏ DevTools (chrome://inspect) ကို ချိတ်ဆက်နိုင်ပါတယ်။ Production error monitoring အတွက်မူ `instrumentation.ts` တွင် Sentry ကဲ့သို့သော tools များကို configure လုပ်နိုင်ပါတယ်။ `await params` ကို မေ့နေခြင်း၊ non-deterministic rendering (`Math.random`, `Date.now`) ကြောင့် hydration mismatches စသည့် common gotchas များကိုလည်း သတိပြုရပါတယ်။
+
+## Fundamental debugging workflow
+
+1. Server Components များတွင် **Console logging** လုပ်ပါက `next dev` run လုပ်ထားသော terminal တွင် ပေါ်ပါတယ်
+2. **Browser DevTools** သည် client-side logs, network, React DevTools များကို ပြသသည်
+3. Layer ကို ဦးစွာ ဆုံးဖြတ်ပါ: server (terminal) vs client (browser console)
+
+## Breakpoint debugging (Node.js)
+
+`--inspect` ဖြင့် dev ကို run လုပ်ပါ:
+
+```bash
+node --inspect --run dev
+# or directly: NODE_OPTIONS='--inspect' next dev
+```
+
+ထို့နောက် Chrome ၏ DevTools (chrome://inspect) ကို attach လုပ်ပြီး `next.config`-loaded code နှင့် server-side modules များတွင် breakpoints သတ်မှတ်ပါ။
+
+## Debugging Server Components
+
+သင့် async component ၏ body တွင် logs များ ထည့်ပါ သို့မဟုတ် breakpoints များကို အသုံးပြုပါ — ၎င်းတို့သည် server ပေါ်တွင် လည်ပတ်ပါတယ်:
+
+```tsx
+export default async function Page() {
+  console.log("rendering page for params", params); // terminal
+  const data = await getData();
+  return <ul>{data.map(...)}</ul>;
+}
+```
+
+## Performance overlay
+
+Dev overlay သည် route performance ပြဿနာများကို inline ဖြစ်အောင် ပြသပါတယ်။ မည်သည့်အပိုင်းက အချိန်ကုန်သည်ကို သိရန် stage logs များကို enable လုပ်ပါ:
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  logging: {
+    fetches: { fullUrl: true },
+  },
+};
+```
+
+## Error monitoring in production
+
+```ts
+// instrumentation.ts - capture server errors
+export async function register() {
+  if (process.env.NEXT_RUNTIME === "nodejs") {
+    const { Sentry } = await import("@sentry/nextjs");
+    Sentry.init({ dsn: process.env.SENTRY_DSN });
+  }
+}
+```
+
+## Common gotchas
+
+- `await params` (Promise) ကို မေ့သွားခြင်း → `[object Promise]` bugs များ
+- Non-deterministic rendering မှ hydration mismatches (`Math.random`, `Date.now`)
+- Caching ဖြင့် အဟောင်းများကို မြင်ရခြင်း - bug ဟု မယူဆမီ `use cache` lifetimes များကို စစ်ဆေးပါ
+
+## Activity — လေ့ကျင့်ခန်း
+
+Server Component တွင် `console.log` တစ်ခုနှင့် Server Action တွင် breakpoint တစ်ခု ထည့်ပါ၊ ကျရှုံးသော request တစ်ခုကို ပြန်ထုတ်ပါ၊ terminal log နှင့် call stack နှစ်ခုလုံးကို ဖမ်းယူပါ။

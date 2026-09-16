@@ -1,0 +1,63 @@
+---
+title: "unstable_rethrow (Special Errors ကို ပြန်လည် Throw)"
+description: "Re-throw special Next errors correctly so error.tsx boundaries work. — error.tsx Boundaries များ အလုပ်လုပ်စေရန် Special Next Errors များကို မှန်ကန်စွာ Re-throw ပြုလုပ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  `notFound`/`redirect` Markers များကို သင့် Error Handling ကြောင့် မဆုံးရှုံးစေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`unstable_rethrow(error)` သည် Next.js ၏ အတွင်းပိုင်း Special Markers များ (`notFound()`၊ `redirect()`၊ `forbidden()`၊ `unauthorized()` မှ ထွက်ပေါ်လာသော) ကို ပြန်လည် Throw လုပ်ပေးသော Helper Function တစ်ခုဖြစ်ပါတယ်။ ဤ Markers များသည် အသုံးပြုသူအား ပြသရန် မလိုသော Error များမဟုတ်ဘဲ Next.js Framework က အထူးကိုင်တွယ်ရမည့် Control-flow Signals များဖြစ်ပါတယ်။ သင်သည် ကိုယ်ပိုင် `try/catch` Block အတွင်း `notFound()` သို့မဟုတ် `redirect()` ဖြစ်နိုင်သော Code များကို ထားရှိပါက Catch Block သည် ထို Marker ကို မတော်တဆ မျိုချလိုက်၍ 404 သို့မဟုတ် 307 အစား မှားယွင်းသော UI သို့မဟုတ် Status 200 ကို ပြနိုင်ပါတယ်။ `unstable_rethrow` ကို Catch Block ၏ ပထမဆုံးအကြိမ် ခေါ်ယူခြင်းဖြင့် Framework Markers များသာ ပြန်လည် Throw ဖြစ်ပြီး ကျန် အစစ်အမှန် Errors များကိုမူ ပုံမှန်အတိုင်း ဆက်လက် ကိုင်တွယ်နိုင်ပါတယ်။ ၎င်းသည် `error.tsx` Error Boundary များနှင့် ဖြည့်စွက်လုပ်ဆောင်ပေးသော Data Functions များအတွင်းမှ Catch-all တစ်ခုအဖြစ် အသုံးဝင်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+`unstable_rethrow(error)` သည် Next.js ၏ Internal **Markers** များ (`notFound()`, `redirect()`, `forbidden()`, `unauthorized()` မှ) ကို ပြန်လည် Throw လုပ်သဖြင့် ၎င်းတို့၏ Special Handling များကို ဆက်လက် အသက်ဝင်စေပါတယ်:
+
+```tsx
+try {
+  // …
+} catch (error) {
+  unstable_rethrow(error);      // next/not-found or next/redirect re-thrown
+  // handle real errors only
+  console.error(error);
+}
+```
+
+## ၎င်းက ဖြေရှင်းပေးသော ပြဿနာ (The Problem It Solves)
+
+`notFound()`/`redirect()` ခေါ်ယူနိုင်သော Code များအား `try/catch` ဖြင့် ထားရှိသောအခါ Catch Block သည် Marker ကို မျိုချလိုက်၍ 404/307 အစား မှားယွင်းသော UI သို့မဟုတ် Status 200 ကို ဖြစ်စေနိုင်ပါတယ်။
+
+## အသုံးပြုပုံပုံစံ (Usage Pattern)
+
+```tsx
+import { unstable_rethrow } from "next/navigation";
+
+export async function load() {
+  try {
+    const data = await fetchWithDatabase();
+    if (!data) notFound();
+    return data;
+  } catch (e) {
+    unstable_rethrow(e);
+    return fallbackData(e);
+  }
+}
+```
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Server ဘက်တွင်သာ
+- Framework Throws များ ပါဝင်နိုင်သော Catch Blocks များတွင် ပထမဆုံး ခေါ်ယူပါ
+- `revalidate`/`after` Error အပြန်အလှန် သက်ရောက်မှုတွင် Markers များကို မမျိုချမိစေရန် သေချာပါ
+
+## Error Boundaries များနှင့် နှိုင်းယှဉ်ခြင်း (Compare: Error Boundaries)
+
+`error.tsx` Boundaries များသည် အစစ်အမှန် Errors များကို အလိုအလျောက် ကိုင်တွယ်ပေးပြီး `unstable_rethrow` သည် Data Functions များအတွင်းရှိ **သင့်** Catch-all အတွက်ဖြစ်ပါတယ်။
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Try/catch ပါသော Data Helper တစ်ခုကို `unstable_rethrow` ခေါ်ယူစေပြီး အတွင်းတွင် `notFound()` ကို Throw လုပ်စေကာ 404 + `not-found.tsx` (သင့် Fallback Content မဟုတ်ဘဲ) ပေါ်ကြောင်း အတည်ပြုပါ။

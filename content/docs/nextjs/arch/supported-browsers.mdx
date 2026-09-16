@@ -1,0 +1,57 @@
+---
+title: "Architecture: Supported Browsers — ထောက်ပံ့ထားသော Browser များ"
+description: "တရားဝင် ထောက်ပံ့ထားသော Browser Matrix နှင့် Feature များအတွက် ၎င်း၏ အဓိပ္ပာယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Browser များကို မှန်ကန်စွာ ရည်မှန်းပြီး ဖြစ်နိုင်သည့်နေရာတွင် Modern Capabilities များကို အသုံးချနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js သည် IE11 ကို မထောက်ပံ့တော့သောကြောင့် ES Modules, Optional Chaining နှင့် Modern CSS ကဲ့သို့သော ခေတ်မီ Web Features များကို တိုက်ရိုက် အသုံးပြုနိုင်ပြီး Polyfill များမှာလည်း အနည်းငယ်သာ လိုအပ်ပါတယ်။ Browser Support ကို `browserslist` Config ဖြင့် သတ်မှတ်နိုင်ပြီး PostCSS Prefixing ကို ၎င်းအတိုင်း အလိုအလျောက် ချိန်ညှိပေးပါတယ်။ သို့ရာတွင် မိမိ ကတိပြုထားသော Browser များတွင် စမ်းသပ်ရန် လိုအပ်ပြီး Blind Polyfill ထည့်ခြင်းမျိုး မလုပ်သင့်ပါ။
+
+## Baseline
+
+| Browser    | Support                        |
+| ---------- | ------------------------------ |
+| Chrome     | ✓ (and Chromium-based: Edge, Brave) |
+| Firefox    | ✓ recent versions              |
+| Safari     | ✓ recent versions (4ish back)  |
+| Opera      | ✓                              |
+
+## IE11
+
+**Next 12 မှစ၍ ဖယ်ရှားခဲ့ပါသည်။** Modern Browser များကို အခြေခံထားပြီး Legacy IE Support လိုအပ်ပါက Dependencies များက ကိုယ်တိုင် Polyfill လုပ်ရန်တာဝန်ရှိပါတယ်။
+
+## What this unlocks
+
+IE11 မရှိတော့သောကြောင့် အောက်ပါတို့ကို အသုံးပြုနိုင်ပါတယ်:
+
+- ES Modules / Optional Chaining / Nullish Coalescing များ
+- `url()`, `crypto.subtle`, Streams များ
+- Modern CSS (Custom Properties, Grid) များကို Native အနေဖြင့် အများစု သုံးနိုင်ခြင်း
+
+## Managing support
+
+```json
+// browserslist in package.json (used by autoprefixer etc.)
+{
+  "browserslist": ["> 0.4%", "last 2 versions", "not dead", "not ie 11"]
+}
+```
+
+- `browserslist` သည် PostCSS Prefixing ကို ထိန်းချုပ်ပါတယ်
+- လိုအပ်ပါက Toolchain Config မှတစ်ဆင့် `@babel/preset-env` ပုံစံ Targeting ကို အသုံးပြုနိုင်ပါတယ်
+
+## Rules & gotchas
+
+- မျက်စိမှိတ် Polyfill မထည့်ပါနှင့် — မိမိ၏ Lowest Target Browser လိုအပ်ချက်ကို ဦးစွာ စစ်ဆေးပါ
+- `next/image` ၏ Output Format များသည် Browser Support အပေါ် မူတည်ပါတယ်
+- ကတိပြုထားသော Browser များတွင် စမ်းသပ်ပါ; CI Screenshot Matrix က အထောက်အကူပြုပါတယ်
+
+## Activity
+
+သင့်လျော်သော `browserslist` Config တစ်ခု သတ်မှတ်ကာ `autoprefixer` ကို Run လုပ်ပြီး `display: grid` + Optional Chaining ပါသော Build သည် မိမိ၏ အသက်အကြီးဆုံး Supported Browser တွင် အလုပ်လုပ်ကြောင်း စစ်ဆေးပါ။

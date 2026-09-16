@@ -1,0 +1,77 @@
+---
+title: "Memory Usage — Memory အသုံးပြုမှု"
+description: "Understand and control Next.js memory: build memory, runtime, dev-server, and cache limits. — build, runtime, dev-server နှင့် cache limits များ၏ memory ကို နားလည်ပြီး ထိန်းချုပ်နည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Builds နှင့် servers များတွင် memory pressure ကို စစ်ဆေးတတ်ပြီး CI နှင့် production ကျန်းမာစေရန် limits များကို ညှိနှိုင်းနည်း နားလည်စေရန် ဖြစ်ပါတယ် — **`cacheMaxMemorySize`** နှင့် build-time memory settings များကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js app တစ်ခုတွင် memory ကို နေရာ အမျိုးမျိုးတွင် သုံးစွဲပါတယ်။ Build လုပ်နေစဉ်အတွင်း compilation, type-checking နှင့် static generation များကြောင့် memory များစွာ လိုအပ်ပြီး dev server ဘက်မှာမူ HMR graphs နှင့် on-demand entries များကြောင့်လည်း memory သုံးပါတယ်။ Runtime တွင်မူ in-memory cache, image buffers နှင့် RSC payloads များက memory ကို စားသုံးပြီး edge runtime တွင်မူ per-request အတွက် တင်းကျပ်သော limits များ ရှိပါတယ်။ In-memory cache ကို `cacheMaxMemorySize` config ဖြင့် အမြင့်ဆုံး ပမာဏ သတ်မှတ်နိုင်ပြီး `cacheLife` profile များကိုလည်း လိုအပ်ချက်အလိုက် ညှိနိုင်ပါတယ်။ Build memory ကို လျှော့ချရန် `next build --experimental-cpus 2` ကဲ့သို့ parallelism ကို ကန့်သတ်ခြင်းနှင့် `NODE_OPTIONS` ၏ `--max-old-space-size` ဖြင့် Node memory cap ကို သတ်မှတ်ခြင်း ပြုလုပ်နိုင်ပါတယ်။ Turbopack memory eviction limits နှင့် filesystem cache ကို ဖွင့်ထားခြင်းဖြင့် dev သုံး memory ကို လျှော့ချနိုင်ပြီး cache ကို limits သတ်မှတ်ထားခြင်း၊ CI က build များကို memory အလုံအလောက် ပေးထားခြင်းနှင့် per-request arrays များကို ကန့်သတ်ခြင်း စသော checklist များဖြင့် memory ပြဿနာများကို စစ်ဆေးသင့်ပါတယ်။
+
+## Where memory goes
+
+- **Build** — compilation, type-checking နှင့် route အများအပြား၏ static generation
+- **Dev server** — HMR graphs များနှင့် on-demand entries
+- **Runtime** — in-memory cache, image buffer နှင့် RSC payloads
+- **Edge runtime** — per-request အတွက် တင်းကျပ်သော limits
+
+## Tuning the cache
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  cacheMaxMemorySize: 50 * 1024 * 1024, // 50 MB in-memory cache cap
+  cacheLife: {
+    // profiles usable by cacheLife("name")
+    productDetail: { stale: 3600, revalidate: 7200, expire: 86400 },
+  },
+};
+```
+
+Replicas များပေါ်တွင် in-memory caches များကို သေးငယ်အောင် ထားပြီး offload လုပ်ရန် `use cache: remote` ကို စဉ်းစားပါ။
+
+## Build-memory settings
+
+Peak usage ကို လျှော့ချရန် parallelism ကို ထိန်းချုပ်ပါ:
+
+```bash
+next build --experimental-cpus 2
+```
+
+ထို့ပြင် Node memory cap ကို သတ်မှတ်ပါ:
+
+```bash
+NODE_OPTIONS="--max-old-space-size=4096" next build
+```
+
+## Turbopack memory
+
+```ts
+turbopack: {
+  turbopackMemoryEviction: { maxMemoryMB: 1024 },
+  turbopackFileSystemCache: true,
+}
+```
+
+Filesystem cache သည် restart ပြုလုပ်မှုများတစ်လျှောက် dev memory ကို လျှော့ချပေးပါတယ်။
+
+## Edge runtime budget
+
+Edge functions များတွင် memory limits တင်းကျပ်ပါသည် — functions များကို သေးငယ်အောင် ထားပြီး ၎င်းတို့တွင် in-memory caches ကြီးများကို ရှောင်ကြဉ်ပါ။
+
+## Checklist for memory issues
+
+- [ ] Cache ကို ကန့်သတ်ထားခြင်း (`cacheMaxMemorySize`)
+- [ ] CI က builds များအား လုံလောက်သော `--max-old-space-size` ပေးထားခြင်း
+- [ ] Per request တွင် ကန့်သတ်မထားသော arrays များ (GC pressure) မတည်ဆောက်ထားခြင်း
+- [ ] Dev တွင် static (file) cache သုံးထားခြင်း
+- [ ] `staticGeneration.exitTimeoutMs` က Long prerenders များကို မသတ်ခြင်း
+
+## Activity
+
+လေ့ကျင့်ခန်း: `--debug` ဖြင့် `npm run build` ကို run ပြီး peak RSS ကို စစ်ဆေးပါ။ `cacheMaxMemorySize` နှင့် Turbopack eviction limit တစ်ခုကို ထည့်၍ ပြန်လည် build လုပ်ပြီး နှိုင်းယှဉ်ကြည့်ပါ။

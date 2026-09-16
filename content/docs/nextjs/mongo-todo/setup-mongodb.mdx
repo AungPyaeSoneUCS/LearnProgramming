@@ -1,0 +1,171 @@
+---
+title: "Part 1: Project Setup & MongoDB ချိတ်ဆက်ခြင်း"
+description: "Next.js project အသစ်တစ်ခု တည်ဆောက်ပြီး mongoose ဖြင့် MongoDB Atlas သို့ ချိတ်ဆက်နိုင်ရန် lib/mongodb.js Connection Utility ရေးသားခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Next.js (App Router) Project အသစ်တစ်ခုကို တည်ဆောက်ပြီး `mongoose` library ဖြင့် MongoDB Atlas Database သို့ ချိတ်ဆက်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+ဒီ Module 14 မှာတော့ သင်ယူခဲ့တဲ့ Next.js (App Router) နည်းပညာတွေကို အသုံးချပြီး Database အဖြစ် **MongoDB** ကိုချိတ်ဆက်ကာ Real-world Full-stack Application တစ်ခုကို အစအဆုံး တည်ဆောက်သွားမှာ ဖြစ်ပါတယ်။ Database ကို အလွယ်တကူ ချိတ်ဆက်အသုံးပြုနိုင်ဖို့ `mongoose` library ကို အဓိက အသုံးပြုသွားပါမယ်။ ဤ Part 1 တွင် Network ပေါ်ရှိ MongoDB Atlas (Cloud Database Service) မှ Connection String (Link) တစ်ခုကို ရယူပြီး Next.js ၏ `.env.local` ဖိုင်ထဲတွင် `MONGODB_URI` အမည်ဖြင့် Secret တစ်ခုအနေဖြင့် သိမ်းဆည်းပါမယ်။ ထို့နောက် `lib/mongodb.js` ဖိုင်တွင် Connection Utility Function ကို ရေးသားပြီး App ရှိ Server-side Code များမှ Database ကို တစ်ကြိမ်တည်း ချိတ်ဆက်အသုံးပြုနိုင်အောင် ပြင်ဆင်ပါမည်။ Next.js Development Server သည် Hot Reload ဖြစ်တတ်သောကြောင့် Connection များ ထပ်တလဲလဲ မဖြစ်အောင် Global Cache Pattern ကို အသုံးပြုရမည် ဖြစ်ပါတယ်။
+
+## ဤ Module တွင် ပါဝင်ရမည့် အဓိက Feature များ (Core Features)
+
+ဒီ To-Do List Application မှာ အောက်ပါ CRUD (Create, Read, Update, Delete) လုပ်ဆောင်ချက်တွေ အပြည့်အစုံ ပါဝင်ရပါမယ်။
+
+- **Create Task:** To-Do အသစ်များကို Input form ကနေတစ်ဆင့် Database သို့ လှမ်းသွင်းခြင်း။
+- **Read Tasks:** Database ထဲတွင် သိမ်းဆည်းထားသော To-Do များကို ဆွဲထုတ်ပြီး (Fetch) UI တွင် list အနေနဲ့ ပြသခြင်း။
+- **Update (Toggle Status):** လုပ်ဆောင်ပြီးစီးသွားသော Task များကို Completed (Done) အဖြစ် Checkbox နှိပ်ပြီး ပြောင်းလဲသတ်မှတ်ခြင်း။
+- **Delete Task:** မလိုအပ်တော့တဲ့ Task များကို ဖျက်ခလုတ်နှိပ်ပြီး Database မှ အပြီးတိုင် ဖျက်ပစ်ခြင်း။
+- **Filter Tasks:** All (အားလုံး), Active (လုပ်ဆောင်ရန်ကျန်), Completed (ပြီးစီးသွားသော) Task များကို ခွဲခြားကြည့်ရှုနိုင်မည့် Filter လုပ်ဆောင်ချက်။
+
+## Step 1: Next.js Project အသစ် တည်ဆောက်ခြင်း
+
+Terminal ဖြင့် Project Folder အသစ်တစ်ခု ဖန်တီးပါမယ်။ `create-next-app` Command ကို သုံး၍ Next.js 16 (App Router) ဖြင့် Scaffold လုပ်ပါမည်။
+
+```bash
+npx create-next-app@latest todo-app --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
+```
+
+Command တွင် `--src-dir` သုံးပါက Code အားလုံးသည် `src/` Folder အောက်တွင် ရှိမည်ဖြစ်ပါတယ်။ ထို Command ပြီးဆုံးပါက Project Folder ထဲ ဝင်ပြီး Development Server ကို စစ်ဆေးပါမယ်:
+
+```bash
+cd todo-app
+npm run dev
+```
+
+Browser တွင် `http://localhost:3000` ကို ဖွင့်၍ Default Next.js Welcome Page ကို တွေ့ရမည်ဖြစ်ပါတယ်။
+
+## Step 2: mongoose Package Install လုပ်ခြင်း
+
+`mongoose` သည် MongoDB အတွက် လူကြိုက်အများဆုံး Object Data Modeling (ODM) Library ဖြစ်ပြီး JavaScript Object များကို MongoDB Document များအဖြစ် မြေပုံဆွဲပေးပါတယ်။
+
+```bash
+npm install mongoose
+```
+
+## Step 3: MongoDB Atlas တွင် Database တစ်ခု ဖန်တီးခြင်း
+
+MongoDB Atlas သည် Managed (Hosting) MongoDB Service ဖြစ်ပါတယ်။ အောက်ပါအတိုင်း လုပ်ဆောင်ပါ:
+
+1. [mongodb.com/cloud/atlas](https://www.mongodb.com/cloud/atlas) တွင် Free Account တစ်ခု Sign up လုပ်ပါ။
+2. **Create a Cluster** ကိုနှိပ်ပြီး Free (M0) Tier ကို ရွေးချယ်ပါ — Create နှိပ်ပြီး Cluster ဖွင့်ပေါ်ဖို့ မိနစ်အနည်းငယ် စောင့်ပါ။
+3. **Database Access** (Security အောက်တွင်) မှ သင့်ရဲ့ App အတွက် Username/Password User တစ်ခု ဖန်တီးပါ။
+4. **Network Access** မှ `0.0.0.0/0` (Allow access from anywhere — development အတွက်သာ) ထည့်ပေးပါ။
+5. Cluster ထဲသို့ဝင်၍ **Connect > Drivers** ကိုနှိပ်ပါ။ Connection String (Link) ကို ကူးယူပါ။ ပုံစံမှာ:
+   `mongodb+srv://<username>:<password>@<cluster-url>.mongodb.net/?retryWrites=true&w=majority`
+
+ထို Connection String တွင် `<password>` အစားထိုး၍ Database Setup အားလုံး ပြီးမြှောက်ပါတယ်။
+
+## Step 4: .env.local တွင် MONGODB_URI ထည့်ခြင်း
+
+Next.js သည် `.env.local` ဖိုင်မှ Environment Variables များကို အလိုအလျောက် ဖတ်ပါသည်။ Project ၏ အမြစ်တွင် `.env.local` ဖိုင်အသစ်တစ်ခု ဖန်တီးပြီး Connection String ကို ထည့်ပါမယ်:
+
+```bash
+# .env.local
+MONGODB_URI="mongodb+srv://<username>:<password>@<cluster-url>.mongodb.net/todo-app?retryWrites=true&w=majority"
+```
+
+Connection String ၏နောက်ဆုံးတွင် `/todo-app` (Database Name) ကိုထည့်ခဲ့ပါတယ် — Atlas သည် Database အသစ်ကို ပထမဆုံး Write လုပ်သည့်အခါ အလိုအလျောက် ဖန်တီးပေးပါတယ်။ `.env.local` သည် Git Repository တွင် Commit မဖြစ်စေရန် `.gitignore` တွင် ပါပြီးဖြစ်ပြီး Secret Value များကို လုံခြုံစွာ ထားပေးပါတယ်။
+
+<Aside type="caution" title="⚠️ သတိပြုရန်">
+  Connection String ရှိ Password ကို GitHub သို့မဟုတ် Code ထဲတွင် ဘယ်တော့မှ ချရေးမိခြင်း မရှိစေရပါ။ `.env.local` သည် Local Machine တွင်သာ ရှိနေရမည့် Secret File ဖြစ်ပါတယ်။
+</Aside>
+
+## Step 5: lib/mongodb.js — Connection Utility ရေးသားခြင်း
+
+အခု Database Connection Logic အားလုံးကို App တစ်ခုလုံးမှ ပြန်သုံးနိုင်ရန် `lib/` Folder ရှိ သီးခြားဖိုင်တစ်ခုတွင် ခွဲထားပါမည်။ Next.js Development အတွက် အောက်ပါ Utility ကို သုံးပါမယ်:
+
+```ts
+// lib/mongodb.ts
+import mongoose from "mongoose";
+
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+  throw new Error(
+    "Please define the MONGODB_URI environment variable inside .env.local"
+  );
+}
+
+// Next.js Hot Reload ကြောင့် Connection များစွာ မဖြစ်စေရန် Global Cache
+interface MongooseCache {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+}
+
+declare global {
+  var mongoose: MongooseCache; // eslint-disable-line no-var
+}
+
+let cached: MongooseCache = globalThis.mongoose ?? { conn: null, promise: null };
+globalThis.mongoose = cached;
+
+export async function connectToDatabase() {
+  if (cached.conn) return cached.conn;
+
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false, // Connection မရခင်မှာ Query များ Queue မတင်ဖို့
+    };
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((m) => m);
+  }
+
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
+  }
+
+  return cached.conn;
+}
+```
+
+## Utility ကို ရှင်းလင်းရှာ ဖတ်ခြင်း (Deep Explanation)
+
+- `process.env.MONGODB_URI` — `.env.local` တွင် ထည့်ထားသော Connection String ကို ဖတ်ပါတယ်။
+- `globalThis.mongoose` — Node.js ၏ Global Scope တွင် Cache Object ကို သိမ်းဆည်းထားပါတယ်။ ထို့ကြောင့် Next.js Hot Reload ဖြစ်တိုင်း (`npm run dev`) Module ပြန်တင်သော်လည်း ပြန်လည် Connect လုပ်စရာမလိုတော့ပါ။
+- `cached.promise` — Connection Promise ကို သိမ်းထားပြီး တစ်ပြိုင်နက်တည်း (Concurrent) ခေါ်သည့် Code များအားလုံး တစ်ကြိမ်တည်း Connect ပြီး တူညီကြောင်း သေချာစေပါတယ်။
+- `bufferCommands: false` — Connection မရသေးခင်မှာ Mongoose သည် Mongoose Query (Buffer) များကို Queue တင်တတ်ပါတယ်။ Serverless Environment တွင် Connection Drop ဖြစ်ခဲ့လျှင် Pending Queries များ ကြာမြင့်နိုင်သောကြောင့် ပိတ်ထားခြင်းဖြစ်ပါတယ်။
+- `cached.conn = await cached.promise` — Connection အောင်မြင်ပါက ၎င်းကို Cache ထဲသိမ်းပြီး နောက်ခေါ်မှုများတွင် တိုက်ရိုက် ပြန်ပေးပါတယ်။ အမှားဖြစ်ပါက Promise ကို Reset လုပ်ပေးပါတယ်။
+
+## Step 6: Connection စမ်းသပ်ခြင်း (Smoke Test)
+
+ချိတ်ဆက်မှု မှန်ကန်ကြောင်း စစ်ဆေးရန် Route Handler တစ်ခု ခေတ္တ ဖန်တီးပါမယ်:
+
+```ts
+// app/api/test-db/route.ts
+import { NextResponse } from "next/server";
+import { connectToDatabase } from "@/lib/mongodb";
+
+export async function GET() {
+  try {
+    const m = await connectToDatabase();
+    const state = m.connection.readyState; // 1 = connected
+    return NextResponse.json({ ok: state === 1, readyState: state });
+  } catch (error) {
+    return NextResponse.json({ ok: false, error: String(error) }, { status: 500 });
+  }
+}
+```
+
+`http://localhost:3000/api/test-db` ကို ဖွင့်၍ `{ "ok": true, "readyState": 1 }` ရပါက ချိတ်ဆက်မှု အောင်မြင်ပါပြီ။ စစ်ဆေးပြီးပါက ဤ Test File ကို ဖျက်နိုင်ပါတယ်။
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Connection Utility ကို Server-side Code (Route Handlers, Server Components, Server Actions) များတွင်သာ သုံးရမည် — Client Components တွင် Mongo Client/Mongoose ကို Import မလုပ်ရပါ။
+- `.env.local` ကို Commit မလုပ်ရပါ — `.gitignore` တွင် ပါပြီးဖြစ်ကြောင်း သေချာစေပါ။
+- Development တွင် Global Cache Pattern မသုံးပါက Console တွင် Connection အများအပြား ဖြစ်ပေါ်ပြီး Performance ကျဆင်းနိုင်ပါတယ်။
+- MongoDB Atlas Free Tier သည် Shared Connection Limit ရှိသောကြောင့် App တစ်ခုလုံးမှ Single Connection ကိုသာ အသုံးပြုရန် အရေးကြီးပါတယ်။
+
+## Activity — လေ့ကျင့်ခန်း
+
+1. `create-next-app` ဖြင့် Project အသစ် တည်ဆောက်ပါ။
+2. `mongoose` install လုပ်ပြီး MongoDB Atlas တွင် Free Cluster ဖန်တီးပါ။
+3. Connection String ကို `.env.local` တွင် `MONGODB_URI` အဖြစ် ထည့်ကာ `lib/mongodb.ts` Utility ကို ရေးပါ။
+4. Test Route Handler ဖြင့် `readyState` စစ်ဆေးပြီး Result ကို ရေးမှတ်ပါ။ စစ်ဆေးပြီးပါက Test File ကို ဖျက်ပါ။

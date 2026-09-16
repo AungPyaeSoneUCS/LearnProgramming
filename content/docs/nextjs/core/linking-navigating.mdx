@@ -1,0 +1,100 @@
+---
+title: "Linking and Navigating — လင့်ခ်ချိတ်ခြင်းနှင့် သွားလာခြင်း"
+description: "Client-side navigation with the Link component and the useRouter hook, plus prefetching behavior in the App Router. — Link Component နှင့် useRouter Hook ဖြင့် Client-side Navigation ပြုလုပ်ပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Route များကြား full client-side transitions ဖြင့် သွားလာနိုင်စေရန် - browser reload မပါဘဲ page များကို ချက်ချင်း load ဖြစ်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js App Router တွင် internal navigation ပြုလုပ်ရန် raw `<a href>` ကို တိုက်ရိုက်အသုံးပြုမည့်အစား `next/link` မှ `<Link>` component ကို အသုံးပြုရပါတယ်။ `<Link>` သည် client-side navigation ကို ဆောင်ရွက်ပေးပြီး link သည် viewport ထဲဝင်လာသောအခါ target route ကို background တွင် **prefetch** လုပ်ပေးသောကြောင့် click လုပ်လျှင် ချက်ချင်း page ပြောင်းသည့် ခံစားမှုကို ရရှိပါတယ်။ Imperative navigation (button click မှ route ပြောင်းခြင်း) အတွက် Client Component များတွင် `useRouter` hook ကို အသုံးပြုပြီး `push`, `replace`, `refresh`, `back`, `forward`, `prefetch` စသည့် methods များကို သုံးနိုင်ပါတယ်။ လက်ရှိ URL ကို ဖတ်ရန် `usePathname` hook ကို သုံးပြီး active link များကို style လုပ်နိုင်ပါတယ်။ Navigation သည် layout state နှင့် scroll position ကို ထိန်းသိမ်းပေးပြီး route များကို **client-side** အနေဖြင့် သက်ဆိုင်ရာ segment များသာ fetch လုပ်ပါတယ်။
+
+## The `<Link>` component (`<Link>` Component)
+
+Internal navigation အတွက် raw `<a href>` ကို ဘယ်တော့မှ မသုံးပါနှင့် - `<Link>` သည် client-side navigation နှင့် prefetching ကို ဆောင်ရွက်ပေးပါတယ်:
+
+```tsx
+import Link from "next/link";
+
+export default function Nav() {
+  return (
+    <nav>
+      <Link href="/dashboard">Dashboard</Link>
+      <Link href="/blog/hello-world">Read post</Link>
+    </nav>
+  );
+}
+```
+
+```tsx
+// Links with dynamic segments
+<Link href={`/blog/${slug}`}>Post: {slug}</Link>
+```
+
+## Link with prefetching (Prefetching ပါသော Link)
+
+`<Link>` သည် link သည် viewport ထဲဝင်လာသောအခါ target route ကို background တွင် prefetch လုပ်ပါတယ်:
+
+```tsx
+<Link href="/dashboard" prefetch>Prefetched dashboard</Link>
+<Link href="/heavy" prefetch={false}>No prefetch (on demand)</Link>
+```
+
+Prefetched routes များကို ကြိုတင် fetch လုပ်ထားသောကြောင့် click လုပ်လျှင် ချက်ချင်း ဖြစ်စေပါတယ်။
+
+## The `useRouter` hook (`useRouter` Hook)
+
+Client Component တစ်ခုမှ imperative navigation အတွက်:
+
+```tsx
+"use client";
+
+import { useRouter } from "next/navigation";
+
+export default function SubmitButton() {
+  const router = useRouter();
+
+  return (
+    <button onClick={() => router.push("/checkout")}>
+      Continue to checkout
+    </button>
+  );
+}
+```
+
+အသုံးဝင်သော methods များ - `push()`, `replace()`, `refresh()`, `back()`, `forward()`, `prefetch()` တို့ ဖြစ်ပါတယ်။
+
+## The `usePathname` hook (`usePathname` Hook)
+
+လက်ရှိ URL ကို ဖတ်ပြီး active links များကို style လုပ်ရန်:
+
+```tsx
+"use client";
+
+import { usePathname } from "next/navigation";
+
+export default function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const pathname = usePathname();
+  const active = pathname === href;
+
+  return (
+    <a href={href} className={active ? "font-bold text-amber-600" : ""}>
+      {children}
+    </a>
+  );
+}
+```
+
+## Navigation rules in the App Router (App Router တွင် Navigation စည်းမျဉ်းများ)
+
+- Navigation သည် ဖြစ်နိုင်သမျှ **layout state** နှင့် scroll position ကို ထိန်းသိမ်းပါတယ်
+- Routing သည် **client-side** ဖြစ်ပြီး ပြောင်းလဲသော segments များသာလျှင် fetch လုပ်ပါတယ်
+- Server Components တွင်းရှိ internal links အားလုံးသည် `next/link` ကို **သုံးရမည်**
+
+## Activity
+
+သင့် homepage တွင် `Link` တစ်ခုကို ထည့်ပြီး nav bar ရှိ active route ကို highlight လုပ်ရန် `usePathname` ကို အသုံးပြုပါ။

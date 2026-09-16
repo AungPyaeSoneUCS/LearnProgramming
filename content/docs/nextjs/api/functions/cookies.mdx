@@ -1,0 +1,65 @@
+---
+title: "cookies — Cookies ဖတ်ခြင်းနှင့် သတ်မှတ်ခြင်း"
+description: "Set or read cookies server-side with the cookies() API. — Cookies() API ဖြင့် server ဘက်တွင် cookies များကို သတ်မှတ်ခြင်း သို့မဟုတ် ဖတ်ခြင်း ပြုလုပ်နိုင်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Server Components, Actions နှင့် Route Handlers များမှ session cookies များကို စီမံခန့်ခွဲနိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`cookies()` သည် `next/headers` မှ import လုပ်ရသည့် server-side API တစ်ခုဖြစ်ပြီး request ၏ cookies များကို ဖတ်ရှုခြင်းနှင့် response cookies များကို သတ်မှတ်ခြင်း နှစ်မျိုးလုံးအတွက် သုံးပါတယ်။ Server Component များတွင် cookies ဖတ်ခြင်းကိုသာ လုပ်နိုင်ပြီး `set` ပြုလုပ်ခြင်းကို တားမြစ်ထားသောကြောင့် cookie သတ်မှတ်လိုပါက Server Action သို့မဟုတ် Route Handler အတွင်းမှ ခေါ်ဆိုရပါတယ်။ Cookies များကို ဖတ်လိုက်သည်နှင့် segment သည် dynamic (per-request) အဖြစ် ပြောင်းလဲသွားသဖြင့် cache လုပ်ထားသော static စာမျက်နှာများတွင်လည်း request အလိုက် မှန်ကန်သော data ရရှိပါတယ်။ `await cookies()` ဖြင့် get/set pattern ကို သုံးနိုင်ပြီး cookie key များသည် lowercase ဖြစ်ရပြီး value များကို infrastructure မှ အရှည်ကန့်သတ်ထားတတ်ပါတယ်။ ထို့ကြောင့် session, consent, visited ကဲ့သို့သော cookie များကို server-side နေရာတစ်ခုတည်းမှ စနစ်တကျ စီမံနိုင်စေပါတယ်။
+
+## Read cookies (Cookies ဖတ်ခြင်း)
+
+```tsx
+import { cookies } from "next/headers";
+
+export default async function Page() {
+  const cookieStore = await cookies();
+  const theme = cookieStore.get("theme");
+  return <div>Theme: {theme?.value}</div>;
+}
+```
+
+## Set cookies (**Server Actions သို့မဟုတ် Route Handlers များတွင်သာ**)
+
+```tsx
+"use server";
+import { cookies } from "next/headers";
+
+export async function acceptCookies() {
+  const store = await cookies();
+  store.set("consent", "yes", { httpOnly: true, sameSite: "lax", maxAge: 60 * 60 * 24 * 365 });
+}
+```
+
+## Response resolution (Response တုံ့ပြန်မှု)
+
+- **Server Components** များသည် `set` ကို ခေါ်၍မရပါ (response မရှိသေးသောကြောင့်) → Server Function / action ကို သုံးပါ
+- Cache semantics: cookies ဖတ်ခြင်းသည် segment ကို dynamic (per-request) ဖြစ်စေပါတယ်
+
+## In Route Handlers
+
+```ts
+import { cookies } from "next/headers";
+
+export async function GET() {
+  const store = await cookies();
+  store.set("visited", "true", { path: "/" });
+  return Response.json({ visited: store.get("visited")?.value });
+}
+```
+
+## Rules & gotchas (စည်းကမ်း နှင့် သတိပြုအချက်များ)
+
+- `await cookies()` — return type များနှင့် စစ်ဆေးပြီး simple get/set pattern သုံးပါ
+- Layouts/pages များတွင် `set` မပြုလုပ်ရပါ; mutation များအတွက် actions ကို သုံးပါ
+- Keys: lowercase; values များကို infra မှ အရှည် ကန့်သတ်ထားပါတယ်
+
+## လေ့ကျင့်ခန်း (Activity)
+
+`maxAge` ရှည်လျားသော cookie ကို သတ်မှတ်ပေးသည့် consent-banner action တစ်ခုကို တည်ဆောက်ပြီး page ပေါ်တွင် ဖတ်ပါကာ pure Client call မှ set မလုပ်နိုင်ကြောင်း သေချာစစ်ဆေးပါ။

@@ -1,0 +1,85 @@
+---
+title: "Sass — Sass/SCSS အသုံးပြုခြင်း"
+description: "Use Sass/SCSS in Next.js with CSS Modules, global imports, and sassOptions. — CSS Modules, global imports နဲ့ sassOptions သုံးပြီး Next.js မှာ Sass/SCSS အသုံးပြုနည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Sass variables, mixins နဲ့ nesting တွေနဲ့ ထိန်းသိမ်းရလွယ်တဲ့ style တွေကို Next.js ထဲ သန့်ရှင်းစွာ ပေါင်းစပ်ပြီး ရေးနိုင်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Sass (SCSS) ဆိုတာ CSS ရဲ့ "superset" တစ်ခုဖြစ်ပြီး variables, mixins, nesting, partials စတဲ့ အင်္ဂါရပ်တွေနဲ့ style တွေကို ထပ်တလဲလဲ မရေးရဘဲ ထိန်းသိမ်းရလွယ်အောင် လုပ်ပေးပါတယ်။ Next.js မှာတော့ npm install sass လုပ်ပြီး root layout ထဲမှာ ./globals.scss ကို import လုပ်ရုံနဲ့ global style တွေ အလုပ်လုပ်ပါတယ်။ Component အလိုက် style လိုချင်ရင် CSS Modules (.module.scss) နဲ့ ပေါင်းစပ်နိုင်ပြီး class name တွေက local scope ဖြစ်လို့ collision မဖြစ်ပါဘူး။ Global variable/mixin တွေကို နေရာတိုင်း manual @use မလုပ်ရအောင် next.config.ts ထဲက sassOptions.additionalData နဲ့ အလိုအလျောက် ထည့်ပေးနိုင်ပါတယ်။ node_modules ထဲက package (bootstrap စသည်) တွေကိုလည်း @use "bootstrap/scss/mixins" ကဲ့သို့ ထည့်သုံးနိုင်ပါတယ်။ တစ်ခု သတိထားစရာက CSS-in-JS နဲ့ Sass က အတူယှဉ်တွဲ နေနိုင်ပေမဲ့ mental model တစ်မျိုးတည်းကို ရွေးဖို့ ပိုကောင်းပြီး nesting က နက်လွန်းရင် specificity bug တွေ ဖြစ်နိုင်ပါတယ်။
+
+## Install and import
+
+```bash
+npm install sass
+```
+
+```tsx
+// Global styles in the root layout
+import "./globals.scss";
+```
+
+`.scss` module တွေအတွက် TypeScript declaration လိုလား? Next.js က `next-env.d.ts` includes နဲ့ CSS Modules ရဲ့ typing ကို TS မှာ အလိုအလျောက် ကိုင်တွယ်ပေးပါတယ်။
+
+## CSS Modules + Sass
+
+```scss
+/* components/card.module.scss */
+$radius: 0.75rem;
+$shadow: 0 4px 24px rgba(0,0,0,.08);
+
+.card {
+  border-radius: $radius;
+  box-shadow: $shadow;
+  padding: 1.5rem;
+
+  &:hover { transform: translateY(-2px); }
+
+  .title { font-weight: 700; }
+}
+```
+
+```tsx
+import styles from "./card.module.scss";
+export default () => <div className={styles.card}><h3 className={styles.title}>…</h3></div>;
+```
+
+## Global Sass config
+
+Global variables နဲ့ mixins တွေကို နေရာတိုင်း manual `@use` မလုပ်ရအောင် ဒီနေရာမှာ ထည့်သတ်မှတ်ပေးပါ:
+
+```scss
+// styles/_tokens.scss
+$primary: #f59e0b;
+```
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  sassOptions: {
+    additionalData: '@use "@/styles/tokens" as *;\n',
+  },
+};
+```
+
+## Importing from node_modules
+
+```scss
+// e.g. include an electron package, or a grid library
+@use "bootstrap/scss/mixins";
+```
+
+## Caveats
+
+- CSS-in-JS နဲ့ Sass က အတူယှဉ်တွဲနေနိုင်ပေမဲ့ mental model တစ်ခုတည်းကို ရွေးပါ
+- Production build ထဲမှာ မသုံးတဲ့ style တွေကို purge/ဖယ်ရှားပေးပါတယ်
+- Specificity bug တွေ မဖြစ်အောင် nesting ကို shallow ထားပါ
+
+## Activity
+
+Component တစ်ခုကို `$primary` variable တစ်ခုနဲ့ mixin တစ်ခုပါတဲ့ `*.module.scss` အဖြစ် ပြောင်းပါ; ပြီးရင် နောက် component တစ်ခုထဲမှာ SCSS Modules ကနေတစ်ဆင့် အဲဒီ mixin ကို ပြန်သုံးကြည့်ပါ။

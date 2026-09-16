@@ -1,0 +1,76 @@
+---
+title: "Project Structure — Project တည်ဆောက်ပုံ"
+description: "Understand every folder and file in a Next.js project: top-level files, app/ directory conventions, and shared folders. — Next.js Project တစ်ခုတွင်းရှိ Folder နှင့် File များ၏ တည်ဆောက်ပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Next.js Codebase တစ်ခုကို ယုံကြည်စွာ ကိုင်တွယ်နိုင်စေရန် - routes များဘယ်မှာရှိ၊ styles များဘယ်မှာထားရမည်၊ config file တစ်ခုစီသည် ဘာလုပ်သည်ကို နားလည်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js project တစ်ခုကို စတင်လုပ်ဆောင်ရာတွင် folder နှင့် file များ၏ တည်ဆောက်ပုံကို နားလည်ရန် အရေးကြီးပါတယ်။ Top-level folder များတွင် `app/` (သို့မဟုတ် `src/app/`) သည် App Router Routes, Layouts, Pages များကိုထားရှိပြီး `public/` သည် static assets များကို `/` တွင်ထားရှိပါတယ်။ `components/`, `lib/`, `next.config.ts`, `tsconfig.json`, နှင့် `package.json` တို့သည် သင့်စိတ်ကြိုက် ဖွဲ့စည်းနိုင်သော project conventions များ ဖြစ်ပါတယ်။ `app/` directory တွင်းရှိ special files များတွင် `layout.tsx` (shared UI shell), `page.tsx` (route ၏ unique UI), `loading.tsx` (fallback UI), `error.tsx` (error boundary), `not-found.tsx` (404 UI), `route.ts` (API endpoint) နှင့် `template.tsx` (navigation အတွက် re-mounted layout) တို့ ပါဝင်ပါတယ်။ Route segment naming conventions အရ `[param]` သည် dynamic segment, `(group)` သည် route group, `_private` သည် routable မဟုတ်သော private folder ဖြစ်ပါတယ်။ `public/` အတွင်းရှိ file များကို root မှ တိုက်ရိုက် serve လုပ်ပြီး ပုံများအတွက် raw `<img>` ထက် `next/image` ၏ `<Image />` ကို အသုံးပြုရန် အကြံပြုပါတယ်။
+
+## Top-level folders (Top-Level Folders များ)
+
+| Folder / File       | Purpose                                              |
+| ------------------- | ---------------------------------------------------- |
+| `app/` (or `src/app/`) | **App Router** - routes, layouts, pages, loading UI  |
+| `pages/` (or `src/pages/`) | **Pages Router** - legacy route system (optional) |
+| `public/`           | Static assets served at `/`                          |
+| `components/`       | Reusable React components (your choice of location)  |
+| `lib/`              | Shared utilities, data-access helpers                |
+| `next.config.ts`    | Next.js configuration                                |
+| `tsconfig.json`     | TypeScript settings                                  |
+| `package.json`      | Dependencies and scripts                             |
+
+## The `app/` directory conventions (`app/` Directory ၏ စည်းမျဉ်းများ)
+
+- **`layout.tsx`** - segment နှင့် ၎င်း၏ children များကို ပတ်ထားသော shared UI shell
+- **`page.tsx`** - route တစ်ခုအတွက် unique UI ကို သတ်မှတ်ပေးသည်
+- **`loading.tsx`** - segment load ဖြစ်နေစဉ် streaming fallback UI
+- **`error.tsx`** - segment တစ်ခုအတွက် error boundary UI
+- **`not-found.tsx`** - segment တစ်ခုအတွက် 404 UI
+- **`route.ts`** - API endpoint (Route Handler)
+- **`template.tsx`** - navigation transitions အတွက် re-mounted layout
+
+```
+src/app
+├── layout.tsx          # root layout (html, body)
+├── page.tsx            # route /
+├── about/
+│   └── page.tsx        # route /about
+├── blog/
+│   ├── layout.tsx      # shared blog chrome
+│   ├── page.tsx        # /blog
+│   └── [slug]/
+│       └── page.tsx    # /blog/hello-world (dynamic)
+└── api/
+    └── posts/
+        └── route.ts    # GET /api/posts
+```
+
+## Route segment naming conventions (Route Segment Naming စည်းမျဉ်းများ)
+
+- `segment/page.js` → **public** route
+- `segment/_private.js` → **private** (not routable, can still be imported)
+- `segment/(group)/page.js` → **route group** (affects URL, groups folder)
+- `segment/[param]/page.js` → **dynamic segment**
+- `segment/[...catch]/page.js` → **catch-all** segment
+
+## The `public/` folder (`public/` Folder)
+
+`public/` တွင်းရှိ မည်သည့် file ကိုမဆို root တွင် serve လုပ်ပါတယ်:
+
+```tsx
+// public/logo.png → served at /logo.png
+<img src="/logo.png" alt="Logo" />
+```
+
+Assets များအတွက် raw `<img>` ထက် `next/image` ၏ `<Image />` ကို တတ်နိုင်သမျှ အသုံးပြုပါ။
+
+## Activity
+
+သင့် scaffolded app ရှိ folder တိုင်းကို အထက်ပါ table နှင့် ယှဉ်တွဲကြည့်ပါ။ ထို့နောက် `<h1>My Profile</h1>` ကို return လုပ်သော `src/app/profile/page.tsx` ကို ဖန်တီးပြီး `/profile` သို့ သွားကြည့်ပါ။

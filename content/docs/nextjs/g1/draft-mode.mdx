@@ -1,0 +1,80 @@
+---
+title: "Draft Mode — Draft Mode"
+description: "Preview unpublished content in production with draftMode - without deploying secrets to the browser. — Browser သို့ secrets များ မပို့ဘဲ production တွင် draftMode ဖြင့် မထုတ်ဝေရသေးသော content များကို အစမ်းကြည့်ရှုခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Signed draft cookie တစ်ခုဖြင့် editors များကို live site ပေါ်တွင် draft content များကို အစမ်းကြည့်ရှုခွင့်ပေးပြီး as-you-type feedback ရနိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Draft Mode ဆိုသည်မှာ production environment တွင်ပင် မထုတ်ဝေရသေးသော draft content များကို ခွင့်ပြုထားသော editors များသာ အစမ်းကြည့်ရှုနိုင်စေသည့် လုပ်ဆောင်ချက် ဖြစ်ပါတယ်။ Editors များသည် `/api/draft?secret=…&slug=…` ကဲ့သို့သော preview URL ကို ဖွင့်ခြင်းဖြင့် Route Handler မှ secret ကို စစ်ဆေးပြီး `draftMode().enable()` ခေါ်ဆိုကာ signed cookie တစ်ခုကို သတ်မှတ်ပေးပါတယ်။ ထို့နောက် page များက `draftMode().isEnabled` ကို ဖတ်၍ draft content များကို ပြသပါတယ်။ Secret ကို `.env.local` ကဲ့သို့ server-side ဖိုင်များတွင်သာ ထားရှိပြီး browser ထဲသို့ ဘယ်တော့မှ မရောက်စေရပါဘူး။ Cache Components များနှင့်လည်း draft mode က ဆက်စပ်လုပ်ဆောင်နိုင်ပြီး previewing editor အတွက် cached values များကို ပြန်လည် render လုပ်ပေးသော်လည်း normal visitors များအတွက် shared cache ကို မပျက်စီးစေပါဘူး။
+
+## The flow
+
+1. Editor သည် `/api/draft?secret=…&slug=…` ကဲ့သို့သော preview URL ကို ဖွင့်သည်
+2. Route Handler က `draftMode().enable()` ကို ခေါ်ဆိုသည် → signed cookie တစ်ခု သတ်မှတ်သည်
+3. နောက်ဆက်တွဲ page renders များသည် `draftMode().isEnabled` ကို ဖတ်၍ draft content များကို ပြသသည်
+
+```
+Editor ─▶ /api/draft?secret=x&slug=pending-post
+         DraftMode().enable() → cookie set
+Editor ─▶ /blog/pending-post → page sees draftMode → renders draft
+```
+
+## Enabling draft mode (Route Handler)
+
+```ts
+// app/api/draft/route.ts
+import { draftMode } from "next/headers";
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const secret = searchParams.get("secret");
+  const slug = searchParams.get("slug");
+
+  if (secret !== process.env.PREVIEW_SECRET) {
+    return new Response("Invalid token", { status: 401 });
+  }
+
+  draftMode().enable();
+
+  const url = new URL(`/blog/${slug}`, request.url);
+  return new Response(null, { status: 302, headers: { Location: url.pathname + url.search } });
+}
+```
+
+## Reading draft state in a page
+
+Draft mode သည် `draftMode().isEnabled` မှတစ်ဆင့် opt-in လုပ်သော directives များကိုသာ သက်ရောက်မှု ရှိပါတယ်:
+
+```tsx
+// app/blog/[slug]/page.tsx
+import { draftMode } from "next/headers";
+
+export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { isEnabled } = draftMode();
+  const post = isEnabled
+    ? await getDraftPost(slug)      // 🧪 show drafts
+    : await getPublishedPost(slug); // production content
+
+  return <article>{post.title}</article>;
+}
+```
+
+## When draft mode affects the cache
+
+**Cache Components** များနှင့်အတူ draft mode သည် previewing editor အတွက် သက်ရောက်သော cached values များကို shared cache မပျက်စီးဘဲ ပြန်လည် render လုပ်စေပါတယ် — normal visitors များအတွက် သင့် `use cache` entries များသည် နဂိုအတိုင်း ရှိနေပါတယ်။
+
+## Guard rails
+
+- Secret သည် `.env.local` တွင်သာ ရှိရမည်၊ browser တွင် လုံးဝ မရှိရ
+- မလိုအပ်ပါက production တွင် disable လုပ်ထားပါ
+- `draftMode().disable()` ဖြင့် cookie ကို ရှင်းလင်းပါ
+
+## Activity — လေ့ကျင့်ခန်း
+
+`/api/draft?secret=…&slug=…` နှင့် `getDraftPost` path တစ်ခုကို ထည့်ပါ၊ ထို့နောက် preview URL ကို ဝင်ကြည့်သည့်အခါ stale-while-published page သည် draft content ကို ပြသကြောင်း အတည်ပြုပါ။

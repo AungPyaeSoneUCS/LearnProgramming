@@ -1,0 +1,96 @@
+---
+title: "Forms — Forms (ဖောင်များ)"
+description: "Build accessible, progressive-enhanced forms with Server Actions, defaults, resetting, and validation. — Server Actions, defaults, resetting နှင့် validation တို့ဖြင့် accessible ဖြစ်ပြီး progressive-enhanced သော forms များ တည်ဆောက်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  JavaScript မရှိဘဲပင် လည်ပတ်နိုင်သော, server-side validate လုပ်ကာ submit ပြီးနောက် သန့်ရှင်းစွာ reset လုပ်နိုင်သည့် forms များကို တည်ဆောက်နိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Forms ဆိုသည်မှာ user ထံမှ data များကို စုဆောင်း၍ server သို့ ပေးပို့ရန်အတွက် အသုံးပြုသည့် input များ ဖြစ်ပါတယ်။ Next.js ၏ App Router တွင် Server Actions များကို form ၏ `action` attribute နှင့် တိုက်ရိုက် ချိတ်ဆက်နိုင်ပြီး ထို့ကြောင့် JavaScript မလိုအပ်ဘဲ form များသည် progressive enhancement ဖြင့် လည်ပတ်နိုင်ပါတယ်။ `useActionState` hook ကို အသုံးပြု၍ action ၏ state (error, success) များကို ဖတ်ရှုပြီး `key` attribute ပြောင်းလဲခြင်းအားဖြင့် submit ပြီးနောက် form ကို သန့်ရှင်းစွာ reset လုပ်နိုင်ပါတယ်။ Controlled vs uncontrolled forms နှစ်မျိုးတွင် uncontrolled က defaultValue + `name` ကို သုံးပြီး progressive enhancement နှင့် ကိုက်ညီကာ controlled သည် live client validation အတွက် သင့်လျော်ပါတယ်။ Server ဘက်တွင်မူ Zod ကဲ့သို့သော library များဖြင့် data များကို validate လုပ်ကာ field errors များကို form သို့ ပြန်လည် ပေးပို့နိုင်ပါတယ်။
+
+## Form-to-Server-Action pattern
+
+```ts
+// app/lib/actions.ts
+"use server";
+
+export async function createProfile(prev: unknown, formData: FormData) {
+  const name = formData.get("name") as string;
+
+  // validate
+  if (!name || name.trim().length < 2) {
+    return { error: "Name must be at least 2 characters" };
+  }
+
+  await db.profile.create({ data: { name } });
+
+  // reset by passing a marker to the form
+  return { success: true };
+}
+```
+
+## Forms with defaults and reset
+
+Success ပြီးနောက် form အသစ် ရရှိစေရန် `key` တစ်ခုကို အသုံးပြုပါ:
+
+```tsx
+"use client";
+
+import { useActionState } from "react";
+import { createProfile } from "@/app/lib/actions";
+
+export default function ProfileForm({ defaultName }: { defaultName: string }) {
+  const [state, action, pending] = useActionState(createProfile, null);
+
+  return (
+    <form action={action} key={state?.success ? "reset-" + Date.now() : "form"}>
+      <label>
+        Name
+        <input name="name" defaultValue={defaultName} aria-invalid={!!state?.error} required />
+      </label>
+      {state?.error && <p role="alert">{state.error}</p>}
+      <button type="submit" disabled={pending}>
+        {pending ? "Saving…" : "Save"}
+      </button>
+    </form>
+  );
+}
+```
+
+## Controlled vs uncontrolled
+
+- **Uncontrolled** (defaultValue + `name`) - progressive enhancement နှင့် လုပ်ဆောင်နိုင်သည်
+- **Controlled** (`value` + `onChange`) - live client validation အတွက် လိုအပ်သည်; `defaultValue` ကို initial state အဖြစ် ထားပါ
+
+## Reset after submit
+
+Tools သုံးခု:
+- `useActionState` state → `key` အသစ်ဖြင့် remount လုပ်ခြင်း
+- Action အတွင်းတွင် `request.formData.then((form) => form.reset())`
+- Success ဖြစ်ချိန်တွင် client `useEffect` အတွင်း `<form ref>` ၏ `reset()`
+
+## Validation strategy
+
+```ts
+import { z } from "zod";
+
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+// catch issues and return messages
+const parsed = schema.safeParse(Object.fromEntries(formData));
+if (!parsed.success) {
+  return { errors: parsed.error.flatten().fieldErrors };
+}
+```
+
+## Activity — လေ့ကျင့်ခန်း
+
+Email နှင့် nickname ပါသော "settings" form တစ်ခုကို တည်ဆောက်ပါ၊ server validation သည် per-field errors များကို ပြန်ပေးစေပါ၊ မြင်သာသော success reset state တစ်ခု ထည့်ပါ။

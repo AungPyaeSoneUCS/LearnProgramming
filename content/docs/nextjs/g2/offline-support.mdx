@@ -1,0 +1,79 @@
+---
+title: "Offline Support — အင်တာနက် မရှိဘဲ အသုံးပြုနိုင်မှု"
+description: "Add offline capability to Next.js apps with service workers, app shell caching, and PWA foundations. — service workers, app shell caching နှင့် PWA foundations များဖြင့် Next.js apps များကို offline သုံးနိုင်အောင် ပြုလုပ်နည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Network ပြတ်တောက်သွားသည့်အခါ cached shell နှင့် routes များဖြင့် အပလီကေးရှင်း တစ်ခုလုံး (သို့) အစိတ်အပိုင်းများကို ဆက်လက် အသုံးပြုနိုင်ရန် နားလည်စေရန် ဖြစ်ပါတယ် — **Service Worker** ၏ install/fetch lifecycle နှင့် **PWA** essentials များကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Offline support ဆိုသည်မှာ အသုံးပြုသူများကို network ပြတ်တောက်သည့် အခြေအနေတွင်ပင် အပလီကေးရှင်း (သို့) ၎င်း၏ အစိတ်အပိုင်းများကို ဆက်လက် ကြည့်ရှုနိုင်စေရန် ပြုလုပ်ခြင်း ဖြစ်ပါတယ်။ Service Worker သည် browser နှင့် network ကြားတွင် ရပ်တည်ကာ fetch requests များကို ကြားဖြတ်ပြီး Cache Storage မှ cached responses များကို ပေးပို့ပါတယ်။ App Shell (PWA) နည်းလမ်းမှာ HTML/JS/CSS များကို ကြိုတင် cache လုပ်ထားပြီး ချက်ချင်း load ဖြစ်စေပါတယ်။ Next.js တွင် `public/sw.js` ဖိုင်ကို ဖန်တီးပြီး `app/layout.tsx` မှ `<Script src="/sw.js" strategy="service-worker" />` ဖြင့် register လုပ်နိုင်ပါသည် (`next-pwa` သည် maintain မလုပ်တော့သောကြောင့် manual နည်းလမ်းကို အကြံပြုထားပါတယ်)။ Service Worker ၏ install event တွင် core routes နှင့် manifest များကို cache ထဲသို့ ထည့်ပြီး fetch event တွင် cache-first သို့မဟုတ် network-fallback strategy ဖြင့် responses များကို ပြန်ပို့ပေးရပါတယ်။ PWA တစ်ခုဖြစ်ရန် manifest, icons, installed-app UX များ လိုအပ်ပြီး fully static content အတွက်မူ `output: "export"` ဖြင့် ထုတ်ကာ generated pages အားလုံးကို precache လုပ်နိုင်ပါတယ်။ DevTools ၏ Network → Offline ဖြင့် shell နှင့် နောက်ဆုံး ကြည့်ခဲ့သော pages များ cache မှ render ဖြစ်ကြောင်း စစ်ဆေးရပါတယ်။
+
+## The tools
+
+| Tool                 | Role                              |
+| -------------------- | --------------------------------- |
+| Service Worker       | Intercepts fetch, serves caches   |
+| App Shell (PWA)      | Cached HTML/JS/CSS for instant load |
+| Cache Storage        | Offline-first data                |
+
+## Registering a service worker
+
+`public/` folder + `Script` component ကို သုံးပါ:
+
+```tsx
+// app/layout.tsx
+import Script from "next/script";
+
+<Script src="/sw.js" strategy="service-worker" />;
+```
+
+သို့မဟုတ် dev dependency တစ်ခုမှ ထည့်နိုင်ပါတယ် (`next-pwa` သည် maintain မလုပ်တော့ — manual ကို ဦးစားပေးပါ)။
+
+## A minimal sw.js
+
+```js
+// public/sw.js
+self.addEventListener("install", (e) => {
+  e.waitUntil(
+    caches.open("v1").then((cache) =>
+      cache.addAll(["/", "/blog", "/manifest.webmanifest"]),
+    ),
+  );
+});
+
+self.addEventListener("fetch", (e) => {
+  e.respondWith(
+    caches.match(e.request).then((cached) =>
+      cached || fetch(e.request).then((res) => {
+        const copy = res.clone();
+        caches.open("v1").then((cache) => cache.put(e.request, copy));
+        return res;
+      }),
+    ),
+  );
+});
+```
+
+## PWA essentials
+
+- **Manifest** (`public/manifest.webmanifest` + `<link rel="manifest">`)
+- **Icons** (192, 512 px)
+- **Installed-app UX** — `display: standalone` ၊ theme color
+- Navigation မအောင်မြင်ပါက ပြသမည့် **offline fallback page**
+
+## Precache awards: static shell from build
+
+Fully static content အတွက် `output: "export"` ဖြင့် ထုတ်ပြီး generated pages အားလုံးကို Service Worker တွင် precache လုပ်ရန် စဉ်းစားပါ။
+
+## Testing offline
+
+DevTools → Network → **Offline** ပြီးနောက် reload လုပ်ပါ။ Shell နှင့် နောက်ဆုံး ကြည့်ခဲ့သော pages များ cache မှ render ဖြစ်ကြောင်း အတည်ပြုပါ။
+
+## Activity
+
+လေ့ကျင့်ခန်း: Service worker တစ်ခုကို register လုပ်ပြီး `/` နှင့် manifest ကို cache လုပ်ကာ DevTools တွင် offline ဖြစ်စေပြီး reload လုပ်ပါ — သင့် home page သည် ဆက်လက် render ဖြစ်သင့်ပါတယ်။

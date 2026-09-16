@@ -1,0 +1,101 @@
+﻿---
+title: "Step 3: Data Fetching with Cache Components"
+description: "Blog ဒေတာများကို use cache + cacheLife + cacheTag ဖြင့် ထိရောက်စွာ Fetch လုပ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Cache Components ၏ `use cache` စနစ်ဖြင့် Blog ဒေတာများကို Cache လုပ်၍ စွမ်းဆောင်ရည် မြှင့်တင်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Data Fetching တွင် အဓိက နည်းနှစ်မျိုး ရှိပါတယ် — Server-side ဖြစ်သည့် Server Component တွင် Database/API ကို တိုက်ရိုက်ခေါ်ခြင်း၊ သို့မဟုတ် Client-side ဖြစ်သည့် Browser တွင် `fetch`/SWR/React Query ဖြင့် ခေါ်ခြင်း။ Next.js 16 Cache Components စနစ်တွင် `"use cache"` Directive ကို Async Function သို့မဟုတ် Component တစ်ခု၏ အပေါ်ဆုံးတွင် ထည့်ခြင်းအားဖြင့် ၎င်းရလဒ်များကို `cacheLife("hours")` ကဲ့သို့ Lifetime များဖြင့် Cache လုပ်နိုင်ပါတယ်။ ထို့အပြင် `cacheTag("posts")` ဖြင့် Cache Entries များကို Semantic Tag ခွဲထားနိုင်ပြီး Post တစ်ခုကို Update လုပ်သောအခါ `revalidateTag("posts")` ဖြင့် သက်ဆိုင်ရာ Cache များကိုသာ မွမ်းမံနိုင်ပါတယ်။ Cache Lifecycle (stale/revalidate/expire) ကို `cacheLife` Profile များဖြင့် ထိန်းချုပ်နိုင်ပြီး Profile မလုံလောက်ပါက Custom Profile များကို `next.config.ts` တွင် သတ်မှတ်နိုင်ပါတယ်။ Blog ကဲ့သို့ Read-heavy Site တွင် ဤစနစ်ကြောင့် Database အလုပ်များကို အများအပြား လျှော့ချနိုင်မည်ဖြစ်ပါတယ်။
+
+## Enable Cache Components
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+};
+
+export default nextConfig;
+```
+
+## Cached Data Module
+
+```ts
+// lib/posts.ts
+import { cacheLife, cacheTag } from "next/cache";
+import { prisma } from "@/lib/prisma";
+
+export async function getPosts() {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("posts");
+
+  return prisma.post.findMany({
+    where: { published: true },
+    orderBy: { createdAt: "desc" },
+  });
+}
+
+export async function getPostBySlug(slug: string) {
+  "use cache";
+  cacheLife("days");
+  cacheTag(`post:${slug}`);
+
+  return prisma.post.findUnique({ where: { slug } });
+}
+```
+
+## Blog List Page
+
+```tsx
+// app/blog/page.tsx
+import { getPosts } from "@/lib/posts";
+
+export default async function BlogPage() {
+  const posts = await getPosts();
+
+  return (
+    <ul className="space-y-6">
+      {posts.map((post) => (
+        <li key={post.id}>
+          <a href={`/blog/${post.slug}`} className="text-xl font-semibold hover:underline">
+            {post.title}
+          </a>
+          <p className="text-sm text-muted-foreground">{new Date(post.createdAt).toDateString()}</p>
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## Invalidation Wiring (Mutation နှင့် ချိတ်ဆက်ခြင်း)
+
+```ts
+"use server";
+import { revalidateTag } from "next/cache";
+import { prisma } from "@/lib/prisma";
+
+export async function publishPost(id: string) {
+  // auth check here…
+  await prisma.post.update({ where: { id }, data: { published: true } });
+  revalidateTag("posts");
+  revalidateTag(`post:${slug}`);
+}
+```
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- `"use cache"` ကိုသုံးသော Function များသည် **Async** ဖြစ်ရမည်
+- Request Timeout ဖြင့် ပြောင်းလဲတတ်သော ဒေတာများအတွက် Cache မလုပ်ဘဲ `<Suspense>` ဖြင့် Streaming သုံးပါ
+- Mutations ပြီးတိုင်း `revalidateTag`/`revalidatePath` ကို မမေ့ပါနှင့်
+
+## Activity — လေ့ကျင့်ခန်း
+
+`getPosts` နှင့် `getPostBySlug` ကို Cache Components ဖြင့် ရေးပြီး Blog List ကို ဖော်ပြပါ။ `prisma` Query Log ဖွင့်၍ Cache Hit ဖြစ်သောအခါ Database Query ထပ်မလုပ်တော့ကြောင်း စောင့်ကြည့်ပါ။

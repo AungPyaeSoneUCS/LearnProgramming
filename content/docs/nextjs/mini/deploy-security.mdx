@@ -1,0 +1,88 @@
+﻿---
+title: "Step 7: Deployment & Security Checklist"
+description: "Blog ၏ Production Deployment နှင့် Security စစ်ဆေးရန် Checklist များ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Blog ကို Production သို့ Deploy လုပ်၍ Security အခြေခံများ စစ်ဆေးနိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Mini Project ၏ နောက်ဆုံး Step တွင် Blog ကို Production Environment သို့ တကယ် Deploy လုပ်ပြီး လုံခြုံရေး စစ်ဆေးမှုများ ပြုလုပ်ပါမည်။ Next.js Application များကို Vercel ကဲ့သို့ Serverless Platform များတွင် အလွယ်တကူ Deploy နိုင်သလို Node.js Server သို့မဟုတ် Docker ကိုယ်တိုင် Host လုပ်လည်း ရပါတယ်။ SQLite ဖြစ်သောကြောင့် Serverless Deployment တွင် Persistent Storage မရှိခြင်း ပြဿနာ ဖြစ်နိုင်ပြီး ထိုကိစ္စတွင် Turso ကဲ့သို့ Embedded SQLite Solution သို့မဟုတ် PostgreSQL + Prisma Accelerate များအဖြစ် ပြောင်းသင့်ပါတယ်။ Deployment မတိုင်မီ လိုအပ်သော Environment Variables အားလုံး (Database URL, Auth Secret, Admin Credentials) ကို Platform ၏ Settings တွင် တပ်ဆင်ထားရန် လိုအပ်ပြီး GitHub Actions သို့မဟုတ် Vercel Git Integration ဖြင့် CI/CD ကို စနစ်တကျ ထားနိုင်ပါတယ်။ Security အနေဖြင့် Secret များကို `.env` တွင်သာ ထား၍ `.gitignore` တွင် ထည့်ထားရမည်ဖြစ်ပြီး, Admin Routes များတွင် Guard များ သေချာလုပ်ထားရမည်ဖြစ်ပါတယ်။
+
+## Build & Check (Deploy မတိုင်မီ)
+
+```bash
+npm run build
+npm run lint
+npx next info
+```
+
+Build Output တွင် Caching (Cache Components) နှင့် Route ၂ ခုချင်းစီ၏ Runtime များ မှန်ကန်ကြောင်း စစ်ဆေးပါ။
+
+## Environment Variables (Production)
+
+```env
+DATABASE_URL="file:./dev.db"
+AUTH_SECRET="use-openssl-rand-base64-32"
+ADMIN_USER="admin"
+ADMIN_HASH="<bcrypt-hash>"
+```
+
+`AUTH_SECRET` ကို အောက်ပါအတိုင်း Generate လုပ်နိုင်ပါတယ်:
+
+```bash
+openssl rand -base64 32
+```
+
+## Deploy Targets
+
+| Target | Best for | Notes |
+| ------ | -------- | ----- |
+| Vercel | Serverless + Preview Deploys | SQLite မဟုတ်ဘဲ Serverless DB လို (Turso/Postgres) |
+| Node Server (`next start`) | Self-host VPS | Persistent SQLite OK; Supervise with PM2/systemd |
+| Docker | Reproducible deploys | Persist SQLite via Volume |
+
+## Node Server Deploy (VPS)
+
+```bash
+# Build on server
+npm ci
+npm run build
+
+# Production server on port 3000
+npm run start -- -p 3000
+
+# Or container
+docker build -t my-blog .
+docker run -p 3000:3000 -e AUTH_SECRET=... -v blogdata:/app/data my-blog
+```
+
+## Security Checklist
+
+- [ ] `.env` ကို Commit မလုပ်ရန် `.gitignore` ထဲထည့်ထားခြင်း
+- [ ] `AUTH_SECRET` သည် Long Random String ဖြစ်ခြင်း
+- [ ] Admin Actions တိုင်းတွင် `requireAdmin()` ပါခြင်း
+- [ ] Admin Routes များတွင် Layout Guard သို့မဟုတ် Middleware ပါခြင်း
+- [ ] Session Cookie များတွင် `httpOnly + secure + sameSite` ပါခြင်း
+- [ ] `npm audit` တွင် Critical Vulnerability များမရှိခြင်း
+- [ ] HTTPS ပေါ်တွင်သာ အသုံးပြုကြောင်း (Vercel/Reverse Proxy) သေချာခြင်း
+
+## Monitoring
+
+- Vercel Analytics / Speed Insights: Real-visitor Data
+- `instrumentation.ts` ၏ `register()` တွင် Error Reporting (Sentry) တပ်ဆင်နိုင်
+- Deployment Preview URL များဖြင့် Production မထွက်မီ စမ်းသပ်နည်း
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- SQLite နှင့် Serverless သည် မသင့်လျော် — Persistent DB အဖြစ်သို့ ပြောင်းရန် စီစဉ်ပါ
+- `.env.local` များကို Production တွင်လည်း ပုံတူထားရန် Platform Settings ကို သုံးပါ
+- Cache Invalidation မှားနေပါက Post အသစ်များ နောက်ကျ ပေါ်နိုင်သည် — `revalidateTag` ကို သေချာ စစ်ပါ
+
+## Activity — လေ့ကျင့်ခန်း
+
+Blog ကို Vercel တွင် Deploy လုပ်ပြီး Production URL ကိုဖွင့်ပါ။ Security Checklist တစ်ခုချင်းစီကို ဖြတ်၍ ပြီးဆုံးကြောင်း ရေးမှတ်ပါ။ ထို့နောက် Post တစ်ခု ဖန်တီး၍ Cache မွမ်းမံမှု မှန်ကန်ကြောင်း Production တွင် စစ်ဆေးပါ။

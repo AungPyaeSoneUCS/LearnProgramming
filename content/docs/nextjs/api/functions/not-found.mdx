@@ -1,0 +1,51 @@
+---
+title: "notFound — 404 ပြသခြင်း"
+description: "Trigger a 404 with the not-found page via the notFound() function. — NotFound() function ဖြင့် not-found page ကို 404 အဖြစ် ဖော်ပြပေးသည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  ပျောက်ဆုံးနေသော content များကို တိကျစွာ အချက်ပြပြီး မှန်ကန်သော 404 UI ကို ပြသနိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`notFound()` သည် `next/navigation` မှ import လုပ်ရသော function တစ်ခုဖြစ်ပြီး internal error တစ်ခုကို ပစ်ထုတ်ခြင်းဖြင့် Next.js ကို 404 response နှင့် အနီးဆုံး (nearest) `not-found.tsx` ကို render လုပ်စေပါတယ်။ ဥပမာအားဖြင့် post ကို fetch လုပ်ပြီး မရှိပါက `notFound()` ကို ခေါ်ဆိုလိုက်လျှင် ထို slug အတွက် 404 page ကို ပြသပေးပါတယ်။ Server Components (pages/layouts), Server Actions နှင့် Route Handlers များတွင် သုံးနိုင်ပြီး သတ်မှတ်ပေးသော status သည် 404 ဖြစ်ပါတယ်။ ၎င်းသည် သာမန် try/catch ဖြင့် ဖမ်းမရသော marker error ဖြစ်ပြီး Next.js ကိုယ်တိုင်သာ ကိုင်တွယ်ပါတယ်။ မှတ်သားရန် မှာ `next/router` အစား `next/navigation` မှ import လုပ်ရမည်၊ try/catch အတွင်းတွင် မထားရဘဲ `dynamicParams=false` ဖြစ်ပါက unlisted dynamic param URLs များကို အလိုအလျောက် 404 ပြန်ပေးပါတယ်။
+
+## What it is
+
+`notFound()` သည် Next.js အား 404 response + အနီးဆုံး `not-found.tsx` ကို render လုပ်ရန် ညွှန်ကြားသော internal error တစ်ခုကို ပစ်ထုတ်ပါတယ်:
+
+```tsx
+import { notFound } from "next/navigation";
+
+export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
+  if (!post) notFound();   // unmatched slug → 404
+  return <Article post={post} />;
+}
+```
+
+## Supported scopes (သုံးနိုင်သော နေရာများ)
+
+- Server Components (pages/layouts)
+- Server Actions
+- Route Handlers (`then` ဖြင့် သုံးလျှင် သတိပြုပါ: manual response ပြန်လိုပါက response ကို တိုက်ရိုက် return လုပ်ပါ)
+
+## Behavior (အပြုအမူ)
+
+- **404** status ကို သတ်မှတ်ပေးပါတယ်
+- အနီးဆုံး `not-found.tsx` ကို render လုပ်ပါတယ်
+- သာမန် try/catch ဖြင့် ဖမ်းလို့မရပါ — ၎င်းသည် marker တစ်ခုဖြစ်ပြီး Next.js မှ ကိုင်တွယ်ပါတယ်
+
+## Rules & gotchas (စည်းကမ်းနှင့် သတိပြုအချက်များ)
+
+- `next/router` မဟုတ်ဘဲ `next/navigation` မှ import လုပ်ပါ
+- try/catch ဖြင့် မထုပ်ပိုးပါနှင့် (ရည်ရွယ်ချက်ရှိရှိ ထွက်ပြေးသည်)
+- `dynamicParams=false` ဖြစ်ပါက unlisted dynamic param URLs များကို အလိုအလျောက် 404 ပြန်ပေးပါတယ်
+
+## လေ့ကျင့်ခန်း (Activity)
+
+ပျောက်ဆုံးသော posts များအတွက် `notFound()` ကို ထည့်သွင်းပြီး `blog/not-found.tsx` ကို style လုပ်ကာ မှားသော slug က 404 ပြန်ပေးပြီး layout ထဲရှိ nav မပျောက်ကြောင်း စစ်ဆေးပါ။

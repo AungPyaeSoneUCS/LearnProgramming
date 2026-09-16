@@ -1,0 +1,58 @@
+---
+title: "create-next-app CLI — Project အသစ် ဖန်တီးရန် CLI Tool"
+description: "Template, package manager နှင့် config များအတွက် Flags များဖြင့် Next.js Project ကို Scaffold လုပ်နည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Command တစ်ကြောင်းတည်းဖြင့် မိမိလိုအပ်သော Starter Template ကို မှန်ကန်စွာ ဖန်တီးနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`npx create-next-app@latest` သည် Next.js Project အသစ်တစ်ခုကို လျှင်မြန်စွာ ဖန်တီးပေးသော Official CLI Tool ဖြစ်ပါတယ်။ Flags များကို ပေးလိုက်သည်နှင့် TypeScript ဖြစ်စေ JavaScript ဖြစ်စေ၊ App Router ဖြစ်စေ Pages Router ဖြစ်စေ မိမိရွေးချယ်ချက်အတိုင်း Project Structure ကို အလိုအလျောက် ထုတ်ပေးပါတယ်။ `--empty` ကဲ့သို့သော Flag များဖြင့် Minimal Template ကိုလည်း ရယူနိုင်ပြီး CI Environment တွင် Interactive Prompt များကို ကျော်လွန်နိုင်ရန် Flag အားလုံးကို တစ်ပြိုင်နက် ပေးအပ်နိုင်ပါတယ်။
+
+## Basic
+
+```bash
+npx create-next-app@latest my-app
+```
+
+## Useful flags
+
+| Flag                     | Effect                          |
+| ------------------------ | ------------------------------- |
+| `--ts` / `--js`           | TypeScript or JavaScript        |
+| `--tailwind` / `--no-tailwind` | Tailwind preload            |
+| `--eslint` / `--no-eslint`     | ESLint config             |
+| `--app` / `--pages`      | App Router vs Pages Router      |
+| `--src-dir`              | put code in `src/`              |
+| `--import-alias "@/*"`   | path alias                      |
+| `--empty`                | minimal template                |
+| `--use-npm` / `--use-pnpm` | package manager              |
+| `--turbopack`            | enable Turbopack on dev/build  |
+
+## Example full run
+
+```bash
+npx create-next-app@latest blog \
+  --ts --tailwind --app --src-dir \
+  --import-alias "@/*" --use-npm --turbopack
+```
+
+## Promptless (CI)
+
+Interactive Prompt များကို ကျော်လွှားရန် Flags များကို ပေးအပ်ပါ:
+
+```bash
+npx create-next-app@latest api --empty --ts --no-eslint --no-tailwind
+```
+
+## What it scaffolds
+
+Typical tree: `src/app/layout.tsx`, `page.tsx`, `globals.css`, `next.config.ts`, `tsconfig.json`, `eslint.config.mjs`, `public/` များ ပါဝင်ပါတယ်။
+
+## Activity
+
+Project နှစ်ခုကို Scaffold လုပ်ပါ: Tailwind + TypeScript + App Router ပါဝင်သော Default အမျိုးအစားနှင့် Flags များဖြင့်သာ ဖန်တီးသော Empty TypeScript အမျိုးအစားတို့ ဖြစ်ပါတယ်။ Tree များကို နှိုင်းယှဉ်ကြည့်ပြီး လေ့ကျင့်ရန် ဖျက်ကာ ပြန်လည်ဖန်တီးပါ။

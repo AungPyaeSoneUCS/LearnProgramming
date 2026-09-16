@@ -1,0 +1,95 @@
+---
+title: "Server Actions — Server Actions (ဆာဗာဘက် လုပ်ဆောင်ချက်များ)"
+description: "The full Server Action toolbox: definition, usage in forms, progressive enhancement, errors, and integration with cache. — Server Action ရဲ့ အသုံးပြုအစု အပြည့်အစုံ — define လုပ်နည်း၊ form မှာ သုံးပုံ၊ progressive enhancement, errors နဲ့ cache နဲ့ ပေါင်းစပ်ပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  App Router ရဲ့ primary mutation API ဖြစ်တဲ့ Server Action ကို — secure, typed ဖြစ်ကာ caching နဲ့ forms နဲ့ ပေါင်းစပ်ပြီး ကျွမ်းကျင်စွာ သုံးတတ်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Server Action ဆိုတာ form submission တွေနဲ့ data mutation တွေအတွက် အသုံးပြုတဲ့ Server Function ဖြစ်ပြီး "use server" directive နဲ့ မှတ်သားပါတယ်။ form ထဲကို `action={createPost}` ဆိုပြီး တိုက်ရိုက်ချိတ်လိုက်ရင် HTML form serialization ကြောင့် JavaScript မလိုဘဲ အလုပ်လုပ်နိုင်တဲ့ **progressive enhancement** ကို ရပါတယ်။ Client ဘက်မှာတော့ useActionState hook နဲ့ pending state နဲ့ return state ကို ဖမ်းယူနိုင်ပြီး button ကို disabled အဖြစ် ပြောင်းနိုင်ပါတယ်။ Error တွေကတော့ throw လုပ်ရင် အနီးဆုံး error.tsx boundary က ပြမယ်၊ ဒါမှမဟုတ် validation အချိန်မှာ inline, field-level message တွေ လိုချင်ရင် error object ကို return လုပ်ပါတယ်။ Cache နဲ့ကတော့ revalidatePath() (route rebuild), revalidateTag() (tag အလိုက် purge), updateTag() (fresh value နဲ့ swap) တွေနဲ့ ပေါင်းစပ်ပါတယ်။ Security မှာတော့ — auth ကို action ထဲထည့် ဆောင်ရွက်ပါ၊ action တွေက POST ကနေ တိုက်ရိုက် ရောက်နိုင်လို့ UI-only လို့ မယူဆပါနဲ့၊ FormData ထဲက input တိုင်းကို Zod နဲ့ validate လုပ်ပြီး ဘယ်တော့မှ မယုံကြည်ပါနဲ့။
+
+## Definition
+
+**Server Action** ဆိုတာ form submission နဲ့ mutation တွေအတွက်သုံးတဲ့ Server Function ဖြစ်ပြီး `"use server"` ဆိုပြီး သတ်မှတ်ပါတယ်:
+
+```ts
+// app/lib/actions.ts
+"use server";
+
+import { cacheLife } from "next/cache";
+import { revalidateTag } from "next/cache";
+import { z } from "zod";
+
+const schema = z.object({ title: z.string().min(1), content: z.string() });
+
+export async function createPost(formData: FormData) {
+  const parsed = schema.parse(Object.fromEntries(formData));
+
+  // verify auth/authorization
+  const session = await auth();
+  if (!session?.user) throw new Error("Unauthorized");
+
+  const post = await db.post.create({ data: parsed });
+
+  revalidateTag("posts"); // invalidate UI after write
+  return { ok: true, id: post.id };
+}
+```
+
+## Calling from a form
+
+```tsx
+<form action={createPost}>
+  <input name="title" />
+  <textarea name="content" />
+  <button type="submit">Create</button>
+</form>
+```
+
+ဒီပုံစံက design အရ JS မလိုဘဲ အလုပ်လုပ်ပါတယ် (HTML form serialization) — **progressive enhancement** ဖြစ်ပါတယ်။
+
+## Bound + pending states
+
+```tsx
+"use client";
+
+import { useActionState } from "react";
+import { createPost } from "@/app/lib/actions";
+
+const [state, formAction, pending] = useActionState(createPost, null);
+
+<form action={formAction}>
+  … <button disabled={pending}>{pending ? "Saving…" : "Save"}</button>
+  {state?.ok && <p>Post #{state.id} created</p>}
+</form>
+```
+
+## Errors
+
+- Throw လုပ်ရင် → အနီးဆုံး `error.tsx` boundary က ပြပါတယ်
+- Inline, field-level messages (validation pattern) အတွက် error state ကို return လုပ်ပါ
+
+## Interop with caches
+
+Actions တွေက cache model နဲ့ ပေါင်းစပ်အလုပ်လုပ်ပါတယ်:
+
+```ts
+revalidatePath("/blog");      // rebuild a route
+revalidateTag("posts");       // purge by tag
+updateTag("posts");           // swap in already-fresh value
+```
+
+## Security rules
+
+- Auth ကို action ရဲ့ အထဲမှာ အမြဲ စစ်ပါ
+- Actions တွေက POST ကနေ တိုက်ရိုက် ရောက်နိုင်ပါတယ် — UI-only လို့ ဘယ်တော့မှ မယူဆပါနဲ့
+- Input တိုင်းကို validate လုပ်ပါ (Zod); `FormData` ကို ဘယ်တော့မှ မယုံကြည်ပါနဲ့
+
+## Activity
+
+ရှိပြီးသား fetch-based mutation တစ်ခုကို Zod + auth check + `revalidateTag` ပါတဲ့ Server Action အဖြစ် ပြောင်းပြီး `useActionState` pending UI နဲ့ form တစ်ခုထဲ ချိတ်ဆက်ပါ။

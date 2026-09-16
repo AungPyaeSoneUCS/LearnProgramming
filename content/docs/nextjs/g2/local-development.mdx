@@ -1,0 +1,75 @@
+---
+title: "Development Environment — ဒေသတွင်း တီထွင်ရေး ဝန်းကျင်"
+description: "Local development in depth: dev server features, strict mode, HMR, delete chronograms, and dev-only config. — dev server features များ၊ strict mode, HMR နှင့် dev-only config များကို အသေးစိတ် နားလည်ရန်"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  မြန်ဆန်သော compiles များ၊ အသုံးဝင်သော diagnostics များနှင့် production သို့ ဘယ်သောအခါမှ မပို့သည့် dev-only config များဖြင့် local development loop ကို ညှိယူနည်းကို နားလည်စေရန် ဖြစ်ပါတယ် — **React Strict Mode**, **HMR** နှင့် **devIndicators** တို့၏ အပြုအမူများကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Development ကာလတွင် တုံ့ပြန်မှု မြန်ဆန်ရန် Next.js သည် Turbopack အခြေပြု dev server တစ်ခုကို ပေးပါတယ်။ `npm run dev` ဖြင့် စတင်နိုင်ပြီး fast refresh, route search နှင့် runtime error overlays များ ပါဝင်ကာ bug များကို ချက်ချင်း မြင်တွေ့နိုင်ပါတယ်။ React Strict Mode ကို default အနေဖြင့် ဖွင့်ထားပြီး render နှင့် effect များကို dev ကာလတွင် နှစ်ကြိမ် လည်ပတ်စေကာ impure code များကို ဖော်ပြပေးပါတယ်။ `devIndicators` config ဖြင့် error overlay ၊ app ISR status နှင့် position ကဲ့သို့ ညွှန်ပြချက်များကို ထိန်းချုပ်နိုင်ပြီး `reactCompiler` ဖြင့် dev ကာလတွင် automatic memoization ရရှိနိုင်ပါတယ်။ Server Component သို့မဟုတ် page တစ်ခုကို တည်းဖြတ်သည့်အခါ server render ကို ပြန်လည် လည်ပတ်ပြီး env vars အသစ်များ ပြောင်းလဲပါက server ကို အလိုအလျောက် ပြန်လည် စတင်ပါတယ်။ Windows/WSL2 ကဲ့သို့ ပတ်ဝန်းကျင်များတွင် file watching အတွက် polling သို့မဟုတ် volumes ကို သုံးရန်နှင့် container ပြင်ပတွင် `node_modules` ကို cache လုပ်ရန် လိုအပ်ပါတယ်။
+
+## The dev server
+
+```bash
+npm run dev
+```
+
+၎င်းက ပေးသော အရာများ: fast refresh ပါသော Turbopack compile ၊ route search ၊ runtime error overlays နှင့် Next.js Font/React dev overlays များ ဖြစ်ပါတယ်။
+
+## React Strict Mode
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  reactStrictMode: true,      // default ON
+};
+```
+
+Strict Mode သည် dev ကာလတွင် renders/effects များကို နှစ်ကြိမ် လည်ပတ်စေပြီး impure code များကို မြင်သာအောင် ဖော်ပြပေးပါတယ်။
+
+## Development-only config
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  devIndicators: {
+    appIsrStatus: true,       // SIGMA bottom-right info
+    errorOverlay: true,
+    position: "bottom-right",
+  },
+  reactCompiler: true,        // automatic memoization in dev
+  serverComponentsHmrCache: true,
+};
+```
+
+## Live reloading & HMR
+
+- **Fast Refresh** — components များကို တည်းဖြတ်နေစဉ် state ကို ထိန်းသိမ်းပေးပါတယ်
+- Server Components သို့မဟုတ် pages များကို တည်းဖြတ်ပါက server render ကို ပြန်လည် လည်ပတ်ပါတယ်
+- Env vars အသစ် သို့မဟုတ် ပြောင်းလဲမှုများသည် server ကို အလိုအလျောက် ပြန်စေပါတယ်
+
+## Inspecting dev network
+
+```
+next dev --turbopack
+```
+
+Route instrumentation ကို dev-only logging ဖြင့် ထည့်နိုင်ပါတယ်:
+
+```ts
+logging: { fetches: { fullUrl: true } }
+```
+
+## Docker/local gotchas
+
+- Windows: WSL2 အတွက် filesystem polling သို့မဟုတ် volumes များကို စောင့်ကြည့်ပါ
+- မြန်ဆန်မှုအတွက် container ၏ ပြင်ပတွင် `node_modules` ကို cache လုပ်ပါ
+
+## Activity
+
+လေ့ကျင့်ခန်း: `reactStrictMode` + `devIndicators` များကို ဖွင့်ပြီး component တစ်ခုတွင် `Math.random()` ကို ရည်ရွယ်ချက်ရှိရှိ render လုပ်ကာ Strict Mode က instability ကို နှစ်ကြိမ် ဖော်ပြသည်ကို ကြည့်ပါ။

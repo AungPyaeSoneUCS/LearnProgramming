@@ -1,0 +1,52 @@
+---
+title: "usePathname (လက်ရှိ Path ဖတ်ခြင်း)"
+description: "Get the current URL pathname on the client. — Client ဘက်တွင် လက်ရှိ URL Pathname ကို ရယူခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Active Path ကို ဖတ်ယူ၍ Nav Highlighting၊ Analytics နှင့် Conditional UI များအတွက် အသုံးပြုနိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`usePathname` သည် Client Components များအတွင်းမှ လက်ရှိ URL ၏ Pathname String ကို ဖတ်ယူပေးသော Next.js Hook တစ်ခုဖြစ်ပါတယ်။ ၎င်းသည် `/blog/my-post` ကဲ့သို့ Query String နှင့် Hash များကို ချန်လှပ်ထားသည့် Path အပိုင်းကိုသာ ပြန်ပေးပါတယ်။ Component မည်သည့်နေရာတွင် တည်ရှိနေစေကာမူ Application နှင့် သက်ဆိုင်သော Path ကို ရရှိနိုင်ပြီး Navigation ဖြစ်ပွားသည့်အခါ Hook သည် ပြန်လည် Render ဖြစ်သဖြင့် လက်ရှိအနေအထားကို အမြဲ ထင်ဟပ်ပါတယ်။ ၎င်းကြောင့် Nav Bar ရှိ Section များအား Active State ပြရန် Prefix Matching ပြုလုပ်ခြင်း၊ `useEffect` အတွင်းမှ Pathname ပြောင်းလဲချိန်တိုင်း Pageview Analytics များ ပို့ခြင်းနှင့် Section အလိုက် Dynamic Styling (ဥပမာ Hero ပြောင်းလဲခြင်း) စသည်တို့တွင် အသုံးပြုနိုင်ပါတယ်။ တစ်ချက် သတိပြုရန်မှာ ၎င်းသည် URL Bar ၏ Full Origin (Host) ကို မပေးဘဲ App ၏ Path ကိုသာ ပြန်ပေးပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```tsx
+"use client";
+import { usePathname } from "next/navigation";
+
+export function Nav() {
+  const pathname = usePathname();
+
+  return (
+    <nav>
+      <a className={pathname === "/" ? "active" : ""} href="/">Home</a>
+      <a className={pathname.startsWith("/blog") ? "active" : ""} href="/blog">Blog</a>
+    </nav>
+  );
+}
+```
+
+## Returns (ပြန်ပေးချက်)
+
+Pathname String (`/blog/my-post`) ဖြစ်ပြီး Query/Hash များကို ဖယ်ထုတ်ထားပါတယ်။
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Client-only Hook ဖြစ်သည်
+- Navigation ဖြစ်ချိန်တွင် ပြန်လည် Render ဖြစ်သည်
+- App ၏ Path ကိုသာ ပြပြီး URL Bar ၏ Full Origin ကို မပြပါ
+
+## Patterns (ပုံစံများ)
+
+- Section-level Active States များအတွက် Prefix Matching
+- `useEffect(() => track(pathname), [pathname])` တွင် Analytics Dispatch လုပ်ရန်
+- Section အလိုက် Hero ပြောင်းလဲခြင်းကဲ့သို့ Dynamic Styling Keys များအတွက်
+
+## Activity (လေ့ကျင့်ခန်း)
+
+`usePathname` Prefix Matching ဖြင့် Active-navigation တစ်ခုကို တည်ဆောက်ပြီး Router-based Metrics များအတွက် Pathname ပြောင်းလဲချိန်တိုင်း Pageview ကို Log လုပ်ပါ။

@@ -1,0 +1,88 @@
+---
+title: "Environment Variables — Environment Variables များ"
+description: "Manage environment variables: .env files, NEXT_PUBLIC_ vars, runtime injection, and validation. — .env files, NEXT_PUBLIC_ vars, runtime injection နှင့် validation ပါဝင်သည့် environment variables များ စီမံခန့်ခွဲခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Client သို့ ဘယ်တော့မှ မရောက်သည့် runtime-only variables များ အပါအဝင် secrets နှင့် public configuration များကို မှန်ကန်စွာ ကိုင်တွယ်နိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Environment Variables ဆိုသည်မှာ code အတွင်းတွင် မထည့်ဘဲ application ၏ ပတ်ဝန်းကျင်တွင် သီးခြား သိမ်းဆည်းထားသော ဆက်တင်များနှင့် secrets များ ဖြစ်ပါတယ်။ Next.js သည် `.env.local`, `.env.development`, `.env.production` နှင့် `.env` ဖိုင်များကို အစဉ်လိုက် load လုပ်ပြီး နောက်မှ load သော ဖိုင်များက ရှေ့ကဖိုင်များကို override လုပ်ပါတယ်။ `NEXT_PUBLIC_` ရှေ့ဆက်ရှိသော variables များသာ build time တွင် client bundle ထဲသို့ inline ပြုလုပ်ပြီး ကျန်အားလုံးသည် server-only ဖြစ်ကာ browser သို့ မပေါက်ကြားနိုင်ပါဘူး။ ထို့ကြောင့် API keys ကဲ့သို့သော secrets များကို `NEXT_PUBLIC_` ရှေ့ဆက် မသုံးဘဲ server ဘက်တွင်သာ အသုံးပြုသင့်ပါတယ်။ Runtime-only variables များအတွက်မူ per-request values (ဥပမာ platform-provided tokens) များကို Runtime API မှတစ်ဆင့် ဖတ်ရှုနိုင်ပြီး ၎င်းတို့သည် client ကို မရောက်ရှိပါဘူး။ Startup တွင် Zod ကဲ့သို့သော library များဖြင့် env အားလုံးကို validate လုပ်ပါက configuration error များကို ကြိုတင် သိရှိနိုင်ပါတယ်။
+
+## The .env file system
+
+Next.js သည် ဤဖိုင်များကို အစဉ်လိုက် load လုပ်ပါတယ် (နောက်မှ load သော အရာများသည် override လုပ်သည်):
+
+```
+.env.local          # local only - gitignored
+.env.development    # dev only
+.env.production     # production only
+.env                # committed defaults
+```
+
+> `.env` ဖိုင်များသည် **multi-line values, comments နှင့် `$VAR` expansion** များကို ပံ့ပိုးပေးပါတယ်။
+
+## Public vs server-only
+
+```bash
+DATABASE_URL="postgres://..."      # server only (default)
+API_KEY="sk-..."                   # server only
+NEXT_PUBLIC_SITE_URL="https://x.com"  # inlined into the client bundle
+```
+
+စည်းမျဉ်းများ:
+
+- **`NEXT_PUBLIC_`** ရှေ့ဆက်ရှိသော အရာများကို build time တွင် inline လုပ်သည် → code ထဲတွင် မြင်နိုင်သည်
+- ကျန်အားလုံးသည် server-only ဖြစ်ပြီး ပေါက်ကြား၍ မရနိုင်
+- Runtime တွင် env အား ပြောင်းလဲခြင်း (per deployment) သည် inlined vars များအတွက် rebuild လိုအပ်သည်
+
+## Using variables
+
+Server Components နှင့် config တွင်:
+
+```ts
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+```
+
+Client Components တွင်:
+
+```tsx
+"use client";
+
+export default function Analytics() {
+  return <script src={`/a?site=${process.env.NEXT_PUBLIC_SITE_URL}`} />;
+}
+```
+
+## Runtime-only variables (not inlined)
+
+ထုတ်ဖော်၍ မရသော (leak မဖြစ်စေသော) secrets များအတွက် per-request values (e.g. platform-provided tokens) လိုအပ်ပါက Runtime API မှတစ်ဆင့် ဖတ်ပါ — ၎င်းတို့သည် server-side တွင် ရှိနေပြီး request time တွင် ရနိုင်ပါတယ်။
+
+## Validate on startup
+
+```ts
+// lib/env.ts
+import { z } from "zod";
+
+const envSchema = z.object({
+  DATABASE_URL: z.string().url(),
+  NEXT_PUBLIC_SITE_URL: z.string().url(),
+});
+
+export const env = envSchema.parse(process.env);
+```
+
+## Checking in dev
+
+```bash
+npm run dev
+echo $DATABASE_URL   # but prefer node -e "console.log(process.env.X)"
+```
+
+## Activity — လေ့ကျင့်ခန်း
+
+Server secret တစ်ခုနှင့် `NEXT_PUBLIC_` var တစ်ခုပါသော `.env.local` တစ်ခု ဖန်တီးပါ။ Browser ၏ JS တွင် server secret မပါဝင်ကြောင်း အတည်ပြုပါ (built bundle ကို grep လုပ်ပါ)။

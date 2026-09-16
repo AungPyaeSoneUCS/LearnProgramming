@@ -1,0 +1,63 @@
+---
+title: "ImageResponse — Dynamic Images ထုတ်လုပ်ခြင်း"
+description: "Generate dynamic images (OG, icons) with JSX using the next/og ImageResponse. — Next/og ImageResponse ကိုသုံး၍ JSX ဖြင့် dynamic images (OG, icons) များ ထုတ်လုပ်နိုင်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Typed JSX များမှ ImageResponse ဖြင့် လှပသော share images နှင့် icons များကို တည်ဆောက်နိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`ImageResponse` သည် `next/og` မှရယူရသော class တစ်ခုဖြစ်ပြီး JSX ကို ပုံရိပ် (image) အဖြစ် render လုပ်ပေးပြီး edge-safe runtime ပေါ်တွင် လည်ပတ်နိုင်ပါတယ်။ ဤနည်းဖြင့် blog post တစ်ခုချင်းစီအတွက် အလိုအလျောက် ထုတ်လုပ်ထားသော Open Graph (OG) ပုံများနှင့် icon များကို server ဘက်မှ ချက်ချင်း ဖန်တီးနိုင်ပါတယ်။ Inline styles (CSS-in-JS style object) နှင့် Flexbox layout (CSS subset) တို့ကို ထောက်ပံ့ပြီး fonts များကို `fonts: [{ name, data, weight }]` ဖြင့် ထည့်သွင်းနိုင်ပါတယ်။ `opengraph-image.tsx`, `icon.tsx`, `manifest` စသည့်ဖိုင်များမှ ပြန်ပို့နိုင်ပြီး Web Font (ဥပမာ Inter) ကို fetch လုပ်ပြီး arrayBuffer အဖြစ်ပြောင်းကာ font data အဖြစ် အသုံးပြုနိုင်ပါတယ်။ မှတ်သားရန် မှာ JSX သက်သက်ဖြစ်သောကြောင့် hooks မသုံးနိုင်ဘဲ OG ပုံများအတွက် caching ကို ပုံမှန် revalidate ပြုလုပ်လေ့ရှိပါတယ်။
+
+## What it is
+
+`next/og` မှ `ImageResponse` သည် JSX ကို ပုံရိပ်အဖြစ် render လုပ်ပေးပါတယ် (Polypon-based, edge-safe):
+
+```tsx
+import { ImageResponse } from "next/og";
+
+export default function OGImage() {
+  return new ImageResponse(
+    (
+      <div style={{ width: "100%", height: "100%", display: "flex", background: "#0f172a", color: "#38bdf8", alignItems: "center", justifyContent: "center", fontSize: 60 }}>
+        Hello from OG
+      </div>
+    ),
+    { width: 1200, height: 630 }
+  );
+}
+```
+
+## What it supports (ထောက်ပံ့ပေးသော အကြောင်းအရာများ)
+
+- Inline styles (CSS-in-JS style object)
+- Flexbox layout model (CSS ၏ subset)
+- Fonts — `fonts: [{ name, data, weight }]`
+- **Edge runtime** တွင်လည်ပတ်နိုင်ပြီး Node dependencies မလိုအပ်ပါ
+- `opengraph-image.tsx`, `icon.tsx`, `manifest` စသည့်နေရာများမှ ပြန်ပို့နိုင်ပါတယ်
+
+## Fonts
+
+```ts
+const font = await fetch(new URL("./Inter.ttf", import.meta.url)).then((r) => r.arrayBuffer());
+
+return new ImageResponse(<div style={{ fontFamily: "Inter" }}>…</div>, {
+  width: 1200,
+  height: 630,
+  fonts: [{ name: "Inter", data: font, style: "normal", weight: 400 }],
+});
+```
+
+## Rules & gotchas (စည်းကမ်းနှင့် သတိပြုအချက်များ)
+
+- Pure JSX — hooks မသုံးနိုင်ဘဲ async ကို custom code wrapping တွင်သာ လုပ်ပါ
+- Twemoji library သည် optional ဖြစ်ပြီး default emoji ဖြင့် ရပါတယ်
+- Caching: `"use cache"` ဖြင့် မှတ်သားနိုင်ပြီး OG အတွက် ပုံမှန် revalidate လုပ်လေ့ရှိပါတယ်
+
+## လေ့ကျင့်ခန်း (Activity)
+
+Post တစ်ခုချင်းစီအတွက် ဆွဲဆောင်မှုရှိသော card (title + author + gradient) ကို ထုတ်လုပ်ပြီး font တစ်ခုကို embed လုပ်ကာ share checker ဖြင့် စစ်ဆေးပါ။

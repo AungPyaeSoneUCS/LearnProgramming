@@ -1,0 +1,80 @@
+---
+title: "TypeScript — TypeScript ပံ့ပိုးမှု"
+description: "TypeScript Support, Config, Strictness နှင့် App Router Typing များအကြောင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  App Router APIs များအတွက် အကောင်းဆုံး Type Safety ကို ရရှိစေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js သည် TypeScript ကို Zero Setup ဖြင့် ထောက်ပံ့ပေးပြီး `create-next-app` ဖြင့် Project ဖန်တီးစဉ် TypeScript Template ကို တိုက်ရိုက် ရွေးချယ်နိုင်ပါတယ်။ `next build` ပြုလုပ်ရာတွင် `tsc` ကို Run လုပ်ကာ Type Error များကို စစ်ဆေးပေးပြီး App Router ၏ `params` ကဲ့သို့သော API များအတွက် Built-in Typing များ ပါဝင်ပါတယ်။ `strict: true` ကို ဖွင့်ထားခြင်းဖြင့် Nullable Value များနှင့် Implicit Any ကဲ့သို့သော ပြဿနာများကို ကာကွယ်နိုင်ပါတယ်။ Path Alias `@/*` ကိုလည်း `tsconfig` တွင် သတ်မှတ်၍ Import လမ်းကြောင်းများကို ရှင်းလင်းစေနိုင်ပါတယ်။
+
+## Out of the box
+
+Next.js သည် `next build` ပြုလုပ်စဉ် `tsc` ကို Run လုပ်ပြီး `next dev` သည် Type Safety သိသော Fast Refresh ကို လုပ်ဆောင်ပါတယ်။ Setup မလိုသော TypeScript:
+
+```bash
+npx create-next-app@latest my-app --typescript
+```
+
+## tsconfig essentials
+
+```jsonc
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [{ "name": "next" }],
+    "paths": { "@/*": ["./*"] }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+```
+
+## App Router typing patterns
+
+```tsx
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Home" };
+
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  // typed Result<
+}
+```
+
+## Env typing
+
+```ts
+// env.d.ts
+declare namespace NodeJS {
+  interface ProcessEnv { DATABASE_URL: string; }
+}
+```
+
+## Rules & gotchas
+
+- `strict: true` အသုံးပြုရန် အကြံပြုပါတယ်
+- `.next/types` သည် Generated Route Types များကို ပေးပြီး (`typedRoutes` သည် Opt-in ဖြစ်ပါတယ်)
+- Path Alias `@/*` — `tsconfig` နှင့် PostCSS/Tailwind Context များတွင် ထပ်တူ ထည့်သွင်းပါ
+
+## Activity
+
+`typedRoutes` Experiment ကို ဖွင့်ကာ `tsc --noEmit` ကို Run လုပ်ပြီး Error များကို ပြုပြင်ပါ။ `generateStaticParams` နှင့် `await params` တို့ကို မှန်ကန်စွာ စစ်ဆေးကြောင်း အတည်ပြုပါ။

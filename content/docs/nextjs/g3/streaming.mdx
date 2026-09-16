@@ -1,0 +1,85 @@
+---
+title: "Streaming — Streaming (အပိုင်းလိုက်ပို့ခြင်း)"
+description: "Stream rendered UI to the browser as data arrives with Suspense, skeletons, and instant shells. — Data ရောက်လာတာနဲ့ Suspense, skeleton, instant shell တွေသုံးပြီး render လုပ်ထားတဲ့ UI ကို browser ဆီ အပိုင်းလိုက် ပို့နည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Page တစ်ခုလုံးကို slow query တစ်ခုနဲ့ ဘယ်တော့မှ မပိတ်ဆို့ပါနဲ့ — shell တွေကို ချက်ချင်းပြပြီး content တွေကို stream လုပ်သွားဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Streaming ဆိုတာ page တစ်ခုလုံး data ပြည့်သည်အထိ စောင့်နေရတာမဟုတ်ဘဲ rendered HTML ကို server ကနေ အပိုင်းလိုက် flush ပို့ပြီး browser မှာ ချက်ချင်း ပြသနိုင်အောင် လုပ်ပေးတဲ့ ယန္တရား ဖြစ်ပါတယ်။ Async section တွေကို Suspense နဲ့ ထုပ်ထားရင် — shell (headers/nav စသည်) နဲ့ ပထမ Suspense က instant render ဖြစ်ပြီး ကျန်တဲ့ suspended component တစ်ခုချင်းစီက သူ့ရဲ့ async data ပြီးပြီဆိုတာနဲ့ stream လို့ ဝင်လာပါတယ်။ next build ရဲ့ route report မှာတော့ streamed content တွေက static shell နောက်က dynamic parts အဖြစ် ပေါ်ပါတယ်။ Streaming ကို `use cache` + `cacheLife` နဲ့ တွဲသုံးရင် Suspense က stream လုပ်ပြီး cache က recomputation ကို တားဆီးပေးလို့ နှစ်မျိုးလုံး ရပါတယ်။ loading.tsx က segment-level fallback ကို အလိုအလျောက် ပေးပြီး content နည်းတဲ့ page တွေမှာတော့ streaming overhead နဲ့ crawlers (htmlLimitedBots config နဲ့ bots အတွက် HTML) အကြောင်းတွေ ထည့်စဉ်းစားဖို့ လိုပါတယ်။
+
+## Streaming with Suspense
+
+Block လုပ်စရာမလိုတဲ့ async section တွေကို ထုပ်ပါ:
+
+```tsx
+import { Suspense } from "react";
+import { PostFeed, Comments } from "./components";
+
+export default async function PostPage({ params }) {
+  const { id } = await params;
+
+  return (
+    <article>
+      <Suspense fallback={<PostSkeleton />}>
+        <PostFeed id={id} />
+      </Suspense>
+      <Suspense fallback={<CommentSkeleton />}>
+        <Comments id={id} />
+      </Suspense>
+    </article>
+  );
+}
+```
+
+- Shell + ပထမ Suspense က instant render ဖြစ်ပါတယ်
+- Suspended component တစ်ခုချင်းစီက သူ့ရဲ့ async data ပြီးတာနဲ့ stream လုပ်ပါတယ်
+
+## The route report
+
+`next build` မှာတော့ "streamed" content တွေက static shell နောက်က dynamic parts အဖြစ် ပေါ်ပါတယ်။
+
+## Incremental rendering
+
+Server HTML ကို အဆင့်ဆင့် progressive flush လုပ်ပါတယ်:
+1. Static shell (headers, nav) → အလွန်မြန်ပါတယ်
+2. ပထမ Suspense fill → data ပြီးတာနဲ့
+3. ကျန်တာတွေ → နောက်မှ
+
+## Streaming + caching
+
+Combine with `use cache` for the best of both:
+
+```tsx
+async function Feed() {
+  "use cache";
+  cacheLife("minutes");
+  const items = await getItems();
+  return <ul>{items.map((i) => <li key={i.id}>{i.title}</li>)}</ul>;
+}
+```
+
+Suspense က stream လုပ်ပေးပြီး cache က re-computation ကို ကာကွယ်ပေးပါတယ်။
+
+## Loading UI files
+
+`loading.tsx` က segment-level fallback တစ်ခုကို အလိုအလျောက် ပေးပါတယ်:
+
+```tsx
+export default function Loading() {
+  return <div className="h-48 animate-pulse rounded-xl bg-muted" />;
+}
+```
+
+## When NOT to stream
+
+Content နည်းတဲ့ page တွေမှာ: streaming overhead (~သေးငယ်) က slow data ကို မပြရတော့တဲ့ အရာနဲ့ လဲဖို့ မတန်ပါဘူး။ ဒါ့အပြင် `crawlers` တွေက fully-rendered HTML ကို ပိုကြိုက်နိုင်လို့ bots တွေအတွက် ကြီးတဲ့ HTML တွေကို ကြိုတင် render လုပ်ဖို့ `htmlLimitedBots` config ကို သုံးနိုင်ပါတယ်။
+
+## Activity
+
+သင့် page ရဲ့ အနှေးဆုံး section နှစ်ခုကို skeleton တွေနဲ့ `<Suspense>` ထဲ ထုပ်ပြီး DevTools မှာ "Slow 4G" လို့ throttle လုပ်ပါ။ Feed မပြီးခင် shell က အရင်ဆုံး paint ဖြစ်တာကို ကြည့်ပါ။

@@ -1,0 +1,82 @@
+---
+title: "Scripts — Script များတင်ခြင်း"
+description: "Load third-party scripts without slowing down your app using next/script strategies. — next/script strategies သုံးပြီး app ကို မနှေးအောင် third-party script တွေ ထည့်နည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Main thread နဲ့ LCP ကို မထိခိုက်စေဘဲ analytics, embeds နဲ့ tooling script တွေကို ထည့်သွင်းနိုင်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Third-party script (analytics, embed, SDK စသည်) တွေကို ပုံမှန် script tag နဲ့ ထည့်ရင် render-blocking ဖြစ်ပြီး main thread ကို ပိတ်ဆို့စေနိုင်ပါတယ် — ဒါကြောင့် Next.js က next/script ရဲ့ `<Script>` component နဲ့ **strategy** အမျိုးမျိုး ပေးထားပါတယ်။ afterInteractive က hydration ပြီးမှ load လုပ်ပြီး (default), beforeInteractive က hydration မတိုင်ခင် head ထဲမှာ အရင်ထည့်၊ lazyOnload က browser idle ဖြစ်မှ တင်ပြီး service-worker strategy က sw.js registration အတွက် သီးသန့်ပါ။ Inline script တွေမှာတော့ hydration ရဲ့ identity အတွက် id prop လိုပါတယ်။ Script က SDK တစ်ခုဆိုရင် onReady နဲ့ global ကို init လို့ရပြီး window ကို သုံးချင်ရင် Client Component ထဲမှာ ထုပ်ရပါတယ်။ Script သုံးတဲ့ component တွေကို root layout ထဲ ထားရင် route တိုင်းအတွက် ရှိနေမယ်၊ page တစ်ခုတည်းအတွက်သာ လိုချင်ရင်တော့ အဲဒီ page ထဲမှာ ထားပါ။ ဒီလိုနည်းနဲ့ LCP ကို မထိခိုက်စေဘဲ third-party code တွေကို ထည့်သွင်းနိုင်ပါတယ်။
+
+## The Script component
+
+```tsx
+import Script from "next/script";
+
+<Script src="https://www.googletagmanager.com/gtag/js?id=G-XXXX" />;
+```
+
+## Strategies
+
+| Strategy            | When it loads                       |
+| ------------------- | ----------------------------------- |
+| `afterInteractive`  | After hydration (default)           |
+| `beforeInteractive` | Before hydration, in the `<head>`   |
+| `lazyOnload`        | When the browser is idle            |
+| `service-worker`    | For `/sw.js` registrations          |
+
+```tsx
+import Script from "next/script";
+
+export default function Analytics() {
+  return (
+    <>
+      <Script
+        src="https://example.com/bundle.js"
+        onLoad={() => console.log("loaded")}
+      />
+      <Script
+        src="/sw.js"
+        strategy="service-worker"
+        onLoad={() => console.log("SW registered")}
+      />
+    </>
+  );
+}
+```
+
+## Inline scripts
+
+```tsx
+<Script id="theme-init" strategy="beforeInteractive">
+  {`document.documentElement.classList.add('no-js');`}
+</Script>
+```
+
+Inline script တွေက hydration အတွက် identity အဖြစ် `id` လိုအပ်ပါတယ်။
+
+## Dispatch events to your app
+
+Global တစ်ခုကို expose လုပ်ပြီး client component ထဲမှာ ဖတ်နိုင်ပါတယ်:
+
+```tsx
+<Script
+  src="/sdk.js"
+  onReady={() => window.MySDK?.init({ apiKey: "x" })}
+/>
+```
+
+`window` ကို အသုံးပြုဖို့ Client Component တစ်ခုထဲမှာ ထုပ်ပါ။
+
+## Loading location
+
+Script သုံးတဲ့ component တွေကို **root layout** ထဲ ထားပါ — route တိုင်းမှာ mount ဖြစ်နေမယ်; route တစ်ခုတည်းအတွက်သာ လိုအပ်ရင်တော့ အဲဒီ page ထဲမှာ ထားပါ။
+
+## Activity
+
+Root layout ထဲမှာ `afterInteractive` နဲ့ Google Analytics ကို ထည့်ပြီး `service-worker` strategy နဲ့ PWA service worker ထည့်ပါ။ DevTools မှာ နှစ်ခုလုံး LCP ကို မပိတ်ဆို့စေတာကို စစ်ဆေးပါ။

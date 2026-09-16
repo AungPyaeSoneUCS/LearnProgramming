@@ -1,0 +1,67 @@
+---
+title: "Parallel Routes — Slot-based Layouts"
+description: "Render multiple sections in one layout simultaneously with @slot folders. — `@slot` Folders များဖြင့် Layout တစ်ခုတွင် Section အများအပြားကို တစ်ပြိုင်နက် Render လုပ်နိုင်ပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Section တစ်ခုစီကို သီးခြားစီ Render လုပ်ပြီး သီးခြားစီ Navigate လုပ်နိုင်သော Dashboard-style Pages များကို တည်ဆောက်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Parallel Routes များသည် `@analytics`၊ `@team` ကဲ့သို့သော **`@slot` Prefix** ပါသည့် Folders များကို အသုံးပြု၍ Layout တစ်ခုတွင် Independent Sections အများအပြားကို တစ်ပြိုင်နက် Render လုပ်နိုင်သော Next.js File Convention တစ်ခုဖြစ်ပါတယ်။ Slot Folder တစ်ခုစီကို Layout ၏ Props များအဖြစ် လက်ခံရရှိပြီး Dashboard အမျိုးအစား စာမျက်နှာများတွင် Side-by-side Content များကို ရှင်းလင်းစွာ ဖွဲ့စည်းနိုင်ပါတယ်။ Slot တစ်ခုစီတွင် မိမိပိုင် Sub-routes (`@team/settings/page.tsx`) များရှိနိုင်ပြီး Browser URL နှင့် RSC များကို အသုံးပြုကာ Slot တစ်ခုတည်းကိုသာ Refresh လုပ်နိုင်သောကြောင့် Modal/Compose UI များအတွက် သင့်တော်ပါတယ်။ URL တစ်ခုကို Hard Refresh လုပ်သောအခါ Slot များအတွက် Fallback အဖြစ် `default.tsx` ကို အသုံးပြုလေ့ရှိပြီး ၎င်းမရှိပါက Error ဖြစ်နိုင်ပါတယ်။ Layout ပေါ်တွင် Slot Components များကို Plain React Nodes အဖြစ် လက်ခံရရှိသောကြောင့် Styling နှင့် Composition များကို ပုံမှန်အတိုင်း လွတ်လပ်စွာ ပြုလုပ်နိုင်ပါတယ်။
+
+## What they are
+
+`@slot` ဟု အမည်ပေးထားသော Folders များသည် Layout အတွက် Named Props များအဖြစ် Render လုပ်ပေးပါတယ်:
+
+```
+app/dashboard/
+├── layout.tsx          # receives { team, analytics }
+├── @team/page.tsx      → renders in <team slot>
+├── @analytics/page.tsx → renders in <analytics slot>
+└── page.tsx
+```
+
+```tsx
+export default function DashboardLayout({ team, analytics }: {
+  team: React.ReactNode;
+  analytics: React.ReactNode;
+}) {
+  return (
+    <div>
+      <aside>{team}</aside>
+      <main>{analytics}</main>
+    </div>
+  );
+}
+```
+
+## Independent navigation
+
+Slot တစ်ခုစီတိုင်းတွင် မိမိပိုင် Sub-routes (`@team/settings/page.tsx`) များ ရှိပါတယ်။ Slot အတွင်းသို့ Navigating လုပ်ပါက Browser URL + RSC မှတစ်ဆင့် ထို Slot တစ်ခုတည်းသာ Refresh ဖြစ်ပြီး Modals/Compose UI များအတွက် ပြီးပြည့်စုံပါတယ်။
+
+## The default.tsx contract
+
+Slot တစ်ခုစီတွင် `default.tsx` ထည့်သွင်းသင့်ပြီး Slot မှ ပိုင်ဆိုင်မှုမရှိသော URL များကို Hard Refresh လုပ်သောအခါ Next.js က ၎င်းကို Fallback အနေဖြင့် Render လုပ်ပေးပါတယ်။
+
+## Styling & state
+
+Component က Mounted ဖြစ်နေသရွေ့ Slot ၏ State များသည် Parallel Navigations များကြားတွင် ထိန်းသိမ်းထားပါတယ်။ Layout သည် ၎င်းတို့ကို Plain React Nodes အဖြစ် လက်ခံရရှိပါတယ်။
+
+## When to use
+
+- Side-by-side Content များ (Dashboards)
+- URL State ဖြင့် Pages များကို Overlay လုပ်သော Modals များ
+- Dual Panels ပါသော Auth Flows များ
+
+## Gotchas
+
+- Reachable URL တစ်ခုစီအတွက် Slot တစ်ခုစီက Page သို့မဟုတ် Default တစ်ခုကို ပေးဆောင်ရပါမယ်
+- Slot အများအပြားရှိပါက Routing Complexity တိုးစေသောကြောင့် လိုအပ်သည့်နေရာတွင်သာ သုံးပါ
+
+## Activity
+
+`@team` နှင့် `@analytics` တို့ဖြင့် `/dashboard` ကို ဖန်တီးပြီး Slot တစ်ခုစီတွင် Independent Sub-routes များကို ထည့်ကာ Slot တစ်ခုတည်းသို့ Navigation လုပ်ခြင်းသည် အခြား Slot ကို Reload မဖြစ်စေကြောင်း စစ်ဆေးပါ။

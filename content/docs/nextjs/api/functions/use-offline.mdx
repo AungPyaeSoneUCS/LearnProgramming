@@ -1,0 +1,49 @@
+---
+title: "useOffline (Offline/Online State)"
+description: "React to offline/online state with the useOffline hook. — useOffline Hook ဖြင့် Offline/Online State ပြောင်းလဲမှုကို တုံ့ပြန်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Network ပြတ်တောက်သွားသောအခါ UI ကို လိုက်လျောညီထွေ ပြောင်းလဲပေးနိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`useOffline` သည် Browser ၏ Online/Offline အခြေအနေ ပြောင်းလဲမှုကို တုံ့ပြန်နိုင်စေရန်အတွက် Boolean တစ်ခုကို ပြန်ပေးသော React Hook တစ်ခုဖြစ်ပါတယ်။ Browser သည် `navigator.onLine === false` ဖြစ်လာသောအခါ Hook မှ true ပြန်ပေးလာပြီး ဤပြောင်းလဲမှုကို UI ထဲတွင် Live ဖြင့် React ပြုလုပ်နိုင်ပါတယ်။ ၎င်းကို PWA/SPA Content များအတွက် Offline Banner များ ပြသရန်၊ Sync Queues များ၏ အခြေအနေ ညွှန်ပြရန်နှင့် Offline ဖြစ်နေစဉ် Form Submit ကို ပိတ်ထားရန် စသည့်နေရာများတွင် အသုံးပြုနိုင်ပါတယ်။ ဤ Hook သည် Client-only ဖြစ်သောကြောင့် SSR တွင်မူ ပုံမှန် false တန်ဖိုးကိုသာ ပြန်ပေးပြီး Browser ၏ အနေအထားကိုသာ ထင်ဟပ်ပါတယ်။ အမှန်တကယ် Offline Content များ ပေးရန်အတွက်မူ Service Workers များနှင့် `use cache` တို့ကို ပေါင်းစပ် အသုံးပြုသင့်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```tsx
+"use client";
+import { useOffline } from "react";
+
+export function RealtimeBanner() {
+  const offline = useOffline();
+
+  return offline ? (
+    <Banner>You're offline - showing saved data</Banner>
+  ) : null;
+}
+```
+
+## Return Value (ပြန်ပေးသည့် တန်ဖိုး)
+
+Boolean တန်ဖိုး ဖြစ်ပြီး Browser မှ `navigator.onLine === false` ဟု သတင်းပို့သောအခါ `true` ဖြစ်ပါတယ်။
+
+## Use Cases (အသုံးပြုပုံများ)
+
+- PWA/SPA Content အတွက် Offline Banners များ
+- Sync Queues များအတွက် Queue Indicators များ
+- Offline ဖြစ်နေစဉ် Posting Forms များကို ပိတ်ထားရန်
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Client-only Hook ဖြစ်သည်
+- Browser State ကိုသာ ထင်ဟပ်ပြီး SSR သည် `false` ကို ပြန်ပေးပါတယ်
+- အမှန်တကယ် Offline Content များအတွက် Service Workers + `use cache` ဖြင့် ပေါင်းစပ် သုံးပါ
+
+## Activity (လေ့ကျင့်ခန်း)
+
+`useOffline` ကို ပြန်လည်ချိတ်ဆက်ရန် အကြံပြုသည့် Banner တစ်ခုနှင့် ချိတ်ဆက်ပြီး DevTools ကို "Offline" သို့ ပြောင်း၍ Banner ပြောင်းလဲခြင်းကို အတည်ပြုပါ။

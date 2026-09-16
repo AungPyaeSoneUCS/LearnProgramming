@@ -1,0 +1,74 @@
+---
+title: "Instrumentation — စောင့်ကြည့်စနစ် ချိတ်ဆက်ခြင်း"
+description: "Hook into the server/client lifecycle with instrumentation.ts and instrumentation-client.ts: init, error tracking, tracing. — instrumentation.ts နှင့် instrumentation-client.ts ဖြင့် server/client lifecycle များတွင် init, error tracking နှင့် tracing များ ချိတ်ဆက်နည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Server နှင့် client နှစ်ဖက်စလုံးမှ Next.js ၏ lifecycle events များအပြီးတွင် observability (ကြည့်ရှုစစ်ဆေးခြင်း) ကို စတင် တပ်ဆင်ပြီး သန့်ရှင်းရေး ပြုလုပ်တတ်လာရန် ဖြစ်ပါတယ် — **instrumentation.ts** နှင့် **instrumentation-client.ts** ဖိုင်များ၏ အခန်းကဏ္ဍကို နားလည်မည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+App တစ်ခုကို production သို့ ပို့ရန်အတွက် log, error tracking နှင့် tracing ကဲ့သို့သော monitoring system များနှင့် ချိတ်ဆက်ရန် လိုအပ်ပါတယ်။ Next.js သည် ထိုသို့ ချိတ်ဆက်ရန် project root တွင် `instrumentation.ts` ဖိုင်ကို ဖန်တီးနိုင်ပြီး ယင်းဖိုင်မှ export လုပ်ထားသော `register` function သည် server boot တက်သည့်အချိန်တွင် runtime တစ်ခုစီအတွက် တစ်ကြိမ်တည်း အလိုအလျောက် လည်ပတ်ပေးပါတယ်။ `NEXT_RUNTIME` environment variable ကို စစ်ဆေးခြင်းဖြင့် `nodejs` runtime နှင့် `edge` runtime အတွက် သီးခြား လုပ်ဆောင်ချက်များကို သတ်မှတ်နိုင်ပြီး Node-only library များကို edge bundle ထဲမှ ဖယ်ထုတ်နိုင်ပါတယ်။ Server Components, Server Actions သို့မဟုတ် Route Handlers တွင် ဖြစ်ပွားသော request-level error များကို ဖမ်းရန် `onRequestError` export ကို သုံးပြီး client ဘက်အတွက်မူ `instrumentation-client.ts` ဖိုင်မှ `register` function ကို အသုံးပြုနိုင်ပါတယ်။ Monitoring tools များနှင့် ချိတ်ဆက်ရာတွင် heavy dependency များကို runtime ပြင်ပတွင် ထားနိုင်ရန် dynamic import ကို ဦးစားပေး သုံးသင့်ပါတယ်။
+
+## instrumentaion.ts (server)
+
+`instrumentation.ts` ကို project root (သို့ `src/`) တွင် ဖန်တီးပါ။ Export လုပ်ထားသော `register` function သည် server boot တက်စဉ် runtime တစ်ခုစီတွင် တစ်ကြိမ်စီ လည်ပတ်ပါတယ်:
+
+```ts
+// instrumentation.ts
+export async function register() {
+  if (process.env.NEXT_RUNTIME === "nodejs") {
+    const { initSentry } = await import("./sentry");
+    initSentry(process.env.SENTRY_DSN);
+  }
+
+  if (process.env.NEXT_RUNTIME === "edge") {
+    await initEdgeTracing();
+  }
+}
+```
+
+`NEXT_RUNTIME` စစ်ဆေးမှုသည် Node-only library များကို edge bundle ထဲသို့ ဝင်ရောက်ခြင်း မဖြစ်အောင် ကာကွယ်ပေးပါတယ်။
+
+## onRequestError
+
+Request-level error များ (Server Components, Server Actions, Route Handlers) ကို ခြေရာခံရန်:
+
+```ts
+// instrumentation.ts
+export async function onRequestError(err, request, context) {
+  console.error("request failed", context.routeType, err);
+  await report(err);
+}
+```
+
+## Client-side instrumentation
+
+`instrumentation-client.ts` သည် client hooks များကို (ဥပမာ reporting အတွက်) register လုပ်ပေးပါတယ်:
+
+```ts
+// instrumentation-client.ts
+export async function register() {
+  console.log("client runtime registered");
+  markStart();
+}
+```
+
+## Use with monitoring
+
+- **Sentry** — DSN ကို env မှ ဖတ်ပြီး pending errors များကို capture လုပ်ပါ
+- **OpenTelemetry** — `getOTELData`/tracing spans များကို အသုံးပြုပါ (OpenTelemetry guide ကို ကြည့်ပါ)
+- **Custom logging** — `onRequestError` payloads များကို စုစည်း မှတ်တမ်းတင်ပါ
+
+## Rules
+
+- `register` သည် `nodejs` နှင့် `edge` runtimes နှစ်ခုစလုံးကို ထောက်ပံ့ပါတယ်
+- Client ဖိုင်သည် `.ts` ဖြစ်ရမည်ဖြစ်ပြီး `instrumentation.ts` ဘေးတွင် တည်ရှိရပါမည်
+- Dynamic imports များသည် heavy dependencies များကို runtime ထဲမှ ဖယ်ထားပေးပါတယ်
+
+## Activity
+
+လေ့ကျင့်ခန်း: `routeType` နှင့် stack error ကို terminal တွင် log လုပ်မည့် `onRequestError` function ပါသော `instrumentation.ts` ကို ထည့်ပြီး error တစ်ခုကို ဖြစ်ပွားစေကာ output ကို အတည်ပြုကြည့်ပါ။

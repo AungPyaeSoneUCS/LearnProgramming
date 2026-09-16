@@ -1,0 +1,104 @@
+﻿---
+title: "Step 2: Layouts, Routing & Navigation"
+description: "Blog ၏ Root Layout၊ Nested Routes နှင့် Navigation Structure တည်ဆောက်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Blog Project တွင် Layouts များနှင့် File-based Routing များကို စနစ်တကျ သုံးနိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+File-based Routing ၏ အဓိက အားသာချက်မှာ Folder Structure ကိုယ်တိုင်က Route တည်ဆောက်ပုံဖြစ်ပြီး `layout.tsx` များသည် ၎င်းတို့၏ Subtree အတွက် Shared UI (Header, Sidebar, Footer) များကို Navigation ကြားတွင် **ထိန်းသိမ်း** ပေးပါတယ်။ Root Layout သည် `<html>`/`<body>` ကို ပထမဦးဆုံး သတ်မှတ်ပေးသဖြင့် Site ၏ Global Design အားလုံး ၎င်းမှ စတင်ပါတယ်။ Dynamic Route `[slug]` များကို `generateStaticParams` နှင့် ပေါင်းစပ်၍ Pre-render လုပ်နိုင်သဖြင့် SEO အတွက် SSSG များ ရရှိစေပါတယ်။ Navigation များတွင် `<Link>` ကို သုံး၍ Prefetch-friendly ဖြစ်စေကာ Page Transitions များ မြန်ဆန်စေပါတယ်။ Admin ကဲ့သို့ ၎င်း၏ဖြေရှင်းရမည့် Group များအတွက် Route Groups `(admin)` များဖြင့် URL မပြောင်းဘဲ သီးခြား Layout များ တည်ဆောက်နိုင်ပါတယ်။
+
+## Root Layout
+
+```tsx
+// app/layout.tsx
+import "./globals.css";
+import type { Metadata } from "next";
+import { Header } from "@/components/Header";
+
+export const metadata: Metadata = {
+  title: { default: "My Blog", template: "%s | My Blog" },
+  description: "A full-stack blog built with Next.js",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body className="mx-auto max-w-3xl px-4">
+        <Header />
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+## Blog List + Detail
+
+```txt
+app/blog/
+├── page.tsx        → /blog (Post List)
+└── [slug]/page.tsx → /blog/:slug (Post Detail)
+```
+
+```tsx
+// app/blog/[slug]/page.tsx
+import { notFound } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+
+export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await prisma.post.findUnique({ where: { slug } });
+
+  if (!post || !post.published) notFound();
+
+  return (
+    <article>
+      <h1>{post.title}</h1>
+      <div>{post.content}</div>
+    </article>
+  );
+}
+```
+
+## Navigation with Link
+
+```tsx
+// components/Header.tsx
+import Link from "next/link";
+
+export function Header() {
+  return (
+    <header className="flex items-center justify-between py-4">
+      <Link href="/" className="font-bold">My Blog</Link>
+      <nav className="flex gap-4">
+        <Link href="/blog">Blog</Link>
+        <Link href="/admin">Admin</Link>
+      </nav>
+    </header>
+  );
+}
+```
+
+## Route Group for Admin
+
+```txt
+app/admin/
+├── layout.tsx    → admin-specific chrome (no footer for example)
+└── page.tsx
+```
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Root Layout သည် `<html>`/`<body>` ပါရမည် — Missing ဖြစ်ပါက Build Error
+- Dynamic Segment များတွင် `await params` လုပ်ပြီးမှ သုံးပါ
+- Header/Nav များတွင် `<a>` အစား `<Link>` သုံးပါ (Full Reload ရှောင်ရန်)
+
+## Activity — လေ့ကျင့်ခန်း
+
+Root Layout + `app/blog/page.tsx` + `app/blog/[slug]/page.tsx` ကို တည်ဆောက်ပြီး `/blog/hello-nextjs-blog` ကို ဖွင့်ကြည့်ပါ။ Header တွင် Active Segment ကို `usePathname` အားဖြင့် Highlight လုပ်ကြည့်ပါ။

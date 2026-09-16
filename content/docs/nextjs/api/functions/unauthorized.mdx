@@ -1,0 +1,58 @@
+---
+title: "unauthorized (401 Unauthorized)"
+description: "Throw a 401 Unauthorized from server code. — Server ဘက်မှ 401 Unauthorized Error ကို Throw လုပ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  401 Semantics နှင့် UI ဖြင့် "ကျေးဇူးပြု၍ Login လုပ်ပါ" ဟူသော အချက်ပြမှုကို ရှင်းလင်းစွာ ပြုလုပ်ပေးနိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`unauthorized()` သည် Server Code တစ်နေရာမှ အသုံးပြုသူ၏ Authentication မရှိကြောင်း ညွှန်ပြသည့် 401 Status Code ကို ထုတ်ပေးသော Function တစ်ခုဖြစ်ပါတယ်။ ၎င်းကို Server Components များ၊ Layouts များ၊ Server Actions များနှင့် Route Handlers များတွင် ခေါ်ယူနိုင်ပြီး ခေါ်ယူလိုက်သည်နှင့် နောက်မှ Code များ ဆက်လက် လည်ပတ်မည် မဟုတ်ပါဘူး။ `authInterrupts` Option ကို `next.config` တွင် Enable လုပ်ထားပါက `notFound`၊ `forbidden` နှင့် `unauthorized` သုံးမျိုးစလုံးကို First-class HTTP Status (404, 403, 401) များအဖြစ် သက်ဆိုင်ရာ UI File (`not-found.tsx`, `forbidden.tsx`, `unauthorized.tsx`) နှင့် တွဲဖက်အသုံးပြုနိုင်ပါတယ်။ ဤနည်းဖြင့် Guest များအတွက် Login CTA ပါသော Custom UI ကို သက်ဆိုင်ရာ Route တွင်သာ သီးသန့်ပြနိုင်သည်။ Section တစ်ခုလုံး ကာကွယ်ရန်အတွက်မူ Root Guard (Layout/Proxy) များကို ပိုမို ဦးစားပေးသင့်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```tsx
+import { unauthorized } from "next/navigation";
+
+export default async function AccountPage() {
+  const session = await getSession();
+  if (!session) unauthorized();   // 401 + unauthorized.tsx
+  return <Account />;
+}
+```
+
+## Supported Scopes (အသုံးပြုနိုင်သော နေရာများ)
+
+- Server Components / Layouts များ
+- Server Actions များ
+- Route Handlers များ
+
+## authInterrupts ဖြင့် အသုံးပြုခြင်း (With authInterrupts)
+
+```ts
+const nextConfig: NextConfig = { authInterrupts: true };
+```
+
+`notFound`/`forbidden`/`unauthorized` ကို First-class 4xx States များအဖြစ် Enable လုပ်ပေးပါတယ် (Redirect Config ကိုလည်း ထည့်သွင်းနိုင်)။
+
+## Interrupt Family ပြန်လည် ခြုံငုံချက် (The Interrupt Family Recap)
+
+| Function       | Status | UI file          |
+| -------------- | ------ | ---------------- |
+| `notFound`     | 404    | `not-found.tsx`  |
+| `forbidden`    | 403    | `forbidden.tsx`  |
+| `unauthorized` | 401    | `unauthorized.tsx` |
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- `next/navigation` (Server) မှ Import လုပ်ပါ
+- Throw လုပ်ပြီးနောက် Code ရပ်သွားပါမယ်
+- Section တစ်ခုလုံးအတွက်မူ Root Guards (Layout/Proxy) ကို ဦးစားပေးပြီး Route တစ်ခုချင်းအတွက် `unauthorized()` ကို Surgical (သီးသန့်) အနေဖြင့် သုံးပါ
+
+## Activity (လေ့ကျင့်ခန်း)
+
+`/account` Route ကို `unauthorized()` ဖြင့် ကာကွယ်ပြီး `unauthorized.tsx` တွင် Login CTA ဖြင့် Style လုပ်ကာ Guest များအတွက် Status 401 နှင့် Custom UI ပေါ်ကြောင်း စစ်ဆေးပါ။

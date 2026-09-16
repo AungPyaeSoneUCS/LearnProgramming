@@ -1,0 +1,58 @@
+---
+title: "unstable_noStore (Cache Opt-out)"
+description: "Opt out of caching for a segment or handler with unstable_noStore. — Segment သို့မဟုတ် Handler တစ်ခုအတွက် Caching မှ ထွက်ရန် unstable_noStore ကို အသုံးပြုခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="caution" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Legacy နည်းလမ်းဖြင့် Uncached Rendering ကို အတင်းအကျပ် ပြုလုပ်နည်းကို သိရှိပြီး မည်သည့်အချိန်တွင် ၎င်းကို မှီခိုမနေသင့်ကြောင်း နားလည်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`unstable_noStore()` သည် ၎င်းကို ခေါ်ယူထားသော လက်ရှိ Scope ၏ Caching ကို လုံးဝပိတ်ပစ်ရန် ရည်ရွယ်သည့် Server-side Helper Function တစ်ခုဖြစ်ပါတယ်။ ဤ Function ကို အသုံးပြုလိုက်သည်နှင့် ၎င်းပါဝင်သော Route သည် Dynamic Route အဖြစ် အမှတ်အသားပြုခြင်းခံရပြီး Static Optimization ကို ရပ်တန့်စေပါတယ်။ ဤအကျိုးသက်ရောက်မှုသည် Production Build တွင် အမှန်တကယ် ဖြစ်ပေါ်နိုင်သောကြောင့် မလိုအပ်ဘဲ သုံးမိပါက Performance ကို သိသိသာသာ လျှော့ချနိုင်ပါတယ်။ ၎င်းကို Route တစ်ခုလုံးအဆင့် Caching ပိတ်ခြင်း၏ Version တစ်ခုဟု ယူဆနိုင်ပြီး Per-route Dynamic အတွက် `export const dynamic = "force-dynamic"` ကဲ့သို့ ပိုမို Explicit သော နည်းလမ်းများ ရှိပါတယ်။ 'use cache' Scope အတွင်းတွင် ၎င်းကို ခေါ်ယူခြင်းသည် Semantics ကြောင့် ဆန့်ကျင်နေသဖြင့် ရှောင်ကြဉ်ရမှာ ဖြစ်ပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+`unstable_noStore()` သည် လက်ရှိ Scope ၏ Caching မှ ထွက်ရန် (Opt-out) ပြုလုပ်ပေးပါတယ်:
+
+```tsx
+import { unstable_noStore as noStore } from "next/cache";
+
+export default async function Live() {
+  noStore();   // never cache this scope
+  const price = await getLivePrice();
+  return <div>${price}</div>;
+}
+```
+
+## Effects (အကျိုးသက်ရောက်မှုများ)
+
+- Route ကို Dynamic အဖြစ် အမှတ်အသားပြုပေး (Cookies/Headers ဖတ်ခြင်းကဲ့သို့)
+- ထို Scope အတွက် Static Optimization ကို ပိတ်ပေး
+
+## ဘယ်အချိန် အသုံးပြုသင့်လဲ (When to Reach for It)
+
+- True Live Counters များ၊ Toggles များနှင့် SSR-only Price များ
+- Cache မလုပ်သင့်သော Route Handlers များ (ဥပမာ Auth Checks)
+
+## ခေတ်မီနည်းလမ်းများကို ဦးစားပေးပါ (Prefer Modern Alternatives)
+
+| Want                       | Modern tool                  |
+| -------------------------- | ---------------------------- |
+| Per-route dynamic forever  | `export const dynamic = "force-dynamic"` |
+| Just don't cache this data | use `use cache` + `cacheLife` tiny, or `connection()` |
+| No-store fetch             | `fetch(url, { cache: "no-store" })` |
+
+`noStore()` သည် Blunt Hammer (ကြမ်းကြမ်းတမ်းတမ်း ကိုင်တွယ်မှု) ဖြစ်ပြီး ရှင်းလင်းမှုအတွက် Explicit Models များကို ဦးစားပေးပါ။
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Server ဘက်တွင်သာ — `next/cache` မှ Import လုပ်ပါ
+- `"use cache"` Scope အတွင်းတွင် ခေါ်ယူခြင်းသည် Contradictory ဖြစ်သည် — ရှောင်ကြဉ်ပါ
+- Production တွင်သာ အကျိုးသက်ရောက်ခြင်းသည် အမှန်ဖြစ်သည် — သေချာစဉ်းစားပြီးမှ သုံးပါ
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Live Price Route တစ်ခုကို `noStore()` ဖြင့် ယာယီအသုံးပြုပြီး Build Report တွင် အမြဲတမ်း Fresh ဖြစ်ကြောင်း အတည်ပြုပါ။ ထို့နောက် သင့်လျော်သောနေရာတွင် `dynamic = "force-dynamic"` + `cacheLife` သို့ Refactor လုပ်ပါ။

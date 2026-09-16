@@ -1,0 +1,79 @@
+---
+title: "Caching (Previous Model) — Caching (ယခင် Model)"
+description: "The pre-Cache-Components caching model: fetch caching, ISR, and unstable_cache - for reading or migration. — Cache Components များ မပေါ်မီ caching model ဖြစ်သော fetch caching, ISR နှင့် unstable_cache တို့အကြောင်း ဖတ်ရှုခြင်းနှင့် migration အတွက်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="caution" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Cache Components သို့ migrate လုပ်ရန် သို့မဟုတ် ၎င်းကို ဆက်လက် အသုံးပြုနေသော ရှိပြီးသား code များကို ထိန်းသိမ်းရန် legacy model ကို ကောင်းစွာ နားလည်နိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Cache Components များ မပေါ်မီကာလက Next.js ၏ caching ကို အပိုင်းသုံးပိုင်း ခွဲထားပါတယ်။ Data များအတွက် `fetch` caching ကို အသုံးပြုပြီး functions များအတွက် `unstable_cache` ကို သုံးကာ pages များအတွက် `revalidate` ဖြင့် ISR (Incremental Static Regeneration) ကို အသုံးပြုပါတယ်။ ၎င်းတို့တစ်ခုစီတွင် သီးခြား configuration နှင့် revalidation နည်းလမ်းများ ရှိသောကြောင့် စီမံခန့်ခွဲရန် ရှုပ်ထွေးမှုများ ရှိခဲ့ပါတယ်။ အသစ်ဖြစ်သော Cache Components model တွင်မူ `use cache` + `cacheLife` တစ်ခုတည်းဖြင့် data, function နှင့် UI cache များအားလုံးကို ပိုမို ညီညွတ်စွာ စီမံနိုင်ပါတယ်။ Migration လုပ်ရာတွင် fetch ၏ `next.revalidate` ကို `use cache` + `cacheLife` ဖြင့် အစားထိုးပြီး `unstable_cache` ခေါ်ဆိုမှုများကို inline `use cache` functions များအဖြစ် ပြောင်းလဲရပါတယ်။
+
+## The old model in one sentence
+
+Cache Components များ မပေါ်မီက caching ကို **`fetch` caching** (data အတွက်), **`unstable_cache`** (functions အတွက်) နှင့် **ISR** (`revalidate` ရှိသော pages များအတွက်) ဟူ၍ ခွဲခြားထားပါတယ်။
+
+## Legacy: fetch caching
+
+```ts
+// 🧪 Previous model - fetch cached GET requests by default
+export async function getData() {
+  const res = await fetch("https://api.example.com/data", {
+    next: { revalidate: 3600, tags: ["data"] },
+  });
+  return res.json();
+}
+
+export async function getUncached() {
+  return fetch("https://api.example.com/live", { cache: "no-store" });
+}
+```
+
+## Legacy: unstable_cache
+
+```ts
+// lib/queries.ts
+import { unstable_cache } from "next/cache";
+
+export const getProducts = unstable_cache(
+  async () => db.product.findMany(),
+  ["products"],
+  { revalidate: 3600, tags: ["products"] },
+);
+```
+
+## Legacy: ISR with revalidate
+
+```ts
+// app/blog/page.tsx
+export const revalidate = 3600; // seconds
+
+export default async function Page() {
+  const posts = await getPosts();
+  return <PostsList posts={posts} />;
+}
+```
+
+## The new model is better
+
+| Concern        | Previous model                    | Cache Components                    |
+| -------------- | --------------------------------- | ----------------------------------- |
+| Data cache     | `fetch` `next: { revalidate }`    | `use cache` + `cacheLife`           |
+| Function cache | `unstable_cache`                  | `use cache` at function level       |
+| UI cache       | Route Segment `revalidate`        | `use cache` + `cacheLife` on components |
+| Tags           | `tags` + `revalidateTag`          | `cacheTag` + `revalidateTag`/`updateTag` |
+
+## Migration path
+
+1. `fetch` ၏ `next.revalidate` ကို `use cache` + `cacheLife` ဖြင့် အစားထိုးပါ
+2. `unstable_cache` ခေါ်ဆိုမှုများကို inline `use cache` functions များဖြင့် အစားထိုးပါ
+3. Segment ၏ `export const revalidate` ကို cached components များဖြင့် အစားထိုးပါ
+4. *Migrating to Cache Components* လမ်းညွှန်ကို သီးသန့် လိုက်နာပါ
+
+## Activity — လေ့ကျင့်ခန်း
+
+သင့် codebase တွင် `unstable_cache`, `next: { revalidate }`, နှင့် `export const revalidate` တို့ကို စစ်ဆေးပါ။ နောက်တစ်ခုကို migrate မလုပ်မီ မည်သည့်အပိုင်းသည် မည်သည့် directive အသစ်နှင့် ကိုက်ညီသည်ကို စာရင်းပြုစုပါ။

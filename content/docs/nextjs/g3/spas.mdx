@@ -1,0 +1,83 @@
+---
+title: "Single-Page Applications (SPAs) — Single-Page Applications (SPAs)"
+description: "How App Router handles classic SPA needs: client navigation, state, and when a true SPA makes sense. — App Router က classic SPA လိုအပ်ချက်တွေ — client navigation, state နဲ့ SPA အစစ်ကို ဘယ်အချိန်မှာ သုံးသင့်လဲဆိုတာ — ကို ဘယ်လိုဖြေရှင်းပေးလဲ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Full-stack platform ရဲ့ အကျိုးကျေးဇူးတွေကို ဆက်ထိန်းထားရင်း app လိုမျိုး experience (instant nav, deep client state) တွေကို တည်ဆောက်နိုင်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+SPA (Single-Page Application) ရဲ့ တောင်းဆိုချက်တွေက instant client navigation, shared client state, deep link/URL, (တချို့မှာ) offline app shell တွေပဲ ဖြစ်ပါတယ်။ App Router က ဒါတွေအားလုံးကို ပေးနေတုန်း full-stack အကျိုးကျေးဇူးတွေ ဆက်ထိန်းပေးပါတယ် — client-side Router (Link/useRouter) နဲ့ instant nav ရနိုင်ပြီး full reload မဖြစ်၊ layout က ဆက် mounted ဖြစ်ပြီး chunk တွေက on demand load ဖြစ်ပါတယ်။ Shared state အတွက်တော့ "use client" Provider components တွေကို root layout မှာ ထုပ်ပြီး context နဲ့ state ဖြန့်ဝေပါတယ်။ Classic SPA က single bundle တစ်ခုတည်း ဖြစ်ပေမဲ့ App Router က route အလိုက် lazy bundles ခွဲပေးလို့ ပိုကောင်းပါတယ်။ ဒါပေမဲ့ trade-off ရှိပါတယ် — SPA-first ပုံစံက heavy client state apps/dashboards တွေအတွက် ကောင်းပေမဲ့ SSR ဆုံးရှုံးရင် LCP နှေးပြီး crawler စွမ်းအား လျော့ပါတယ်၊ ဒါကြောင့် hybrid (server-render shell + client-render interactive island) က များသောအားဖြင့် အသင့်တော်ဆုံး ဖြစ်ပါတယ်။
+
+## What SPAs need, and the App Router equivalent
+
+| SPA need                | App Router answer                          |
+| ----------------------- | ------------------------------------------ |
+| Instant client nav      | Client-side Router (Link/useRouter)        |
+| Shared client state     | Provider components on `"use client"`      |
+| Deep link / URLs        | File routing + searchParams                |
+| Single bundle           | Per-route lazy bundles (better)            |
+| Offline / app shell     | PWA + service worker                       |
+
+## Client navigation feels identical
+
+```tsx
+// Client Component
+"use client";
+
+import { useRouter } from "next/navigation";
+
+export default function Menu() {
+  const router = useRouter();
+  return <button onClick={() => router.push("/dashboard")}>Go</button>;
+}
+```
+
+Full reload တွေ မရှိပါဘူး — layouts persist ဖြစ်ပြီး chunks တွေက on demand load ဖြစ်ပါတယ်။
+
+## Global client state (Provider pattern)
+
+```tsx
+"use client";
+
+import { createContext, useContext, useState } from "react";
+
+const AppContext = createContext(null);
+
+export function AppProvider({ children }) {
+  const [state, setState] = useState({});
+  return <AppContext.Provider value={{ state, setState }}>{children}</AppContext.Provider>;
+}
+```
+
+Root layout မှာ ထုပ်ပါ:
+
+```tsx
+// app/layout.tsx
+import { AppProvider } from "@/components/app-provider";
+
+<body><AppProvider>{children}</AppProvider></body>
+```
+
+## When a pure SPA route is okay
+
+တချို့ route တွေက SSR/data-fetching ကို လုံးဝ ရှောင်ထွက်လို့ရပါတယ်:
+
+```tsx
+export const dynamic = "force-static"; // shell only
+// or simply keep uncached client-only UI
+```
+
+## Trade-off check
+
+- SPA-first: heavy client state ရှိတဲ့ tools/dashboards တွေအတွက် အကောင်းဆုံး
+- SSR ဆုံးရှုံးမှု = LCP နှေးပြီး crawling အားနည်းမယ်
+- Hybrid ကများသောအားဖြင့် အကောင်းဆုံး: shell ကို server-render၊ interactive island ကို client-render လုပ်ပါ
+
+## Activity
+
+Chat နဲ့ဆင်တဲ့ in-app screen တစ်ခု ဆောက်ပါ — messages တွေ ထိန်းထားတဲ့ root `AppProvider` ထည့်ပြီး `Link`/`useRouter` နဲ့ navigation လုပ်ပါ၊ view တွေကြား သွားပြန်လာတဲ့အခါ provider state မပျက်တာကို စစ်ဆေးပါ။

@@ -1,0 +1,79 @@
+---
+title: "Static Exports — Static Export များ"
+description: "Generate a pure-static site with output: export - what works, what doesn't, and how to build it. — output: export နဲ့ pure-static site ထုတ်နည်း — ဘာတွေ အလုပ်လုပ်လဲ၊ ဘာတွေ မလုပ်ဘူးလဲ၊ ဘယ်လို တည်ဆောက်မလဲ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="caution" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Static export ကို မရွေးခင် ကန့်သတ်ချက်တွေကို နားလည်ထားပြီးမှ မြန်ဆန်တဲ့ static site တစ်ခုကို မှန်ကန်စွာ တည်ဆောက်နိုင်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Static export ဆိုတာ next.config.ts ထဲမှာ output: "export" သတ်မှတ်လိုက်ရင် build လုပ်တဲ့အခါ HTML/CSS/JS တွေကို out/ directory ထဲ ထုတ်ပေးတဲ့ mode ဖြစ်ပါတယ် — server လုံးဝမလိုဘဲ S3, Cloudflare Pages, GitHub Pages, nginx စတဲ့ static host မှန်သမျှကို တင်ပြီး အလုပ်လုပ်ပါတယ်။ ဒါပေမဲ့ request-time behavior တွေ (cookies, headers) ကို မလုပ်နိုင်ပါဘူး — Route Handlers (route.ts), dynamic Server Actions, streaming, on-demand ISR, edge/node runtime features တွေက NOT supported ဖြစ်ပါတယ်။ Image ကိုတော့ unoptimized: true ဒါမှမဟုတ် ကိုယ်ပိုင် loader ဒါမှမဟုတ် static public/ images တွေနဲ့ပဲ သုံးနိုင်ပါတယ်။ Dynamic route တွေကတော့ generateStaticParams နဲ့ slug အားလုံးကို enumerate ပေးဖို့လိုပြီး build မှာ route တိုင်း HTML ထုတ်နိုင်မှာပါ။ Client-side fetch တွေကတော့ ကိုယ့်ဘာသာကိုယ် ကိုင်တွယ်ရမယ့် အပိုင်းပဲ ဖြစ်ပါတယ်။ Content site, docs, portfolio လို user-specific page မပါတဲ့ project တွေအတွက် ဒီ mode က TTFB အမြန်ဆုံးနဲ့ hosting အရိုးရှင်းဆုံး ဖြစ်ပါတယ်။
+
+## Enabling
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  output: "export",
+};
+```
+
+```bash
+npm run build   # writes HTML/CSS/JS to out/
+```
+
+## Supported / unsupported
+
+| Supported                        | NOT supported                     |
+| -------------------------------- | --------------------------------- |
+| Pages, dynamic routes (SSG)      | Route Handlers (`route.ts`)       |
+| Metadata, image optimization     | Server Actions (dynamic)          |
+| Static search + client fetch     | Streaming, ISR on demand          |
+| Layouts/templates                | Edge/Node runtime features        |
+| Static data with `use cache`     | Cookies/auth per request          |
+
+စည်းမျဉ်းတွေ:
+- Dynamic request-time behavior မပါဘူး (cookies, headers မရှိ)
+- `Image` ဟာ `unoptimized` ဒါမှမဟုတ် plain loader ဒါမှမဟုတ် static `public/` images လိုပါတယ်
+- Client `fetch` တစ်ခုခုဆိုရင် ကိုယ့်တာဝန်ပဲ
+
+## Image setup for static
+
+```ts
+images: {
+  unoptimized: true,   // or loader: "cloudinary", …
+},
+```
+
+## Generate every route
+
+Dynamic page တွေက slug အားလုံးကို enumerate ဖို့ `generateStaticParams` လိုပါတယ်:
+
+```tsx
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
+  return posts.map((p) => ({ slug: p.slug }));
+}
+```
+
+## Serving out/
+
+Static host မှန်သမျှကို တင်နိုင်ပါတယ်:
+
+```bash
+out/ → S3, Cloudflare Pages, GitHub Pages, nginx
+```
+
+## When to choose static export
+
+- Content site, docs, portfolio တွေ
+- User-specific page မရှိ၊ server API မရှိတဲ့ project တွေ
+- TTFB အမြန်ဆုံးနဲ့ hosting အရိုးရှင်းဆုံး ဖြစ်ချင်သူတွေ
+
+## Activity
+
+Docs site ငယ်တစ်ခုကို `output: "export"` အဖြစ် ပြောင်းပြီး post တိုင်းအတွက် `generateStaticParams` ထည့်ပါ၊ `out/` ကို local မှာ serve လုပ် (`npx serve out`) ပြီးတော့ navigation + metadata အလုပ်လုပ်တာကို စစ်ဆေးပါ။

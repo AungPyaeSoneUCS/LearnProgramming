@@ -1,0 +1,58 @@
+---
+title: "Route Groups — URL မပြောင်းဘဲ စီစဉ်ခြင်း"
+description: "Use (folders) to organize without affecting the URL - shared layouts, multiple roots, scoping. — `(folders)` များကို အသုံးပြု၍ URL ကို မထိခိုက်ဘဲ စီစဉ်နိုင်ခြင်း - Shared Layouts များ၊ Multiple Roots များနှင့် Scoping အကြောင်း ဖြစ်ပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Public URLs များကို မပြောင်းလဲဘဲ Routes များကို ပြန်လည်စီစဉ်ခြင်းနှင့် Layouts များကို မျှဝေနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Route Groups များသည် Folder အမည်များကို Parentheses `(marketing)` အတွင်း ထည့်သွင်း၍ Project Structure ကို စနစ်တကျ စီစဉ်နိုင်ပြီး URL ပေါ်တွင် သက်ရောက်မှု မရှိသော Next.js App Router ၏ File Convention တစ်ခုဖြစ်ပါတယ်။ ဥပမာ `app/(marketing)/about/page.tsx` သည် `/about` URL အဖြစ်သာ ဖော်ပြပြီး Group Name သည် URL တွင် မပါဝင်ပါဘူး။ ၎င်းကို အသုံးပြု၍ Section အလိုက် သီးခြား Layouts များ သတ်မှတ်နိုင်ပြီး Marketing Pages တွင် Cart မပါသော Chrome၊ Shop Pages တွင် Cart/Filters ပါသော Chrome စသည်ဖြင့် ခွဲခြားနိုင်ပါတယ်။ Root `app/layout.tsx` ကို ဖယ်ရှားပြီး Top-level Group တစ်ခုစီတွင် Layout တစ်ခုစီ ထည့်ခြင်းဖြင့် Multiple Root Layouts များကိုလည်း ဖန်တီးနိုင်သော်လည်း Group များ အကြား သွားလာသည့်အခါ Full Page Load ဖြစ်တာကို သတိပြုရပါတယ်။ `(marketing)/faq` သည် `/faq` အဖြစ်သာ ကျန်ရှိပြီး Duplicate Resolved Paths များ ဖြစ်ပေါ်ပါက Conflict ရှောင်ရှားရန် တစ်ခုကိုသာ ထားရှိရပါမယ်။
+
+## What a route group is
+
+Parentheses ဖြင့် ပတ်ထားသော Folder တစ်ခုဖြစ်ပြီး ဥပမာ `(marketing)`။ ၎င်းကို **URL မှ ဖယ်ထုတ်ထားပါတယ်**:
+
+```
+app/(marketing)/about/page.tsx → /about
+app/(shop)/products/page.tsx    → /products
+```
+
+## Uses
+
+1. **Section အလိုက် စီစဉ်ခြင်း** - URL မထူးရှုပ်စေဘဲ
+2. **Group တစ်ခုစီအတွက် မတူညီသော Layouts များ**
+
+```tsx
+// app/(marketing)/layout.tsx - landing chrome (no cart)
+// app/(shop)/layout.tsx        - cart & filters live here
+```
+
+3. **Layout Collisions များကို ရှောင်ရှားခြင်း**: `/login` နှင့် `/register` များသည် Root Nav ကို မျှဝေစရာမလိုဘဲ Groups များခွဲထားနိုင်ပါတယ်။
+
+## Creating multiple root layouts
+
+Root `app/layout.tsx` ကို ဖယ်ရှားပြီး Top-level Group တစ်ခုစီအတွက် Layout တစ်ခုစီ ထည့်သွင်းပါ:
+
+```tsx
+// app/(marketing)/layout.tsx  → html/body (deliberate duplication)
+// app/(shop)/layout.tsx       → html/body
+```
+
+<Aside type="caution" title="⚠️ သတိပြုရန်">
+  Multiple Root Layouts ရှိပါက Layout တစ်ခုစီသည် မိမိပိုင် `<html>`/`<body>` များကို ထိန်းသိမ်းရမည်ဖြစ်သည်။ Groups များ အကြား သွားလာပါက Full Page Load ဖြစ်ပါတယ်။
+</Aside>
+
+## Rules & gotchas
+
+- Group Name သည် URL ကို မထိခိုက်ပါဘူး: `(marketing)/faq` သည် `/faq` အဖြစ်သာ ရှိနေပါမယ်
+- Group အတွင်း မပါဝင်ဘဲ သီးခြား Route တစ်ခုလည်း ရှိနိုင်ပါတယ်: `app/about/page.tsx` သည် `(marketing)/about` နှင့် အတူ ယှဉ်တွဲနေနိုင်ပြီး Duplicate Resolved Paths များသည် Conflict ဖြစ်သောကြောင့် တစ်ခုကိုသာ ထားရှိရပါမယ်
+- `api`/`_private` ကဲ့သို့သော Directories များသည် Convention အရ Private ဖြစ်ပါတယ် (Underscore ဆိုသည်မှာ Routable မဟုတ်ဟု ဆိုလိုပါတယ်)
+
+## Activity
+
+App တစ်ခုကို မတူညီသော Layouts များဖြင့် `(marketing)` နှင့် `(shop)` Groups များအဖြစ် ပြန်လည်စီစဉ်ပြီး URLs များ မပြောင်းသည်ကိုလည်းကောင်း၊ Build Output တွင် Cross-group Navigation Notice ပေါ်သည်ကိုလည်းကောင်း စစ်ဆေးပါ။

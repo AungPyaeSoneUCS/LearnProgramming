@@ -1,0 +1,69 @@
+---
+title: "page.js — Page File"
+description: "The unique UI of a route: config options, params, searchParams, and reanalysis with page files. — Route ၏ Unique UI ကို သတ်မှတ်ပေးသော Page Files များအကြောင်း၊ ၎င်းတို့၏ Config Options များ၊ `params` နှင့် `searchParams` အကြောင်း ရှင်းပြထားပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  `page.tsx` နှင့် ၎င်း၏ Config Flags များကို မှန်ကန်စွာ အသုံးပြု၍ Route UI ကို သတ်မှတ်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`page.tsx` သည် Route တစ်ခုတည်း၏ **Unique UI** ကို သတ်မှတ်ပေးသော Next.js App Router ၏ အဓိကကျသော File Convention တစ်ခုဖြစ်ပြီး Folder တစ်ခုစီတွင် တစ်ခုသာ ထားရှိနိုင်ပါတယ်။ Page Component သည် `params` နှင့် `searchParams` Props များကို လက်ခံနိုင်ပြီး Next 16 တွင် ၎င်းတို့သည် `Promise` များဖြစ်သောကြောင့် `await` ပြုလုပ်ပြီးမှ အသုံးပြုရပါတယ်။ Page Files များတွင် `metadata`/`generateMetadata` (SEO)၊ `generateStaticParams` (Pre-rendering)၊ `generateViewport` နှင့် `dynamicParams` စသည့် Export Options များကိုလည်း သတ်မှတ်နိုင်ပါတယ်။ Page များသည် Layout ၏ အတွင်းတွင် Render ဖြစ်ပြီး Loading (Suspense Fallback) များ၊ Error Boundaries များနှင့် Not-found (404) စသည့် Sibling Files များနှင့် တွဲဖက်၍ Complete Route Experience ကို ဖန်တီးပေးပါတယ်။ App Router ၏ Routing အတွက် အခြေခံဖြစ်သောကြောင့် ဤ Convention ကို ကျွမ်းကျင်ခြင်းသည် Next.js Development အတွက် မဖြစ်မနေ လိုအပ်ပါတယ်။
+
+## Usage
+
+Page File ၏ အသုံးပြုပုံ ဥပမာများ:
+
+```tsx
+// app/page.tsx → /
+export default function Home() { return <h1>Hello</h1>; }
+
+// app/blog/[slug]/page.tsx → /blog/:slug
+export default async function Post({ params, searchParams }: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ preview?: string }>;
+}) {
+  const { slug } = await params;
+  const { preview } = await searchParams ?? {};
+  return <Article slug={slug} preview={!!preview} />;
+}
+```
+
+## Supported exports
+
+Page.tsx တွင် အောက်ပါ Export Options များကို သတ်မှတ်နိုင်ပါတယ်:
+
+| Export                 | Purpose                               |
+| ---------------------- | ------------------------------------- |
+| **default component**  | The page UI                           |
+| `metadata` / `generateMetadata` | SEO meta                  |
+| `generateStaticParams` | Prerender dynamic routes          |
+| `generateViewport`     | viewport metadata                |
+| `dynamicParams`        | allow unknown dynamic segments   |
+| `revalidate` (legacy)  | old model cache time             |
+
+## Loading & error pairing
+
+Pages များသည် Sibling Files များနှင့် တွဲဖက်၍ ဖွဲ့စည်းပါတယ်:
+
+```
+app/blog/
+├── layout.tsx
+├── loading.tsx   → Suspense fallback while the page streams
+├── error.tsx     → boundary if the page throws
+├── not-found.tsx → 404 UI for the segment
+└── page.tsx
+```
+
+## Rules
+
+- Page တွင် Children မရှိနိုင်ပါဘူး (`<Page><Whatever>` ဆိုသည့်အရာ မရှိပါ - Layouts ကိုသုံးပါ)
+- Segment တစ်ခုစီတွင် Page တစ်ခုသာ ထားရှိနိုင်ပါတယ်
+- Async Functions များကို ခွင့်ပြုပါတယ် (Data Fetch များအတွက် အကြံပြုပါတယ်)
+
+## Activity
+
+`await params` ဖတ်သည့် Dynamic `[slug]` Page တစ်ခုကို ထည့်သွင်းပြီး `generateStaticParams` ကို ချိတ်ဆက်ကာ `loading.tsx` + `error.tsx` တို့နှင့် တွဲဖက်ပါ။

@@ -1,0 +1,69 @@
+---
+title: "Custom Server — Custom Server"
+description: "Run a custom Node.js HTTP server with Next.js using next({ dev }).handler - and when you should NOT. — next({ dev }).handler ဖြင့် Next.js နှင့်အတူ custom Node.js HTTP server တစ်ခု လည်ပတ်ခြင်း — နှင့် မည်သည့်အခါ မလုပ်သင့်ကြောင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="caution" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  အမှန်တကယ် လိုအပ်သည့်အခါတွင်သာ Next.js ကို ရှိပြီးသား Node server တစ်ခုအတွင်း ထည့်သွင်းနည်းနှင့် trade-offs များကို သိရှိနိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Custom Server ဆိုသည်မှာ Next.js ၏ built-in server အစား ကိုယ်ပိုင် Node.js HTTP server (Express, Hono, Fastify ကဲ့သို့သော) တစ်ခုအတွင်းတွင် Next.js application ကို လည်ပတ်စေသည့် နည်းလမ်း ဖြစ်ပါတယ်။ `next({ dev, hostname, port })` ဖြင့် Next.js instance တစ်ခုကို ဖန်တီးပြီး `app.getRequestHandler()` မှတစ်ဆင့် incoming requests များကို Next.js သို့ ပို့ပေးနိုင်ပါတယ်။ ဤနည်းသည် ရှိပြီးသား HTTP server နောက်ကွယ်တွင် Next.js ကို run ရန် မလွဲမသွေ လိုအပ်သည့် အခြေအနေများအတွက် သင့်လျော်ပါတယ်။ သို့သော် custom server ကို အသုံးပြုခြင်းသည် automatic optimizations များကို ဖယ်ရှားပြီး Vercel သို့ deploy မလုပ်နိုင်သည့် အားနည်းချက်များ ရှိပါတယ်။ ထို့ကြောင့် Route Handlers + proxy ကို ဦးစွာ ဦးစားပေး၍ custom server ကို နောက်ဆုံး နည်းလမ်းအဖြစ်သာ အသုံးပြုသင့်ပါတယ်။ Auth, custom API logic, redirects နှင့် proxy စသည့် လုပ်ဆောင်ချက်များကို သင့်လျော်သော layer အသီးသီးတွင် ထားရှိခြင်းသည် deploy နှင့် ထိန်းသိမ်းမှု ပိုမို လွယ်ကူစေပါတယ်။
+
+## When a custom server makes sense
+
+- Next.js ကို ရှိပြီးသား HTTP server (Express, Hono, Fastify) တစ်ခု၏ နောက်ကွယ်တွင် run ရန် လိုအပ်သောအခါ
+- Custom request handling ကို အခြား framework တစ်ခုနှင့် မျှဝေသုံးစွဲရန် လိုအပ်သောအခါ
+
+> **Warning — သတိပေးချက်:** Custom server တစ်ခုသည် automatic optimizations များကို ဖယ်ရှားပြီး Vercel သို့ **deploy မလုပ်နိုင်**ပါ။ Route Handlers + proxy ကို ဦးစွာ ဦးစားပေးပါ။
+
+## Minimal custom server
+
+```ts
+// server.ts
+import { createServer } from "node:http";
+import { parse } from "node:url";
+import next from "next";
+
+const port = parseInt(process.env.PORT || "3000", 10);
+const dev = process.env.NODE_ENV !== "production";
+const app = next({ dev, hostname: "localhost", port });
+const handle = app.getRequestHandler();
+
+app.prepare().then(() => {
+  createServer((req, res) => {
+    const parsedUrl = parse(req.url ?? "/", true);
+    handle(req, res, parsedUrl);
+  }).listen(port);
+});
+```
+
+ဤသို့ run လုပ်ပါ:
+
+```bash
+npx tsx server.ts
+```
+
+## Pre-render your custom server
+
+`next build` သည် app ကို compile လုပ်ပြီး custom server က ထို build ကို ဝန်ဆောင်မှု ပေးပါတယ်။ Self-hosting packages များအတွက် output သည် `standalone` ဖြစ်ရန် လိုအပ်ပါတယ်။
+
+## Next.js-specific features to delegate
+
+Custom behavior များကို သင့်လျော်သော layer တွင် ထားပါ:
+
+| Need                          | Use                            |
+| ----------------------------- | ------------------------------ |
+| Auth / session                | Server Components / Functions  |
+| Custom API logic              | Route Handlers (`route.ts`)    |
+| Redirect / rewrite            | `next.config.ts` headers/rewrites |
+| Proxy to upstream             | `proxy.ts`                     |
+
+Raw control များ ဆက်လက် လိုအပ်နေသေးပါက `handle` ကို ခေါ်ဆိုမှု မတိုင်မီ *အတွင်း* middleware-scoped code တွင် ပြုလုပ်ပါ။
+
+## Activity — လေ့ကျင့်ခန်း
+
+Development တွင် အထက်ပါ custom server ကို စတင်ပါ၊ `/` ကို ဝင်ရောက်ပါ၊ ထို့နောက် သင့် custom handling ကို `route.ts` သို့ ရွှေ့ခြင်းသည် Vercel deployment အတွက် အဘယ်ကြောင့် ပိုကောင်းသည်ကို ဆင်ခြင်သုံးသပ်ပါ။

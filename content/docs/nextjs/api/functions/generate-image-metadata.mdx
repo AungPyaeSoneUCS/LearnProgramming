@@ -1,0 +1,62 @@
+---
+title: "generateImageMetadata — Metadata ပုံရိပ်များစွာ ထုတ်လုပ်ခြင်း"
+description: "Generate multiple metadata images per route with generateImageMetadata. — Route တစ်ခုအလိုက် metadata image အများအပြား ထုတ်လုပ်ပေးသော function ဖြစ်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Function တစ်ခုတည်းမှ page တစ်ခုအလိုက် သို့မဟုတ် image အမျိုးမျိုးပါသော social cards များကို ထုတ်လုပ်နိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`generateImageMetadata` သည် route တစ်ခုအတွက် `ImageResponse` ဖြင့် image metadata entry **များစွာကို** တစ်ပြိုင်နက် ထုတ်လုပ်ပေးသော function တစ်ခုဖြစ်ပါတယ်။ ဥပမာအားဖြင့် အရွယ်အစားမတူသော card အမျိုးမျိုး (ဥပမာ 1200x630 standard card နှင့် 630x630 square card) ကို array အဖြစ် ပြန်ပေးနိုင်ပြီး entry တစ်ခုချင်းစီအတွက် `/opengraph-image/<id>` ကဲ့သို့ URL တစ်ခုစီ ရရှိပါတယ်။ Color/size သို့မဟုတ် locale အလိုက် variant များ၊ summary နှင့် large image ကဲ့သို့ card အများအပြား၊ params အလိုက် dynamic variation များအတွက် အသုံးဝင်ပါတယ်။ ၎င်းသည် default `Image()` function နှင့် အတူတကွ အလုပ်လုပ်ပြီး အဆိုပါ function သည် matching `params` + `size` များကို လက်ခံရရှိပါတယ်။ Server-only ဖြစ်ပြီး async ခွင့်ပြုသောကြောင့် variant တစ်ခုချင်းစီအလိုက် deterministic နှင့် cacheable ဖြစ်ပါတယ်။
+
+## What it is
+
+`generateImageMetadata` သည် route တစ်ခုအတွက် `ImageResponse` ဖြင့် image metadata entry **များစွာကို** ထုတ်လုပ်ပေးပါတယ်:
+
+```tsx
+// app/games/[id]/opengraph-image.tsx
+import { ImageResponse } from "next/og";
+
+export async function generateImageMetadata({ params }: any) {
+  const { id } = await params;
+  return [
+    { size: { width: 1200, height: 630 }, alt: "Standard card" },
+    { size: { width: 630, height: 630 }, alt: "Square card" },
+  ];
+}
+
+export default function Image({ params }: any) {
+  return new ImageResponse(
+    <div style={{ fontSize: 60, background: "#111", color: "#fff" }}>Game card</div>
+  );
+}
+```
+
+## When to use (ဘယ်အခါ သုံးသင့်လဲ)
+
+- Color/size သို့မဟုတ် locale အလိုက် variant များ
+- Card အများအပြား (ဥပမာ summary + large image)
+- Params ပေါ်မူတည်သော dynamic variations များ
+
+## Signature
+
+```ts
+generateImageMetadata(): Promise<ImageMetadata[]>
+ImageMetadata = { alt?, contentType?, size?, id? }
+```
+
+Entry တစ်ခုချင်းစီတိုင်းသည် `/opengraph-image/<id>` ကဲ့သို့ URL တစ်ခုကို ရရှိပါတယ်။
+
+## Rules (စည်းကမ်းများ)
+
+- Matching `params` + `size` များကို လက်ခံရရှိသော `default function Image()` နှင့်အတူ တွဲဖက်အလုပ်လုပ်ပါတယ်
+- Server-only ဖြစ်ပြီး async ခွင့်ပြုပါတယ်
+- Variant တစ်ခုချင်းစီအလိုက် deterministic နှင့် cacheable ဖြစ်ပါတယ်
+
+## လေ့ကျင့်ခန်း (Activity)
+
+Game share cards များအတွက် အရွယ်အစား 2 မျိုး (1200x630 နှင့် 630x630) ထုတ်လုပ်ပြီး `<meta property="og:image">` variant နှစ်ခုလုံး ပေါ်လာပြီး resolve ဖြစ်ကြောင်း စစ်ဆေးပါ။

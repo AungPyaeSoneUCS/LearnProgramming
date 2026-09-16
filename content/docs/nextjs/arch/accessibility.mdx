@@ -1,0 +1,65 @@
+---
+title: "Architecture: Accessibility — အသုံးပြုနိုင်မှု"
+description: "Next.js App များတွင် အဓိက A11y ကျင့်သုံးနည်းများ: Semantics, Keyboard, Focus နှင့် Testing။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  လူတိုင်းအတွက် အလုပ်လုပ်နိုင်သော App များ ထုတ်လွှတ်နိုင်စေရန် — Structure သည် Code ကဲ့သို့ပင် အရေးကြီးကြောင်း နားလည်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Accessibility ဆိုသည်မှာ မသန်စွမ်းသူများ အပါအဝင် လူတိုင်း App ကို အသုံးပြုနိုင်စေရန် ဖြစ်ပါတယ်။ Screen Reader ကဲ့သို့သော Assistive Technology များ မှန်ကန်စွာ ဖတ်နိုင်ရန် Semantic HTML Structure ကို အသုံးပြုရပါတယ်။ Keyboard ဖြင့်သာ လည်ပတ်နိုင်သော Navigation နှင့် Focus Management သည် Dialog များတွင် အထူး အရေးကြီးပါတယ်။ `axe` ကဲ့သို့သော Tool များဖြင့် ပုံမှန် စစ်ဆေးပေးခြင်းဖြင့် A11y ပြဿနာများကို ကြိုတင် ရှာဖွေ ပြုပြင်နိုင်ပါတယ်။
+
+## Semantics first
+
+- အမှန်တကယ် `<nav>`, `<main>`, `<header>`, `<article>` Landmark များကို အသုံးပြုပါ
+- Heading အစဉ်လိုက် မှန်ကန်စွာ သုံးပါ (h1 → h2…)
+- Interactive Text များအတွက် Button/Link Element အစစ်များကို အသုံးပြုပါ
+
+```tsx
+export default function Layout({ children }) {
+  return (
+    <body>
+      <a className="skip-link" href="#main">Skip to content</a>
+      <header>…</header>
+      <main id="main">{children}</main>
+    </body>
+  );
+}
+```
+
+## Keyboard & focus
+
+- Interactive Element အားလုံး Focus ရနိုင်ရပါမယ်
+- Visible `:focus-visible` Outline များကို ထားရှိပါ (ဘယ်တော့မှ ဖျက်မပစ်ပါနှင့်)
+- Dialog/Overlay များတွင် Focus ကို Trap လုပ်ကာ ပြန်လည် သတ်မှတ်ပေးပါ
+- Heavy Transition များကို ပိတ်ရန် `prefers-reduced-motion` ကို အသုံးပြုပါ
+
+## Images & media
+
+- `alt` Text များ ထည့်ပါ (ပန်းချီသက်သက် ပုံများအတွက် `role="presentation"` သုံးနိုင်ပါတယ်)
+- Video/Audio များအတွက် Caption သို့မဟုတ် Transcript ထည့်ပါ
+
+## Forms
+
+```tsx
+<label htmlFor="email">Email</label>
+<input id="email" name="email" type="email" aria-describedby="email-hint" required />
+<p id="email-hint">We'll never share your email.</p>
+```
+
+- Error Message များကို `aria-describedby` ဖြင့် ချိတ်ဆက်ပေးပါ
+- Color တစ်ခုတည်းကို အားကိုးမနေဘဲ Text သို့မဟုတ် Icons များကိုပါ ထည့်သွင်းပါ
+
+## Testing
+
+- `axe`/`Lighthouse` ဖြင့် ပုံမှန် စစ်ဆေးမှုများ ပြုလုပ်ပါ
+- Keyboard ဖြင့်သာ လည်ပတ်၍ စစ်ဆေးမည့် Checklist များ ပြုလုပ်ပါ
+- အဓိက Journeys များအတွက် Screen Reader Smoke Test ပြုလုပ်ပါ
+
+## Activity
+
+Page တစ်ခုကို `axe` ဖြင့် စစ်ဆေးကာ Violation ၃ ခု (Headings, Labels, Focus) ကို ပြုပြင်ပြီး Pre-merge Review အတွက် Keyboard-only Walkthrough ကို ရိုက်ကူးပါ။

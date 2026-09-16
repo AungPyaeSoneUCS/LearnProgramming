@@ -1,0 +1,73 @@
+---
+title: "OpenTelemetry — Distributed Tracing စနစ်"
+description: "Trace Next.js requests end-to-end with OpenTelemetry: setup, instrumentation, and exporters. — OpenTelemetry ဖြင့် Next.js requests များကို setup, instrumentation နှင့် exporters သုံး၍ end-to-end ခြေရာခံနည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Distributed tracing ဖြင့် သင့် app တွင် အချိန် ဘယ်မှာ ကုန်ဆုံးသည်ကို သိရှိစေရန် — request တိုင်း၊ cache hit တိုင်းနှင့် external call တိုင်းမှ tracing ရရှိပုံကို နားလည်စေရန် ဖြစ်ပါတယ် — **traces** နှင့် **spans** တို့၏ သဘောတရားများကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+OpenTelemetry (OTel) သည် application မှ ထုတ်ပေးသော traces (ခြေရာများ) ကို စုစည်း ဖော်ပြသည့် open standard တစ်ခု ဖြစ်ပါတယ်။ Next.js သည် server-side မှ request တစ်ခုချင်းစီအတွက် spans များ — cache operations, RSC rendering, fetches နှင့် downstream API calls များ အပါအဝင် — ကို အလိုအလျောက် ထုတ်ပေးနိုင်ပါတယ်။ စတင်ရန် `@opentelemetry/sdk-node`, `@opentelemetry/instrumentation-http` နှင့် `@opentelemetry/instrumentation-fetch` packages များကို install လုပ်ပြီး `instrumentation.ts` ၏ `register` function အတွင်းတွင် `NEXT_RUNTIME === "nodejs"` ဖြစ်မှသာ `NodeSDK` တစ်ခုကို start လုပ်ပါတယ်။ Exporter အနေဖြင့် OTLP exporter တစ်ခုကို သတ်မှတ်ပြီး Jaeger (`jaegertracing/all-in-one`) ကဲ့သို့ backend သို့ traces များကို ပို့နိုင်ပါတယ်။ ကိုယ်ပိုင် spans များကိုလည်း `trace.getTracer(...).startSpan(...)` ဖြင့် ထည့်သွင်းနိုင်ပြီး incoming requests, Route Handlers, Server Components, fetch calls နှင့် external HTTP များကို အလိုအလျောက် trace လုပ်ပေးပါတယ်။ Trace waterfall မှ နေ၍ ဘယ် span က နှေးကွေးသည်ကို စစ်ဆေးပြီး performance ပိုင်းခြား စိတ်ဖြာနိုင်ပါသည်။
+
+## What OTel gives you
+
+**OpenTelemetry** သည် *traces* များကို ထုတ်လွှတ်ပေးပါတယ် — request တစ်ခုချင်းစီအတွက် server-side spans များ၊ cache operations, RSC rendering, fetches နှင့် downstream API calls များ ဖြစ်ပါတယ်။
+
+## Enabling
+
+```bash
+npm install @opentelemetry/sdk-node @opentelemetry/instrumentation-http @opentelemetry/instrumentation-fetch
+```
+
+```ts
+// instrumentation.ts
+import { NodeSDK } from "@opentelemetry/sdk-node";
+
+export async function register() {
+  if (process.env.NEXT_RUNTIME === "nodejs") {
+    const sdk = new NodeSDK({
+      serviceName: "my-app",
+      // traceExporter: your collector (OTLP)
+    });
+    await sdk.start();
+  }
+}
+```
+
+## Exporters
+
+တစ်ခုကို configure လုပ်ပါ:
+
+```ts
+import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
+
+const exporter = new OTLPTraceExporter({
+  url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ?? "http://localhost:4318/v1/traces",
+});
+```
+
+Local UI အတွက် — Jaeger (`jaegertracing/all-in-one`) ကို run ပြီး OTLP ကို ၎င်းဆီသို့ ညွှန်ပြပါ။
+
+## Custom spans
+
+```ts
+import { trace } from "@opentelemetry/api";
+const span = trace.getTracer("my-app").startSpan("render-product-grid");
+// ... do work
+span.end();
+```
+
+## What gets traced automatically
+
+- Incoming requests များ (server + edge)
+- Route Handlers နှင့် Server Components
+- `fetch` calls များနှင့် cache read/write
+- External HTTP (http instrumentation ဖြင့်)
+
+## Activity
+
+လေ့ကျင့်ခန်း: Local Jaeger တစ်ခုဆီသို့ OTLP export ကို ပြင်ဆင်ပြီး routes ၅ ခုကို load လုပ်ကာ slowest span ကို ရှာဖွေရန် trace waterfall ကို စစ်ဆေးပါ။

@@ -1,0 +1,71 @@
+---
+title: "opengraph-image.* (Social Share Cards ထုတ်လုပ်ခြင်း)"
+description: "Generate social share cards for Twitter/X and Facebook/LinkedIn with opengraph-image files. — `opengraph-image` ဖိုင်များဖြင့် Twitter/X နှင့် Facebook/LinkedIn အတွက် social share cards ထုတ်လုပ်နည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  သင့် page များအတွက် link preview ပေါ်တွင် ပြသမည့် ရုပ်ပုံကို တိကျစွာ ထိန်းချုပ်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`opengraph-image.*` နှင့် `twitter-image.*` ဖိုင်များသည် ဝဘ်ဆိုက်၏ URL ကို social media ပေါ်တွင် share လုပ်သောအခါ link preview တွင် ပြသမည့် ရုပ်ပုံကို သတ်မှတ်ပေးပါတယ်။ Next.js သည် ဖိုင်အမည်ပေါ်မူတည်၍ `<meta property="og:image">` နှင့် `<meta name="twitter:image">` tag များကို အလိုအလျောက် ထုတ်ပေးပါတယ်။ `next/og` ၏ `ImageResponse` ကို အသုံးပြု၍ dynamic generator ရေးသားနိုင်ပြီး blog post title ကဲ့သို့ dynamic data ဖြင့် ရုပ်ပုံကို ချက်ချင်း ရေးဆွဲနိုင်ပါတယ်။ စံနှုန်းအရ 1200×630 အရွယ်အစားကို အသုံးပြုပြီး segment တိုင်းတွင် ကိုယ်ပိုင် og:image သတ်မှတ်နိုင်ပါတယ်။
+
+## The convention (ပုံစံသတ်မှတ်ချက်)
+
+File naming convention အတိုင်း ထည့်လိုက်လျှင် သင့်လျော်သော meta tag များကို ထုတ်ပေးပါတယ်:
+
+```
+app/opengraph-image.png     →  <meta property="og:image" content="/opengraph-image.png" />
+app/twitter-image.png       →  <meta name="twitter:image" content="/twitter-image.png" />
+```
+
+Static images အပြင် `opengraph-image.tsx` ဖိုင်ဖြင့် dynamic generator ကိုလည်း ရေးသားနိုင်ပါတယ်။
+
+## Dynamic generator (အကြံပြုထားသော နည်းလမ်း)
+
+```tsx
+// app/blog/[slug]/opengraph-image.tsx
+import { ImageResponse } from "next/og";
+
+export default async function OGImage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
+
+  return new ImageResponse(
+    (<div style={{ width: 1200, height: 630, display: "flex", background: "#111", color: "#fff", padding: 80, fontSize: 56 }}>
+      {post.title}
+    </div>),
+    { width: 1200, height: 630 }
+  );
+}
+```
+
+## The golden ratio (အချိုးအစား စံနှုန်း)
+
+- Standard: 1200 × 630 (2:1 အချိုး — link shares အတွက်)
+- Twitter preview များသည် `twitter:card = summary_large_image` ကိုလည်း ဖတ်ပါတယ်
+
+## Metadata controls (Metadata ဖြင့် ထိန်းချုပ်ခြင်း)
+
+Metadata object ထဲတွင် `openGraph.images` ကို အောက်ပါအတိုင်း သတ်မှတ်နိုင်ပါတယ်:
+
+```ts
+export const metadata = {
+  openGraph: {
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Banner" }],
+  },
+};
+```
+
+## Rules (စည်းမျဉ်းများ)
+
+- Segment တစ်ခုလျှင် `og:image` တစ်ခု — child routes များက parent များကို override လုပ်ပါတယ်
+- Dynamic: page ကဲ့သို့ async metadata တွက်ရန် `params`/`searchParams` ကို သုံးနိုင်ပါတယ်
+- Generator ရလဒ်များအတွက် `use cache` ဖြင့် cache လုပ်ပါ
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Blog post route တွင် post title ကို ရေးဆွဲပေးသော `opengraph-image.tsx` ဖိုင်ကို ဖန်တီးပြီး URL ကို link-share checker တစ်ခုတွင် paste လုပ်ကာ သင့် card ပေါ်လာကြောင်း အတည်ပြုပါ။

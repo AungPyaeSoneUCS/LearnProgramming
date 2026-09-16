@@ -1,0 +1,101 @@
+---
+title: "JSON-LD — Search Engine အတွက် Structured Data"
+description: "Add structured data (JSON-LD) for rich results: Product, Article, FAQ, and Breadcrumb schemas. — Product, Article, FAQ နှင့် Breadcrumb schemas များဖြင့် rich results ရရှိရန် JSON-LD ထည့်သွင်းနည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Search engines များ သင့် content ကို နားလည်စေပြီး rich results ရရှိစေရန် JSON-LD structured data များ မည်သို့ ထည့်ရမည်ကို နားလည်စေရန် ဖြစ်ပါတယ် — **schema.org** အမျိုးအစားများနှင့် ၎င်းတို့ကို Server Component အတွင်း ထည့်သွင်းပုံကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+JSON-LD ဆိုသည်မှာ web page အတွင်းရှိ data များကို search engines များ စနစ်တကျ ဖတ်နိုင်ရန် schema.org ပေါ်တွင် အခြေခံပြီး structured data အဖြစ် ဖော်ပြသည့် format တစ်ခု ဖြစ်ပါတယ်။ `<script type="application/ld+json">` block အတွင်းတွင် products, articles, FAQs, breadcrumbs, events စသော entities များကို JSON format ဖြင့် ဖော်ပြပြီး Google က ၎င်းကို ဖတ်ကာ rich snippets များ ပြသပေးပါတယ်။ Product page တစ်ခုတွင် `@type: "Product"` ဖြင့် name, description, image နှင့် offers များကို ထည့်သွင်းပြီး page ၏ JSX တွင် `dangerouslySetInnerHTML` ကို သုံး၍ script block အဖြစ် render လုပ်နိုင်ပါတယ်။ Article နှင့် FAQPage schemas များတွင်လည်း headline, datePublished, author ကဲ့သို့ data များနှင့် FAQ ၏ question/answer အတွဲများကို ဖော်ပြနိုင်ကာ BreadcrumbList schema ဖြင့် navigation path ကို ညွှန်ပြနိုင်ပါတယ်။ Script block ကို Server Component အတွင်းတွင် ထားမှသာလျှင် HTML ၏ အစိတ်အပိုင်း ဖြစ်မည်ဖြစ်ပြီး page တစ်ခုတွင် schema အမျိုးအစား တစ်ခုထက်ပို၍ ရောနှော မထားသင့်ဘဲ canonical URL များကို သုံးကာ Google ၏ Rich Results Test ဖြင့် စစ်ဆေးရန် အကြံပြုပါတယ်။
+
+## What JSON-LD is
+
+`<script type="application/ld+json">` block တစ်ခုဖြင့် entities များ — products, articles, FAQs, breadcrumbs, events — ကို ဖော်ပြပါတယ်။ Google သည် ၎င်းကို ဖတ်ပြီး rich snippets များအတွက် အသုံးပြုပါတယ်။
+
+## A basic Product schema
+
+```tsx
+// app/products/[slug]/page.tsx
+import type { Metadata } from "next";
+
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const product = await getProduct(slug);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    image: [product.image],
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      price: product.price,
+      availability: "https://schema.org/InStock",
+    },
+  };
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <article>
+        <h1>{product.name}</h1>
+        <span>${product.price}</span>
+      </article>
+    </>
+  );
+}
+```
+
+## Article + FAQ schemas
+
+```tsx
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: post.title,
+  datePublished: post.publishedAt,
+  author: { "@type": "Person", name: post.author },
+  image: [post.cover],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.question,
+    acceptedAnswer: { "@type": "Answer", text: f.answer },
+  })),
+};
+```
+
+## Breadcrumb schema
+
+```tsx
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "/" },
+    { "@type": "ListItem", position: 2, name: "Shop", item: "/shop" },
+  ],
+};
+```
+
+## Rules of thumb
+
+- Page တစ်ခုတွင် ရည်ရွယ်ချက်အလိုက် snippet တစ်မျိုးတည်းသာ ထားပါ (Product vs Article)
+- **alt** နှင့် canonical URLs များကို သုံးပြီး JSON ကို valid အောင် ထားပါ
+- Google ၏ **Rich Results Test** ဖြင့် စစ်ဆေးပါ
+- Script ကို Server Component အတွင်းတွင် ထားမှသာ HTML ၏ အစိတ်အပိုင်း ဖြစ်မည်
+
+## Activity
+
+လေ့ကျင့်ခန်း: Product page တစ်ခုတွင် Product schema နှင့် docs page တစ်ခုတွင် FAQ schema ကို ထည့်ပါ။ URL နှစ်ခုလုံးကို Rich Results Test ဖြင့် စစ်ဆေးကြည့်ပါ။

@@ -1,0 +1,57 @@
+---
+title: "fetch — Next.js caching ပါဝင်သော fetch"
+description: "Extended fetch with Next.js caching: revalidate, tags, and cache-control. — Next.js caching ဖြင့် ချဲ့ထွင်ထားသော fetch — revalidate, tags နှင့် cache-control တို့ ပါဝင်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  App Router ရှိ fetch options များဖြင့် external data များကို သပ်ရပ်စွာ cache လုပ်နိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Next.js 16 တွင် `fetch` သည် ပုံမှန်အားဖြင့် cache လုပ်ထားပြီး web fetch call များတွင် `next` option ထည့်ခြင်းဖြင့် cache သက်တမ်းကို ထိန်းချုပ်နိုင်ပါတယ်။ `revalidate` ဖြင့် အချိန်အပိုင်းအခြားအလိုက် ပြန်လန်းဆန်းစေနိုင်ပြီး `tags` ဖြင့် အမည်တပ်၍ `revalidateTag("stats")` ကဲ့သို့ tag အလိုက် တိကျစွာ ပြန်လန်းဆန်းနိုင်ပါတယ်။ `cache: "no-store"` ကိုသုံးလျှင် ထို fetch အတွက်သာ cache မလုပ်ဘဲ ကျော်လွှားနိုင်ပါတယ်။ `"use cache"` scope အတွင်းရှိ fetches များသည် per-fetch options များကို ချန်လှပ်ပြီး scope-level `cacheLife` ကိုသာ အားကိုးနိုင်ပါတယ်။ Route handlers နှင့် POST/အခြား GET မဟုတ်သော method များသည် mutation အဓိပ္ပာယ်သက်ရောက်သောကြောင့် cache မပြုလုပ်ပေးပါ။
+
+## Default behavior in Next 16 (Next 16 တွင် ပုံမှန်အပြုအမူ)
+
+`fetch` သည် ပုံမှန်အားဖြင့် cache လုပ်ထားပါတယ်။ web fetch calls တွင်ရှိသော `next` options များဖြင့် lifetime ကို ထိန်းချုပ်ပါ:
+
+```tsx
+const res = await fetch("https://api.example.com/stats", {
+  next: {
+    revalidate: 3600,          // seconds
+    tags: ["stats"],           // revalidateTag targets
+    cache: "no-store",         // opt-out
+  },
+});
+```
+
+## Without `next` options (`next` options မပါဘဲ)
+
+- Browser-like caching semantics (HTTP cache headers) အကျုံးဝင်ပါတယ်
+- Cached responses များကို requests/builds အမျိုးမျိုးတွင် မျှဝေသုံးစွဲပါတယ်
+
+## Revalidation & invalidation
+
+```ts
+// Revalidate by tag
+await revalidateTag("stats");
+
+// Or by path - bust the tree
+await revalidatePath("/dashboard", "layout");
+```
+
+## What about `"use cache"`? ( `"use cache"` ကော ဘယ်လိုလဲ)
+
+ပိုမိုထိန်းချုပ်နိုင်ရန်အတွက် Cache Components မော်ဒယ်ကို သုံးပါ — `"use cache"` scope အတွင်းရှိ fetches များသည် per-fetch options များကို ချန်လှပ်ပြီး scope-level `cacheLife` ကို အားကိုးနိုင်ပါတယ်။
+
+## Rules & gotchas (စည်းကမ်း နှင့် သတိပြုအချက်များ)
+
+- `cache: "no-store"` သည် fetch တစ်ခုချင်းအလိုက် cache မှ ထွက်ရန် (opt-out) လုပ်ပေးပါတယ်
+- Cached fetch responses များသည် cache layer မှ ဖြတ်သန်းရန် serializable ဖြစ်ရပါမယ်
+- Route handlers + POST/အခြား GET မဟုတ်သော method များသည် cache မပြုလုပ်ပေးပါ (mutation semantics)
+
+## လေ့ကျင့်ခန်း (Activity)
+
+Ticket API fetch တစ်ခုတွင် `next: { revalidate: 60, tags: ["prices"] }` ကို ထည့်သွင်းပြီး `revalidateTag("prices")` ဖြင့် invalidate လုပ်ကာ နောက် request တွင် fresh data ရောက်ရှိကြောင်း အတည်ပြုပါ။

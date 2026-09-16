@@ -1,0 +1,66 @@
+---
+title: "Link — လင့်ခ် Component"
+description: "The next/link API: href variants, prefetch, replace, scroll, scroll restoration, and the current URL — href အမျိုးအစားများ၊ prefetch၊ replace၊ scroll နှင့် လက်ရှိ URL များအကြောင်း API။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Dynamic hrefs များ၊ Behavior props များနှင့် Active State Styling တို့အပါအဝင် `Link` ၏ Feature များအားလုံးကို အသုံးပြုတတ်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`next/link` ၏ `<Link>` component သည် Client-side Navigation ကို ဖွင့်ပေးသည့် Next.js ၏ အခြေခံအကျဆုံး Component တစ်ခုဖြစ်ပါတယ်။ ၎င်းကို အသုံးပြုလိုက်သောအခါ Browser သည် Server မှ စာမျက်နှာအသစ်ကို ဒေါင်းလုဒ်လုပ်စရာမလိုဘဲ Route change ကို Client-side မှ ချောမွေ့စွာ ကိုင်တွယ်နိုင်ပြီး Viewport အတွင်း ရောက်ရှိနေသော ချိတ်ဆက်မှုများကို အလိုအလျောက် Prefetch လုပ်ပေးပါတယ်။ `href` အနေဖြင့် String၊ Dynamic Template နှင့် Query ပါသော Object အသွင်ဖြင့် သုံးနိုင်ပြီး `replace`၊ `scroll`၊ `shallow` ကဲ့သို့ Behavior props များဖြင့် Navigation ၏ အမူအကျင့်ကို ချိန်ညှိနိုင်ပါတယ်။ External URL များအတွက်မူ `target` နှင့် `rel` များကို အလိုအလျောက် မထည့်ပေးသည့်အတွက် ကိုယ်တိုင် ထည့်သွင်းပေးရပါမယ်။ လက်ရှိ Route ကို မီးမောင်းထိုးပြလိုလျှင် `usePathname` hook ကို သုံး၍ Active Link Styling ပြုလုပ်နိုင်ပါတယ်။
+
+## Basic
+
+```tsx
+import Link from "next/link";
+
+<Link href="/dashboard">Dashboard</Link>
+```
+
+External URL များအတွက် `target="_blank"` နှင့် `rel` များကို အလိုအလျောက် မထည့်ပေးသောကြောင့် ကိုယ်တိုင် ထည့်သွင်းပေးရပါတယ်။
+
+## Dynamic hrefs
+
+```tsx
+<Link href="/blog/[slug]" as={`/blog/${slug}`}></Link>   // legacy - don't use
+// Modern:
+<Link href={`/blog/${slug}`}>Post</Link>
+```
+
+Query ပါဝင်သော Object href:
+
+```tsx
+<Link href={{ pathname: "/shop", query: { tag: "nextjs" } }}>Shop</Link>
+```
+
+## Behavior props
+
+| Prop         | Effect                                      |
+| ------------ | ------------------------------------------- |
+| `prefetch`   | `true`/`false` to prefetch                  |
+| `replace`    | Replace instead of push (history)           |
+| `scroll`     | False keeps scroll position on navigate     |
+| `shallow`    | Don't refetch data on query change          |
+| `target`, `rel` | Pass-through for external                |
+
+## Styling the active link
+
+```tsx
+"use client";
+import { usePathname } from "next/navigation";
+
+const pathname = usePathname();
+<Link href="/about" className={pathname === "/about" ? "active" : ""}>About</Link>
+```
+
+## Link in Server Components
+
+Links များကို Server Components တွင် Render ပြုလုပ်နိုင်ပါတယ်။ Hooks ပါဝင်သည့်အခါ Behavior ဆိုင်ရာ ကောင်းမွန်မှုများအတွက်မူ Client Component တစ်ခု လိုအပ်ပါတယ်။
+
+## Activity
+
+သင့် Navigation menu ကို Query-object hrefs သုံးထားသော `next/link` အဖြစ် ပြောင်းလဲပြီး အရေးကြီးသော Paths များကို `prefetch` လုပ်ကာ List အတွင်းရှိ Navigation တွင် Scroll ကို ဆက်ထားပြီး `usePathname` ဖြင့် Active route ကို မီးမောင်းထိုးပြပါ။

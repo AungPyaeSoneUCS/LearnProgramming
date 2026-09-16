@@ -1,0 +1,56 @@
+---
+title: "updateTag (Background Recompute)"
+description: "Recompute tagged caches in the background while serving stale content. — Stale Content များ ဆက်လက် ပေးနေစဉ် Tag ပေးထားသော Caches များကို Background တွင် ပြန်တွက်ချက်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  In-flight Requests များကို စောင့်ဆိုင်းစေခြင်း မရှိဘဲ Cached Data များကို Update လုပ်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`updateTag()` သည် Cache Components ခေတ်၏ `revalidateTag` နှင့် တွဲဖက်သော Sidekick Function တစ်ခုဖြစ်ပြီး Cache Tag ပေးထားသော Scope များကို **Background** တွင် ပြန်လည် တွက်ချက်ပေးပါတယ်။ ၎င်းကို Server Action တစ်ခုမှ ခေါ်ယူနိုင်ပြီး လက်ရှိ In-flight Requests များသည် Stale (သိမ်းထားသော) Version ကို ဆက်လက် မြင်တွေ့နေဆဲဖြစ်ကာ Update ပြီးစီးသောအခါ Cache Entries များကို Fresh ဒေတာများဖြင့် Hot-swap လုပ်ပေးပါတယ်။ ဤနည်းလမ်းသည် Load မြင့်မားသော High-traffic Lists များတွင် Revalidation ကြောင့် Request အများအပြား တစ်ပြိုင်နက်တည်း ဖြစ်ပွားခြင်း (Thundering Herd) ကို ကာကွယ်ပေးပါတယ်။ `updateTag` သည် ရှိပြီးသား `cacheTag(...)` အမည်များကိုသာ ရည်ညွှန်းရမည်ဖြစ်ပြီး Server Scope တွင်သာ အသုံးပြုနိုင်ပါတယ်။ ထို့အပြင် `updateTag` ခေါ်ယူမှု အများအပြားကို Scope တစ်ခုအလိုက် Coalesce ပြုလုပ်ပြီး Ordering ကို စီမံပေးပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+`updateTag` သည် Cache Components ခေတ်၏ `revalidateTag` Sidekick ဖြစ်ပါတယ်:
+
+```ts
+import { updateTag } from "next/cache";
+
+export async function refreshPrices() {
+  "use server";
+  await updateTag("prices");
+}
+```
+
+## Behavior (လုပ်ဆောင်ပုံ)
+
+- Cached Scopes များကို **Background Re-computation** အတွက် Tag လုပ်ပေး
+- ရှိပြီးသား Requests များသည် Stale Version ကို မြင်ရပြီး Update ပြီးစီးပါက Entries များ Refresh ဖြစ်သွားပါမယ်
+- Update ပြီးနောက် လာမည့် Request သည် Fresh ဒေတာကို ရရှိပါမယ်
+
+## revalidateTag နှင့် နှိုင်းယှဉ်ခြင်း (Compare with revalidateTag)
+
+| Function       | Timing                          | Serves stale to in-flight? |
+| -------------- | ------------------------------- | -------------------------- |
+| `revalidateTag` | purge; next request recomputes  | Yes (next fetch fresh)     |
+| `updateTag`    | recompute now in background     | Yes, then hot swap         |
+
+## ဘယ်အချိန် သုံးမလဲ (When to Use)
+
+- Full Purge ပြုလုပ်ပါက Thundering Herd ဖြစ်စေနိုင်သော High-traffic Lists များ
+- ကြာမြင့်စွာ ပြုလုပ်ရသော Recompute များတွင် Update ကို စတင်ထား၍ Cache ကို ဆက်လက် ပေးနေနိုင်ရန်
+- ဖြည်းညင်းစွာသာ ပြောင်းလဲနေသော Catalogs များ
+
+## Rules & Gotchas (စည်းမျဉ်းများနှင့် သတိထားရမှုများ)
+
+- Server Scope တွင်သာ အသုံးပြုနိုင်
+- ရှိပြီးသား `cacheTag(...)` အမည်များကိုသာ ရည်ညွှန်းရမည်
+- Ordering — `updateTag` အများအပြားကို Scope တစ်ခုအလိုက် Coalesce လုပ်ပါတယ်
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Hot Pricing Endpoint တစ်ခုကို `revalidateTag` မှ `updateTag` သို့ ပြောင်းလဲပြီး Concurrent Request နှစ်ခုကို Fire လုပ်၍ Latency Spikes မရှိဘဲ တစ်ခုက Stale-while-rebuilt ဖြစ်ကြောင်း အတည်ပြုပါ။

@@ -1,0 +1,83 @@
+---
+title: "Content Security Policy — Content Security Policy (CSP)"
+description: "Add a Content Security Policy (CSP) to Next.js apps: nonces, headers, and scripts. — Next.js apps များတွင် Content Security Policy (CSP) ထည့်သွင်းခြင်း၊ nonces, headers နှင့် scripts အကြောင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="danger" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  CSP headers များဖြင့် browser မည်သည့် scripts နှင့် resources များကို load ခွင့်ပြုသည်ကို ကန့်သတ်ခြင်းဖြင့် XSS ရန်မှ ကာကွယ်နိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Content Security Policy (CSP) ဆိုသည်မှာ browser သည် မည်သည့် origins မှ scripts, styles, images, fonts စသည့် resources များကို load လုပ်ခွင့်ရှိသည်ကို server မှ သတ်မှတ်ပေးသည့် security mechanism တစ်ခု ဖြစ်ပါတယ်။ ၎င်းကို `Content-Security-Policy` response header ဖြင့် ပို့ဆောင်ပြီး Next.js ရှိ `next.config.ts` ၏ `async headers()` သို့မဟုတ် middleware / `proxy.ts` မှတစ်ဆင့် ထည့်သွင်းနိုင်ပါတယ်။ CSP သည် ခွင့်ပြုချက်မရှိသော inline scripts, injected `<script>` များနှင့် `eval()` တို့ကို ပိတ်ဆို့ခြင်းဖြင့် cross-site scripting (XSS) တိုက်ခိုက်မှုအများစုကို ကာကွယ်ပါတယ်။ Next.js ၏ အချို့ inline scripts များ ဆက်လက် လည်ပတ်နိုင်ရန်အတွက် `'unsafe-inline'` သို့မဟုတ် per-request nonce တစ်ခုကို အသုံးပြုရန် လိုအပ်ပါသည်။ `connect-src` ပျောက်ဆုံးပါက fetch နှင့် WebSocket calls များ ပျက်စီးနိုင်သဖြင့် သတိထားပြီး `frame-ancestors 'self'` ဖြင့် clickjacking ကို ကာကွယ်နိုင်ပါတယ်။
+
+## What CSP prevents
+
+CSP သည် အတိအကျ ခွင့်ပြုမထားသော scripts/styles/content များကို ပိတ်ဆို့ပြီး inline events, injected `<script>` နှင့် `eval()` စသည့် **cross-site scripting (XSS)** တိုက်ခိုက်မှု အများစုကို တားဆီးပါတယ်။
+
+## Enable CSP via headers
+
+`next.config.ts` ဖိုင်အတွင်းတွင်:
+
+```ts
+// next.config.ts
+const CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: https:",
+  "font-src 'self'",
+  "connect-src 'self' https://api.example.com",
+  "frame-ancestors 'self'",
+].join("; ");
+
+const nextConfig: NextConfig = {
+  async headers() {
+    return [{ source: "/:path*", headers: [{ key: "Content-Security-Policy", value: CSP }] }];
+  },
+};
+```
+
+> **Good to know — သိထားသင့်သည်:** Next.js သည် အချို့ inline scripts များအတွက် `'unsafe-inline'` လိုအပ်ပြီး မဟုတ်ပါက full strictness အတွက် **nonces** များကို (အောက်တွင် ကြည့်ပါ) အသုံးပြုရပါမယ်။
+
+## Nonces for inline scripts
+
+Request တစ်ခုချင်းစီအတွက် random nonce တစ်ခု ထုတ်ပေးကာ inline scripts များ ဆက်လက် လည်ပတ်နိုင်အောင် ပြုလုပ်ပါ:
+
+```ts
+// app/page.tsx - Server Component
+import { createHash, randomBytes } from "node:crypto";
+
+export default async function Page() {
+  const nonce = createHash("sha256").update(randomBytes(12)).digest("hex");
+  // pass nonce to <script> tags / the CSP header
+}
+```
+
+ထို့နောက် `script-src 'self' 'nonce-${nonce}'` header value ကို ထည့်ပြီး သင့် `<Script>` components များပေါ်တွင် `nonce` သတ်မှတ်ပါ။
+
+## Middleware / Proxy approach
+
+Config headers တွင် nonces များ တွက်ချက်၍ မရလျှင် CSP ကို `proxy.ts` သို့မဟုတ် middleware တွင် ထည့်သွင်းပါ:
+
+```ts
+// middleware protects + injects headers
+export function middleware(request: NextRequest) {
+  const response = NextResponse.next();
+  response.headers.set("Content-Security-Policy", CSP);
+  return response;
+}
+```
+
+## Common pitfalls
+
+- `connect-src` ပျောက်ဆုံးပါက `fetch` နှင့် WebSocket calls များ ပျက်စီးနိုင်သည်
+- `img-src` အလွန်တင်းကျပ်ပါက next/image remote sources များ ပျက်စီးနိုင်သည်
+- `frame-ancestors 'self'` သည် iframes များမှတစ်ဆင့် clickjacking ကို တားဆီးပေးသည်
+- ပထမဆုံး rollout တွင် `report-uri` / `report-to` ဖြင့် violations များကို အစီရင်ခံပါ
+
+## Activity — လေ့ကျင့်ခန်း
+
+`default-src 'self'` ပါသော `Content-Security-Policy` header တစ်ခု ထည့်ပါ၊ app သည် ပုံမှန် အလုပ်လုပ်နေဆဲ ဖြစ်ကြောင်း အတည်ပြုပါ၊ ထို့နောက် ခေါ်ဆိုသော external API များအတွက် `connect-src` ကို ထည့်ပါ။

@@ -1,0 +1,61 @@
+---
+title: "Route Segment Config: maxDuration (Route လုပ်ဆောင်ချိန် အကန့်အသတ်)"
+description: "Cap how long a route may execute with the maxDuration segment export. — `maxDuration` segment export ဖြင့် route တစ်ခု မည်မျှကြာကြာ လုပ်ဆောင်နိုင်သည်ကို ကန့်သတ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Route တစ်ခုချင်းစီအတွက် execution time limit များ သတ်မှတ်၍ နှေးကွေးသော အလုပ်များကို ကြိုတင်ခန့်မှန်းနိုင်သော error ဖြင့် ရပ်တန့်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`maxDuration` သည် route တစ်ခု၏ maximum execution time (စက္ကန့်ဖြင့်) ကို သတ်မှတ်ပေးသည့် Route Segment Config တစ်ခု ဖြစ်ပါတယ်။ သတ်မှတ်ထားသော အချိန်ထက် ကျော်လွန်ပါက platform (ဥပမာ serverless hosting) သည် timeout ဖြစ်စေပြီး `TimeoutError` ကို ပြန်ပေးပါတယ်။ ၎င်းကို Route Handler တစ်ခုချင်းစီတွင် export လုပ်နိုင်သကဲ့သို့ `next.config.ts` မှတစ်ဆင့် app တစ်ခုလုံးအတွက်လည်း သတ်မှတ်နိုင်ပါတယ်။ Hosting provider အလိုက် default တန်ဖိုးများ ကွဲပြားတတ်ပြီး execution အလိုက် ကောက်ခံသော host များတွင် ဤတန်ဖိုး နည်းလေ စျေးသက်သာလေဖြစ်ပါတယ်။
+
+## What it is
+
+`maxDuration` သည် route ၏ maximum execution time (စက္ကန့်ဖြင့်) ကို သတ်မှတ်ပေးပါတယ်:
+
+```ts
+// app/api/export/route.ts
+export const maxDuration = 30;
+```
+
+```ts
+// Or via next.config.ts for the whole app
+const nextConfig: NextConfig = {
+  maxDuration: 30,
+};
+```
+
+Platform က ပြင်ဆင်ကျင့်သုံးပေးသည် (ဥပမာ serverless limits): ကျော်လွန်ပါက `TimeoutError` ဖြစ်ပါတယ်။
+
+## Platform defaults (Platform အလိုက် Default တန်ဖိုးများ)
+
+Hosting platform အလိုက် ပုံမှန် default တန်ဖိုးများကို အောက်ပါဇယားတွင် ဖော်ပြပါတယ်:
+
+| Platform | Typical default | Config |
+| -------- | --------------- | ------ |
+| Vercel   | 60s (hobby 10s) | via vercel config too |
+| Others   | define via infra | env/host-specific |
+
+## Rules & store details (စည်းမျဉ်းများနှင့် အသေးစိတ်)
+
+- တန်ဖိုး နည်းလေ စျေးသက်သာလေ (host အချို့တွင် execution အလိုက် ကောက်ခံပါတယ်)
+- Maximum လည်း မဟုတ်၊ အာမခံထားသည်လည်း မဟုတ် — ၎င်းသည် **cap** (အကန့်အသတ်) သဘောသာ ဖြစ်ပါတယ်
+- လေးလံသော အလုပ်များ (file exports, ML inference) နှင့် တွဲသုံးလျှင် realistic limits သတ်မှတ်ပါ
+
+## Errors & observability (အမှားများနှင့် စောင့်ကြည့်နိုင်မှု)
+
+Timeout ဖြစ်သောအခါ `onRequestError` က `digest` နှင့်အတူ ခေါ်ဆိုပြီး `error.tsx`/`GlobalError` bound တွင် repro UI ကို ပြသနိုင်ပါတယ်။
+
+## When to tune (မည်သည့်အခါ ချိန်ညှိမည်)
+
+- ကြီးမားသော exports များ လုပ်သော Route Handlers → တန်ဖိုး မြှင့်ပါ
+- Edge routes → defaults များကို နိမ့်ထားပါ (mid-threshold)
+- လေးလံသော non-export အလုပ်များတွင် `cacheLife`/incremental guidance ထည့်ပါ
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Simulated slow API တစ်ခုပေါ်တွင် `maxDuration = 5` သတ်မှတ်ပြီး ခေါ်ဆိုကာ timeout error ပေါ်လာပြီး သင့် error handling က ဖမ်းယူနိုင်ကြောင်း အတည်ပြုပါ။

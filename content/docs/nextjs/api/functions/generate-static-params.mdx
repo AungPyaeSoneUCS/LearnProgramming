@@ -1,0 +1,55 @@
+---
+title: "generateStaticParams — Build အချိန်တွင် Static Pre-render"
+description: "Pre-render dynamic routes at build time with generateStaticParams. — Build အချိန်တွင် dynamic routes များကို static ဖြင့် ကြိုတင် render လုပ်ပေးသော function ဖြစ်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Build အချိန်တွင် dynamic URLs များကို static pages အဖြစ် ပြောင်းလဲပြီး မြန်နှုန်းနှင့် server load သုညရရှိစေရန် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`generateStaticParams` သည် dynamic route တစ်ခုအတွက် build-time prerendering ပြုလုပ်ရန် param sets များကို ပြန်ပေးသော function တစ်ခုဖြစ်ပါတယ်။ `app/blog/[slug]/page.tsx` ကဲ့သို့ dynamic segment ရှိသော page တွင် posts အားလုံးကို fetch လုပ်ပြီး slug များကို param အဖြစ် ပြန်ပေးလိုက်ပါက build လုပ်စဉ် HTML အားလုံးကို static ဖြင့် ကြိုတင်ထုတ်ပေးပါတယ်။ User များ ဝင်ရောက်သောအခါ server က ထပ်မံ render လုပ်စရာမလိုဘဲ static file ကို တိုက်ရိုက် ပေးပို့နိုင်သောကြောင့် မြန်နှုန်းမြင့်မားပြီး server load လည်း မရှိသလောက်ပင် ဖြစ်ပါတယ်။ Unlisted slug များအတွက် default `dynamicParams` (true) ဆိုလျှင် on-demand render + cache ဖြစ်ပြီး `dynamicParams = false` ဆိုလျှင် 404 ပြန်ပေးပါတယ်။ ဤ function သည် dynamic `[param]` routes (သို့မဟုတ် route groups) များတွင်သာ export လုပ်ရပြီး catch-all routes တွင် array များ ပြန်ပေးရကာ multiple dynamic params ရှိပါက လိုအပ်သော ပေါင်းစပ်မှုအားလုံးကို ပြန်ပေးရပါတယ်။
+
+## What it is
+
+`generateStaticParams` သည် build-time prerendering အတွက် param sets များကို ပြန်ပေးပါတယ်:
+
+```tsx
+// app/blog/[slug]/page.tsx
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
+
+export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
+  return <Article post={post} />;
+}
+```
+
+## Behavior combo (အပြုအမူ ပေါင်းစပ်မှု)
+
+| Option                | Unlisted slugs                    |
+| --------------------- | --------------------------------- |
+| default `dynamicParams` (true) | render on demand + cache   |
+| `dynamicParams = false`       | 404 at edge              |
+
+## Rules & gotchas (စည်းကမ်း နှင့် သတိပြုအချက်များ)
+
+- Dynamic `[param]` routes (သို့မဟုတ် route groups) တွင်သာ export လုပ်ပါ
+- Async ခွင့်ပြုပြီး build/runtime SSG တွင်သာ အသုံးပြုပါတယ်
+- Catch-alls: arrays များကို ပြန်ပေးပါ (`{ slug: ["a", "b"] }`)
+- Multiple dynamic params: လိုအပ်သော ပေါင်းစပ်မှုအားလုံးကို ပြန်ပေးပါ
+
+## Use cases (အသုံးပြုမှုများ)
+
+- Blogs/docs: static HTML အပြည့်အစုံ
+- Product catalogs: ကြိုတင်ထုတ်ထားသော pages များ၊ revalidation ဖြင့် အပ်ဒိတ်
+
+## လေ့ကျင့်ခန်း (Activity)
+
+Post 5 ခုအပေါ် `generateStaticParams` + `dynamicParams=false` ကို ထည့်သွင်းပြီး build လုပ်ကာ post တိုင်းအတွက် HTML ဖိုင်များ ထွက်ပေါ်ကြောင်းနှင့် မသိသော slug → 404 ဖြစ်ကြောင်း အတည်ပြုပါ။

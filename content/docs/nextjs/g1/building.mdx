@@ -1,0 +1,67 @@
+---
+title: "Building — Build လုပ်ခြင်း"
+description: "The build process: next build phases, output, and the optimization report Next.js produces. — Build လုပ်ငန်းစဉ်၊ next build အဆင့်များ၊ output နှင့် Next.js ထုတ်ပေးသည့် optimization report အကြောင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Type-checking မှအစ final route optimization report အထိ `next build` run လုပ်သောအခါ ဘာတွေ ဖြစ်ပျက်သည်ကို နားလည်နိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`next build` ဆိုသည်မှာ Next.js application တစ်ခုကို production အတွက် အဆင်သင့် ဖြစ်စေရန် compile လုပ်သည့် command တစ်ခု ဖြစ်ပါတယ်။ Build အတွင်း Turbopack ဖြင့် route/component များအားလုံးကို compile လုပ်ပြီး `tsconfig.json` ဖြင့် type-check လုပ်ကာ error တစုံတရာ ရှိပါက ရပ်တန့်သွားပါတယ်။ ထို့နောက် static routes များကို prerender (SSG) လုပ်ပြီး dynamic အဖြစ် သတ်မှတ်ရမည့်အရာများကို ခွဲခြားပါတယ်။ Final output များကို minified JS/CSS နှင့် per-route chunks အဖြစ် optimize လုပ်ပါတယ်။ Report တွင် page တစ်ခုချင်းစီ၏ size နှင့် first load ကို ပြသပြီး ○ (Static), ● (SSG), ƒ (Dynamic) စသည့် အမျိုးအစားများဖြင့် အမှတ်အသားပြုပါတယ်။
+
+## What `next build` does
+
+```bash
+npm run build
+```
+
+အဆင့်များကို အစဉ်လိုက် ဖော်ပြပါမယ်:
+
+1. Route/component တိုင်းကို **Compile** လုပ်ခြင်း (Turbopack)
+2. `tsconfig.json` ဖြင့် **Type-check** လုပ်ခြင်း (error ရှိပါက ရပ်တန့်သည်)
+3. **Lint-surface** - configure မထားလျှင် build ကို မရပ်တန့်စေပါ
+4. Static routes (SSG) များကို **Prerender** လုပ်ခြင်း — optimize မလုပ်နိုင်သောအရာများကို dynamic အဖြစ် မှတ်သားသည်
+5. Static pages များအတွက် **page data စုဆောင်းခြင်း**
+6. Final output များကို **Optimize** လုပ်ခြင်း (minified JS/CSS, per-route chunks)
+
+## Reading the report
+
+`next build` သည် page တစ်ခုချင်းစီအတွက် အောက်ပါအတိုင်း ပြသသည်:
+
+```
+┌ /                          size 385 B    first load 92.8 kB
+├ /blog                      size 0 B      first load 80.2 kB
+└ /blog/[slug]             size 0 B      first load 80.2 kB
+
+○ (Static) prerendered as static content
+● (SSG) prerendered as static HTML
+ƒ (Dynamic) server-rendered on demand
+```
+
+- **`○` Static** - လူတိုင်းအတွက် HTML တူညီသည် (အမြန်ဆုံး၊ cache လုပ်နိုင်သည်)
+- **`●` SSG** - prerendered လုပ်ထားပြီး ပြန်လည် generate လုပ်နိုင်သည်
+- **`ƒ` Dynamic** - request တစ်ခုချင်းစီအလိုက် built လုပ်သည်
+
+## Choosing dynamic vs static
+
+Next.js သည် အလိုအလျောက် ဆုံးဖြတ်သည်:
+
+- `use cache`/prerenderable content ပါသော routes များ → static shell + dynamic holes
+- Request data (cookies, headers) ဖတ်သော routes များ → dynamic
+- **Route Segment Config** ဖြင့် behavior ကို တွန်းအားပေး၍ ရသည်
+
+## Verbose output
+
+```bash
+next build --debug
+```
+
+Bundles နှင့် optimization steps များအကြောင်း အသေးစိတ် diagnostics များကို ပြသသည်။
+
+## Activity — လေ့ကျင့်ခန်း
+
+`npm run build` ကို run ပြီး report ထဲရှိ route တိုင်းကို ○, ● (သို့) ƒ အဖြစ် ခွဲခြားပါ။ Dynamic route တစ်ခုကို ရွေးပြီး ၎င်းသည် static ၍ မရခြင်း အကြောင်းရင်းကို ရှင်းပြပါ။

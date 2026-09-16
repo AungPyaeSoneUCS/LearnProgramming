@@ -1,0 +1,55 @@
+---
+title: "Root Params — Root Params Serializer"
+description: "The RootParams serializer type for 'use cache' functions reading route up the tree. — 'use cache' functions များအတွက် route ၏ root params များကို ဖတ်ရှုနိုင်သည့် RootParams serializer type ဖြစ်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Root နှင့် ဆက်စပ်ထားသော cached functions များအတွက် `root-params` serializable object ကို နားလည်နိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`root-params` သည် `"use cache"` functions များသို့ ပေးပို့လိုက်သော serializable sentinel တစ်ခုဖြစ်ပြီး **root path params** များ ပြောင်းလဲသည့်အခါ dynamic APIs များကို မဖတ်ဘဲ ၎င်း functions များ ပြန်လည် execute ဖြစ်စေရန် ကူညီပါတယ်။ URL params များကို cache key ထဲသို့ ထည့်ထားခြင်းဖြင့် URL တစ်ခုချင်းစီအတွက် cache entry သီးခြားစီ ဖြစ်ပေါ်သွားပြီး `rootParams()` သည် root level တွင် (local `params` နှင့်မတူဘဲ) ထို params များကို ဖော်ထုတ်ပေးပါတယ်။ ဤ function ကို `"use cache"` scopes အတွင်းတွင်သာ သုံးနိုင်ပြီး serialized key အလိုက် re-execution ဖြစ်သောကြောင့် `cookies()` ဖတ်ခြင်းထက် ပိုမို လုံခြုံပါတယ်။ `"use cache: private"` နှင့် တွဲသုံးခြင်းကို မခွင့်ပြုဘဲ root params များကို readonly အဖြစ် ထားပါတယ်။ ဥပမာအားဖြင့် tenant subdirectory ကဲ့သို့ root parameter အလိုက် output ပြောင်းလဲသော cached functions များ သို့မဟုတ် Request APIs မလိုဘဲ URL-keyed caching လိုအပ်သော နေရာများတွင် အသုံးဝင်ပါတယ်။
+
+## What it is
+
+`root-params` သည် `"use cache"` functions များသို့ ပေးပို့လိုက်သော serializable sentinel တစ်ခုဖြစ်ပြီး **root path params** များ ပြောင်းလဲသည့်အခါ dynamic APIs မပါဘဲ ပြန်လည် execute ဖြစ်စေရန် ကူညီပါတယ်:
+
+```ts
+import { rootParams } from "next/server";
+
+export async function getItem() {
+  "use cache";
+  cacheLife("days");
+  // Routes may re-run on root param change
+  const id = await rootParams();
+  return db.items[id];
+}
+```
+
+## The idea (သဘောတရား)
+
+URL params များကို cache key ထဲသို့ ထည့်ထားခြင်းဖြင့် URL အမျိုးမျိုးသည် cache entry အမျိုးမျိုးကို အလိုအလျောက် ထုတ်ပေးပါတယ်။ `rootParams` သည် ထို params များကို root level တွင် (local `params` များနှင့်မတူဘဲ) ဖော်ထုတ်ပေးပါတယ်။
+
+## Signature
+
+```ts
+function rootParams(): Promise<Record<string, string | string[]>>
+```
+
+## Rules (စည်းကမ်းများ)
+
+- `"use cache"` scopes အတွင်းတွင်သာ ခေါ်ဆိုနိုင်ပါတယ်
+- Re-execution သည် serialized key ကို အသုံးပြုပြီး `cookies()` ဖတ်ခြင်းထက် ပိုမို လုံခြုံပါတယ်
+- `"use cache: private"` နှင့် တွဲသုံး၍မရဘဲ root ကို readonly အဖြစ် ထားပါ
+
+## When to use (ဘယ်အခါ သုံးသင့်လဲ)
+
+- Output သည် root parameter (ဥပမာ tenant subdirectory) အလိုက် ပြောင်းလဲသော cached functions
+- Request APIs မလိုဘဲ URL-keyed caching လိုအပ်သော နေရာများ
+
+## လေ့ကျင့်ခန်း (Activity)
+
+Cached `getContentForPath()` helper တစ်ခုတွင် `rootParams` ကို အသုံးပြုပြီး root နှစ်ခုသို့ သွားလာကာ root တစ်ခုချင်းစီအတွက် cache entry သီးခြားစီ ရရှိကြောင်း အတည်ပြုပါ။

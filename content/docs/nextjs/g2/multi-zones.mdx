@@ -1,0 +1,65 @@
+---
+title: "Multi-zones — Zone အများအပြား ပေါင်းစပ်ခြင်း"
+description: "Combine multiple Next.js apps into one URL with zone prefixes and rewrites. — zone prefixes နှင့် rewrites များဖြင့် Next.js apps အများအပြားကို URL တစ်ခုတည်းတွင် ပေါင်းစပ်နည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  ဧရာမ monolith ကြီးကို app အသေးစား အများအပြားအဖြစ် ခွဲပြီး — တစ်ခုချင်းစီကို သီးခြား domain/branch/deploy လုပ်၍ — URL တစ်ခုတည်း၏ နောက်တွင် စုစည်း ပေါင်းစပ်နည်းကို နားလည်စေရန် ဖြစ်ပါတယ် — **`basePath`** နှင့် **`rewrites`** တို့၏ အသုံးပြုပုံကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Multi-zones ဆိုသည်မှာ Next.js application ကြီးတစ်ခုကို အပိုင်းခွဲပြီး app တစ်ခုချင်းစီကို သီးခြားစီ deploy လုပ်ကာ path prefix တစ်ခုတွင် တပ်ဆင်ထားခြင်း ဖြစ်ပါတယ်။ ဥပမာ main web app သည် `/shop/*` path များကို shop zone app သို့လည်းကောင်း ၊ `/blog/*` path များကို blog zone app (အခြား repo) သို့လည်းကောင်း rewrites ဖြင့် လမ်းကြောင်းလွှဲပေးနိုင်ပါတယ်။ Zone app တစ်ခုစီသည် မိမိ၏ `next.config.ts` တွင် `basePath` (ဥပမာ `/shop`) ကို သတ်မှတ်ထားပြီး app အတွင်းရှိ internal links များသည် ထို prefix ကို အလိုအလျောက် သိရှိပါတယ်။ Main app ဘက်တွင် `rewrites` function ကို သုံး၍ `/shop/:path*` နှင့် `/blog/:path*` များကို သင့်လျော်သော zone app ၏ URLs များဆီသို့ လမ်းကြောင်းလွှဲပေးရပါတယ်။ Cross-zone navigation ကို client-side အဖြစ် ဆက်လက်ထားနိုင်ပြီး app တစ်ခုချင်းစီသည် မိမိ own data ကို သီးခြား ဆွဲယူပါတယ်။ Zone ခွဲခြင်းသည် independent deploys, scaling နှင့် team များအတွက် အားသာချက်ရှိသော်လည်း shared UI များ duplicate ဖြစ်ခြင်း၊ testing ပိုရှုပ်ထွေးခြင်းနှင့် caches ပိုခက်ခဲခြင်း စသော ဆိုးကျိုးများလည်း ရှိပြီး isolated deploy units များ တကယ် မလိုအပ်ပါက monorepo ကို ဦးစားပေးသင့်ပါတယ်။
+
+## What a zone is
+
+**Zone** ဆိုသည်မှာ သီးခြား deploy လုပ်ပြီး path prefix တစ်ခုတွင် တပ်ဆင်ထားသည့် Next.js app တစ်ခု ဖြစ်ပါတယ်။ Main app သည် မသိသော paths များကို သင့်လျော်သော zone app ဆီသို့ rewrite လုပ်ပေးပါတယ်:
+
+```
+app.com/
+├── /                     → web app (main)
+├── /shop/*               → shop zone app
+└── /blog/*               → blog zone app (different repo)
+```
+
+## Configuring a zone app
+
+```ts
+// next.config.ts (shop app)
+const nextConfig: NextConfig = {
+  basePath: "/shop",
+};
+```
+
+Zone app အတွင်းရှိ internal links များသည် `/shop` prefix ကို အလိုအလျောက် သိရှိပါတယ်။
+
+## Wiring the main app
+
+```ts
+// next.config.ts (main app)
+const nextConfig: NextConfig = {
+  async rewrites() {
+    return [
+      { source: "/shop/:path*", destination: "https://shop.example.com/shop/:path*" },
+      { source: "/blog/:path*", destination: "https://blog.example.com/blog/:path*" },
+    ];
+  },
+};
+```
+
+## Cross-app navigation
+
+Router ကို တာဝန်ယူစေပါ — navigations များသည် client-side ဖြစ်နေပြီး app တစ်ခုချင်းစီသည် မိမိ data ကို ဆွဲယူပါတယ်။ Full cross-zone transitions များအတွက် absolute zone URLs များဖြင့် `next/link` ကို သုံးပါ။
+
+## When to use
+
+- **Pros** — independent deploys, scaling နှင့် team များအတွက် အားသာချက်များ
+- **Cons** — shared UI များ duplicate ဖြစ်ခြင်း၊ tests ပိုရှုပ်ထွေးခြင်း၊ caches ပိုခက်ခဲခြင်း
+
+Isolated deploy units တကယ် မလိုအပ်ပါက **monorepo packages** များကို ဦးစားပေးပါ။
+
+## Activity
+
+လေ့ကျင့်ခန်း: Zone နှစ်ခုကို ဖန်တီးပါ (main + `basePath: "/shop"` ရှိသော shop) ၊ ၎င်းတို့ကို local တွင် port ကွဲပြားစွာ run ပြီး rewrite ဖြင့် ချိတ်ဆက်ကာ main app မှ `/shop` ကို ဖွင့်ကြည့်ပါ။

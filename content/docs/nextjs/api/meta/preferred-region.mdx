@@ -1,0 +1,55 @@
+---
+title: "Route Segment Config: preferredRegion (Route လည်ပတ်ရာ Region သတ်မှတ်ခြင်း)"
+description: "Pin a route to a geographic region with the preferredRegion export. — `preferredRegion` export ဖြင့် route တစ်ခုကို ပထဝီ region တစ်ခုသို့ pin လုပ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Latency သို့မဟုတ် compliance အကြောင်းပြချက်များအတွက် route တစ်ခု လည်ပတ်မည့်နေရာကို သေချာစွာ ရွေးချယ်သတ်မှတ်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`preferredRegion` သည် route တစ်ခု လည်ပတ်မည့် geographic region (များ) ကို သတ်မှတ်ပေးသည့် Route Segment Config တစ်ခု ဖြစ်ပါတယ်။ သုံးစွဲသူများ သို့မဟုတ် database နှင့် နီးသော region ကို ရွေးထားလျှင် network latency ကို သိသိသာသာ လျှော့ချနိုင်ပါတယ်။ အချို့သော ဥပဒေဆိုင်ရာ လိုအပ်ချက်များကြောင့် data ကို သတ်မှတ်ထားသော jurisdiction အတွင်းမှာသာ ထားရန်လို၍ region ကို pin လုပ်ရပါတယ်။ Array ဖြင့် စာရင်းသတ်မှတ်နိုင်ပြီး ပထမဆုံး region မရရှိပါက နောက်တစ်ခုသို့ ပြောင်းလဲ လည်ပတ်ပါတယ်။
+
+## What it is
+
+`preferredRegion` သည် route လည်ပတ်မည့် region (များ) ကို ထိန်းချုပ်ပေးပါတယ်:
+
+```ts
+// app/api/users/route.ts
+export const preferredRegion = ["iad1", "sfo1"];
+```
+
+```ts
+// Single region
+export const preferredRegion = "fra1";
+```
+
+## Region identifiers & splits (Region အမှတ်အသားများနှင့် ဝေငှပုံ)
+
+- Host ၏ region list မှ ရွေးချယ်ပါ (Vercel: `iad1`, `sfo1`, `fra1`, `syd1`, `cle1`, …)
+- Array ဆိုလျှင် preferred list ဖြစ်ပြီး failure ဖြစ်သည့်အခါ နောက်ဆုံး region ကို အသုံးပြုပါတယ်
+- App-level: `next.config` သို့မဟုတ် host config တွင် `regions` သတ်မှတ်ပါ
+
+## When to choose (မည်သည့်အခါ ရွေးမည်)
+
+- **Latency**: users/persistence နှင့် နီးရာသို့ pin လုပ်ခြင်း
+- **Compliance**: data ကို jurisdiction တစ်ခုအတွင်း ထားရှိခြင်း
+- **Isolation**: cold start contention ကို ရှောင်ရန် (secondary regions)
+
+## Trade-offs (မျှတမှုများ)
+
+- Single region = ဝေးလံသော users များအတွက် latency မြင့်ခြင်း, cold instances နည်းခြင်း
+- Multicast writes နှင့် consistency အကြား: သင့် DB region နှင့် ညှိနှိုင်းပါ
+- Concurrent executions အပေါ် limit ရှိသည့် ကြီးမားသော contracts
+
+## Precedence (ဦးစားပေးအစီအစဉ်)
+
+- Route-level သည် config-level ထက် သာလွန်ပါတယ်
+- သတ်မှတ်မထားပါက project default သို့ ပြန်ကျပါတယ်
+
+## Activity (လေ့ကျင့်ခန်း)
+
+`/api/orders` ကို သင့် DB နှင့် အနီးဆုံး region (`preferredRegion = ["fra1"]`) သို့ pin လုပ်ပြီး deploy ကာ project default နှင့် နှိုင်းယှဉ်၍ cold-start p95 latency ကို တိုင်းတာပါ။

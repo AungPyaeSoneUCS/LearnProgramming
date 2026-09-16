@@ -1,0 +1,60 @@
+---
+title: "use client — Client Directive"
+description: "The use client directive: declaring the module boundary for interactive components — Interactive components များအတွက် Module Boundary ကို ကြေညာပေးသော Directive။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Client Boundary ကို တိကျစွာ နေရာချပေးခြင်းဖြင့် Interactivity များ အလုပ်လုပ်နိုင်ပြီး Server code များ Browser သို့ မပေါက်ကြားအောင် ကာကွယ်နိုင်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`"use client"` သည် File ထိပ်ဆုံးတွင် ထားရှိခြင်းဖြင့် ထို Module တစ်ခုလုံးကို Client Module အဖြစ် ကြေညာပေးသည့် Directive တစ်ခုဖြစ်ပါတယ်။ ထို File အတွင်း Export လုပ်ထားသော အရာများအားလုံးသည် Client Components များ ဖြစ်လာပြီး Browser တွင် Run နိုင်ပါတယ်။ သို့သော် ပထမဆုံး Load အတွက်မူ Server ပေါ်တွင် ကြိုတင် Render လုပ်ပြီးမှ Browser သို့ ပို့ဆောင်ပေးခြင်း ဖြစ်ပါတယ်။ `useState`၊ `useEffect` ကဲ့သို့ Hooks များ၊ Event handlers များနှင့် Browser APIs များကို ဤ Module များတွင်သာ အသုံးပြုနိုင်ပြီး Server-only code များကို Import လုပ်ခြင်းမှာ တားမြစ်ထားပါတယ်။ အရေးကြီးသည်မှာ Boundary ကို Interactivity ရှိသော နေရာတွင်သာ ထားရှိသင့်ပြီး File အများအပြားကို Client အဖြစ် မှားယွင်းပြောင်းလဲခြင်းသည် SSR ၏ အကျိုးကျေးဇူးများကို လျှော့ချနိုင်ပါတယ်။
+
+## What it marks
+
+File ၏ ထိပ်ဆုံးတွင် `"use client"` ထားရှိခြင်းသည် Export တိုင်း အပါအဝင် **Module တစ်ခုလုံး** ကို Client Module အဖြစ် ကြေညာပေးပါတယ်:
+
+```tsx
+"use client";
+
+import { useState } from "react";
+
+export function Counter() { … }
+export function ToggleTheme() { … }
+```
+
+## Rules of place
+
+- ပထမဆုံး Statement ဖြစ်ရမည် (Imports များထက် ရှေ့တွင်)
+- File အတွင်းရှိ အရာအားလုံးသည် Browser တွင် Run ပြီး (ပထမဆုံး Load အတွက် ကနဦးတွင် Server မှ Render လုပ်ထားသည်)
+- Client Modules များသည် Server-only code များကို Import လုပ်ရန် မလုပ်နိုင်ပါ
+
+## What you can still use
+
+- Hooks များ: `useState`, `useEffect`, `useRouter`, `usePathname` စသည်တို့
+- Event handlers များ၊ Browser APIs များ၊ Context providers/wrappers များ
+- Composition အနေဖြင့် Server Components များကို `children` အဖြစ် လက်ခံနိုင်ခြင်း
+
+## Common misuse
+
+```tsx
+// ❌ using it everywhere kills SSR benefits
+"use client";
+export default async function Page() { … }  // ❌ async Page in client = error
+
+// ✅ put it only where interactivity lives
+export default function LikeButton() { … }
+```
+
+## Boundary design
+
+- Client files များကို သေးငယ်စွာ ထားရှိပါ (Islands)
+- Server Components မှ Serializable props များကို ဖြတ်သန်းပေးပါ
+- Providers (Theme, Query) များကို Component Tree ၏ အမြင့်ပိုင်းတွင် တစ်ကြိမ်သာ ထုပ်ပိုးပါ
+
+## Activity
+
+Interactive Island (Counter/Filter) ငယ်တစ်ခုတွင် `"use client"` ကို ထည့်သွင်းပြီး Build output ရှိ Boundary ကို စစ်ဆေးခြင်းဖြင့် ကျန် Page ၏ အစိတ်အပိုင်းများ Server-rendered ဖြစ်နေကြောင်း အတည်ပြုပါ။

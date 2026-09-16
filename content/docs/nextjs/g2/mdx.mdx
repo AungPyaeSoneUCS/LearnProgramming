@@ -1,0 +1,93 @@
+---
+title: "MDX — Markdown + JSX ဖြင့် အကြောင်းအရာ ရေးသားခြင်း"
+description: "Write pages in MDX: components in markdown, custom component mapping, and mdx-components.js. — markdown အတွင်း JSX components များ သုံး၍ page များ ရေးသားနည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Markdown ၏ ဖတ်ရလွယ်ကူမှုကို JSX components များနှင့် ပေါင်းစပ်ပြီး MDX ဖြင့် content များ ရေးသားနည်းကို နားလည်စေရန် ဖြစ်ပါတယ် — **`mdx-components.js`** ဖြင့် custom component mapping ပြုလုပ်ပုံကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+MDX ဆိုသည်မှာ Markdown syntax အတွင်းတွင် JSX components များကို import လုပ်ပြီး ထည့်သွင်း သုံးစွဲနိုင်သည့် format တစ်ခု ဖြစ်ပါတယ်။ App Router တွင် `page.mdx` ဖိုင်ကို ဖန်တီးပါက ၎င်းသည် page တစ်ခုအဖြစ် render ဖြစ်ပြီး သင်ကိုယ်တိုင် ရေးထားသော components များဖြင့် style လုပ်နိုင်ပါတယ်။ MDX ကို ဖွင့်ရန် `@next/mdx` package ကို install လုပ်ပြီး `next.config.ts` တွင် `withMDX` wrapper ဖြင့် wrap လုပ်ကာ `pageExtensions` တွင် `mdx` ကို ထည့်သွင်းရပါတယ်။ Markdown element များ (h1, code, etc.) ကို သင့်ကိုယ်ပိုင် components များနှင့် mapping လုပ်ရန် project root (သို့ `src/`) တွင် `mdx-components.tsx` ဖိုင်ကို ဖန်တီးပြီး `useMDXComponents` function မှ တစ်ဆင့် ဖော်ပြနိုင်ပါတယ်။ ထို mapping များသည် MDX ဖိုင်အားလုံးတွင် အလိုအလျောက် အကျိုးသက်ရောက်ပြီး MDX pages များတွင်လည်း frontmatter မှတစ်ဆင့် title/metadata သတ်မှတ်နိုင်ပါတယ်။ MDX pages များသည် build time တွင် ပိုမို နှေးကွေးသောကြောင့် content ကို ကျစ်လျစ်အောင် ထားသင့်ပြီး body text အတွင်းတွင် heavy client components များကို ရှောင်ကြဉ်ကာ static MDX pages များတွင် `use cache` နှင့် တွဲသုံး၍ edge caching ပြုလုပ်နိုင်ပါတယ်။
+
+## What MDX is
+
+**imports နှင့် JSX** များကို ထောက်ပံ့ပေးသော Markdown ဖြစ်ပါတယ်။ App Router တွင် `page.mdx` သည် သင့်ကိုယ်ပိုင် components များဖြင့် style လုပ်နိုင်သော page အဖြစ် render ပြုလုပ်ပေးပါတယ်။
+
+## A page.mdx example
+
+```mdx
+# Welcome to the docs
+- **Bold** text works as usual.
+
+<Note type="tip">
+  This box is a custom React component.
+</Note>
+```
+
+## Enabling MDX
+
+MDX ပံ့ပိုးမှုကို install လုပ်ပါ:
+
+```bash
+npm install @next/mdx
+```
+
+```ts
+// next.config.ts
+import createMDX from "@next/mdx";
+
+const withMDX = createMDX({ importSource: "next-mdx-import-source-file", mdxRs: true });
+
+export default withMDX({
+  pageExtensions: ["ts", "tsx", "md", "mdx"],
+});
+```
+
+## Custom components
+
+Components များကို `mdx-components.js` မှတစ်ဆင့် markdown elements များနှင့် map လုပ်ပါ:
+
+```tsx
+// mdx-components.tsx (in project root or src)
+import type { MDXComponents } from "mdx/types";
+import { Note, CodeBlock, Callout } from "@/components/mdx";
+
+export function useMDXComponents(components: MDXComponents): MDXComponents {
+  return {
+    h1: (props) => <h1 className="text-4xl font-bold" {...props} />,
+    code: (props) => <CodeBlock {...props} />,
+    Callout,
+    ...components,
+  };
+}
+```
+
+ထို mapping များသည် MDX ဖိုင်တိုင်းတွင် အလိုအလျောက် အကျိုးသက်ရောက်ပါတယ်။
+
+## Layout for MDX pages
+
+MDX pages များကို title/metadata ပေးပါ:
+
+```mdx
+---
+title: "Installation"
+description: "Quick start."
+---
+
+## Install
+…
+```
+
+## Trade-offs
+
+- MDX pages များသည် build time တွင် ပို၍ နှေးကွေးပါတယ် — content ကို ကျစ်လျစ်အောင် ထားပါ
+- Styling အတွက် `mdx-components.js` ကို သုံးပြီး body text အတွင်းတွင် heavy client components များကို ရှောင်ကြဉ်ပါ
+- Static MDX pages များကို `use cache` နှင့် တွဲသုံး၍ edge caching ပြုလုပ်နိုင်ပါတယ်
+
+## Activity
+
+လေ့ကျင့်ခန်း: README ပုံစံ lesson တစ်ခုကို `page.mdx` အဖြစ် ပြောင်းပြီး `mdx-components.js` မှတစ်ဆင့် `h1`/`code` ကို style လုပ်ကာ ဖိုင်အတွင်းတွင် custom `Callout` component တစ်ခုကို render လုပ်ပါ။

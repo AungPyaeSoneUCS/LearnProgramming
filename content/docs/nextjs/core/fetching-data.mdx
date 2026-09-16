@@ -1,0 +1,114 @@
+---
+title: "Fetching Data — Data ရယူခြင်း"
+description: "How to fetch data in Server and Client Components, work with ORMs, and stream UI that depends on slow data. — Server နှင့် Client Components တွင် Data ကို ရယူပုံနှင့် Streaming ပြုလုပ်ပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Next.js App ၏ မည်သည့်နေရာတွင်မဆို data ကို source နှင့် အနီးဆုံးမှ ရယူနိုင်ပုံနှင့် နှေးကွေးသော data ကြောင့် page တစ်ခုလုံး ပိတ်မသွားစေရန် streaming ပြုလုပ်နည်းကို နားလည်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Data fetching ဆိုသည်မှာ Application အတွက်လိုအပ်သော data များကို database သို့မဟုတ် API များမှ ရယူခြင်း ဖြစ်ပါတယ်။ Next.js တွင် Server Components များသည် server ပေါ်တွင် run သောကြောင့် database ကို တိုက်ရိုက်ခေါ်နိုင်ပြီး `fetch` ကို အသုံးပြုနိုင်ပြီး request သည် client ဆီသို့ မရောက်ရှိပါဘူး။ Data ကို Server Component တွင် fetch လုပ်ခြင်းသည် round trip မလိုသောကြောင့် အမြန်ဆုံးနှင့် အသန့်ရှင်းဆုံး နည်းလမ်း ဖြစ်ပါတယ်။ Component mount ပြီးမှသာ fetch လုပ်ရမည့် သို့မဟုတ် မကြာခဏ refetch လုပ်ရမည့် data များအတွက်မူ Client Component တွင် `useEffect` နှင့် `useState` ကို အသုံးပြု၍ fetch လုပ်နိုင်ပါတယ်။ နှေးကွေးသော data များကြောင့် page တစ်ခုလုံး စောင့်ရသည့်အခြေအနေမဖြစ်စေရန် အဆိုပါ အပိုင်းများကို `<Suspense>` ဖြင့် ပတ်ကာ streaming လုပ်နိုင်ပြီး ကျန်သော page အစိတ်အပိုင်းများကို ချက်ချင်း render လုပ်နိုင်ပါတယ်။
+
+## Fetching in Server Components (Server Components တွင် Fetch လုပ်ခြင်း)
+
+Server Components များသည် data fetch လုပ်ရန် အကြံပြုထားသော နေရာ ဖြစ်ပါတယ် - database ကို တိုက်ရိုက်ခေါ်နိုင်သလို `fetch` ကိုလည်း သုံးနိုင်ပြီး request သည် client ဆီသို့ လုံးဝမရောက်ပါဘူး။
+
+```tsx
+// app/blog/page.tsx
+export default async function BlogPage() {
+  const res = await fetch("https://api.example.com/blog");
+  const posts = await res.json();
+
+  return (
+    <ul>
+      {posts.map((post) => <li key={post.id}>{post.title}</li>)}
+    </ul>
+  );
+}
+```
+
+## Using an ORM or SQL directly (ORM သို့မဟုတ် SQL ကို တိုက်ရိုက်အသုံးပြုခြင်း)
+
+Server Components များသည် server ပေါ်တွင် run သောကြောင့် additional round trips လုံးဝမလိုအပ်ပါ:
+
+```tsx
+// app/dashboard/page.tsx
+import { db } from "@/lib/db";
+
+export default async function DashboardPage() {
+  const users = await db.user.findMany(); // Prisma
+  return (
+    <ul>
+      {users.map((u) => <li key={u.id}>{u.name}</li>)}
+    </ul>
+  );
+}
+```
+
+## Fetching in Client Components (Client Components တွင် Fetch လုပ်ခြင်း)
+
+Mount ပြီးမှသာ fetch လုပ်ရမည့် (သို့မဟုတ် မကြာခဏ refetch လုပ်ရမည့်) data များအတွက် Client Component တွင် fetch လုပ်ပါ:
+
+```tsx
+"use client";
+
+import { useEffect, useState } from "react";
+
+export default function LivePrices() {
+  const [prices, setPrices] = useState<number[]>([]);
+
+  useEffect(() => {
+    fetch("/api/prices")
+      .then((res) => res.json())
+      .then(setPrices);
+  }, []);
+
+  return <ul>{prices.map((p, i) => <li key={i}>{p}</li>)}</ul>;
+}
+```
+
+## Streaming with Suspense (Suspense ဖြင့် Streaming)
+
+နှေးကွေးသော အပိုင်းများကို `<Suspense>` ဖြင့် ပတ်ထားပါက page ၏ ကျန်အစိတ်အပိုင်းများ ချက်ချင်း render ဖြစ်ပါတယ်:
+
+```tsx
+import { Suspense } from "react";
+import LatestPosts from "./latest-posts";
+
+export default function HomePage() {
+  return (
+    <main>
+      <h1>Home</h1>
+      <Suspense fallback={<div>Loading latest posts…</div>}>
+        <LatestPosts />
+      </Suspense>
+    </main>
+  );
+}
+```
+
+```tsx
+// latest-posts.tsx
+export default async function LatestPosts() {
+  await new Promise((r) => setTimeout(r, 1500)); // slow API
+  const posts = await fetch("https://api.example.com/posts").then((r) => r.json());
+  return <ul>{posts.map((p) => <li key={p.id}>{p.title}</li>)}</ul>;
+}
+```
+
+## Which fetch should you use? (မည်သည့် Fetch ကို အသုံးပြုသင့်သနည်း)
+
+| Situation                        | Recommendation                          |
+| -------------------------------- | --------------------------------------- |
+| Data for a page (server-side)    | `fetch` in a Server Component           |
+| Database access                  | ORM or SQL directly in a Server Component |
+| Frequently-changing client data  | `fetch` in a Client Component            |
+| Per-request user-specific data   | Pass `cookies()`/`headers()` results as props |
+
+## Activity
+
+Product page တစ်ခုကို တည်ဆောက်ပါ - Server Component တွင် products များကို fetch လုပ်ပြီး `<Suspense>` ဖြင့် skeleton fallback render လုပ်ကာ Client "refresh price" button တစ်ခု ထည့်ပါ။

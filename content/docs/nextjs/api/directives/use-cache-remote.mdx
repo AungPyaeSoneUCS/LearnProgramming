@@ -1,0 +1,67 @@
+---
+title: "use cache: remote — Remote Cache"
+description: "Offload cache storage to a platform cache handler so cached entries scale across instances — Cache storage ကို Platform cache handler သို့ လွှဲပြောင်း၍ Cached entries များကို Instances အားလုံးတွင် ချဲ့ထွင်အသုံးပြုနိုင်ရန်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Request-de-duplicated caching ကို Server တစ်ခုတည်း၏ Memory ထက်ကျော်လွန်၍ Remote cache သို့ လွှဲပြောင်းခြင်းဖြင့် Scale လုပ်တတ်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`"use cache: remote"` သည် Caching ကို Process-memory cache မည့်အစား Platform မှ ပံ့ပိုးပေးသော Cache handler (ဥပမာ CDN-backed store) သို့ ပို့ဆောင်ပေးသည့် Directive တစ်ခုဖြစ်ပါတယ်။ In-memory cache သည် အမြန်ဆုံး Speed ရှိသော်လည်း Instance တစ်ခုတည်းအတွက်သာ သက်ဆိုင်သောကြောင့် Server အများအပြားရှိသည့် အခြေအနေတွင် Cache Hits များ ပျောက်ဆုံးနိုင်ပါတယ်။ Remote variant ကို အသုံးပြုခြင်းဖြင့် Network round trip တစ်ကြိမ် ပိုကုန်ကျသော်လည်း Cache entries များကို Instances အားလုံးအကြား မျှဝေနိုင်သည့်အတွက် Cold start ပြဿနာကို သက်သာစေပါတယ်။ Environment တွင် Platform cache handler တစ်ခု ရှိရန် လိုအပ်ပြီး `cacheHandlers` မှတစ်ဆင့် သတ်မှတ်နိုင်ပါတယ်။ Handler မရှိသည့်အခါ Compiler သည် In-memory cache သို့ အလိုအလျောက် ပြန်ကျဆင်းသွားတာကြောင့် အမြဲတမ်း အခြေခံအဆင့် ကာကွယ်မှု ရှိနေပါတယ်။
+
+## What it is
+
+`"use cache: remote"` သည် Caching ကို Process-memory cache မည့်အစား **Platform မှ ပံ့ပိုးပေးသော Cache handler** (ဥပမာ CDN-backed store) သို့ ဦးတည်ပို့ဆောင်ပေးပါတယ်။
+
+## The trade-off table
+
+| Aspect               | `use cache` (in-memory)    | `use cache: remote`             |
+| -------------------- | -------------------------- | ------------------------------- |
+| Speed                | Fastest (no I/O)           | +1 network round trip           |
+| Scale                | Per instance               | Shared across instances         |
+| Platform fees        | Free                       | Usually metered                 |
+| When to choose       | Single instance / low load | Multi-instance / cold start bot |
+
+## Using it
+
+```tsx
+export async function getPrices(productId: string) {
+  "use cache: remote";
+  cacheLife("minutes");
+  cacheTag("prices");
+  return db.price.findMany({ where: { productId } });
+}
+```
+
+## Prerequisites
+
+- Environment တွင် Platform cache handler တစ်ခု ရှိရန် (`cacheHandlers` မှတစ်ဆင့် သတ်မှတ်နိုင်သည် သို့မဟုတ် Host မှ ပံ့ပိုးပေးနိုင်သည်)
+- Handler မရှိပါက Compiler သည် In-memory cache သို့ ပြန်ကျဆင်းသည်
+
+## Configuration
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  cacheHandlers: {
+    remote: {
+      kind: "remote",
+      // platform handler name
+    },
+  },
+};
+```
+
+## When to adopt
+
+- Vertical scale-out လုပ်သည့်အခါ (Instances အများအပြား၊ Cold cache)
+- Request-de-duplication အကျိုးကျေးဇူး မြင့်မားသည့်အခါ (Hot public pages)
+- Cost အပေါ် သတိထားလိုပါသလား? In-memory မှ စတင်ကာ Hot routes များကို Remote သို့ မြှင့်တင်ပါ
+
+## Activity
+
+Multi-instance Deployment တွင် Hot public query တစ်ခုကို `"use cache: remote"` သို့ ပြောင်းရွှေ့ပြီး တူညီသော Route အတွက် In-memory နှင့် Cache Hit Ratios များကို နှိုင်းယှဉ်ကြည့်ပါ။

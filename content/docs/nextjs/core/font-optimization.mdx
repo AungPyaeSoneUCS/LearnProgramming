@@ -1,0 +1,69 @@
+---
+title: "Font Optimization — Font ပိုမိုကောင်းမွန်အောင် ပြုလုပ်ခြင်း"
+description: "Optimize fonts with next/font: self-hosted with automatic subsetting, zero layout shift, and font variables. — next/font ဖြင့် Font များကို Self-hosted, Subsetting ပြုလုပ်၍ Optimize လုပ်ပုံ။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Network requests, FOUT (flash of unstyled text) သို့မဟုတ် layout shift တို့မရှိဘဲ လှပသော fonts များကို အသုံးပြုနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Font များကို Google ကဲ့သို့ external server မှ `<link>` tag ဖြင့် တင်သောအခါ render blocking, unstyled text (FOUT) နှင့် layout shift (Cumulative Layout Shift) စသည့် ပြဿနာများ ဖြစ်ပေါ်တတ်ပါတယ်။ Next.js ၏ `next/font` module သည် fonts များကို **self-host** လုပ်ပေးပြီး အသုံးပြုသော characters များကိုသာ ထည့်သွင်းသည့် automatic **subsetting** ကို ဆောင်ရွက်ပေးပါတယ်။ `next/font/google` မှ `Inter` ကဲ့သို့ fonts များကို variable option ဖြင့် သတ်မှတ်ခြင်းဖြင့် CSS variables (`--font-inter`) များရရှိပြီး Tailwind တွင် အလွယ်တကူ အသုံးချနိုင်ပါတယ်။`font-display` နှင့် size-adjust metadata ကြောင့် **layout shift လုံးဝမဖြစ်ပါဘူး**။ Local font files များကို `next/font/local` ဖြင့် သုံးနိုင်ပြီး Font များကို page မှာ အသုံးပြုမှသာ download လုပ်ပြီး external network requests မလိုသောကြောင့် privacy friendly ဖြစ်ပါတယ်။
+
+## The problem fonts cause (Font များကြောင့် ဖြစ်ပေါ်သော ပြဿနာ)
+
+Google-hosted `<link>` tags များသည် render blocking ဖြစ်စေပြီး unstyled text ကို flash လုပ်စေကာ layout metrics (Cumulative Layout Shift) များကို ပြောင်းလဲစေနိုင်ပါတယ်။
+
+## next/font to the rescue (next/font မှ ကယ်ဆယ်ခြင်း)
+
+`next/font` သည် fonts များကို **self-host** လုပ်ပေးကာ အလိုအလျောက် subset လုပ်ပေးပြီး `font-display` နှင့် size-adjust metadata ကိုသုံး၍ **layout shift လုံးဝမဖြစ်စေပါဘူး**:
+
+```tsx
+// app/layout.tsx
+import { Inter, Montserrat } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-heading" });
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+CSS variables များကို Tailwind ဖြင့် နေရာတိုင်းတွင် အသုံးပြုနိုင်ပါတယ်:
+
+```tsx
+<h1 className="font-[family-name:var(--font-heading)]">Hello</h1>
+```
+
+## Local font files (Local Font Files)
+
+```tsx
+import localFont from "next/font/local";
+
+const pixel = localFont({
+  src: "./pixel.woff2",
+  variable: "--font-pixel",
+});
+```
+
+## Performance guarantees (စွမ်းဆောင်ရည် အာမခံချက်များ)
+
+- Font များကို page တွင် အသုံးပြုမှသာ download လုပ်ပါတယ် (on-demand)
+- အလိုအလျောက် **subsetting** - လိုအပ်သော glyphs များသာလျှင် ပို့ပေးပါတယ်
+- External network requests မရှိပါ - fonts များကို self-host လုပ်ထားသောကြောင့် privacy friendly ဖြစ်ပါတယ်
+
+## Next.js Font (dev-time tool) (Next.js Font - Dev အချိန် တူးလ်)
+
+Development တွင် `https://next/font` debugging ကို အသုံးပြု၍ Next.js Font overlay မှ route တစ်ခုစီအတွက် မည်သည့် font assets များ တင်နေသည်ကို စစ်ဆေးနိုင်ပါတယ်။
+
+## Activity
+
+သင့် root layout တွင် font variables နှစ်ခု (body + heading) ကို သတ်မှတ်ပြီး Tailwind ဖြင့် အသုံးပြုပါ။ Network tab တွင် fonts များကို သင့်ကိုယ်ပိုင် origin မှ သက်ရောက်ကြောင်း စစ်ဆေးပါ။

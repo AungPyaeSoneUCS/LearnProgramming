@@ -1,0 +1,83 @@
+---
+title: "Data Security — Data လုံခြုံရေး"
+description: "Keep secrets secret, prevent XSS/injection, sanitize data, and build a security checklist for Next.js apps. — Secrets များကို လျှို့ဝှက်ထားခြင်း၊ XSS/injection ကာကွယ်ခြင်း၊ data သန့်စင်ခြင်းနှင့် Next.js apps များအတွက် security checklist ဖန်တီးခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="danger" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Secrets များကို client သို့ ဘယ်တော့မှ မပေါက်ကြားစေခြင်း၊ input တိုင်းကို validate လုပ်ခြင်းနှင့် security posture ဖြင့် app ကို အဆုံးအထိ လုံခြုံအောင် ပြုလုပ်နိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Data Security ဆိုသည်မှာ application တစ်ခုအတွင်း ကိုင်တွယ်သော data များကို ထုတ်ဖော်ခြင်း၊ ခိုးယူခြင်းနှင့် tampering များမှ ကာကွယ်ခြင်း ဖြစ်ပါတယ်။ Secrets (API keys, database URLs စသည်) များကို `.env.local` ကဲ့သို့ gitignored ဖိုင်များတွင် ထားရှိပြီး `process.env.X` ဖြင့် access လုပ်ပါတယ်။ `NEXT_PUBLIC_*` ရှေ့ဆက်ရှိသော variables များသာ browser သို့ ရောက်ရှိနိုင်သောကြောင့် လျှို့ဝှက်ချက်များကို ၎င်းဖြင့် ဘယ်တော့မှ မထားသင့်ပါဘူး။ `server-only` package ကို အသုံးပြုကာ server modules များကို client imports များမှ ကာကွယ်နိုင်ပြီး `dangerouslySetInnerHTML` ကဲ့သို့သော အန္တရာယ်ရှိသည့် approaches များကိုလည်း ရှောင်ရှားရပါတယ်။ User input များအားလုံးကို Zod ကဲ့သို့သော validation tools များဖြင့် Server Functions နှင့် Route Handlers များတွင် validate လုပ်ရန် လိုအပ်ပါတယ်။ XSS နှင့် SQL injection များကို React ၏ default escaping, sanitizers (DOMPurify/sanitize-html) နှင့် ORM parameterized queries များဖြင့် ကာကွယ်ပါတယ်။
+
+## Secret management
+
+- Secrets များကို **`.env.local`** (gitignored) တွင်ထားပြီး `process.env.X` အဖြစ် ရည်ညွှန်းပါ
+- `NEXT_PUBLIC_*` variables များသာ browser သို့ ရောက်သည် — ကျန်သောအရာအားလုံးသည် server-side တွင်သာ ရှိသည်
+- Server Components များတွင် secrets များကို inline မထည့်ပါနှင့် (client tree သို့ ရောက်သော `process.env` များသည် bundled risk ဖြစ်သည်)
+
+```bash
+# .env.local (gitignored)
+DATABASE_URL="postgres://..."
+API_KEY="sk-..."
+NEXT_PUBLIC_ANALYTICS_ID="pub-..."
+```
+
+## Server-only guard
+
+Server modules များကို မတော်တဆ client imports များမှ ကာကွယ်ပါ:
+
+```ts
+// lib/server-only-utils.ts
+import "server-only";
+
+export const token = process.env.API_KEY;
+```
+
+Client file တစ်ခုမှ `server-only` ကို import လုပ်ပါက build သည် ကျရှုံးပါတယ်။
+
+## Validate all inputs
+
+User input ကို ဘယ်တော့မှ မယုံကြည်ပါနှင့် — Zod ဖြင့် Server Functions နှင့် Route Handlers တွင် validate လုပ်ပါ:
+
+```ts
+import { z } from "zod";
+
+const postSchema = z.object({
+  title: z.string().min(3).max(120),
+  content: z.string().min(1),
+  published: z.boolean().optional(),
+});
+
+export async function createPost(formData: FormData) {
+  const parsed = postSchema.parse({
+    title: formData.get("title"),
+    content: formData.get("content"),
+  });
+  await db.post.create({ data: parsed });
+}
+```
+
+## Practical hardening for XSS and injection
+
+- **Default React escaping** — `dangerouslySetInnerHTML` ဖြင့် untrusted content များကို မထည့်ပါနှင့်
+- HTML ကို render လုပ်ရန် လိုအပ်ပါက sanitizer (DOMPurify / sanitize-html) ကို အသုံးပြုပါ
+- **ORM parameterized queries** ကို အသုံးပြုပါ (SQL ကို string-concat လုပ်ခြင်းကို ဘယ်တော့မှ မလုပ်ပါနှင့်)
+- လိုအပ်ပါက untrusted HTML များကို `renderToHTML` restrictions များဖြင့် မှတ်သားပါ
+
+## Checklist
+
+- [ ] `NEXT_PUBLIC_*` သို့မဟုတ် client components များတွင် secrets များ မရှိ
+- [ ] DB/secret modules များတွင် `server-only` ရှိ
+- [ ] Action နှင့် API body တိုင်းတွင် Zod validation ရှိ
+- [ ] Server Function တိုင်းတွင် Auth + authorization ရှိ
+- [ ] CSP နှင့် security headers များ သတ်မှတ်ထား
+- [ ] CRLF/log-injection-proof logging; request IDs များ
+- [ ] Auth endpoints များတွင် rate limiting ရှိ
+
+## Activity — လေ့ကျင့်ခန်း
+
+Server Action တစ်ခုကို checklist အတွက် audit လုပ်ပါ: Zod validation၊ auth check တစ်ခု ထည့်ပါ၊ ထို့နောက် secret တစ်ခုခုကို `server-only` နောက်တွင် `process.env` ထဲသို့ ရွှေ့ပါ။

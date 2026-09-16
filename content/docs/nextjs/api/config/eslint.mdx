@@ -1,0 +1,67 @@
+---
+title: "ESLint — Code Quality စစ်ဆေးခြင်း"
+description: "Bundled `next lint` နှင့် Flat Config ကို အသုံးပြု၍ Next.js Project များကို Lint လုပ်နည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  React နှင့် Next.js ၏ ဖြစ်နိုင်ခြေရှိသော အမှားများကို Production မရောက်မီ ကြိုတင် ဖမ်းမိနိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+ESLint သည် JavaScript/TypeScript Code အတွက် Linting Tool တစ်ခုဖြစ်ပြီး Code စည်းမျဉ်းများကို ချိုးဖောက်သည့် အချက်များကို တွေ့ရှိပေးပါတယ်။ Next.js သည် Core Web Vitals နှင့် TypeScript ဆိုင်ရာ Rule အစုံများ ပါဝင်သော `eslint-config-next` Package ကို ပေးအပ်ထားပါတယ်။ `next lint` Command ကို CI တွင် `tsc` နှင့် `build` တို့နှင့် တွဲဖက်၍ လည်ပတ်စေခြင်းဖြင့် Bug များနှင့် Anti-pattern များကို စောစီးစွာ ဖမ်းမိနိုင်ပါတယ်။
+
+## Setup
+
+```bash
+npm install -D eslint eslint-config-next
+```
+
+```jsonc
+// eslint.config.mjs (flat config)
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const compat = new FlatCompat({ baseDirectory: __dirname });
+
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+];
+
+export default eslintConfig;
+```
+
+## Scripts
+
+```json
+{ "scripts": { "lint": "next lint" } }
+```
+
+## Helpful rules
+
+- `react/no-unescaped-entities`
+- `@next/next/no-html-link-for-pages` (use `next/link`)
+- `@next/next/no-img-element`
+- TypeScript-aware rules from `eslint-config-next` — TypeScript နှင့် တွဲဖက်သိသော Rules များ
+
+## Ignoring
+
+```jsonc
+// .eslintignore or flat config ignores
+{ ignores: [".next/**"] }
+```
+
+## Rules & gotchas
+
+- `next lint` သည် Default အားဖြင့် app/Router နှင့် pages များကို Lint လုပ်ပေးပါတယ်
+- ဗားရှင်းအသစ်များတွင် Flat Config ကို သုံးပါ; Legacy `eslintrc` ကိုလည်း ထောက်ပံ့ပေးပါသေးတယ်
+- CI တွင် `lint` ကို `tsc` နှင့် `build` တို့နှင့် တွဲဖက် Run လုပ်ပါ
+
+## Activity
+
+`eslint-config-next` နှင့် `next/typescript` တို့ကို ထည့်သွင်းကာ `no-html-link-for-pages` Rule ကို ချိုးဖောက်သော Code တစ်ခုကို ရည်ရွယ်ချက်ရှိရှိ ထည့်သွင်းပြီး `npm run lint` ဖြင့် စစ်ဆေးပါ။ ထို့နောက် `next/link` ကို အသုံးပြု၍ ပြုပြင်ပါ။

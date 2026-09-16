@@ -1,0 +1,58 @@
+---
+title: "after — Response ပို့ပြီးနောက် အလုပ်များ စီစဉ်ခြင်း"
+description: "Schedule work to run after the response is sent - logging, analytics, and cleanup. — Response ပို့ပြီးမှ လုပ်ဆောင်ရမည့် အလုပ်များ (logging, analytics, cleanup) ကို စီစဉ်ပေးသည့် function ဖြစ်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  အရေးမပါသော (non-critical) အလုပ်များကို Response ပို့ချပြီးသည့်အထိ ရွှေ့ဆိုင်းထားပြီး page load speed မထိခိုက်စေရန် ထိန်းချုပ်နည်းကို နားလည်ရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`after` သည် Next.js ၏ Server Function တစ်ခုဖြစ်ပြီး သင်ခန့်အပ်လိုက်သော အလုပ်များ (logging, analytics, cleanup စသည်) ကို Response ကို client ထံ ပို့ချပြီးသွားမှသာ လုပ်ဆောင်ပေးပါတယ်။ ထို့ကြောင့် အလေးချိန်ကြီးသော အလုပ်များကြောင့် user များ page ပေါ်လာမည့်အချိန် မနှောင့်နှေးစေဘဲ တုံ့ပြန်မှုကို အမြန်ဆုံး ရရှိစေပါတယ်။ `after` ကို Server Components, Route Handlers နှင့် Server Functions များတွင် သုံးနိုင်ပြီး route ၏ runtime (Node / Edge) နှင့် တူညီသော runtime တွင် လည်ပတ်ပါတယ်။ Platform ၏ time budget ကို မကျော်လွန်စေရန် ကြီးမားသော အလုပ်များကို queue ထဲသို့ ရွှေ့ထားသင့်ပြီး error များကို client သို့ မပို့ဘဲ `onRequestError` သို့သာ ပို့ပေးပါတယ်။
+
+## What it is
+
+`after` သည် Response ပို့ချပြီးမှသာ အလုပ်များ လုပ်ဆောင်ရန် register လုပ်ပေးသော Server Function တစ်ခုဖြစ်ပြီး (edge-compatible execution) ဖြစ်ပါတယ်:
+
+```tsx
+import { after } from "next/server";
+
+export default async function Page() {
+  after(async () => {
+    await logPageView();   // no longer blocks the response
+  });
+  return <h1>Fast page</h1>;
+}
+```
+
+## Typical jobs (အသုံးများသော အလုပ်များ)
+
+- Analytics / tracking ရေးသားမှုများ
+- Logging (page တစ်ခုချင်းအတွက် audit trails)
+- Cache warming, notifications ပို့ခြင်း
+- Streaming ပြီးနောက် cleanup လုပ်ခြင်း
+
+## Where it runs (ဘယ်မှာ လည်ပတ်လဲ)
+
+- Route ၏ runtime (Node/Edge) နှင့် အတူတူ လည်ပတ်ပါတယ်
+- Time budget သည် platform ကန့်သတ်ချက်အတွင်း တွက်ချက်ခံရပြီး စရိတ်ကြီးသော အလုပ်များကို queue ထဲ ရွှေ့ထားပါ
+- Errors များကို log လုပ်ပြီး client သို့ မပို့ဘဲ exceptions များသည် `onRequestError` ထံ ရောက်ရှိပါတယ်
+
+## Rules (စည်းကမ်းများ)
+
+- Server Components, Route Handlers, Server Functions များတွင် သုံးနိုင်ပါတယ်
+- Client မှ ကြည့်ရှုရမည့် (observe) အလုပ်များအတွက် မဟုတ်ပါ
+- `after` ခေါ်ဆိုမှုများကို `"use cache"` လုပ်ထားသော function များထဲတွင်လည်း သုံးနိုင်ပါတယ်
+- Determinism: လုပ်ဆောင်မှု အစဉ်လိုက်ကို ထိန်းသိမ်းထားသော်လည်း အလုပ်များအချင်းချင်း မှီခိုမှုမရှိစေရန် ထားပါ
+
+## Compare with patterns (အခြားပုံစံများနှင့် နှိုင်းယှဉ်ချက်)
+
+- Non-critical code ကို await လုပ်မည့်အစား → `after` ကို သုံးပါ
+- Fire-and-forget promises (မယုံကြည်ရလောက်သော) အစား → `after` ကို သုံးပါ
+
+## လေ့ကျင့်ခန်း (Activity)
+
+သင့် page-view logging ကို `after()` ထဲသို့ ရွှေ့ပြောင်းပြီး throttling ထည့်သွင်းကာ timed log header ကိုသုံး၍ log ရေးသားခြင်းမဖြစ်မီ Response ပြီးဆုံးကြောင်း အတည်ပြုပါ။

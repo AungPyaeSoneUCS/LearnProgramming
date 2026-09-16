@@ -1,0 +1,75 @@
+---
+title: "CI Build Caching — CI Build Caching လုပ်ခြင်း"
+description: "Speed up CI/CD pipelines by caching Next.js build artifacts across runs. — Runs များအကြားတွင် Next.js build artifacts များကို cache လုပ်ခြင်းဖြင့် CI/CD pipelines များကို မြန်ဆန်စေခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  CI runs များကြားတွင် `.next` နှင့် Turbopack caches များကို cache လုပ်ခြင်းအားဖြင့် pipeline အချိန်ကို မိနစ်များမှ စက္ကန့်များသို့ လျှော့ချနိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+CI Build Caching ဆိုသည်မှာ Continuous Integration pipelines များတွင် build လုပ်သည့်အခါတိုင်း အစမှ အလုံးစုံ ပြန်လည် compile လုပ်စရာ မလိုတော့အောင် ယခင် runs များ၏ build artifacts များကို သိမ်းဆည်းထားသည့် နည်းလမ်း ဖြစ်ပါတယ်။ Next.js သည် build ကာလအတွင်း `.next/cache` သို့ ရေးသားပြီး Turbopack ၏ persistent filesystem cache ကိုလည်း အသုံးပြုပါတယ်။ GitHub Actions တွင် `actions/cache@v4` သို့မဟုတ် GitLab CI တွင် `cache:` keyword ဖြင့် ယင်းဖိုင်များကို runs များကြားတွင် ထိန်းသိမ်းနိုင်ပါတယ်။ Compiled modules, image optimization results နှင့် Webpack/Turbopack intermediates များကို cache လုပ်သောကြောင့် rebuild တစ်ကြိမ်တွင် အားလုံးကို ပြန်လည် compile လုပ်စရာ မလိုပါဘူး။ `turbopackFileSystemCache` configuration ဖြင့် Turbopack ၏ persistent cache ကို ထိန်းချုပ်နိုင်ပါတယ်။
+
+## Caching `.next/cache`
+
+Next.js သည် builds ကာလအတွင်း `.next/cache` နှင့် Turbopack ၏ persistent filesystem cache သို့ ရေးသားပါတယ်။ Runs များကြားတွင် ၎င်းကို persist လုပ်ပါ:
+
+- **GitHub Actions**
+
+```yaml
+- name: Cache Next.js build
+  uses: actions/cache@v4
+  with:
+    path: |
+      .next/cache
+    key: ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}
+    restore-keys: |
+      ${{ runner.os }}-nextjs-
+```
+
+- **GitLab CI**
+
+```yaml
+cache:
+  paths:
+    - .next/cache
+```
+
+## What is cached
+
+- Compiled modules များ (incremental compilation)
+- Image optimization results များ
+- Webpack/Turbopack intermediates များ
+
+ထို့ကြောင့် rebuild လုပ်သည့်အခါ အရာအားလုံးကို ပြန်လည် compile လုပ်ခြင်းကို ကျော်သွားနိုင်ပါတယ်။
+
+## Important caveats
+
+- `NODE_ENV=production` နှင့် `NODE_ENV=test` builds များသာ `.next/cache` ကို အသုံးပြုသည် (dev အတွက် သီးခြား cache ရှိသည်)
+- Config/deps ပြောင်းလဲမှုများအတွက် cache invalidation သည် keys များဖြင့် အလိုအလျောက် ဖြစ်သည်; သင့်လျော်သော restore strategies များကို ထားရှိပါ
+- Turbopack ၏ `turbopackFileSystemCache` config သည် ၎င်း၏ persistent cache ကို ထိန်းချုပ်သည်
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  turbopack: {
+    turbopackFileSystemCache: true,
+  },
+};
+```
+
+## Verifying the win
+
+Sequential CI builds နှစ်ခုကို နှိုင်းယှဉ်ကြည့်ပါ:
+
+```
+Before: compile 41s, build total 1m12s
+After:  compile  3s, build total   28s
+```
+
+## Activity — လေ့ကျင့်ခန်း
+
+သင့် CI config တွင် `.next/cache` step တစ်ခု ထည့်ပါ၊ builds နှစ်ခုကို ဆက်တိုက် run ပါ၊ ထို့နောက် အချိန် ကျဆင်းမှုကို တိုင်းတာပါ။

@@ -1,0 +1,75 @@
+---
+title: "ISR with Cache Components — Cache ဖြင့် Incremental Static Regeneration"
+description: "Incremental static regeneration today: prerender, cache with cacheLife, and revalidate per route/tag. — `cacheLife` နှင့် `cacheTag` တို့ကို သုံး၍ prerender လုပ်ပြီး route/tag အလိုက် revalidate ပြုလုပ်နည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Cache Components အခေတ်တွင် ISR ကို မည်သို့ လုပ်ဆောင်ရမည်ကို နားလည်စေရန် ဖြစ်ပါတယ် — static shells များနှင့် cached data များ၊ time-based refresh နှင့် on-demand invalidation များကို **`use cache`**, **`cacheLife`**, **`cacheTag`** တို့ဖြင့် ထိန်းချုပ်တတ်လာမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+ISR (Incremental Static Regeneration) သည် static pages များကို အချိန်ကာလအလိုက် ပြန်လည် ပြုလုပ်ပေးသော နည်းလမ်းဖြစ်ပြီး ယခု Cache Components model နှင့်အတူ ပိုမို ရှင်းလင်းသော ပုံစံသို့ ပြောင်းလဲသွားပါတယ်။ Build time တွင် သိထားသည့် post များအားလုံးကို `generateStaticParams` ဖြင့် prerender လုပ်ပြီး data များကို `"use cache"` function အတွင်းတွင် `cacheLife` နှင့် `cacheTag` ဖြင့် သိမ်းဆည်းပါတယ်။ `cacheLife` သည် time-based refresh window ကို ချုပ်ကိုင်ပြီး `cacheTag("posts")` သည် on-demand invalidation အတွက် tag တစ်ခုကို ပေးပါတယ်။ Slugs စာရင်းထဲ မပါဝင်သော အသစ်များအတွက် `dynamicParams` ကို true ထားလျှင် dynamic render လုပ်ပြီး cache လုပ်ကာ false ထားလျှင် 404 ချက်ချင်း ပြသပါတယ်။ Mutation တစ်ခု ဖြစ်ပွားပြီးနောက် `revalidateTag` သို့မဟုတ် fresh data ရှိပြီးသားဖြစ်ပါက `updateTag` ဖြင့် background တွင် rebuild လုပ်နိုင်ပြီး ယခင် cache လုပ်ထားသော pages များကို ဆက်လက် ဖြန့်ဝေနေပါတယ်။ ထို့ကြောင့် ဧည့်သည်များသည် rebuild ပြီးရန်ကို စောင့်စရာမလိုဘဲ ချက်ချင်း စာမျက်နှာကို ကြည့်ရှုနိုင်ပါသည်။
+
+## The modern ISR pattern
+
+```tsx
+// app/blog/[slug]/page.tsx
+import { cacheLife, cacheTag } from "next/cache";
+
+async function getPost(slug: string) {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("posts");
+  return db.post.findUnique({ where: { slug } });
+}
+
+export async function generateStaticParams() {
+  const posts = await db.post.findMany();
+  return posts.map((p) => ({ slug: p.slug }));
+}
+
+export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
+  return <article>{post.title}</article>;
+}
+```
+
+- Build time: သိထားသည့် post pages အားလုံးကို (static shell + cached data) ဖြင့် prerender လုပ်ပါတယ်
+- Any time: **slug မပါဝင်သည့်** ဧည့်သည်တစ်ဦးသည် dynamic render ရရှိပြီး ၎င်းနောက် cache လုပ်နိုင်ပါတယ်
+- Refresh: `cacheLife` က time window ကို စီမံပြီး `cacheTag("posts")` က on-demand invalidation ကို ဖွင့်ပေးပါတယ်
+
+## Control unknown slugs
+
+`dynamicParams` သည် စာရင်းမပါဝင်သော segments များကို ခွင့်ပြုမပြု ဆုံးဖြတ်ပေးပါတယ်:
+
+```ts
+export const dynamicParams = true;  // default - new slugs render on demand
+export const dynamicParams = false; // unknown slugs → 404 instantly
+```
+
+## On-demand rebuild after a mutation
+
+```ts
+"use server";
+
+import { revalidateTag } from "next/cache";
+
+export async function updatePost(slug: string, title: string) {
+  await db.post.update({ where: { slug }, data: { title } });
+  revalidateTag("posts"); // stale-while-revalidate rebuild of all /blog/* pages
+}
+```
+
+ပိုမို တိကျသော ပြောင်းလဲမှုအတွက် `updateTag("posts")` သည် ရှိပြီးသား fresh value ကို ဦးစားပေး အသုံးပြုပါတယ်။
+
+## When pages are ready
+
+ယခင် cache လုပ်ထားသော pages များသည် fresh page တစ်ခု ပြုလုပ်နေစဉ်အတွင်းလည်း ဆက်၍ ဖြန့်ဝေနေပြီး ဧည့်သည်များသည် rebuild ကို စောင့်စရာ မလိုပါဘူး။
+
+## Activity
+
+လေ့ကျင့်ခန်း: သင့် blog ကို အထက်ပါ ပုံစံသို့ ပြောင်းပါ။ Post တစ်ခုကို rename လုပ်သည့် admin action တစ်ခု ထည့်ပြီး full rebuild မလုပ်ဘဲ background refresh တစ်ကြိမ်အတွင်း public page က အပ်ဒိတ် ဖြစ်သည်ကို အတည်ပြုပါ။

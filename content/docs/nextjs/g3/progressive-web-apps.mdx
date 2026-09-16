@@ -1,0 +1,94 @@
+---
+title: "Progressive Web Apps (PWAs) — Progressive Web App များ"
+description: "Turn your Next.js app into an installable, offline-capable PWA with a manifest and service worker. — Manifest နဲ့ service worker သုံးပြီး Next.js app ကို install လုပ်လို့ရတဲ့၊ offline သုံးလို့ရတဲ့ PWA အဖြစ် ပြောင်းနည်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  App icon, manifest, service worker နဲ့ safe shell တွေကနေတစ်ဆင့် သင့် app ကို install လုပ်လို့ရတဲ့၊ offline မှာ ခံနိုင်ရည်ရှိတဲ့ PWA အဖြစ် ပြောင်းလဲနိုင်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+PWA (Progressive Web App) ဆိုတာ website တစ်ခုကို native app လို install လုပ်လို့ရအောင်၊ offline မှာ အလုပ်လုပ်နိုင်အောင် လုပ်ပေးတဲ့ နည်းလမ်းစုတစ်ခု ဖြစ်ပါတယ်။ PWA ရဲ့ အခြေခံ သုံးခုက Manifest (app ရဲ့ name, icons, display mode), Service Worker (offline cache နဲ့ background update) နဲ့ HTTPS (install လုပ်ဖို့နဲ့ service worker အတွက် မဖြစ်မနေ လိုအပ်ချက်) ဖြစ်ပါတယ်။ Next.js မှာဆိုရင် `app/manifest.ts` နဲ့ `public/manifest.webmanifest` မှာ manifest metadata ထည့်ပြီး `app/layout.tsx` ထဲကနေ `<Script src="/sw.js" strategy="service-worker" />` နဲ့ service worker ကို register လုပ်ပါတယ်။ Chrome ထဲက beforeinstallprompt event ကို ဖမ်းပြီး ကိုယ်ပိုင် Install ခလုတ် လုပ်လို့ရပြီး DevTools → Application panel ထဲမှာတော့ installability နဲ့ offline ဖြစ်မှုကို စစ်ဆေးနိုင်ပါတယ်။ စစ်ဆေးစရာတွေ ပြည့်စုံအောင် manifest, 192/512 icons, shell cache, HTTPS, offline fallback page အားလုံး ရှိနေဖို့ လိုပါတယ်။
+
+## PWA triad
+
+1. **Manifest** — app name, icons, display mode တွေကို သတ်မှတ်ပေးတဲ့ config
+2. **Service worker** — offline cache နဲ့ background update တွေကို ဖန်တီးပေးတဲ့ script
+3. **HTTPS** — production မှာ install လုပ်နိုင်ဖို့နဲ့ service worker အတွက် မဖြစ်မနေ လိုအပ်ပါတယ်
+
+## Configuration
+
+```mdx
+# app/manifest.ts
+export const metadata = {
+  title: "My App",
+  themeColor: "#18181b",
+  icons: [{ rel: "icon", url: "/icons/icon-512.png" }],
+  manifest: "/manifest.webmanifest",
+};
+```
+
+```json
+// public/manifest.webmanifest
+{
+  "name": "My App",
+  "short_name": "App",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#18181b",
+  "theme_color": "#18181b",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
+```
+
+## Adding the service worker
+
+```tsx
+// app/layout.tsx
+import Script from "next/script";
+
+<Script src="/sw.js" strategy="service-worker" />;
+```
+
+`sw.js` ကို `public/` ထဲမှာ ထားပါ (worker body အတွက် *Offline Support* lesson ကို ကြည့်ပါ)။
+
+## Install prompt
+
+```tsx
+"use client";
+
+import { useEffect, useState } from "react";
+
+export default function InstallPrompt() {
+  const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
+
+  useEffect(() => {
+    const handler = (e: BeforeInstallPromptEvent) => {
+      e.preventDefault();
+      setDeferred(e);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  if (!deferred) return null;
+  return <button onClick={() => deferred.prompt()}>Install app</button>;
+}
+```
+
+## Checklist
+
+- [ ] Manifest + 192/512 icons
+- [ ] SW က shell + visited route တွေကို cache လုပ်ထားခြင်း
+- [ ] Production မှာ HTTPS
+- [ ] Offline fallback page
+
+## Activity
+
+Manifest တစ်ခု ထည့်ပြီး service worker ကို register လုပ်ပါ၊ DevTools → Application ကိုဖွင့်ပြီး app က installable ဖြစ်လာတာနဲ့ offline ဖြစ်နေချိန် `/` ကို load လုပ်နိုင်တာကို စစ်ဆေးပါ။

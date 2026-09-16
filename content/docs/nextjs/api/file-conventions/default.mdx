@@ -1,0 +1,63 @@
+---
+title: "default.js — Parallel Routes ၏ Fallback UI"
+description: "The fallback UI for parallel routes when the route doesn't exist on a fast refresh. — Fast Refresh တွင် Route မရှိသည့် Parallel Routes များအတွက် Fallback UI ကို သတ်မှတ်ပေးသည့် ဖိုင်ဖြစ်ပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Full Refresh ပြုလုပ်ပြီးနောက် Parallel Routes များ ပျက်စီးသွားခြင်းမှ ကာကွယ်ရန် Default Slot View ကို သတ်မှတ်နိုင်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`default.tsx` သည် Parallel Routes ၏ **fallback UI** ကို သတ်မှတ်ပေးသော File Convention တစ်ခုဖြစ်ပြီး Slot တစ်ခုအတွက် URL တွင် ကိုက်ညီမည့် Route မရှိသည့်အခါ ထို Slot ၏နေရာတွင် ပြသရန် View ကို ရေးသားပေးရပါတယ်။ Browser မှ Full Refresh (Hard Reload) ပြုလုပ်သောအခါ URL ကို ပြန်ဖတ်ပြီး ထို URL သည် `@feed`၊ `@analytics` ကဲ့သို့သော Parallel Slots များနှင့် Mapping မဖြစ်နိုင်သောကြောင့် Next.js သည် Slot တစ်ခုစီအတွက် `default.tsx` ရှိလျှင် ၎င်းကို ဖော်ပြပေးပါတယ်။ Client-side Navigation များတွင် ထို URL များကို Slot များက ကိုင်တွယ်နိုင်သော်လည်း Full Refresh သို့မဟုတ် Hard Navigation ဖြစ်သောအခါ URL နှင့် Slot များ Mapping မဖြစ်တော့သဖြင့် Fallback အနေဖြင့် ဤဖိုင်ကို Slot တိုင်းတွင် ထည့်သွင်းရန် အကြံပြုပါတယ်။ ဤ Convention ကို ကျွမ်းကျင်ပါက Dashboard ကဲ့သို့သော Multiple Slots ပါသော Layouts များတွင် Refresh လုပ်ပြီးနောက် Error မဖြစ်ဘဲ ဆက်လက်လည်ပတ်နိုင်စေမှာ ဖြစ်ပါတယ်။
+
+## The problem
+
+With parallel routes:
+
+```tsx
+// app/dashboard/@feed/page.tsx
+// app/dashboard/@analytics/page.tsx
+```
+
+Client ဘက်မှ `/dashboard` သို့ Navigating လုပ်ပါက Slot နှစ်ခုလုံး Render ဖြစ်ပြီး ကောင်းမွန်စွာ အလုပ်လုပ်ပါတယ်။ သို့သော် **Full Page Reload** ပြုလုပ်သောအခါ URL ကို ပြန်ဖတ်ပြီး ထို URL သည် Layout များ ပိုင်ဆိုင်မှုမရှိသောကြောင့် Parallel Routes (`@feed`, `@analytics`) နှင့် Mapping မဖြစ်တော့ပါဘူး။ ထိုအခါ Next.js သည် Slot များ၏ **`default.tsx`** ကို အစားထိုး Render လုပ်ပေးပါတယ်။
+
+## Definition
+
+```tsx
+// app/dashboard/@analytics/default.tsx
+export default function AnalyticsDefault() {
+  return <p>No analytics view for this URL</p>;
+}
+```
+
+## Rules
+
+- Route တိုင်း အမြဲ Matching ဖြစ်မနေလျှင် Parallel Route တစ်ခုစီအတွက် `default.tsx` မဖြစ်မနေ လိုအပ်ပါတယ်
+- Active Path သည် Slot ကို မဖြည့်ဆည်းနိုင်သည့်အခါ ဤဖိုင်မှ View ကို Render လုပ်ပေးပါတယ်
+- အများအားဖြင့် Slot ၏ Home Content သို့မဟုတ် Placeholder ကိုသာ ဖော်ပြလေ့ရှိပါတယ်
+
+## Example layout
+
+```tsx
+// app/dashboard/layout.tsx
+export default function Layout({ feed, analytics }: { feed: React.ReactNode; analytics: React.ReactNode }) {
+  return (
+    <div>
+      <main>{feed}</main>
+      <aside>{analytics}</aside>
+    </div>
+  );
+}
+```
+
+## When default triggers
+
+1. Slot A နှင့် Map မဖြစ်သော URL သို့ Fast Refresh / Hard Navigation ပြုလုပ်ခြင်း
+2. Match မဖြစ်သော Slots များ၏ Initial Server Render ပြုလုပ်ခြင်း
+
+## Activity
+
+Parallel Slot တစ်ခုတွင် `default.tsx` ကို ထည့်သွင်းပြီး ၎င်းမရှိသော URL ကို Hard-Reload လုပ်ကာ Slot သည် Error ဖြစ်မည့်အစား ပုံမှန်အတိုင်း Render ဆက်လုပ်နေသည်ကို စစ်ဆေးပါ။

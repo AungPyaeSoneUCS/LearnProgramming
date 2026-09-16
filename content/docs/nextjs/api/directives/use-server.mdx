@@ -1,0 +1,69 @@
+---
+title: "use server — Server Directive"
+description: "The use server directive: declaring Server Functions callable from the client — Client မှ ခေါ်ဆိုနိုင်သော Server Functions များကို ကြေညာပေးသော Directive။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  လုံခြုံပြီး Typed Server Functions များကို Client သို့ ထုတ်ဖော်ကာ Forms နှင့် Buttons များမှ တိုက်ရိုက် ခေါ်ဆိုအသုံးပြုတတ်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`"use server"` သည် Server Functions များကို ကြေညာရန် အသုံးပြုသော Directive တစ်ခုဖြစ်ပြီး ၎င်း Functions များသည် Server ပေါ်တွင်သာ အမြဲတမ်း Run ပြီး Client မှ ခေါ်ဆိုနိုင်ပါတယ်။ Function-level အနေဖြင့်လည်းကောင်း၊ File-level အနေဖြင့် Export အားလုံးကို Server Functions အဖြစ်လည်းကောင်း သတ်မှတ်နိုင်ပါတယ်။ `<form action={fn}>` မှ တိုက်ရိုက်ဖြစ်စေ၊ `useActionState(fn, …)` သို့မဟုတ် `fn.bind(null, ...args)` မှတစ်ဆင့်ဖြစ်စေ ခေါ်ဆိုနိုင်ပါတယ်။ ၎င်း Functions များသည် HTTP POST မှတစ်ဆင့် ရောက်ရှိလာနိုင်သောကြောင့် Authentication Check နှင့် Validation တို့ကို Function တိုင်းအတွင်း မဖြစ်မနေ ထည့်သွင်းရပါမယ်။ မူရင်း Signature သည် `FormData` ကို လက်ခံရရှိပြီး Mutation များပြီးနောက် `revalidatePath`/`revalidateTag` များဖြင့် Cache များကို အသစ်ပြန်လုပ်ရန် လိုအပ်ပါတယ်။
+
+## What it marks
+
+`"use server"` သည် **Server Functions** များကို ကြေညာပေးပါတယ် — Server ပေါ်တွင်သာ အမြဲတမ်း Run ပြီး Client မှ ခေါ်ဆိုနိုင်သော Async functions များ ဖြစ်ပါတယ်:
+
+```ts
+// function-level
+export async function subscribe(formData: FormData) {
+  "use server";
+  // server-only logic, PRISM/DB…
+}
+
+// file-level (all exports are Server Functions)
+"use server";
+
+export async function createPost() { … }
+export async function deletePost(id: string) { … }
+```
+
+## Where they're callable from
+
+- `<form action={fn}>` - တိုက်ရိုက် ခေါ်ဆိုမှု
+- `useActionState(fn, …)` - State နှင့် Pending များဖြင့်
+- `fn.bind(null, ...args)` - `FormData` အပြင် နောက်ထပ် Arguments များအတွက်
+- Client Component တစ်ခုမှ Programmatically ဖြင့် (Wrapper မှတစ်ဆင့် - အောက်တွင် ကြည့်ပါ)
+
+## The rules
+
+- **async** မဖြစ်မနေ ဖြစ်ရပါမယ်
+- Server Functions များသည် POST မှတစ်ဆင့် ရောက်ရှိနိုင်သဖြင့် **Function တိုင်းအတွင်း Auth-check** ထည့်သွင်းပါ
+- Secrets များကို လွတ်လပ်စွာ မထည့်ပါနှင့်; Validation များကို Zod ဖြင့် ထိန်းသိမ်းပါ
+- Deterministic နီးစပ်စေရန်: Time-dependent ဖြစ်သော Heavy work များကို ရှောင်ကြဉ်ပါ
+
+## Passing data
+
+မူရင်း Signature သည် `FormData` ကို လက်ခံရရှိပါတယ်။ Typed inputs များကို `.bind()` မှတစ်ဆင့် ထည့်သွင်းနိုင်ပါတယ်:
+
+```tsx
+"use client";
+
+const updateTodo = updateTodoAction.bind(null, id);
+
+<form action={updateTodo}>
+  <input name="done" type="checkbox" />
+  <button>Save</button>
+</form>
+```
+
+## Errors & revalidation
+
+Inline UI အတွက် Errors များကို State object ထဲတွင် ပြန်ပို့ပါ။ Mutation များပြီးနောက် `revalidatePath`/`revalidateTag` များဖြင့် Caches များကို Invalidate ပြုလုပ်ပါ။
+
+## Activity
+
+Form submission တစ်ခုကို Zod ဖြင့် Validate လုပ်ကာ Auth ကို စစ်ဆေးပြီး DB သို့ ရေးသားသည့်အပြင် `revalidateTag("todos")` ကို ခေါ်ဆိုသော `"use server"` action တစ်ခုအဖြစ် ပြောင်းလဲပါ။

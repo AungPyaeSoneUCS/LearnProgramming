@@ -1,0 +1,60 @@
+---
+title: "generateSitemaps — Sitemap များစွာ ခွဲထုတ်ခြင်း"
+description: "Split your sitemap into multiple files for very large sites. — ကြီးမားသော site များအတွက် sitemap ကို ဖိုင်များစွာအဖြစ် ခွဲထုတ်ပေးသော function ဖြစ်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Sitemap များစွာကို ထုတ်လုပ်ခြင်းဖြင့် sitemap URL အရေအတွက် ကန့်သတ်ချက်အောက်တွင် ရှိနေစေရန် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`generateSitemaps` သည် sitemap ဖိုင်တစ်ခုတည်းက ကန့်သတ်ချက် (URL 50,000 ခု / 50MB) ကို ကျော်လွန်တော့မည့်အခါ sitemap "chunks" စာရင်းကို ပြန်ပေးသော function တစ်ခုဖြစ်ပါတယ်။ ၎င်းကို သုံးပါက `/sitemap.xml` အပြင် `/sitemap/1.xml`, `/sitemap/2.xml` စသည်ဖြင့် ဖိုင်အများအပြား ထုတ်ပေးသောကြောင့် ကြီးမားသော site များပင် search engine များအတွက် sitemap ကို လွယ်ကူစွာ တင်ပြနိုင်ပါတယ်။ Database တွင် URL 50,000 ကျော်ရှိသည့်အခါ၊ route တစ်ခုချင်းစီ၏ pagination build နှေးသည့်အခါ သို့မဟုတ် crawl priority အခန်းများကို သီးခြားခွဲထားလိုလျှင် အသုံးဝင်ပါတယ်။ `sitemap()` ကို default export အဖြစ် ထားရှိကာ `generateSitemaps` ကို named export အဖြစ် ထားရှိရပြီး id များသည် simple keys များဖြစ်ပါတယ်။ ထို့အပြင် `robots.ts` ထဲရှိ sitemap field မှ ဤ child sitemap များကို ထည့်သွင်း ညွှန်းဆိုနိုင်ပါတယ်။
+
+## What it is
+
+`generateSitemaps` သည် ဖိုင်တစ်ခုတည်းက ကန့်သတ်ချက် (URL 50,000 ခု / 50MB) ကျော်လွန်သည့်အခါ sitemap "chunks" စာရင်းကို ပြန်ပေးပါတယ်:
+
+```ts
+// app/sitemap.ts
+import type { MetadataRoute } from "next";
+
+export async function generateSitemaps() {
+  const batches = [1, 2, 3]; // e.g. from DB pagination
+  return batches.map((id) => ({ id }));
+}
+
+export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
+  const posts = await getPostsPage(id);
+  return posts.map((post) => ({ url: `https://example.com/blog/${post.slug}` }));
+}
+```
+
+`/sitemap.xml`, `/sitemap/1.xml`, `/sitemap/2.xml` စသည်ဖြင့် ဖိုင်များ ထုတ်လုပ်ပေးပါတယ်။
+
+## When to use (ဘယ်အခါ သုံးသင့်လဲ)
+
+- DB တွင် URL 50,000 ကျော်ရှိသည့်အခါ
+- Route တစ်ခုချင်းစီအတွက် pagination သည် build နှေးသောအခါ
+- Crawl priority sections များကို သီးခြားခွဲထားလိုပါက
+
+## Rules (စည်းကမ်းများ)
+
+- `sitemap()` ကို default export အဖြစ် ထားရမည်; `generateSitemaps` ကို named export အဖြစ် ထားရမည်
+- IDs များသည် simple keys များဖြစ်ပြီး route သည် `{ id }` အလိုက် resolve ဖြစ်ပါတယ်
+- `robots.ts` ၏ sitemap field မှ child sitemap များကို ထည့်သွင်းညွှန်းဆိုပါ
+
+## Nested robots reference
+
+```ts
+sitemap: [
+  "https://example.com/sitemap.xml",
+  "https://example.com/sitemap/1.xml",
+],
+```
+
+## လေ့ကျင့်ခန်း (Activity)
+
+သင့် sitemap ကို `generateSitemaps` ဖြင့် pagination ခွဲထုတ်ပြီး build လုပ်ကာ `/sitemap/2.xml` ကို curl လုပ်၍ chunks များ တည်ရှိပြီး URLs စာရင်းဝင်ကြောင်း စစ်ဆေးပါ။

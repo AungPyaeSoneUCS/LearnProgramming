@@ -1,0 +1,89 @@
+---
+title: "Redirecting — URL လွှဲပြောင်းခြင်း"
+description: "Redirect users with next.config redirects, the redirect() function, and permanentRedirect - with status codes explained. — next.config redirects, redirect() function နဲ့ permanentRedirect တွေကို သုံးပြီး user တွေကို redirect လုပ်နည်း၊ status code တွေနဲ့အတူ ရှင်းပြထားပါတယ်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Config, code ဒါမှမဟုတ် auth ကဏ္ဍကနေတစ်ဆင့် user တွေနဲ့ crawler တွေကို မှန်ကန်တဲ့ URL ဆီ — ခဏတာ (temporary) ဒါမှမဟုတ် အမြဲတမ်း (permanent) — ပို့ပေးနိုင်ဖို့ ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Redirecting ဆိုတာ user ဒါမှမဟုတ် crawler က တောင်းဆိုလာတဲ့ URL ကို အခြား URL တစ်ခုဆီ လွှဲပြောင်းပေးတဲ့ ယန္တရား ဖြစ်ပြီး Next.js မှာ နေရာသုံးမျိုးကနေ လုပ်နိုင်ပါတယ် — next.config.ts ထဲက redirects() (global, deploy တိုင်း ရှိနေ), page/action ထဲက redirect(path) / permanentRedirect(path), auth fail ဖြစ်တဲ့အခါ next/navigation ကနေ redirect() ပဲ ဖြစ်ပါတယ်။ Status code ကလည်း အရေးကြီးပါတယ် — redirect() က 307 (temporary), permanentRedirect() က 308 (permanent, method+body preserve), notFound() က 404 ပဲ ဖြစ်ပါတယ်။ Form mutation ပြီးတဲ့နောက်မှာ redirect() လုပ်တာကို PRG (Post/Redirect/Get) pattern လို့ ခေါ်ပြီး double submit ကို ကာကွယ်ပေးပါတယ်။ Route Handler/edge လို low-level နေရာတွေမှာတော့ NextResponse.redirect(url, 308) ကို တိုက်ရိုက်သုံးပါတယ်။ အကောင်းဆုံးအလေ့အထကတော့ structural move တွေကို config redirect နဲ့ သွား၊ data-dependent flow တွေကို in-code redirect နဲ့ သွားပြီး redirect loop (source = destination) ကို ဘယ်တော့မှ မလုပ်ပါဘူး။
+
+## Three ways to redirect
+
+| Location                  | API                                         |
+| ------------------------- | ------------------------------------------- |
+| Config (global)           | `redirects()` in `next.config.ts`           |
+| In code (page/action)     | `redirect(path)` / `permanentRedirect(path)` |
+| After auth failure        | `redirect()` from `next/navigation`         |
+
+## Config redirects (preserved across deploys)
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      { source: "/old-path", destination: "/new-path", permanent: true },
+      { source: "/product/:slug", destination: "/items/:slug", permanent: false },
+      { source: "/legacy/*", destination: "/new/:splat", permanent: true },
+    ];
+  },
+};
+```
+
+## Redirect during render
+
+```tsx
+import { notFound, redirect } from "next/navigation";
+
+export default async function UserPage({ params }) {
+  const { id } = await params;
+  const user = await getUser(id);
+
+  if (user.vanity) redirect(`/u/${user.vanity}`);        // 307
+  if (user.movedLongAgo) permanentRedirect(`/u/${id}`);  // 308
+  if (!user) notFound();                                 // 404
+
+  return <Profile user={user} />;
+}
+```
+
+- `redirect()` → **307** (temporary — ယာယီ)
+- `permanentRedirect()` → **308** (permanent — အမြဲတမ်း၊ method+body ကို ထိန်းထားပေးပါတယ်)
+
+## After a mutation
+
+```ts
+"use server";
+import { redirect } from "next/navigation";
+
+export async function createPost(formData: FormData) {
+  const post = await db.post.create({ data: { title: formData.get("title") } });
+  redirect(`/blog/${post.slug}`); // PRG pattern: redirect after POST succeeds
+}
+```
+
+## Stream/edge context
+
+In Route Handlers/edge, `NextResponse.redirect(url, 308)` is the low-level primitive:
+
+```ts
+export function GET() {
+  return NextResponse.redirect("https://example.com/new", 308);
+}
+```
+
+## Best practice
+
+- Structural move တွေအတွက် **config** redirect ကို ဦးစားပေးပါ (SSR ကိုလည်း လွတ်မြောက်စေပါတယ်)
+- Data-dependent flow တွေအတွက် **in-code** redirect ကို သုံးပါ
+- Redirect loop ဘယ်တော့မှ မလုပ်ပါနဲ့: source ≠ destination
+
+## Activity
+
+Route တစ်ခုကို ရွှေ့ပြီး အဟောင်း URL အတွက် 301 config redirect ထည့်ပါ၊ form mutation ပြီးတဲ့နောက်မှာ `redirect()` တစ်ခု ထည့်ပါ။ Status code သုံးမျိုးစလုံးကို `curl -I` နဲ့ စမ်းကြည့်ပါ။

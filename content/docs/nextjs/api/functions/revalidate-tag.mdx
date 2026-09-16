@@ -1,0 +1,65 @@
+---
+title: "revalidateTag (Cache Tag ဖြင့် Invalidate ပြုလုပ်ခြင်း)"
+description: "Invalidate all cached scopes sharing a cache tag. — Cache Tag တစ်ခုတည်းကို မျှဝေထားသော Cached Scopes အားလုံးကို Invalidate ပြုလုပ်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Semantic Tag တစ်ခုတည်းဖြင့် Cache Entries အားလုံးကို Call တစ်ကြိမ်တည်းနှင့် ဖျက်ပစ်နိုင်ရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`revalidateTag()` သည် Cache Tag တစ်ခုကို မျှဝေထားသည့် Cached Scopes အားလုံးကို တစ်ကြိမ်တည်းဖြင့် Invalidate ပြုလုပ်ပေးသော Server-side Function တစ်ခုဖြစ်ပါတယ်။ `cacheTag("news")` ကဲ့သို့ Tag ပေးထားသော Function များကို နောက် Request တွင် ပြန်လည် Execute လုပ်စေပြီး သက်တမ်းကုန်ဆုံးသွားသော ဒေတာများကို Fresh ဒေတာများဖြင့် အစားထိုးပေးပါတယ်။ ၎င်းသည် "အားလုံးဖျက်ပစ်ခြင်း" (Full Purge) မဟုတ်ဘဲ Tag သတ်မှတ်ထားသော Entry များကိုသာ သက်ရောက်မှုရှိပြီး Revalidation သည် On-demand ဖြစ်ပါတယ်။ Tag တစ်ခုထက်ပို၍ သတ်မှတ်ထားပါက ထို Tags အားလုံးနှင့် ကိုက်ညီမှုရှိမှသာ Full Coverage ရရှိစေပါတယ်။ Serverless Region များတွင် Revalidation သည် ဒေသအသီးသီးသို့ ပျံ့နှံ့သွားပြီး Purge Timing ကို API Documentation တွင် သတ်မှတ်ထားပါတယ်။
+
+## What it is (ဆိုတာ ဘာလဲ)
+
+```ts
+import { revalidateTag } from "next/cache";
+
+export default async function Page() {
+  // called from a "use cache" writer or any server scope:
+  await revalidateTag("news");
+}
+```
+
+## cacheTag နှင့် ပေါင်းစပ် အသုံးပြုပုံ (How it Pairs with cacheTag)
+
+```tsx
+export async function getHeader() {
+  "use cache";
+  cacheTag("header");
+  return getSiteHeader();
+}
+```
+
+```ts
+await revalidateTag("header");  // header function re-runs next request
+```
+
+## Signature (ပုံစံ)
+
+```ts
+revalidateTag(tag: string): Promise<void>
+```
+
+## Behavior & Rules (လုပ်ဆောင်ပုံနှင့် စည်းမျဉ်းများ)
+
+- ထို Tag ဖြင့် Cached Scopes အားလုံးကို Purge လုပ်ပေး
+- Tag အများအပြားသည် Full Coverage ရရှိရန် Intersection ကို ဖန်တီးပေး
+- Revalidation သည် On-demand ဖြစ်ပြီး နောက် Fetch တွင် ပြန်လည် Execute လုပ်ပေး
+- "Full Purge" မဟုတ်ပါ — Tag ပေးထားသော Entry များကိုသာ သက်ရောက်မှုရှိ
+- Tag အရေအတွက် ကန့်သတ်ချက်နှင့် Lowercase Rule များကို Platform က စီမံပေးပါတယ်
+
+## updateTag နှင့် နှိုင်းယှဉ်ခြင်း (Compare with updateTag)
+
+`revalidateTag` သည် **Purge** လုပ်ကာ နောက် Request တွင် ပြန်တွက်ချက်စေပြီး `updateTag` သည် In-flight Requests များအား Stale ဒေတာ ဆက်လက်ပေးနေစဉ် **ယခုချက်ချင်း ပြန်တွက်ချက်** ပေးပါတယ် (Superset UX)။
+
+## Region/Edge Scope
+
+Serverless Region များတွင် Revalidation သည် ဒေသအနှံ့ ပျံ့နှံ့ပြီး Purge Timing ကို API Documentation တွင် သတ်မှတ်ထားပါတယ်။
+
+## Activity (လေ့ကျင့်ခန်း)
+
+Site Header နှင့် Nav ကို "chrome" Tag ပေး၍ Admin Action တစ်ခုမှ `revalidateTag("chrome")` ကို ခေါ်ယူပြီး ထို Cached Scopes များသာ Re-fetch ဖြစ်ကြောင်း အတည်ပြုပါ။

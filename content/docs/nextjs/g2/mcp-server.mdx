@@ -1,0 +1,58 @@
+---
+title: "Next.js MCP Server — AI Tools အတွက် MCP Server"
+description: "Give AI coding tools live access to your Next.js app with the MCP server: docs, routes, helpers. — MCP server ဖြင့် AI coding tools များကို သင့် Next.js app ၏ docs, routes နှင့် helpers များထံ တိုက်ရိုက် ဝင်ရောက်ခွင့်ပေးနည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Model Context Protocol server တစ်ခုမှတစ်ဆင့် AI agents များက သင့် app (လက်ရှိ routes, API list, docs) ကို စစ်ဆေးနိုင်ပြီး လုပ်ဆောင်စေနိုင်ရန် နားလည်စေရန် ဖြစ်ပါတယ် — **MCP** ဆိုသည်မှာ ဘာလဲ၊ မည်သို့ install လုပ်ပြီး configure လုပ်ရမည်ကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+MCP (Model Context Protocol) သည် AI tools (Claude, Cursor, agents) များကို ပြင်ပ resources များနှင့် tools များနှင့် ချိတ်ဆက်ပေးသည့် open standard တစ်ခု ဖြစ်ပါတယ်။ Next.js သည် တရားဝင် MCP server တစ်ခုကို ပေးထားပြီး ၎င်းမှတစ်ဆင့် သင့် project ၏ context ၊ ဥပမာ လက်ရှိ route များ၊ API စာရင်းများနှင့် docs များကို AI agent များထံ ထုတ်ဖော်ပေးပါတယ်။ `npx @vercel/next-mcp-server@latest` ဖြင့် run နိုင်ပြီး agent ၏ configuration (ဥပမာ `mcpServers` block) အတွင်းတွင် ထည့်သွင်း ချိတ်ဆက်ရပါတယ်။ ချိတ်ဆက်ပြီးနောက် agent သည် project အတွင်းရှိ `page.tsx`/`route.ts` ဖိုင်များအားလုံးကို စာရင်းထုတ်နိုင်ပြီး သင့်ထည့်သွင်းထားသော Next.js version နှင့် ကိုက်ညီသည့် API docs များကို ဖတ်နိုင်ကာ config နှင့် env availability များကိုလည်း စစ်ဆေးနိုင်ပါတယ်။ ထို့ကြောင့် ခေတ်မမီတော့သော training data ထက် သင့် project အတွက် အမှန်တကယ် ကိုက်ညီသော အဖြေများကို ရရှိစေပါတယ်။ MCP server သည် local ပေါ်တွင် လည်ပတ်ပြီး read commands များကို လုပ်ဆောင်နိုင်သောကြောင့် ယုံကြည်ရသော အရင်းအမြစ်များနှင့်သာ ချိတ်ဆက်သင့်ပါတယ်။
+
+## What MCP is
+
+**MCP (Model Context Protocol)** သည် AI tools (Claude, Cursor, agents) များကို ပြင်ပ "resources" နှင့် "tools" များနှင့် ချိတ်ဆက်ပေးသော standard တစ်ခု ဖြစ်ပါတယ်။ Next.js သည် သင့် project ၏ context ကို ထုတ်ဖော်ပေးသော တရားဝင် MCP server တစ်ခုကို ထည့်သွင်းပေးထားပါတယ်။
+
+## Installing
+
+```bash
+npx @vercel/next-mcp-server@latest
+```
+
+သင့် agent ၏ config တွင် ဥပမာအားဖြင့် ချိတ်ဆက်ပါ:
+
+```json
+{
+  "mcpServers": {
+    "next": {
+      "command": "npx",
+      "args": ["@vercel/next-mcp-server@latest"]
+    }
+  }
+}
+```
+
+## What the agent can now do
+
+- **List routes** — `page.tsx`/`route.ts` အားလုံးနှင့် ၎င်းတို့၏ lifecycle များကို မြင်နိုင်မည်
+- **Read docs** — directives, functions, config များအတွက် လက်ရှိ API docs များ (သင့်ထည့်သွင်းထားသည့် Next.js version နှင့် ကိုက်ညီမည်)
+- **Inspect config** — helper invocations နှင့် env availability
+- ခေတ်မမီတော့သော training data အစား သင့် `next` version နှင့် ကိုက်ညီသော အဖြေများကို ရရှိမည်
+
+## Using it with opencode / Claude / Cursor
+
+- Cursor — `@next` mentions ကို သုံးပါ
+- Claude Code — Claude Desktop config တွင် MCP server ကို ဖွင့်ပါ
+- opencode — `opencode.json` ၏ MCP servers block တွင် ထည့်ပါ
+
+## Security
+
+MCP servers များသည် local ပေါ်တွင် လည်ပတ်ပြီး read commands များကို လုပ်ဆောင်နိုင်ပါတယ် — ထို့ကြောင့် ယုံကြည်ရသော အရင်းအမြစ်များနှင့်သာ ချိတ်ဆက်ကာ ၎င်းတို့ ထုတ်ဖော်ပေးသည့် tools များကို ပြန်လည် သုံးသပ်ပါ။
+
+## Activity
+
+လေ့ကျင့်ခန်း: Next.js MCP server ကို install လုပ်ပြီး သင့် agent နှင့် ချိတ်ဆက်ကာ agent ကို "list my routes and recommend where caching belongs" ဟု မေးကြည့်ပါ — agent သည် သက်ရှိ project structure ကို မြင်ကြောင်း အတည်ပြုပါ။

@@ -1,0 +1,108 @@
+---
+title: "Mutating Data — Data ပြောင်းလဲခြင်း"
+description: "Update data securely with Server Functions and Server Actions, handle forms, and revalidate caches after mutations. — Server Actions များဖြင့် Data ကို လုံခြုံစွာ Update ပြုလုပ်ခြင်းနှင့် Mutation ပြီးနောက် Cache ပြန်လည်သန့်စင်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Hand-written API routes မလိုဘဲ လုံခြုံသော data mutations များကို ပြုလုပ်နိုင်စေရန်၊ ထို့နောက် cached UI ကို invalidate လုပ်၍ အလိုအလျောက် update ဖြစ်စေရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Mutation ဆိုသည်မှာ database အတွင်းရှိ data များကို create, update သို့မဟုတ် delete ပြုလုပ်ခြင်း ဖြစ်ပါတယ်။ Next.js တွင် `"use server"` ဖြင့် မှတ်သားထားသော async function ကို **Server Function** ဟုခေါ်ပြီး form submission နှင့် mutations များအတွက် အသုံးပြုသော Server Function ကို **Server Action** ဟုခေါ်ပါတယ်။ Server Functions များကို client မှ separate API route မရေးဘဲ ခေါ်ယူနိုင်ပြီး form ၏ `action` prop သို့ တိုက်ရိုက်ထည့်၍ binding လုပ်နိုင်ပါတယ်။ Form သည် JavaScript load မဖြစ်မီကပင် အလုပ်လုပ်နိုင်သောကြောင့် ၎င်းကို **progressive enhancement** ဟုခေါ်ပါတယ်။ `FormData` အပြင် အခြား arguments များကို ပေးပို့ရန် `.bind(null, id)` ကို သုံးနိုင်ပြီး ဖောင်တင်နေသည့် state ကို `useActionState` hook ဖြင့် စောင့်ကြည့်နိုင်ပါတယ်။ Mutation ပြီးနောက် `revalidatePath` သို့မဟုတ် `revalidateTag` ဖြင့် stale caches များကို ရှင်းလင်းရန် အရေးကြီးပြီး Server Functions များသည် သင့် UI မှသာမဟုတ်ဘဲ direct POST requests ဖြင့် လည်းချဉ်းကပ်နိုင်သောကြောင့် authentication နှင့် authorization ကို function အတွင်း အမြဲစစ်ဆေးရပါတယ်။
+
+## Server Functions and Server Actions (Server Functions နှင့် Server Actions)
+
+**Server Function** ဆိုသည်မှာ `"use server"` ဖြင့် မှတ်သားထားသော async function ဖြစ်ပြီး server ပေါ်တွင် run ပါတယ်။ **Server Action** ဆိုသည်မှာ form submissions နှင့် mutations များအတွက် အသုံးပြုသော Server Function တစ်ခုဖြစ်ပါတယ်။ နှစ်မျိုးလုံးကို client မှ separate API route မရေးဘဲ ခေါ်ယူနိုင်ပါတယ်။
+
+```ts
+// app/lib/actions.ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { db } from "@/lib/db";
+
+export async function createPost(formData: FormData) {
+  const title = formData.get("title") as string;
+  const content = formData.get("content") as string;
+
+  await db.post.create({ data: { title, content } });
+
+  // UI ကို အလိုအလျောက် update ဖြစ်စေရန် cache ကို ရှင်းလင်းခြင်း
+  revalidatePath("/blog");
+}
+```
+
+> **လုံခြုံရေး သတိပေးချက်:** Server Functions များကို သင့် UI မှသာမဟုတ်ဘဲ direct POST requests များမှလည်း ချဉ်းကပ်နိုင်ပါတယ်။ Server Function တိုင်းအတွင်းတွင် authentication နှင့် authorization တို့ကို **အမြဲတမ်း** စစ်ဆေးပါ။
+
+## Binding actions to a form (Actions များကို Form နှင့် Binding လုပ်ခြင်း)
+
+```tsx
+// app/blog/new/page.tsx
+import { createPost } from "@/app/lib/actions";
+
+export default function NewPostPage() {
+  return (
+    <form action={createPost}>
+      <input name="title" placeholder="Title" required />
+      <textarea name="content" placeholder="Content" required />
+      <button type="submit">Publish</button>
+    </form>
+  );
+}
+```
+
+ဤသည်မှာ **progressive enhancement** ဖြစ်ပါတယ် - form သည် JavaScript load မဖြစ်မီကပင် အလုပ်လုပ်ပါတယ်။
+
+## Passing extra arguments (အပိုဆောင်း Arguments များ ပေးပို့ခြင်း)
+
+`FormData` အပြင် အခြားသော values များကို ပေးပို့ရန် `.bind(null, id)` ကို အသုံးပြုပါ:
+
+```tsx
+"use client";
+
+import { deletePost } from "@/app/lib/actions";
+
+export default function DeleteButton({ id }: { id: number }) {
+  const boundAction = deletePost.bind(null, id);
+  return <button formAction={boundAction}>Delete</button>;
+}
+```
+
+## Pending state with useActionState (useActionState ဖြင့် Pending State)
+
+```tsx
+"use client";
+
+import { useActionState } from "react";
+import { createPost } from "@/app/lib/actions";
+
+export default function PostForm() {
+  const [state, formAction, isPending] = useActionState(createPost, null);
+
+  return (
+    <form action={formAction}>
+      <input name="title" required />
+      <button type="submit" disabled={isPending}>
+        {isPending ? "Saving…" : "Save"}
+      </button>
+    </form>
+  );
+}
+```
+
+## After mutating: revalidate (Mutation ပြီးနောက် Revalidate လုပ်ခြင်း)
+
+Mutation တစ်ခုပြီးတိုင်း stale caches များကို အမြဲရှင်းလင်းပါ:
+
+```ts
+revalidatePath("/blog");          // re-render a path
+revalidateTag("posts");           // re-render everything tagged "posts"
+revalidatePath("/blog/[slug]", "page");
+```
+
+## Activity
+
+သင့် blog တွင် "create post" form တစ်ခုကို ထည့်ပါ။ Submit ပြီးနောက် list page သည် post အသစ်ဖြင့် ပြန်လည် re-render ဖြစ်ကြောင်း စစ်ဆေးပြီး unauthenticated POST တစ်ခုကို သင့် code တွင် ငြင်းပယ်ကြောင်း စစ်ဆေးပါ။

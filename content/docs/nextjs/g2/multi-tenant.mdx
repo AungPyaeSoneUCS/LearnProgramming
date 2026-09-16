@@ -1,0 +1,80 @@
+---
+title: "Multi-tenant — ဖောက်သည် အများအပြား ဖြန့်ဝေမှု"
+description: "Serve many customers from one Next.js deployment with subdomain/slug-based tenancy and per-tenant config. — deployment တစ်ခုတည်းမှ ဖောက်သည်များစွာကို subdomain/slug-based tenancy ဖြင့် ဖြန့်ဝေနည်း"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Codebase တစ်ခုတည်းဖြင့် သီးခြား branding, data နှင့် config များရှိသည့် အဖွဲ့အစည်း အများအပြားကို ဖြန့်ဝေနိုင်ရန် နားလည်စေရန် ဖြစ်ပါတယ် — **tenant ခွဲခြားသတ်မှတ်ပုံ** နှင့် **data isolation** ပြုလုပ်ပုံတို့ကို ကျင့်သုံးမည်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Multi-tenant architecture ဆိုသည်မှာ deployment တစ်ခုတည်းနှင့် codebase တစ်ခုတည်းကို အသုံးပြု၍ ဖောက်သည် (customer) အများအပြားကို ဖြန့်ဝေနိုင်သည့် ဒီဇိုင်းတစ်ခု ဖြစ်ပါတယ်။ Tenancy model အနေဖြင့် subdomain (`acme.app.com`) ၊ path (`app.com/acme`) သို့မဟုတ် header/domain lookup နည်းလမ်းများကို ရွေးချယ်နိုင်ပြီး တစ်ခုချင်းစီတွင် cookie isolation နှင့် SEO ကဲ့သို့ ကွဲပြားသော အားသာချက်များ ရှိပါတယ်။ Tenant ကို စောစီးစွာ သိရှိရန် proxy/middleware အဆင့်တွင် host header မှ ခွဲထုတ်ပြီး `x-tenant` header ကဲ့သို့ သတ်မှတ်ကာ downstream သို့ ပေးပို့ရပါတယ်။ Data layer တွင်လည်း queries များကို `tenantId` ဖြင့် အမြဲ scope လုပ်ပြီး cache keys များထဲတွင် `tenantId` ထည့်ထားခြင်းဖြင့် tenant အချင်းချင်း data ပေါက်ကြားမှုကို ကာကွယ်ပါတယ်။ Per-tenant theming အတွက် tenant config မှ `data-theme` သို့မဟုတ် font class များကို ရယူ၍ root layout တွင် သတ်မှတ်နိုင်ပြီး `cacheTag(tenant:...)` ဖြင့် surgical revalidation ပြုလုပ်နိုင်ပါတယ်။ Auth သည် tenant တစ်ခုတည်းအတွင်းတွင် scope ဖြစ်သင့်ပြီး tenant ပြောင်းလဲခြင်းကို တိကျစွာ ထိန်းချုပ်ရန် လိုအပ်ပါတယ်။
+
+## Tenancy models
+
+| Model                | URL                        | Pros / cons                    |
+| -------------------- | -------------------------- | ------------------------------ |
+| Subdomain            | `acme.app.com`             | Clean, cookie isolation        |
+| Path                  | `app.com/acme`             | Simple, SEO per tenant         |
+| Header/domain lookup | custom domains per tenant  | Production-ready setups        |
+
+## The tenant context
+
+Tenant ကို (proxy/middleware ဖြင့်) စောစီးစွာ သိရှိပြီး အောက်ဆင့်များသို့ ပေးပို့ပါ:
+
+```ts
+// proxy.ts
+import { NextRequest, NextResponse } from "next/server";
+
+export default function TenantProxy(request: NextRequest) {
+  const host = request.headers.get("host") ?? "";
+  const tenant = host.split(".")[0]; // crude example
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-tenant", tenant);
+  return NextResponse.next({ request: { headers: requestHeaders } });
+}
+```
+
+## Isolation at the data layer
+
+Queries များကို tenant အလိုက် အမြဲ scope လုပ်ပါ:
+
+```ts
+export async function getTenantPosts(tenantId: string) {
+  "use cache";
+  cacheLife("minutes");
+  cacheTag(`tenant:${tenantId}`);
+  return db.post.findMany({ where: { tenantId } });
+}
+```
+
+Cache keys များတွင် `tenantId` ပါဝင်သောကြောင့် tenant အချင်းချင်း data ပေါက်ကြားမှု မရှိပါဘူး။
+
+## Per-tenant theming
+
+```tsx
+export default async function Page({ params }) {
+  const tenant = await getTenant(params.tenant ?? "default");
+  return (
+    <html data-theme={tenant.theme}>
+      <body className={tenant.fontClass}>
+        <Header brand={tenant.brand} />
+      </body>
+    </html>
+  );
+}
+```
+
+## Key checks
+
+- Auth သည် tenant တစ်ခုအတွင်းသာ scope ဖြစ်ပြီး tenant ပြောင်းလဲခြင်းကို သွယ်ဝိုက် ခွင့်မပြုပါ
+- Surgical revalidation အတွက် `cacheTag(tenant:…)` ကို သုံးပါ
+- Shared config များကို cache ပါသော `getTenantConfig` function ဖြင့် deduplicate လုပ်ပါ
+- Tenant အလိုက် migrations များ (shared DB vs row-isolated) ကို စီမံပါ
+
+## Activity
+
+လေ့ကျင့်ခန်း: Proxy တွင် `x-tenant` header detection ထည့်ပြီး `getPosts(tenantId)` query ကို cache tags ဖြင့် scope လုပ်ကာ subdomains နှစ်ခုတွင် data များ သီးခြား render ဖြစ်ကြောင်း အတည်ပြုပါ။

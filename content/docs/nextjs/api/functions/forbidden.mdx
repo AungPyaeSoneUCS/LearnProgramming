@@ -1,0 +1,59 @@
+---
+title: "forbidden — 403 ငြင်းပယ်မှု"
+description: "Throw a 403 Forbidden from server code with the Red Variant for a custom UI. — Server code မှ 403 Forbidden error ကို ပစ်ထုတ်၍ custom UI ဖြင့် ပြသနိုင်စေရန် ဖြစ်သည်။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Server scope မှန်သမျှတွင် သန့်ရှင်းသော (clean) 403 တုံ့ပြန်မှု အဓိပ္ပာယ်ရှိစေရန် ပြုလုပ်နိုင်အောင် သိရှိစေရန်ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`forbidden` သည် `next/navigation` မှ import လုပ်ရသော function တစ်ခုဖြစ်ပြီး server code အတွင်းမှ ခေါ်ဆိုလိုက်ပါက Next.js က ၎င်းကို 403 response နှင့် `forbidden.tsx` UI အဖြစ် အလိုအလျောက် ဖော်ပြပေးပါတယ်။ Server Components (pages/layouts/route segments), Server Actions (`"use server"` functions) နှင့် Route Handlers (`route.ts`) စသည့် server scope များအားလုံးတွင် သုံးနိုင်ပါတယ်။ `authInterrupts` option ကို `next.config.ts` တွင် ဖွင့်ထားပါက `notFound()`, `forbidden()`, `unauthorized()` တို့သည် first-class 4xx handling အဖြစ် ဆောင်ရွက်ပေးပြီး redirect များကိုလည်း configure လုပ်နိုင်ပါတယ်။ User ၏ role အရ ခွင့်မပြုသော နေရာကို လာရောက်ကြည့်ရှုသူများကို 403 ပြန်ပေးခြင်းဖြင့် မလိုလားအပ်သော data ပေါက်ကြားမှုကို ကာကွယ်နိုင်ပါတယ်။
+
+## What it is
+
+`forbidden` သည် Next.js မှ 403 response + `forbidden.tsx` UI အဖြစ် ပြောင်းလဲပေးသော special error တစ်ခုကို ပစ်ထုတ်ပေးပါတယ်:
+
+```tsx
+import { forbidden } from "next/navigation";
+
+export default async function AdminPage() {
+  const role = await getUserRole();
+  if (role !== "admin") forbidden();   // 403
+  return <AdminPanel />;
+}
+```
+
+## Supported scopes (သုံးနိုင်သော နေရာများ)
+
+- Server Components (pages/layouts/route segments)
+- Server Actions (`"use server"` functions)
+- Route Handlers (`route.ts`)
+
+## With AuthInterrupts config
+
+```ts
+// next.config.ts
+const nextConfig: NextConfig = { authInterrupts: true };
+```
+
+`authInterrupts` သည် official interrupts များကို ဖွင့်ပေးပြီး `notFound()`, `forbidden()`, `unauthorized()` တို့အား first-class 4xx handling အဖြစ် ပြောင်းလဲပေးပါတယ် (configurable redirects များနှင့်အတူ)။
+
+## The sibling functions (အခြားဆက်စပ် functions များ)
+
+| Function        | Triggered when           | Status |
+| --------------- | ------------------------ | ------ |
+| `notFound`      | missing resource         | 404    |
+| `forbidden`     | authed but unauthorized  | 403    |
+| `unauthorized`  | not authenticated        | 401    |
+
+## Compare with redirect (redirect နှင့် နှိုင်းယှဉ်ချက်)
+
+Flow ပြောင်းလဲမှုများအတွက် `redirect("/login")` ကို သုံးပြီး hard 403 semantics + UI အတွက်မူ `forbidden()` ကို သုံးပါ။
+
+## လေ့ကျင့်ခန်း (Activity)
+
+Role စစ်ဆေးပြီးနောက် admin route တစ်ခုကို `forbidden()` ဖြင့် Gate လုပ်ကာ 403 status နှင့် custom `forbidden.tsx` render ကို အတည်ပြုပြီး non-admin များသည် content ကို ဘယ်တော့မှ မမြင်ရကြောင်း စမ်းသပ်ပါ။

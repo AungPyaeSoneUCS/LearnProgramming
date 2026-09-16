@@ -1,0 +1,81 @@
+---
+title: "Image — ရုပ်ပုံ Component"
+description: "The next/image component API: fill, sizes, priority, quality, and loader - fully typed — fill, sizes, priority, quality နှင့် loader များကို အသေးစိတ်ဖော်ပြထားသော ရုပ်ပုံ API၊ Fully typed။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  `<Image />` ၏ Optimization ဆိုင်ရာ ခလုတ်များအားလုံး — Local/Remote sources မှ Artifacts နှင့် Measuring အထိ — အသုံးပြုတတ်စေရန် ရည်ရွယ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+`next/image` ၏ `<Image>` component သည် HTML `<img>` ၏ အဆင့်မြှင့်တင်ထားသော ဗားရှင်းဖြစ်ပြီး ရုပ်ပုံများကို Server ပေါ်တွင် လိုအပ်သလို Resize လုပ်ခြင်း၊ Modern Format များဖြစ်သော WebP/AVIF သို့ ပြောင်းလဲခြင်းတို့ကို အလိုအလျောက် လုပ်ဆောင်ပေးပါတယ်။ Viewport အလိုက် မှန်ကန်သော အရွယ်အစားကို ရွေးချယ်ပို့ပေးရန် `sizes` ဖြင့် Responsive သတ်မှတ်နိုင်ပြီး `fill` ကိုသုံးလျှင် Parent container ၏ အရွယ်အစားနှင့် ဆန့်ဖြည့်ပြနိုင်ပါတယ်။ `priority` ဖြင့် First-load ရုပ်ပုံများကို Preload လုပ်နိုင်ပြီး `quality`၊ `placeholder` ကဲ့သို့ Props များဖြင့် အသေးစိတ် ထိန်းချုပ်နိုင်ပါတယ်။ Remote source များအတွက်မူ `next.config.ts` ထဲတွင် `remotePatterns` ကို ကြိုတင်သတ်မှတ်မှသာ အလုပ်လုပ်နိုင်ပြီး Static export များတွင်လည်း `images.unoptimized` သို့မဟုတ် Custom loader လိုအပ်ပါတယ်။
+
+## The core props
+
+```tsx
+import Image from "next/image";
+
+<Image
+  src={post.cover}          // relative for local, absolute for remote
+  alt="Cover art"           // required
+  width={800}               // required unless fill
+  height={600}
+  priority                  // preloads, skips lazy
+  sizes="(min-width: 768px) 50vw, 100vw"
+  quality={80}              // 1-100
+  placeholder="blur"        // blur-up
+/>
+```
+
+## fill + sizes pattern
+
+```tsx
+<div className="relative aspect-video w-full">
+  <Image
+    src={hero}
+    alt="Hero"
+    fill
+    sizes="100vw"
+    className="object-cover"
+  />
+</div>
+```
+
+`fill` သည် Container box အတွင်းမှ ဆန့်ဖြည့်ပေးပြီး `object-cover` နှင့် အရွယ်အစား သတ်မှတ်ထားသော Container တစ်ခု အတူတွဲသုံးရန် လိုအပ်ပါတယ်။
+
+## Remote sources & config
+
+```ts
+// next.config.ts
+images: {
+  remotePatterns: [
+    { protocol: "https", hostname: "cdn.example.com", pathname: "/img/**" },
+  ],
+  formats: ["image/avif", "image/webp"],
+  deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+}
+```
+
+## Custom loaders / unoptimized
+
+```tsx
+<Image src="..." loader={
+  ({ src, width }) => `https://cdn.example.com/${src}?w=${width}`
+} />
+```
+
+Static exports များအတွက်မူ `images.unoptimized = true` (သို့မဟုတ် loader တစ်ခု) မဖြစ်မနေ လိုအပ်ပါတယ်။
+
+## Behavioral rules
+
+- `alt` မဖြစ်မနေ လိုအပ်သည် (a11y)
+- `width/height` သို့မဟုတ် `fill` အနည်းဆုံး တစ်ခုခု သုံးရမည် (Layout shift မဖြစ်စေရန်)
+- `priority` ကို Above-the-fold ရုပ်ပုံများအတွက်သာ အသုံးပြုသင့်ပါတယ်
+- Remote caching ကို `images` cache config ဖြင့် အုပ်ချုပ်ပါတယ်
+
+## Activity
+
+Hero ရုပ်ပုံတစ်ခုကို `fill` + `sizes` + `priority` သုံး၍ မြှင့်တင်ပြီး Thumbnail grid အတွက် Blur `placeholder` ကို ထည့်ကာ External host များအတွက် `remotePatterns` များ သတ်မှတ်ပြီး Lighthouse image checks ဖြင့် စစ်ဆေးပါ။

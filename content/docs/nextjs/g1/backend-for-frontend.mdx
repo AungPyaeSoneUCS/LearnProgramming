@@ -1,0 +1,74 @@
+---
+title: "Backend for Frontend — Frontend အတွက် Backend (BFF)"
+description: "Build a thin BFF layer that aggregates, shapes, and secures data for your UI - via Route Handlers and the proxy. — Route Handlers နှင့် proxy မှတစ်ဆင့် UI အတွက် data များကို စုစည်း၊ ပုံဖော်ပြီး လုံခြုံစေသည့် ပါးလွှာသော BFF layer တည်ဆောက်ခြင်း။"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note" title="🎯 သင်ခန်းစာ ရည်ရွယ်ချက်">
+  Backend-for-Frontend (BFF) layer တစ်ခုဖြင့် backend ၏ raw response တင်မဟုတ်ဘဲ frontend ၏ လိုအပ်ချက်နှင့် အတိအကျ ကိုက်ညီသော API ကို ပေးအပ်နိုင်ရန် ဖြစ်ပါတယ်။
+</Aside>
+
+## ရှင်းလင်းချက်
+
+Backend-for-Frontend (BFF) ဆိုသည်မှာ browser နှင့် backend services အများအကြားတွင် ရပ်တည်သော ပါးလွှာသည့် layer တစ်ခု ဖြစ်ပါတယ်။ Browser သည် microservices တိုင်းကို တိုက်ရိုက် ဆက်သွယ်မည့်အစား BFF ကို တစ်ချက်တည်းဖြင့် ဆက်သွယ်ပြီး ၎င်းက အထက်ရှိ upstream calls အများကို စုစည်း (aggregate) ပေးပါတယ်။ BFF သည် payload များကို UI နှင့် ကိုက်ညီအောင် ပုံဖော်ပေးခြင်း၊ API keys များကို server-side တွင် ဝှက်ထားခြင်းနှင့် CORS ပြဿနာများကို ရှောင်ရှားပေးခြင်းတို့ကိုလည်း ဆောင်ရွက်ပါတယ်။ Next.js တွင် ၎င်းကို Route Handler (`route.ts`) ဖြင့် သို့မဟုတ် ပိုမိုကြီးမားသော pass-through လိုအပ်သည့်အခါ `proxy.ts` ဖြင့် အကောင်အထည်ဖော်နိုင်ပါတယ်။ လုံခြုံရေးအတွက် BFF ထုတ်ဖော်မည့် paths များကို whitelist လုပ်ပြီး inputs များကို validate လုပ်ကာ upstream credentials များကို server-only env vars တွင်သာ ထားရှိသင့်ပါတယ်။
+
+## Why a BFF?
+
+Browser သည် microservice တိုင်းနှင့် တိုက်ရိုက် ဆက်သွယ်ရန် မလိုအပ်ပါဘူး။ BFF တစ်ခုသည်:
+
+- Upstream calls အများကို response တစ်ခုတည်းအဖြစ် **စုစည်းပေးခြင်း (Aggregates)**
+- Payloads များကို UI နှင့် ကိုက်ညီအောင် **ပုံဖော်ပေးခြင်း (Shapes)**
+- API keys များကို server-side တွင်သာ ထားကာ **လျှို့ဝှက်ချက်များကို ဖုံးကွယ်ပေးခြင်း (Hides secrets)**
+- Browser သည် same-origin မှ ဆက်သွယ်သောကြောင့် **CORS ကို ရှောင်ရှားနိုင်ခြင်း (Avoids CORS)**
+
+```
+Browser ──▶ /api/profile  ──(BFF/middle)&──▶ /users + /orders + /rewards
+```
+
+## Implement with a Route Handler
+
+```ts
+// app/api/profile/route.ts
+import { NextResponse } from "next/server";
+import { proxy } from "next/server";
+
+export async function GET(request: Request) {
+  const [user, orders] = await Promise.all([
+    fetch(`https://users.internal/v1/me`).then((r) => r.json()),
+    fetch(`https://orders.internal/v1/mine`).then((r) => r.json()),
+  ]);
+
+  return NextResponse.json({
+    name: user.name,
+    orderCount: orders.length,
+    nextOrder: orders[0]?.id ?? null,
+  });
+}
+```
+
+## Or implement with a proxy
+
+Backend တစ်ခုလုံး၏ မျက်နှာပြင်ကို တိုက်ရိုက် pass-through လုပ်ရန်အတွက်:
+
+```ts
+// proxy.ts
+import { proxy } from "next/server";
+
+export const config = { matcher: "/api/:path*" };
+
+export default function Proxy(request: NextRequest) {
+  return proxy(request, { url: "https://bff.example.com/" + request.nextUrl.pathname.replace("/api/", "") });
+}
+```
+
+## Security guidance
+
+- BFF ထုတ်ဖော်မည့် paths များကို whitelist လုပ်ပါ
+- Inputs အားလုံးကို sanitize နှင့် validate လုပ်ပါ
+- Upstream credentials များကို server-only env vars များတွင် ထားရှိပါ
+- Slow upstreams များက pages များကို hang မဖြစ်စေရန် `AbortController` ဖြင့် timeout/retry ထည့်ပါ
+
+## Activity — လေ့ကျင့်ခန်း
+
+GitHub user + repos APIs များကို payload တစ်ခုတည်းအဖြစ် ပေါင်းစပ်ပေးသော Route Handler တစ်ခု ဖန်တီးပါ၊ ထို့နောက် ထို `fetch` တစ်ခုတည်းမှ ရသော data ဖြင့် portfolio page တစ်ခုကို render လုပ်ပါ။
